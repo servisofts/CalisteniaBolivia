@@ -7,10 +7,11 @@ const ActionButtom = (props) => {
         }}
             style={{
                 width: "35%",
+                maxWidth:100,
                 height: 40,
                 margin: 8,
                 borderWidth: 1,
-                borderColor: "#555",
+                borderColor: "#ffffff22",
                 borderRadius: 8,
                 alignItems: 'center',
                 justifyContent: 'center',

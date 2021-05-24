@@ -116,6 +116,8 @@ export default class SCarruselItem extends Component {
                     position: "absolute",
                     width: "100%",
                     // backgroundColor:"#000",
+                    justifyContent:"center",
+                    alignItems:"center",
                     height: "100%",
                         transform: [
                             { translateX: this.state.pan.x }

@@ -41,7 +41,7 @@ class UsuarioPerfil extends Component {
             this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
             return <ActivityIndicator color={"#fff"} />
         }
-        
+
         return (
             <View style={{
                 width: "95%",
@@ -74,14 +74,14 @@ class UsuarioPerfil extends Component {
                             this.props.dispatch({
                                 component: "image",
                                 type: "cambio",
-                                url: AppParams.urlImages + this.props.state.usuarioReducer.usuarioLog.key,
+                                url: AppParams.urlImages +"usuario_"+ this.props.state.usuarioReducer.usuarioLog.key,
                             })
                             // this.state.repaint = new Date().getTime()
                             // this.setState({ ...this.state });
                         });
                     }}>
                         {/* {"foto"} */}
-                        {this.props.state.imageReducer.getImage(AppParams.urlImages + this.props.state.usuarioReducer.usuarioLog.key, {
+                        {this.props.state.imageReducer.getImage(AppParams.urlImages +"usuario_"+ this.props.state.usuarioReducer.usuarioLog.key, {
                             width: "100%",
                             height: "100%",
                         })}
@@ -149,13 +149,15 @@ class UsuarioPerfil extends Component {
                     alignItems: "center",
                     // backgroundColor: "#000"
                 }}>
-                    <BackgroundImage source={require("../../img/fondos/color/1.jpg")} />
+                    <BackgroundImage
+                        // source={require("../../img/fondos/color/1.jpg")}
+                    />
                     <View style={{
                         width: "90%",
                         borderRadius: 8,
                         height: "90%",
                         maxWidth: 500,
-                        backgroundColor: "#ffffff44",
+                        backgroundColor: "#ffffff09",
                         alignItems: "center"
                     }}>
                         {this.getPerfil()}

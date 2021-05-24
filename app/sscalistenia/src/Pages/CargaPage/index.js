@@ -3,6 +3,8 @@ import { View, Animated, Dimensions } from 'react-native';
 import Carga from './Carga';
 import Svg from '../../Svg';
 import AppParams from '../../Params/index.json'
+import LogoAnimado from '../../Component/LogoAnimado';
+import BackgroundImage from '../../Component/BackgroundImage';
 
 class CargaPage extends Component {
   static navigationOptions = {
@@ -32,9 +34,10 @@ class CargaPage extends Component {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor:"#000"
+        backgroundColor: "#000",
+        overflow:"hidden",
       }}>
-
+        <BackgroundImage/>
         <Animated.View
           style={[
             {
@@ -52,11 +55,19 @@ class CargaPage extends Component {
             },
           ]}
         >
-          <Svg name="logoBlanco"
+          <View style={{
+            width: "80%",
+            alignItems: 'center',
+            height: 400,
+            // backgroundColor:"#000"
+          }}>
+            <LogoAnimado />
+          </View>
+          {/* <Svg resource={require("../../img/calistenia.svg")}
             style={{
               width: (Dimensions.get("window").width+Dimensions.get("window").height)/2 * 0.4,
               height:(Dimensions.get("window").width+Dimensions.get("window").height)/2 * 0.4,
-            }} />
+            }} /> */}
         </Animated.View>
 
         <Carga navigation={this.props.navigation} />

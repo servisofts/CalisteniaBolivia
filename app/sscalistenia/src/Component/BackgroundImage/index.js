@@ -11,8 +11,9 @@ export default class BackgroundImage extends Component<type> {
         };
     }
     getBackground = () => {
-        if (!this.props.source) {
-            return <View />
+        var source = this.props.source;
+        if (!source) {
+            source= require("../../img/background.png");
         }
         return <View style={{
             width: "100%",
@@ -21,13 +22,14 @@ export default class BackgroundImage extends Component<type> {
             left: 0,
             position: "absolute",
             // opacity: 0.8,
-            // backgroundColor: "#fff",
+            backgroundColor: "#000000",
             ...this.props.style,
         }}>
-            <SImage source={this.props.source} style={{
+            <SImage source={source} blurRadius={8 - (Platform.OS == "android" ? 4 : 0)} style={{
                 width: "100%",
                 height: "100%",
-                resizeMode: "cover",
+                resizeMode: "stretch",
+                opacity: 0.6,
             }} />
             <View style={{
                 width: "100%",
@@ -36,16 +38,16 @@ export default class BackgroundImage extends Component<type> {
                 left: 0,
                 position: "absolute",
                 opacity: (0.7 + (Platform.OS == "web" ? -0.2 : 0)),
-                backgroundColor: "#000000"
+                backgroundColor: "#00000044"
             }}>
 
             </View>
         </View>
     }
     render() {
-        if (!this.props.source) {
-            return <View />
-        }
+        // if (!this.props.source) {
+        //     return <View />
+        // }
         return this.getBackground()
     }
 }

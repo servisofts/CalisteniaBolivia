@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>sscalistenia</string>
+	<string>Calistenia Bolivia</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -47,6 +47,13 @@
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Quremos utilzar su libreria porfavor</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Robofan Free.otf</string>
+		<string>SanFrancisco.otf</string>
+		<string>San Francisco.otf</string>
+		<string>myFont.otf</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

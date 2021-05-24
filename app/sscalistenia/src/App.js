@@ -46,12 +46,13 @@ const App = () => {
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
         <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
         <View style={{
-          flex: 1,
+          // position:"absolute",
           height: "100%",
+          width: "100%",
           backgroundColor: "#000"
         }}>
           <Container />
-          <DropDown />
+          {/* <DropDown /> */}
         </View>
       </SafeAreaView>
     </Provider>

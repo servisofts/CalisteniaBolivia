@@ -19,7 +19,7 @@ class Ventanas extends Component {
     change(props) {
         this.state.ventana = props;
         var encontro = false;
-        this.setState({ventana:props})
+        this.setState({ ventana: props })
         Object.keys(this.props.ventanas).map((key) => {
             if (key == props) {
                 encontro = true;
@@ -74,7 +74,6 @@ class Ventanas extends Component {
                         top: 0,
                         left: 0,
                         width: "100%",
-                        paddingTop: 40,
                         // backgroundColor: "#f0f",
                         justifyContent: "center",
                         alignItems: "center",
@@ -87,7 +86,8 @@ class Ventanas extends Component {
         }
         return (<View style={{
             width: "100%",
-            height: "100%",
+            // height: "100%",
+            flex: 1,
             justifyContent: "center",
             alignItems: "center",
         }}>

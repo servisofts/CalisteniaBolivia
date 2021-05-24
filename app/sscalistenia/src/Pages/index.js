@@ -16,6 +16,18 @@ import UsuarioPerfilPage from './UsuarioPerfilPage'
 import UsuarioRegistroPage from './UsuarioRegistroPage'
 import TestRNF from './TestRNF'
 
+import ServisoftsPage from './ServisoftsPage'
+import BaseDatosPage from './BaseDatosPage'
+import AseguramientoPage from './AseguramientoPage'
+import CodigoPage from './CodigoPage'
+import ServidorPage from './ServidorPage'
+import PresentacionCalisPage from './PresentacionCalisPage'
+import ModuloRegistroPage from './ModuloRegistroPage'
+import ModuloPerfilPage from './ModuloPerfilPage'
+import ProcesoRegistroPage from './ProcesoRegistroPage'
+import ProcesoPerfilPage from './ProcesoPerfilPage'
+import ProcesoComentarioRegistroPage from './ProcesoComentarioRegistroPage'
+
 
 
 export const getPages = () => {
@@ -32,6 +44,18 @@ export const getPages = () => {
         UsuarioRegistroPage,
         CarpetasPage,
         FilePerfil,
-        DescargaPage
+        DescargaPage,
+        ServisoftsPage,
+        BaseDatosPage,
+        AseguramientoPage,
+        CodigoPage,
+        CodigoPage,
+        ServidorPage,
+        PresentacionCalisPage,
+        ModuloRegistroPage,
+        ModuloPerfilPage,
+        ProcesoRegistroPage,
+        ProcesoPerfilPage,
+        ProcesoComentarioRegistroPage
     }
 }

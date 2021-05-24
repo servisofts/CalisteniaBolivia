@@ -5,10 +5,10 @@ import * as SSStorage from '../../../SSStorage';
 import AppParams from '../../../Params/index.json'
 import SThread from '../../../Component/SThread';
 var lastSend = 0;
-
+var location = "";
 const Carga = (props) => {
     const [mensaje, setMensaje] = React.useState("");
-    const [redirect, setRedirect] = React.useState(false);
+    const [redirect, setRedirect] = React.useState("");
     const getMensaje = () => {
         if (!props.navigation) {
             return "No se encontro navegacion.";
@@ -34,14 +34,6 @@ const Carga = (props) => {
                 return;
             });
             return "Buscando usuario...";
-        } else {
-            if (!props.state.usuarioReducer.usuarioLog) {
-                props.navigation.replace("LoginPage");
-                ///no hay usuario
-            } else {
-                props.navigation.replace("LoginPage");
-                ///existe usuario
-            }
         }
         return "Cargando...";
     }
@@ -50,9 +42,16 @@ const Carga = (props) => {
         setMensaje(mensajeTemp);
         return <View />;
     }
-    new SThread(3000, "hiloVerificarEntrada").start(() => {
-        // props.navigation.replace("LoginPage");
-        props.navigation.replace("LoginPage");
+    new SThread(2600, "hiloVerificarEntrada").start(() => {
+
+        if (!props.state.usuarioReducer.usuarioLog) {
+            // props.navigation.replace("LoginPage");
+            props.navigation.replace("PresentacionCalisPage");
+            ///no hay usuario
+        } else {
+            props.navigation.replace("InicioPage");
+        }
+        // props.navigation.replace("InicioPage");
     })
     return (
         <View style={{

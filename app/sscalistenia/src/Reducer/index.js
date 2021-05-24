@@ -11,6 +11,10 @@ import usuarioPageReducer from './usuarioPageReducer';
 import cabeceraDatoReducer from './cabeceraDatoReducer';
 import fileReducer from './fileReducer';
 import fileSeguimiento from './fileSeguimiento';
+import oldReducer from './oldReducer';
+import moduloReducer from './moduloReducer';
+import procesoReducer from './procesoReducer';
+import procesoComentarioReducer from './procesoComentarioReducer';
 
 export default combineReducers({
     cabeceraDatoReducer,
@@ -24,5 +28,9 @@ export default combineReducers({
     usuarioRolReducer,
     usuarioPageReducer,
     fileReducer,
-    fileSeguimiento
+    fileSeguimiento,
+    oldReducer,
+    moduloReducer,
+    procesoReducer,
+    procesoComentarioReducer
 });
