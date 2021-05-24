@@ -37,7 +37,22 @@ public class Manejador {
                     new SFile(data, session);
                     break;
                 }
-                
+                case "old": {
+                    new Old(data, session);
+                    break;
+                }
+                case "modulo": {
+                    new Modulo(data, session);
+                    break;
+                }
+                case "proceso": {
+                    new Proceso(data, session);
+                    break;
+                }
+                case "procesoComentario": {
+                    new ProcesoComentario(data, session);
+                    break;
+                }
                 default:
                     break;
             }

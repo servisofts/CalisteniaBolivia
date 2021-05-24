@@ -165,65 +165,13 @@ public class ServerHttp {
     private static void handleRequest(HttpExchange exchange) throws IOException {
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:3000");
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
-        List<String> header = exchange.getRequestHeaders().get("key_usuario");
-        System.out.println(header);
+        
         String ruta = Config.getJSON("files").getString("url");
         URI requestURI = exchange.getRequestURI();
         String path  = requestURI.getPath().replaceAll("/", "");
 
-        String key_usuario = "";
-        if(header!=null){
-            key_usuario=header.get(0);
-        }
-
-
-        String arrPartes[]= path.split("\\.");
-        String extension = ""; 
-        String extensionFinal =path;
-        if(arrPartes.length>1){
-            System.out.println("Existe estencion");    
-            path=arrPartes[0];
-            extension = arrPartes[1];
-        }
-        
-        try{
-            String consulta = "select get_file_path_invertido('"+path+"') as json";
-            JSONArray files = Conexion.ejecutarConsultaArray(consulta);
-            if(files.length()>0){
-                consulta = "select get_file_key_creador('"+path+"') as json";
-                PreparedStatement ps = Conexion.preparedStatement(consulta);
-                ResultSet rs = ps.executeQuery();
-                String key_creador = rs.next()?rs.getString("json"):"";
-                rs.close();
-                ps.close();
-
-                ruta+=key_creador;
-                String key_file="";
-                for ( int i = files.length()-1; i >= 0; i--) {
-                    key_file = files.getJSONObject(i).getString("key");
-                    ruta += "/"+key_file;
-                }
-
-                JSONObject file_tipo_seguimiento = new JSONObject();
-                file_tipo_seguimiento.put("key",UUID.randomUUID().toString());
-                file_tipo_seguimiento.put("key_tipo_seguimiento","2");
-                file_tipo_seguimiento.put("descripcion","ver_file");
-                file_tipo_seguimiento.put("data",ruta);
-                file_tipo_seguimiento.put("key_usuario",key_usuario);
-                file_tipo_seguimiento.put("key_file",key_file);
-                file_tipo_seguimiento.put("fecha_on","now()");
-                file_tipo_seguimiento.put("estado",1);
-
-            }else{
-                ruta += "usuario/"+path;
-            }
-            
-
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
+        String [] paths = path.split("_");
+        ruta=ruta+paths[0]+"/"+paths[1];
         File file = new File (ruta);
         if(!file.exists()){
             file = new File("./default.png");
@@ -232,7 +180,6 @@ public class ServerHttp {
         FileInputStream fis = new FileInputStream(file);
         BufferedInputStream bis = new BufferedInputStream(fis);
         bis.read(bytearray, 0, bytearray.length);
-        
         exchange.sendResponseHeaders(200, file.length());
         OutputStream os = exchange.getResponseBody();
         os.write(bytearray,0,bytearray.length);
