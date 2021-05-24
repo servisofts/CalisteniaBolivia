@@ -11,7 +11,7 @@ class BarraSuperior extends Component {
         this.state = {
             anim: new Animated.Value(0),
         };
-  
+
     }
 
     startAnimation() {
@@ -21,7 +21,7 @@ class BarraSuperior extends Component {
         }).start();
     }
     componentDidMount() {
-     
+
         this.startAnimation();
     }
 
@@ -47,7 +47,7 @@ class BarraSuperior extends Component {
                     this.props.navigation.navigate("UsuarioPerfilPage")
                 }}>
 
-                    {this.props.state.imageReducer.getImage(AppParams.urlImages + this.props.state.usuarioReducer.usuarioLog.key, {
+                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_"+this.props.state.usuarioReducer.usuarioLog.key, {
                         width: "100%",
                         height: "100%",
                     })}
@@ -100,8 +100,9 @@ class BarraSuperior extends Component {
         }
         return (<Text style={{
             color: "#fff",
-            fontSize: 12,
-            fontWeight: "bold"
+            // fontSize: 12,
+            fontWeight: "bold",
+            // fontFamily:"myFont"
         }}>{text}</Text>)
     }
     render() {
@@ -159,11 +160,11 @@ class BarraSuperior extends Component {
                 </View>
 
                 <View style={{
-                    width: 130,
+                    width: 100,
                     height: "100%",
                     padding: 4,
                 }}>
-                    <Svg name="logo" style={{
+                    <Svg resource={require("../../img/calistenia.svg")} style={{
                         with: "100%",
                         height: "100%",
                         fill: "#000"

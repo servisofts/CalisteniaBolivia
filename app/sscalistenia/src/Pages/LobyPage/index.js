@@ -32,7 +32,9 @@ class LobyPage extends Component {
         alignItems: "center"
         // backgroundColor:"#000",
       }}>
-        <BarraSuperior title={"Inicio"} />
+        <BarraSuperior title={"Servisofts"} goBack={()=>{
+            this.props.navigation.goBack();
+        }} />
         <ScrollView showsVerticalScrollIndicator={false} style={{
           width: "100%",
           maxWidth: 800,

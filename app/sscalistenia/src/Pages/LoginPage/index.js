@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView, KeyboardAvoidingView, Platform, StyleSheet, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
+import BackgroundImage from '../../Component/BackgroundImage';
+import LogoAnimado from '../../Component/LogoAnimado';
 import STextImput from '../../Component/STextImput';
 import AppParams from '../../Params';
 import Svg from '../../Svg';
@@ -24,7 +26,7 @@ class LoginPage extends Component {
       borderRadius: 8,
     }
     this.ImputUsuario = new STextImput({
-      placeholder: "Usuario",
+      placeholder: "Correo",
       autoCapitalize: "none",
       style: style,
       autoFocus: true,
@@ -81,12 +83,12 @@ class LoginPage extends Component {
   }
   render() {
 
-    if (this.props.state.usuarioReducer.estado == "error") {
+    if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type== "login") {
       this.props.state.usuarioReducer.estado = "";
       this.ImputPassword.setError();
     }
     if (this.props.state.usuarioReducer.usuarioLog) {
-      this.props.navigation.replace("CarpetasPage");
+      this.props.navigation.replace("InicioPage");
       return <View />
     }
 
@@ -96,31 +98,24 @@ class LoginPage extends Component {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
+        <BackgroundImage />
         <ScrollView bounces={false} style={{
           flex: 1,
           width: "100%",
-          backgroundColor: "#000",
+          // backgroundColor: "#000",
           // justifyContent: "center",
         }}
           contentContainerStyle={{
-            alignItems: "center"
+            alignItems: "center",
+            paddingTop:20,
           }}
         >
           <View style={{
             width: "100%",
             alignItems: 'center',
-            transform: [
-              { rotateX: "8deg" }
-            ]
             // backgroundColor:"#000"
           }}>
-            <Svg name="logoBlanco"
-              style={{
-                width: "70%",
-                maxWidth: 500,
-                height: 300,
-                fill: "#fff"
-              }} />
+           <LogoAnimado/>
           </View>
 
           <View style={{
@@ -134,7 +129,7 @@ class LoginPage extends Component {
               fontSize: 16,
               // fontWeight: "bold",
               color: "#999"
-            }}>Iniciar session</Text>
+            }}>Iniciar sesión</Text>
             {this.ImputUsuario.getComponent()}
             {this.ImputPassword.getComponent()}
           </View>
@@ -150,7 +145,7 @@ class LoginPage extends Component {
             }}>
               <Text style={{
                 color: "#999"
-              }}>{this.props.state.usuarioReducer.estado != "cargando" ? "Login" : <ActivityIndicator color={"#fff"}/>}</Text>
+              }}>{this.props.state.usuarioReducer.estado != "cargando" ? "Login" : <ActivityIndicator color={"#fff"} />}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.BTN} onPress={(evt) => {
               this.props.navigation.navigate("UsuarioRegistroPage")

@@ -8,7 +8,7 @@ const initialState = {
     usuarioLog: false,
     sessiones: {},
     lastSend: new Date(),
-    data:{}
+    data: false
 }
 
 export default (state, action) => {
@@ -26,6 +26,9 @@ export default (state, action) => {
                 break;
             case "registro":
                 registro(state, action);
+                break;
+            case "editar":
+                editar(state, action);
                 break;
             case "registroFacebook":
                 registroFacebook(state, action);
@@ -102,7 +105,7 @@ const getAll = (state, action) => {
         }
         action.data.map((obj, key) => {
             state.data[obj.key] = obj.data;
-            state.usuarios[obj.key] = obj.usuario;
+            state.usuarios[obj.key] = { ...obj.usuario, datos: obj.data };
         });
     }
 }
@@ -179,8 +182,29 @@ const registro = (state, action) => {
     }
     if (action.estado === "exito") {
         state.usuarioLog = action.data.datos
-        
+
         SSStorage.setItem(AppParams.storage.urlLog, JSON.stringify(action.data.datos));
+    }
+}
+const editar = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "error") {
+        state.error = action.error
+    }
+    if (action.estado === "exito") {
+        // if (state.usuarioLog) {
+        // if (state.usuarioLog.key == action.data.key) {
+        // state.usuarioLog = action.data.datos
+        // SSStorage.setItem(AppParams.storage.urlLog, JSON.stringify(action.data.datos));
+        // }
+        // }
+        var obj = action.data;
+        if (state.usuarios[obj.key]) {
+            state.usuarios[obj.key] = { ...state.usuarios[obj.key], ...action.data };
+        }
+
+
+
     }
 }
 const registroFacebook = (state, action) => {

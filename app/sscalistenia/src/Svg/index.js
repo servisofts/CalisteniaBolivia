@@ -5,6 +5,21 @@ import LogoB from '../img/logoblanco.svg';
 import See from '../img/see.svg';
 import Folder from '../img/ssfolder.svg';
 import EPUndefined from '../img/extensionPack/undefined.svg';
+import Usuarios from '../img/usuarios.svg';
+import Ajustes from '../img/ajustes.svg';
+import Finanza from '../img/finansa.svg';
+import Ssmenu from '../img/ssmenu.svg';
+import Boxeo from '../img/boxeo.svg';
+import Bar from '../img/bar.svg';
+import Carrito from '../img/carrito.svg';
+import Basedatos from '../img/basedatos.svg';
+import Asegurado from '../img/asegurado.svg';
+import Codigo from '../img/codigo.svg';
+import Server from '../img/server.svg';
+import Santiguo from '../img/santiguo.svg';
+import Login from '../img/login.svg';
+import Add from '../img/add.svg';
+import Delete from '../img/delete.svg';
 
 const Svg = (props) => {
 
@@ -22,6 +37,36 @@ const Svg = (props) => {
             return (Platform.OS == "web" ? <img style={props.style} src={Folder} /> : <Folder style={props.style} />);
         case "EPUndefined":
             return (Platform.OS == "web" ? <img style={props.style} src={EPUndefined} /> : <EPUndefined style={props.style} />);
+        case "Usuarios":
+            return (Platform.OS == "web" ? <img style={props.style} src={Usuarios} /> : <Usuarios style={props.style} />);
+        case "Ajustes":
+            return (Platform.OS == "web" ? <img style={props.style} src={Ajustes} /> : <Ajustes style={props.style} />);
+        case "Finanza":
+            return (Platform.OS == "web" ? <img style={props.style} src={Finanza} /> : <Finanza style={props.style} />);
+        case "Ssmenu":
+            return (Platform.OS == "web" ? <img style={props.style} src={Ssmenu} /> : <Ssmenu style={props.style} />);
+        case "Boxeo":
+            return (Platform.OS == "web" ? <img style={props.style} src={Boxeo} /> : <Boxeo style={props.style} />);
+        case "Bar":
+            return (Platform.OS == "web" ? <img style={props.style} src={Bar} /> : <Bar style={props.style} />);
+        case "Carrito":
+            return (Platform.OS == "web" ? <img style={props.style} src={Carrito} /> : <Carrito style={props.style} />);
+        case "BaseDatos":
+            return (Platform.OS == "web" ? <img style={props.style} src={Basedatos} /> : <Basedatos style={props.style} />);
+        case "Asegurado":
+            return (Platform.OS == "web" ? <img style={props.style} src={Asegurado} /> : <Asegurado style={props.style} />);
+        case "Codigo":
+            return (Platform.OS == "web" ? <img style={props.style} src={Codigo} /> : <Codigo style={props.style} />);
+        case "Server":
+            return (Platform.OS == "web" ? <img style={props.style} src={Server} /> : <Server style={props.style} />);
+        case "Santiguo":
+            return (Platform.OS == "web" ? <img style={props.style} src={Santiguo} /> : <Santiguo style={props.style} />);
+        case "Login":
+            return (Platform.OS == "web" ? <img style={props.style} src={Login} /> : <Login style={props.style} />);
+        case "Add":
+            return (Platform.OS == "web" ? <img style={props.style} src={Add} /> : <Add style={props.style} />);
+        case "Delete":
+            return (Platform.OS == "web" ? <img style={props.style} src={Delete} /> : <Delete style={props.style} />);
         default: return <Text>Not Found</Text>
     }
 }
