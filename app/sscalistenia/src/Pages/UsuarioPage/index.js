@@ -96,7 +96,7 @@ class UsuarioPage extends Component {
           padding: 8,
           margin: 8,
           borderRadius: 10,
-          backgroundColor: "#33333355"
+          backgroundColor: "#66000022"
           // borderWidth: 1,
           // borderColor: "#ddd",
         }}>

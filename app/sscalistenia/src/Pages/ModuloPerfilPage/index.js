@@ -258,7 +258,7 @@ class ModuloPerfilPage extends Component {
                         justifyContent: "center",
                         alignItems: "center"
                     }} onPress={() => {
-                        this.props.navigation.navigate("ProcesoRegistroPage", { data: this.props.data });
+                        this.props.navigation.navigate("ProcesoRegistroPage", { data: this.data });
                     }}>
                         <Text style={{
                             color: "#fff",
