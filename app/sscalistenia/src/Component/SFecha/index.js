@@ -5,6 +5,6 @@ export const SFechaFormat = (fecha) => {
     if (isNaN(date.getTime())) {
         return "--";
     }
-    var fecha = moment(fecha).format("YYYY/MM/DD HH24:mm");
+    var fecha = moment(fecha).format("YYYY/MM/DD HH:mm");
     return fecha;
 }
