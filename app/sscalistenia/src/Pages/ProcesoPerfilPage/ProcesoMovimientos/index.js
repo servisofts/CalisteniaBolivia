@@ -6,7 +6,7 @@ import SImageFetch from '../../../Component/SImageFetch';
 import SOrdenador from '../../../Component/SOrdenador';
 import SSwipeList from '../../../Component/SSwipeList';
 import AppParams from '../../../Params';
-class ProcesosAprovados extends Component {
+class ProcesosMovimientos extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,20 +54,19 @@ class ProcesosAprovados extends Component {
         </View>
     }
     getLista() {
-        var data = this.props.state.procesoReducer.data[this.props.data.key];
-
+        var data = this.props.state.procesoSeguimientoReducer.data[this.props.data.key];
         if (!data) {
-            if (this.props.state.procesoReducer.estado == "cargando") {
+            if (this.props.state.procesoSeguimientoReducer.estado == "cargando") {
                 return <ActivityIndicator color={"#fff"} />
             }
-            if (this.props.state.procesoReducer.estado == "error") {
+            if (this.props.state.procesoSeguimientoReducer.estado == "error") {
                 return <ActivityIndicator color={"#fff"} />
             }
             var object = {
-                component: "proceso",
+                component: "procesoSeguimiento",
                 type: "getAll",
                 estado: "cargando",
-                key_modulo: this.props.data.key,
+                key_proceso: this.props.data.key,
                 key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             }
             // alert(JSON.stringify(object));
@@ -115,7 +114,7 @@ class ProcesosAprovados extends Component {
                             {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + obj.key_usuario, {
                                 width: "100%",
                                 height: "100%",
-                                resizeMode:"cover"
+
                             })}
                         </View>
                         <View style={{
@@ -143,7 +142,7 @@ class ProcesosAprovados extends Component {
                             marginStart: 8,
                         }}>
                             <TouchableOpacity onPress={() => {
-                                this.props.navigation.navigate("ProcesoPerfilPage", { data: obj });
+                                // this.props.navigation.navigate("ProcesoPerfilPage", { data: obj });
 
                             }}>
                                 <Text style={{
@@ -161,24 +160,7 @@ class ProcesosAprovados extends Component {
                             }}>{obj.observacion}</Text>
 
                         </View>
-                        <TouchableOpacity activeOpacity={0.9} style={{
-                            width: "100%",
-                            borderRadius: 8,
-                            height: 300,
-
-                            // backgroundColor: "#ff0",
-                        }} onPress={() => {
-                            this.props.navigation.navigate("ProcesoPerfilPage", { data: obj });
-                        }}>
-                            {/* <SImageFetch src={AppParams.urlImages + "proceso_" + obj.key} style={{
-                                width: "100%",
-                            }} /> */}
-                            {this.props.state.imageReducer.getImage(AppParams.urlImages + "proceso_" + obj.key, {
-                                width: "100%",
-                                height: "100%",
-                                resizeMode: 'cover',
-                            })}
-                        </TouchableOpacity>
+                       
 
 
                     </View>
@@ -193,7 +175,7 @@ class ProcesosAprovados extends Component {
                     }}>
                         <Text style={{
                             color: "#fff"
-                        }}>ESTE ES EL MENU --TODO---</Text>
+                        }}>ESTE ES EL MENU </Text>
                     </View>
                 </View>
             </View>
@@ -203,8 +185,8 @@ class ProcesosAprovados extends Component {
         if (!this.props.data) {
             return <ActivityIndicator color={"#fff"} />
         }
-        if (this.props.state.procesoReducer.estado == "exito" && this.props.state.procesoReducer.type == "editar") {
-            this.props.state.procesoReducer.estado = "";
+        if (this.props.state.procesoSeguimientoReducer.estado == "exito" && this.props.state.procesoSeguimientoReducer.type == "editar") {
+            this.props.state.procesoSeguimientoReducer.estado = "";
             this.setState({ ...this.state });
             return <ActivityIndicator color={"#fff"} />
         }
@@ -212,7 +194,6 @@ class ProcesosAprovados extends Component {
             <View style={{
                 width: "100%",
                 flex: 1,
-                paddingBottom: 200,
             }}>
 
                 {this.getLista()}
@@ -224,4 +205,4 @@ class ProcesosAprovados extends Component {
 const initStates = (state) => {
     return { state }
 };
-export default connect(initStates)(ProcesosAprovados);
+export default connect(initStates)(ProcesosMovimientos);

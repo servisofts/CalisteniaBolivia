@@ -43,12 +43,27 @@ class InicioPage extends Component {
         }}>
           <View style={{
             width: "100%",
-            height: 170,
+            // height: 170,
+            // minHeight: 200,
+            height: 300,
+            // overflow: "hidden",
           }}>
             <SCarrusel time={15000}>
-              <Graphic1 data={{}} />
               {/* <Graphic2 data={{}} /> */}
-              <SImage source={require("../../img/portadas/3.jpg")} style={{ resizeMode: "center", width: "100%", maxHeight: "100%", maxWidth: 700, objectFit: "contain", }} />
+              <View style={{
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+              }}>
+                <SImage source={require("../../img/portadas/3.jpg")} style={{
+                  width: "100%",
+                  height: "100%",
+                  // objectFit: "cover",
+                  resizeMode: "contain",
+                }} />
+              </View>
+              <Graphic1 data={{}} />
+
             </SCarrusel>
           </View>
 

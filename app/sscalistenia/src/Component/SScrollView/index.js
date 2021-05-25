@@ -14,7 +14,7 @@ export default class SSCrollView extends Component<TProps> {
     static defaultProps = {
         contentContainerStyle: {
             justifyContent: 'center',
-            alignItems: "center"
+            alignItems: "center",
         }
     }
     render() {

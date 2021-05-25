@@ -28,22 +28,22 @@ class ProcesoComentarioRegistroPage extends Component {
       height: 50,
       margin: 8,
       color: "#fff",
-      backgroundColor: "#ffffff22",
+      backgroundColor: "#66000022",
       borderWidth: 1,
-      borderColor: "#444",
+      borderColor: "#ffffff11",
       borderRadius: 8,
     }
     this.data = props.navigation.state.params.data;
     this.imputs = {
       descripcion: new STextImput({
-        placeholder: "Descripcion",
+        placeholder: "Ingrese el titulo...",
         // defaultValue: this.data["Nombres"].dato,
         // autoCapitalize: "none",
 
         style: styleImput
       }),
       observacion: new STextImput({
-        placeholder: "Observacion",
+        placeholder: "Ingrese el mensaje...",
         // defaultValue: this.data["Nombres"].dato,
         // autoCapitalize: "none",
         multiline: true,
@@ -130,12 +130,17 @@ class ProcesoComentarioRegistroPage extends Component {
                   Object.keys(this.imputs).map((key) => {
                     if (this.imputs[key].verify() == false) isValid = false;
                     objectResult[key] = this.imputs[key].getValue();
+                    
                   })
 
                   if (!isValid) {
                     this.setState({ ...this.state });
                     return;
                   }
+                  Object.keys(this.imputs).map((key) => {
+                    objectResult[key] = this.imputs[key].setValue("");
+                    
+                  })
                   objectResult["key_usuario"] = this.props.state.usuarioReducer.usuarioLog.key;
                   objectResult["key_proceso"] = this.data.key;
                   var object = {
@@ -148,6 +153,7 @@ class ProcesoComentarioRegistroPage extends Component {
                   }
                   // alert(JSON.stringify(object));
                   this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                 
                 }}
               />
             </View>

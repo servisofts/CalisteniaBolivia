@@ -1,4 +1,4 @@
-import AppParams from '../../Params';
+    import AppParams from '../../Params';
 export const choseFile = (props, callback) => {
     var form = document.createElement("FORM");
     form.setAttribute("method", "POST");

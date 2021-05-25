@@ -69,7 +69,8 @@ class UsuarioPerfil extends Component {
                             component: "usuario",
                             type: "subirFoto",
                             estado: "cargando",
-                            key: usuario.key
+                            key: usuario.key,
+                            key_usuario:usuario.key,
                         }, (resp) => {
                             this.props.dispatch({
                                 component: "image",
