@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import AppParams from '../../Params';
@@ -10,12 +10,11 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import SImage from '../../Component/SImage';
 import Ventanas from '../../Component/Ventanas';
-import ProcesosAprovados from './ProcesosAprovados';
-import SSCrollView from '../../Component/SScrollView';
+import ProcesoMensaje from './ProcesoMensaje';
 
 
 
-class ModuloPerfilPage extends Component {
+class ProcesoPerfilPage extends Component {
     static navigationOptions = {
         headerShown: false,
     }
@@ -48,71 +47,13 @@ class ModuloPerfilPage extends Component {
         }
         return usr.datos;
     }
-    getFotoPerfil() {
-        return (<View style={{
-            width: "80%",
-            marginTop: 16,
-            maxWidth: 400,
-            height: 300,
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
-            <TouchableOpacity style={{
-                width: "90%",
-                flex: 1,
-                backgroundColor: "#66000022",
-                borderRadius: 8,
-                // overflow: "hidden",
-            }} onPress={() => {
-                SImageImput.choseFile({
-                    component: "modulo",
-                    type: "subirFoto",
-                    estado: "cargando",
-                    key: this.data.key,
-                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key
-                }, (resp) => {
-                    this.props.dispatch({
-                        component: "image",
-                        type: "cambio",
-                        url: AppParams.urlImages + "modulo_" + this.data.key,
-                    })
-                    // this.state.repaint = new Date().getTime()
-                    // this.setState({ ...this.state });
-                });
-            }}>
-                {/* {"foto"} */}
-                {this.props.state.imageReducer.getImage(AppParams.urlImages + "modulo_" + this.data.key, {
-                    width: "100%",
-                    height: "100%",
-
-                })}
-
-            </TouchableOpacity>
-            <Text style={{
-                color: "#fff",
-                marginTop: 16,
-                fontSize: 38,
-                fontWeight: "bold"
-            }}>
-                {this.data.descripcion}
-            </Text>
-            <Text style={{
-                color: "#fff",
-                marginTop: 8,
-                fontSize: 18,
-                fontWeight: "bold"
-            }}>
-                {this.data.observacion}
-            </Text>
-        </View>)
-    }
     getPerfil(key) {
-        var modulo = this.props.state.moduloReducer.data[this.data.key];
-        this.data = modulo;
-        if (!modulo) {
+        var obj = this.props.state.procesoReducer.data[this.data.key_modulo][this.data.key];
+        this.data = obj;
+        if (!obj) {
             return <ActivityIndicator color={"#fff"} />
         }
-        if (modulo.estado == 0) {
+        if (obj.estado == 0) {
             this.props.navigation.goBack();
             return <View />
         }
@@ -123,7 +64,23 @@ class ModuloPerfilPage extends Component {
         // }
         return (<>
             <View style={{
+                // width: "100%",
+                minHeight: 50,
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row"
+            }}>
+                {this.props.state.imageReducer.getImage(AppParams.urlImages + "modulo_" + this.data.key_modulo, {
+                    width: 45,
+                    height: 45,
+                })}
+                <Text style={{
+                    color: "#fff"
+                }}>{this.props.state.moduloReducer.data[obj.key_modulo].descripcion}</Text>
+            </View>
+            <View style={{
                 width: "98%",
+                height: 130,
                 borderBottomWidth: 1,
                 borderColor: "#aaa",
                 justifyContent: "center",
@@ -131,13 +88,51 @@ class ModuloPerfilPage extends Component {
                 flexDirection: "row"
             }}>
 
+
+                <View style={{
+                    width: 70,
+                    height: 70,
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}>
+                    <TouchableOpacity style={{
+                        width: "90%",
+                        height: "90%",
+                        backgroundColor: "#ffffff55",
+                        borderRadius: 8,
+                        overflow: "hidden",
+                    }} onPress={() => {
+                        SImageImput.choseFile({
+                            component: "proceso",
+                            type: "subirFoto",
+                            estado: "cargando",
+                            key: this.data.key,
+                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+                        }, (resp) => {
+                            this.props.dispatch({
+                                component: "image",
+                                type: "cambio",
+                                url: AppParams.urlImages + "proceso_" + this.data.key,
+                            })
+                            // this.state.repaint = new Date().getTime()
+                            // this.setState({ ...this.state });
+                        });
+                    }}>
+                        {/* {"foto"} */}
+                        {this.props.state.imageReducer.getImage(AppParams.urlImages + "proceso_" + this.data.key, {
+                            width: "100%",
+                            height: "100%",
+                        })}
+
+                    </TouchableOpacity>
+                </View>
                 <View style={{
                     flex: 1,
+                    height: "100%",
                     justifyContent: "center",
                     alignItems: "center"
                     // backgroundColor:"#000"
                 }}>
-                    {this.getFotoPerfil()}
                     <View style={{
                         width: "100%",
                         height: 20,
@@ -155,23 +150,23 @@ class ModuloPerfilPage extends Component {
                                 fontSize: 20,
                                 fontWeight: "bold",
                                 color: "#fff"
-                            }}>{modulo.descripcion} </Text>
+                            }}>{obj.descripcion} </Text>
                             <Text style={{
                                 fontSize: 10,
                                 color: "#bbb"
-                            }}>{moment(new Date(modulo.fecha_on)).format("DD/MM/YYYY")} </Text>
+                            }}>{moment(new Date(obj.fecha_on)).format("DD/MM/YYYY")} </Text>
                         </View>
                     </View>
                     <Text style={{
-                        height: 40,
+                        // height: 40,
                         width: "95%",
                         fontSize: 12,
                         fontWeight: "bold",
                         color: "#999"
-                    }}>{modulo.observacion} </Text>
+                    }}>{obj.observacion} </Text>
                     <View style={{
                         width: "90%",
-                        height: 40,
+                        // height: 40,
                         alignItems: "flex-end",
                         justifyContent: "flex-end",
                         flexDirection: "row",
@@ -181,15 +176,15 @@ class ModuloPerfilPage extends Component {
                             width: 35,
                             height: 35,
                             justifyContent: 'center',
-                            alignItems: "center",
+                            alignItems: "center"
                         }} onPress={() => {
-                            modulo.estado = 0;
+                            obj.estado = 0;
                             var object = {
-                                component: "modulo",
+                                component: "proceso",
                                 type: "editar",
                                 estado: "cargando",
                                 key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                data: modulo
+                                data: obj
                             }
                             // alert(JSON.stringify(object));
                             this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
@@ -224,6 +219,34 @@ class ModuloPerfilPage extends Component {
                 </View>
 
             </View>
+
+            {/* <View style={{
+                flex: 1,
+                alignItems: "center",
+                flexDirection: "row",
+                // backgroundColor: "#fff",
+            }}>
+
+                <View style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 4,
+                    backgroundColor: "#ffffff22"
+                }}>
+                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.data.key_usuario, {
+                        width: "100%",
+                        height: "100%",
+                    })}
+                </View>
+             <Text style={{
+                        fontSize: 14,
+                        color: "#bbb"
+                    }}>{"Creador por: "} </Text> 
+                <Text style={{
+                    fontSize: 14,
+                    color: "#bbb"
+                }}>{usuario_creador.Nombres} {usuario_creador.Apellidos} </Text>
+            </View> */}
         </>
         )
     }
@@ -233,39 +256,39 @@ class ModuloPerfilPage extends Component {
             <View style={{
                 width: "100%",
                 height: "100%",
-                alignItems: "center",
+                position: "absolute",
             }}>
-                <BackgroundImage
-                />
-                <BarraSuperior duration={500} title={"Modulo"} navigation={this.props.navigation} goBack={() => {
+                <BarraSuperior duration={500} title={"Proceso"} navigation={this.props.navigation} goBack={() => {
                     this.props.navigation.goBack();
                 }} />
                 <View style={{
                     width: "100%",
                     flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    // backgroundColor: "#000"
                 }}>
-                    <SSCrollView>
-                        {this.getFotoPerfil()}
-
-                        <ProcesosAprovados navigation={this.props.navigation} data={this.data} />
-                    </SSCrollView>
-                    <TouchableOpacity style={{
+                    <BackgroundImage
+                    // source={require("../../img/fondos/color/1.jpg")}
+                    />
+                    <View style={{
+                        width: "95%",
+                        borderRadius: 8,
+                        height: "95%",
+                        maxWidth: 500,
+                        backgroundColor: "#ffffff09",
+                        alignItems: "center",
                         position: "absolute",
-                        bottom: 0,
-                        backgroundColor: "#00000099",
-                        width: "100%",
-                        height: 40,
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }} onPress={() => {
-                        this.props.navigation.navigate("ProcesoRegistroPage", { data: this.props.data });
+                        overflow: "hidden",
+
                     }}>
-                        <Text style={{
-                            color: "#fff",
-                            // fontWeight:"bold",
-                            textDecorationLine: "underline"
-                        }}>Agregar proceso</Text>
-                    </TouchableOpacity>
+                        {this.getPerfil()}
+
+                        <Ventanas ref={(ref) => { this.ventanas = ref }} default={"Comentarios"} ventanas={{
+                            "Comentarios": <ProcesoMensaje navigation={this.props.navigation} data={this.data} />,
+                            "Estadisticas": <View />
+                        }} />
+                    </View>
                 </View>
             </View>
         );
@@ -274,4 +297,4 @@ class ModuloPerfilPage extends Component {
 const initStates = (state) => {
     return { state }
 };
-export default connect(initStates)(ModuloPerfilPage);
+export default connect(initStates)(ProcesoPerfilPage);

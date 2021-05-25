@@ -28,9 +28,9 @@ class ModuloRegistroPage extends Component {
       height: 50,
       margin: 8,
       color: "#fff",
-      backgroundColor: "#ffffff22",
+      backgroundColor: "#66000022",
       borderWidth: 1,
-      borderColor: "#444",
+      borderColor: "#ffffff11",
       borderRadius: 8,
     }
 
@@ -99,7 +99,7 @@ class ModuloRegistroPage extends Component {
             <Text style={{
               color: "#fff",
               fontSize: 16,
-            }}>Solicitud de modulo.</Text>
+            }}>Solicitud de modulo</Text>
             <View style={{
               width: "100%",
               maxWidth: 600,

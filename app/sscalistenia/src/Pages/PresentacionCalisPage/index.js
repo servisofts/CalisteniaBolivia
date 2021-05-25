@@ -73,7 +73,7 @@ class PresentacionCalisPage extends Component {
                   require("../../img/portadas/14.jpg"),
                   require("../../img/portadas/15.jpg"),
                 ].map((img) => {
-                  return <SImage source={img} style={{ resizeMode: "center", width: "100%", maxHeight: "100%", maxWidth: 700, objectFit: "contain", }} />
+                  return <SImage source={img} style={{  width: "100%", maxHeight: "100%", maxWidth: 700, objectFit: "contain", resizeMode: "center"}} />
                 })}
               </SCarrusel>
             </View>

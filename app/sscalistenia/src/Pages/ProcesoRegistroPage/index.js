@@ -28,9 +28,9 @@ class ProcesoRegistroPage extends Component {
       height: 50,
       margin: 8,
       color: "#fff",
-      backgroundColor: "#ffffff22",
+      backgroundColor: "#66000022",
       borderWidth: 1,
-      borderColor: "#444",
+      borderColor: "#ffffff11",
       borderRadius: 8,
     }
     this.data = props.navigation.state.params.data;
@@ -99,7 +99,7 @@ class ProcesoRegistroPage extends Component {
             <Text style={{
               color: "#fff",
               fontSize: 16,
-            }}>Nuevo proceso.</Text>
+            }}>Nuevo proceso</Text>
             <View style={{
               width: "100%",
               maxWidth: 600,

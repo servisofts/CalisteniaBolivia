@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.scrollView}>
+      <SafeAreaView style={styles.scrollView} behavior={{padding:0,}}>
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
         <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
         <View style={{

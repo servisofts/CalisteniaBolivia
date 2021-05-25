@@ -11,11 +11,12 @@ const ActionButtom = (props) => {
                 height: 40,
                 margin: 8,
                 borderWidth: 1,
-                borderColor: "#ffffff22",
+                borderColor: "#ffffff11",
                 borderRadius: 8,
                 alignItems: 'center',
                 justifyContent: 'center',
-                ...props.style
+                backgroundColor:"#66000022",
+                ...props.style,
             }}>
             <Text style={{
                 color: "#999",
