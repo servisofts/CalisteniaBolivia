@@ -61,7 +61,7 @@ class UsuarioPerfil extends Component {
                     <TouchableOpacity style={{
                         width: "90%",
                         height: "90%",
-                        backgroundColor: "#ffffff55",
+                        backgroundColor: "#66000022",
                         borderRadius: 8,
                         overflow: "hidden",
                     }} onPress={() => {
@@ -157,7 +157,7 @@ class UsuarioPerfil extends Component {
                         borderRadius: 8,
                         height: "90%",
                         maxWidth: 500,
-                        backgroundColor: "#ffffff09",
+                        backgroundColor: "#66000022",
                         alignItems: "center"
                     }}>
                         {this.getPerfil()}
