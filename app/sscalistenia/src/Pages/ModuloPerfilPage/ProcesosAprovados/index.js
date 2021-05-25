@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { SFechaFormat } from '../../../Component/SFecha';
+import SOrdenador from '../../../Component/SOrdenador';
 import SSwipeList from '../../../Component/SSwipeList';
 import AppParams from '../../../Params';
 class ProcesosAprovados extends Component {
@@ -72,7 +74,9 @@ class ProcesosAprovados extends Component {
             return <ActivityIndicator color={"#Fff"} />
         }
         var i = 0;
-        return Object.keys(data).map((key) => {
+        return new SOrdenador({ data: data }).ordernarObject([
+            { key: "fecha_on", order: "desc" }
+        ]).map((key) => {
             var obj = data[key];
             if (obj.estado == 0) {
                 return false;
@@ -123,7 +127,7 @@ class ProcesosAprovados extends Component {
                                 fontSize: 10,
                                 color: "#666",
                                 marginStart: 10,
-                            }}>{obj.fecha_on}</Text>
+                            }}>{SFechaFormat(obj.fecha_on)}</Text>
                         </View>
                     </View>
                     <View style={{
@@ -137,13 +141,17 @@ class ProcesosAprovados extends Component {
                             width: "100%",
                             marginStart: 8,
                         }}>
-                            <Text style={{
-                                color: "#fff",
-                                fontSize: 16,
-                                marginTop: 16,
+                            <TouchableOpacity onPress={() => {
+                                this.props.navigation.navigate("ProcesoPerfilPage", { data: obj });
 
-                            }}>{obj.descripcion}</Text>
+                            }}>
+                                <Text style={{
+                                    color: "#fff",
+                                    fontSize: 16,
+                                    marginTop: 16,
 
+                                }}>{obj.descripcion}</Text>
+                            </TouchableOpacity>
                             <Text style={{
                                 marginTop: 16,
                                 fontSize: 14,
@@ -188,7 +196,7 @@ class ProcesosAprovados extends Component {
                 width: "100%",
                 flex: 1,
             }}>
-              
+
                 {this.getLista()}
 
             </View>

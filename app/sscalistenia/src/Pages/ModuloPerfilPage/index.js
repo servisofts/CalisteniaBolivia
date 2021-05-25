@@ -12,6 +12,7 @@ import SImage from '../../Component/SImage';
 import Ventanas from '../../Component/Ventanas';
 import ProcesosAprovados from './ProcesosAprovados';
 import SSCrollView from '../../Component/SScrollView';
+import { SFechaFormat } from '../../Component/SFecha';
 
 
 
@@ -97,6 +98,12 @@ class ModuloPerfilPage extends Component {
                 {this.data.descripcion}
             </Text>
             <Text style={{
+                color: "#666",
+                fontSize: 10,
+            }}>
+                {SFechaFormat(this.data.fecha_on)}
+            </Text>
+            <Text style={{
                 color: "#fff",
                 marginTop: 8,
                 fontSize: 18,
@@ -104,6 +111,7 @@ class ModuloPerfilPage extends Component {
             }}>
                 {this.data.observacion}
             </Text>
+
         </View>)
     }
     getPerfil(key) {

@@ -1,7 +1,7 @@
 export default class SOrdenador {
 
-    constructor({ listaKeys }) {
-        this.data = listaKeys;
+    constructor({ data }) {
+        this.data = data;
     }
     ordernarObject(arrProps) {
         if (!this.data) {
