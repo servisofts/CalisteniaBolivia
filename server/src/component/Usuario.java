@@ -110,64 +110,44 @@ public class Usuario {
     }
 
     public void subirFoto(JSONObject obj, SSSessionAbstract session) {
-        String url = Config.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url+"usuario/");
+        String url = Config.getJSON().getJSONObject("files").getString("url")+"usuario/";
+        File f = new File(url);
         if(!f.exists()) f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
+        Conexion.historico(obj.getString("key_usuario"), obj.getString("key_usuario"),"usuario_subirFoto",new JSONObject().put("url", new JSONArray().put(f.getPath()+"/"+obj.getString("key"))));
         obj.put("estado", "exito");
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
     }
 
     public void nuevoUsuario(JSONObject obj, SSSessionAbstract session) {
-        String url = Config.getJSON().getJSONObject("files").getString("url")+obj.getJSONObject("data").getString("key")+"/";
+         String url = Config.getJSON().getJSONObject("files").getString("url")+"usuario/";
         File f = new File(url);
         if(!f.exists()) f.mkdirs();
 
-
-        try {
-
+        try{
+            JSONObject cliente = new JSONObject();
             String key = UUID.randomUUID().toString();
-            JSONObject file = obj.getJSONObject("data");
-            file.put("key",key);
-            file.put("descripcion","Bienvenido");
-            file.put("fecha_on","now()");
-            file.put("estado",1);
-            file.put("tipo",0);
-            file.put("posx", 0);
-            file.put("posy", 0);
+            cliente.put("key", key);
+            cliente.put("key_usuario", obj.getString("key_usuario"));
+            cliente.put("descripcion", "cliente_nuevo");
+            cliente.put("fecha_on", "now()");
+            cliente.put("estado", 1);
+            Conexion.insertArray("cliente", new JSONArray().put(cliente));
 
-            Conexion.insertArray("file", new JSONArray().put(file));
-            f = new File(url+key);
-            if(!f.exists()) f.mkdirs();
+            Conexion.historico(obj.getString("key_usuario"), obj.getString("key_usuario"),"usuario_registro",new JSONObject().put("hola", "Bien venido a la estructura Servisofts."));
 
-            JSONObject file_tipo_seguimiento = new JSONObject();
-            file_tipo_seguimiento.put("key",UUID.randomUUID().toString());
-            file_tipo_seguimiento.put("key_usuario",obj.getString("key_usuario"));
-            file_tipo_seguimiento.put("key_tipo_seguimiento","1");
-            file_tipo_seguimiento.put("key_file",key);
-            file_tipo_seguimiento.put("fecha_on","now()");
-            file_tipo_seguimiento.put("estado",1);
-            Conexion.insertArray("file_tipo_seguimiento", new JSONArray().put(file_tipo_seguimiento));
-
-            JSONObject observador = new JSONObject();
-            observador.put("key",UUID.randomUUID().toString());
-            observador.put("key_usuario",obj.getString("key_usuario"));
-            observador.put("descripcion","Creador");
-            observador.put("tipo",1);
-            observador.put("key_file",key);
-            observador.put("fecha_on","now()");
-            observador.put("estado",1);
-            Conexion.insertArray("observador", new JSONArray().put(observador));
-            obj.put("dirs",  new JSONArray().put(url));
-            obj.put("data", file);
+            obj.put("data", cliente);
+            obj.put("key_usuario", obj.getString("key_usuario"));
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
-        } catch (SQLException e) {
-            obj.put("estado", "error");
-            obj.put("error", e.getLocalizedMessage());
+
+        }catch(Exception e){
             e.printStackTrace();
+            obj.put("error", e.getLocalizedMessage());
+            obj.put("estado", "error");
         }
+        
+        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
+        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
 
     }
 }

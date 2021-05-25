@@ -35,7 +35,10 @@
      <script src="js/sweetalert2.all.js"></script>   
   </head>
   <body class="login">
-    
+      <div class="servisofts_working">
+          <img alt="Trabajando" src="images/servisofts/robot.png" style="width: 100%;height: 100%;"/>
+          <img alt="Trabajando" src="images/servisofts/logo.svg" style="width: 40%; height: 100%; margin-top: -50px;"/>
+      </div>
     <div>
       <a class="hiddenanchor" id="signup"></a>
       <a class="hiddenanchor" id="signin"></a>

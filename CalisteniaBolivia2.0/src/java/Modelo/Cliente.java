@@ -1,8 +1,7 @@
 package Modelo;
 import java.sql.Date;
 import java.io.InputStream;
-import javax.servlet.http.Part;
-import javax.websocket.Decoder.BinaryStream;
+
 public class Cliente {
     //Tabla Cliente
     int IdContacto;

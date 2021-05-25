@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +38,39 @@ public class Conexion {
 
     }
 
+    public static void historico(String key_usuario, String descripcion, JSONObject data){
+        try{
+            String key = UUID.randomUUID().toString();
+            JSONObject historico = new JSONObject();
+            historico.put("key",key);
+            historico.put("key_usuario",key_usuario);
+            historico.put("data",data);
+            historico.put("descripcion",descripcion);
+            historico.put("fecha_on","now()");
+            historico.put("estado",1);
+            insertArray("historico", new JSONArray().put(historico));
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void historico(String key_usuario, String key_aux, String descripcion, JSONObject data){
+        try{
+            String key = UUID.randomUUID().toString();
+            JSONObject historico = new JSONObject();
+            historico.put("key",key);
+            historico.put("key_usuario",key_usuario);
+            historico.put("key_aux",key_aux);
+            historico.put("data",data);
+            historico.put("descripcion",descripcion);
+            historico.put("fecha_on","now()");
+            historico.put("estado",1);
+            insertArray("historico", new JSONArray().put(historico));
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     private static Connection conectar() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -46,7 +80,7 @@ public class Conexion {
                         return con;
                     }
                 }
-                console.log(console.ANSI_YELLOW,"Conectando a la base de datos...");
+                console.log(console.ANSI_YELLOW,"Conectando a la base de datos postgress...");
                 System.out.println();
                 con = DriverManager.getConnection("jdbc:postgresql://" + ip + ":" + puerto + "/" + bd_name, usuario,
                         contrasena);
@@ -106,11 +140,13 @@ public class Conexion {
         return getConexion().prepareStatement(query);
     }
 
-    public static void insertArray(String nombre_tabla, JSONArray json) throws SQLException {
+    public static void insertArray(String nombre_tabla, JSONArray json) throws SQLException{
+    
         String funct = "insert into " + nombre_tabla + " (select * from json_populate_recordset(null::" + nombre_tabla
-                + ", '" + json.toString() + "')) RETURNING key";
+            + ", '" + json.toString() + "')) RETURNING key";
         PreparedStatement ps = con.prepareStatement(funct);
         ps.executeQuery();
+        
     }
 
     public static void anular(String nombre_tabla, String key) throws SQLException {
