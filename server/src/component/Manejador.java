@@ -53,6 +53,14 @@ public class Manejador {
                     new ProcesoComentario(data, session);
                     break;
                 }
+                case "procesoSeguimiento": {
+                    new ProcesoSeguimiento(data, session);
+                    break;
+                }
+                case "tipoSeguimiento": {
+                    new TipoSeguimiento(data, session);
+                    break;
+                }
                 default:
                     break;
             }

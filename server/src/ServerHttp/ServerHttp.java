@@ -163,7 +163,7 @@ public class ServerHttp {
 
 
     private static void handleRequest(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "http://localhost:3000");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
         
         String ruta = Config.getJSON("files").getString("url");

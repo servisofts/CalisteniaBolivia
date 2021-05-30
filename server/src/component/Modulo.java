@@ -2,6 +2,9 @@ package component;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -79,6 +82,8 @@ public class Modulo {
             modulo.put("estado",1);
             Conexion.insertArray("modulo", new JSONArray().put(modulo));
             Conexion.historico(obj.getString("key_usuario"),key, "modulo_regitro", modulo);
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            modulo.put("fecha_on", formatter.format(new Date()));
             obj.put("data", modulo);
             obj.put("estado", "exito");
             SSServerAbstract.sendAllServer(obj.toString());

@@ -16,8 +16,8 @@ import Server.SSSAbstract.SSSessionAbstract;
 import SocketCliente.SocketCliete;
 import conexion.Conexion;
 
-public class ProcesoComentario {
-    public ProcesoComentario(JSONObject data, SSSessionAbstract session) {
+public class TipoSeguimiento {
+    public TipoSeguimiento(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
@@ -45,10 +45,10 @@ public class ProcesoComentario {
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try{
-            String consulta =  "select proceso_comentario_get_all('"+obj.getString("key_proceso")+"') as json";
-            JSONObject proceso_comentario = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), obj.getString("key_proceso"), "proceso_comentario_getAll", new JSONObject());
-            obj.put("data", proceso_comentario);
+            String consulta =  "select tipo_seguimiento_get_all() as json";
+            JSONObject tipo_seguimiento = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "tipo_seguimiento_getAll", new JSONObject());
+            obj.put("data", tipo_seguimiento);
             obj.put("estado", "exito");
         }catch(Exception e){
             obj.put("error", e.getLocalizedMessage());
@@ -59,9 +59,9 @@ public class ProcesoComentario {
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
             String key = obj.getString("key");
-            String consulta =  "select proceso_comentario_get_by_key('"+key+"') as json";
+            String consulta =  "select tipo_seguimiento_get_by_key('"+key+"') as json";
                 JSONObject proceso = Conexion.ejecutarConsultaObject(consulta);
-                Conexion.historico(obj.getString("key_usuario"), key, "proceso_comentario_getByKey", new JSONObject().put("key", key));
+                Conexion.historico(obj.getString("key_usuario"), key, "tipo_seguimiento_getByKey", new JSONObject().put("key", key));
                 obj.put("data", proceso);
                 obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -78,14 +78,13 @@ public class ProcesoComentario {
             String fecha_on = formatter.format(new Date());
 
             String key = UUID.randomUUID().toString();
-            JSONObject proceso_comentario = obj.getJSONObject("data");
-            proceso_comentario.put("key",key);
-            proceso_comentario.put("fecha_on",fecha_on);
-            proceso_comentario.put("estado",1);
-            Conexion.insertArray("proceso_comentario", new JSONArray().put(proceso_comentario));
-            Conexion.historico(obj.getString("key_usuario"),key, "proceso_comentario_regitro", proceso_comentario);
-            
-            obj.put("data", proceso_comentario);
+            JSONObject tipo_seguimiento = obj.getJSONObject("data");
+            tipo_seguimiento.put("key",key);
+            tipo_seguimiento.put("fecha_on",fecha_on);
+            tipo_seguimiento.put("estado",1);
+            Conexion.insertArray("tipo_seguimiento", new JSONArray().put(tipo_seguimiento));
+            Conexion.historico(obj.getString("key_usuario"),key, "tipo_seguimiento_regitro", tipo_seguimiento);            
+            obj.put("data", tipo_seguimiento);
             obj.put("estado", "exito");
             SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
@@ -98,10 +97,10 @@ public class ProcesoComentario {
 
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
-            JSONObject proceso_comentario = obj.getJSONObject("data");
-            Conexion.editObject("proceso_comentario", proceso_comentario);
-            Conexion.historico(obj.getString("key_usuario"),proceso_comentario.getString("key"), "proceso_comentario_editar", proceso_comentario);
-            obj.put("data", proceso_comentario);
+            JSONObject tipo_seguimiento = obj.getJSONObject("data");
+            Conexion.editObject("tipo_seguimiento", tipo_seguimiento);
+            Conexion.historico(obj.getString("key_usuario"),tipo_seguimiento.getString("key"), "tipo_seguimiento_editar", tipo_seguimiento);
+            obj.put("data", tipo_seguimiento);
             obj.put("estado", "exito");
 
             SSServerAbstract.sendAllServer(obj.toString());
@@ -115,12 +114,12 @@ public class ProcesoComentario {
     public void subirFoto(JSONObject obj, SSSessionAbstract session)  {
         try{
            
-            String url = Config.getJSON().getJSONObject("files").getString("url")+"proceso_comentario/";
+            String url = Config.getJSON().getJSONObject("files").getString("url")+"tipo_seguimiento/";
             File f = new File(url);
             if(!f.exists()) f.mkdirs();
             JSONArray documentos = new JSONArray();
             url+=obj.getString("key");
-            Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "proceso_comentario_subirFoto", new JSONObject().put("url", url));
+            Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "tipo_seguimiento_subirFoto", new JSONObject().put("url", url));
             obj.put("dirs", new JSONArray().put(url));
             obj.put("estado", "exito");
             obj.put("data", documentos);
