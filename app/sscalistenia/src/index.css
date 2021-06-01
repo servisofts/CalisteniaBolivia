@@ -55,10 +55,10 @@ div::-webkit-scrollbar {
 }
 
 div::-webkit-scrollbar-track {
-  background: #333;        /* color of the tracking area */
+  background: #66000022;        /* color of the tracking area */
 }
 
 div::-webkit-scrollbar-thumb {
-  background-color:#666;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
+  background-color:#66000044;    /* color of the scroll thumb */
+  border-radius: 10px;       /* roundness of the scroll thumb */
 }

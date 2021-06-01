@@ -34,7 +34,9 @@ class BarraSuperior extends Component {
                 width: 50,
                 height: "100%",
                 justifyContent: "center",
+                // borderRadius:,
                 borderBottomEndRadius: 30,
+                borderTopLeftRadius:8,
                 overflow: "hidden",
                 // alignItems:"center"
                 // backgroundColor: "#fff"
@@ -126,7 +128,7 @@ class BarraSuperior extends Component {
                     flexDirection: "row",
                     backgroundColor: "#000",
                     borderBottomEndRadius: 30,
-                    borderWidth: 1,
+                    // borderWidth: 1,
                     borderColor: "#000",
                     // overflow: "hidden",
                 }}>

@@ -2,13 +2,73 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { SFechaFormat } from '../../../Component/SFecha';
+import SOrdenador from '../../../Component/SOrdenador';
+import SSCrollView from '../../../Component/SScrollView';
 import SSwipeList from '../../../Component/SSwipeList';
+import STextImput from '../../../Component/STextImput';
 import AppParams from '../../../Params';
+import Svg from '../../../Svg';
 class ProcesoMensaje extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+        this.imputs = {
+            descripcion: new STextImput({
+                placeholder: "Escribe tu mensaje...",
+                // defaultValue: this.data["Nombres"].dato,
+                // autoCapitalize: "none",
+                style: {
+                    color: "#fff",
+                    flex: 1,
+                    padding: 4,
+                    height: "100%",
+                }
+            })
+        }
+        this.data = this.props.data;
+
+    }
+    getUsuario(key) {
+        var usr = this.props.state.usuarioReducer.data[key];
+        if (!usr) {
+            if (this.props.state.usuarioReducer.estado == "cargando") {
+                return false
+            }
+            var object = {
+                component: "usuario",
+                type: "getById",
+                version: "2.0",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key: key
+            }
+            // alert(JSON.stringify(object));
+            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            return false;
+        }
+        if (!usr.datos) {
+            return false
+        }
+        return usr.datos;
+    }
+    getUsuarioCreador(key) {
+        var usuario = this.getUsuario(key);
+        if (!usuario) {
+            return <ActivityIndicator color={"#fff"} />
+        }
+        return <View style={{
+            // justifyContent: "center",
+            // alignContent: "center",
+            flex: 1,
+            // marginStart: 10,
+        }}>
+            <Text style={{
+                color: "#ffff",
+                fontSize: 12,
+
+            }}>{usuario["Nombres"] + " " + usuario["Apellidos"]}</Text>
+        </View>
     }
     getLista() {
         var data = this.props.state.procesoComentarioReducer.data[this.props.data.key];
@@ -30,7 +90,10 @@ class ProcesoMensaje extends Component {
             this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
             return <ActivityIndicator color={"#Fff"} />
         }
-        return Object.keys(data).map((key) => {
+        var arr = new SOrdenador({ data: data }).ordernarObject([
+            { key: "fecha_on", peso: 1, order: "desc" }
+        ])
+        return arr.map((key) => {
             var obj = data[key];
             if (obj.estado == 0) {
                 return false;
@@ -42,45 +105,62 @@ class ProcesoMensaje extends Component {
             }} obj={obj}>
                 <View style={{
                     width: "100%",
-                    borderBottomColor: "#444",
-                    borderBottomWidth: 1,
+                    // borderBottomColor: "#444",
+                    // borderBottomWidth: 1,
+                    borderRadius: 8,
                     flexDirection: "row",
-                    // backgroundColor: "#fff",
+                    backgroundColor: "#66000022",
+                    padding: 8,
                 }}>
                     <View style={{
-                        flex: 1,
-                    }}>
-                        <Text style={{
-                            color: "#fff"
-                        }}>{obj.descripcion}</Text>
-                        <Text style={{
-                            fontSize: 10,
-                            color: "#666"
-                        }}>{obj.observacion}</Text>
-                        <Text style={{
-                            fontSize: 10,
-                            color: "#666"
-                        }}>{SFechaFormat(obj.fecha_on)}</Text>
-                    </View>
-
-                    <View style={{
-                        width: 50,
+                        width: 70,
+                        height: 50,
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
                         <View style={{
-                            width: 35,
-                            height: 35,
+                            width: 50,
+                            height: 50,
                             borderRadius: 8,
-                            borderWidth: 1,
-                            borderColor: "#666"
+                            // borderWidth: 2,
+                            // borderColor: "#66000022",
+                            overflow: "hidden"
                         }}>
                             {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + obj.key_usuario, {
                                 width: "100%",
                                 height: "100%",
+                                resizeMode: 'stretch',
                             })}
                         </View>
                     </View>
+                    <View style={{
+                        flex: 1,
+                        // alignItems: "center"
+                    }}>
+                        <Text style={{
+                            position: "absolute",
+                            right: 0,
+                            bottom: 0,
+                            fontSize: 10,
+                            color: "#999"
+                        }}>{SFechaFormat(obj.fecha_on)}</Text>
+                        {this.getUsuarioCreador(obj.key_usuario)}
+                        <Text style={{
+                            flex:4,
+                            color: "#999",
+                            fontSize: 12,
+                        }}>{obj.descripcion}</Text>
+                        {/* <View style={{
+                            flex: 1,
+                        }}>
+                            <Text style={{
+                                fontSize: 12,
+                                color: "#999"
+                            }}>{obj.observacion}</Text>
+                        </View> */}
+                    </View>
+
+
                 </View>
             </View>
         })
@@ -97,108 +177,74 @@ class ProcesoMensaje extends Component {
         return (
             <View style={{
                 width: "100%",
-                flex: 1,
             }}>
 
-                <SSwipeList style={{
-                    marginTop: 90,
-                    height: Dimensions.get("window").height * 0.65,
-                    width: "100%",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}
-                    leftAction={(obj, evt) => {
-                        // console.log("action leftContent")
-                        // valor = glup.ofertas[obj].key
-                        // console.log(valor);
-                        // btnOpenModal("ModalOfertarMeAyudas")
-                        // alert(obj)
-
-                        evt.reset();
-                    }}
-                    leftContent={(obj, key) => {
-                        return <View style={{
-                            width: "100%",
-                            height: "100%",
-                            justifyContent: "center",
-                            alignItems: "flex-end",
-                            paddingRight: "10%",
-                            backgroundColor: "#f00"
-                        }}>
-                            <Text style={{
-                                color: "#fff",
-                                fontSize: Dimensions.get("window").height * 0.019
-                            }}>
-                                NEGOCIAR
-                        </Text>
-                        </View>
-                    }}
-                    rigthAction={(obj, evt) => {
-                        obj.estado = 0;
-                        var object = {
-                            component: "proceso",
-                            type: "editar",
-                            estado: "cargando",
-                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                            data: obj
-                        }
-                        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                        evt.reset();
-                    }}
-                    rigthContent={(obj, key) => {
-                        return <View style={{
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "#C31C37",
-                            justifyContent: "center",
-                            alignItems: "flex-start",
-                            paddingLeft: "10%",
-                        }}>
-                            <Text style={{
-                                color: "#fff",
-                                fontSize: Dimensions.get("window").height * 0.019
-                            }}>
-                                ELIMINAR
-                        </Text>
-                        </View>
-                    }}>
-                    {this.getLista()}
-                </SSwipeList>
-                {/* <ScrollView style={{
-                    position: "absolute",
-                    marginTop: 50,
-                    height: Dimensions.get("window").height * 0.65,
-                    width: "100%",
-                }} contentContainerStyle={{
-                    // height:"100%"
-                    paddingBottom: 100,
-                }}>
-
-                </ScrollView> */}
-                <TouchableOpacity style={{
-                    position: "absolute",
+                <View style={{
                     width: "100%",
                     height: 50,
-                    padding: 4,
-                    top:40,
-                }} onPress={() => {
-                    this.props.navigation.navigate("ProcesoComentarioRegistroPage", { data: this.props.data });
-                }}>
+                    // padding: 4,
+                }} >
                     <View style={{
                         width: "100%",
                         height: "100%",
-                        borderBottomColor: "#444",
-                        borderBottomWidth: 1,
+                        borderColor: "#ffffff11",
+                        // borderBottomWidth: 1,
+                        // borderTopWidth: 1,
                         justifyContent: "center",
-                        alignItems: "center"
-                        // backgroundColor: "#fff",
+                        alignItems: "center",
+                        backgroundColor: "#66000022",
+                        borderRadius: 8,
+                        flexDirection: "row",
                     }}>
-                        <Text style={{
-                            color: "#fff"
-                        }}>Nuevo comentario</Text>
+                        {this.imputs.descripcion.getComponent()}
+                        <TouchableOpacity style={{
+                            width: 50,
+                            height: "90%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderRadius: 8,
+                            backgroundColor: "#66000022"
+                        }} onPress={() => {
+                            if (this.props.state.procesoComentarioReducer.estado == "cargando") {
+                                return;
+                            }
+                            var isValid = true;
+                            var objectResult = {};
+
+                            Object.keys(this.imputs).map((key) => {
+                                if (this.imputs[key].verify() == false) isValid = false;
+                                objectResult[key] = this.imputs[key].getValue();
+                            })
+
+                            if (!isValid) {
+                                this.setState({ ...this.state });
+                                return;
+                            }
+                            this.imputs.descripcion.clear();
+                            objectResult["key_usuario"] = this.props.state.usuarioReducer.usuarioLog.key;
+                            objectResult["key_proceso"] = this.data.key;
+                            var object = {
+                                component: "procesoComentario",
+                                type: "registro",
+                                estado: "cargando",
+                                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                                key_proceso: this.data.key,
+                                data: objectResult,
+                            }
+                            // alert(JSON.stringify(object));
+                            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                        }}>
+                            <Svg resource={require("../../../img/send.svg")} style={{
+                                fill: "#ffffff",
+                                height: 20,
+                                width: 20
+                            }} />
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
-            </View>
+                </View>
+                { this.getLista()}
+
+            </View >
         );
     }
 }

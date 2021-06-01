@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, Dimensions } from 'react-native';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import AppParams from '../../Params';
-import Svg from '../../Svg';
-import FilePreview from '../CarpetasPage/FilePreview';
-import * as SImageImput from '.././../Component/SImageImput';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import SImage from '../../Component/SImage';
-import Ventanas from '../../Component/Ventanas';
+import SSCrollView from '../../Component/SScrollView';
+import ProcesoPerfil from './ProcesoPerfil';
+import ProcesoMovimientos from './ProcesoMovimientos';
 import ProcesoMensaje from './ProcesoMensaje';
-
-
+import ProcesoTipoSeguimiento from './ProcesoTipoSeguimiento';
 
 class ProcesoPerfilPage extends Component {
     static navigationOptions = {
@@ -24,234 +20,12 @@ class ProcesoPerfilPage extends Component {
         };
         this.data = props.navigation.state.params.data;
     }
-    getUsuario(key) {
-        var usr = this.props.state.usuarioReducer.data[key];
-        if (!usr) {
-            if (this.props.state.usuarioReducer.estado == "cargando") {
-                return false
-            }
-            var object = {
-                component: "usuario",
-                type: "getById",
-                version: "2.0",
-                estado: "cargando",
-                cabecera: "registro_administrador",
-                key: key
-            }
-            // alert(JSON.stringify(object));
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-            return false;
-        }
-        if (!usr.datos) {
-            return false
-        }
-        return usr.datos;
-    }
-    getPerfil(key) {
-        var obj = this.props.state.procesoReducer.data[this.data.key_modulo][this.data.key];
-        this.data = obj;
-        if (!obj) {
-            return <ActivityIndicator color={"#fff"} />
-        }
-        if (obj.estado == 0) {
-            this.props.navigation.goBack();
-            return <View />
-        }
-
-        // var usuario_creador = this.getUsuario(this.data.key_usuario);
-        // if (!usuario_creador) {
-        //     return <ActivityIndicator color={"#fff"} />
-        // }
-        return (<>
-            <View style={{
-                // width: "100%",
-                minHeight: 50,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row"
-            }}>
-                {this.props.state.imageReducer.getImage(AppParams.urlImages + "modulo_" + this.data.key_modulo, {
-                    width: 45,
-                    height: 45,
-                })}
-                <Text style={{
-                    color: "#fff"
-                }}>{this.props.state.moduloReducer.data[obj.key_modulo].descripcion}</Text>
-            </View>
-            <View style={{
-                width: "98%",
-                height: 130,
-                borderBottomWidth: 1,
-                borderColor: "#aaa",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row"
-            }}>
-
-
-                <View style={{
-                    width: 70,
-                    height: 70,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <TouchableOpacity style={{
-                        width: "90%",
-                        height: "90%",
-                        backgroundColor: "#ffffff55",
-                        borderRadius: 8,
-                        overflow: "hidden",
-                    }} onPress={() => {
-                        SImageImput.choseFile({
-                            component: "proceso",
-                            type: "subirFoto",
-                            estado: "cargando",
-                            key: this.data.key,
-                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
-                        }, (resp) => {
-                            this.props.dispatch({
-                                component: "image",
-                                type: "cambio",
-                                url: AppParams.urlImages + "proceso_" + this.data.key,
-                            })
-                            // this.state.repaint = new Date().getTime()
-                            // this.setState({ ...this.state });
-                        });
-                    }}>
-                        {/* {"foto"} */}
-                        {this.props.state.imageReducer.getImage(AppParams.urlImages + "proceso_" + this.data.key, {
-                            width: "100%",
-                            height: "100%",
-                        })}
-
-                    </TouchableOpacity>
-                </View>
-                <View style={{
-                    flex: 1,
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center"
-                    // backgroundColor:"#000"
-                }}>
-                    <View style={{
-                        width: "100%",
-                        height: 20,
-                        // backgroundColor:"#fff",
-                    }}>
-                        <View style={{
-                            width: "95%",
-                            flex: 1,
-                            alignItems: "center",
-                            // justifyContent:"center",
-                            flexDirection: "row"
-                        }}>
-                            <Text style={{
-                                flex: 5,
-                                fontSize: 20,
-                                fontWeight: "bold",
-                                color: "#fff"
-                            }}>{obj.descripcion} </Text>
-                            <Text style={{
-                                fontSize: 10,
-                                color: "#bbb"
-                            }}>{moment(new Date(obj.fecha_on)).format("DD/MM/YYYY")} </Text>
-                        </View>
-                    </View>
-                    <Text style={{
-                        // height: 40,
-                        width: "95%",
-                        fontSize: 12,
-                        fontWeight: "bold",
-                        color: "#999"
-                    }}>{obj.observacion} </Text>
-                    <View style={{
-                        width: "90%",
-                        // height: 40,
-                        alignItems: "flex-end",
-                        justifyContent: "flex-end",
-                        flexDirection: "row",
-                        // backgroundColor: "#fff",
-                    }}>
-                        <TouchableOpacity style={{
-                            width: 35,
-                            height: 35,
-                            justifyContent: 'center',
-                            alignItems: "center"
-                        }} onPress={() => {
-                            obj.estado = 0;
-                            var object = {
-                                component: "proceso",
-                                type: "editar",
-                                estado: "cargando",
-                                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                data: obj
-                            }
-                            // alert(JSON.stringify(object));
-                            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                        }}>
-                            <View style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                overflow: "hidden",
-                                width: "90%",
-                                height: "90%",
-                            }}>
-                                <Svg name={"Delete"} style={{
-                                    position: "absolute",
-                                    width: "100%",
-                                    height: "100%",
-                                }} />
-                            </View>
-                            <View style={{
-                                height: 10,
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }}>
-                                <Text style={{
-                                    color: "#ffffff",
-                                    fontSize: 9,
-                                    textAlign: "center"
-                                    // fontFamily: "myFont"
-                                }}>{"Eliminar"}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-            </View>
-
-            {/* <View style={{
-                flex: 1,
-                alignItems: "center",
-                flexDirection: "row",
-                // backgroundColor: "#fff",
-            }}>
-
-                <View style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 4,
-                    backgroundColor: "#ffffff22"
-                }}>
-                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.data.key_usuario, {
-                        width: "100%",
-                        height: "100%",
-                    })}
-                </View>
-             <Text style={{
-                        fontSize: 14,
-                        color: "#bbb"
-                    }}>{"Creador por: "} </Text> 
-                <Text style={{
-                    fontSize: 14,
-                    color: "#bbb"
-                }}>{usuario_creador.Nombres} {usuario_creador.Apellidos} </Text>
-            </View> */}
-        </>
-        )
-    }
     render() {
-
+        var data= this.props.state.procesoReducer.data[this.data.key_modulo][this.data.key];
+        if(!data || !data.estado){
+            this.props.navigation.goBack();
+        }
+        const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0
         return (
             <View style={{
                 width: "100%",
@@ -266,29 +40,38 @@ class ProcesoPerfilPage extends Component {
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                    // backgroundColor: "#000"
                 }}>
-                    <BackgroundImage
-                    // source={require("../../img/fondos/color/1.jpg")}
-                    />
-                    <View style={{
+                    <BackgroundImage />
+                    {/* <View style={{
                         width: "95%",
                         borderRadius: 8,
                         height: "95%",
-                        maxWidth: 500,
-                        backgroundColor: "#ffffff09",
+                        maxWidth: 600,
+                        backgroundColor: "#66000022",
                         alignItems: "center",
                         position: "absolute",
                         overflow: "hidden",
 
+                    }}> */}
+                    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} keyboardVerticalOffset={keyboardVerticalOffset} style={{
+                        flex: 1,
+                        height: "100%",
+                        width: "100%",
                     }}>
-                        {this.getPerfil()}
+                        <SSCrollView>
+                            <ProcesoPerfil data={this.data} navigation={this.props.navigation} />
+                            <View style={{
+                                height:30,
+                            }}></View>
+                            <ProcesoMovimientos data={this.data} navigation={this.props.navigation} />
+                            <View style={{
+                                height:100,
+                            }}></View>
+                            <ProcesoMensaje data={this.data} navigation={this.props.navigation} />
 
-                        <Ventanas ref={(ref) => { this.ventanas = ref }} default={"Comentarios"} ventanas={{
-                            "Comentarios": <ProcesoMensaje navigation={this.props.navigation} data={this.data} />,
-                            "Estadisticas": <View />
-                        }} />
-                    </View>
+                        </SSCrollView>
+                    </KeyboardAvoidingView>
+                    {/* </View> */}
                 </View>
             </View>
         );

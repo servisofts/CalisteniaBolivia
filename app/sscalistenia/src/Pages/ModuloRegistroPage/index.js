@@ -34,23 +34,22 @@ class ModuloRegistroPage extends Component {
       borderRadius: 8,
     }
 
-    this.imputs = {
-      descripcion: new STextImput({
-        placeholder: "Descripcion",
-        // defaultValue: this.data["Nombres"].dato,
-        // autoCapitalize: "none",
+      this.imputs = {
+        descripcion: new STextImput({
+          placeholder: "Descripcion",
+          // defaultValue: this.data["Nombres"].dato,
+          // autoCapitalize: "none",
+          style: styleImput
+        }),
+        observacion: new STextImput({
+          placeholder: "Observacion",
+          // defaultValue: this.data["Nombres"].dato,
+          // autoCapitalize: "none",
+          multiline: true,
+          style: { ...styleImput, height: 100 }
+        }),
 
-        style: styleImput
-      }),
-      observacion: new STextImput({
-        placeholder: "Observacion",
-        // defaultValue: this.data["Nombres"].dato,
-        // autoCapitalize: "none",
-        multiline: true,
-        style: { ...styleImput, height: 100 }
-      }),
-
-    }
+      }
   }
   componentDidMount() { // B
 

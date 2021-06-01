@@ -27,6 +27,7 @@ import ModuloPerfilPage from './ModuloPerfilPage'
 import ProcesoRegistroPage from './ProcesoRegistroPage'
 import ProcesoPerfilPage from './ProcesoPerfilPage'
 import ProcesoComentarioRegistroPage from './ProcesoComentarioRegistroPage'
+import ProcesoSeguimietoRegistroPage from './ProcesoSeguimietoRegistroPage'
 
 
 
@@ -56,6 +57,7 @@ export const getPages = () => {
         ModuloPerfilPage,
         ProcesoRegistroPage,
         ProcesoPerfilPage,
-        ProcesoComentarioRegistroPage
+        ProcesoComentarioRegistroPage,
+        ProcesoSeguimietoRegistroPage
     }
 }

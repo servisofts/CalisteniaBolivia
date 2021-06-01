@@ -63,7 +63,7 @@ class ModuloPerfilPage extends Component {
                 flex: 1,
                 backgroundColor: "#66000022",
                 borderRadius: 8,
-                // overflow: "hidden",
+                overflow: "hidden",
             }} onPress={() => {
                 SImageImput.choseFile({
                     component: "modulo",
@@ -85,7 +85,7 @@ class ModuloPerfilPage extends Component {
                 {this.props.state.imageReducer.getImage(AppParams.urlImages + "modulo_" + this.data.key, {
                     width: "100%",
                     height: "100%",
-
+                    resizeMode:"cover"
                 })}
 
             </TouchableOpacity>

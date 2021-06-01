@@ -41,6 +41,8 @@ class Modulos extends Component {
                 width: 100,
                 height: 100,
                 margin: 4,
+                justifyContent:"center",
+                alignItems:"center"
             }} onPress={() => {
                 this.props.navigation.navigate("ModuloPerfilPage", { data: obj });
             }}>
@@ -50,11 +52,11 @@ class Modulos extends Component {
                     alignItems: "center",
                     // borderRadius: 30,
                     borderWidth: 1,
-                    borderColor: "#66666633",
+                    borderColor: "#66000022",
                     borderRadius: 10,
                     overflow: "hidden",
-                    width: "90%",
-                    height: "90%",
+                    width: 80,
+                    height: 80,
                 }}>
                     {/* <Svg name={"Ajustes"} style={{
                         position: "absolute",
@@ -64,7 +66,7 @@ class Modulos extends Component {
                     {this.props.state.imageReducer.getImage(AppParams.urlImages + "modulo_" + obj.key, {
                         width: "100%",
                         height: "100%",
-
+                        resizeMode:"center"
                     })}
                 </View>
                 <View style={{

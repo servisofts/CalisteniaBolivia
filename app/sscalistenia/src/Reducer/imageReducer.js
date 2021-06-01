@@ -16,9 +16,8 @@ const createImage = (url, props) => {
     return <Image source={{
         uri: url+"?fecha="+new Date().getTime(),
     }} style={{
-        resizeMode: "contain",
-        width: "100%",
-        height: "100%",
+        // resizeMode: "contain",
+  
         ...props
     }} />
 }
