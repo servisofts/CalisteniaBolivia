@@ -115,7 +115,7 @@ class ProcesosAprovados extends Component {
                             {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + obj.key_usuario, {
                                 width: "100%",
                                 height: "100%",
-                                resizeMode:"cover"
+                                resizeMode: "cover"
                             })}
                         </View>
                         <View style={{
@@ -161,7 +161,8 @@ class ProcesosAprovados extends Component {
                             }}>{obj.observacion}</Text>
 
                         </View>
-                        <TouchableOpacity activeOpacity={0.9} style={{
+
+                        {/* <TouchableOpacity activeOpacity={0.9} style={{
                             width: "100%",
                             borderRadius: 8,
                             height: 300,
@@ -170,19 +171,15 @@ class ProcesosAprovados extends Component {
                         }} onPress={() => {
                             this.props.navigation.navigate("ProcesoPerfilPage", { data: obj });
                         }}>
-                            {/* <SImageFetch src={AppParams.urlImages + "proceso_" + obj.key} style={{
-                                width: "100%",
-                            }} /> */}
                             {this.props.state.imageReducer.getImage(AppParams.urlImages + "proceso_" + obj.key, {
                                 width: "100%",
                                 height: "100%",
                                 resizeMode: 'cover',
                             })}
-                        </TouchableOpacity>
-
+                        </TouchableOpacity> */}
 
                     </View>
-                    <View style={{
+                    {/* <View style={{
                         flex: 1,
                         // backgroundColor: "#f0f",
                         borderTopColor: "#66000044",
@@ -194,7 +191,7 @@ class ProcesosAprovados extends Component {
                         <Text style={{
                             color: "#fff"
                         }}>ESTE ES EL MENU --TODO---</Text>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         })

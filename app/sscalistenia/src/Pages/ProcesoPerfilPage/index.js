@@ -8,6 +8,7 @@ import SSCrollView from '../../Component/SScrollView';
 import ProcesoPerfil from './ProcesoPerfil';
 import ProcesoMovimientos from './ProcesoMovimientos';
 import ProcesoMensaje from './ProcesoMensaje';
+import ProcesoTipoSeguimiento from './ProcesoTipoSeguimiento';
 
 class ProcesoPerfilPage extends Component {
     static navigationOptions = {
@@ -20,6 +21,10 @@ class ProcesoPerfilPage extends Component {
         this.data = props.navigation.state.params.data;
     }
     render() {
+        var data= this.props.state.procesoReducer.data[this.data.key_modulo][this.data.key];
+        if(!data || !data.estado){
+            this.props.navigation.goBack();
+        }
         const keyboardVerticalOffset = Platform.OS === 'ios' ? 90 : 0
         return (
             <View style={{
@@ -54,8 +59,14 @@ class ProcesoPerfilPage extends Component {
                         width: "100%",
                     }}>
                         <SSCrollView>
-                            <ProcesoPerfil data={this.data} />
-                            <ProcesoMovimientos data={this.data} />
+                            <ProcesoPerfil data={this.data} navigation={this.props.navigation} />
+                            <View style={{
+                                height:30,
+                            }}></View>
+                            <ProcesoMovimientos data={this.data} navigation={this.props.navigation} />
+                            <View style={{
+                                height:100,
+                            }}></View>
                             <ProcesoMensaje data={this.data} navigation={this.props.navigation} />
 
                         </SSCrollView>

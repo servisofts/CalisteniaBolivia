@@ -16,6 +16,7 @@ import moduloReducer from './moduloReducer';
 import procesoReducer from './procesoReducer';
 import procesoComentarioReducer from './procesoComentarioReducer';
 import procesoSeguimientoReducer from './procesoSeguimientoReducer';
+import tipoSeguimientoReducer from './tipoSeguimientoReducer';
 
 export default combineReducers({
     cabeceraDatoReducer,
@@ -34,5 +35,6 @@ export default combineReducers({
     moduloReducer,
     procesoReducer,
     procesoComentarioReducer,
-    procesoSeguimientoReducer
+    procesoSeguimientoReducer,
+    tipoSeguimientoReducer
 });

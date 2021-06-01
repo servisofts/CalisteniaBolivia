@@ -43,6 +43,9 @@ class STextImput extends Component {
         return false;
     }
     verify() {
+        if(this.propiedades.isNull){
+            return true;
+        }
         if (!this.value) {
             if (!this.propsTemp.style) {
                 this.propsTemp.style = this.propiedades.style;

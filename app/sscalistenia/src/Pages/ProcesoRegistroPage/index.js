@@ -13,10 +13,8 @@ import Svg from '../../Svg';
 var _ref = {};
 class ProcesoRegistroPage extends Component {
   static navigationOptions = ({ navigation }) => {
-    const key = navigation.getParam('key', false);
     return {
       headerShown: false,
-      title: (!key ? "Crear usuario" : "Editar usuario")
     }
   }
   constructor(props) {
@@ -33,18 +31,19 @@ class ProcesoRegistroPage extends Component {
       borderColor: "#ffffff11",
       borderRadius: 8,
     }
+    this.key_edit = props.navigation.state.params.key;
     this.data = props.navigation.state.params.data;
     this.imputs = {
       descripcion: new STextImput({
         placeholder: "Descripcion",
-        // defaultValue: this.data["Nombres"].dato,
+        defaultValue: (!this.key_edit ? "" : this.data.descripcion),
         // autoCapitalize: "none",
 
         style: styleImput
       }),
       observacion: new STextImput({
         placeholder: "Observacion",
-        // defaultValue: this.data["Nombres"].dato,
+        defaultValue: (!this.key_edit ? "" : this.data.observacion),
         // autoCapitalize: "none",
         multiline: true,
         style: { ...styleImput, height: 100 }
@@ -76,7 +75,7 @@ class ProcesoRegistroPage extends Component {
       }}>
         <BackgroundImage />
 
-        <BarraSuperior duration={500} title={"Nuevo proceso"} navigation={this.props.navigation} goBack={() => {
+        <BarraSuperior duration={500} title={(!this.key_edit ? "Nuevo" : "Editar") + " proceso"} navigation={this.props.navigation} goBack={() => {
           this.props.navigation.goBack();
         }} {...this.props} />
 
@@ -99,7 +98,7 @@ class ProcesoRegistroPage extends Component {
             <Text style={{
               color: "#fff",
               fontSize: 16,
-            }}>Nuevo proceso</Text>
+            }}>{(!this.key_edit ? "Nuevo" : "Editar")} proceso</Text>
             <View style={{
               width: "100%",
               maxWidth: 600,
@@ -119,7 +118,20 @@ class ProcesoRegistroPage extends Component {
               justifyContent: 'center',
               flexDirection: "row",
             }}>
-              <ActionButtom label={this.props.state.procesoReducer.estado == "cargando" ? "cargando" : "Crear"}
+              {(!this.key_edit ? <View /> : <ActionButtom label={"Eliminar"} onPress={() => {
+                this.data.estado = 0;
+                var object = {
+                  component: "proceso",
+                  type: "editar",
+                  estado: "cargando",
+                  key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                  data: this.data,
+                }
+                // alert(JSON.stringify(object));
+                this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+              }} />)}
+
+              <ActionButtom label={this.props.state.procesoReducer.estado == "cargando" ? "cargando" : (!this.key_edit ? "Crear" : "Editar")}
                 onPress={() => {
                   if (this.props.state.procesoReducer.estado == "cargando") {
                     return;
@@ -136,18 +148,33 @@ class ProcesoRegistroPage extends Component {
                     this.setState({ ...this.state });
                     return;
                   }
-                  objectResult["key_usuario"] = this.props.state.usuarioReducer.usuarioLog.key;
-                  objectResult["key_modulo"] = this.data.key;
-                  var object = {
-                    component: "proceso",
-                    type: "registro",
-                    estado: "cargando",
-                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                    key_modulo: this.data.key,
-                    data: objectResult,
+
+                  if (this.key_edit) {
+                    var dataEdit = { ...this.data, ...objectResult, }
+                    var object = {
+                      component: "proceso",
+                      type: "editar",
+                      estado: "cargando",
+                      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                      data: dataEdit,
+                    }
+                    // alert(JSON.stringify(object));
+                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                  } else {
+                    objectResult["key_usuario"] = this.props.state.usuarioReducer.usuarioLog.key;
+                    objectResult["key_modulo"] = this.data.key;
+                    var object = {
+                      component: "proceso",
+                      type: "registro",
+                      estado: "cargando",
+                      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                      key_modulo: this.data.key,
+                      data: objectResult,
+                    }
+                    // alert(JSON.stringify(object));
+                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                   }
-                  // alert(JSON.stringify(object));
-                  this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+
                 }}
               />
             </View>

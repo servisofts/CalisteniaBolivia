@@ -3,7 +3,8 @@ import { View, Text, ScrollView } from 'react-native';
 
 
 type TProps = {
-    contentContainerStyle: Object
+    contentContainerStyle: Object,
+    
 }
 export default class SSCrollView extends Component<TProps> {
     constructor(props) {
@@ -27,7 +28,10 @@ export default class SSCrollView extends Component<TProps> {
                 <ScrollView style={{
                     width: "100%", height: "100%",
 
-                }} contentContainerStyle={this.props.contentContainerStyle}>
+                }} contentContainerStyle={this.props.contentContainerStyle}
+                    {...this.props}
+                    
+                >
                     <View style={{
                         width: "100%",
                         maxWidth: 600,

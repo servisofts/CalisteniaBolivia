@@ -29,6 +29,47 @@ class ProcesoMensaje extends Component {
         this.data = this.props.data;
 
     }
+    getUsuario(key) {
+        var usr = this.props.state.usuarioReducer.data[key];
+        if (!usr) {
+            if (this.props.state.usuarioReducer.estado == "cargando") {
+                return false
+            }
+            var object = {
+                component: "usuario",
+                type: "getById",
+                version: "2.0",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key: key
+            }
+            // alert(JSON.stringify(object));
+            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            return false;
+        }
+        if (!usr.datos) {
+            return false
+        }
+        return usr.datos;
+    }
+    getUsuarioCreador(key) {
+        var usuario = this.getUsuario(key);
+        if (!usuario) {
+            return <ActivityIndicator color={"#fff"} />
+        }
+        return <View style={{
+            // justifyContent: "center",
+            // alignContent: "center",
+            flex: 1,
+            // marginStart: 10,
+        }}>
+            <Text style={{
+                color: "#ffff",
+                fontSize: 12,
+
+            }}>{usuario["Nombres"] + " " + usuario["Apellidos"]}</Text>
+        </View>
+    }
     getLista() {
         var data = this.props.state.procesoComentarioReducer.data[this.props.data.key];
         if (!data) {
@@ -103,18 +144,20 @@ class ProcesoMensaje extends Component {
                             fontSize: 10,
                             color: "#999"
                         }}>{SFechaFormat(obj.fecha_on)}</Text>
+                        {this.getUsuarioCreador(obj.key_usuario)}
                         <Text style={{
-                            color: "#fff",
-                            fontSize: 16,
+                            flex:4,
+                            color: "#999",
+                            fontSize: 12,
                         }}>{obj.descripcion}</Text>
-                        <View style={{
+                        {/* <View style={{
                             flex: 1,
                         }}>
                             <Text style={{
                                 fontSize: 12,
                                 color: "#999"
                             }}>{obj.observacion}</Text>
-                        </View>
+                        </View> */}
                     </View>
 
 

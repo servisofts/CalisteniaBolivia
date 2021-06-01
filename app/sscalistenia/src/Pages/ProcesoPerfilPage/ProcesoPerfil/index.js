@@ -7,6 +7,7 @@ import AppParams from '../../../Params';
 import Svg from '../../../Svg';
 import * as SImageImput from '../../../Component/SImageImput';
 import STextImput from '../../../Component/STextImput';
+import BTNEditar from '../../../Component/BTNEditar';
 
 class ProcesoPerfil extends Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class ProcesoPerfil extends Component {
                 fontSize: 12,
                 fontWeight: "bold"
             }}>
-                Costos:
+                Total:
             </Text>
             <View style={{
                 width: 150,
@@ -100,12 +101,15 @@ class ProcesoPerfil extends Component {
             alignItems: "center"
         }}>
             <TouchableOpacity style={{
-                width: "90%",
+                width: "100%",
                 flex: 1,
                 backgroundColor: "#66000022",
                 borderRadius: 8,
                 // overflow: "hidden",
             }} onPress={() => {
+                if (this.data.key_usuario != this.props.state.usuarioReducer.usuarioLog.key) {
+                    return false;
+                }
                 SImageImput.choseFile({
                     component: "proceso",
                     type: "subirFoto",
@@ -130,28 +134,45 @@ class ProcesoPerfil extends Component {
                 })}
 
             </TouchableOpacity>
-            <Text style={{
-                color: "#fff",
-                marginTop: 16,
-                fontSize: 38,
-                fontWeight: "bold"
-            }}>
-                {this.data.descripcion}
-            </Text>
-            <Text style={{
-                color: "#666",
-                fontSize: 10,
-            }}>
-                {SFechaFormat(this.data.fecha_on)}
-            </Text>
-            <Text style={{
-                color: "#fff",
+            <TouchableOpacity style={{
+                width: "100%",
                 marginTop: 8,
-                fontSize: 18,
-                fontWeight: "bold"
+                paddingTop: 8,
+                alignItems: "center"
+            }} onPress={() => {
+                if (this.data.key_usuario != this.props.state.usuarioReducer.usuarioLog.key) {
+                    return false;
+                }
+                this.props.navigation.navigate("ProcesoRegistroPage", {
+                    data: this.data,
+                    key: this.data.key
+                });
             }}>
-                {this.data.observacion}
-            </Text>
+                <Text style={{
+                    color: "#fff",
+                    fontSize: 30,
+                    fontWeight: "bold"
+                }}>
+                    {this.data.descripcion}
+                </Text>
+                {/* <BTNEditar /> */}
+
+                <Text style={{
+                    color: "#666",
+                    fontSize: 10,
+                }}>
+                    {SFechaFormat(this.data.fecha_on)}
+                </Text>
+                <Text style={{
+                    color: "#fff",
+                    marginTop: 8,
+                    fontSize: 16,
+                    fontWeight: "bold"
+                }}>
+                    {this.data.observacion}
+                </Text>
+            </TouchableOpacity>
+
 
         </View>)
     }
@@ -166,10 +187,10 @@ class ProcesoPerfil extends Component {
             flexDirection: "row"
         }}>
             <View style={{
-                width: 80,
+                width: 60,
                 height: "100%",
                 backgroundColor: "#66000022",
-                borderRadius: 100,
+                borderRadius: 8,
                 overflow: "hidden",
             }}>
                 {/* {"foto"} */}
@@ -183,8 +204,10 @@ class ProcesoPerfil extends Component {
 
             </View>
             <View style={{
-                flex: 1.
+                flex: 1,
+                marginStart: 8,
             }}>
+
                 <Text style={{
                     color: "#fff",
                     marginTop: 16,
@@ -199,11 +222,13 @@ class ProcesoPerfil extends Component {
                 }}>
                     {SFechaFormat(this.modulo.fecha_on)}
                 </Text>
+
             </View>
 
 
         </View>)
     }
+
     render() {
         this.modulo = this.props.state.moduloReducer.data[this.props.data.key_modulo];
         this.data = this.props.state.procesoReducer.data[this.props.data.key_modulo][this.props.data.key];
@@ -216,7 +241,7 @@ class ProcesoPerfil extends Component {
             }}>
                 {this.getModulo()}
                 {this.getFotoPerfil()}
-                {this.getPrecio()}
+                {/* {this.getPrecio()} */}
 
 
             </View>
