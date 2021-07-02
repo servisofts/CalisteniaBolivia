@@ -28,8 +28,17 @@ import ProcesoRegistroPage from './ProcesoRegistroPage'
 import ProcesoPerfilPage from './ProcesoPerfilPage'
 import ProcesoComentarioRegistroPage from './ProcesoComentarioRegistroPage'
 import ProcesoSeguimietoRegistroPage from './ProcesoSeguimietoRegistroPage'
+import ClientesPage from './ClientesPage'
+import ClienteRegistroPage from './ClienteRegistroPage'
+import ClientePerfilPage from './ClientePerfilPage'
+import RRHHPage from './RRHHPage'
+import ServiciosPage from './ServiciosPage'
+import ServicioPerfilPage from './ServicioPerfilPage'
+import PaquetePage from './PaquetePage'
+import PaqueteRegistroPage from './PaqueteRegistroPage'
+import ServisoftsUsuarioConErrorPage from './ServisoftsUsuarioConErrorPage'
 
-
+import SSRolesPermisos from '../SSRolesPermisos/Pages';
 
 export const getPages = () => {
     return {
@@ -42,6 +51,7 @@ export const getPages = () => {
         InicioPage,
         UsuarioPage,
         UsuarioPerfilPage,
+        "AjustesPage": UsuarioPerfilPage,
         UsuarioRegistroPage,
         CarpetasPage,
         FilePerfil,
@@ -58,6 +68,16 @@ export const getPages = () => {
         ProcesoRegistroPage,
         ProcesoPerfilPage,
         ProcesoComentarioRegistroPage,
-        ProcesoSeguimietoRegistroPage
+        ProcesoSeguimietoRegistroPage,
+        ClientesPage,
+        ClienteRegistroPage,
+        RRHHPage,
+        ClientePerfilPage,
+        ServicioPerfilPage,
+        ServiciosPage,
+        ServisoftsUsuarioConErrorPage,
+        PaqueteRegistroPage,
+        PaquetePage,
+        ...SSRolesPermisos
     }
 }

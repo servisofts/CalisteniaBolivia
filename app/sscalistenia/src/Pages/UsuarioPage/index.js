@@ -9,6 +9,9 @@ import ActionButtom from '../../Component/ActionButtom';
 import AppParams from '../../Params';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
+import SSCrollView from '../../Component/SScrollView';
+import SOrdenador from '../../Component/SOrdenador';
+import Buscador from '../../Component/Buscador';
 
 
 class UsuarioPage extends Component {
@@ -19,6 +22,9 @@ class UsuarioPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      pagination: {
+        curPage: 1,
+      }
     };
     SSNavigation.setProps(props);
 
@@ -62,159 +68,120 @@ class UsuarioPage extends Component {
     Linking.openURL(phoneNumber);
   };
 
+  pagination = (listaKeys) => {
+    if (!listaKeys) {
+      return [];
+    }
+    if (listaKeys.length <= 0) {
+      return [];
+    }
+    var pageLimit = 50
+    var tamanho = listaKeys.length;
+    var nroBotones = Math.ceil(tamanho / pageLimit);
+    if (this.state.pagination.curPage > nroBotones) {
+      this.state.pagination.curPage = nroBotones;
+    }
+    var actual = pageLimit * (this.state.pagination.curPage - 1);
+
+    // console.log(actual);
+    // console.log(actual + pageLimit);
+    return listaKeys.slice(0, actual + pageLimit);
+  }
   render() {
 
     const getLista = () => {
-      var data = this.props.state.usuarioReducer.usuarios;
+      var cabecera = "registro_administrador";
+      var data = this.props.state.usuarioReducer.data[cabecera];
       if (!data) {
         if (this.props.state.usuarioReducer.estado == "cargando") {
           return <Text>Cargando</Text>
         }
         var object = {
           component: "usuario",
+          version: "2.0",
           type: "getAll",
           estado: "cargando",
-          cabecera: "registro_administrador",
-          data: ""
+          cabecera: cabecera,
+          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         return <View />
       }
-      // console.log(data);
-      return Object.keys(data).map((key) => {
+      // console.log(data)  ;
+      if (!this.state.buscador) {
+        return <View />
+      }
+      return this.pagination(
+        new SOrdenador([
+          { key: "Peso", order: "desc", peso: 4 },
+          { key: "Nombres", order: "asc", peso: 2 },
+          { key: "Apellidos", order: "asc", peso: 1 },
+        ]).ordernarObject(
+          this.state.buscador.buscar(data)
+        )
+      ).map((key) => {
         var usr = data[key];
-        var obj = data[key].datos;
+        var obj = data[key];
         // console.log(obj);
         // return <View />
         if (!usr.estado) {
           return <View />
         }
-        return <View style={{
+
+        return <TouchableOpacity style={{
           width: "90%",
-          maxWidth: 500,
-          height: 120,
-          padding: 8,
-          margin: 8,
+          maxWidth: 600,
+          height: 50,
+          margin: 4,
           borderRadius: 10,
-          backgroundColor: "#66000022"
-          // borderWidth: 1,
-          // borderColor: "#ddd",
+          backgroundColor: "#66000044"
+        }} onPress={() => {
+          this.props.navigation.navigate("UsuarioRegistroPage", {
+            key: key
+          })
         }}>
           <View style={{
-            flex: 4
+            flex: 1,
+            justifyContent: "center"
           }}>
             <View style={{
               flexDirection: "row",
               height: "100%",
               width: "100%",
+              alignItems: "center"
             }}>
               <View style={{
-                width: 90,
-                height: "100%",
+                width: 40,
+                height: 40,
+                marginRight: 8,
                 justifyContent: "center",
                 alignItems: "center",
-                padding: 8,
+                // padding: 1,
+                // borderRadius: 200,
+                backgroundColor: "#ff999933",
+                borderRadius: 100,
+                overflow: "hidden"
               }}>
-                {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_"+key, {
-                  width: "90%",
-                  height: "90%",
+                {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + key, {
+                  width: "100%",
+                  objectFit: "cover",
+                  resizeMode: "cover",
+
                 })}
               </View>
               <View style={{
                 flex: 1,
+                justifyContent: "center"
               }}>
-                <View style={{
-                  flexDirection: "row",
-                  flex: 1.5,
-                }}>
-                  <Text style={{
-                    fontSize: 16,
-                    fontWeight: "bold",
-                    color: "#fff"
-                  }}>{obj["Nombres"].dato + " " + obj["Apellidos"].dato}</Text>
-                </View>
-                <View style={{
-                  flexDirection: "row",
-                  flex: 1,
-                }}>
-                  {/* <Text style={{
-                    color: "#999"
-                  }}>Correo: </Text> */}
-                  <TouchableOpacity onPress={() => {
-                    this.sendMail(obj["Correo"].dato)
-                  }}>
-                    <Text style={{
-                      color: "#999",
-                      textDecorationLine: (Platform.OS=="web"?"none":"underline"),
-                    }}>{obj["Correo"].dato}</Text>
-                  </TouchableOpacity>
-
-                </View>
-                <View style={{
-                  flex: 1,
-                  flexDirection: "row"
-                }}>
-
-                  {/* <Text style={{
-                    color: "#999"
-                  }}>Telefono: </Text> */}
-                  <TouchableOpacity onPress={() => {
-                    this.callNumber(obj["Telefono"].dato)
-                  }}>
-                    <Text style={{
-                      color: "#999",
-                      textDecorationLine: (Platform.OS=="web"?"none":"underline"),
-                    }}>{obj["Telefono"].dato}</Text>
-                  </TouchableOpacity>
-                </View>
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: "#fff"
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
             </View>
           </View>
-          <View style={{
-            flex: 1,
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            // backgroundColor: "#fff"
-          }}>
-
-          </View>
-          {/* <View style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center"
-          }}>
-            <ActionButtom label="Ver" style={{
-              height: 30,
-            }}
-              onPress={() => {
-                this.props.navigation.navigate("UsuarioRegistroPage", { key: key });
-              }} />
-            <ActionButtom label="Eliminar"
-              style={{
-                height: 30,
-                backgroundColor: "#99000077"
-              }}
-              styleText={{
-                color: "#fff"
-              }}
-              onPress={() => {
-                var object = {
-                  component: "usuario",
-                  type: "editar",
-                  estado: "cargando",
-                  data: {
-                    key: key,
-                    estado: 0
-                  }
-                }
-                this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-              }}
-            />
-          </View> */}
-        </View>
+        </TouchableOpacity>
       })
     }
     return (<>
@@ -230,22 +197,35 @@ class UsuarioPage extends Component {
         <BarraSuperior title={"Usuarios"} navigation={this.props.navigation} goBack={() => {
           this.props.navigation.goBack();
         }} />
-        <ScrollView
-          style={{ width: "100%" }}
-          contentContainerStyle={{
-            alignItems: "center"
-          }}
-        >
-          {getLista()}
-        </ScrollView>
 
-        {/* <NaviDrawerButtom open={() => {
-          this.state.naviDrawer.open();
-        }} /> */}
+        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
+          if (!this.state.buscador) this.setState({ buscador: ref });
+        }} repaint={() => { this.setState({ ...this.state }) }} />
+        <View style={{
+          flex: 1,
+          width: "100%",
+        }}>
+          <SSCrollView
+            style={{ width: "100%" }}
+            onScroll={(evt) => {
+              var evn = evt.nativeEvent;
+              var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
+              // console.log(evn);
+              var heigth = evn.contentSize.height;
+              if (heigth - posy <= 0) {
+                this.state.pagination.curPage += 1;
+                // console.log(this.state.pagination.curPage);
+                this.setState({ ...this.state })
+              }
+            }}
+            contentContainerStyle={{
+              alignItems: "center"
+            }}
+          >
+            {getLista()}
+          </SSCrollView>
+        </View>
       </View>
-      {/* <NaviDrawer ref={(ref) => {
-        this.state.naviDrawer = ref;
-      }} navigation={this.props.navigation} /> */}
     </>
     );
   }

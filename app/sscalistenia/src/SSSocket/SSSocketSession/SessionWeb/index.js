@@ -152,7 +152,7 @@ class SessionWeb {
         }
     }
     hiloTimeOut = async (data) => {
-        await delay(3000)
+        await delay(5000)
         data.estado = "timeout"
         this.store.dispatch(data)
     }

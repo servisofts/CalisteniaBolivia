@@ -63,19 +63,22 @@ class LoginPage extends Component {
     if (this.ImputUsuario.verify() == false) isValid = false;
     if (this.ImputPassword.verify() == false) isValid = false;
     if (!isValid) {
+      
       // alert("faltan datos")
     } else {
       var object = {
         component: "usuario",
+        version:"2.0",
         type: "login",
         estado: "cargando",
         data: {
-          usr: this.ImputUsuario.getValue(),
-          pass: this.ImputPassword.getValue(),
+          usuario: this.ImputUsuario.getValue(),
+          password: this.ImputPassword.getValue(),
         },
       }
       // alert(JSON.stringify(object));
       this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+      // console.log(object)
       // this.props.state.socketReducer.session["proyecto"].send(object, true);
     }
     this.setState({ ...this.state });

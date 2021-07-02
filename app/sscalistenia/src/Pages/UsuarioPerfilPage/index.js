@@ -21,27 +21,15 @@ class UsuarioPerfil extends Component {
         this.state = {
         };
     }
+    componentDidMount() {
+        this.props.dispatch({
+            component: "image",
+            type: "cambio",
+            url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key ,
+        })
+    }
     getPerfil() {
         var usuario = this.props.state.usuarioReducer.usuarioLog
-        // alert(JSON.stringify(usuario));
-        var usrD = this.props.state.usuarioReducer.usuarioDatos;
-        if (!usrD) {
-            if (this.props.state.usuarioReducer.estado == "cargando") {
-                return <ActivityIndicator color={"#fff"} />
-            }
-            var object = {
-                component: "usuario",
-                type: "getById",
-                version: "2.0",
-                estado: "cargando",
-                cabecera: "registro_administrador",
-                key: usuario.key
-            }
-            // alert(JSON.stringify(object));
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-            return <ActivityIndicator color={"#fff"} />
-        }
-
         return (
             <View style={{
                 width: "95%",
@@ -66,23 +54,24 @@ class UsuarioPerfil extends Component {
                         overflow: "hidden",
                     }} onPress={() => {
                         SImageImput.choseFile({
+                            servicio:AppParams.socket.name,
                             component: "usuario",
                             type: "subirFoto",
                             estado: "cargando",
                             key: usuario.key,
-                            key_usuario:usuario.key,
+                            key_usuario: usuario.key,
                         }, (resp) => {
                             this.props.dispatch({
                                 component: "image",
                                 type: "cambio",
-                                url: AppParams.urlImages +"usuario_"+ this.props.state.usuarioReducer.usuarioLog.key,
+                                url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
                             })
                             // this.state.repaint = new Date().getTime()
                             // this.setState({ ...this.state });
                         });
                     }}>
                         {/* {"foto"} */}
-                        {this.props.state.imageReducer.getImage(AppParams.urlImages +"usuario_"+ this.props.state.usuarioReducer.usuarioLog.key, {
+                        {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, {
                             width: "100%",
                             height: "100%",
                         })}
@@ -107,7 +96,7 @@ class UsuarioPerfil extends Component {
                             fontSize: 20,
                             fontWeight: "bold",
                             color: "#fff"
-                        }}>{usrD.datos["Nombres"] + " " + usrD.datos["Apellidos"]} </Text>
+                        }}>{usuario["Nombres"] + " " + usuario["Apellidos"]} </Text>
                     </View>
                     <View style={{
                         width: "95%",
@@ -117,17 +106,17 @@ class UsuarioPerfil extends Component {
                             width: "90%",
                             fontSize: 14,
                             color: "#bbb"
-                        }}>{usrD.datos["Correo"]} </Text>
+                        }}>{usuario["Correo"]} </Text>
                         <Text style={{
                             width: "90%",
                             fontSize: 14,
                             color: "#bbb"
-                        }}>{usrD.datos["Telefono"]} </Text>
+                        }}>{usuario["Telefono"]} </Text>
                         <Text style={{
                             width: "90%",
                             fontSize: 10,
                             color: "#bbb"
-                        }}>Fecha de registro: {moment(new Date(usrD.fecha_on)).format("DD/MM/YYYY")} </Text>
+                        }}>Fecha de registro: {moment(new Date(usuario.fecha_on)).format("DD/MM/YYYY")} </Text>
                     </View>
                 </View>
             </View>
@@ -151,7 +140,7 @@ class UsuarioPerfil extends Component {
                     // backgroundColor: "#000"
                 }}>
                     <BackgroundImage
-                        // source={require("../../img/fondos/color/1.jpg")}
+                    // source={require("../../img/fondos/color/1.jpg")}
                     />
                     <View style={{
                         width: "90%",

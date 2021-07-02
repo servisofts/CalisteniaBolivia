@@ -31,6 +31,16 @@ const Carga = (props) => {
                     return;
                 }
                 props.state.usuarioReducer.usuarioLog = JSON.parse(value)
+
+                var object = {
+                    component: "usuarioPage",
+                    type: "getAll",
+                    estado: "cargando",
+                    key_usuario: props.state.usuarioReducer.usuarioLog.key
+                }
+                props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+
+
                 return;
             });
             return "Buscando usuario...";

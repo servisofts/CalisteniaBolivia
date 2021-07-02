@@ -165,13 +165,14 @@ class SessionMobile {
         }
     }
     hiloTimeOut = async (data) => {
-        await delay(3000)
+        await delay(5000)
         data.estado = "timeout"
         this.store.dispatch(data)
     }
     send(mensaje, isDispatch) {
         // this.colaMensaje.setMensaje(mensaje);
         this.socket.write(JSON.stringify(mensaje) + "\n");
+        // console.log(mensaje)
         if (isDispatch) this.store.dispatch(mensaje);
         if (isDispatch) this.hiloTimeOut(mensaje)
     }

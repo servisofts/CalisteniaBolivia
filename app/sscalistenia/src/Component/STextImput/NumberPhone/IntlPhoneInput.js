@@ -9,13 +9,21 @@ import BackgroundImage from '../../BackgroundImage';
 export default class IntlPhoneInput extends React.Component {
     constructor(props) {
         super(props);
-        const defaultCountry = data.filter((obj) => obj.code === props.defaultCountry)[0] || data.filter((obj) => obj.code === 'TR')[0];
+        var telefono = props.defaultValue;
+        var phone = "";
+        var dialCode = "+591";
+        if (telefono) {
+            phone = telefono.split(" ")[1];
+            dialCode = telefono.split(" ")[0];
+        }
+
+        const defaultCountry = data.filter((obj) => obj.dialCode === dialCode)[0] || data.filter((obj) => obj.code === 'BO')[0];
         this.state = {
             defaultCountry,
             flag: defaultCountry.flag,
             modalVisible: false,
             dialCode: defaultCountry.dialCode,
-            phoneNumber: '',
+            phoneNumber: phone,
             mask: defaultCountry.mask,
             countryData: data,
             selectedCountry: defaultCountry
@@ -126,7 +134,7 @@ export default class IntlPhoneInput extends React.Component {
                     backgroundColor: "#000"
                     // backgroundColor: style.colors.fondo
                 }}>
-                    <BackgroundImage/>
+                    <BackgroundImage />
                     <View style={{
                         flex: 1,
                         width: "100%",

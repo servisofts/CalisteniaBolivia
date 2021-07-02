@@ -1,4 +1,4 @@
-    import AppParams from '../../Params';
+import AppParams from '../../Params';
 export const choseFile = (props, callback) => {
     var form = document.createElement("FORM");
     form.setAttribute("method", "POST");
@@ -20,7 +20,14 @@ export const choseFile = (props, callback) => {
             body: body,
             mode: 'no-cors',
         };
-        var myRequest = new Request(AppParams.urlImages + "multipart", myInit);
+        var servicios = AppParams.servicios;
+        // console.log(props);
+        var url = servicios[props.servicio];
+        if (!url) {
+            alert(url);
+            return false;
+        }
+        var myRequest = new Request(url + "multipart", myInit);
         fetch(myRequest)
             .then(function (response) {
                 if (callback) {

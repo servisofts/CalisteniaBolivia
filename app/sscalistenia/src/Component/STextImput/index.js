@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TextInput } from 'react-native';
 import IntlPhoneInput from './NumberPhone/IntlPhoneInput';
 
+import CheckImput from './CheckImput';
 
 class STextImput extends Component {
     propiedades;
@@ -10,6 +11,7 @@ class STextImput extends Component {
     constructor(_props) {
         super(_props);
         this.state = {
+            value: ""
         };
         this.propiedades = _props;
         this.value = "";
@@ -19,6 +21,7 @@ class STextImput extends Component {
         if (_props.value) {
             this.value = _props.value;
         }
+        // this.setState({ value: this.value });
 
 
 
@@ -43,7 +46,10 @@ class STextImput extends Component {
         return false;
     }
     verify() {
-        if(this.propiedades.isNull){
+        if (this.propiedades.isNull) {
+            return true;
+        }
+        if (this.propiedades.type == "Check") {
             return true;
         }
         if (!this.value) {
@@ -87,13 +93,18 @@ class STextImput extends Component {
     }
     getComponent() {
         var INSTANCE = this;
+        if (this.propiedades.type == "Check") {
+            return <CheckImput {...this.propiedades} onChange={(val) => {
+                INSTANCE.value = val;
+            }} />
+        }
         if (this.propiedades.type == "Phone") {
             return <IntlPhoneInput
                 containerStyle={{
                     ...this.propiedades.style
 
                 }}
-
+                defaultValue={this.value}
                 phoneInputStyle={{
                     flex: 1,
                     // width:"100%",
@@ -118,13 +129,16 @@ class STextImput extends Component {
         return (<TextInput
             ref={(ref) => this._ref = ref}
             placeholderTextColor={'#666'}
+            // value={this.state.value}
             onChangeText={(text) => {
                 this.setState({ value: text })
                 this.value = text;
                 this.value = this.value.trim();
+
                 if (this.propiedades.type == "Monto") {
                     const clean = text.replace(/[^0-9]/g, '');
                     this.value = clean
+
                     // this.verify();
                     // return true;
                     // INSTANCE._ref.setNaviteProps({ test: clean })
@@ -132,10 +146,11 @@ class STextImput extends Component {
                 if (this.propiedades.type == "Email") {
                     this.verify();
                 }
-
+                // this.setState({
+                //     value: this.value
+                // })
             }}
             {...this.propiedades}
-
             style={{ ...this.propiedades.style, outline: "none" }}
         />)
     }

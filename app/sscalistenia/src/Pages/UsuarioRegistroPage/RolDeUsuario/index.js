@@ -2,38 +2,47 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../Params';
+import STheme from '../../../STheme';
 
 const RolDeUsuario = (props) => {
-    const getRoles = () => {
-        var data = props.state.rolReducer.data;
-        if (!data) {
-            if (props.state.rolReducer.estado == "cargando") {
-                return <Text>Cargando</Text>
-            }
-            var object = {
-                component: "rol",
-                type: "getAll",
-                estado: "cargando"
-            }
-            props.state.socketReducer.session["proyecto"].send(object, true);
-            return <View />
+    var data = props.state.rolReducer.data;
+    if (!data) {
+        if (props.state.rolReducer.estado == "cargando") {
+            return <Text>Cargando</Text>
         }
+        var object = {
+            component: "rol",
+            type: "getAll",
+            key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            estado: "cargando"
+        }
+        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+        return <View />
+    }
 
-        var key_usuario = props.data.key;
-        var usuarioRol = props.state.usuarioRolReducer.usuario[key_usuario];
-        if (!usuarioRol) {
-            if (props.state.usuarioRolReducer.estado == "cargando") {
-                return <Text>Cargando</Text>
-            }
-            var object = {
-                component: "usuarioRol",
-                type: "getAll",
-                estado: "cargando",
-                key_usuario: key_usuario
-            }
-            props.state.socketReducer.session["proyecto"].send(object, true);
-            return <View />
+    var key_usuario = props.data.key;
+    if (!key_usuario) {
+        return <View />
+    }
+    var usuarioRol = props.state.usuarioRolReducer.usuario[key_usuario];
+    if (!usuarioRol) {
+        if (props.state.usuarioRolReducer.estado == "cargando") {
+            return <Text>Cargando</Text>
         }
+        if (props.state.usuarioRolReducer.estado == "error") {
+            return <Text>Cargando</Text>
+        }
+        var object = {
+            component: "usuarioRol",
+            type: "getAll",
+            estado: "cargando",
+            key_usuario: key_usuario
+        }
+        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+        return <View />
+    }
+
+    const getRoles = () => {
 
         var Lista = Object.keys(data).map((key) => {
             var obj = data[key];
@@ -41,35 +50,43 @@ const RolDeUsuario = (props) => {
             if (usuarioRol[key]) {
                 var key_nn = usuarioRol[key]
                 isActivo = props.state.usuarioRolReducer.data[key_nn];
+                if (isActivo.estado == 0) {
+                    isActivo = false;
+                }
             }
             return <TouchableOpacity style={{
                 width: 200,
                 height: 160,
                 margin: 8,
                 borderRadius: 10,
-                borderWidth: 2,
-                borderColor: "#ddd",
+                borderWidth: 1,
+                // borderColor: "#ffffff44",
+                backgroundColor: STheme.color.card,
+                // padding:4,
+
             }}
                 onPress={() => {
                     if (!isActivo) {
                         var object = {
                             component: "usuarioRol",
                             type: "registro",
+                            key_usuario: props.state.usuarioReducer.usuarioLog.key,
                             estado: "cargando",
                             data: {
-                                key_rol:key,
+                                key_rol: key,
                                 key_usuario: props.data.key,
                             }
                         }
-                        props.state.socketReducer.session["proyecto"].send(object, true);
+                        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                     } else {
                         var object = {
                             component: "usuarioRol",
-                            type: "anular",
+                            type: "editar",
+                            key_usuario: props.state.usuarioReducer.usuarioLog.key,
                             estado: "cargando",
-                            data: isActivo
+                            data: { ...isActivo, estado: 0 }
                         }
-                        props.state.socketReducer.session["proyecto"].send(object, true);
+                        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                     }
                     // props.navigation.navigate("PermisoCrearPage", { key: objPermiso.key });
                 }}>
@@ -77,10 +94,13 @@ const RolDeUsuario = (props) => {
                     flex: 1
                 }}>
                     <View style={{
-                        padding: 1,
-                        width: "100%", height: 120,
+                        padding: 8,
+                        backgroundColor: "#ffffff11",
+                        height: 120,
+                        borderRadius: 8,
+                        overflow: "hidden"
                     }}>
-                        {props.state.imageReducer.getImage(AppParams.urlImages + "rol/" + obj.key, {})}
+                        {props.state.imageReducer.getImage(AppParams.servicios["roles_permisos"] + "rol/" + obj.key, {})}
                     </View>
                     <View style={{
                         flex: 1,
@@ -89,7 +109,8 @@ const RolDeUsuario = (props) => {
                     }}>
                         <Text style={{
                             fontSize: 18,
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: STheme.color.text
                         }}>{obj.descripcion}</Text>
                     </View>
                 </View>
@@ -98,13 +119,14 @@ const RolDeUsuario = (props) => {
                     width: "100%",
                     height: "100%",
                     borderRadius: 8,
-                    backgroundColor: "#00000099",
+                    backgroundColor: "#000000dd",
                     justifyContent: "center",
                     alignItems: "center",
                 }}>
                     <Text style={{
-                        fontSize: 10,
-                        color: "#fff"
+                        fontSize: 20,
+                        color: "#ffffff",
+                        fontWeight: "bold"
                     }}>Activar</Text>
                 </View>)}
             </TouchableOpacity>
@@ -113,13 +135,18 @@ const RolDeUsuario = (props) => {
             {Lista}
         </ScrollView>
     }
-
+    // var pagina = props.state.usuarioPageReducer.data["UsuarioPage"];
+    // if (!pagina) {
+    //     return <View />;
+    // }
+    // if (!pagina.permisos["editar_roles"]) {
+    //     return <View />;
+    // }
     return <View style={{
         marginTop: 32,
         width: "96%",
         maxWidth: 1080,
         borderRadius: 8,
-        backgroundColor: "#fff",
         // padding: 8,
         minHeight: 220,
         marginBottom: 32,
@@ -131,7 +158,7 @@ const RolDeUsuario = (props) => {
             color: "#999",
             width: "100%",
             textAlign: "center"
-        }}>Roles del usuario</Text>
+        }}>Tipos de usuario</Text>
         {getRoles()}
     </View>
 }

@@ -31,11 +31,11 @@ export const choseFile = (props, callback) => {
                     type: "image/png",
                     name: "img.png",
                     obj: props
-                },callback);
+                }, callback);
             }).catch(err => {
                 callback({
-                    estado:"error",
-                    error:err
+                    estado: "error",
+                    error: err
                 })
             });
 
@@ -53,20 +53,27 @@ const UploadFile = (props, callback) => {
             ? props.data.uri
             : props.data.uri.replace('file://', ''),
     };
+
+    var servicios = AppParams.servicios;
+    var url = servicios[props.obj.servicio];
+    if (!url) {
+        return false;
+    }
     var body = new FormData();
     body.append('data', JSON.stringify(props.obj));
     body.append('file', photo);
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-    xhr.open('POST', AppParams.urlImages+"multipart");
+
+    xhr.open('POST', url + "multipart");
     xhr.setRequestHeader("Content-Type", "multipart/form-data");
     xhr.setRequestHeader("Accept", "*/*");
     xhr.onreadystatechange = function () { // Call a function when the state changes.
         if (this.readyState === XMLHttpRequest.DONE) {
             var objJson = xhr.responseText;
             callback({
-                estado:"exito",
-                data:objJson
+                estado: "exito",
+                data: objJson
             })
         }
     }

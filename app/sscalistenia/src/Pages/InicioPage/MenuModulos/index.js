@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 import Svg from '../../../Svg';
-
+import SSCrollView from '../../../Component/SScrollView';
+import AppParams from '../../../Params';
 export default class MenuModulos extends Component {
     constructor(props) {
         super(props);
@@ -10,30 +12,50 @@ export default class MenuModulos extends Component {
     }
 
     getItems = () => {
-        return [
-            { descripcion: "Usuarios", icon: "Usuarios", route: "UsuarioPage" },
-            // { descripcion: "Finanzas", icon: "Finanza" },
-            { descripcion: "Servisofts", icon: "Ssmenu", route: "ServisoftsPage" },
-            { descripcion: "Ajustes", icon: "Ajustes" , route: "UsuarioPerfilPage"},
-        ].map((obj) => {
+
+        var pages = SSRolesPermisosGetPages();
+        // var pages = {
+        //     as: {
+        //         url: "UsuarioPage",
+        //         key: "as",
+        //         descripcion: "Usuario Page"
+        //     }
+        // }
+        return Object.keys(pages).map((key) => {
+            var obj = pages[key];
+            // console.log(obj)
+            if(!obj.is_page){
+                return <View />
+            }
+            var urlImage = AppParams.servicios["roles_permisos"] + "page/" + obj.key;
+            if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
+                return <View />
+            }
             return (<TouchableOpacity style={{
-                width: 130,
-                height: 130,
+                width: 110,
+                height: 110,
                 margin: 4,
+                alignItems: "center",
+                justifyContent: "center"
             }} onPress={() => {
-                if (obj.route) {
-                    this.props.navigation.navigate(obj.route);
+                if (obj.url) {
+                    // console.log(obj)
+                    this.props.navigation.navigate(obj.url);
                 }
             }}>
                 <View style={{
                     flex: 1,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    width: 92,
+                    height: 92,
                 }}>
-                    <Svg name={obj.icon} style={{
-                        width: "90%",
-                        height: "90%",
-                    }} />
+                    {this.props.state.imageReducer.getImage(urlImage, {
+                        resizeMode: "cover",
+                        objectFit: "cover"
+                    })}
                 </View>
                 <View style={{
                     height: 20,
@@ -43,102 +65,31 @@ export default class MenuModulos extends Component {
                     <Text style={{
                         color: "#ffffff",
                         fontSize: 14,
-                        // fontFamily: "myFont"
                     }}>{obj.descripcion}</Text>
                 </View>
 
             </TouchableOpacity>)
         })
+        // return [
+        //     { descripcion: "RRHH", icon: "Usuarios", route: "RRHHPage" },
+        //     { descripcion: "Usuarios", icon: "Usuarios", route: "UsuarioPage" },
+        //     { descripcion: "Roles", icon: "Usuarios", route: "RolPage" },
+        //     { descripcion: "Paginas", icon: "Usuarios", route: "PermisoPagePage" },
+        //     { descripcion: "Servisofts", icon: "Ssmenu", route: "ServisoftsPage" },
+        //     { descripcion: "Ajustes", icon: "Ajustes", route: "UsuarioPerfilPage" },
+        // ].map((obj) => {
+
+        // })
 
     }
-    getItems2 = () => {
-        return [
-            { descripcion: "Calistenia", icon: "Bar", },
-            // { descripcion: "Finanzas", icon: "Finanza" },
-            { descripcion: "Boxeo", icon: "Boxeo", },
-            { descripcion: "Snack", icon: "Carrito" },
-        ].map((obj) => {
-            return (<TouchableOpacity style={{
-                width: 130,
-                height: 130,
-                margin: 4,
-            }} onPress={() => {
-                if (obj.route) {
-                    this.props.navigation.navigate(obj.route);
-                }
-            }}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <Svg name={obj.icon} style={{
-                        width: "90%",
-                        height: "90%",
-                    }} />
-                </View>
-                <View style={{
-                    height: 20,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                        // fontFamily: "myFont"
-                    }}>{obj.descripcion}</Text>
-                </View>
-                <View style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "#000000dd",
-                    borderRadius: 20,
-                    alignItems:"center",
-                    justifyContent:"center"
-                }}>
-                    <Svg resource={require("../../../img/lock.svg")} style={{
-                        width:30,
-                        height:30,
-                    }}/>
-                </View>
-            </TouchableOpacity>)
-        })
 
-    }
     render() {
         return (
             <View style={{
-                width: "100%",
-                height: 300,
-                justifyContent: "center",
-                alignItems: "center",
+                flexWrap: "wrap",
+                flexDirection: "row",
             }}>
-                <ScrollView style={{
-                    width: "100%",
-                    height: 150,
-                }} horizontal={true}
-                    contentContainerStyle={{
-                        minWidth: "100%",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                >
-                    {this.getItems()}
-                </ScrollView>
-                <ScrollView style={{
-                    width: "100%",
-                    height: 150,
-                }} horizontal={true}
-                    contentContainerStyle={{
-                        minWidth: "100%",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                >
-                    {this.getItems2()}
-                </ScrollView>
-
+                {this.getItems()}
             </View>
         );
     }

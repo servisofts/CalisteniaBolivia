@@ -17,7 +17,14 @@ import procesoReducer from './procesoReducer';
 import procesoComentarioReducer from './procesoComentarioReducer';
 import procesoSeguimientoReducer from './procesoSeguimientoReducer';
 import tipoSeguimientoReducer from './tipoSeguimientoReducer';
+import tipoUsuarioReducer from './tipoUsuarioReducer';
+import clienteReducer from './clienteReducer';
+import servicioReducer from './servicioReducer';
+import paqueteReducer from './paqueteReducer';
+import paqueteServicioReducer from './paqueteServicioReducer';
+import paqueteUsuarioReducer from './paqueteUsuarioReducer';
 
+import SSRolesPermisos from '../SSRolesPermisos/Reducer'
 export default combineReducers({
     cabeceraDatoReducer,
     socketReducer,
@@ -36,5 +43,12 @@ export default combineReducers({
     procesoReducer,
     procesoComentarioReducer,
     procesoSeguimientoReducer,
-    tipoSeguimientoReducer
+    tipoSeguimientoReducer,
+    tipoUsuarioReducer,
+    clienteReducer,
+    servicioReducer,
+    paqueteReducer,
+    paqueteServicioReducer,
+    paqueteUsuarioReducer,
+    ...SSRolesPermisos
 });
