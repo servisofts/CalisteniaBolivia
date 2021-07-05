@@ -7,9 +7,9 @@ export default (state, action) => {
     if (!state) return initialState
     if (action.component == "paqueteUsuario") {
         switch (action.type) {
-            // case "registro":
-            //     registro(state, action);
-            //     break;
+            case "registro":
+                registro(state, action);
+                break;
             // case "editar":
             //     editar(state, action);
             //     break;
@@ -25,15 +25,15 @@ export default (state, action) => {
     return state;
 }
 
-// const registro = (state, action) => {
-//     state.estado = action.estado
-//     if (action.estado === "exito") {
-//         if (state.data) {
-//             state.data[action.data.key_paquete][action.data.key_servicio] = action.data;
-//         }
-//         state.lastRegister = action.data;
-//     }
-// }
+const registro = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        if (state.data) {
+            state.data[action.data.key_usuario][action.data.key] = action.data;
+        }
+        state.lastRegister = action.data;
+    }
+}
 // const editar = (state, action) => {
 //     state.estado = action.estado
 //     if (action.estado === "exito") {

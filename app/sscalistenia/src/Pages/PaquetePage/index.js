@@ -8,7 +8,7 @@ import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
 import SCarrusel from '../../Component/SCarrusel';
 import SImage from '../../Component/SImage';
 import SSCrollView from '../../Component/SScrollView';
-import * as SSNavigation from '../../SSNavigation'
+// import * as SSNavigation from '../../SSNavigation'
 import Svg from '../../Svg';
 import ListaPaquetes from './ListaPaquetes';
 import FloatButtom from '../../Component/FloatButtom';
@@ -21,11 +21,18 @@ class PaquetePage extends Component {
     super(props);
     this.state = {
     };
-    SSNavigation.setProps(props);
+    // SSNavigation.setProps(props);
 
   }
 
   render() {
+    this.type = this.props.navigation.getParam("type");
+    this.title = "Paquetes";
+    if (this.type == "registro_paquete") {
+      this.key_usuario = this.props.navigation.getParam("key_usuario");
+      this.title = "Seleccionar un paquete.";
+    }
+
     return (<>
       <View style={{
         flex: 1,
@@ -36,7 +43,7 @@ class PaquetePage extends Component {
         // backgroundColor:"#000",
       }}>
         <BackgroundImage source={require("../../img/background.png")} />
-        <BarraSuperior navigation={this.props.navigation} title={"Paquetes"} goBack={() => { this.props.navigation.goBack() }} />
+        <BarraSuperior navigation={this.props.navigation} title={this.title} goBack={() => { this.props.navigation.goBack() }} />
 
         <View style={{
           flex: 1,
@@ -52,7 +59,18 @@ class PaquetePage extends Component {
               // overflow: "hidden",
             }}>
             </View>
-            <ListaPaquetes navigation={this.props.navigation} {...this.props} />
+            <ListaPaquetes {...this.props} onPress={(key) => {
+              if (this.type == "registro_paquete") {
+                this.props.navigation.navigate("ClientePaqueteRegistroPage", {
+                  key_usuario: this.key_usuario,
+                  key_paquete: key,
+                });
+                return;
+              }
+              this.props.navigation.navigate("PaqueteRegistroPage", {
+                key: key,
+              });
+            }} />
           </SSCrollView>
           <FloatButtom label={"+"} onPress={() => {
             this.props.navigation.navigate("PaqueteRegistroPage");

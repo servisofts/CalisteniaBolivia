@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRolesPermisos';
-import Svg from '../../../Svg';
-import SSCrollView from '../../../Component/SScrollView';
-import AppParams from '../../../Params';
-import Buscador from '../../../Component/Buscador';
-import SOrdenador from '../../../Component/SOrdenador';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import AppParams from '../../Params';
 
-export default class ListaPaquetes extends Component {
+class Paquete extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
     }
 
-    getItems = () => {
+    render() {
+        var key = this.props.key_paquete;
         let reducer = this.props.state.paqueteReducer;
         let data = reducer.data;
         if (!data) {
@@ -29,30 +26,10 @@ export default class ListaPaquetes extends Component {
             this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
             return <View />
         }
-        // var pages = {
-        //     as: {
-        //         url: "UsuarioPage",
-        //         key: "as",
-        //         descripcion: "Usuario Page"
-        //     }
-        // }
-        if (!this.state.buscador) {
-            return <View />
-        }
-        return new SOrdenador([
-            { key: "Peso", order: "desc", peso: 4 },
-            { key: "Descripcion", order: "asc", peso: 2 },
-        ]).ordernarObject(
-            this.state.buscador.buscar(data)
-
-        ).map((key) => {
-            var obj = data[key];
-            // console.log(obj)
-            var urlImage = AppParams.urlImages + "paquete_" + obj.key;
-            // if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
-            //     return <View />
-            // }
-            return (<TouchableOpacity style={{
+        var obj = data[key];
+        var urlImage = AppParams.urlImages + "paquete_" + obj.key;
+        return (
+            <TouchableOpacity style={{
                 width: "96%",
                 backgroundColor: "#66000044",
                 height: 50,
@@ -131,39 +108,11 @@ export default class ListaPaquetes extends Component {
                     }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
                 </View>
 
-            </TouchableOpacity>)
-        })
-        // return [
-        //     { descripcion: "RRHH", icon: "Usuarios", route: "RRHHPage" },
-        //     { descripcion: "Usuarios", icon: "Usuarios", route: "UsuarioPage" },
-        //     { descripcion: "Roles", icon: "Usuarios", route: "RolPage" },
-        //     { descripcion: "Paginas", icon: "Usuarios", route: "PermisoPagePage" },
-        //     { descripcion: "Servisofts", icon: "Ssmenu", route: "ServisoftsPage" },
-        //     { descripcion: "Ajustes", icon: "Ajustes", route: "UsuarioPerfilPage" },
-        // ].map((obj) => {
-
-        // })
-
-    }
-
-    render() {
-        return (
-            <View style={{
-                width: "100%",
-                // flexWrap: "wrap",
-                // flexDirection: "row",
-                alignItems: "center"
-
-            }}>
-                <Buscador ref={(ref) => {
-                    if (!this.state.buscador) this.setState({ buscador: ref });
-                }} repaint={() => { this.setState({ ...this.state }) }} />
-                {this.getItems()}
-                <View style={{
-                    width: "100%",
-                    height: 50,
-                }}></View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
+const initStates = (state) => {
+    return { state }
+};
+export default connect(initStates)(Paquete);

@@ -78,7 +78,7 @@ class ClientePerfilPage extends Component {
         }}>
           <SSCrollView>
             {this.getPerfil()}
-            <PaquetesDeUsuario key_usuario={this.key} />
+            <PaquetesDeUsuario key_usuario={this.key} navigation={this.props.navigation}/>
           </SSCrollView>
         </View>
       </View>

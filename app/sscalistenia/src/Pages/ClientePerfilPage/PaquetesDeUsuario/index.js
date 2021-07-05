@@ -64,7 +64,6 @@ class PaquetesDeUsuario extends Component {
                 borderRadius: 8,
                 alignItems: "center",
                 justifyContent: "center",
-                flexDirection: "row",
                 padding: 4,
             }} onPress={() => {
                 // if (obj.url) {
@@ -75,71 +74,103 @@ class PaquetesDeUsuario extends Component {
                 // }
             }}>
                 <View style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 4,
-                    overflow: "hidden",
-                    width: 40,
-                    height: 40,
-                    backgroundColor: "#ff999933"
+                    flex: 1,
+                    width: "100%",
+                    flexDirection: "row",
                 }}>
-                    {this.props.state.imageReducer.getImage(urlImagePaquete, {
-                        resizeMode: "cover",
-                        objectFit: "cover"
-                    })}
-                </View>
-                <View style={{
-                    flex: 4,
-                    height: 20,
-                    justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>{paquete.descripcion}</Text>
+                    <View style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 4,
+                        overflow: "hidden",
+                        width: 40,
+                        height: 40,
+                        backgroundColor: "#ff999933"
+                    }}>
+                        {this.props.state.imageReducer.getImage(urlImagePaquete, {
+                            resizeMode: "cover",
+                            objectFit: "cover"
+                        })}
+                    </View>
+                    <View style={{
+                        flex: 4,
+                        height: 20,
+                        justifyContent: "center",
+                        // alignItems: "center"
+                        paddingStart: 8,
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 14,
+                        }}>{paquete.descripcion}</Text>
+                    </View>
+
+                    <View style={{
+                        flex: 1,
+                        height: 20,
+                        justifyContent: "center",
+                        // alignItems: "center"
+                        paddingStart: 8,
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 14,
+                        }}>Bs. {(paquete.precio).toLocaleString('en-IN')}</Text>
+                    </View>
+
+                    <View style={{
+                        flex: 2,
+                        justifyContent: "center",
+                        // alignItems: "center"
+                        paddingStart: 8,
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 10,
+                        }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 10,
+                        }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
+                    </View>
                 </View>
 
-                <View style={{
-                    flex: 1,
-                    height: 20,
-                    justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>Bs. {(paquete.precio).toLocaleString('en-IN')}</Text>
-                </View>
-                <View style={{
-                    flex: 2,
-                    height: 20,
-                    justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
-                </View>
 
 
             </TouchableOpacity>
         })
+    }
+    getBtnAdd = () => {
+        return <TouchableOpacity style={{
+            width: "96%",
+            backgroundColor: "#66000044",
+            height: 50,
+            marginBottom: 8,
+            borderRadius: 8,
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 4,
+        }} onPress={() => {
+            this.props.navigation.navigate("PaquetePage", {
+                type: "registro_paquete",
+                key_usuario: this.props.key_usuario,
+            });
+        }}>
+            <Text style={{
+                color: "#fff",
+                textDecorationLine: "underline",
+            }}>Nuevo paquete</Text>
+        </TouchableOpacity>
     }
     render() {
 
         return (
             <View style={{
                 width: "100%",
+                alignItems: "center",
+                marginTop: 16,
             }}>
+                {this.getBtnAdd()}
                 {this.getLista()}
             </View>
         );

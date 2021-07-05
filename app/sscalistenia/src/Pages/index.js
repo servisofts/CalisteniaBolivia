@@ -37,7 +37,9 @@ import ServicioPerfilPage from './ServicioPerfilPage'
 import PaquetePage from './PaquetePage'
 import PaqueteRegistroPage from './PaqueteRegistroPage'
 import ServisoftsUsuarioConErrorPage from './ServisoftsUsuarioConErrorPage'
-
+import ClientePaqueteRegistroPage from './ClientePaqueteRegistroPage'
+import SucursalPage from './SucursalPage'
+import BuscarDireccionPage from './BuscarDireccionPage'
 import SSRolesPermisos from '../SSRolesPermisos/Pages';
 
 export const getPages = () => {
@@ -78,6 +80,9 @@ export const getPages = () => {
         ServisoftsUsuarioConErrorPage,
         PaqueteRegistroPage,
         PaquetePage,
+        ClientePaqueteRegistroPage,
+        SucursalPage,
+        BuscarDireccionPage,
         ...SSRolesPermisos
     }
 }
