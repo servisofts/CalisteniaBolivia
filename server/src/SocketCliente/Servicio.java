@@ -2,18 +2,11 @@ package SocketCliente;
 
 import java.io.IOException;
 import java.security.cert.CertificateEncodingException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
 
-import conexion.*;
 import Config.Config;
 import SSL.SSL;
-import SocketCliente.SocketCliete;
 import util.*;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

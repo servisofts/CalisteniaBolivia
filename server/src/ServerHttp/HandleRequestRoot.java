@@ -2,23 +2,16 @@ package ServerHttp;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.Files;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.io.UnsupportedEncodingException;
-
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import org.jboss.com.sun.net.httpserver.HttpExchange;
-import org.json.JSONObject;
 
 import Config.Config;
-import component.Manejador;
 
 public class HandleRequestRoot {
     public static void handle(HttpExchange exchange) throws IOException {

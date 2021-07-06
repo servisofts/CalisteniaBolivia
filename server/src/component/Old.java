@@ -4,10 +4,10 @@ import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
-
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.xdevapi.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +18,7 @@ import Server.SSSAbstract.SSSessionAbstract;
 import SocketCliente.SocketCliete;
 import conexion.Conexion;
 import conexion.ConexionMySql;
+import conexion.ConexionUsuario;
 
 public class Old {
     public Old(JSONObject data, SSSessionAbstract session) {
@@ -45,6 +46,23 @@ public class Old {
             break;
             default:
                 defaultType(data, session);
+        }
+    }
+
+    
+    public static void usuariosToCliente() {
+        try{
+            ConexionUsuario.setConexion(Config.getJSON("data_base"));
+            String consulta =  "select v2_get_all('b98d744a-6629-4c80-b513-f007c884e8e1','registro_administrador') as json";
+            JSONObject usuarios = ConexionUsuario.ejecutarConsultaObject(consulta);
+            String names[] = JSONObject.getNames(usuarios);
+            JSONObject usuario;
+            for (int i = 0; i < names.length; i++) {
+                usuario = usuarios.getJSONObject(names[i]);
+                System.out.println(usuario.toString());
+            } 
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

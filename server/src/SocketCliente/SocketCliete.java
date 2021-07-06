@@ -187,7 +187,9 @@ public class SocketCliete extends Thread {
     }
 
     public static void send(String server, JSONObject data, SSSessionAbstract session) {
-        data.put("router", session.getIdSession());
+        if(session!=null)
+            data.put("router", session.getIdSession());
+            
         Clientes.get(server).response.println(data);
         Clientes.get(server).response.flush();
 
