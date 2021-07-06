@@ -22,6 +22,7 @@ import * as SSNavigation from './SSNavigation';
 import AppParams from './Params/index.json'
 import BarraDeDesconeccion from './SSSocket/BarraDeDesconeccion';
 import DropDown from './Component/DropDown';
+import SSRolesPermisos from './SSRolesPermisos';
 const store = createStore(
   Reducer,
   {},
@@ -45,6 +46,7 @@ const App = () => {
       <SafeAreaView style={styles.scrollView} behavior={{padding:0,}}>
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
         <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
+        <SSRolesPermisos/>
         <View style={{
           // position:"absolute",
           height: "100%",

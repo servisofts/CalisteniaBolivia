@@ -5,6 +5,7 @@ import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import AppParams from '../../Params';
 import Svg from '../../Svg';
+import EtapaMigracion from './EtapaMigracion';
 import GraphicDB from './GraphicDB';
 import Modulos from './Modulos';
 
@@ -69,6 +70,13 @@ class ServisoftsPage extends Component {
                   textDecorationLine: "underline"
                 }}>servisofts.com</Text>
               </TouchableOpacity>
+              <View style={{
+                marginTop: 8,
+                width: "100%",
+                backgroundColor: "#999",
+                height: 1,
+              }}></View>
+              <EtapaMigracion navigation={this.props.navigation} />
               <View style={{
                 marginTop: 8,
                 width: "100%",

@@ -8,7 +8,10 @@ import NaviDrawer from '../../Component/NaviDrawer';
 import STextImput from '../../Component/STextImput';
 import AppParams from '../../Params';
 import Svg from '../../Svg';
-
+import RolDeUsuario from './RolDeUsuario';
+import TipoUsuario from './TipoUsuario';
+import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
+import SSCrollView from '../../Component/SScrollView';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class UsuarioRegistroPage extends Component {
@@ -33,23 +36,23 @@ class UsuarioRegistroPage extends Component {
       borderColor: "#444",
       borderRadius: 8,
     }
-
+    this.cabecera = "registro_administrador"
     var key = this.props.navigation.getParam("key", false);
     this.TextButom = "CREAR";
     this.data = {};
     if (key) {
       this.TextButom = "EDITAR";
-      this.data = this.props.state.usuarioReducer.data[key];
+      this.data = this.props.state.usuarioReducer.data[this.cabecera][key];
       this.data.key = key;
       if (!this.data) {
         alert("NO HAY DATA");
       }
     }
-
+    console.log(this.data)
     this.imputs = {
       Nombres: new STextImput({
         placeholder: "Nombres",
-        // defaultValue: this.data["Nombres"].dato,
+        defaultValue: this.data["Nombres"],
         // autoCapitalize: "none",
 
         style: styleImput
@@ -59,13 +62,25 @@ class UsuarioRegistroPage extends Component {
         placeholder: "Apellidos",
         type: "correo",
 
-        // defaultValue: this.data["Apellidos"].dato,
+        defaultValue: this.data["Apellidos"],
         // autoCapitalize: "none",
+        style: styleImput
+      }),
+      CI: new STextImput({
+        placeholder: "Numero de documento de identidad",
+        defaultValue: this.data["CI"],
+        autoCapitalize: "none",
+        style: styleImput
+      }),
+      "Fecha nacimiento": new STextImput({
+        placeholder: "Fecha nacimiento",
+        defaultValue: this.data["Fecha nacimiento"],
+        autoCapitalize: "none",
         style: styleImput
       }),
       Correo: new STextImput({
         placeholder: "Correo",
-        // defaultValue: this.data["Correo"].dato,
+        defaultValue: this.data["Correo"],
         // autoCapitalize: "none",
         type: "Email",
         autoCapitalize: "none",
@@ -74,7 +89,7 @@ class UsuarioRegistroPage extends Component {
       }),
       Telefono: new STextImput({
         placeholder: "Telefono",
-        // defaultValue: this.data["Telefono"].dato,
+        defaultValue: this.data["Telefono"],
         // autoCapitalize: "none",
         type: "Phone",
         style: styleImput
@@ -82,7 +97,7 @@ class UsuarioRegistroPage extends Component {
       Password: new STextImput({
         placeholder: "Password",
         secureTextEntry: true,
-        // defaultValue: this.data["Telefono"].dato,
+        defaultValue: this.data["Password"],
         // autoCapitalize: "none",
         style: styleImput
       }),
@@ -116,21 +131,22 @@ class UsuarioRegistroPage extends Component {
       this.props.navigation.goBack();
     }
 
-    if (!this.props.state.cabeceraDatoReducer.data["registro_administrador"]) {
-      if (this.props.state.cabeceraDatoReducer.estado == "cargando") {
-        return <View />
-      }
-      if (this.props.state.cabeceraDatoReducer.estado == "error") {
-        return <View />
-      }
-      this.props.state.socketReducer.session[AppParams.socket.name].send({
-        component: "cabeceraDato",
-        type: "getDatoCabecera",
-        estado: "cargando",
-        cabecera: "registro_administrador"
-      }, true);
-      return <View />
-    }
+    // if (!this.props.state.cabeceraDatoReducer.data["registro_administrador"]) {
+    //   if (this.props.state.cabeceraDatoReducer.estado == "cargando") {
+    //     return <View />
+    //   }
+    //   if (this.props.state.cabeceraDatoReducer.estado == "error") {
+    //     return <View />
+    //   }
+    //   this.props.state.socketReducer.session[AppParams.socket.name].send({
+    //     component: "cabeceraDato",
+    //     type: "getDatoCabecera",
+    //     estado: "cargando",
+    //     cabecera: "registro_administrador"
+    //   }, true);
+    //   return <View />
+    // }
+
     return (
       <View style={{
         flex: 1,
@@ -140,93 +156,97 @@ class UsuarioRegistroPage extends Component {
       }}>
         <BackgroundImage />
 
-        <BarraSuperior duration={500} title={"Registrate"} navigation={this.props.navigation} goBack={() => {
+        <BarraSuperior duration={500} title={!this.data.key ? "registro" : "editar"} navigation={this.props.navigation} goBack={() => {
           this.props.navigation.goBack();
         }} {...this.props} />
 
-        <ScrollView style={{
-          width: "100%",
-          height: "100%"
-
-        }} contentContainerStyle={{
-          alignItems: "center",
+        <View style={{
           flex: 1,
-          paddingTop: 20,
         }}>
+          <SSCrollView style={{
+            width: "100%",
+            height: "100%"
 
-          <View style={{
-            width: "90%",
-            maxWidth: 600,
-            alignItems: 'center',
-            // justifyContent: 'center',
+          }} contentContainerStyle={{
+            alignItems: "center",
+            flex: 1,
+            paddingTop: 20,
           }}>
-            <Text style={{
-              color: "#fff",
-              fontSize: 16,
-            }}>Registra tu usuario.</Text>
+
             <View style={{
-              width: "100%",
+              width: "90%",
               maxWidth: 600,
               alignItems: 'center',
               // justifyContent: 'center',
             }}>
-              {Object.keys(this.imputs).map((key) => {
-                return this.imputs[key].getComponent();
-              })}
+              <Text style={{
+                color: "#fff",
+                fontSize: 16,
+              }}>{!this.data.key ? "Registra " : "Edita "}tu usuario.</Text>
+              <View style={{
+                width: "100%",
+                maxWidth: 600,
+                alignItems: 'center',
+                // justifyContent: 'center',
+              }}>
+
+                {!this.data.key ? <View /> : <View style={{
+                  width: 150,
+                  height: 150,
+                }}><FotoPerfilUsuario usuario={this.data} />
+                </View>}
 
 
-            </View>
-            <View style={{
-              flex: 1,
-              width: "90%",
-              maxWidth: 600,
-              justifyContent: 'center',
-              flexDirection: "row",
-            }}>
-              <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
-                onPress={() => {
-                  if (this.props.state.usuarioReducer.estado == "cargando") {
-                    return;
-                  }
-                  var cabeceras = this.props.state.cabeceraDatoReducer.data["registro_administrador"];
-                  var isValid = true;
-                  var objectResult = {};
-                  var arr = [];
+                {Object.keys(this.imputs).map((key) => {
+                  return this.imputs[key].getComponent();
+                })}
 
-                  Object.keys(this.imputs).map((key) => {
-                    if (this.imputs[key].verify() == false) isValid = false;
-                    objectResult[key] = this.imputs[key].getValue();
-                    var dato = false;
-                    cabeceras.map((cabe) => {
-                      if (cabe.dato.descripcion == key) {
-                        dato = cabe;
-                      }
+
+              </View>
+              <View style={{
+                flex: 1,
+                width: "90%",
+                maxWidth: 600,
+                justifyContent: 'center',
+                flexDirection: "row",
+              }}>
+                <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
+                  onPress={() => {
+                    if (this.props.state.usuarioReducer.estado == "cargando") {
+                      return;
+                    }
+                    var isValid = true;
+                    var objectResult = {};
+                    Object.keys(this.imputs).map((key) => {
+                      if (this.imputs[key].verify() == false) isValid = false;
+                      objectResult[key] = this.imputs[key].getValue();
                     })
-
-                    arr.push({
-                      dato: dato,
-                      data: this.imputs[key].getValue()
-                    })
-                  })
-                  if (!isValid) {
-                    this.setState({ ...this.state });
-                    return;
-                  }
-                  var object = {
-                    component: "usuario",
-                    type: "registro",
-                    version: "2.0",
-                    estado: "cargando",
-                    cabecera: "registro_administrador",
-                    data: arr,
-                  }
-                  // alert(JSON.stringify(object));
-                  this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                }}
-              />
+                    if (!isValid) {
+                      this.setState({ ...this.state });
+                      return;
+                    }
+                    var object = {
+                      component: "usuario",
+                      type: !this.data.key ? "registro" : "editar",
+                      version: "2.0",
+                      estado: "cargando",
+                      cabecera: "registro_administrador",
+                      key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
+                      data: {
+                        ...this.data,
+                        ...objectResult,
+                      },
+                    }
+                    // alert(JSON.stringify(object));
+                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        </ScrollView>
+            <RolDeUsuario data={this.data} />
+            <TipoUsuario data={this.data} />
+          </SSCrollView>
+        </View>
 
       </View>
     );

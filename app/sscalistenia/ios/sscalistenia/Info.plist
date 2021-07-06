@@ -44,7 +44,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Queremos utilizar su camara porfavor</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Porfavor permitanos acceder a su ubicacion para mostrarle las sucursales mas cercanas.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Quremos utilzar su libreria porfavor</string>
 	<key>UIAppFonts</key>

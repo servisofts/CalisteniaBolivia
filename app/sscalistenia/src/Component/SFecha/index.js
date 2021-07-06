@@ -8,6 +8,14 @@ export const SFechaFormat = (fecha) => {
     var fecha = moment(fecha).format("YYYY/MM/DD HH:mm");
     return fecha;
 }
+export const SDateFormat = (fecha) => {
+    var date = new Date(fecha);
+    if (isNaN(date.getTime())) {
+        return "--";
+    }
+    var fecha = moment(fecha).format("YYYY/MM/DD");
+    return fecha;
+}
 export const SFechaDiff = (fecha, fechaFin) => {
     var date = new Date(fecha);
     if (isNaN(date.getTime())) {

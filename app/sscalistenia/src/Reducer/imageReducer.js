@@ -16,8 +16,9 @@ const createImage = (url, props) => {
     return <Image source={{
         uri: url+"?fecha="+new Date().getTime(),
     }} style={{
-        // resizeMode: "contain",
-  
+        resizeMode: "contain",
+        width: "100%",
+        height: "100%",
         ...props
     }} />
 }
@@ -38,4 +39,5 @@ export default (state, action) => {
 const cambio = (state, action) => {
     // fetch(action.url);
     state.IMAGES[action.url] = createImage(action.url,action.props)
+    // alert("cambio imagen");
 }
