@@ -8,7 +8,8 @@ import NaviDrawer from '../../Component/NaviDrawer';
 import STextImput from '../../Component/STextImput';
 import AppParams from '../../Params';
 import Svg from '../../Svg';
-
+import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
+import SSCrollView from '../../Component/SScrollView';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class ClienteRegistroPage extends Component {
@@ -45,7 +46,7 @@ class ClienteRegistroPage extends Component {
         alert("NO HAY DATA");
       }
     }
-
+    console.log(this.data)
     this.imputs = {
       Nombres: new STextImput({
         placeholder: "Nombres",
@@ -61,6 +62,18 @@ class ClienteRegistroPage extends Component {
 
         defaultValue: this.data["Apellidos"],
         // autoCapitalize: "none",
+        style: styleImput
+      }),
+      CI: new STextImput({
+        placeholder: "Numero de documento de identidad",
+        defaultValue: this.data["CI"],
+        autoCapitalize: "none",
+        style: styleImput
+      }),
+      "Fecha nacimiento": new STextImput({
+        placeholder: "Fecha nacimiento",
+        defaultValue: this.data["Fecha nacimiento"],
+        autoCapitalize: "none",
         style: styleImput
       }),
       Correo: new STextImput({
@@ -131,6 +144,7 @@ class ClienteRegistroPage extends Component {
     //   }, true);
     //   return <View />
     // }
+
     return (
       <View style={{
         flex: 1,
@@ -144,79 +158,88 @@ class ClienteRegistroPage extends Component {
           this.props.navigation.goBack();
         }} {...this.props} />
 
-        <ScrollView style={{
-          width: "100%",
-          height: "100%"
-
-        }} contentContainerStyle={{
-          alignItems: "center",
+        <View style={{
           flex: 1,
-          paddingTop: 20,
         }}>
-
-          <View style={{
-            width: "90%",
-            maxWidth: 600,
-            alignItems: 'center',
-            // justifyContent: 'center',
+          <SSCrollView style={{
+            width: "100%",
+            // height: "100%",
+            maxWidth: "100%",
           }}>
-            <Text style={{
-              color: "#fff",
-              fontSize: 16,
-            }}>Registra tu usuario.</Text>
+
             <View style={{
-              width: "100%",
+              width: "90%",
               maxWidth: 600,
               alignItems: 'center',
               // justifyContent: 'center',
             }}>
-              {Object.keys(this.imputs).map((key) => {
-                return this.imputs[key].getComponent();
-              })}
+              <Text style={{
+                color: "#fff",
+                fontSize: 16,
+              }}>{!this.data.key ? "Registra " : "Edita "}tu usuario cliente.</Text>
+              <View style={{
+                width: "100%",
+                maxWidth: 600,
+                alignItems: 'center',
+                // justifyContent: 'center',
+              }}>
+
+                {!this.data.key ? <View /> : <View style={{
+                  width: 150,
+                  height: 150,
+                }}><FotoPerfilUsuario usuario={this.data} />
+                </View>}
 
 
+                {Object.keys(this.imputs).map((key) => {
+                  return this.imputs[key].getComponent();
+                })}
+
+
+              </View>
+              <View style={{
+                flex: 1,
+                width: "90%",
+                maxWidth: 600,
+                justifyContent: 'center',
+                flexDirection: "row",
+              }}>
+                <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
+                  onPress={() => {
+                    if (this.props.state.usuarioReducer.estado == "cargando") {
+                      return;
+                    }
+                    var isValid = true;
+                    var objectResult = {};
+                    Object.keys(this.imputs).map((key) => {
+                      if (this.imputs[key].verify() == false) isValid = false;
+                      objectResult[key] = this.imputs[key].getValue();
+                    })
+                    if (!isValid) {
+                      this.setState({ ...this.state });
+                      return;
+                    }
+                    var object = {
+                      component: "usuario",
+                      type: !this.data.key ? "registro" : "editar",
+                      version: "2.0",
+                      estado: "cargando",
+                      cabecera: "registro_administrador",
+                      key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
+                      key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
+                      data: {
+                        ...this.data,
+                        ...objectResult,
+                      },
+                    }
+                    // alert(JSON.stringify(object));
+                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                  }}
+                />
+              </View>
             </View>
-            <View style={{
-              flex: 1,
-              width: "90%",
-              maxWidth: 600,
-              justifyContent: 'center',
-              flexDirection: "row",
-            }}>
-              <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
-                onPress={() => {
-                  if (this.props.state.usuarioReducer.estado == "cargando") {
-                    return;
-                  }
-                  var isValid = true;
-                  var objectResult = {};
-                  Object.keys(this.imputs).map((key) => {
-                    if (this.imputs[key].verify() == false) isValid = false;
-                    objectResult[key] = this.imputs[key].getValue();
-                  })
-                  if (!isValid) {
-                    this.setState({ ...this.state });
-                    return;
-                  }
-                  var object = {
-                    component: "usuario",
-                    type: !this.data.key ? "registro" : "editar",
-                    version: "2.0",
-                    estado: "cargando",
-                    cabecera: "registro_administrador",
-                    key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
-                    data: {
-                      ...this.data,
-                      ...objectResult
-                    },
-                  }
-                  // alert(JSON.stringify(object));
-                  this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                }}
-              />
-            </View>
-          </View>
-        </ScrollView>
+          </SSCrollView>
+        </View>
 
       </View>
     );

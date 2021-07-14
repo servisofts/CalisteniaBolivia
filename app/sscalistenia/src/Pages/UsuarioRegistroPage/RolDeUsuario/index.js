@@ -55,7 +55,8 @@ const RolDeUsuario = (props) => {
                 }
             }
             return <TouchableOpacity style={{
-                width: 200,
+                width: "45%",
+                maxWidth:200,
                 height: 160,
                 margin: 8,
                 borderRadius: 10,
@@ -105,10 +106,11 @@ const RolDeUsuario = (props) => {
                     <View style={{
                         flex: 1,
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                     }}>
                         <Text style={{
                             fontSize: 18,
+                            textAlign:"center",
                             fontWeight: "bold",
                             color: STheme.color.text
                         }}>{obj.descripcion}</Text>
@@ -131,9 +133,13 @@ const RolDeUsuario = (props) => {
                 </View>)}
             </TouchableOpacity>
         })
-        return <ScrollView horizontal={true}>
+        return <View style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            width: "100%",
+        }}>
             {Lista}
-        </ScrollView>
+        </View>
     }
     // var pagina = props.state.usuarioPageReducer.data["UsuarioPage"];
     // if (!pagina) {

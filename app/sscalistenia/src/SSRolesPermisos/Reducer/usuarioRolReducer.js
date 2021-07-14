@@ -1,9 +1,9 @@
 const initialState = {
     estado: "Not Found",
     data: false,
-    data:{},
-    rol:{},
-    usuario:{}
+    data: {},
+    rol: {},
+    usuario: {}
 }
 
 export default (state, action) => {
@@ -35,11 +35,11 @@ const registro = (state, action) => {
     if (action.estado === "exito") {
         if (state.data) {
             state.data[action.data.key] = action.data;
-            if(state.rol[action.data.key_rol]){
-                state.rol[action.data.key_rol][action.data.key_usuario]  = action.data.key;    
+            if (state.rol[action.data.key_rol]) {
+                state.rol[action.data.key_rol][action.data.key_usuario] = action.data.key;
             }
-            if(state.usuario[action.data.key_usuario]){
-                state.usuario[action.data.key_usuario][action.data.key_rol]  = action.data.key;    
+            if (state.usuario[action.data.key_usuario]) {
+                state.usuario[action.data.key_usuario][action.data.key_rol] = action.data.key;
             }
             // state.data[action.data.key] = action.data;
         }
@@ -52,15 +52,21 @@ const editar = (state, action) => {
         if (state.data) {
             state.data[action.data.key] = action.data;
         }
-        if(!state.rol[action.data.key_rol]){
-            state.rol[action.data.key_rol] = {};
+        if (state.rol[action.data.key_rol]) {
+            if (action.data.estado == 0) {
+                delete state.rol[action.data.key_rol][action.data.key_usuario]
+            } else {
+                state.rol[action.data.key_rol][action.data.key_usuario] = action.data.key
+            }
         }
-        state.rol[action.data.key_rol][action.data.key_usuario]=action.data.key
-        
-        if(!state.usuario[action.data.key_usuario]){
-            state.usuario[action.data.key_usuario] = {};
+        if (state.usuario[action.data.key_usuario]) {
+            if (action.data.estado == 0) {
+                delete state.usuario[action.data.key_usuario][action.data.key_rol]
+            } else {
+                state.usuario[action.data.key_usuario][action.data.key_rol] = action.data.key
+
+            }
         }
-        state.usuario[action.data.key_usuario][action.data.key_rol]=action.data.key
         state.lastEdit = action.data;
     }
 }
@@ -71,23 +77,21 @@ const getAll = (state, action) => {
             ...state.data,
             ...action.data
         }
-        if(action.key_rol){
+        if (action.key_rol) {
             state.rol[action.key_rol] = {};
         }
-        if(action.key_usuario){
+        if (action.key_usuario) {
             state.usuario[action.key_usuario] = {};
         }
-        Object.keys(action.data).map((key)=>{
+        Object.keys(action.data).map((key) => {
             var obj = action.data[key];
-            if(!state.rol[obj.key_rol]){
-                state.rol[obj.key_rol] = {};
+            console.log(obj);
+            if (state.rol[obj.key_rol]) {
+                state.rol[obj.key_rol][obj.key_usuario] = obj.key
             }
-            state.rol[obj.key_rol][obj.key_usuario]=obj.key
-            
-            if(!state.usuario[obj.key_usuario]){
-                state.usuario[obj.key_usuario] = {};
+            if (state.usuario[obj.key_usuario]) {
+                state.usuario[obj.key_usuario][obj.key_rol] = obj.key
             }
-            state.usuario[obj.key_usuario][obj.key_rol]=obj.key
         })
     }
 }
@@ -98,10 +102,10 @@ const anular = (state, action) => {
         if (state.data) {
             delete state.data[action.data.key];
 
-            if(state.rol[action.data.key_rol]){
+            if (state.rol[action.data.key_rol]) {
                 delete state.rol[action.data.key_rol][action.data.key_usuario];
             }
-            if(state.usuario[action.data.key_usuario]){
+            if (state.usuario[action.data.key_usuario]) {
                 delete state.usuario[action.data.key_usuario][action.data.key_rol];
             }
         }

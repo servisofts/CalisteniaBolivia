@@ -10,11 +10,10 @@ import AppParams from '../../Params';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import SSCrollView from '../../Component/SScrollView';
+import FloatButtom from '../../Component/FloatButtom';
 import SOrdenador from '../../Component/SOrdenador';
 import Buscador from '../../Component/Buscador';
-import FloatButtom from '../../Component/FloatButtom';
-
-class UsuarioPage extends Component {
+class EntrenadorPage extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
     headerShown: false,
@@ -67,15 +66,15 @@ class UsuarioPage extends Component {
 
     Linking.openURL(phoneNumber);
   };
-
   pagination = (listaKeys) => {
+    var pageLimit = 50
     if (!listaKeys) {
       return [];
     }
     if (listaKeys.length <= 0) {
       return [];
     }
-    var pageLimit = 50
+
     var tamanho = listaKeys.length;
     var nroBotones = Math.ceil(tamanho / pageLimit);
     if (this.state.pagination.curPage > nroBotones) {
@@ -87,8 +86,9 @@ class UsuarioPage extends Component {
     // console.log(actual + pageLimit);
     return listaKeys.slice(0, actual + pageLimit);
   }
-  render() {
 
+  render() {
+    this.onSelect = this.props.navigation.getParam("onSelect");
     const getLista = () => {
       var cabecera = "registro_administrador";
       var data = this.props.state.usuarioReducer.data[cabecera];
@@ -107,17 +107,40 @@ class UsuarioPage extends Component {
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         return <View />
       }
-      // console.log(data)  ;
+      var reducer = this.props.state.usuarioRolReducer;
+      var dataRU = reducer.rol["b5b4a616-dd16-4443-b859-39245f50c8df"];
+      if (!dataRU) {
+        if (reducer.estado == "cargando") {
+          return <Text>Cargando</Text>
+        }
+        this.props.state.socketReducer.session[AppParams.socket.name].send({
+          component: "usuarioRol",
+          type: "getAll",
+          estado: "cargando",
+          key_rol: "b5b4a616-dd16-4443-b859-39245f50c8df",
+        }, true);
+        return <View />
+      }
       if (!this.state.buscador) {
         return <View />
       }
+      // console.log(clientes);
+      // var dto = data;
+      var objFinal = {};
+      Object.keys(data).map((key) => {
+        if (!dataRU[key]) {
+          return <View />
+        }
+        objFinal[key] = data[key];
+      });
+      // console.log("REPINTO===")
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
         ]).ordernarObject(
-          this.state.buscador.buscar(data)
+          this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
         var usr = data[key];
@@ -127,7 +150,6 @@ class UsuarioPage extends Component {
         if (!usr.estado) {
           return <View />
         }
-
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -136,8 +158,13 @@ class UsuarioPage extends Component {
           borderRadius: 10,
           backgroundColor: "#66000044"
         }} onPress={() => {
-          this.props.navigation.navigate("UsuarioRegistroPage", {
-            key: key
+          if (this.onSelect) {
+            this.onSelect(usr);
+            this.props.navigation.goBack();
+            return;
+          }
+          this.props.navigation.navigate("EntrenadorPerfilPage", {
+            key_usuario: key
           })
         }}>
           <View style={{
@@ -176,7 +203,8 @@ class UsuarioPage extends Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  color: "#fff"
+                  color: "#fff",
+                  textTransform: "capitalize"
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
             </View>
@@ -194,11 +222,10 @@ class UsuarioPage extends Component {
         // backgroundColor:"#000",
       }}>
         <BackgroundImage />
-        <BarraSuperior title={"Usuarios"} navigation={this.props.navigation} goBack={() => {
+        <BarraSuperior title={"Entrenadores"} navigation={this.props.navigation} goBack={() => {
           this.props.navigation.goBack();
         }} />
-
-        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
+        <Buscador ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }} />
         <View style={{
@@ -207,6 +234,9 @@ class UsuarioPage extends Component {
         }}>
           <SSCrollView
             style={{ width: "100%" }}
+            contentContainerStyle={{
+              alignItems: "center"
+            }}
             onScroll={(evt) => {
               var evn = evt.nativeEvent;
               var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
@@ -218,15 +248,12 @@ class UsuarioPage extends Component {
                 this.setState({ ...this.state })
               }
             }}
-            contentContainerStyle={{
-              alignItems: "center"
-            }}
           >
             {getLista()}
           </SSCrollView>
-          <FloatButtom onPress={() => {
-            this.props.navigation.navigate("UsuarioRegistroPage")
-          }} />
+          {/* <FloatButtom onPress={() => {
+            this.props.navigation.navigate("ClienteRegistroPage")
+          }} /> */}
         </View>
       </View>
     </>
@@ -236,4 +263,4 @@ class UsuarioPage extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(UsuarioPage);
+export default connect(initStates)(EntrenadorPage);

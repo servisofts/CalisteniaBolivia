@@ -18,15 +18,16 @@ import procesoComentarioReducer from './procesoComentarioReducer';
 import procesoSeguimientoReducer from './procesoSeguimientoReducer';
 import tipoSeguimientoReducer from './tipoSeguimientoReducer';
 import tipoUsuarioReducer from './tipoUsuarioReducer';
-import clienteReducer from './clienteReducer';
 import servicioReducer from './servicioReducer';
 import paqueteReducer from './paqueteReducer';
 import paqueteServicioReducer from './paqueteServicioReducer';
 import paqueteUsuarioReducer from './paqueteUsuarioReducer';
 import locationGoogleReducer from './locationGoogleReducer';
 import sucursalReducer from './sucursalReducer';
-import SSRolesPermisos from '../SSRolesPermisos/Reducer'
+import SSRolesPermisos from '../SSRolesPermisos/Reducer';
+import entrenamientoReducer from './entrenamientoReducer';
 export default combineReducers({
+    entrenamientoReducer,
     cabeceraDatoReducer,
     socketReducer,
     usuarioReducer,
@@ -46,7 +47,6 @@ export default combineReducers({
     procesoSeguimientoReducer,
     tipoSeguimientoReducer,
     tipoUsuarioReducer,
-    clienteReducer,
     servicioReducer,
     paqueteReducer,
     paqueteServicioReducer,

@@ -63,12 +63,12 @@ class LoginPage extends Component {
     if (this.ImputUsuario.verify() == false) isValid = false;
     if (this.ImputPassword.verify() == false) isValid = false;
     if (!isValid) {
-      
+
       // alert("faltan datos")
     } else {
       var object = {
         component: "usuario",
-        version:"2.0",
+        version: "2.0",
         type: "login",
         estado: "cargando",
         data: {
@@ -86,12 +86,12 @@ class LoginPage extends Component {
   }
   render() {
 
-    if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type== "login") {
+    if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type == "login") {
       this.props.state.usuarioReducer.estado = "";
       this.ImputPassword.setError();
     }
     if (this.props.state.usuarioReducer.usuarioLog) {
-      this.props.navigation.replace("InicioPage");
+      this.props.navigation.replace("CargaPage");
       return <View />
     }
 
@@ -110,7 +110,7 @@ class LoginPage extends Component {
         }}
           contentContainerStyle={{
             alignItems: "center",
-            paddingTop:20,
+            paddingTop: 20,
           }}
         >
           <View style={{
@@ -118,7 +118,7 @@ class LoginPage extends Component {
             alignItems: 'center',
             // backgroundColor:"#000"
           }}>
-           <LogoAnimado/>
+            <LogoAnimado />
           </View>
 
           <View style={{
@@ -151,7 +151,7 @@ class LoginPage extends Component {
               }}>{this.props.state.usuarioReducer.estado != "cargando" ? "Login" : <ActivityIndicator color={"#fff"} />}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.BTN} onPress={(evt) => {
-              this.props.navigation.navigate("UsuarioRegistroPage")
+              this.props.navigation.navigate("ClienteRegistroPage")
             }}>
               <Text style={{
                 color: "#999"

@@ -5,15 +5,20 @@ import Svg from '../../../Svg';
 class InputDireccion extends Component {
     constructor(props) {
         super(props);
+        var direccion = false;
+        if (props.defaultValue) {
+            direccion = props.defaultValue;
+        }
         this.state = {
-            value: this.props.label,
+            value: (!direccion ? this.props.label : direccion.direccion),
+            direccion: (!direccion ? false : direccion)
         };
     }
     setError = (bool) => {
         this.setState({ error: bool })
     }
     getValue = () => {
-        this.setState({ error: false})
+        this.setState({ error: false })
         return this.state.direccion
     }
     render() {
@@ -32,7 +37,7 @@ class InputDireccion extends Component {
                     height: 40,
                     ...this.props.style,
                     borderColor: this.state.error ? "#f00" : "#444",
-                    
+
                 }} onPress={() => {
                     this.props.navigation.navigate("BuscarDireccionPage", {
                         select: (data) => {
@@ -64,7 +69,7 @@ class InputDireccion extends Component {
                         color: "#fff",
                     }}
                         numberOfLines={1}
-                        // onChangeText={(texto) => hanlechage(texto)}
+                    // onChangeText={(texto) => hanlechage(texto)}
                     >
                         {this.state.value}
                     </Text>

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
 import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
-import NaviDrawer from '../../Component/NaviDrawer';
-import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
+// import NaviDrawer from '../../Component/NaviDrawer';
+// import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
 import * as SSNavigation from '../../SSNavigation'
-import ActionButtom from '../../Component/ActionButtom';
+// import ActionButtom from '../../Component/ActionButtom';
 import AppParams from '../../Params';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
@@ -107,23 +107,30 @@ class ClientesPage extends Component {
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         return <View />
       }
-      var clienteReducer = this.props.state.clienteReducer;
-      var clientes = clienteReducer.data;
-      if (!clientes) {
-        if (clienteReducer.estado == "cargando") {
+      var reducer = this.props.state.usuarioRolReducer;
+      var dataRU = reducer.rol["d16d800e-5b8d-48ae-8fcb-99392abdf61f"];
+      if (!dataRU) {
+        if (reducer.estado == "cargando") {
           return <Text>Cargando</Text>
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send({
-          component: "cliente",
+          component: "usuarioRol",
           type: "getAll",
           estado: "cargando",
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+          key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
         }, true);
         return <View />
       }
       if (!this.state.buscador) {
         return <View />
       }
+      var objFinal = {};
+      Object.keys(data).map((key) => {
+        if (!dataRU[key]) {
+          return <View />
+        }
+        objFinal[key] = data[key];
+      });
       // console.log(clientes);
       // var dto = data;
       // console.log("REPINTO===")
@@ -133,16 +140,12 @@ class ClientesPage extends Component {
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
         ]).ordernarObject(
-          this.state.buscador.buscar(data)
+          this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
         var usr = data[key];
         var obj = data[key];
-        if (!clientes[key]) {
-          return <View />
-        }
-        // console.log(obj);
-        // return <View />
+   
         if (!usr.estado) {
           return <View />
         }
@@ -242,9 +245,9 @@ class ClientesPage extends Component {
           >
             {getLista()}
           </SSCrollView>
-          {/* <FloatButtom onPress={() => {
+          <FloatButtom onPress={() => {
             this.props.navigation.navigate("ClienteRegistroPage")
-          }} /> */}
+          }} />
         </View>
       </View>
     </>

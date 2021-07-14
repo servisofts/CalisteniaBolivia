@@ -141,6 +141,10 @@ class RolPage extends Component {
                 color: STheme.color.text,
                 fontWeight: "bold"
               }}>{obj.descripcion}</Text>
+              <Text style={{
+                fontSize: 12,
+                color: STheme.color.text,
+              }}>{obj.key}</Text>
 
             </View>
             <View style={{

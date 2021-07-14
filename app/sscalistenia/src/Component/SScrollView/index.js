@@ -26,10 +26,10 @@ export default class SSCrollView extends Component<TProps> {
                 position: "absolute",
             }}>
                 <ScrollView style={{
-                    width: "100%", height: "100%",
+                    width: "100%",
+                    height: "100%",
 
                 }}
-                   
                     contentContainerStyle={this.props.contentContainerStyle}
                     {...this.props}
                     disableScrollViewPanResponder={true}
@@ -38,6 +38,7 @@ export default class SSCrollView extends Component<TProps> {
                         width: "100%",
                         maxWidth: 600,
                         alignItems: "center",
+                        ...this.props.style
                     }}>
                         {this.props.children}
 

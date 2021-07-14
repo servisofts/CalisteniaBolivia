@@ -1,169 +1,193 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import InputDireccion from '../BuscarDireccionPage/InputDireccion';
+import { connect } from 'react-redux';
+import qs from 'qs';
+import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
+import NaviDrawer from '../../Component/NaviDrawer';
+import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
+import * as SSNavigation from '../../SSNavigation'
 import ActionButtom from '../../Component/ActionButtom';
+import AppParams from '../../Params';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
-import STextImput from '../../Component/STextImput';
-import AppParams from '../../Params';
-import Svg from '../../Svg';
-import FotoPerfilComponent from '../../Component/FotoPerfilComponent';
 import SSCrollView from '../../Component/SScrollView';
-import { connect } from 'react-redux';
-var styleImput = {
-    width: "80%",
-    padding: 8,
-    height: 50,
-    margin: 8,
-    color: "#fff",
-    backgroundColor: "#ffffff22",
-    borderWidth: 1,
-    borderColor: "#444",
-    borderRadius: 8,
-}
-
+import FloatButtom from '../../Component/FloatButtom';
+import SOrdenador from '../../Component/SOrdenador';
+import Buscador from '../../Component/Buscador';
 class SucursalPage extends Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerShown: false,
-        }
+    static navigationOptions = {
+        headerShown: false,
     }
     constructor(props) {
         super(props);
         this.state = {
-        };
-
-        var key = this.props.navigation.getParam("key", false);
-        this.TextButom = "CREAR";
-        this.data = {};
-        if (key) {
-            this.TextButom = "EDITAR";
-            this.data = this.props.state.sucursalReducer.data[key];
-            this.data.key = key;
-            if (!this.data) {
-                alert("NO HAY DATA");
+            pagination: {
+                curPage: 1,
             }
+        };
+        SSNavigation.setProps(props);
+
+    }
+    pagination = (listaKeys) => {
+        var pageLimit = 50
+        if (!listaKeys) {
+            return [];
         }
-        console.log(this.data)
-        this.imputs = {
-            descripcion: new STextImput({
-                placeholder: "descripcion",
-                defaultValue: this.data["descripcion"],
-                style: styleImput
-            }),
+        if (listaKeys.length <= 0) {
+            return [];
         }
+
+        var tamanho = listaKeys.length;
+        var nroBotones = Math.ceil(tamanho / pageLimit);
+        if (this.state.pagination.curPage > nroBotones) {
+            this.state.pagination.curPage = nroBotones;
+        }
+        var actual = pageLimit * (this.state.pagination.curPage - 1);
+
+        // console.log(actual);
+        // console.log(actual + pageLimit);
+        return listaKeys.slice(0, actual + pageLimit);
     }
 
     render() {
-        return (
+        this.onSelect = this.props.navigation.getParam("onSelect");
+        const getLista = () => {
+            var data = this.props.state.sucursalReducer.data;
+            if (!data) {
+                if (this.props.state.sucursalReducer.estado == "cargando") {
+                    return <Text>Cargando</Text>
+                }
+                var object = {
+                    component: "sucursal",
+                    type: "getAll",
+                    estado: "cargando",
+                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                }
+                this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                return <View />
+            }
+
+            if (!this.state.buscador) {
+                return <View />
+            }
+            // console.log(clientes);
+            // var dto = data;
+            // console.log("REPINTO===")
+            return this.pagination(
+                new SOrdenador([
+                    { key: "Peso", order: "desc", peso: 4 },
+                    { key: "Descripcion", order: "asc", peso: 2 },
+                ]).ordernarObject(
+                    this.state.buscador.buscar(data)
+                )
+            ).map((key) => {
+                var obj = data[key];
+                return <TouchableOpacity style={{
+                    width: "90%",
+                    maxWidth: 600,
+                    height: 50,
+                    margin: 4,
+                    borderRadius: 10,
+                    backgroundColor: "#66000044"
+                }} onPress={() => {
+                    if (this.onSelect) {
+                        this.onSelect(obj);
+                        this.props.navigation.goBack();
+                        return;
+                    }
+                    this.props.navigation.navigate("SucursalRegistroPage", {
+                        key: key
+                    })
+                }}>
+                    <View style={{
+                        flex: 1,
+                        justifyContent: "center"
+                    }}>
+                        <View style={{
+                            flexDirection: "row",
+                            height: "100%",
+                            width: "100%",
+                            alignItems: "center"
+                        }}>
+                            <View style={{
+                                width: 40,
+                                height: 40,
+                                marginRight: 8,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                // padding: 1,
+                                // borderRadius: 200,
+                                backgroundColor: "#ff999933",
+                                borderRadius: 100,
+                                overflow: "hidden"
+                            }}>
+                                {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + key, {
+                                    width: "100%",
+                                    objectFit: "cover",
+                                    resizeMode: "cover",
+
+                                })} */}
+                            </View>
+                            <View style={{
+                                flex: 1,
+                                justifyContent: "center"
+                            }}>
+                                <Text style={{
+                                    fontSize: 16,
+                                    fontWeight: "bold",
+                                    color: "#fff",
+                                    textTransform: "capitalize"
+                                }}>{obj["descripcion"] + " "}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            })
+        }
+        return (<>
             <View style={{
                 flex: 1,
                 width: "100%",
                 height: "100%",
-                backgroundColor: "#000"
+                justifyContent: "center",
+                alignItems: "center"
+                // backgroundColor:"#000",
             }}>
                 <BackgroundImage />
-
-                <BarraSuperior duration={500} title={(!this.data.key ? "Registro de " : "Editar") + " sucursal"} navigation={this.props.navigation} goBack={() => {
+                <BarraSuperior title={"Sucursales"} navigation={this.props.navigation} goBack={() => {
                     this.props.navigation.goBack();
-                }} {...this.props} />
+                }} />
+                <Buscador ref={(ref) => {
+                    if (!this.state.buscador) this.setState({ buscador: ref });
+                }} repaint={() => { this.setState({ ...this.state }) }} />
                 <View style={{
-                    width: "100%",
                     flex: 1,
+                    width: "100%",
                 }}>
-
-                    <SSCrollView style={{
-                        width: "100%",
-                        height: "100%"
-
-                    }} >
-
-                        <View style={{
-                            width: "100%",
-                            // maxWidth: 600,
-                            alignItems: 'center',
-                            // justifyContent: 'center',
-                        }}>
-                            <Text style={{
-                                color: "#fff",
-                                fontSize: 16,
-                            }}>{!this.data.key ? "Registra " : "Edita "} una sucursal</Text>
-                            <View style={{
-                                width: "100%",
-                                maxWidth: 600,
-                                alignItems: 'center',
-                                // justifyContent: 'center',
-                            }}>
-
-                                {!this.data.key ? <View /> : <View style={{
-                                    width: 150,
-                                    height: 150,
-                                }}><FotoPerfilComponent data={this.data} component={"sucursal"} />
-                                </View>}
-
-                                {Object.keys(this.imputs).map((key) => {
-                                    return this.imputs[key].getComponent();
-                                })}
-
-
-                            </View>
-                            <InputDireccion
-                                ref={(ref) => { this.direccion = ref }}
-                                navigation={this.props.navigation} label={"Ubicacion de la sucursal"}
-                                style={styleImput}
-                            />
-                            <View style={{
-                                flex: 1,
-                                width: "90%",
-                                maxWidth: 600,
-                                justifyContent: 'center',
-                                flexDirection: "row",
-                            }}>
-                                <ActionButtom label={this.props.state.sucursalReducer.estado == "cargando" ? "cargando" : this.TextButom}
-                                    onPress={() => {
-                                        if (this.props.state.sucursalReducer.estado == "cargando") {
-                                            return;
-                                        }
-                                        var isValid = true;
-                                        var objectResult = {};
-                                        Object.keys(this.imputs).map((key) => {
-                                            if (this.imputs[key].verify() == false) isValid = false;
-                                            objectResult[key] = this.imputs[key].getValue();
-                                        })
-
-                                        var direccion = this.direccion.getValue();
-
-                                        if (!direccion) {
-                                            this.direccion.setError(true);
-                                            isValid = false;
-                                        }
-                                        objectResult = { ...objectResult, ...direccion }
-
-                                        if (!isValid) {
-                                            this.setState({ ...this.state });
-                                            return;
-                                        }
-                                        var object = {
-                                            component: "sucursal",
-                                            type: !this.data.key ? "registro" : "editar",
-                                            estado: "cargando",
-                                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                            data: {
-                                                ...this.data,
-                                                ...objectResult,
-                                            },
-                                        }
-                                        // alert(JSON.stringify(object));
-                                        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                                    }}
-                                />
-                            </View>
-
-                        </View>
+                    <SSCrollView
+                        style={{ width: "100%" }}
+                        contentContainerStyle={{
+                            alignItems: "center"
+                        }}
+                        onScroll={(evt) => {
+                            var evn = evt.nativeEvent;
+                            var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
+                            // console.log(evn);
+                            var heigth = evn.contentSize.height;
+                            if (heigth - posy <= 0) {
+                                this.state.pagination.curPage += 1;
+                                // console.log(this.state.pagination.curPage);
+                                this.setState({ ...this.state })
+                            }
+                        }}
+                    >
+                        {getLista()}
                     </SSCrollView>
+                    <FloatButtom onPress={() => {
+                        this.props.navigation.navigate("SucursalRegistroPage")
+                    }} />
                 </View>
-
             </View>
+        </>
         );
     }
 }

@@ -12,6 +12,7 @@ import RolDeUsuario from './RolDeUsuario';
 import TipoUsuario from './TipoUsuario';
 import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
 import SSCrollView from '../../Component/SScrollView';
+import DeleteBtn from '../../Component/DeleteBtn';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class UsuarioRegistroPage extends Component {
@@ -106,7 +107,9 @@ class UsuarioRegistroPage extends Component {
   componentDidMount() { // B
 
   }
-
+  getEliminar() {
+    return <DeleteBtn />
+  }
   render() {
 
     if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type == "registro") {
@@ -147,6 +150,7 @@ class UsuarioRegistroPage extends Component {
     //   return <View />
     // }
 
+
     return (
       <View style={{
         flex: 1,
@@ -165,12 +169,8 @@ class UsuarioRegistroPage extends Component {
         }}>
           <SSCrollView style={{
             width: "100%",
-            height: "100%"
-
-          }} contentContainerStyle={{
-            alignItems: "center",
-            flex: 1,
-            paddingTop: 20,
+            // height: "100%",
+            maxWidth: "100%",
           }}>
 
             <View style={{
@@ -179,6 +179,7 @@ class UsuarioRegistroPage extends Component {
               alignItems: 'center',
               // justifyContent: 'center',
             }}>
+
               <Text style={{
                 color: "#fff",
                 fontSize: 16,
@@ -193,9 +194,11 @@ class UsuarioRegistroPage extends Component {
                 {!this.data.key ? <View /> : <View style={{
                   width: 150,
                   height: 150,
+                  alignItems:"center",
                 }}><FotoPerfilUsuario usuario={this.data} />
                 </View>}
 
+                {this.getEliminar()}
 
                 {Object.keys(this.imputs).map((key) => {
                   return this.imputs[key].getComponent();
@@ -244,7 +247,7 @@ class UsuarioRegistroPage extends Component {
               </View>
             </View>
             <RolDeUsuario data={this.data} />
-            <TipoUsuario data={this.data} />
+            {/* <TipoUsuario data={this.data} /> */}
           </SSCrollView>
         </View>
 

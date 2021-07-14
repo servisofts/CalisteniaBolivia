@@ -39,9 +39,14 @@ import PaqueteRegistroPage from './PaqueteRegistroPage'
 import ServisoftsUsuarioConErrorPage from './ServisoftsUsuarioConErrorPage'
 import ClientePaqueteRegistroPage from './ClientePaqueteRegistroPage'
 import SucursalPage from './SucursalPage'
+import SucursalRegistroPage from './SucursalRegistroPage'
 import BuscarDireccionPage from './BuscarDireccionPage'
 import SSRolesPermisos from '../SSRolesPermisos/Pages';
+import EntrenadorPage from './EntrenadorPage'
+import EntrenadorPerfilPage from './EntrenadorPerfilPage'
+import EntrenamientoRegistroPage from './EntrenamientoRegistroPage'
 
+import EntrenamientoPage from './EntrenamientoPage'
 export const getPages = () => {
     return {
         // TestRNF,
@@ -83,6 +88,11 @@ export const getPages = () => {
         ClientePaqueteRegistroPage,
         SucursalPage,
         BuscarDireccionPage,
+        SucursalRegistroPage,
+        EntrenadorPerfilPage,
+        EntrenadorPage,
+        EntrenamientoPage,
+        EntrenamientoRegistroPage,
         ...SSRolesPermisos
     }
 }
