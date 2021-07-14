@@ -30,9 +30,6 @@ public class Usuario {
 
     public Usuario(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
-            case "registro":
-                registro(data, session);
-                break;
             case "insertarDato":
                 insertarDato(data, session);
                 break;
@@ -45,8 +42,8 @@ public class Usuario {
             case "subirFoto":
                 subirFoto(data, session);
                 break;
-            case "nuevoUsuario":
-                nuevoUsuario(data, session);
+            case "registro":
+                registro(data, session);
                 break;
             default:
                 defaultType(data, session);
@@ -75,6 +72,7 @@ public class Usuario {
         obj.put("data", data);
         obj.put("estado", "exito");
     }
+
 
     public void registro(JSONObject obj, SSSessionAbstract session) {
         JSONArray data = obj.getJSONArray("data");

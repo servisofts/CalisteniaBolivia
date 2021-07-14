@@ -51,7 +51,7 @@ public class ConexionMySql {
                     }
                 }
                 System.out.println("Conectando a la base de datos mysql...");
-                con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + bd_name, usuario,
+                con = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + puerto + "/" + bd_name + "", usuario,
                         contrasena);
                 System.out.println("Conexion exitosa mysql");
                 // restore_backup();

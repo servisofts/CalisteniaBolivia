@@ -37,9 +37,6 @@ import org.jboss.com.sun.net.httpserver.Headers;
 import org.jboss.com.sun.net.httpserver.HttpServer;
 import org.apache.commons.fileupload.RequestContext;
 import org.jboss.com.sun.net.httpserver.HttpContext;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 import org.jboss.com.sun.net.httpserver.HttpPrincipal;

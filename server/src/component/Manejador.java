@@ -3,6 +3,7 @@ package component;
 import org.json.JSONObject;
 
 import Server.SSSAbstract.SSSessionAbstract;
+import SocketCliente.SocketCliete;
 import util.console;
 
 public class Manejador {
@@ -61,11 +62,66 @@ public class Manejador {
                     new TipoSeguimiento(data, session);
                     break;
                 }
-                default:
+                case "tipoUsuario": {
+                    new TipoUsuario(data, session);
                     break;
+                }
+                case "servicio": {
+                    new Servicio(data, session);
+                    break;
+                }
+                case "paquete": {
+                    new Paquete(data, session);
+                    break;
+                }
+                case "paqueteServicio": {
+                    new PaqueteServicio(data, session);
+                    break;
+                }
+                case "paqueteUsuario": {
+                    new PaqueteUsuario(data, session);
+                    break;
+                }
+                case "locationGoogle": {
+                    new LocationGoogle(data, session);
+                    break;
+                }
+                case "sucursal": {
+                    new Sucursal(data, session);
+                    break;
+                }
+                case "entrenamiento": {
+                    new Entrenamiento(data, session);
+                    break;
+                }
+                default:
+                    redirect(data, session);
             }
         } else {
             data.put("error", "No existe el componente");
+        }
+    }
+
+    private void redirect(JSONObject data, SSSessionAbstract session){
+        switch(data.getString("component")){
+            case "rol":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "page":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "permiso":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "rolPermiso":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "usuarioRol":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "usuarioPage":
+                SocketCliete.send("roles_permisos", data, session);
+            break;
         }
     }
 }
