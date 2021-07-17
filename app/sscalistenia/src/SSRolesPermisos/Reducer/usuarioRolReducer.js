@@ -83,16 +83,18 @@ const getAll = (state, action) => {
         if (action.key_usuario) {
             state.usuario[action.key_usuario] = {};
         }
-        Object.keys(action.data).map((key) => {
+        var arr = Object.keys(action.data)
+        for (let i = 0; i < arr.length; i++) {
+            var key = arr[i];
             var obj = action.data[key];
-            console.log(obj);
+            // console.log(obj);
             if (state.rol[obj.key_rol]) {
                 state.rol[obj.key_rol][obj.key_usuario] = obj.key
             }
             if (state.usuario[obj.key_usuario]) {
                 state.usuario[obj.key_usuario][obj.key_rol] = obj.key
             }
-        })
+        }
     }
 }
 

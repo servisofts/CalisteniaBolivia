@@ -11,6 +11,7 @@ import Svg from '../../Svg';
 import FotoPerfilComponent from '../../Component/FotoPerfilComponent';
 import ServicioDePaquete from './ServicioDePaquete';
 import SSCrollView from '../../Component/SScrollView';
+import DeleteBtn from '../../Component/DeleteBtn';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class PaqueteRegistroPage extends Component {
@@ -82,6 +83,31 @@ class PaqueteRegistroPage extends Component {
 
   }
 
+  getEliminar() {
+    if (!this.data.key) {
+      return <View />
+    }
+    return <DeleteBtn
+      style={{
+        width: 100,
+        height: 40,
+        margin:8,
+      }}
+      onDelete={() => {
+        var object = {
+          component: "paquete",
+          type:  "editar",
+          estado: "cargando",
+          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+          data: {
+            ...this.data,
+            estado: 0,
+          },
+        }
+        // alert(JSON.stringify(object));
+        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+      }} />
+  }
   render() {
 
     // if (this.props.state.paqueteReducer.estado == "error" && this.props.state.paqueteReducer.type == "registro") {
@@ -164,6 +190,7 @@ class PaqueteRegistroPage extends Component {
                 justifyContent: 'center',
                 flexDirection: "row",
               }}>
+                {this.getEliminar()}
                 <ActionButtom label={this.props.state.paqueteReducer.estado == "cargando" ? "cargando" : this.TextButom}
                   onPress={() => {
                     if (this.props.state.paqueteReducer.estado == "cargando") {

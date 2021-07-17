@@ -152,8 +152,13 @@ class PaquetesDeUsuario extends Component {
             padding: 4,
         }} onPress={() => {
             this.props.navigation.navigate("PaquetePage", {
-                type: "registro_paquete",
-                key_usuario: this.props.key_usuario,
+                type: "select",
+                onResult: (key) => {
+                    this.props.navigation.navigate("ClientePaqueteRegistroPage",{
+                        key_usuario:this.props.key_usuario,
+                        key_paquete:key,
+                    });
+                }
             });
         }}>
             <Text style={{

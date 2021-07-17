@@ -108,7 +108,31 @@ class UsuarioRegistroPage extends Component {
 
   }
   getEliminar() {
-    return <DeleteBtn />
+    if (!this.data.key) {
+      return <View />
+    }
+    return <DeleteBtn
+      style={{
+        width: 100,
+        height: 40,
+        margin:8,
+      }}
+      onDelete={() => {
+        var object = {
+          component: "usuario",
+          type: "editar",
+          version: "2.0",
+          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+          estado: "cargando",
+          cabecera: "registro_administrador",
+          data: {
+            ...this.data,
+            estado: 0,
+          },
+        }
+        // alert(JSON.stringify(object));
+        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+      }} />
   }
   render() {
 
@@ -194,11 +218,10 @@ class UsuarioRegistroPage extends Component {
                 {!this.data.key ? <View /> : <View style={{
                   width: 150,
                   height: 150,
-                  alignItems:"center",
+                  alignItems: "center",
                 }}><FotoPerfilUsuario usuario={this.data} />
                 </View>}
 
-                {this.getEliminar()}
 
                 {Object.keys(this.imputs).map((key) => {
                   return this.imputs[key].getComponent();
@@ -213,6 +236,8 @@ class UsuarioRegistroPage extends Component {
                 justifyContent: 'center',
                 flexDirection: "row",
               }}>
+                {this.getEliminar()}
+
                 <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
                   onPress={() => {
                     if (this.props.state.usuarioReducer.estado == "cargando") {
@@ -244,6 +269,7 @@ class UsuarioRegistroPage extends Component {
                     this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                   }}
                 />
+
               </View>
             </View>
             <RolDeUsuario data={this.data} />

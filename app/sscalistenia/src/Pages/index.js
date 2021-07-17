@@ -45,8 +45,9 @@ import SSRolesPermisos from '../SSRolesPermisos/Pages';
 import EntrenadorPage from './EntrenadorPage'
 import EntrenadorPerfilPage from './EntrenadorPerfilPage'
 import EntrenamientoRegistroPage from './EntrenamientoRegistroPage'
-
+import UsuarioEliminadoPage from './UsuarioEliminadoPage'
 import EntrenamientoPage from './EntrenamientoPage'
+import CalendarioPage from './CalendarioPage'
 export const getPages = () => {
     return {
         // TestRNF,
@@ -93,6 +94,8 @@ export const getPages = () => {
         EntrenadorPage,
         EntrenamientoPage,
         EntrenamientoRegistroPage,
+        UsuarioEliminadoPage,
+        CalendarioPage,
         ...SSRolesPermisos
     }
 }

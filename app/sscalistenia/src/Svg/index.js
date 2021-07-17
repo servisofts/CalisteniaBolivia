@@ -21,6 +21,7 @@ import Login from '../img/login.svg';
 import Add from '../img/add.svg';
 import Delete from '../img/delete.svg';
 import Editar from '../img/Editar.svg';
+import NoDelete from '../img/noDelete.svg';
 
 const Svg = (props) => {
 
@@ -68,6 +69,8 @@ const Svg = (props) => {
             return (Platform.OS == "web" ? <img style={props.style} src={Add} /> : <Add style={props.style} />);
         case "Delete":
             return (Platform.OS == "web" ? <img style={props.style} src={Delete} /> : <Delete style={props.style} />);
+        case "noDelete":
+            return (Platform.OS == "web" ? <img style={props.style} src={NoDelete} /> : <NoDelete style={props.style} />);
         case "Editar":
             return (Platform.OS == "web" ? <img style={props.style} src={Editar} /> : <Editar style={props.style} />);
         default: return <Text>Not Found</Text>

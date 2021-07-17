@@ -10,6 +10,11 @@ import Svg from '../../Svg';
 // import ServicioDePaquete from './ServicioDePaquete';
 import SSCrollView from '../../Component/SScrollView';
 import Paquete from '../../Component/Paquete';
+import Usuario from './Usuario';
+import SCalendar from '../../Component/SCalendar';
+import SDate from '../../Component/SCalendar/SDate';
+import { SPopupOpen } from '../../SPopup';
+import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class ClientePaqueteRegistroPage extends Component {
@@ -22,6 +27,11 @@ class ClientePaqueteRegistroPage extends Component {
     super(props);
     this.state = {
       servicios: {},
+      task: {
+        descripcion: "Servicio",
+        fecha_inicio: new SDate(),
+        fecha_fin: false
+      }
     };
 
   }
@@ -30,9 +40,9 @@ class ClientePaqueteRegistroPage extends Component {
     this.key_paquete = this.props.navigation.getParam("key_paquete", false);
     if (this.props.state.paqueteUsuarioReducer.estado == "exito" && this.props.state.paqueteUsuarioReducer.type == "registro") {
       this.props.state.paqueteUsuarioReducer.estado = "";
-      alert("Se registro")
-
+      this.props.navigation.goBack();
     }
+
 
     return (
       <View style={{
@@ -64,38 +74,72 @@ class ClientePaqueteRegistroPage extends Component {
               // justifyContent: 'center',
             }}>
 
-              <Text style={{
+              {/* <Text style={{
                 color: "#fff",
                 fontSize: 16,
-              }}>Agregar un paquete.</Text>
+              }}>Agregar un paquete.</Text> */}
               <View style={{
                 width: "100%",
-                maxWidth: 600,
-                alignItems: 'center',
+                maxWidth: 800,
+                alignItems: "center",
+                // backgroundColor:"#fff",
                 // justifyContent: 'center',
               }}>
-
-                <Paquete key_paquete={this.key_paquete} />
-
                 <Text style={{
+                  fontSize: 22,
+                  color: "#fff",
+                  width: "95%",
+                  textAlign: "center",
+                  marginBottom: 4,
+                }}>Recibo</Text>
+                <Text style={{
+                  width: "95%",
+                  fontSize: 12,
+                  color: "#fff",
+                  marginTop: 8,
+                  marginBottom: 4,
+
+                }}>Cliente</Text>
+                <Usuario key_usuario={this.key_usuario} onLoad={(usr) => { }} />
+                <Text style={{
+                  width: "95%",
+                  fontSize: 12,
+                  color: "#fff",
+                  marginTop: 8,
+                  marginBottom: 4,
+                }}>Subscripcion</Text>
+                <Paquete key_paquete={this.key_paquete} onLoad={(paquete) => {
+                  if (!this.state.task.fecha_fin) {
+                    this.state.task.fecha_fin = new SDate();
+                    this.state.task.fecha_fin.addDay(paquete.dias);
+                    this.setState({ ...this.state });
+                  }
+                }} />
+                <Text style={{
+                  fontSize: 12,
+                  color: "#fff",
+                  marginTop: 8,
+                  marginBottom: 4,
+                }}>Selecciona la fecha inicio</Text>
+                <SCalendar task={this.state.task} />
+
+                {/* <Text style={{
                   color: "#fff",
                   fontSize: 16,
-                }}>Se va a asignar un paquete al usuario {this.key_usuario}.</Text>
+                }}>Se va a asignar un paquete al usuario {this.key_usuario}.</Text> */}
                 <ActionButtom label={"Crear"} cargando={this.props.state.paqueteUsuarioReducer.estado == "cargando"} onPress={() => {
-                  var object = {
-                    component: "paqueteUsuario",
-                    type: "registro",
-                    estado: "cargando",
-                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                    data: {
-                      key_paquete: this.key_paquete,
-                      key_usuario: this.key_usuario,
-                      fecha_inicio: new Date(),
-                      fecha_fin: new Date(),
-                    }
-                  }
-                  // alert(JSON.stringify(object));
-                  this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                  SPopupOpen({
+                    
+                    key: "confirmarPaquete", content: (
+                      <ConfirmarPaquete data={{
+                        key_paquete: this.key_paquete,
+                        key_usuario: this.key_usuario,
+                        fecha_inicio: this.state.task.fecha_inicio.toString("yyyy-MM-dd"),
+                        fecha_fin: this.state.task.fecha_fin.toString("yyyy-MM-dd")
+                      }} />
+                    )
+                  })
+                 
                 }} />
               </View>
 

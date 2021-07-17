@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Svg from '../../Svg';
 import STextImput from '../STextImput';
 
 type Tprops = {
@@ -39,6 +40,11 @@ export default class Buscador extends Component<Tprops> {
                     peso++;
                 }
             }
+            if (!this.state.verEliminados) {
+                if (obj.estado == 0) {
+                    isValid = false;
+                }
+            }
             if (isValid) {
                 arr2.push(key);
                 if (!objFinal[key]) {
@@ -50,25 +56,43 @@ export default class Buscador extends Component<Tprops> {
 
         return objFinal;
     }
-
+    getVerEliminados = () => {
+        return <TouchableOpacity
+            onPress={() => {
+                this.state.verEliminados = !this.state.verEliminados;
+                this.props.repaint();
+            }}
+            style={{
+                marginStart: 4,
+                marginEnd: 4,
+                width: 25,
+                height: 25,
+            }}>
+            <Svg name={(!this.state.verEliminados ? "noDelete" : "Delete")} style={{
+                width: 25,
+                height: 25,
+            }} />
+        </TouchableOpacity>
+    }
     render() {
         return (
             <View style={{
-                width: "100%",
-                height: 40,
+                width: "98%",
+                height: 50,
                 // backgroundColor: "#fff",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                flexDirection: "row",
 
             }}>
                 <View style={{
-                    width: "90%",
+                    flex: 1,
                     maxWidth: 600,
                     height: 30,
                     backgroundColor: "#ff000022",
                     justifyContent: "center",
                     borderRadius: 8,
-                    alignItems: "center"
+                    alignItems: "center",
 
                 }}>
                     <STextImput placeholder={this.props.placeholder ? this.props.placeholder : "Buscar..."} style={{
@@ -84,7 +108,10 @@ export default class Buscador extends Component<Tprops> {
 
                         }}
                     />
+
                 </View>
+                {this.getVerEliminados()}
+
             </View>
         );
     }

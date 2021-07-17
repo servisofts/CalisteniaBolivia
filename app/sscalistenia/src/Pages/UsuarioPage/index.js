@@ -13,6 +13,7 @@ import SSCrollView from '../../Component/SScrollView';
 import SOrdenador from '../../Component/SOrdenador';
 import Buscador from '../../Component/Buscador';
 import FloatButtom from '../../Component/FloatButtom';
+import DeleteBtn from '../../Component/DeleteBtn';
 
 class UsuarioPage extends Component {
   static navigationOptions = {
@@ -87,6 +88,27 @@ class UsuarioPage extends Component {
     // console.log(actual + pageLimit);
     return listaKeys.slice(0, actual + pageLimit);
   }
+  getRecuperar(data) {
+    if (data.estado != 0) {
+      return <View />
+    }
+    return <DeleteBtn title={"Recuperar"} onDelete={() => {
+      var object = {
+        component: "usuario",
+        type: "editar",
+        version: "2.0",
+        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+        estado: "cargando",
+        cabecera: "registro_administrador",
+        data: {
+          ...data,
+          estado: 1,
+        },
+      }
+      // alert(JSON.stringify(object));
+      this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+    }} />
+  }
   render() {
 
     const getLista = () => {
@@ -111,22 +133,29 @@ class UsuarioPage extends Component {
       if (!this.state.buscador) {
         return <View />
       }
+      var objFinal = {};
+      Object.keys(data).map((key) => {
+        // if (data[key].estado == 0) {
+        //   return <View />
+        // }
+        objFinal[key] = data[key];
+      });
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
         ]).ordernarObject(
-          this.state.buscador.buscar(data)
+          this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
         var usr = data[key];
         var obj = data[key];
         // console.log(obj);
         // return <View />
-        if (!usr.estado) {
-          return <View />
-        }
+        // if (!usr.estado) {
+        //   return <View />
+        // }
 
         return <TouchableOpacity style={{
           width: "90%",
@@ -176,9 +205,11 @@ class UsuarioPage extends Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  color: "#fff"
+                  color: "#fff",
+                  textDecorationLine:(obj.estado==0?"line-through":"none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
+              {this.getRecuperar(obj)}
             </View>
           </View>
         </TouchableOpacity>

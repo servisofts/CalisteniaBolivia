@@ -52,6 +52,9 @@ export default class ListaPaquetes extends Component {
             // if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
             //     return <View />
             // }
+            // if (obj.estado != 1) {
+            //     return <View />
+            // }
             return (<TouchableOpacity style={{
                 width: "96%",
                 backgroundColor: "#66000044",
@@ -83,7 +86,7 @@ export default class ListaPaquetes extends Component {
                     })}
                 </View>
                 <View style={{
-                    flex: 6,
+                    flex: 4,
                     height: 20,
                     justifyContent: "center",
                     // alignItems: "center"
@@ -92,38 +95,42 @@ export default class ListaPaquetes extends Component {
                     <Text style={{
                         color: "#ffffff",
                         fontSize: 14,
+                        textDecorationLine: (obj.estado != 1 ? "line-through" : "none")
                     }}>{obj.descripcion}</Text>
                 </View>
                 <View style={{
                     flex: 1,
-                    height: 20,
+                    height: "100%",
                     justifyContent: "center",
                     // alignItems: "center"
-                    paddingStart: 8,
                 }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>{obj.participantes}</Text>
-                </View>
-                <View style={{
-                    flex: 1,
-                    height: 20,
-                    justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>{obj.dias}</Text>
+                    <View style={{
+                        flex: 1,
+                        // alignItems: "center"
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 8,
+                        }}>{"#per: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.participantes}</Text>
+                        </Text>
+                    </View>
+                    <View style={{
+                        flex: 1,
+                        // alignItems: "center"
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 8,
+                        }}>{"dias: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.dias}</Text>
+                        </Text>
+                    </View>
                 </View>
                 <View style={{
                     flex: 2,
                     height: 20,
                     justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
+                    alignItems: "center",
+                    // paddingStart: 8,
                 }}>
                     <Text style={{
                         color: "#ffffff",

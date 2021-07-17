@@ -21,10 +21,13 @@ export default class MenuModulos extends Component {
         //         descripcion: "Usuario Page"
         //     }
         // }
+        if (!pages) {
+            return <View />
+        }
         return Object.keys(pages).map((key) => {
             var obj = pages[key];
             // console.log(obj)
-            if(!obj.is_page){
+            if (!obj.is_page) {
                 return <View />
             }
             var urlImage = AppParams.servicios["roles_permisos"] + "page/" + obj.key;
@@ -58,13 +61,14 @@ export default class MenuModulos extends Component {
                     })}
                 </View>
                 <View style={{
-                    height: 20,
+                    height: 22,
                     justifyContent: "center",
                     alignItems: "center"
                 }}>
                     <Text style={{
                         color: "#ffffff",
-                        fontSize: 14,
+                        fontSize: 12,
+                        textAlign: "center",
                     }}>{obj.descripcion}</Text>
                 </View>
 

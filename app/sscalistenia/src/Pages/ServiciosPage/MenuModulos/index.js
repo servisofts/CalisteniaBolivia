@@ -72,11 +72,12 @@ export default class MenuModulos extends Component {
                 <View style={{
                     height: 20,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                 }}>
                     <Text style={{
                         color: "#ffffff",
                         fontSize: 14,
+                        textAlign:"center"
                     }}>{obj.descripcion}</Text>
                 </View>
 

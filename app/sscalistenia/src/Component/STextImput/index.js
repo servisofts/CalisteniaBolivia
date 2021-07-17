@@ -22,9 +22,6 @@ class STextImput extends Component {
             this.value = _props.value;
         }
         // this.setState({ value: this.value });
-
-
-
     }
 
     getValue() {
@@ -118,7 +115,7 @@ class STextImput extends Component {
                 }
                 defaultCountry="BO"
                 lang="en"
-                placeholderTextColor={'#666'}
+                placeholderTextColor={'#999'}
                 // onChangeText={onChangeText}
                 onChangeText={(text) => {
                     INSTANCE.value = text.dialCode + " " + text.phoneNumber;
@@ -126,19 +123,17 @@ class STextImput extends Component {
             />
         }
         var INSTANCE = this;
+        console.log(this._props)
         return (<TextInput
             ref={(ref) => this._ref = ref}
-            placeholderTextColor={'#666'}
-            // value={this.state.value}
+            placeholderTextColor={'#999'}
             onChangeText={(text) => {
                 this.setState({ value: text })
                 this.value = text;
                 this.value = this.value.trim();
-
                 if (this.propiedades.type == "Monto") {
                     const clean = text.replace(/[^0-9]/g, '');
                     this.value = clean
-
                     // this.verify();
                     // return true;
                     // INSTANCE._ref.setNaviteProps({ test: clean })
@@ -151,6 +146,8 @@ class STextImput extends Component {
                 // })
             }}
             {...this.propiedades}
+            placeholder={(!this._props ? this.propiedades.placeholder : this._props.placeholder)}
+            defaultValue={this.value + ""}
             style={{ ...this.propiedades.style, outline: "none" }}
         />)
     }

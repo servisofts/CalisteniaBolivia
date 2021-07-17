@@ -6,12 +6,13 @@ type tprop = {
     title: String,
     time: Number,
     onDelete: Function,
-    onCancel: Function
+    onCancel: Function,
+    style: View.style
 }
 export default class DeleteBtn extends Component<tprop> {
     constructor(props) {
         super(props);
-        this.time = !props.time ? 5 : props.time;
+        this.time = !props.time ? 3 : props.time;
         this.state = {
             count: this.time,
             text: props.title ? props.title : "ELIMINAR",
@@ -23,7 +24,7 @@ export default class DeleteBtn extends Component<tprop> {
         if (this.onAnimCancel) {
             return;
         }
-        
+
         new Animated.timing(this.state.anim, {
             duration: 200,
             toValue: this.time * 2
@@ -74,6 +75,7 @@ export default class DeleteBtn extends Component<tprop> {
             <TouchableOpacity style={{
                 width: 60,
                 height: 25,
+                ...this.props.style,
             }} onPress={() => {
                 if (this.onAnimated) {
                     this.animCancel();
