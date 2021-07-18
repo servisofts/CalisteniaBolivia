@@ -123,7 +123,7 @@ class STextImput extends Component {
             />
         }
         var INSTANCE = this;
-        console.log(this._props)
+        // console.log(this._props)
         return (<TextInput
             ref={(ref) => this._ref = ref}
             placeholderTextColor={'#999'}

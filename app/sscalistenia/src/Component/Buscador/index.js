@@ -57,6 +57,9 @@ export default class Buscador extends Component<Tprops> {
         return objFinal;
     }
     getVerEliminados = () => {
+        if (!this.props.eliminados) {
+            return <View />
+        }
         return <TouchableOpacity
             onPress={() => {
                 this.state.verEliminados = !this.state.verEliminados;
@@ -102,6 +105,8 @@ export default class Buscador extends Component<Tprops> {
                         paddingLeft: 8,
                         paddingRigth: 8,
                     }}
+                        autoFocus={true}
+
                         onChangeText={(txt) => {
                             this.state.value = txt;
                             this.props.repaint();

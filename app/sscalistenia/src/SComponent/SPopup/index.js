@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import Svg from '../Svg';
+// import Svg from '../../Svg';
 
 var INSTANCE = false;
 
 
-export const SPopupOpen = ({ key, content }) => {
-    INSTANCE.open({ key, content });
+export const SPopupOpen = ({ key, content, style }) => {
+    INSTANCE.open({ key, content, style });
 }
 export const SPopupClose = (key) => {
     INSTANCE.close(key);
@@ -17,16 +17,22 @@ export default class SPopup extends Component {
         this.state = {
             data: {
 
-            }
+            },
+            style: {}
         };
         INSTANCE = this;
     }
     componentDidMount() {
         INSTANCE = this;
     }
-    open({ key, content }) {
+    open({ key, content, style }) {
         // console.log(key);
         this.state.data[key] = content;
+        if (style) {
+            this.state.style[key] = style;
+        } else {
+            this.state.style[key] = {};
+        }
         this.setState({ ...this.state });
     }
     close(key) {
@@ -36,6 +42,7 @@ export default class SPopup extends Component {
     getPopups() {
         return Object.keys(this.state.data).map((key) => {
             var obj = this.state.data[key];
+            var style = this.state.style[key];
             return (
                 <TouchableWithoutFeedback onPress={() => {
                     this.close(key);
@@ -43,9 +50,10 @@ export default class SPopup extends Component {
                     width: "100%",
                     height: "100%",
                     position: "absolute",
-                    backgroundColor: "#000000aa",
+                    backgroundColor: "#000000f0",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    ...style
                 }}>
                         <TouchableWithoutFeedback onPress={() => {
                             // console.log("touch2")
@@ -53,16 +61,16 @@ export default class SPopup extends Component {
                             <View style={{
                                 width: "90%",
                                 maxWidth: 600,
-                                backgroundColor: "#fff",
+                                // backgroundColor: "#fff",
                                 borderRadius: 8,
-                                padding: 8,
+                                // padding: 8,
                                 minHeight: 200,
                                 alignItems: "center",
                                 justifyContent: "center",
                             }}>
                                 {obj}
                                 <TouchableOpacity style={{
-                                    width: 50,
+                                    width: 30,
                                     height: 30,
                                     position: "absolute",
                                     top: 0,
@@ -72,15 +80,14 @@ export default class SPopup extends Component {
                                 }} onPress={() => {
                                     this.close(key);
                                 }}>
-                                   <Svg resource={require("../img/cerrar.svg")} style={{
-                                        width: 25,
-                                        height: 25,
-                                        color:"#000",
-                                        left:10,
+                                    {/* <Svg resource={require("../img/cerrar.svg")} style={{
+                                        width: 15,
+                                        height: 15,
+                                        color: "#000",
                                         //top: -10
-                                    }} />
-                                   
-                                    
+                                    }} /> */}
+
+
                                 </TouchableOpacity>
                             </View>
                         </TouchableWithoutFeedback>

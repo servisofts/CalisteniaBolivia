@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, Platform } from 'react-native';
 import SImage from '../SImage';
 type type = {
-    source: Object
+    source: Object,
+    contraste: String
+
 }
 export default class BackgroundImage extends Component<type> {
     constructor(props) {
@@ -13,7 +15,7 @@ export default class BackgroundImage extends Component<type> {
     getBackground = () => {
         var source = this.props.source;
         if (!source) {
-            source= require("../../img/background.png");
+            source = require("../../img/background.png");
         }
         return <View style={{
             width: "100%",
@@ -38,7 +40,7 @@ export default class BackgroundImage extends Component<type> {
                 left: 0,
                 position: "absolute",
                 opacity: (0.7 + (Platform.OS == "web" ? -0.2 : 0)),
-                backgroundColor: "#00000044"
+                backgroundColor: (this.props.contraste ? this.props.contraste : "#00000044")
             }}>
 
             </View>

@@ -41,16 +41,22 @@ import ClientePaqueteRegistroPage from './ClientePaqueteRegistroPage'
 import SucursalPage from './SucursalPage'
 import SucursalRegistroPage from './SucursalRegistroPage'
 import BuscarDireccionPage from './BuscarDireccionPage'
-import SSRolesPermisos from '../SSRolesPermisos/Pages';
+
 import EntrenadorPage from './EntrenadorPage'
 import EntrenadorPerfilPage from './EntrenadorPerfilPage'
 import EntrenamientoRegistroPage from './EntrenamientoRegistroPage'
 import UsuarioEliminadoPage from './UsuarioEliminadoPage'
 import EntrenamientoPage from './EntrenamientoPage'
 import CalendarioPage from './CalendarioPage'
+import ProveedoresPage from './Proveedor/ProveedoresPage'
+import ProveedorRegistroPage from './Proveedor/ProveedorRegistroPage'
+
+import SSRolesPermisos from '../SSRolesPermisos/Pages';
+import SComponent from '../SComponent/Pages';
 export const getPages = () => {
     return {
         // TestRNF,
+        ...SComponent,
         CargaPage,
         LobyPage,
         LobyTecnologiasPage,
@@ -96,6 +102,8 @@ export const getPages = () => {
         EntrenamientoRegistroPage,
         UsuarioEliminadoPage,
         CalendarioPage,
+        ProveedoresPage,
+        ProveedorRegistroPage,
         ...SSRolesPermisos
     }
 }

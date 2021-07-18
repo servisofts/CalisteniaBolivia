@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import ActionButtom from '../../Component/ActionButtom';
-import BackgroundImage from '../../Component/BackgroundImage';
-import BarraSuperior from '../../Component/BarraSuperior';
-import NaviDrawer from '../../Component/NaviDrawer';
-import STextImput from '../../Component/STextImput';
-import AppParams from '../../Params';
-import Svg from '../../Svg';
-import RolDeUsuario from './RolDeUsuario';
-import TipoUsuario from './TipoUsuario';
-import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
-import SSCrollView from '../../Component/SScrollView';
-import DeleteBtn from '../../Component/DeleteBtn';
-import { SSRolesPermisosValidate } from '../../SSRolesPermisos';
+import ActionButtom from '../../../Component/ActionButtom';
+import BackgroundImage from '../../../Component/BackgroundImage';
+import BarraSuperior from '../../../Component/BarraSuperior';
+import NaviDrawer from '../../../Component/NaviDrawer';
+import STextImput from '../../../Component/STextImput';
+import AppParams from '../../../Params';
+import Svg from '../../../Svg';
+import FotoPerfilUsuario from '../../../Component/FotoPerfilUsuario';
+import SSCrollView from '../../../Component/SScrollView';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
-class UsuarioRegistroPage extends Component {
+class ProveedorRegistroPage extends Component {
   static navigationOptions = ({ navigation }) => {
     const key = navigation.getParam('key', false);
     return {
@@ -50,7 +46,7 @@ class UsuarioRegistroPage extends Component {
         alert("NO HAY DATA");
       }
     }
-    console.log(this.data)
+    // console.log(this.data)
     this.imputs = {
       Nombres: new STextImput({
         placeholder: "Nombres",
@@ -108,72 +104,7 @@ class UsuarioRegistroPage extends Component {
   componentDidMount() { // B
 
   }
-  getEditar() {
-    if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: !this.data.key ? "crear" : "editar" })) {
-      return <View />
-    }
-    return <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
-      onPress={() => {
-        if (this.props.state.usuarioReducer.estado == "cargando") {
-          return;
-        }
-        var isValid = true;
-        var objectResult = {};
-        Object.keys(this.imputs).map((key) => {
-          if (this.imputs[key].verify() == false) isValid = false;
-          objectResult[key] = this.imputs[key].getValue();
-        })
-        if (!isValid) {
-          this.setState({ ...this.state });
-          return;
-        }
-        var object = {
-          component: "usuario",
-          type: !this.data.key ? "registro" : "editar",
-          version: "2.0",
-          estado: "cargando",
-          cabecera: "registro_administrador",
-          key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
-          data: {
-            ...this.data,
-            ...objectResult,
-          },
-        }
-        // alert(JSON.stringify(object));
-        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-      }}
-    />
-  }
-  getEliminar() {
-    if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "eliminar" })) {
-      return <View />
-    }
-    if (!this.data.key) {
-      return <View />
-    }
-    return <DeleteBtn
-      style={{
-        width: 100,
-        height: 40,
-        margin: 8,
-      }}
-      onDelete={() => {
-        var object = {
-          component: "usuario",
-          type: "editar",
-          version: "2.0",
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-          estado: "cargando",
-          cabecera: "registro_administrador",
-          data: {
-            ...this.data,
-            estado: 0,
-          },
-        }
-        // alert(JSON.stringify(object));
-        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-      }} />
-  }
+
   render() {
 
     if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type == "registro") {
@@ -214,7 +145,6 @@ class UsuarioRegistroPage extends Component {
     //   return <View />
     // }
 
-
     return (
       <View style={{
         flex: 1,
@@ -243,11 +173,10 @@ class UsuarioRegistroPage extends Component {
               alignItems: 'center',
               // justifyContent: 'center',
             }}>
-
               <Text style={{
                 color: "#fff",
                 fontSize: 16,
-              }}>{!this.data.key ? "Registra " : "Edita "}tu usuario.</Text>
+              }}>{!this.data.key ? "Registra " : "Edita "} el usuario proveedor.</Text>
               <View style={{
                 width: "100%",
                 maxWidth: 600,
@@ -258,8 +187,7 @@ class UsuarioRegistroPage extends Component {
                 {!this.data.key ? <View /> : <View style={{
                   width: 150,
                   height: 150,
-                  alignItems: "center",
-                }}><FotoPerfilUsuario usuario={this.data} disable={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar" })} />
+                }}><FotoPerfilUsuario usuario={this.data} />
                 </View>}
 
 
@@ -276,15 +204,40 @@ class UsuarioRegistroPage extends Component {
                 justifyContent: 'center',
                 flexDirection: "row",
               }}>
-                {this.getEliminar()}
-                {this.getEditar()}
-
-
-
+                <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
+                  onPress={() => {
+                    if (this.props.state.usuarioReducer.estado == "cargando") {
+                      return;
+                    }
+                    var isValid = true;
+                    var objectResult = {};
+                    Object.keys(this.imputs).map((key) => {
+                      if (this.imputs[key].verify() == false) isValid = false;
+                      objectResult[key] = this.imputs[key].getValue();
+                    })
+                    if (!isValid) {
+                      this.setState({ ...this.state });
+                      return;
+                    }
+                    var object = {
+                      component: "usuario",
+                      type: !this.data.key ? "registro" : "editar",
+                      version: "2.0",
+                      estado: "cargando",
+                      cabecera: "registro_administrador",
+                      key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
+                      key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
+                      data: {
+                        ...this.data,
+                        ...objectResult,
+                      },
+                    }
+                    // alert(JSON.stringify(object));
+                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                  }}
+                />
               </View>
             </View>
-            <RolDeUsuario data={this.data} />
-            {/* <TipoUsuario data={this.data} /> */}
           </SSCrollView>
         </View>
 
@@ -296,4 +249,4 @@ class UsuarioRegistroPage extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(UsuarioRegistroPage);
+export default connect(initStates)(ProveedorRegistroPage);

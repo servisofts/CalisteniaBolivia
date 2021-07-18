@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../Params';
+import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 import STheme from '../../../STheme';
 
 const RolDeUsuario = (props) => {
+    if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "ver_rol" })) {
+        return <View />
+    }
     var data = props.state.rolReducer.data;
     if (!data) {
         if (props.state.rolReducer.estado == "cargando") {
@@ -43,10 +47,16 @@ const RolDeUsuario = (props) => {
     }
 
     const getRoles = () => {
+        var isAddSuperUsuario = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "add_rol_super_usuario" })
 
         var Lista = Object.keys(data).map((key) => {
             var obj = data[key];
             var isActivo = false;
+            if (key == "01726154-c439-4d63-99a1-0615d9e15f15") {
+                if (!isAddSuperUsuario) {
+                    return <View />
+                }
+            }
             if (usuarioRol[key]) {
                 var key_nn = usuarioRol[key]
                 isActivo = props.state.usuarioRolReducer.data[key_nn];
@@ -56,7 +66,7 @@ const RolDeUsuario = (props) => {
             }
             return <TouchableOpacity style={{
                 width: "45%",
-                maxWidth:200,
+                maxWidth: 200,
                 height: 160,
                 margin: 8,
                 borderRadius: 10,
@@ -67,6 +77,9 @@ const RolDeUsuario = (props) => {
 
             }}
                 onPress={() => {
+                    if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
+                        return <View />
+                    }
                     if (!isActivo) {
                         var object = {
                             component: "usuarioRol",
@@ -110,7 +123,7 @@ const RolDeUsuario = (props) => {
                     }}>
                         <Text style={{
                             fontSize: 18,
-                            textAlign:"center",
+                            textAlign: "center",
                             fontWeight: "bold",
                             color: STheme.color.text
                         }}>{obj.descripcion}</Text>

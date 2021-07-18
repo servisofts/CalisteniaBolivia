@@ -33,7 +33,7 @@ class RolRegistroPage extends Component {
       borderWidth: 2,
       borderColor: "#999",
       borderRadius: 8,
-      color:"#fff",
+      color: "#fff",
     }
     var key = this.props.navigation.getParam("key", false);
     this.TextButom = "CREAR";
@@ -92,12 +92,17 @@ class RolRegistroPage extends Component {
           flex: 1,
           width: "100%",
         }}>
-          <SSCrollView contentContainerStyle={{
-            alignItems: "center"
-          }}>
+          <SSCrollView
+            style={{
+              maxWidth: "100%",
+            }}
+            contentContainerStyle={{
+              alignItems: "center",
+
+            }}>
             <View style={{
               width: "100%",
-              maxWidth: 600,
+              // maxWidth: 600,
               alignItems: 'center',
             }}>
               <View style={{
@@ -139,6 +144,10 @@ class RolRegistroPage extends Component {
                 }}>
                   {this.props.state.imageReducer.getImage(urlImage, {})}
                 </TouchableOpacity>
+                <Text style={{
+                  fontSize: 12,
+                  color: "#999",
+                }}>{this.data.key}</Text>
                 {Object.keys(this.imputs).map((key) => {
                   return this.imputs[key].getComponent();
                 })}
@@ -195,7 +204,6 @@ class RolRegistroPage extends Component {
                 />
 
               </View>
-
             </View>
             {!this.data.key ? <View /> : <PremisosDelRol data={this.data} />}
           </SSCrollView>

@@ -13,7 +13,7 @@ import Paquete from '../../Component/Paquete';
 import Usuario from './Usuario';
 import SCalendar from '../../Component/SCalendar';
 import SDate from '../../Component/SCalendar/SDate';
-import { SPopupOpen } from '../../SPopup';
+import { SPopupOpen } from '../../SComponent/SPopup';
 import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
@@ -129,8 +129,8 @@ class ClientePaqueteRegistroPage extends Component {
                 }}>Se va a asignar un paquete al usuario {this.key_usuario}.</Text> */}
                 <ActionButtom label={"Crear"} cargando={this.props.state.paqueteUsuarioReducer.estado == "cargando"} onPress={() => {
                   SPopupOpen({
-                    
-                    key: "confirmarPaquete", content: (
+                    key: "confirmarPaquete",
+                    content: (
                       <ConfirmarPaquete data={{
                         key_paquete: this.key_paquete,
                         key_usuario: this.key_usuario,
@@ -139,7 +139,7 @@ class ClientePaqueteRegistroPage extends Component {
                       }} />
                     )
                   })
-                 
+
                 }} />
               </View>
 

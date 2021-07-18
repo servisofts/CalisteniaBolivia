@@ -335,7 +335,7 @@ class SessionWeb {
 }
 const Log = (mensaje) => {
     if (DEBUG) {
-        console.log("\x1b[34m" + "SSSocketNative::SSSession:: " + mensaje + "\x1b[39m");
+        console.log("\x1B[31m " + "SSSocketNative::SSSession:: " + mensaje + "\x1b[39m");
     }
 }
 export default SessionWeb;

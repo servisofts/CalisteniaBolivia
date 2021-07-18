@@ -3,9 +3,16 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import AppParams from "../Params";
 let INSTANCE = false;
-export const SSRolesPermisosValidate = ({ page, permiso }) => {
-    return INSTANCE.isValid({ page, permiso });
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
+    var isValid = INSTANCE.isValid({ page, permiso });
+    if (isAlert) {
+        alert("No tiene permisos. Contactese con el administrador.")
+    }
+    return isValid;
 }
+
 export const SSRolesPermisosGetPages = () => {
     return INSTANCE.getPages();
 }
@@ -26,14 +33,24 @@ class SSRolesPermisos extends Component {
         if (!this.permisos[page]) {
             return false;
         }
+        if (!this.permisos[page].permisos[permiso]) {
+            return false;
+        }
         // Object.keys(this.permisos).map((key) => {
         //     var obj = this.permisos[key];
         //     console.log(key);
         // })
         return true;
     }
-    getPermisos() {
-
+    getPermisos = async () => {
+        // await delay(2000);
+        var object = {
+            component: "usuarioPage",
+            type: "getAll",
+            estado: "cargando",
+            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+        }
+        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
     }
     render() {
         if (!this.props.state.socketReducer.session[AppParams.socket.name]) {
@@ -51,13 +68,7 @@ class SSRolesPermisos extends Component {
                 console.log("CARGANDO PAGINAS")
                 return <View />
             }
-            var object = {
-                component: "usuarioPage",
-                type: "getAll",
-                estado: "cargando",
-                key_usuario: this.props.state.usuarioReducer.usuarioLog.key
-            }
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            this.getPermisos();
             return <View />
         }
         this.permisos = permisos;
