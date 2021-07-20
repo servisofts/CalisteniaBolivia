@@ -7,7 +7,7 @@ public class ManejadorServicio {
         if(!obj.isNull("component")){
             switch(obj.getString("component")){
                 case "servicio":
-                    new servicio(obj);
+                    new servicio2(obj);
                 break;
             }
         }

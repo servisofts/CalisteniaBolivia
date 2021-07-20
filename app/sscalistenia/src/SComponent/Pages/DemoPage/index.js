@@ -69,6 +69,17 @@ class DemoPage extends Component {
                 }} > Ver Grid </SButtom>
         </View>
     }
+    getSInput() {
+        return <View>
+            <SButtom
+                options={{
+                    type: "secondary"
+                }}
+                onPress={() => {
+                    this.props.navigation.navigate("InputDemo");
+                }} > InputDemos </SButtom>
+        </View>
+    }
     getOption = (tipoObjeto) => {
         var cont = false;
         switch (tipoObjeto) {
@@ -81,6 +92,8 @@ class DemoPage extends Component {
             case "SPopup": cont = this.getSPopup();
                 break;
             case "SGrid": cont = this.getSGrid();
+                break;
+            case "SInput": cont = this.getSInput();
                 break;
         }
         return <SContainer options={{
@@ -110,6 +123,7 @@ class DemoPage extends Component {
                 {this.getOption("SButtom")}
                 {this.getOption("SPopup")}
                 {this.getOption("SGrid")}
+                {this.getOption("SInput")}
             </SContainer>
         );
     }
