@@ -61,18 +61,22 @@ class STextImput extends Component {
         }
 
         if (this.propiedades.type == "Email") {
-            var aux = this.value.replace(/\s*$/, "");
-            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            if (reg.test(aux) === false) {
-                // if (!this.propsTemp.style) {
-                //     this.propsTemp.style = this.propiedades.style;
-                // }
-                // this.propiedades.style = {
-                //     ...this.propiedades.style,
-                //     borderColor: "#BE223A"
-                // }
-                // return false
-            }
+            // try {
+            //     var aux = this.value.replace(/\s*$/, "");
+            //     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            //     if (reg.test(aux) === false) {
+            //         // if (!this.propsTemp.style) {
+            //         //     this.propsTemp.style = this.propiedades.style;
+            //         // }
+            //         // this.propiedades.style = {
+            //         //     ...this.propiedades.style,
+            //         //     borderColor: "#BE223A"
+            //         // }
+            //         // return false
+            //     }
+            // } catch (e) {
+
+            // }
         }
         if (this.propsTemp.style) {
             this.propiedades.style = { ...this.propsTemp.style };

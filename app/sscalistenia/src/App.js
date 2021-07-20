@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     flex: 1,
-    backgroundColor: "#000",
     maxHeight: "100%"
   },
   container: {

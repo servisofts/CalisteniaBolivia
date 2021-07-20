@@ -7,10 +7,22 @@ export default class SSize extends Component {
     this.state = {
     };
   }
-  static getSize(col) {
+  static getSize(colp) {
     if (!INSTANCE) return {};
-    if (col == "default") {
+    if (colp == "default") {
       return {}
+    }
+    var col = {};
+    if (typeof colp == "string") {
+      colp.split(" ").map((row) => {
+        var cols = /((xs|sm|md|lg|xl)-(([0-9]{1,2}.[0-9])|([0-9]{1,2})))/.exec(row);
+        if (cols[2] && cols[3]) {
+          col[cols[2]] = cols[3];
+        }
+      })
+
+    } else {
+      col = colp;
     }
 
     const getMax = (type) => {
@@ -84,7 +96,7 @@ export default class SSize extends Component {
         style={{
           width: "100%",
           height: "100%",
-          position:"absolute",
+          position: "absolute",
           // backgroundColor:"#f0f"
         }}
         onLayout={(evt) => {

@@ -7,6 +7,7 @@ import { SButtom } from './SButtom';
 import { SAnimated } from './SAnimated';
 import SPopup, { SPopupOpen, SPopupClose } from './SPopup';
 import SSize from './SSize';
+import { SView } from './SView';
 
 export {
     STheme,
@@ -36,16 +37,19 @@ export class SComponentClass extends Component {
         return this.props.children;
     }
     render() {
-        return (<SContainer style={{
-            width: "100%",
-            flex: 1,
-        }}>
+        return (<SView
+            style={{
+                width: "100%",
+                height:"100%",
+                flex: 1,
+                overflow: "hidden",
+            }}>
             <SSize repaint={() => this.repaint()} >
                 {this.getChildrens()}
             </SSize>
             <SThemeClass repaint={() => this.repaint()} />
             <SPopup />
-        </SContainer>
+        </SView>
         );
     }
 }

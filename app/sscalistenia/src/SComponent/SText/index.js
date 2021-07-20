@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet , TextStyle} from 'react-native';
 import { STheme } from '../../SComponent';
 
 type typeConfig = {
@@ -7,7 +7,7 @@ type typeConfig = {
     variant: "default" | "h1" | "h2" | "h3" | "h4" | "h5",
 }
 type typeProps = {
-    style: Text.Style,
+    style: TextStyle,
     options: typeConfig
     // onPress: Function,
     //callBack:Function,

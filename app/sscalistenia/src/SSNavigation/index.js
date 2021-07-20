@@ -4,6 +4,7 @@ import { NavigationNavigator, createAppContainer } from 'react-navigation';
 import * as Pages from '../Pages'
 import { connect } from 'react-redux';
 import { AsyncStorage, Linking } from 'react-native';
+import { STheme } from '../SComponent';
 
 var curNavPage;
 export const init = (): NavigationNavigator => {
@@ -14,7 +15,7 @@ export const init = (): NavigationNavigator => {
                 headerTintColor: "#000",
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
-                    backgroundColor: "#000"
+                    backgroundColor: STheme().backgroundColor
                 }
             }),
         }
@@ -67,10 +68,8 @@ class SSNavigation extends Component {
             <Container
                 uriPrefix={"calistenia://"}
                 // enableURLHandling={false}
-
                 persistNavigationState={this.persistNavigationState}
                 loadNavigationState={this.loadNavigationState}
-
                 onNavigationStateChange={(prev, news, action) => {
                     console.log(prev.routes[0])
                     console.log(action)

@@ -52,7 +52,7 @@ const Carga = (props) => {
         setMensaje(mensajeTemp);
         return <View />;
     }
-    new SThread(2600, "hiloVerificarEntrada").start(() => {
+    new SThread(2000, "hiloVerificarEntrada",true).start(() => {
 
         if (!props.state.usuarioReducer.usuarioLog) {
             // props.navigation.replace("LoginPage");
