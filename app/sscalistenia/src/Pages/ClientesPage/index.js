@@ -121,6 +121,21 @@ class ClientesPage extends Component {
         }, true);
         return <ActivityIndicator color={"#fff"} />
       }
+
+      var usuariosActivos = this.props.state.usuariosActivosReducer;
+      if (!usuariosActivos) {
+        if (reducer.estado == "cargando") {
+          return <ActivityIndicator color={"#fff"} />
+        }
+        this.props.state.socketReducer.session[AppParams.socket.name].send({
+          component: "usuario",
+          type: "getActivos",
+          estado: "cargando",
+        }, true);
+        return <ActivityIndicator color={"#fff"} />
+      }
+
+
       if (!this.state.buscador) {
         return <ActivityIndicator color={"#fff"} />
       }
