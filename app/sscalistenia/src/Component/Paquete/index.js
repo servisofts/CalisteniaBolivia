@@ -27,6 +27,7 @@ class Paquete extends Component {
             return <View />
         }
         var obj = data[key];
+        if (this.props.onLoad) this.props.onLoad(obj);
         var urlImage = AppParams.urlImages + "paquete_" + obj.key;
         return (
             <TouchableOpacity style={{
@@ -42,7 +43,7 @@ class Paquete extends Component {
             }} onPress={() => {
                 // if (obj.url) {
                 // console.log(obj)
-                this.props.onPress(key);
+                if (this.props.onPress) this.props.onPress(key);
                 // }
             }}>
                 <View style={{
@@ -60,7 +61,7 @@ class Paquete extends Component {
                     })}
                 </View>
                 <View style={{
-                    flex: 6,
+                    flex: 4,
                     height: 20,
                     justifyContent: "center",
                     // alignItems: "center"
@@ -73,33 +74,36 @@ class Paquete extends Component {
                 </View>
                 <View style={{
                     flex: 1,
-                    height: 20,
+                    height: "100%",
                     justifyContent: "center",
                     // alignItems: "center"
-                    paddingStart: 8,
                 }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>{obj.participantes}</Text>
-                </View>
-                <View style={{
-                    flex: 1,
-                    height: 20,
-                    justifyContent: "center",
-                    // alignItems: "center"
-                    paddingStart: 8,
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 14,
-                    }}>{obj.dias}</Text>
+                    <View style={{
+                        flex: 1,
+                        // alignItems: "center"
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 8,
+                        }}>{"#per: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.participantes}</Text>
+                        </Text>
+                    </View>
+                    <View style={{
+                        flex: 1,
+                        // alignItems: "center"
+                    }}>
+                        <Text style={{
+                            color: "#ffffff",
+                            fontSize: 8,
+                        }}>{"dias: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.dias}</Text>
+                        </Text>
+                    </View>
                 </View>
                 <View style={{
                     flex: 2,
                     height: 20,
                     justifyContent: "center",
-                    // alignItems: "center"
+                    alignItems: "center",
                     paddingStart: 8,
                 }}>
                     <Text style={{

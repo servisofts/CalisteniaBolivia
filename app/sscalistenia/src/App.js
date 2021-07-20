@@ -17,12 +17,14 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import Reducer from './Reducer';
-import * as SSNavigation from './SSNavigation';
+import SSNavigation from './SSNavigation';
 
 import AppParams from './Params/index.json'
 import BarraDeDesconeccion from './SSSocket/BarraDeDesconeccion';
 import DropDown from './Component/DropDown';
 import SSRolesPermisos from './SSRolesPermisos';
+import { SComponentClass } from './SComponent';
+
 const store = createStore(
   Reducer,
   {},
@@ -31,31 +33,23 @@ const store = createStore(
 
 SSSocket.init(store);
 
-const Container = SSNavigation.init(store);
+// const Container = SSNavigation.init(store);
 
 
 const isNative = Platform.OS !== 'web';
 
 const App = () => {
-  const [wasRotated, setwasRotated] = useState(false);
-  const spinValue = useRef(new Animated.Value(0)).current;
-  const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.scrollView} behavior={{padding:0,}}>
+      <SafeAreaView style={styles.scrollView} behavior={{ padding: 0, }}>
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
         <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
-        <SSRolesPermisos/>
-        <View style={{
-          // position:"absolute",
-          height: "100%",
-          width: "100%",
-          backgroundColor: "#000"
-        }}>
-          <Container />
-          {/* <DropDown /> */}
-        </View>
+        <SSRolesPermisos />
+        <SComponentClass >
+          <SSNavigation />
+        </SComponentClass>
+
       </SafeAreaView>
     </Provider>
 
@@ -66,7 +60,6 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     flex: 1,
-    backgroundColor: "#000",
     maxHeight: "100%"
   },
   container: {

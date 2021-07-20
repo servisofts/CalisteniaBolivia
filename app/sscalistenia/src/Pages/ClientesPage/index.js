@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
+import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform, ActivityIndicator } from 'react-native';
 // import NaviDrawer from '../../Component/NaviDrawer';
 // import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
-import * as SSNavigation from '../../SSNavigation'
+// import * as SSNavigation from '../../SSNavigation'
 // import ActionButtom from '../../Component/ActionButtom';
 import AppParams from '../../Params';
 import BackgroundImage from '../../Component/BackgroundImage';
@@ -25,7 +25,7 @@ class ClientesPage extends Component {
         curPage: 1,
       }
     };
-    SSNavigation.setProps(props);
+    // SSNavigation.setProps(props);
 
   }
   sendMail = (to) => {
@@ -94,7 +94,7 @@ class ClientesPage extends Component {
       var data = this.props.state.usuarioReducer.data[cabecera];
       if (!data) {
         if (this.props.state.usuarioReducer.estado == "cargando") {
-          return <Text>Cargando</Text>
+          return <ActivityIndicator color={"#fff"} />
         }
         var object = {
           component: "usuario",
@@ -105,13 +105,13 @@ class ClientesPage extends Component {
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-        return <View />
+        return <ActivityIndicator color={"#fff"} />
       }
       var reducer = this.props.state.usuarioRolReducer;
       var dataRU = reducer.rol["d16d800e-5b8d-48ae-8fcb-99392abdf61f"];
       if (!dataRU) {
         if (reducer.estado == "cargando") {
-          return <Text>Cargando</Text>
+          return <ActivityIndicator color={"#fff"} />
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send({
           component: "usuarioRol",
@@ -119,21 +119,21 @@ class ClientesPage extends Component {
           estado: "cargando",
           key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
         }, true);
-        return <View />
+        return <ActivityIndicator color={"#fff"} />
       }
       if (!this.state.buscador) {
-        return <View />
+        return <ActivityIndicator color={"#fff"} />
       }
       var objFinal = {};
       Object.keys(data).map((key) => {
         if (!dataRU[key]) {
           return <View />
         }
+        // if (data[key].estado == 0) {
+        //   return <View />
+        // }
         objFinal[key] = data[key];
       });
-      // console.log(clientes);
-      // var dto = data;
-      // console.log("REPINTO===")
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
@@ -145,10 +145,10 @@ class ClientesPage extends Component {
       ).map((key) => {
         var usr = data[key];
         var obj = data[key];
-   
-        if (!usr.estado) {
-          return <View />
-        }
+
+        // if (!usr.estado) {
+        //   return <View />
+        // }
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -198,7 +198,8 @@ class ClientesPage extends Component {
                   fontSize: 16,
                   fontWeight: "bold",
                   color: "#fff",
-                  textTransform:"capitalize"
+                  textTransform: "capitalize",
+                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
             </View>
@@ -234,11 +235,9 @@ class ClientesPage extends Component {
             onScroll={(evt) => {
               var evn = evt.nativeEvent;
               var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
-              // console.log(evn);
               var heigth = evn.contentSize.height;
               if (heigth - posy <= 0) {
                 this.state.pagination.curPage += 1;
-                // console.log(this.state.pagination.curPage);
                 this.setState({ ...this.state })
               }
             }}

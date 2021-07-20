@@ -131,6 +131,9 @@ class EntrenadorPage extends Component {
         if (!dataRU[key]) {
           return <View />
         }
+        // if (data[key].estado == 0) {
+        //   return <View />
+        // }
         objFinal[key] = data[key];
       });
       // console.log("REPINTO===")
@@ -147,9 +150,9 @@ class EntrenadorPage extends Component {
         var obj = data[key];
         // console.log(obj);
         // return <View />
-        if (!usr.estado) {
-          return <View />
-        }
+        // if (!usr.estado) {
+        //   return <View />
+        // }
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -204,7 +207,8 @@ class EntrenadorPage extends Component {
                   fontSize: 16,
                   fontWeight: "bold",
                   color: "#fff",
-                  textTransform: "capitalize"
+                  textTransform: "capitalize",
+                  textDecorationLine:(obj.estado==0?"line-through":"none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
             </View>

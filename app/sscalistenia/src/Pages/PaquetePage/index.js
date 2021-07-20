@@ -27,9 +27,10 @@ class PaquetePage extends Component {
 
   render() {
     this.type = this.props.navigation.getParam("type");
+    this.onResult = this.props.navigation.getParam("onResult");
     this.title = "Paquetes";
-    if (this.type == "registro_paquete") {
-      this.key_usuario = this.props.navigation.getParam("key_usuario");
+    if (this.type == "select") {
+      // this.key_usuario = this.props.navigation.getParam("key_usuario");
       this.title = "Seleccionar un paquete.";
     }
 
@@ -51,20 +52,12 @@ class PaquetePage extends Component {
         }}>
 
           <SSCrollView>
-            <View style={{
-              width: "100%",
-              // height: 170,
-              // minHeight: 200,
-              height: 50,
-              // overflow: "hidden",
-            }}>
-            </View>
             <ListaPaquetes {...this.props} onPress={(key) => {
-              if (this.type == "registro_paquete") {
-                this.props.navigation.navigate("ClientePaqueteRegistroPage", {
-                  key_usuario: this.key_usuario,
-                  key_paquete: key,
-                });
+              if (this.type == "select") {
+                if (this.onResult) {
+                  this.props.navigation.goBack();
+                  this.onResult(key);
+                }
                 return;
               }
               this.props.navigation.navigate("PaqueteRegistroPage", {

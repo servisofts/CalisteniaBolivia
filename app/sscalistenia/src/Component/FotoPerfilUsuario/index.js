@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../Params';
 import * as SImageImput from '../SImageImput';
@@ -19,6 +19,9 @@ class FotoPerfilUsuario extends Component {
             borderRadius: 8,
             overflow: "hidden",
         }} onPress={() => {
+            if (this.props.disable) {
+                return;
+            }
             SImageImput.choseFile({
                 servicio: AppParams.socket.name,
                 component: "usuario",

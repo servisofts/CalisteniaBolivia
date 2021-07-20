@@ -46,11 +46,24 @@ const editar = (state, action) => {
         state.lastEdit = action.data;
     }
 }
+// const getAll = (state, action) => {
+//     state.estado = action.estado
+//     if (action.estado === "exito") {
+//         state.data[action.key_page] = action.data;
+//     }
+// }
+
+
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        state.data[action.key_page] = action.data;
+        Object.keys(action.data).map((key) => {
+            var obj = action.data[key];
+            if (!state.data[obj.key_page]) {
+                state.data[obj.key_page] = {};
+            }
+            state.data[obj.key_page][key] = obj;
+        })
     }
 }
-
 

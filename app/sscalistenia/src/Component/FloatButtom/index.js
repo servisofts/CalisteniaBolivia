@@ -3,6 +3,9 @@ import { TouchableOpacity, View, Text } from "react-native";
 import STheme from '../../STheme';
 import Svg from '../../Svg';
 const FloatButtom = (props) => {
+    if (props.esconder) {
+        return <View />
+    }
     return (
         <TouchableOpacity onPress={() => {
             props.onPress();

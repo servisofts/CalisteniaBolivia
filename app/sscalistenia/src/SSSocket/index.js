@@ -6,10 +6,10 @@ var store;
 var SESSIONES = {};
 var LOGS = [];
 var orgLog = console.log;
-console.log = function (message) {
-    LOGS.push(message);
-    return orgLog(message);
-}
+// console.log = function (message) {
+//     LOGS.push(message);
+//     return orgLog(message);
+// }
 export const getLog = () => {
     return LOGS;
 }

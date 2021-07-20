@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Button, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, Button, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import NaviDrawer from '../../../Component/NaviDrawer';
 import NaviDrawerButtom from '../../../Component/NaviDrawer/NaviDrawerButtom';
 import * as SSNavigation from '../../../SSNavigation'
@@ -13,6 +13,8 @@ import STheme from '../../../STheme';
 import BackgroundImage from '../../../Component/BackgroundImage';
 import DeleteBtn from '../../../Component/DeleteBtn';
 import Svg from '../../../Svg';
+import SOrdenador from '../../../Component/SOrdenador';
+import Buscador from '../../../Component/Buscador';
 
 
 class PermisoPagePage extends Component {
@@ -55,13 +57,16 @@ class PermisoPagePage extends Component {
           component: "permiso",
           type: "getAll",
           estado: "cargando",
-          key_page: key_page,
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         return <View />
       }
-      var Lista = Object.keys(permisos).map((key) => {
+      var Lista = new SOrdenador([
+        { key: "descripcion", order: "asc", peso: 2 },
+      ]).ordernarObject(
+        permisos
+      ).map((key) => {
         var objPermiso = permisos[key];
         // fetch(AppParams.urlImages + "permiso/" + objPermiso.key)
 
@@ -73,10 +78,9 @@ class PermisoPagePage extends Component {
         }
         var urlImage = AppParams.servicios["roles_permisos"] + "permiso/" + objPermiso.key;
         return <TouchableOpacity style={{
-          width: 60,
-          marginStart: 4,
-          // justifyContent: "center",
-          alignItems: "center"
+          width: 80,
+          height: 120,
+          alignItems: "center",
         }} onPress={() => {
           // var pagina = this.props.state.usuarioPageReducer.data["PermisoPagePage"];
           // if (!pagina) {
@@ -88,8 +92,8 @@ class PermisoPagePage extends Component {
           this.props.navigation.navigate("PermisoCrearPage", { key: objPermiso.key, key_page: objPermiso.key_page });
         }}>
           <View style={{
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             borderRadius: 8,
             backgroundColor: STheme.color.card,
             borderColor: "#ddd",
@@ -104,7 +108,7 @@ class PermisoPagePage extends Component {
 
           </View>
           <Text style={{
-            width: "100%",
+            width: "90%",
             textAlign: "center",
             fontSize: 10,
             // backgroundColor: "#000",
@@ -122,28 +126,29 @@ class PermisoPagePage extends Component {
         // }
         return (
           <TouchableOpacity style={{
-            marginStart: 4,
-            height: 50,
-            width: 50,
+            height: 80,
+            width: 80,
+            alignItems: "center"
           }}
             onPress={() => {
               this.props.navigation.navigate("PermisoCrearPage", { key_page: key_page });
             }} >
             <Svg name={"Add"} style={{
-              width: "100%",
-              height: "100%"
+              width: 60,
+              height: 60
             }} />
           </TouchableOpacity>
         )
       }
-      return <ScrollView
-        horizontal={true}
+      return <View
         style={{
-          flexDirection: "row"
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "flex-start"
         }}>
         {getButtomCrearPermiso()}
         {Lista}
-      </ScrollView>
+      </View>
     }
     const getButtomEditar = (obj) => {
       // var pagina = this.props.state.usuarioPageReducer.data["PermisoPagePage"];
@@ -153,12 +158,12 @@ class PermisoPagePage extends Component {
       // if (!pagina.permisos["editar"]) {
       //   return <View />
       // }
-      return (<ActionButtom label="EDITAR" onPress={() => {
+      return (<ActionButtom styleText={{ fontSize: 10, }} label="Editar" onPress={() => {
         this.props.navigation.navigate("PermisoPageRegistroPage", { key: obj.key });
       }} style={{
         width: 60,
         height: 25,
-        borderRadius:4,
+        borderRadius: 4,
         margin: 0,
       }} />)
     }
@@ -170,7 +175,7 @@ class PermisoPagePage extends Component {
       // if (!pagina.permisos["anular"]) {
       //   return <View />
       // }
-      return (<DeleteBtn label="Anular"
+      return (<DeleteBtn title="Anular"
         onDelete={() => {
           var object = {
             component: "page",
@@ -188,17 +193,23 @@ class PermisoPagePage extends Component {
     }
 
     const getLista = () => {
-      return Object.keys(permisos).map((key) => {
+      if (!this.state.buscador) {
+        return <ActivityIndicator color={"#fff"} />
+      }
+
+      return new SOrdenador([
+        { key: "descripcion", order: "asc", peso: 2 },
+      ]).ordernarObject(
+        this.state.buscador.buscar(permisos)
+      ).map((key) => {
         var obj = permisos[key];
         if (obj.estado == 0) {
           return <View />
         }
         return <View style={{
           width: "95%",
-          maxWidth: 600,
-          height: 120,
           // padding: 4,
-          paddingStart: 8,
+          padding: 4,
           marginBottom: 8,
           borderRadius: 10,
           // borderWidth: 2,
@@ -210,56 +221,49 @@ class PermisoPagePage extends Component {
           <View style={{
             flexDirection: "row",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            height: 80,
+            marginBottom: 8,
+            borderBottomColor: "#660000",
+            borderBottomWidth: 1,
           }}>
+            <View style={{
+              width: 45,
+              height: 45,
+              margin: 4,
+            }}>
+              {this.props.state.imageReducer.getImage(AppParams.servicios["roles_permisos"] + "page/" + key, {})}
+            </View>
             {/* <Text style={{
               color: "#999"
             }}>descripcion: </Text> */}
             <View style={{
               flex: 2,
-              flexDirection: "row",
-              alignItems: "center"
+              // alignItems: "center"
             }}>
               <Text style={{
-                fontSize: 14,
+                fontSize: 18,
                 color: STheme.color.text
               }}>{obj.descripcion}</Text>
+              <Text style={{
+                fontSize: 10,
+                color: STheme.color.text
+              }}>{"/" + obj.url}</Text>
             </View>
 
             <View style={{
-              flexDirection: "row",
+              // flexDirection: "row",
               justifyContent: "space-evenly",
-              alignItems: "center"
+              alignItems: "center",
+              padding: 4,
             }}>
               {getButtomEditar(obj)}
               <View style={{
-                width:8,
+                height: 8,
               }}></View>
               {getButtomAnular(obj)}
 
             </View>
-          </View>
-
-          <View style={{
-            flexDirection: "row",
-            alignItems: "center",
-            // justifyContent:. 
-          }}>
-            <View style={{
-              flex: 1,
-              flexDirection: "row",
-            }}>
-              <Text style={{
-                color: "#999",
-                fontSize: 10,
-                color: STheme.color.text
-              }}>url: </Text>
-              <Text style={{
-                fontSize: 10,
-                color: STheme.color.text
-              }}>{obj.url}</Text>
-            </View>
-
           </View>
 
           <View style={{
@@ -311,9 +315,23 @@ class PermisoPagePage extends Component {
 
           // justifyContent:"Ce"
         }}>
-          <SSCrollView>
-            {getLista()}
-          </SSCrollView>
+
+          <Buscador placeholder={"Buscar."} ref={(ref) => {
+            if (!this.state.buscador) this.setState({ buscador: ref });
+          }} repaint={() => { this.setState({ ...this.state }) }}
+            eliminados={false}
+          />
+          <View style={{
+            flex: 1,
+            width: "100%",
+            alignItems: 'center',
+          }}>
+            <SSCrollView style={{
+              maxWidth: "100%",
+            }}>
+              {getLista()}
+            </SSCrollView>
+          </View>
         </View>
 
         {getButtomCrear()}

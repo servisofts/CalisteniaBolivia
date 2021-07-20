@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableOpacity,ActivityIndicator, View, Text } from "react-native";
+import { TouchableOpacity, ActivityIndicator, View, Text } from "react-native";
 const ActionButtom = (props) => {
+
     return (
         <TouchableOpacity onPress={() => {
             props.onPress();
@@ -12,7 +13,7 @@ const ActionButtom = (props) => {
                 margin: 8,
                 borderWidth: 1,
                 borderColor: "#ffffff11",
-                borderRadius: 8,
+                borderRadius: 4,
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: "#66000022",
@@ -24,7 +25,7 @@ const ActionButtom = (props) => {
                     ...props.styleText
                 }}>{props.label}</Text>
                 :
-                <ActivityIndicator color={"#999"}/>
+                <ActivityIndicator color={"#999"} />
             }
 
         </TouchableOpacity >

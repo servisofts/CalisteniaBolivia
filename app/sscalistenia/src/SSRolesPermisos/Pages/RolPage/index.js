@@ -13,6 +13,7 @@ import BackgroundImage from '../../../Component/BackgroundImage';
 import DeleteBtn from '../../../Component/DeleteBtn';
 import FloatButtom from '../../../Component/FloatButtom';
 import SSCrollView from '../../../Component/SScrollView';
+import { SSRolesPermisosValidate } from '../..';
 
 
 class RolPage extends Component {
@@ -43,13 +44,10 @@ class RolPage extends Component {
       }} />)
     }
     const getButtonEditar = (obj) => {
-      // var pagina = this.props.state.usuarioPageReducer.data["RolPage"];
-      // if (!pagina) {
-      //   return <View />;
-      // }
-      // if (!pagina.permisos["editar"]) {
-      //   return <View />;
-      // }
+      if (!SSRolesPermisosValidate({ page: "rolPage", permiso: "editar" })) {
+        // return <View />
+      }
+      
       return (<ActionButtom label="EDITAR"
         onPress={() => {
           this.props.navigation.navigate("RolRegistroPage", { key: obj.key });
@@ -103,6 +101,7 @@ class RolPage extends Component {
 
       return Object.keys(permisos).map((key) => {
         var obj = permisos[key];
+
         var urlImage = AppParams.servicios["roles_permisos"] + "rol/" + obj.key;
         return <View style={{
           width: "95%",
@@ -141,10 +140,7 @@ class RolPage extends Component {
                 color: STheme.color.text,
                 fontWeight: "bold"
               }}>{obj.descripcion}</Text>
-              <Text style={{
-                fontSize: 12,
-                color: STheme.color.text,
-              }}>{obj.key}</Text>
+
 
             </View>
             <View style={{

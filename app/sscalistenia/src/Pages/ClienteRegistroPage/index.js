@@ -46,7 +46,7 @@ class ClienteRegistroPage extends Component {
         alert("NO HAY DATA");
       }
     }
-    console.log(this.data)
+    // console.log(this.data)
     this.imputs = {
       Nombres: new STextImput({
         placeholder: "Nombres",
