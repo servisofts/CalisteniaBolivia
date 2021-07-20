@@ -106,6 +106,18 @@ public class UsuarioV2 {
                 System.out.println("NOTIFICAR QUE SE REGISTRO UN NUEVO USUARIO");
 
                 
+                if(obj.has("key_rol")){
+                    JSONObject usuario_rol = new JSONObject();
+                    usuario_rol.put("component", "usuarioRol");
+                    usuario_rol.put("type", "registro");
+                    usuario_rol.put("key_usuario", data.getString("key"));
+                    JSONObject data_usuario_rol = new JSONObject();
+                    data_usuario_rol.put("key_rol", obj.getString("key_rol"));
+                    data_usuario_rol.put("key_usuario", data.getString("key"));
+                    usuario_rol.put("data", data_usuario_rol);
+                    SocketCliete.send("roles_permisos", usuario_rol, session);
+                }
+
 
                 JSONObject objNotificacion = new JSONObject(obj.toString());
                 objNotificacion.put("component", "notificacion");
@@ -115,7 +127,7 @@ public class UsuarioV2 {
                 objNotificacion.put("component", "usuario");
                 
                 SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, objNotificacion.toString());
-                new Manejador(objNotificacion, session);
+                //new Manejador(objNotificacion, session);
                 // SocketWeb.sendAll(objNotificacion.toString());
             }
 

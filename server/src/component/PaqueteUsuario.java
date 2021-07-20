@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Config.Config;
+import Email.Email;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
@@ -82,8 +83,27 @@ public class PaqueteUsuario {
             obj.put("data", paquete_usuario);
             obj.put("estado", "exito");
 
+
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+
+            JSONObject cliente = obj.getJSONObject("cliente");
+
+            JSONObject mail = new JSONObject();
+            mail.put("__MAIL__",cliente.getString("Correo"));
+            mail.put("__FECHA__",paquete_usuario.getString("fecha_inicio"));
+            mail.put("__ID_PEDIDO__",paquete_usuario.getString("key"));
+            mail.put("__CI__",cliente.getString("CI"));
+            mail.put("__PAQUETE__",paquete_usuario.getString("nombre_paquete"));
+            mail.put("__RENOVACION__",paquete_usuario.getString("fecha_fin"));
+            mail.put("__MONTO__",paquete_usuario.get("monto").toString());
+            mail.put("__KEY_USUARIO_CLIENTE__",paquete_usuario.getString("key_usuario")+"?fecha="+new Date().toString());
+            mail.put("__KEY_PAQUETE__",paquete_usuario.getString("key_paquete")+"?fecha="+new Date().toString());
+
+            new Email(Email.TIPO_RECIBO, mail);
+
+
+
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();

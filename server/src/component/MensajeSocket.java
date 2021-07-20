@@ -5,16 +5,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
 import org.json.JSONObject;
-
 import Server.SSSAbstract.SSSessionAbstract;
 import util.console;
 
 public class MensajeSocket {
 
     public static HashMap<String, MensajeSocket> Mensajes = new HashMap<>();
-
     public static Thread hilo;
 
     public static void run() {

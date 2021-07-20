@@ -42,9 +42,6 @@ public class Usuario {
             case "subirFoto":
                 subirFoto(data, session);
                 break;
-            case "registro":
-                registro(data, session);
-                break;
             default:
                 defaultType(data, session);
         }

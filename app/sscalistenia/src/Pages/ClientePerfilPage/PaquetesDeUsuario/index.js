@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { SDateFormat, SFechaFormat } from '../../../Component/SFecha';
 import AppParams from '../../../Params';
 import SOrdenador from '../../../Component/SOrdenador';
+
 class PaquetesDeUsuario extends Component {
     constructor(props) {
         super(props);
         this.state = {
+             
         };
     }
 
@@ -28,6 +30,7 @@ class PaquetesDeUsuario extends Component {
         }
         return data[key];
     }
+
     getLista() {
         let reducer = this.props.state.paqueteUsuarioReducer;
         let data = reducer.data[this.props.key_usuario];
@@ -134,9 +137,6 @@ class PaquetesDeUsuario extends Component {
                         }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
                     </View>
                 </View>
-
-
-
             </TouchableOpacity>
         })
     }
