@@ -6,6 +6,7 @@ import BarraSuperior from '../../Component/BarraSuperior';
 import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
 import PaquetesDeUsuario from './PaquetesDeUsuario';
 import SSCrollView from '../../Component/SScrollView';
+
 class ClientePerfilPage extends Component {
   static navigationOptions = ({ navigation }) => {
     return {

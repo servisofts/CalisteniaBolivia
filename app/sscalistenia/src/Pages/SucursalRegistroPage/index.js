@@ -6,11 +6,10 @@ import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import STextImput from '../../Component/STextImput';
 import AppParams from '../../Params';
-import Svg from '../../Svg';
 import FotoPerfilComponent from '../../Component/FotoPerfilComponent';
 import SSCrollView from '../../Component/SScrollView';
 import { connect } from 'react-redux';
-import FloatButtom from '../../Component/FloatButtom';
+
 var styleImput = {
     width: "80%",
     padding: 8,
@@ -24,7 +23,7 @@ var styleImput = {
 }
 
 class SucursalRegistroPage extends Component {
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({ navigation }) => {    
         return {
             headerShown: false,
         }

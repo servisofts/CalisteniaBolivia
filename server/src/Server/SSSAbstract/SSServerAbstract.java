@@ -130,7 +130,7 @@ public abstract class SSServerAbstract implements SSServerInterface {
                 for (int i = 0; i < key_usrs.length(); i++) {
                     ArrayList<String> devices = USUARIOS.get(key_usrs.getString(i));
                     if (devices == null) {
-                        return;
+                        continue;
                     }
                     for (String idDevice : devices) {
                         String idSession = DEVICES.get(idDevice);

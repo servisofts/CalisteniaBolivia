@@ -2,8 +2,6 @@ package Email;
 
 import java.io.FileReader;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -11,12 +9,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Email extends Thread {
     public static final String TIPO_NUEVO_CERTIFICADO = "nuevoCertificado";
+    public static final String TIPO_RECIBO = "recibo";
 
+    
     private static final String EMAIL = "servisofts.srl@gmail.com";
     private static final String PASS = "servisofts123.";
 
@@ -33,6 +34,16 @@ public class Email extends Thread {
                 Contenido = Contenido.replaceAll("SevisoftsImagen","data:image/png;base64,"+data.getString("cert"));
                 // Contenido = Contenido.replaceAll("usuarioServisofts",data.getString("pass"));
                 // Contenido = Contenido.replaceAll("passServisofts",data.getString("pass"));
+
+                break;
+            case TIPO_RECIBO:
+                this.Asunto = "Tu recibo de Calistenia";
+                CorreoDestino = data.getString("__MAIL__");
+                Contenido = getHtml("recibo.html");
+                String names[] = JSONObject.getNames(data);
+                for(int i = 0; i<names.length; i++){
+                    Contenido = Contenido.replaceAll(names[i],data.getString(names[i]));
+                }
 
                 break;
             default:
@@ -84,5 +95,20 @@ public class Email extends Thread {
             }
           
         return cuerpo;
+    }
+
+    public static void main(String args[]){
+        JSONObject obj = new JSONObject();
+        obj.put("__MAIL__","ruddypazd@gmail.com");
+        obj.put("__FECHA__","asdas");
+        obj.put("__ID_PEDIDO__","sadsdsdfk-sdf-sdfsd-fsd");
+        obj.put("__CI__","6340999SC");
+        obj.put("__PAQUETE__","Calistenia 2 x 1");
+        obj.put("__RENOVACION__","10 324 2353");
+        obj.put("__MONTO__","250");
+        obj.put("__KEY_USUARIO_CLIENTE__","a34002d9-c8bc-4e58-b98c-ace4aa15f915");
+        obj.put("__KEY_PAQUETE__","5");
+        
+        new Email(Email.TIPO_RECIBO, obj);
     }
 }
