@@ -10,6 +10,7 @@ export default class SC_Mes extends Component {
         this.state = {
             date: new SDate()
         };
+       
     }
     getSDate() {
         return this.state.date;

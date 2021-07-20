@@ -31,6 +31,6 @@ public class App {
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
         ConexionMySql.setConexion(Config.getJSON("data_base_mysql")); 
-        new Migrador().run();
+        // new Migrador().run();
     }
 }

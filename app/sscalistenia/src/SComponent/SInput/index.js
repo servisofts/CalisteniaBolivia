@@ -20,22 +20,13 @@ type typeConfig = {
 
 }
 
-type typeProps = {
-    style: ViewStyle,
-    props: typeConfig,
-    onPress: Function,
-    // ViewPropTypes,
-    // TouchableOpacityProps,
-    //callBack:Function,
-}
 interface IProps extends ViewProps {
     animated: Boolean,
     style: ViewStyle,
     props: typeConfig,
-    onPress: Function,
 }
 
-export class SView extends Component<IProps> {
+export class SInput extends Component<IProps> {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,9 +42,6 @@ export class SView extends Component<IProps> {
             ...(this.props.props.style ? this.props.props.style : {}),
             ...(this.props.props.height ? { height: this.props.props.height } : {}),
         }
-    }
-    getLayout() {
-        return this.layout;
     }
     render() {
         this.buildStyle();
@@ -71,7 +59,7 @@ export class SView extends Component<IProps> {
             }
         }
         var childrens = this.props.children;
-        if (typeof childrens == "string" || typeof childrens == "number") {
+        if (typeof childrens == "string") {
             childrens = <SText options={{
                 type: this.getOption("customStyle") == "secondary" ? "primary" : "default"
             }}>{this.props.children}</SText>
@@ -79,10 +67,6 @@ export class SView extends Component<IProps> {
         return (
             <Component
                 {...this.props}
-                ref={(ref) => {
-                    if (this.props.ref) this.props.ref(this);
-                    // return this;
-                }}
                 onLayout={(evt) => {
                     this.layout = evt.nativeEvent.layout
                     if (this.props.onLayout) this.props.onLayout(evt);
@@ -108,7 +92,7 @@ export class SView extends Component<IProps> {
     }
 }
 
-SView.defaultProps = {
+SInput.defaultProps = {
     props: {},
     style: {}
 };

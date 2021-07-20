@@ -77,6 +77,7 @@ class UsuarioRegistroPage extends Component {
       "Fecha nacimiento": new STextImput({
         placeholder: "Fecha nacimiento",
         defaultValue: this.data["Fecha nacimiento"],
+        type: "Fecha",
         autoCapitalize: "none",
         style: styleImput
       }),

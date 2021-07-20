@@ -60,6 +60,9 @@ class STextImput extends Component {
             return false;
         }
 
+        if (this.propiedades.type == "Fecha") {
+
+        }
         if (this.propiedades.type == "Email") {
             // try {
             //     var aux = this.value.replace(/\s*$/, "");
@@ -103,7 +106,6 @@ class STextImput extends Component {
             return <IntlPhoneInput
                 containerStyle={{
                     ...this.propiedades.style
-
                 }}
                 defaultValue={this.value}
                 phoneInputStyle={{
