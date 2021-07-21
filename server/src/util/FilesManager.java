@@ -17,135 +17,70 @@ import javax.imageio.ImageIO;
 import Config.Config;
 
 public class FilesManager {
-    public static String guardar_file(String url, String nombre) throws IOException {
-        int dbs = 2048;
-        String arr[] = url.split("/");
-        String rootPath = Config.getJSON("files").getString("url");
-
-        File roF = new File(rootPath);
-        if (!roF.exists()) {
-            roF.mkdirs();
-        }
-        String urlTemp = "images";
-        for (int i = 0; i < arr.length; i++) {
-            urlTemp += "/" + arr[i];
-            File d = new File(rootPath + urlTemp);
-            if (!d.exists()) {
-                d.mkdirs();
-            }
-
-        }
-        FileInputStream fileInputStream = new FileInputStream("");
-
-        File f = new File(rootPath + "/images/" + url + "/" + nombre);
-        BufferedImage image = ImageIO.read(fileInputStream);
+    public static String guardar_file(InputStream in, String url) throws IOException {
+                
+        
+        File f = new File(url);
+        BufferedImage image = ImageIO.read(in);
         int w, h;
-        double porc = 100;
-        if (image.getWidth() > image.getHeight()) {
-            if (image.getWidth() > 1024) {
-                porc = 1024 * 100 / image.getWidth();
+        double porc=100;
+        if(image.getWidth()>image.getHeight()){
+            if(image.getWidth()>500){
+                porc = 500*100/image.getWidth();
             }
-        } else {
-            if (image.getHeight() > 1024) {
-                porc = 1024 * 100 / image.getHeight();
+        }else{
+            if(image.getHeight()>500){
+                porc = 500*100/image.getHeight();
             }
         }
-        w = (int) (image.getWidth() * (porc / 100));
-        h = (int) (image.getHeight() * (porc / 100));
+
+        w = (int)(image.getWidth()*(porc/100));
+        h = (int)(image.getHeight()*(porc/100));
         Graphics2D g = image.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
+        
         g.drawImage(image, 0, 0, w, h, null);
         g.dispose();
-        ImageIO.write(image.getSubimage(0, 0, w, h), "png", f);
-        return nombre;
+        ImageIO.write(image.getSubimage(0, 0, w, h), "png", f); 
+        return url;
     }
-
-    public static void copyInputStreamToFile(InputStream inputStream, File file) throws IOException {
-
-        // append = false
-        try (FileOutputStream outputStream = new FileOutputStream(file, false)) {
-            int read;
-            byte[] bytes = new byte[8192];
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-            System.out.println("Imagen insertada con exito: " + file.getAbsolutePath());
-            outputStream.close();
-        }
-
-    }
-
     public static String guardar_file_(byte[] image, String nombre, String user_key, String tipe) throws IOException {
-        String rootPath = Config.getJSON("files").getString("url");
-        rootPath += user_key + "/" + tipe + "/";
+        String rootPath =Config.getJSON("files").getString("url");
+        rootPath+=user_key+"/"+tipe+"/";
         File file = new File(rootPath);
-        if (!file.exists()) {
+        if(!file.exists()){
             file.mkdirs();
         }
-        rootPath += nombre;
+        rootPath+=nombre;
         file = new File(rootPath);
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(image);
         fos.close();
         return nombre;
     }
-
-    public static String guardar_file_type(byte[] image, String nombre, String user_key, String tipe)
-            throws IOException {
-        String rootPath = Config.getJSON("files").getString(tipe);
-        rootPath += user_key + "/";
-        String arr[] = rootPath.split("/");
+    public static String guardar_file_Glup(byte[] image, String nombre, String user_key, String tipe) throws IOException {
+        String rootPath =Config.getJSON("files").getString("url_glup");
+        rootPath+=user_key+"/";
+        String arr[] =rootPath.split("/");
         File file = new File(rootPath);
         String urlTemp = "";
         for (int i = 0; i < arr.length; i++) {
-            urlTemp += arr[i] + "/";
+            urlTemp +=  arr[i]+"/";
             File d = new File(urlTemp);
             if (!d.exists()) {
                 boolean exito = d.mkdir();
-                if (!exito) {
-                    Files.createDirectory(Paths.get(urlTemp),
-                            PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwxr-x---")));
+                if(!exito){
+                    Files.createDirectory(Paths.get(urlTemp),PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rwxr-x---")));
                 }
 
             }
 
         }
-        rootPath += nombre;
+        rootPath+=nombre;
         file = new File(rootPath);
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(image);
         fos.close();
         return nombre;
-    }
-
-    public static String rezizeImage(String url, int width, int height) throws IOException {
-        
-        File fileOriginal = new File(url);
-        File f = new File(url+"_small");
-        FileInputStream fileInputStream = new FileInputStream(fileOriginal);
-        
-        BufferedImage image = ImageIO.read(fileInputStream);
-        int w, h;
-        double porc = 100;
-        if (image.getWidth() > image.getHeight()) {
-            if (image.getWidth() > width) {
-                porc = width * 100 / image.getWidth();
-            }
-        } else {
-            if (image.getHeight() > height) {
-                porc = height * 100 / image.getHeight();
-            }
-        }
-        w = (int) (image.getWidth() * (porc / 100));
-        h = (int) (image.getHeight() * (porc / 100));
-        Graphics2D g = image.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-        g.drawImage(image, 0, 0, w, h, null);
-        g.dispose();
-        ImageIO.write(image.getSubimage(0, 0, w, h), "png", f);
-
-        return url;
     }
 }

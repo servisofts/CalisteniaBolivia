@@ -1,8 +1,6 @@
-
 import Config.Config;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
-import component.Migrador;
 import conexion.Conexion;
 import conexion.ConexionMySql;
 import util.console;

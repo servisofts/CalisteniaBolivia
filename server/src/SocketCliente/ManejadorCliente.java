@@ -22,9 +22,10 @@ public class ManejadorCliente {
                     version2(action);
                 break;
             }
-        }else
+        }else{
             version1(action);
-        
+        }
+
         if (action.has("router")) {
             SSSessionAbstract sesion =  SSServerAbstract.getSession(action.getString("router"));
             sesion.send(action.toString());            

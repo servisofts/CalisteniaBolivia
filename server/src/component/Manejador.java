@@ -78,8 +78,8 @@ public class Manejador {
                     new PaqueteServicio(data, session);
                     break;
                 }
-                case "paqueteUsuario": {
-                    new PaqueteUsuario(data, session);
+                case "paqueteVenta": {
+                    new PaqueteVenta(data, session);
                     break;
                 }
                 case "locationGoogle": {
