@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TextInput, Dimensions, Animated, NativeScrollEvent, ScrollViewProps } from 'react-native';
+import { View, Text, ScrollView, TextInput, Dimensions, Animated, NativeScrollEvent, ScrollViewProps, Platform } from 'react-native';
 import SThread from '../../Component/SThread';
 import { SButtom, SText, STheme } from '../../SComponent';
 import { SView } from '../SView';
@@ -14,19 +14,23 @@ type typeHeader = {
 //     maxScroll: { x: Number, y: Number },
 //     scrollPos: { x: Number, y: Number }
 // }
+
 export type onSrollEndEvt = {
     horizontal: NativeScrollEvent,
     vertical: NativeScrollEvent,
 }
-type SType = {
+type SType = ScrollViewProps & {
     header: [typeHeader],
     data: [Object],
     disableHorizontal: Boolean,
     reverse: Boolean,
     onScrollEnd: (evt: onSrollEndEvt) => {},
+    onScroll: (evt: onSrollEndEvt) => {},
+    header: Component,
+    footer: Component
 
-} & ScrollViewProps
-
+}
+const preventDefault = e => e.preventDefault();
 export default class SScrollView extends Component<SType> {
     constructor(props) {
         super(props);
@@ -94,12 +98,26 @@ export default class SScrollView extends Component<SType> {
             return this.layout
         }
     }
-    setEnabled(en) {
-        if (this.scrollv) {
-            this.scrollv.setNativeProps({ scrollEnabled: en })
+    componentWillUnmount() {
+        if (Platform.OS == "web") {
+            document.ontouchmove = ()=>{}
+            // document.removeEventListener('touchmove', preventDefault);
         }
-        if (this.scrollh) {
-            this.scrollh.setNativeProps({ scrollEnabled: en })
+    }
+    setEnabled(en) {
+        if (Platform.OS == "web") {
+            if (!en) {
+                document.ontouchmove = preventDefault;
+            } else {
+                document.ontouchmove = ()=>{}
+            }
+        } else {
+            if (this.scrollv) {
+                this.scrollv.setNativeProps({ scrollEnabled: en })
+            }
+            if (this.scrollh) {
+                this.scrollh.setNativeProps({ scrollEnabled: en })
+            }
         }
     }
     scrollIncrement({ x, y }) {
@@ -130,6 +148,16 @@ export default class SScrollView extends Component<SType> {
             this.scrollh.scrollTo({ x: 1, y: 1 }, true);
         }
     }
+    moveScrollVertical({ x, y }) {
+        if (this.scrollv) {
+            this.scrollv.scrollTo({ x, y }, false);
+        }
+    }
+    moveScrollHorizontal({ x, y }) {
+        if (this.scrollh) {
+            this.scrollh.scrollTo({ x, y }, false);
+        }
+    }
     scrollToEnd() {
 
         if (this.scrollv) {
@@ -155,6 +183,7 @@ export default class SScrollView extends Component<SType> {
             return <View />
         }
         return <ScrollView
+
             ref={(ref) => { this.scrollh = ref }}
             horizontal={true}
             style={{
@@ -169,6 +198,9 @@ export default class SScrollView extends Component<SType> {
             }}
             onScroll={(evt) => {
                 this.scroll_h = evt.nativeEvent;
+                if (this.props.onScroll) {
+                    this.props.onScroll(this.scrollInfo())
+                }
                 if (this.props.onScrollEnd) {
                     new SThread(350, "scroll_h", true).start(() => {
                         this.onScrollAnimationEnd();
@@ -185,57 +217,74 @@ export default class SScrollView extends Component<SType> {
             contentContainerStyle={{
                 ...this.props.contentContainerStyle,
                 ...(this.props.disableHorizontal ? { width: "100%" } : {})
-                
+
             }}
         >
-            <ScrollView
-                nestedScrollEnabled={true}
-                ref={(ref) => { this.scrollv = ref }}
-                style={{
-                    width: "100%",
-                    ...this.props.style
-                }}
-                scrollEventThrottle={16}
-                disableScrollViewPanResponder={true}
-                onLayout={(evt) => {
-                    // this.setState({ scrollv: evt.nativeEvent.layout })
-                }}
-                onScroll={(evt) => {
-                    this.scroll_v = evt.nativeEvent;
-                    if (this.props.onScrollEnd) {
-                        new SThread(350, "scroll_v", true).start(() => {
-                            this.onScrollAnimationEnd();
-                        })
-                    }
-                    // this.setState({ scroll_v: evt.nativeEvent })
-                }}
-                contentContainerStyle={{ ...this.props.contentContainerStyle }}
-            // onContentSizeChange={() => {
-            //     if (this.props.reverse) {
-            //         this.scrollv.scrollToEnd({ amimated: false });
-            //     }
-            // }}
-            >
-                <View style={{
-                    width: "100%",
-                    height: "100%",
-                }}>
-                    {this.props.children}
-                </View>
-            </ScrollView>
+            <View>
+                {this.props.header}
+                <ScrollView
+                    nestedScrollEnabled={true}
+                    ref={(ref) => { this.scrollv = ref }}
+                    style={{
+                        width: "100%",
+                        ...this.props.style
+                    }}
+                    scrollEventThrottle={16}
+                    disableScrollViewPanResponder={true}
+                    onLayout={(evt) => {
+                        // this.setState({ scrollv: evt.nativeEvent.layout })
+                    }}
+                    onScroll={(evt) => {
+                        this.scroll_v = evt.nativeEvent;
+                        if (this.props.onScroll) {
+                            this.props.onScroll(this.scrollInfo())
+                        }
+                        if (this.props.onScrollEnd) {
+                            new SThread(350, "scroll_v", true).start(() => {
+                                this.onScrollAnimationEnd();
+                            })
+                        }
+                        // this.setState({ scroll_v: evt.nativeEvent })
+                    }}
+                    contentContainerStyle={{ ...this.props.contentContainerStyle }}
+                // onContentSizeChange={() => {
+                //     if (this.props.reverse) {
+                //         this.scrollv.scrollToEnd({ amimated: false });
+                //     }
+                // }}
+                >
+                    <View style={{
+                        width: "100%",
+                        height: "100%",
+                        ...this.props.contentContainerStyle
+                    }}>
+                        {this.props.children}
+                    </View>
+                </ScrollView>
+                {this.props.footer}
+            </View>
         </ScrollView>
     }
     render() {
+
         return (
             <SView style={{
                 width: "100%",
                 flex: 1,
-            }}>
+                ...this.props.style
+            }}  >
+
                 <SView style={{
                     position: "absolute",
                     width: "100%",
                     height: "100%",
                     overflow: "hidden",
+                    ...(Platform.OS == "web" ? {
+                        position: "fixed",
+                    } : {
+                        flex: 1,
+
+                    })
 
                 }} onLayout={(evt) => {
                     this.layout = evt.nativeEvent.layout

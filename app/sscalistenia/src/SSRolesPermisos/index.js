@@ -26,6 +26,14 @@ class SSRolesPermisos extends Component {
     }
     isValid({ page, permiso }) {
         // console.log("ENTRO IS VALID")
+        var roles = this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
+        if (!roles) {
+            return false;
+        }
+        if(roles["01726154-c439-4d63-99a1-0615d9e15f15"]){
+            return true;
+        }
+
         if (!this.permisos) return false;
         var isValid = false;
         // console.log(this.permisos);
@@ -52,14 +60,22 @@ class SSRolesPermisos extends Component {
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
     }
+    getMisRoles = async () => {
+        // await delay(2000);
+        var object = {
+            component: "usuarioRol",
+            type: "getAll",
+            estado: "cargando",
+            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+        }
+        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+    }
     render() {
         if (!this.props.state.socketReducer.session[AppParams.socket.name]) {
-            console.log("No haysocket")
             return <View />
         }
         INSTANCE = this;
         if (!this.props.state.usuarioReducer.usuarioLog) {
-            console.log("NO HAY USARIO")
             return <View />
         }
         var permisos = this.props.state.usuarioPageReducer.data;
@@ -72,6 +88,16 @@ class SSRolesPermisos extends Component {
             return <View />
         }
         this.permisos = permisos;
+
+        var roles = this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
+        if (!roles) {
+            if (this.props.state.usuarioRolReducer.estado == "cargando") {
+                console.log("CARGANDO ROLES DE USUARIOS")
+                return <View />
+            }
+            this.getMisRoles();
+            return <View />
+        }
         return <View />
     }
 }

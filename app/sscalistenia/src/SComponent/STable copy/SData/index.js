@@ -24,30 +24,19 @@ export default class SData extends Component {
         return data;
     }
     getRow(obj, key) {
-
         return this.props.header.map((header, i) => {
-            var Anims = this.props.animates;
-            if (!Anims) {
-                return <View />
-            }
-            if (!Anims.widthHeaderAnim) {
-                return <View />
-            }
+            var Anims = this.props.getAnimates(i);
             return (
                 <SView props={{
                     variant: "center",
                     animated: true,
                 }} style={{
-                    position: "absolute",
-                    left: 0,
+                    left:0,
                     height: "100%",
-                    borderWidth: 1,
-                    borderColor: STheme().colorOpaque + "66",
-                    width: (Anims.widthHeaderAnim[header.key] ? Anims.widthHeaderAnim[header.key].x : header.width),
+                    width: (Anims.anim ? Anims.anim.x : header.width),
                     // borderWidth: 1,
-                    zIndex: (Anims.animSelect[header.key] ? Anims.animSelect[header.key] : 1),
                     transform: [
-                        { translateX: (Anims.positionHeader[header.key] ? Anims.positionHeader[header.key].x : 0) }
+                        { translateX: (Anims.animPosition ? Anims.animPosition.x : 0) }
                     ]
                 }}>
                     <SText style={{
@@ -61,20 +50,18 @@ export default class SData extends Component {
 
     }
     render() {
-        if (!this.props.animates) {
-            return <View />
-        }
         return this.props.data.map((obj, key) => {
             return (
                 <SView props={{
                     direction: "row",
                     style: {
-                        width: "100%",
+                        width:"100%",
                         height: 40,
-                      
+                        marginTop: 5,
+                        borderBottomWidth: 1,
+                        borderColor: STheme().colorOpaque + "66"
                     }
                 }}>
-
                     {this.getRow(obj, key)}
                 </SView>
             );

@@ -18,6 +18,7 @@ type typeConfig = {
     col: TypeCol,
     icon: Component,
     label: String,
+    onStateChange: Function,
 }
 
 interface IProps extends TextInputProps {
@@ -32,11 +33,10 @@ export class SInput extends Component<IProps> {
     constructor(props) {
         super(props);
         this.state = {
-            value: "",
+            value: this.props.defaultValue,
             error: false,
             data: {}
         };
-
     }
     getOption(option) {
         return !this.props.props[option] ? 'default' : this.props.props[option]
@@ -48,22 +48,28 @@ export class SInput extends Component<IProps> {
             ...(this.props.props.height ? { height: this.props.props.height } : {}),
         }
     }
-    verify() {
+    verify(noStateChange) {
         if (!this.props.props.isRequired) return true;
+        var isValid = true;
         if (!this.getValue()) {
-            this.setState({ error: "null" });
-            return false;
-        }
-        if (this.type) {
-            if (this.type.verify) {
-                if (!this.type.verify(this.getValue())) {
-                    this.setState({ error: "null" });
-                    return false;
+            isValid = false;
+        } else {
+            if (this.type) {
+                if (this.type.verify) {
+                    if (!this.type.verify(this.getValue())) {
+                        isValid = false;
+                    }
                 }
             }
         }
-        this.setState({ error: false });
-        return true;
+        if (!isValid != this.state.error) {
+            if (!noStateChange) {
+                this.props.onStateChange(isValid)
+            }
+            this.state.error = !isValid;
+            this.setState({ error: this.state.error });
+        }
+        return isValid
     }
     setValue(val) {
         this.setState({ value: val });
@@ -120,6 +126,15 @@ export class SInput extends Component<IProps> {
         if (this.props.onPress || type.onPress) {
             Component = TouchableOpacity;
         }
+        var valueFilter = this.state.value;
+        if (this.type.filter) {
+            valueFilter = this.type.filter(valueFilter);
+        }
+        // if(valueFilter){
+        //     if(valueFilter){
+        //         this.verify();
+        //     }
+        // }
         return (
             <Component
                 onLayout={(evt) => {
@@ -150,7 +165,7 @@ export class SInput extends Component<IProps> {
                 }} style={{ flex: 1, height: "100%" }}>
                     {this.getIcon()}
                     <TextInput
-                        value={this.state.value}
+                        value={valueFilter}
                         {...type.props}
                         {...this.props}
                         onChangeText={(_text) => {
@@ -158,6 +173,9 @@ export class SInput extends Component<IProps> {
                             if (this.type) {
                                 if (this.type.filter) {
                                     text = this.type.filter(text)
+                                }
+                                 if (this.type.onChangeText) {
+                                    text = this.type.onChangeText(text)
                                 }
                             }
                             this.state.value = text
@@ -185,5 +203,6 @@ export class SInput extends Component<IProps> {
 
 SInput.defaultProps = {
     props: {},
-    style: {}
+    style: {},
+    onStateChange: () => { }
 };

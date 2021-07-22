@@ -19,6 +19,9 @@ type typeProps = {
     onChange: { (value): boolean }
 }
 export default class SIDialCodeAlert extends Component<typeProps> {
+    static getDialCode(dialcode) {
+        return Countries.filter((obj) => obj.dialCode == dialcode)[0] || Countries.filter((obj) => obj.code == dialcode)[0];
+    }
     static getOpenButtom(dialcode, style, onChange) {
         var notifiChange = false;
         if (!dialcode) {

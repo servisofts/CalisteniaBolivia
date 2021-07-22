@@ -22,8 +22,37 @@ import Add from '../img/add.svg';
 import Delete from '../img/delete.svg';
 import Editar from '../img/Editar.svg';
 import NoDelete from '../img/noDelete.svg';
+import Cerrar from '../img/cerrar.svg';
 
-const Svg = (props) => {
+type typeName = "logo"
+    | "logoBlanco"
+    | "see"
+    | "folder"
+    | "EPUndefined"
+    | "Usuarios"
+    | "Ajustes"
+    | "Finanza"
+    | "Ssmenu"
+    | "Boxeo"
+    | "Bar"
+    | "Carrito"
+    | "BaseDatos"
+    | "Asegurado"
+    | "Codigo"
+    | "Server"
+    | "Santiguo"
+    | "Login"
+    | "Add"
+    | "Delete"
+    | "noDelete"
+    | "Editar"
+    | "Cerrar"
+
+type svgProps = {
+    name: typeName,
+    resource: String
+}
+const Svg = (props: svgProps) => {
 
     if (props.resource) {
         return (Platform.OS == "web" ? <img style={props.style} src={props.resource.default} /> : <props.resource.default style={props.style} />);
@@ -73,6 +102,8 @@ const Svg = (props) => {
             return (Platform.OS == "web" ? <img style={props.style} src={NoDelete} /> : <NoDelete style={props.style} />);
         case "Editar":
             return (Platform.OS == "web" ? <img style={props.style} src={Editar} /> : <Editar style={props.style} />);
+        case "Cerrar":
+            return (Platform.OS == "web" ? <img style={props.style} src={Cerrar} /> : <Cerrar style={props.style} />);
         default: return <Text>Not Found</Text>
     }
 }

@@ -50,17 +50,21 @@ class PermisoPagePage extends Component {
       var reducer = this.props.state.permisoReducer;
       var permisos = reducer.data[key_page];
       if (!permisos) {
-        if (reducer.estado == "cargando") {
-          return <Text>Cargando</Text>
+        if (Object.keys(reducer.data).length > 0) {
+          permisos = {};
+        } else {
+          if (reducer.estado == "cargando") {
+            return <Text>Cargando</Text>
+          }
+          var object = {
+            component: "permiso",
+            type: "getAll",
+            estado: "cargando",
+            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+          }
+          this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+          return <View />
         }
-        var object = {
-          component: "permiso",
-          type: "getAll",
-          estado: "cargando",
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key
-        }
-        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-        return <View />
       }
       var Lista = new SOrdenador([
         { key: "descripcion", order: "asc", peso: 2 },

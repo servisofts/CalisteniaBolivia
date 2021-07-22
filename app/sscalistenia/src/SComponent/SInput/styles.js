@@ -21,6 +21,7 @@ const getType = (type: TypeStyles) => {
                     borderColor: STheme().colorOpaque+"44",
                     borderRadius: 4,
                     marginTop: 32,
+                    paddingStart:8,
                 },
                 "LabelStyle": {
                     position: "absolute",

@@ -12,7 +12,8 @@ export default class SHeaderItem extends Component {
         };
         this.move = 0;
         this.animSelect = new Animated.Value(0);
-        this.anim = new Animated.ValueXY({ x: this.props.obj.width, y: 0 });
+        // this.anim = new Animated.ValueXY({ x: this.props.obj.width, y: 0 });
+        this.anim = props.anim;
         this.pan = new SAPanResponder({
             onGrand: (e, gs) => {
                 this.startWidth = this.anim.x._value;
@@ -33,14 +34,14 @@ export default class SHeaderItem extends Component {
             onRelease: () => {
                 this.state.obj.width = this.anim.x._value;
                 this.props.reload();
-                this.props.changeSize(this.layout.width + 1 - this.startWidth)
+                this.props.changeSize(this.layout.width + 1 - this.anim.x._value)
                 // this.anim.extractOffset();
                 this.scroll.setEnabled(true)
 
             }
         });
 
-        this.animPosition = new Animated.ValueXY({ x: 0, y: 0 });
+        this.animPosition = props.animPosition
         this.panMove = new SAPanResponder({
             onGrand: (e, gs) => {
                 this.move = 0
@@ -102,7 +103,7 @@ export default class SHeaderItem extends Component {
         }
         return {
             ...this.layout,
-            xReal: this.layout.x + this.animPosition.x._value,
+            xReal: this.layout.left + this.animPosition.x._value,
             width: this.anim.x._value,
         }
     }
@@ -133,9 +134,13 @@ export default class SHeaderItem extends Component {
         var myLayout = this.getLayout();
         var pxinicio = layoutP.xReal;
         var pxfinal = layoutP.xReal + layoutP.width
+
         var myCenter = myLayout.xReal + (myLayout.width / 2);
 
         if (myCenter > pxinicio && myCenter < pxfinal) {
+            console.log(pxinicio+" - "+pxfinal)
+            console.log(myCenter)
+
             var toValue = layoutP.width
             var moved = myLayout.width
             if (myCenter - pxinicio > pxfinal - myCenter) {
@@ -150,7 +155,7 @@ export default class SHeaderItem extends Component {
                 duration: 100,
             }).start(() => {
                 this.setState({ onAnimated: false })
-                if (this.props.onChangePosition) this.props.onChangePosition(this, ref);
+                // if (this.props.onChangePosition) this.props.onChangePosition(this, ref);
             });
         }
     }

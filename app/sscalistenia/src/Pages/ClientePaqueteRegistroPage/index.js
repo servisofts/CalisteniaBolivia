@@ -12,8 +12,7 @@ import SSCrollView from '../../Component/SScrollView';
 import Paquete from '../../Component/Paquete';
 import Usuario from './Usuario';
 import SCalendar from '../../Component/SCalendar';
-import SDate from '../../Component/SCalendar/SDate';
-import { SPopupOpen } from '../../SComponent/SPopup';
+import { SPopupOpen, SDate } from '../../SComponent';
 import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
@@ -44,7 +43,7 @@ class ClientePaqueteRegistroPage extends Component {
     var DATA = []
     for (let i = 0; i < this.state.paquete.participantes; i++) {
       DATA.push(<Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
-        console.log(usr);
+        // console.log(usr);
         if (!this.state.usuariosData[i]) {
           this.state.usuariosData[i] = usr;
           this.state.usuarios[i] = usr.key;
@@ -129,7 +128,8 @@ class ClientePaqueteRegistroPage extends Component {
                   if (!this.state.task.fecha_fin) {
                     this.state.paquete = paquete;
                     this.state.task.fecha_fin = new SDate();
-                    this.state.task.fecha_fin.addDay(paquete.dias);
+                    this.state.task.fecha_fin.addDay(paquete.dias-1);
+                    this.state.task.dias = paquete.dias;
                     this.setState({ ...this.state });
                   }
                 }} />
@@ -147,7 +147,9 @@ class ClientePaqueteRegistroPage extends Component {
                   marginTop: 8,
                   marginBottom: 4,
                 }}>Selecciona la fecha inicio</Text>
-                <SCalendar task={this.state.task} />
+                <SCalendar task={this.state.task} onChange={({ fecha_inicio, fecha_fin }) => {
+                  this.setState({ task: { ...this.state.task, fecha_inicio, fecha_fin } })
+                }} />
 
                 {/* <Text style={{
                   color: "#fff",

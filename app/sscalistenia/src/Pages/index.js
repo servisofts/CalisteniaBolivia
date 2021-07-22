@@ -57,6 +57,7 @@ import SComponent from '../SComponent/Pages';
 export const getPages = () => {
     return {
         // TestRNF,
+        // ...SComponent,
         CargaPage,
         LobyPage,
         LobyTecnologiasPage,
@@ -105,7 +106,6 @@ export const getPages = () => {
         CalendarioPage,
         ProveedoresPage,
         ProveedorRegistroPage,
-        ...SComponent,
         ...SSRolesPermisos
     }
 }
