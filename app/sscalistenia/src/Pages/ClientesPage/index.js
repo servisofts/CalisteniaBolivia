@@ -122,7 +122,7 @@ class ClientesPage extends Component {
         return <ActivityIndicator color={"#fff"} />
       }
 
-      var usuariosActivos = this.props.state.usuariosActivosReducer;
+    /*  var usuariosActivos = this.props.state.usuariosActivosReducer;
       if (!usuariosActivos) {
         if (reducer.estado == "cargando") {
           return <ActivityIndicator color={"#fff"} />
@@ -134,7 +134,7 @@ class ClientesPage extends Component {
         }, true);
         return <ActivityIndicator color={"#fff"} />
       }
-
+      */
 
       if (!this.state.buscador) {
         return <ActivityIndicator color={"#fff"} />
