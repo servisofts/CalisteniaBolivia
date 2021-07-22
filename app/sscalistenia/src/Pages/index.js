@@ -57,7 +57,6 @@ import SComponent from '../SComponent/Pages';
 export const getPages = () => {
     return {
         // TestRNF,
-
         CargaPage,
         LobyPage,
         LobyTecnologiasPage,

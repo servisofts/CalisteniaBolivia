@@ -53,6 +53,7 @@ public class servicio2 {
         }
         SocketCliete.servicios_habilitados = serviciosH;
         SocketCliete.StartServicio("usuario");
+        SocketCliete.StartServicio("roles_permisos");
         SocketCliete.StartServicio("geolocation");
     }
 

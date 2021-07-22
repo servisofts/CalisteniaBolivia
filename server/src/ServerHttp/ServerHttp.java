@@ -138,14 +138,15 @@ public class ServerHttp {
                 No te olvides de setear la variable dir en tu type de subida para que guarden los documentos
                 */
                 if (obj.has("dirs")) {
-                    File aux;
+                    //File aux;
                     
                     for (int i = 0; i < documentos.size(); i++) {
-                        aux = new File(obj.getJSONArray("dirs").getString(i));
-                        copyInputStreamToFile(documentos.get(i).getFile(), aux);
+                        //aux = new File(obj.getJSONArray("dirs").getString(i));
+                        FilesManager.guardar_file(documentos.get(i).getFile(), obj.getJSONArray("dirs").getString(i));
+                        //copyInputStreamToFile(documentos.get(i).getFile(), aux);
                         switch(obj.getString("component")){
                             case "SFile":
-                                obj.getJSONArray("data").getJSONObject(i).put("tamano", aux.length()+"");
+                        //        obj.getJSONArray("data").getJSONObject(i).put("tamano", aux.length()+"");
                                 Conexion.editObject("file", obj.getJSONArray("data").getJSONObject(i));   
                             break;
                         }

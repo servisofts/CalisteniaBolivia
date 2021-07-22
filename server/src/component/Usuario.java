@@ -33,6 +33,9 @@ public class Usuario {
             case "insertarDato":
                 insertarDato(data, session);
                 break;
+            case "getActivos":
+                getActivos(data, session);
+                break;
             case "identificacion":
                 identificaion(data, session);
                 break;
@@ -60,6 +63,19 @@ public class Usuario {
         }
         
         obj.put("estado", "exito");
+    }
+
+    public void getActivos(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_all_clientes_activos() as json";
+            JSONObject file = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", file);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
 
     public void recuperarPass(JSONObject obj, SSSessionAbstract session) {
