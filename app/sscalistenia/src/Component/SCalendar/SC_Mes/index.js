@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator, TouchableOpacity, Animated } from 'react-native';
 import CalendarFunctions from '../CalendarFunctions';
 import SDate from '../SDate';
 import Task from './Task';
+import { SView, STheme, SAPanResponder } from '../../../SComponent'
 
 export default class SC_Mes extends Component {
     constructor(props) {
@@ -10,7 +11,32 @@ export default class SC_Mes extends Component {
         this.state = {
             date: new SDate()
         };
-       
+        this.anim = new Animated.ValueXY({ x: 0, y: 0 });
+        this.pan = new SAPanResponder({
+            onGrand: (e, gs) => {
+                this.startWidth = this.anim.x._value;
+                this.anim.flattenOffset();
+                // this.anim.setOffset({
+                //     x: this.anim.x._value,
+                //     y: this.anim.y._value
+                // });
+            },
+            onMove: (e, gs) => {
+                // if (this.startWidth + gs.dx <= 10) {
+                //     return;
+                // }
+                this.anim.setValue({ x: this.startWidth + gs.dx, y: 0 })
+            },
+            onRelease: () => {
+                // this.state.width = this.anim.x._value;
+                // this.props.reload();
+                // this.props.changeSize(this.layout.width + 1 - this.startWidth)
+                // this.anim.extractOffset();
+                // this.scroll.setEnabled(true)
+
+            }
+        });
+
     }
     getSDate() {
         return this.state.date;
@@ -73,6 +99,26 @@ export default class SC_Mes extends Component {
             </TouchableOpacity>
         </View>
     }
+    getSelector({ isCurDate, isCurMonth, date }) {
+        if (this.state.date.equalDay(date)) {
+            return <SView
+                {...this.pan.getPanHandlers()}
+                props={{
+                    animated: true
+                }}
+                style={{
+                    position: "absolute",
+                    borderRadius: 100,
+                    width: 30,
+                    height: 30,
+                    backgroundColor: "#ff000066",
+                    transform: [{ translateX: this.anim.x }]
+                }}>
+
+            </SView>
+        }
+        return <View />
+    }
     getBody() {
         var date = this.state.date.clone();
         date.setDay(1);
@@ -102,27 +148,26 @@ export default class SC_Mes extends Component {
                             flex: 1,
                             width: "100%",
                         }}>
-                            <View style={[(!isCurDate ? {} : {
-                                backgroundColor: "#ff000066",
-                                borderRadius: 100,
-                            }),
-                            {
-                                width: 30,
-                                height: 30,
-                                justifyContent:"center",
-                                alignItems:"center"
-                            }
-                            ]}>
+                            <SView
+                                props={{
+                                }}
+                                style={{
+                                    width: 30,
+                                    height: 30,
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }}>
                                 <Text style={[
                                     {
                                         fontSize: 14,
                                         color: (isCurMonth ? "#fff" : "#666")
                                     },
                                 ]}>{date.toString("dd")}</Text>
-                            </View>
+                            </SView>
+                            {this.getSelector({ isCurDate, isCurMonth, date })}
                         </View>
                         <Task date={date.clone()} task={this.props.task} />
-                    </View>
+                    </View >
                 )
             }
             ITEM_mes.push(<View style={[{

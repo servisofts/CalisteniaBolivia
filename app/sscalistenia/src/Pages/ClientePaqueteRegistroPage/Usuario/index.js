@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../Params';
 
@@ -11,12 +11,11 @@ class Usuario extends Component {
     }
 
     render() {
-        var data = this.props.state.usuarioReducer.data["registro_administrador"];
-        var obj = data[this.props.key_usuario]
-        return (
-            <View style={{
+
+        if (!this.props.key_usuario) {
+            return <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000044",
+                backgroundColor: "#66000066",
                 height: 50,
                 marginBottom: 8,
                 borderRadius: 8,
@@ -24,6 +23,32 @@ class Usuario extends Component {
                 justifyContent: "center",
                 flexDirection: "row",
                 padding: 4,
+            }} onPress={() => {
+                this.props.onPress()
+            }}>
+                <Text style={{
+                    fontSize: 12,
+                    color: "#fff",
+                }}>{"Inserta un usuario"}</Text>
+            </TouchableOpacity>
+        }
+        var data = this.props.state.usuarioReducer.data["registro_administrador"];
+        var obj = data[this.props.key_usuario]
+        this.obj = obj;
+        this.props.onLoad(obj);
+        return (
+            <TouchableOpacity style={{
+                width: "96%",
+                backgroundColor: "#66000066",
+                height: 50,
+                marginBottom: 8,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+                padding: 4,
+            }} onPress={() => {
+                this.props.onPress()
             }}>
                 <View style={{
                     flex: 1,
@@ -62,13 +87,13 @@ class Usuario extends Component {
                                 fontSize: 16,
                                 fontWeight: "bold",
                                 color: "#fff",
-                                textTransform:"capitalize",
+                                textTransform: "capitalize",
                                 textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                             }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }

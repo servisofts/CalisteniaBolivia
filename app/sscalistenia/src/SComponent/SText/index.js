@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet , TextStyle} from 'react-native';
+import { Text, StyleSheet, TextStyle } from 'react-native';
 import { STheme } from '../../SComponent';
 
 type typeConfig = {
@@ -8,7 +8,8 @@ type typeConfig = {
 }
 type typeProps = {
     style: TextStyle,
-    options: typeConfig
+    options: typeConfig,
+    props: typeConfig,
     // onPress: Function,
     //callBack:Function,
 };
@@ -22,7 +23,11 @@ export class SText extends Component<typeProps> {
 
     }
     getOption(option) {
-        return !this.props.options[option] ? "default" : this.props.options[option]
+        var opt = {
+            ...this.props.options,
+            ...this.props.props
+        }
+        return !opt[option] ? "default" : opt[option]
     }
     //---RENDER
     getTypes(theme) {
@@ -30,13 +35,13 @@ export class SText extends Component<typeProps> {
             "default": StyleSheet.create({
                 text: {
                     color: theme.colorSecondary,
-                    ...this.props.style,
+                    // ...this.props.style,
                 }
             }),
             "primary": StyleSheet.create({
                 text: {
                     color: theme.colorPrimary,
-                    ...this.props.style,
+                    // ...this.props.style,
 
                 }
             }),
@@ -44,7 +49,7 @@ export class SText extends Component<typeProps> {
                 text: {
                     color: theme.colorSecondary,
                     textDecorationLine: "underline",
-                    ...this.props.style
+                    // ...this.props.style
                 }
             }),
         }
@@ -95,8 +100,17 @@ export class SText extends Component<typeProps> {
         //---RETURN
         var variant = this.variant[this.getOption("variant")]
         var style = this.styleType[this.getOption("type")]
+        var VAL = this.props.children;
+        // if (typeof VAL == "object") {
+        //     try {
+        //         VAL = JSON.stringify(VAL);
+        //     } catch (e) {
+        //         VAL = "ERROR"
+        //     }
+        // }
+
         return (
-            <Text style={[variant.text, style.text]}>{this.props.children} </Text>
+            <Text style={[variant.text, style.text, this.props.style]}>{VAL} </Text>
         );
     }
 }
@@ -104,6 +118,7 @@ export class SText extends Component<typeProps> {
 SText.defaultProps = {
     options: {
     },
+    props: {},
     style: {
         // width: 100,
         // height: 40,

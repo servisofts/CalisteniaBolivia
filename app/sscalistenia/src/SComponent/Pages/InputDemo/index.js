@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { SText, SContainer } from '../../../SComponent';
 import { SButtom } from '../../SButtom';
-import SIFechaPicker from '../../SInput/SIFechaPicker';
+import { SInput } from '../../SInput';
+import SIFechaPicker from '../../SInput/SInputTypes';
 import { SPopupOpen } from '../../SPopup';
 import { SView } from '../../SView';
 
@@ -53,17 +54,32 @@ export default class InputDemo extends Component {
                 </SContainer>
 
                 <SContainer options={{
-                    type: "secondary",
+                    type: "primary",
                     variant: "page",
                 }}>
-                    <SContainer options={{
+                    <SView props={{
                         type: "secondary",
-                        variant: "row",
-                        col: { xs: 11.5 }
+                        variant: "center",
+                        col: { xs: "12", sm: "10", md: "8", lg: "6", xl: "4" }
                     }} style={{
+                        height: 100
                     }}>
-                        <SIFechaPicker></SIFechaPicker>
-                    </SContainer>
+                        <SInput props={{
+                            customStyle: "primary",
+                            col: "xs-12",
+                        }}
+                            placeholder={"default"}
+                        />
+                        <SInput props={{
+                            type: "fecha",
+                            customStyle: "secondary",
+                            col: {
+
+                            },
+                        }}
+                        // placeholder={"fecha"}
+                        />
+                    </SView>
                 </SContainer>
             </SContainer>
         );

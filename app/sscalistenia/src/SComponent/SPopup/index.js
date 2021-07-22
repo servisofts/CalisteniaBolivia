@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ScrollView } from 'react-native';
 // import Svg from '../../Svg';
+import { SScrollView } from '../../SComponent'
+import { SView } from '../SView';
+import SPopupComponent from './SPopupComponent';
 
 var INSTANCE = false;
 
@@ -12,6 +15,8 @@ export const SPopupClose = (key) => {
     INSTANCE.close(key);
 }
 export default class SPopup extends Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -39,61 +44,19 @@ export default class SPopup extends Component {
         delete this.state.data[key];
         this.setState({ ...this.state });
     }
+
     getPopups() {
         return Object.keys(this.state.data).map((key) => {
             var obj = this.state.data[key];
             var style = this.state.style[key];
-            return (
-                <TouchableWithoutFeedback onPress={() => {
-                    this.close(key);
-                }}><View style={{
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    backgroundColor: "#000000f0",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    ...style
-                }}>
-                        <TouchableWithoutFeedback onPress={() => {
-                            // console.log("touch2")
-                        }}>
-                            <View style={{
-                                width: "90%",
-                                maxWidth: 600,
-                                // backgroundColor: "#fff",
-                                borderRadius: 8,
-                                // padding: 8,
-                                minHeight: 200,
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}>
-                                {obj}
-                                <TouchableOpacity style={{
-                                    width: 30,
-                                    height: 30,
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 0,
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }} onPress={() => {
-                                    this.close(key);
-                                }}>
-                                    {/* <Svg resource={require("../img/cerrar.svg")} style={{
-                                        width: 15,
-                                        height: 15,
-                                        color: "#000",
-                                        //top: -10
-                                    }} /> */}
-
-
-                                </TouchableOpacity>
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </View>
+            return <SPopupComponent
+                style={style}
+                close={() => { this.close(key) }}
+            >
+                <TouchableWithoutFeedback>
+                    {obj}
                 </TouchableWithoutFeedback>
-            )
+            </SPopupComponent>
         })
     }
     render() {

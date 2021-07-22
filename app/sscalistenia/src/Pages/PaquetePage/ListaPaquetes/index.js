@@ -58,7 +58,6 @@ export default class ListaPaquetes extends Component {
             return (<TouchableOpacity style={{
                 width: "96%",
                 backgroundColor: "#66000044",
-                height: 50,
                 marginBottom: 8,
                 borderRadius: 8,
                 alignItems: "center",
@@ -71,6 +70,7 @@ export default class ListaPaquetes extends Component {
                 this.props.onPress(key);
                 // }
             }}>
+
                 <View style={{
                     justifyContent: "center",
                     alignItems: "center",
@@ -86,7 +86,7 @@ export default class ListaPaquetes extends Component {
                     })}
                 </View>
                 <View style={{
-                    flex: 4,
+                    flex: 3,
                     height: 20,
                     justifyContent: "center",
                     // alignItems: "center"
@@ -110,8 +110,9 @@ export default class ListaPaquetes extends Component {
                     }}>
                         <Text style={{
                             color: "#ffffff",
-                            fontSize: 8,
-                        }}>{"#per: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.participantes}</Text>
+                            fontSize: 9,
+                            textAlign: "center",
+                        }}><Text style={{ color: "#ffffff", fontSize: 12, textAlign: "center", }}>{obj.participantes} </Text>{" personas"}
                         </Text>
                     </View>
                     <View style={{
@@ -120,8 +121,9 @@ export default class ListaPaquetes extends Component {
                     }}>
                         <Text style={{
                             color: "#ffffff",
-                            fontSize: 8,
-                        }}>{"dias: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.dias}</Text>
+                            fontSize: 9,
+                            textAlign: "center",
+                        }}><Text style={{ color: "#ffffff", fontSize: 12, textAlign: "center", }}>{obj.dias} </Text>{" dias"}
                         </Text>
                     </View>
                 </View>

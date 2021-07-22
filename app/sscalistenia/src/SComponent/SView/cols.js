@@ -8,6 +8,9 @@ type lg = "md-1" | "lg-2" | "lg-3" | "lg-4" | "lg-5" | "lg-6" | "lg-7" | "lg-8" 
 type xl = "xl-1" | "xl-2" | "xl-3" | "xl-4" | "xl-5" | "xl-6" | "xl-7" | "xl-8" | "xl-9" | "xl-10" | "xl-11" | "xl-12";
 
 type typencol = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12";
+type typeUnion = xs | sm | md | lg | xl
+
+type typeUnion2 = typeUnion[]
 
 export type TypeCol = {
     'xs': typencol,
@@ -15,6 +18,6 @@ export type TypeCol = {
     'md': typencol,
     'lg': typencol,
     'xl': typencol,
-} | xs | sm | md | lg | xl
+} | typeUnion | typeUnion2
 
 

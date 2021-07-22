@@ -31,7 +31,7 @@ class NewTable extends Component {
                         customStyle: (((pos.x + pos.y) % 2) == 0 ? "primary" : "secondary")
                     }}
                     onPress={(evt) => {
-                        this.scroll.scrollTo({ x: evt.layout.x+50, y: evt.layout.y+50 });
+                        this.scroll.scrollTo({ x: evt.layout.x + 50, y: evt.layout.y + 50 });
                     }}
                     style={{
                         width: separation,
@@ -56,17 +56,17 @@ class NewTable extends Component {
                 }}>
                     <STable
                         header={[
-                            { label: "Nombres", key: "Nombres/dato", width: 120 },
-                            { label: "Apellidos", key: "Apellidos/dato", width: 120 },
-                            { label: "Correo", key: "Correo/dato", width: 200 },
-                            { label: "Fecha nacimineto", key: "Fecha de nacimiento/dato", width: 120 },
-                            { label: "Teléfono", key: "Telefono/dato", width: 120 },
-                            { label: "Sexo", key: "Sexo/dato", width: 80 },
-                            { label: "Nacionalidad", key: "Nacionalidad/dato", width: 100 },
-                            { label: "Domicilio actual", key: "Domicilio actual/dato/direccion", width: 250 },
-                            { label: "Codigo de referencia", key: "Codigo de referencia/dato", width: 100 },
-                            { label: "Carnet de identidad", key: "Carnet de identidad/dato/back", width: 100 },
-                            { label: "Password", key: "Password/dato", width: 200 },
+                            { label: "Nombres", key: "data/Nombres/dato", width: 120 },
+                            { label: "Apellidos", key: "data/Apellidos/dato", width: 120 },
+                            { label: "Correo", key: "data/Correo/dato", width: 200 },
+                            { label: "Fecha nacimineto", key: "data/Fecha de nacimiento/dato", width: 120 },
+                            { label: "Teléfono", key: "data/Telefono/dato", width: 120 },
+                            { label: "Sexo", key: "data/Sexo/dato", width: 80 },
+                            { label: "Nacionalidad", key: "data/Nacionalidad/dato", width: 100 },
+                            { label: "Domicilio actual", key: "data/Domicilio actual/dato/direccion", width: 250 },
+                            { label: "Codigo de referencia", key: "data/Codigo de referencia/dato", width: 100 },
+                            { label: "Carnet de identidad", key: "data/Carnet de identidad/dato/back", width: 100 },
+                            { label: "Password", key: "data/Password/dato", width: 200 },
                             // { label: "Fecha", key: "Apellidos/fecha_on", width: 180 },
                         ]}
                         data={DataJson}

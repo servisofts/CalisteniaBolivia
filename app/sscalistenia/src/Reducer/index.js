@@ -25,7 +25,9 @@ import locationGoogleReducer from './locationGoogleReducer';
 import sucursalReducer from './sucursalReducer';
 import SSRolesPermisos from '../SSRolesPermisos/Reducer';
 import entrenamientoReducer from './entrenamientoReducer';
+import paqueteVentaReducer from './paqueteVentaReducer'
 export default combineReducers({
+    paqueteVentaReducer,
     entrenamientoReducer,
     cabeceraDatoReducer,
     socketReducer,

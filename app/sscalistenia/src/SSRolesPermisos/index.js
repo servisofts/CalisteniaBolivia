@@ -7,7 +7,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
     var isValid = INSTANCE.isValid({ page, permiso });
-    if (isAlert) {
+    if (isAlert && !isValid) {
         alert("No tiene permisos. Contactese con el administrador.")
     }
     return isValid;

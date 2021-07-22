@@ -12,6 +12,7 @@ type typeProps = {
     style: TouchableOpacity.Style,
     styleText: Text.Style,
     options: typeConfig,
+    props: typeConfig,
     onPress: Function,
     //callBack:Function,
 }
@@ -25,7 +26,11 @@ export class SButtom extends Component<typeProps> {
 
     }
     getOption(option) {
-        return !this.props.options[option] ? "default" : this.props.options[option]
+        var opt = {
+            ...this.props.options,
+            ...this.props.props
+        }
+        return !opt[option] ? "default" : opt[option]
     }
     //---RENDER
     getTypes() {

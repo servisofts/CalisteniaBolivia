@@ -39,6 +39,7 @@ export class SThemeClass extends Component {
     }
     render() {
         INSTANCE = this;
+        // return <View/>
         return (
             <TouchableOpacity style={{
                 position: "absolute",

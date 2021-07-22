@@ -7,8 +7,13 @@ import { SButtom } from './SButtom';
 import { SAnimated } from './SAnimated';
 import SPopup, { SPopupOpen, SPopupClose } from './SPopup';
 import SSize from './SSize';
+import { SInput } from './SInput';
 import { SView } from './SView';
-
+import SThread from './SThread';
+import SAPanResponder from './SAnimated/SAPanResponder'
+import SScrollView from './SScrollView'
+import SImage from './SImage';
+import SBackground from './SBackground';
 export {
     STheme,
     SText,
@@ -19,6 +24,13 @@ export {
     SPopupClose,
     SSize,
     SAnimated,
+    SInput,
+    SView,
+    SThread,
+    SAPanResponder,
+    SScrollView,
+    SImage,
+    SBackground
 }
 export class SComponentClass extends Component {
     constructor(props) {
@@ -40,7 +52,7 @@ export class SComponentClass extends Component {
         return (<SView
             style={{
                 width: "100%",
-                height:"100%",
+                height: "100%",
                 flex: 1,
                 overflow: "hidden",
             }}>

@@ -1,35 +1,40 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ViewStyle, TouchableOpacity, ViewProps, Animated } from 'react-native';
+import { View, StyleSheet, ViewStyle, TouchableOpacity, TextInputProps, Animated, TextInput, Platform } from 'react-native';
 import { STheme } from '../../SComponent';
 import { Variant, TypeVariant } from './variants';
 import { Type, TypeType } from './types';
-import { Col, TypeCol } from './cols';
+import { Col, TypeCol } from '../SView/cols';
 import { CustomStyles, TypeStyles } from './styles';
 import SSize from '../SSize';
 import { SText } from '../SText';
+import { SView } from '../SView';
 
 type typeConfig = {
     style: ViewStyle,
     customStyle: TypeStyles,
     type: TypeType,
+    isRequired: Boolean,
     variant: TypeVariant,
     col: TypeCol,
-    direction: "row" | "column",
-    height: any,
-    animated: Boolean,
-
+    icon: Component,
+    label: String,
 }
 
-interface IProps extends ViewProps {
-    animated: Boolean,
+interface IProps extends TextInputProps {
     style: ViewStyle,
     props: typeConfig,
+    onPress: Function,
 }
+// export type SInputProps = IProps;
 
 export class SInput extends Component<IProps> {
+    static TYPE(type: TypeType) { return type };
     constructor(props) {
         super(props);
         this.state = {
+            value: "",
+            error: false,
+            data: {}
         };
 
     }
@@ -43,30 +48,80 @@ export class SInput extends Component<IProps> {
             ...(this.props.props.height ? { height: this.props.props.height } : {}),
         }
     }
+    verify() {
+        if (!this.props.props.isRequired) return true;
+        if (!this.getValue()) {
+            this.setState({ error: "null" });
+            return false;
+        }
+        if (this.type) {
+            if (this.type.verify) {
+                if (!this.type.verify(this.getValue())) {
+                    this.setState({ error: "null" });
+                    return false;
+                }
+            }
+        }
+        this.setState({ error: false });
+        return true;
+    }
+    setValue(val) {
+        this.setState({ value: val });
+    }
+    getValue() {
+        return this.state.value;
+    }
+    setData(val) {
+        this.setState({ data: { ...this.state.data, ...val } });
+    }
+    getData() {
+        return this.state.data;
+    }
+    getIcon() {
+        if (!this.type) return <View />
+        var ITEM = false;
+        if (this.props.props.icon) {
+            ITEM = this.props.props.icon
+        }
+        if (this.type.icon) {
+            ITEM = this.type.icon
+        }
+        if (!ITEM) {
+            return <View />
+        }
+        return <SView
+            props={{ variant: "center" }}
+            style={{
+                height: "100%"
+            }}>
+            {ITEM}
+        </SView>
+    }
+    getStyle = () => {
+        return this.customStyle
+    }
+    getLabel() {
+        if (!this.props.props.label) {
+            return <View />
+        }
+        return <SText style={[
+            this.customStyle.LabelStyle,
+            this.type.style.LabelStyle,
+        ]}>{this.props.props.label}</SText>
+    }
     render() {
         this.buildStyle();
         this.variant = Variant(this.getOption("variant"));
         this.customStyle = CustomStyles(this.getOption("customStyle"))
         var size = SSize.getSize(this.getOption("col"))
+        var type = Type(this.getOption("type"), this);
+        this.type = type;
         var Component = View;
-        if (this.props.animated || this.props.props.animated) {
-            Component = Animated.View
-        }
-        if (this.props.onPress) {
+        if (this.props.onPress || type.onPress) {
             Component = TouchableOpacity;
-            if (this.props.animated) {
-                Component = Animated.createAnimatedComponent(Component);
-            }
-        }
-        var childrens = this.props.children;
-        if (typeof childrens == "string") {
-            childrens = <SText options={{
-                type: this.getOption("customStyle") == "secondary" ? "primary" : "default"
-            }}>{this.props.children}</SText>
         }
         return (
             <Component
-                {...this.props}
                 onLayout={(evt) => {
                     this.layout = evt.nativeEvent.layout
                     if (this.props.onLayout) this.props.onLayout(evt);
@@ -75,18 +130,54 @@ export class SInput extends Component<IProps> {
                     if (this.props.onPress) this.props.onPress({
                         layout: this.layout
                     });
+                    if (type.onPress) type.onPress({
+                        layout: this.layout
+                    });
                 }}
                 style={[
                     this.variant.View,
                     this.customStyle.View,
+                    type.style.View,
+                    (this.state.error ? this.customStyle.error : {}),
                     {
                         ...size,
                         ...this.style,
-                        ...(this.getOption("direction") == "row" ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
-
                     }
                 ]} >
-                {childrens}
+                <SView props={{
+                    col: "xs-12",
+                    direction: "row",
+                }} style={{ flex: 1, height: "100%" }}>
+                    {this.getIcon()}
+                    <TextInput
+                        value={this.state.value}
+                        {...type.props}
+                        {...this.props}
+                        onChangeText={(_text) => {
+                            var text = _text;
+                            if (this.type) {
+                                if (this.type.filter) {
+                                    text = this.type.filter(text)
+                                }
+                            }
+                            this.state.value = text
+                            this.setState({ value: this.state.value })
+                            this.verify()
+                        }}
+                        style={[
+                            this.customStyle.InputText,
+                            type.style.InputText,
+                            {
+                                flex: 1,
+                                height: "100%",
+                                outline: "none",
+
+                            }]}
+                        placeholderTextColor={this.customStyle.placeholder.color}
+
+                    />
+                </SView>
+                {this.getLabel()}
             </Component >
         );
     }

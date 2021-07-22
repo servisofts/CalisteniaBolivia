@@ -8,17 +8,26 @@ export default class SHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            data: this.props.header
         };
         this.headers = [];
     }
-    getHeaders() {
-        if (!this.props.header) {
-            return <View />
+
+    getRef(i) {
+        if (this.state.data.length != this.headers.length) {
+            return false;
         }
-        return this.props.header.map((obj, key) => {
+        return this.headers[i];
+    }
+    getHeaders() {
+        return this.state.data.map((obj, key) => {
+            obj["index"] = key;
             return (<SHeaderItem
                 ref={(ref) => { this.headers[key] = ref }}
                 obj={obj}
+                onLoad={(ref) => {
+                    this.props.onLoad(key, ref)
+                }}
                 getScroll={() => { return this.props.getScroll() }}
                 layoutParent={() => { return this.layout }}
                 onMove={(gs) => {
@@ -28,6 +37,27 @@ export default class SHeader extends Component {
                         }
                         brother.onMoveBrother(this.headers[key], gs);
                     })
+                }}
+                reload={() => {
+                    var arr = this.headers.map((brother, bkey) => {
+                        return brother.getObj();
+                    })
+                    var lista = arr.sort(function (a, b) {
+                        if (a.index > b.index) {
+                            return 1;
+                        }
+                        if (a.index < b.index) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                    this.props.setHeader(lista, true);
+                }}
+                onChangePosition={(from: SHeaderItem, to: SHeaderItem) => {
+                    var indexFrom = from.getObj().index;
+                    var indexTo = to.getObj().index;
+                    from.setObj({ ...from.getObj(), index: indexTo })
+                    to.setObj({ ...to.getObj(), index: indexFrom })
                 }}
                 changeSize={(size) => {
                     this.layout.width += size;

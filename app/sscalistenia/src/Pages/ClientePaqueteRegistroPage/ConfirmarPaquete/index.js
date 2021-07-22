@@ -5,7 +5,8 @@ import BackgroundImage from '../../../Component/BackgroundImage';
 import DeleteBtn from '../../../Component/DeleteBtn';
 import STextImput from '../../../Component/STextImput';
 import AppParams from '../../../Params';
-import { SPopupClose } from '../../../SComponent/SPopup';
+import { SView, SText, SPopupClose, SPopupOpen } from '../../../SComponent';
+import ConfirmacionUsuario from './ConfirmacionUsuario';
 
 class ConfirmarPaquete extends Component {
     constructor(props) {
@@ -14,31 +15,31 @@ class ConfirmarPaquete extends Component {
         };
     }
 
-    sendServer(data, usuario) {
-        var correoNew = this.correoI.getValue();
-        if (correoNew != usuario.Correo) {
+    sendServer(data) {
+        // var correoNew = this.correoI.getValue();
+        // if (correoNew != usuario.Correo) {
 
-            var object = {
-                component: "usuario",
-                type: "editar",
-                version: "2.0",
-                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                estado: "cargando",
-                cabecera: "registro_administrador",
-                data: {
-                    ...usuario,
-                    Correo: correoNew
-                },
-            }
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-        }
+        //     var object = {
+        //         component: "usuario",
+        //         type: "editar",
+        //         version: "2.0",
+        //         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+        //         estado: "cargando",
+        //         cabecera: "registro_administrador",
+        //         data: {
+        //             ...usuario,
+        //             Correo: correoNew
+        //         },
+        //     }
+        //     this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+        // }
         var object = {
-            component: "paqueteUsuario",
+            component: "paqueteVenta",
             type: "registro",
             estado: "cargando",
             key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             data,
-            cliente: usuario,
+            clientes: this.props.data.usuariosData,
         }
         // alert(JSON.stringify(object));
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
@@ -48,69 +49,189 @@ class ConfirmarPaquete extends Component {
     getTextDetail({ label, value }) {
         return <Text style={{ color: "#fff", marginBottom: 8, }}>{label}: {value}</Text>
     }
+    getUsuarios() {
+        return this.props.data.usuariosData.map((obj) => {
+            return <SView style={{
+                width: 80,
+                height: 80,
+                alignItems: "center",
+            }} onPress={() => {
+                SPopupOpen({
+                    key: "ConfirmacionUsuario",
+                    content: <ConfirmacionUsuario data={obj} />
+                })
+            }}>
+                <View style={{
+                    width: 50,
+                    height: 50,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#ff999933",
+                    borderRadius: 100,
+                    overflow: "hidden"
+                }}>
+                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + obj.key, {
+                        width: "100%",
+                        objectFit: "cover",
+                        resizeMode: "cover",
+
+                    })}
+                </View>
+                <SText props={{
+                    type: "primary"
+                }} style={{
+                    textAlign: "center"
+                }}>{obj["Nombres"]} {obj["Apellidos"]}</SText>
+            </SView>
+        })
+    }
     render() {
-        var usuario = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key_usuario];
+        // var usuario = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key_usuario];
         var paquete = this.props.state.paqueteReducer.data[this.props.data.key_paquete];
         return (
-            <View style={{
-                width: "100%",
-                height: 400,
-                borderRadius: 10,
-                overflow: "hidden",
-                alignItems: "center",
+            <SView props={{
+                col: "xs-11 md-8 xl-4",
+                withoutFeedback:true,
+            }} style={{
+                borderRadius:8,
             }}>
                 <BackgroundImage contraste={"#66000044"} />
                 <View style={{
-                    width: "90%",
+                    width: "100%",
                     flex: 1,
-                    padding: 8,
-                    // alignItems: "center",
+                    borderRadius: 10,
+                    overflow: "hidden",
+                    alignItems: "center",
+                    paddingBottom: 8,
+
                 }}>
-                    <Text style={{ color: "#fff", fontSize: 18, marginBottom: 8 }}>{"Confirmar la compra del servicio"}</Text>
-                    <Text style={{ color: "#fff", marginTop: 8, marginBottom: 8, }}>{"Cliente:"}</Text>
-                    {this.getTextDetail({
-                        label: "Nombre",
-                        value: usuario.Nombres + " " + usuario.Apellidos
-                    })}
-                    <STextImput
-                        ref={(ref) => { this.correoI = ref }}
-                        style={{
-                            width: "100%",
-                            height: 30,
-                            color: "#fff",
-                            borderColor: "#fff",
-                            borderWidth: 1,
+                    <View style={{
+                        width: "100%",
+                        padding: 8,
+                        flex: 1,
+                        alignItems: "center",
+                        // justifyContent: "center"
+                    }}>
+                        <Text style={{ color: "#fff", fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
+                        <View style={{
+                            justifyContent: "center",
+                            alignItems: "center",
                             borderRadius: 4,
-                        }}
-                        defaultValue={usuario.Correo}
-                    />
-                    <Text style={{ color: "#fff", marginTop: 8, marginBottom: 8, }}>{"Servicio:"}</Text>
-                    {this.getTextDetail({
-                        label: "Nombre",
-                        value: paquete.descripcion
-                    })}
-                    {this.getTextDetail({
-                        label: "Precio",
-                        value: paquete.precio
-                    })}
-                    <Text style={{ color: "#fff", marginBottom: 8, }}>Cantidad de dias: {paquete.dias}</Text>
-                    <Text style={{ color: "#fff", marginBottom: 8, }}>Cantidad de personas: {paquete.participantes}</Text>
-                    <Text style={{ color: "#fff", marginBottom: 8, }}>Fecha inicio: {this.props.data.fecha_inicio}</Text>
-                    <Text style={{ color: "#fff", marginBottom: 8, }}>Fecha fin: {this.props.data.fecha_fin}</Text>
+                            overflow: "hidden",
+                            width: 60,
+                            height: 60,
+                            backgroundColor: "#ff999933"
+                        }}>
+                            {this.props.state.imageReducer.getImage(AppParams.urlImages + "paquete_" + paquete.key, {
+                                resizeMode: "cover",
+                                objectFit: "cover"
+                            })}
+                        </View>
+                        <SView props={{
+                            col: "xs-12",
+                            direction: "row",
+                        }} style={{
+                            justifyContent: "center"
+                        }}>
+                            <SView props={{
+                                variant: "center",
+                                col: "xs-6",
+                                style: {
+                                    height: 40,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary",
+                                    variant: "h4"
+                                }}>{paquete.descripcion}</SText>
+                            </SView>
+                            <SView props={{
+                                col: "xs-6",
+                                variant: "center",
+                                style: {
+                                    height: 40,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary",
+                                    variant: "h4"
+                                }}>Bs. {paquete.precio}</SText>
+                            </SView>
+
+                            <SView props={{
+                                col: "xs-6",
+                                variant: "center",
+                                style: {
+                                    height: 25,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary"
+                                }}># De días: {paquete.dias}</SText>
+                            </SView>
+
+                            <SView props={{
+                                col: "xs-6",
+                                variant: "center",
+                                style: {
+                                    height: 25,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary"
+                                }}># Personas: {paquete.participantes}</SText>
+
+                            </SView>
+                            <SView props={{
+                                col: "xs-6",
+                                variant: "center",
+                                style: {
+                                    height: 25,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary"
+                                }}>Desde {this.props.data.fecha_inicio}</SText>
+                            </SView>
+                            <SView props={{
+                                col: "xs-6",
+                                variant: "center",
+                                style: {
+                                    height: 25,
+                                }
+                            }}>
+                                <SText props={{
+                                    type: "primary"
+                                }}>hasta {this.props.data.fecha_fin}</SText>
+                            </SView>
+                            <SView props={{
+                                col: "xs-12",
+                                direction: "row"
+                            }} style={{
+                                marginTop: 8,
+                                justifyContent: "space-evenly",
+                                alignItems: "center"
+                            }}>
+                                {this.getUsuarios()}
+                            </SView>
+                        </SView>
+
+                    </View>
+                    <View style={{ alignItems: "center" }}>
+                        <DeleteBtn title={"Pagar"} style={{ width: 100, height: 40, }} onDelete={() => {
+                            this.sendServer({
+                                descripcion: "",
+                                // key_usuario: usuario.key,
+                                key_paquete: paquete.key,
+                                fecha_inicio: this.props.data.fecha_inicio,
+                                fecha_fin: this.props.data.fecha_fin,
+                                monto: paquete.precio,
+                                nombre_paquete: paquete.descripcion
+                            })
+                        }} />
+                    </View>
                 </View>
-                <View style={{ alignItems: "center" }}>
-                    <DeleteBtn title={"Pagar"} style={{ width: 100, height: 40, }} onDelete={() => {
-                        this.sendServer({
-                            key_usuario: usuario.key,
-                            key_paquete: paquete.key,
-                            fecha_inicio: this.props.data.fecha_inicio,
-                            fecha_fin: this.props.data.fecha_fin,
-                            monto: 100,
-                            nombre_paquete: paquete.descripcion
-                        }, usuario)
-                    }} />
-                </View>
-            </View>
+            </SView>
         );
     }
 }

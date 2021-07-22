@@ -10,6 +10,8 @@ import AppParams from '../../Params';
 import Svg from '../../Svg';
 import FotoPerfilUsuario from '../../Component/FotoPerfilUsuario';
 import SSCrollView from '../../Component/SScrollView';
+import { SInput, SPopupOpen, SText } from '../../SComponent'
+import { SView } from '../../SComponent/SView';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class ClienteRegistroPage extends Component {
@@ -23,17 +25,7 @@ class ClienteRegistroPage extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    var styleImput = {
-      width: "80%",
-      padding: 8,
-      height: 50,
-      margin: 8,
-      color: "#fff",
-      backgroundColor: "#ffffff22",
-      borderWidth: 1,
-      borderColor: "#444",
-      borderRadius: 8,
-    }
+    this.inputsRef = {};
     this.cabecera = "registro_administrador"
     var key = this.props.navigation.getParam("key", false);
     this.TextButom = "CREAR";
@@ -46,79 +38,70 @@ class ClienteRegistroPage extends Component {
         alert("NO HAY DATA");
       }
     }
-    // console.log(this.data)
-    this.imputs = {
-      Nombres: new STextImput({
-        placeholder: "Nombres",
-        defaultValue: this.data["Nombres"],
-        // autoCapitalize: "none",
-
-        style: styleImput
-      }),
-
-      Apellidos: new STextImput({
-        placeholder: "Apellidos",
-        type: "correo",
-
-        defaultValue: this.data["Apellidos"],
-        // autoCapitalize: "none",
-        style: styleImput
-      }),
-      CI: new STextImput({
-        placeholder: "Numero de documento de identidad",
-        defaultValue: this.data["CI"],
-        autoCapitalize: "none",
-        style: styleImput
-      }),
-      "Fecha nacimiento": new STextImput({
-        placeholder: "Fecha nacimiento",
-        defaultValue: this.data["Fecha nacimiento"],
-        autoCapitalize: "none",
-        style: styleImput
-      }),
-      Correo: new STextImput({
-        placeholder: "Correo",
-        defaultValue: this.data["Correo"],
-        // autoCapitalize: "none",
-        type: "Email",
-        autoCapitalize: "none",
-        autoCompleteType: "email",
-        style: styleImput
-      }),
-      Telefono: new STextImput({
-        placeholder: "Telefono",
-        defaultValue: this.data["Telefono"],
-        // autoCapitalize: "none",
-        type: "Phone",
-        style: styleImput
-      }),
-      Password: new STextImput({
-        placeholder: "Password",
-        secureTextEntry: true,
-        defaultValue: this.data["Password"],
-        // autoCapitalize: "none",
-        style: styleImput
-      }),
-    }
   }
   componentDidMount() { // B
 
   }
-
+  getInput(key, type, required, size) {
+    return <SInput
+      ref={(ref) => { this.inputsRef[key] = ref }}
+      // placeholder={key}
+      defaultValue={this.data[key]}
+      props={{
+        isRequired: required,
+        type: type,
+        col: size,
+        customStyle: "calistenia",
+        label: key,
+      }} />
+  }
+  onPress() {
+    if (this.props.state.usuarioReducer.estado == "cargando") {
+      return;
+    }
+    var isValid = true;
+    var objectResult = {};
+    Object.keys(this.inputsRef).map((key) => {
+      var input: SInput = this.inputsRef[key];
+      if (!input.verify()) isValid = false;
+      objectResult[key] = input.getValue();
+    })
+    if (!isValid) {
+      this.setState({ ...this.state });
+      return;
+    }
+    var object = {
+      component: "usuario",
+      type: !this.data.key ? "registro" : "editar",
+      version: "2.0",
+      estado: "cargando",
+      cabecera: "registro_administrador",
+      key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
+      key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
+      data: {
+        ...this.data,
+        ...objectResult,
+      },
+    }
+    // alert(JSON.stringify(object));
+    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+  }
   render() {
 
     if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type == "registro") {
       this.props.state.usuarioReducer.estado = "";
-      // alert(this.props.state.usuarioReducer.errorRegistro)
-      switch (this.props.state.usuarioReducer.errorRegistro) {
-        case "existe_Correo":
-          this.imputs.Correo.setError()
-          break;
-        case "existe_Telefono":
-          this.imputs.Telefono.setError()
-          break;
-
-      }
+      SPopupOpen({
+        key: "errorRegistro",
+        content: (
+          <SView props={{
+            col: "xs-12",
+            variant: "center",
+            customStyle: "primary",
+          }} style={{ height: "100%", borderRadius: 8, }}>
+            <SText options={{ variant: "h3" }}>El usuario ya existe</SText>
+          </SView>
+        )
+      })
     }
     if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "registro") {
       this.props.state.usuarioReducer.estado = "";
@@ -128,22 +111,6 @@ class ClienteRegistroPage extends Component {
       this.props.state.usuarioReducer.estado = "";
       this.props.navigation.goBack();
     }
-
-    // if (!this.props.state.cabeceraDatoReducer.data["registro_administrador"]) {
-    //   if (this.props.state.cabeceraDatoReducer.estado == "cargando") {
-    //     return <View />
-    //   }
-    //   if (this.props.state.cabeceraDatoReducer.estado == "error") {
-    //     return <View />
-    //   }
-    //   this.props.state.socketReducer.session[AppParams.socket.name].send({
-    //     component: "cabeceraDato",
-    //     type: "getDatoCabecera",
-    //     estado: "cargando",
-    //     cabecera: "registro_administrador"
-    //   }, true);
-    //   return <View />
-    // }
 
     return (
       <View style={{
@@ -190,57 +157,30 @@ class ClienteRegistroPage extends Component {
                 }}><FotoPerfilUsuario usuario={this.data} />
                 </View>}
 
-
-                {Object.keys(this.imputs).map((key) => {
-                  return this.imputs[key].getComponent();
-                })}
-
-
-              </View>
-              <View style={{
-                flex: 1,
-                width: "90%",
-                maxWidth: 600,
-                justifyContent: 'center',
-                flexDirection: "row",
-              }}>
+                <SView props={{
+                  col: "xs-12",
+                  direction: "row"
+                }} style={{
+                  justifyContent: "space-evenly"
+                }}>
+                  {this.getInput("Nombres", SInput.TYPE(""), true, "xs-12 md-10")}
+                  {this.getInput("Apellidos", SInput.TYPE(""), true, "xs-12 md-10")}
+                  {this.getInput("CI", SInput.TYPE(""), true, "xs-12 md-5")}
+                  {this.getInput("Fecha nacimiento", SInput.TYPE("fecha"), true, "xs-12 md-5")}
+                  {this.getInput("Correo", SInput.TYPE("email"), true, "xs-12 md-9")}
+                  {this.getInput("Telefono", SInput.TYPE("phone"), true, "xs-12 md-9")}
+                  {this.getInput("Password", SInput.TYPE("password"), true, "xs-12 md-9")}
+                </SView>
                 <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
                   onPress={() => {
-                    if (this.props.state.usuarioReducer.estado == "cargando") {
-                      return;
-                    }
-                    var isValid = true;
-                    var objectResult = {};
-                    Object.keys(this.imputs).map((key) => {
-                      if (this.imputs[key].verify() == false) isValid = false;
-                      objectResult[key] = this.imputs[key].getValue();
-                    })
-                    if (!isValid) {
-                      this.setState({ ...this.state });
-                      return;
-                    }
-                    var object = {
-                      component: "usuario",
-                      type: !this.data.key ? "registro" : "editar",
-                      version: "2.0",
-                      estado: "cargando",
-                      cabecera: "registro_administrador",
-                      key_usuario: !this.data.key ? "" : this.props.state.usuarioReducer.usuarioLog.key,
-                      key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
-                      data: {
-                        ...this.data,
-                        ...objectResult,
-                      },
-                    }
-                    // alert(JSON.stringify(object));
-                    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                    this.onPress()
                   }}
                 />
               </View>
+
             </View>
           </SSCrollView>
         </View>
-
       </View>
     );
   }

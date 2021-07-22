@@ -8,78 +8,118 @@ export default class SHeaderItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            obj: this.props.obj
         };
-
+        this.move = 0;
         this.animSelect = new Animated.Value(0);
         this.anim = new Animated.ValueXY({ x: this.props.obj.width, y: 0 });
         this.pan = new SAPanResponder({
             onGrand: (e, gs) => {
-                this.startWidth = this.layout.width;
+                this.startWidth = this.anim.x._value;
                 this.anim.flattenOffset();
-                this.anim.setOffset({
-                    x: this.anim.x._value,
-                    y: this.anim.y._value
-                });
+                // this.anim.setOffset({
+                //     x: this.anim.x._value,
+                //     y: this.anim.y._value
+                // });
                 this.scroll.setEnabled(false)
             },
             onMove: (e, gs) => {
-                var layoutParent = this.scroll.getLayout();
-                console.log(this.props.layoutParent())
-                console.log(this.layout)
-                console.log({ moveX: gs.moveX, dx: gs.dx, x0: gs.x0 })
-                this.anim.setValue({ x: gs.dx, y: 0 })
-                // if (gs.moveX < 50) {
-                //     this.scroll.scrollIncrement({ x: -2, y: 0 })
-                // }
-                // if (gs.moveX > layoutParent.width - 50) {
-                //     this.scroll.scrollIncrement({ x: +2, y: 0 })
-                // }
+                if (this.startWidth + gs.dx <= 10) {
+                    return;
+                }
+                this.anim.setValue({ x: this.startWidth + gs.dx, y: 0 })
+
             },
             onRelease: () => {
+                this.state.obj.width = this.anim.x._value;
+                this.props.reload();
                 this.props.changeSize(this.layout.width + 1 - this.startWidth)
                 // this.anim.extractOffset();
                 this.scroll.setEnabled(true)
+
             }
         });
 
         this.animPosition = new Animated.ValueXY({ x: 0, y: 0 });
         this.panMove = new SAPanResponder({
             onGrand: (e, gs) => {
+                this.move = 0
                 this.startPosition = {
                     x: this.animPosition.x._value,
                     y: this.animPosition.y._value
                 }
                 this.animPosition.flattenOffset();
-                this.animPosition.setOffset({
-                    x: this.animPosition.x._value,
-                    y: this.animPosition.y._value
-                });
+                // this.animPosition.setOffset({
+                //     x: this.animPosition.x._value,
+                //     y: this.animPosition.y._value
+                // });
                 this.animSelect.setValue(10);
                 this.scroll.setEnabled(false)
             },
             onMove: (e, gs) => {
-                this.animPosition.setValue({ x: gs.dx, y: 0 })
+                this.animPosition.setValue({ x: this.startPosition.x + gs.dx, y: 0 })
                 this.props.onMove(gs);
             },
             onRelease: () => {
-                new Animated.timing(this.animPosition, {
-                    toValue: this.startPosition,
-                    duration: 100,
-                }).start();
+                if (this.move) {
+                    new Animated.timing(this.animPosition, {
+                        toValue: {
+                            x: this.startPosition.x + (this.move * -1),
+                            y: 0
+                        },
+                        duration: 100,
+                    }).start();
+                    this.props.reload();
+                } else {
+                    new Animated.timing(this.animPosition, {
+                        toValue: this.startPosition,
+                        duration: 100,
+                    }).start();
+                }
+
                 this.animSelect.setValue(1);
                 this.scroll.setEnabled(true)
+                this.move = 0
+
                 // this.props.changeSize(this.layout.width + 1 - this.startWidth)
             }
         });
     }
+    componentDidMount() {
+        this.props.onLoad(this);
+        // console.log("ASdasasdas ")
+    }
+    getAnimates() {
+        return {
+            anim: this.anim,
+            animPosition: this.animPosition,
+            animSelect: this.animSelect
+        }
+    }
     getLayout() {
-        return this.layout
+        if (!this.layout) {
+            return {}
+        }
+        return {
+            ...this.layout,
+            xReal: this.layout.x + this.animPosition.x._value,
+            width: this.anim.x._value,
+        }
     }
     setLayout(layout) {
         this.layout = {
             ...this.layout,
             ...layout
         }
+    }
+    setObj(obj) {
+        this.setState({ obj: obj })
+    }
+    getObj() {
+        return this.state.obj;
+    }
+    setMove(move) {
+        this.move += move;
     }
     setLastMoved(ref) {
         this.lastMoved = ref;
@@ -88,23 +128,30 @@ export default class SHeaderItem extends Component {
         return this.lastMoved;
     }
     onMoveBrother(ref, gs) {
+        if (this.state.onAnimated) return
         var layoutP = ref.getLayout();
-        var p = gs.dx + layoutP.x + (layoutP.width / 2)
-        var mp = this.layout.x;
+        var myLayout = this.getLayout();
+        var pxinicio = layoutP.xReal;
+        var pxfinal = layoutP.xReal + layoutP.width
+        var myCenter = myLayout.xReal + (myLayout.width / 2);
 
-
-        if (p > mp && p < mp + this.layout.width / 2) {
-            console.log(this.props.obj.label)
-            var lastMoved = ref.getLastMoved()
-            var prevLayout = {
-                ...this.layout
+        if (myCenter > pxinicio && myCenter < pxfinal) {
+            var toValue = layoutP.width
+            var moved = myLayout.width
+            if (myCenter - pxinicio > pxfinal - myCenter) {
+                toValue = toValue * -1
+                moved = moved * -1;
             }
-            this.layout.x = !lastMoved ? (layoutP.x - this.layout.x) : (layoutP.x - lastMoved.x);
-            ref.setLastMoved(prevLayout);
+            ref.setMove(moved);
+            this.setState({ onAnimated: true })
+
             new Animated.timing(this.animPosition, {
-                toValue: this.layout.x,
+                toValue: { x: this.animPosition.x._value + toValue, y: 0 },
                 duration: 100,
-            }).start();
+            }).start(() => {
+                this.setState({ onAnimated: false })
+                if (this.props.onChangePosition) this.props.onChangePosition(this, ref);
+            });
         }
     }
     render() {
@@ -138,6 +185,7 @@ export default class SHeaderItem extends Component {
                     }} style={{
                         textAlign: "center"
                     }}>
+                        {/* {this.getLayout().xReal} */}
                         {this.props.obj.label}
                     </SText>
 

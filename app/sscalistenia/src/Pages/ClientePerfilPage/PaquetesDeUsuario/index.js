@@ -9,7 +9,7 @@ class PaquetesDeUsuario extends Component {
     constructor(props) {
         super(props);
         this.state = {
-             
+
         };
     }
 
@@ -32,14 +32,14 @@ class PaquetesDeUsuario extends Component {
     }
 
     getLista() {
-        let reducer = this.props.state.paqueteUsuarioReducer;
-        let data = reducer.data[this.props.key_usuario];
+        let reducer = this.props.state.paqueteVentaReducer;
+        let data = reducer.usuario[this.props.key_usuario];
         if (!data) {
             if (reducer.estado == "cargando") return <ActivityIndicator color={"#fff"} />
             if (reducer.estado == "error") return <Text>ERROR</Text>
             var object = {
-                component: "paqueteUsuario",
-                type: "getAll",
+                component: "paqueteVenta",
+                type: "getAllByUsuario",
                 estado: "cargando",
                 key_usuario: this.props.key_usuario
             }
@@ -118,7 +118,7 @@ class PaquetesDeUsuario extends Component {
                         <Text style={{
                             color: "#ffffff",
                             fontSize: 14,
-                        }}>Bs. {(paquete.precio).toLocaleString('en-IN')}</Text>
+                        }}>Bs. {(obj.monto ? obj.monto : 0).toLocaleString('en-IN')}</Text>
                     </View>
 
                     <View style={{
@@ -154,9 +154,9 @@ class PaquetesDeUsuario extends Component {
             this.props.navigation.navigate("PaquetePage", {
                 type: "select",
                 onResult: (key) => {
-                    this.props.navigation.navigate("ClientePaqueteRegistroPage",{
-                        key_usuario:this.props.key_usuario,
-                        key_paquete:key,
+                    this.props.navigation.navigate("ClientePaqueteRegistroPage", {
+                        key_usuario: this.props.key_usuario,
+                        key_paquete: key,
                     });
                 }
             });

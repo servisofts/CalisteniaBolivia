@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native"
 import { STheme } from "../STheme"
 
-export type Typesp = "default" | "center" | "center-horizontal" | "center-vertical"
+export type Typesp = "default" | "center" | "center-horizontal" | "center-vertical" | "col-square"
 
 
 export type TypeVariant = Typesp | [Typesp]
@@ -11,7 +11,7 @@ const getType = (type: TypeVariant) => {
         case "center":
             return StyleSheet.create({
                 "View": {
-                    overflow:"hidden",
+                    overflow: "hidden",
                     justifyContent: "center",
                     alignItems: "center",
                 }
@@ -28,10 +28,16 @@ const getType = (type: TypeVariant) => {
                     alignItems: "center"
                 }
             })
+        case "col-square":
+            return StyleSheet.create({
+                "View": {
+                   
+                }
+            })
         default:
             return StyleSheet.create({
                 "View": {
-                    overflow:"hidden",
+                    overflow: "hidden",
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
                 }

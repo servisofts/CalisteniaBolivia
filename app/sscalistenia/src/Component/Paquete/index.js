@@ -32,7 +32,7 @@ class Paquete extends Component {
         return (
             <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000044",
+                backgroundColor: "#66000066",
                 height: 50,
                 marginBottom: 8,
                 borderRadius: 8,

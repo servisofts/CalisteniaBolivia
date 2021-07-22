@@ -38,6 +38,7 @@ import PaquetePage from './PaquetePage'
 import PaqueteRegistroPage from './PaqueteRegistroPage'
 import ServisoftsUsuarioConErrorPage from './ServisoftsUsuarioConErrorPage'
 import ClientePaqueteRegistroPage from './ClientePaqueteRegistroPage'
+import ClientesPageSelect from './ClientesPageSelect'
 import SucursalPage from './SucursalPage'
 import SucursalRegistroPage from './SucursalRegistroPage'
 import BuscarDireccionPage from './BuscarDireccionPage'
@@ -56,7 +57,7 @@ import SComponent from '../SComponent/Pages';
 export const getPages = () => {
     return {
         // TestRNF,
-        ...SComponent,
+
         CargaPage,
         LobyPage,
         LobyTecnologiasPage,
@@ -84,6 +85,7 @@ export const getPages = () => {
         ProcesoComentarioRegistroPage,
         ProcesoSeguimietoRegistroPage,
         ClientesPage,
+        ClientesPageSelect,
         ClienteRegistroPage,
         RRHHPage,
         ClientePerfilPage,
@@ -104,6 +106,7 @@ export const getPages = () => {
         CalendarioPage,
         ProveedoresPage,
         ProveedorRegistroPage,
+        ...SComponent,
         ...SSRolesPermisos
     }
 }

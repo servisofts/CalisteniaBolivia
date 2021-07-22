@@ -56,15 +56,15 @@ img {
   user-drag: none;
 }
 div::-webkit-scrollbar {
-  width: 8px;               /* width of the entire scrollbar */
-  height: 8px;
+  width: 4px;               /* width of the entire scrollbar */
+  height: 4px;
 }
 
 div::-webkit-scrollbar-track {
-  background: #66000022;        /* color of the tracking area */
+  background: #00000000;        /* color of the tracking area */
 }
 
 div::-webkit-scrollbar-thumb {
-  background-color:#66000044;    /* color of the scroll thumb */
+  background-color:#66666644;    /* color of the scroll thumb */
   border-radius: 10px;       /* roundness of the scroll thumb */
 }

@@ -77,30 +77,29 @@ const RolDeUsuario = (props) => {
 
             }}
                 onPress={() => {
-                    if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
-                        return <View />
-                    }
-                    if (!isActivo) {
-                        var object = {
-                            component: "usuarioRol",
-                            type: "registro",
-                            key_usuario: props.state.usuarioReducer.usuarioLog.key,
-                            estado: "cargando",
-                            data: {
-                                key_rol: key,
-                                key_usuario: props.data.key,
+                    if (SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
+                        if (!isActivo) {
+                            var object = {
+                                component: "usuarioRol",
+                                type: "registro",
+                                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                                estado: "cargando",
+                                data: {
+                                    key_rol: key,
+                                    key_usuario: props.data.key,
+                                }
                             }
+                            props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+                        } else {
+                            var object = {
+                                component: "usuarioRol",
+                                type: "editar",
+                                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                                estado: "cargando",
+                                data: { ...isActivo, estado: 0 }
+                            }
+                            props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                         }
-                        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-                    } else {
-                        var object = {
-                            component: "usuarioRol",
-                            type: "editar",
-                            key_usuario: props.state.usuarioReducer.usuarioLog.key,
-                            estado: "cargando",
-                            data: { ...isActivo, estado: 0 }
-                        }
-                        props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                     }
                     // props.navigation.navigate("PermisoCrearPage", { key: objPermiso.key });
                 }}>
