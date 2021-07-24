@@ -97,7 +97,6 @@ export default class SSize extends Component {
           width: "100%",
           height: "100%",
           position: "absolute",
-          // backgroundColor:"#f0f"
         }}
         onLayout={(evt) => {
           if (this.state.layout) {
@@ -111,7 +110,6 @@ export default class SSize extends Component {
             this.setState({ layout: evt.nativeEvent.layout });
             this.props.repaint();
           }
-
           // console.log(evt.nativeEvent.layout)
         }}>
         {this.props.children}

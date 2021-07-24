@@ -28,8 +28,8 @@ export default class SHeader extends Component {
         };
 
     }
-    setScrollEnabled(val){
-        if(this.props.getScroll){
+    setScrollEnabled(val) {
+        if (this.props.getScroll) {
             this.props.getScroll().setEnabled(val)
         }
     }
@@ -56,12 +56,16 @@ export default class SHeader extends Component {
                 // this.scroll.setEnabled(false)
             },
             onMove: (e, gs) => {
+
+
                 var anim = this.state.positionHeader[key];
                 var animWidthP = this.state.widthHeaderAnim[key]
                 anim.setValue({ x: this.startPosition.x + gs.dx, y: 0 })
                 var arrKeys = Object.keys(this.state.positionHeader);
+
                 arrKeys.map((keyHeader) => {
                     if (key != keyHeader) {
+
                         var animPosHeader = this.state.positionHeader[keyHeader];
                         var animWidth = this.state.widthHeaderAnim[keyHeader]
                         var center = animPosHeader.x._value + (animWidth.x._value / 2);
@@ -73,6 +77,7 @@ export default class SHeader extends Component {
                             }
                             var temp = animPosHeader.x._value;
                             animPosHeader.setValue({ x: temp - (animWidthP.x._value * direction), y: 0 })
+
                             if (direction == -1) {
                                 this.lastMoved = {
                                     x: temp,
@@ -87,6 +92,7 @@ export default class SHeader extends Component {
 
                             // animPosHeader.setValue({ x: animPosHeader.x._value + gs.dx - this.lastdx, y: 0 })
                         }
+
                         return;
                     }
                     return;
@@ -111,12 +117,8 @@ export default class SHeader extends Component {
                     }).start();
                 }
                 this.state.animSelect[key].setValue(1);
-                // this.animSelect.setValue(1);
-                // this.scroll.setEnabled(true)
-                // this.move = 0
                 this.setScrollEnabled(true)
-                // this.props.changeSize(this.layout.width + 1 - this.startWidth)
-            }
+            },
         });
     }
     createPan(key) {
@@ -142,9 +144,7 @@ export default class SHeader extends Component {
                 anim.setValue({ x: this.startWidth + gs.dx, y: 0 })
                 // console.log(gs.dx)
                 var arrKeys = Object.keys(this.state.positionHeader);
-                if (this.props.contentSize) {
-                    this.props.contentSize.setValue({ x: this.props.contentSize.x._value + gs.dx - this.lastdx, y: this.props.contentSize.y._value });
-                }
+
                 arrKeys.map((keyHeader) => {
                     if (key != keyHeader) {
                         var animPosHeader = this.state.positionHeader[keyHeader];
@@ -159,6 +159,10 @@ export default class SHeader extends Component {
 
             },
             onRelease: () => {
+                if (this.props.contentSize) {
+                    var anim = this.state.widthHeaderAnim[key];
+                    this.props.contentSize.setValue({ x: this.props.contentSize.x._value + (anim.x._value - this.startWidth), y: this.props.contentSize.y._value });
+                }
                 // this.state.obj.width = this.anim.x._value;
                 // this.props.reload();
                 // this.props.changeSize(this.layout.width + 1 - this.anim.x._value)
@@ -172,11 +176,15 @@ export default class SHeader extends Component {
     }
     getHeaders() {
         let position = 0;
+        var total = 0;
         return this.state.data.map((obj, key) => {
             if (!this.state.widthHeaderAnim[obj.key]) {
                 this.state.widthHeaderAnim[obj.key] = new Animated.ValueXY({ x: obj.width, y: 0 })
+                total += obj.width;
                 if (this.props.contentSize) {
-                    this.props.contentSize.setValue({ x: this.props.contentSize.x._value + obj.width, y: this.props.contentSize.y._value });
+                    if (this.props.contentSize.x._value - total <= 0) {
+                        this.props.contentSize.setValue({ x: this.props.contentSize.x._value + obj.width, y: this.props.contentSize.y._value });
+                    }
                 }
             }
             if (!this.state.positionHeader[obj.key]) {
@@ -192,6 +200,7 @@ export default class SHeader extends Component {
             if (!this.state.animSelect[obj.key]) {
                 this.state.animSelect[obj.key] = new Animated.Value(1);
             }
+
             position += this.state.widthHeaderAnim[obj.key].x._value
             if (!this.state.load) {
                 this.props.loadAnimated({
@@ -205,6 +214,7 @@ export default class SHeader extends Component {
             return <SView
 
                 props={{
+                    // customStyle: "secondary",
                     variant: "center",
                     animated: true
                 }}
@@ -215,6 +225,7 @@ export default class SHeader extends Component {
                     width: this.state.widthHeaderAnim[obj.key].x,
                     height: "100%",
                     zIndex: this.state.animSelect[obj.key],
+                    ...this.props.style,
                     transform: [
                         { translateX: this.state.positionHeader[obj.key].x }
                     ]
@@ -243,6 +254,7 @@ export default class SHeader extends Component {
                         }}>
                             {obj.label}
                         </SText>
+
                     </SView>
 
                     <SView
@@ -251,7 +263,9 @@ export default class SHeader extends Component {
                             animated: true
                         }}
                         style={{
-                            width: 8,
+                            right: 0,
+                            position: "absolute",
+                            width: 16,
                             height: "100%",
                             cursor: "cell",
                             alignItems: "flex-end",
@@ -263,8 +277,20 @@ export default class SHeader extends Component {
                         }}>
 
                         </SView>
-                    </SView>
 
+                    </SView>
+                    <SView style={{
+                        right: 4,
+                        top: 0,
+                        width: 20,
+                        position: "absolute",
+                        height: 20,
+                        backgroundColor: "#ffffff22"
+                    }} onPress={() => {
+
+                    }}>
+
+                    </SView>
                 </SView>
             </SView>
         });
@@ -279,8 +305,8 @@ export default class SHeader extends Component {
                     top: 0,
                     left: 0,
                     position: "absolute",
-                    height: 40,
                     width: "100%",
+                    height: "100%",
                     // backgroundColor: "#000",
                     // transform: [
                     //     { translateY: this.props.headerPosition.y }

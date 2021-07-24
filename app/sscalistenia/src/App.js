@@ -31,9 +31,8 @@ const store = createStore(
   applyMiddleware(reduxThunk),
 );
 
-SSSocket.init(store);
+// SSSocket.init(store);
 
-// const Container = SSNavigation.init(store);
 
 
 const isNative = Platform.OS !== 'web';
@@ -44,8 +43,8 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaView style={styles.scrollView} behavior={{ padding: 0, }}>
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
-        <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
-        <SSRolesPermisos />
+        {/* <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} /> */}
+        {/* <SSRolesPermisos /> */}
         <SComponentClass >
           <SSNavigation />
         </SComponentClass>

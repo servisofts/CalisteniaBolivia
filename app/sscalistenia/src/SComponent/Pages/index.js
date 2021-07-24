@@ -4,12 +4,15 @@ import Documentacion from "./Documentacion"
 import DemoSView from "./DemoSView"
 import NewTable from "./NewTable"
 import InputDemo from "./InputDemo"
-export default {
+import DemoSScroll from "./DemoSScroll"
+export default {  
     NewTable,
-    SComponentDocumentacion: Documentacion,
+    DemoSScroll,
+    SComponentGridDemo: GridDemo,
     DemoSView,
+    SComponentDocumentacion: Documentacion,
     InputDemo,
     SComponentDemoPage: DemoPage,
-    SComponentGridDemo: GridDemo,
+ 
 
 }

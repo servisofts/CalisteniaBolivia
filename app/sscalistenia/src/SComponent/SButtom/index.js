@@ -123,8 +123,10 @@ export class SButtom extends Component<typeProps> {
         var variant = this.variant[this.getOption("variant")]
         var style = this.styleType[this.getOption("type")]
         var Component = TouchableOpacity;
-        if (this.props.props.variant == "confirm") {
-            Component = DeleteBtn
+        if (this.props.props) {
+            if (this.props.props.variant == "confirm") {
+                Component = DeleteBtn
+            }
         }
         return (
             <Component style={{ ...variant.touchable, ...style.touchable, ...this.props.style }}

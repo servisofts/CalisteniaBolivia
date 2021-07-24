@@ -5,6 +5,8 @@ import SScrollView from '../SScrollView';
 import { SView } from '../SView';
 import SHeader from './SHeader';
 import SData from './SData'
+import SScrollView2 from '../SScrollView2';
+import SFooter from './SFooter';
 type typeHeader = {
     label: String,
     key: String,
@@ -14,6 +16,9 @@ type typeHeader = {
 type SType = {
     header: [typeHeader],
     data: [Object],
+    style: {
+
+    }
 }
 
 export default class STable extends Component<SType> {
@@ -33,69 +38,73 @@ export default class STable extends Component<SType> {
             animates: {
             }
         };
-        this.contentSize = new Animated.ValueXY({ x: 0, y: 0 })
+        this.contentSize = new Animated.ValueXY({ x: 200, y: 0 })
         this.headerPosition = new Animated.ValueXY({ x: 0, y: 0 })
     }
 
     render() {
         return (
             <View style={{
-                width:"100%",
-                flex:1,
+                width: "100%",
+                height: "100%"
             }}>
-
-                <SScrollView
-                    style={{ 
-                        width:"100%",
-                        flex:1,
-                    }}
-                    ref={(ref) => { this.scroll = ref; }}
-                    onScroll={(evt) => {
-                        if (evt.horizontal) {
-                            // var pos = evt.horizontal.contentSize.width - (evt.horizontal.contentOffset.x + evt.horizontal.layoutMeasurement.width);
-                            // if (pos < 200) {
-                            // this.scroll.moveScrollHorizontal({ x: evt.horizontal.contentSize.width - evt.horizontal.layoutMeasurement.width - 200, y: 0 })
-                            // }
+                <SView props={{
+                    // direction:"row",
+                }} style={{
+                    width: "100%",
+                    flex: 1,
+                }}>
+                    <SScrollView2
+                        ref={(ref) => { this.scroll = ref; }}
+                        header={{
+                            style: {
+                                height: 40,
+                            },
+                            content: (
+                                <SHeader
+                                    style={{
+                                        backgroundColor: STheme().colorDanger,
+                                    }}
+                                    header={this.state.header}
+                                    contentSize={this.contentSize}
+                                    getScroll={() => { return this.scroll }}
+                                    loadAnimated={(animates, reset) => {
+                                        this.state.animates = animates;
+                                        if (!animates["widthHeaderAnim"] || reset) {
+                                            this.setState({ animates: this.state.animates })
+                                        }
+                                    }}
+                                />)
                         }
-                        // if (evt.vertical) {
-                        //     var off = evt.vertical.contentOffset.y
-                        //     this.headerPosition.setValue({ x: 0, y: off })
-                        // }
-                    }}
-                    header={
-                        <SView style={{
-                            height: 40,
-                            width: "100%",
-                           
+                        }
+                    >
+                        <SView props={{
+                            direction: "row",
+                            animated: true
+                        }} style={{
+                            width: this.contentSize.x,
+                            height: "100%",
+                            flex: 1,
+                            // backgroundColor: "#f0f"
                         }}>
-                            <SHeader header={this.state.header} contentSize={this.contentSize}
-                                getScroll={() => { return this.scroll }}
-                                loadAnimated={(animates, reset) => {
-                                    this.state.animates = animates;
-                                    if (!animates["widthHeaderAnim"] || reset) {
-                                        this.setState({ animates: this.state.animates })
-                                    }
-                                }}
-                            />
+                            <SData
+                                ref={(ref) => { this.refData = ref }}
+                                data={this.props.data}
+                                header={this.state.header}
+                                animates={this.state.animates} />
+                            <View style={{
+                                width: "100%",
+                                height: 20,
+                            }}>
+
+                            </View>
                         </SView>
-                    }
-                >
-                    <SView props={{
-                        animated: true
-                    }} style={{
-                        width: this.contentSize.x,
-                        height:"100%",
-                        flex:1,
-                    }}>
-                        <SData
-                            ref={(ref) => { this.refData = ref }}
-                            data={this.props.data}
-                            header={this.state.header}
-                            animates={this.state.animates} />
+                    </SScrollView2>
+                </SView>
+                <SFooter data={this.props.data}
+                    header={this.state.header}
+                />
 
-
-                    </SView>
-                </SScrollView>
             </View>
         );
     }

@@ -50,16 +50,15 @@ class NewTable extends Component {
                 variant: "center",
             }} style={{
                 width: "100%",
-                flex: 1,
+                height:"100%"
             }}>
                 <SView style={{
                     width: "100%",
-                    flex: 1,
                     height:"100%",
                 }}>
                     <STable
                         header={[
-                            { label: "Nombres", key: "data/Nombres/dato", width: 350, index: 2 },
+                            { label: "Nombres", key: "data/Nombres/dato", width: 150, index: 2 },
                             { label: "Apellidos", key: "data/Apellidos/dato", width: 120, index: 1 },
                             { label: "Correo", key: "data/Correo/dato", width: 200, index: 3 },
                             { label: "Fecha nacimineto", key: "data/Fecha de nacimiento/dato", width: 120, index: 4 },

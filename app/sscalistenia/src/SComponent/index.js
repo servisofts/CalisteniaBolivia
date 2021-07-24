@@ -12,6 +12,7 @@ import { SView } from './SView';
 import SThread from './SThread';
 import SAPanResponder from './SAnimated/SAPanResponder'
 import SScrollView from './SScrollView'
+import SScrollView2 from './SScrollView2'
 import SImage from './SImage';
 import SBackground from './SBackground';
 import SSound from './SSound';
@@ -33,6 +34,7 @@ export {
     SThread,
     SAPanResponder,
     SScrollView,
+    SScrollView2,
     SImage,
     SBackground
 }
@@ -59,6 +61,7 @@ export class SComponentClass extends Component {
                 left: 0,
                 width: "100%",
                 height: "100%",
+                alignItems:"stretch",
                 overflow: "hidden",
                 ...(Platform.OS == "web" ? {
                     position: "fixed",
