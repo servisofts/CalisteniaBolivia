@@ -20,6 +20,13 @@ class ConfirmarPaquete extends Component {
     }
 
     sendServer(data) {
+        var clientes = this.props.data.usuariosData.map((obj) => {
+            return {
+                ...obj,
+                fecha_inicio: this.props.data.fecha_inicio,
+                fecha_fin: this.props.data.fecha_fin,
+            }
+        });
 
         var object = {
             component: "paqueteVenta",
@@ -27,7 +34,7 @@ class ConfirmarPaquete extends Component {
             estado: "cargando",
             key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             data,
-            clientes: this.props.data.usuariosData,
+            clientes: clientes,
         }
         // alert(JSON.stringify(object));
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
@@ -124,8 +131,7 @@ class ConfirmarPaquete extends Component {
                 descripcion: "",
                 // key_usuario: usuario.key,
                 key_paquete: this.paquete.key,
-                fecha_inicio: this.props.data.fecha_inicio,
-                fecha_fin: this.props.data.fecha_fin,
+
                 monto: this.paquete.precio,
                 nombre_paquete: this.paquete.descripcion
             })

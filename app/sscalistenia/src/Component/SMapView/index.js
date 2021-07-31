@@ -104,26 +104,25 @@ class SMapView extends Component {
                 >
                     {this.props.children}
                 </GoogleMapReact>
-                <TouchableOpacity
-                    style={{
-                        position: "absolute",
-                        bottom: 100,
-                        right: 8,
-                        padding: 4,
-                        backgroundColor: "#ccc",
-                        borderRadius: 10,
-                    }}
-                    onPress={() => {
-                        alert("edson")
-                        this.getposition();
-                    }}>
-                    <Svg name="logoSimple"
+                    {/* <TouchableOpacity
                         style={{
-                            width: 35,
-                            height: 35,
-                            fill: "#2C4C7E"
-                        }} />
-                </TouchableOpacity>
+                            position: "absolute",
+                            bottom: 100,
+                            right: 8,
+                            padding: 4,
+                            backgroundColor: "#ccc",
+                            borderRadius: 10,
+                        }}
+                        onPress={() => {
+                            this.getposition();
+                        }}>
+                        <Svg name="logoSimple"
+                            style={{
+                                width: 35,
+                                height: 35,
+                                fill: "#2C4C7E"
+                            }} />
+                    </TouchableOpacity> */}
             </>
         );
     }

@@ -40,6 +40,18 @@ export default class SScrollView2 extends Component<SType> {
     getRef(key) {
         return this.state.ref[key];
     }
+    scrollTo({ x, y }) {
+        if (!this.layout) {
+            return;
+        }
+        var { width, height } = this.layout;
+        if (this.getRef("scrollv")) {
+            this.getRef("scrollv").scrollTo({ x: x - width / 2, y: y - height / 2 }, true);
+        }
+        if (this.getRef("scrollh")) {
+            this.getRef("scrollh").scrollTo({ x: 1, y: 1 }, true);
+        }
+    }
     setEnabled(en) {
         this.getRef("scrollh").setEnabled(en);
         this.getRef("scrollv").setEnabled(en);
@@ -63,49 +75,86 @@ export default class SScrollView2 extends Component<SType> {
                     position: "absolute",
                     width: "100%",
                     height: "100%",
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    alignItems: "center",
                 }} onLayout={(evt) => {
-
+                    this.layout = evt.nativeEvent.layout
                 }}>
-                    <Scroll
-                        ref={(ref) => { this.setRef("scrollh", ref) }}
-                        horizontal={true}
-                    >
-                        <View>
-                            <Scroll
-                                ref={(ref) => { this.setRef("scrollv", ref) }}
-                            >
-                                <View style={{ width: "100%", height: this.props.header.style.height, }}></View>
-                                {this.props.children}
-                            </Scroll>
-
+                    <View style={{
+                        maxWidth: "100%",
+                        height: "100%",
+                        ...(this.props.disableHorizontal ? {
+                            minWidth: "100%",
+                        } : {}),
+                    }}>
+                        <Scroll
+                            disableHorizontal={this.props.disableHorizontal}
+                            ref={(ref) => { this.setRef("scrollh", ref) }}
+                            horizontal={true}
+                            {...!this.props.onScrollEnd ? {} : {
+                                onScrollEnd: (evt) => {
+                                    this.props.onScrollEnd({
+                                        horizontal: {
+                                            key: "horizontal",
+                                            ...evt
+                                        }
+                                    })
+                                }
+                            }}
+                        >
                             <View style={{
-                                position: "absolute",
                                 width: "100%",
-                                top: 0,
-                                left: 0,
-                                ...this.props.header.style
                             }}>
-                                {this.props.header.content}
+                                <Scroll
+                                    disableHorizontal={this.props.disableHorizontal}
+                                    ref={(ref) => { this.setRef("scrollv", ref) }}
+                                    {...!this.props.onScrollEnd ? {} : {
+                                        onScrollEnd: (evt) => {
+                                            this.props.onScrollEnd({
+                                                vertical: {
+                                                    key: "vertical",
+                                                    ...evt
+                                                }
+                                            })
+                                        }
+                                    }}
+                                >
+                                    <View style={{
+                                        width: "100%",
+                                        height: "100%",
+                                    }}>
+                                        <View style={{ width: "100%", height: this.props.header.style.height, }}></View>
+                                        {this.props.children}
+                                    </View>
+                                </Scroll>
+
+                                <View style={{
+                                    position: "absolute",
+                                    width: "100%",
+                                    top: 0,
+                                    left: 0,
+                                    ...this.props.header.style
+                                }}>
+                                    {this.props.header.content}
+                                </View>
+
                             </View>
-                         
-                        </View>
-                    </Scroll>
-                    <Indicator ref={(ref) => {
-                        if (ref) {
-                            ref.setScroll(this.state.ref["scrollh"]);
-                        }
-                        this.setRef("indicatorH", ref)
-                    }}
-                    />
-                    <Indicator ref={(ref) => {
-                        if (ref) {
-                            ref.setScroll(this.state.ref["scrollv"]);
-                        }
-                        this.setRef("indicatorV", ref)
-                    }}
-                    />
-                    {/* </View> */}
+                        </Scroll>
+                        <Indicator ref={(ref) => {
+                            if (ref) {
+                                ref.setScroll(this.state.ref["scrollh"]);
+                            }
+                            this.setRef("indicatorH", ref)
+                        }}
+                        />
+                        <Indicator ref={(ref) => {
+                            if (ref) {
+                                ref.setScroll(this.state.ref["scrollv"]);
+                            }
+                            this.setRef("indicatorV", ref)
+                        }}
+                        />
+                    </View>
 
                 </View>
             </View>

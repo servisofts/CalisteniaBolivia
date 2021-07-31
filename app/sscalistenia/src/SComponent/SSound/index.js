@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Delele from '../../sound/delete.mp3'
+// import Delele from '../../sound/delete.mp3'
 export default class SSound extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
-        this.sonido = new Audio(Delele);
-        this.sonido.play();
+        // this.sonido = new Audio(Delele);
+        // this.sonido.play();
 
     }
     play() {

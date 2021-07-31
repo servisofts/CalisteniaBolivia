@@ -12,7 +12,7 @@ import SSCrollView from '../../Component/SScrollView';
 import Paquete from '../../Component/Paquete';
 import Usuario from './Usuario';
 import SCalendar from '../../Component/SCalendar';
-import { SPopupOpen, SDate } from '../../SComponent';
+import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2 } from '../../SComponent';
 import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
@@ -42,30 +42,65 @@ class ClientePaqueteRegistroPage extends Component {
     }
     var DATA = []
     for (let i = 0; i < this.state.paquete.participantes; i++) {
-      DATA.push(<Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
-        // console.log(usr);
-        if (!this.state.usuariosData[i]) {
-          this.state.usuariosData[i] = usr;
-          this.state.usuarios[i] = usr.key;
-          this.setState({ ...this.state })
-        }
-        if (this.state.usuariosData[i].key != usr.key) {
-          this.state.usuariosData[i] = usr;
-          this.state.usuarios[i] = usr.key;
-          this.setState({ ...this.state })
-        }
-      }}
-        onPress={() => {
-          this.props.navigation.navigate("ClientesPageSelect", {
-            select: (data) => {
-              this.state.usuariosData[i] = data;
-              this.state.usuarios[i] = data.key;
-              this.setState({ ...this.state })
-            }
-          })
-        }} />)
+      DATA.push(<SView props={{
+        col: "xs-12 sm-9 md-6 xl-4",
+        variant: "center",
+      }} style={{
+        padding: 12,
+      }}>
+        <Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
+          // console.log(usr);
+          if (!this.state.usuariosData[i]) {
+            this.state.usuariosData[i] = usr;
+            this.state.usuarios[i] = usr.key;
+            this.setState({ ...this.state })
+          }
+          if (this.state.usuariosData[i].key != usr.key) {
+            this.state.usuariosData[i] = usr;
+            this.state.usuarios[i] = usr.key;
+            this.setState({ ...this.state })
+          }
+        }}
+          onPress={() => {
+            this.props.navigation.navigate("ClientesPageSelect", {
+              select: (data) => {
+                this.state.usuariosData[i] = data;
+                this.state.usuarios[i] = data.key;
+                this.setState({ ...this.state })
+              }
+            })
+          }} />
+        <SView props={{
+          col: "xs-12",
+          direction: "row"
+        }}>
+          {this.getCalendar()}
+          {/* <SInput props={{
+            col: "xs-6",
+            type: "fecha",
+            customStyle: "calistenia",
+          }} /> */}
+          <SView style={{
+            width: "100%",
+            height: 100,
+          }}></SView>
+        </SView>
+      </SView>)
     }
-    return DATA;
+    return <SView props={{
+      col: "xs-12",
+      direction: "row",
+      variant: "center"
+    }}>
+      {DATA}
+    </SView>
+  }
+  getCalendar = () => {
+    return <SCalendar
+      task={this.state.task}
+      onChange={({ fecha_inicio, fecha_fin }) => {
+        this.setState({ task: { ...this.state.task, fecha_inicio, fecha_fin } })
+      }} />
   }
   render() {
     this.key_usuario = this.props.navigation.getParam("key_usuario", false);
@@ -74,6 +109,7 @@ class ClientePaqueteRegistroPage extends Component {
       this.props.state.paqueteVentaReducer.estado = "";
       this.props.navigation.goBack();
     }
+
 
 
     return (
@@ -92,24 +128,17 @@ class ClientePaqueteRegistroPage extends Component {
           width: "100%",
           flex: 1,
         }}>
-
-          <SSCrollView style={{
-            width: "100%",
-            height: "100%"
-
-          }} >
-
+          <SScrollView2
+            disableHorizontal
+            style={{
+              width: "100%",
+              height: "100%"
+            }} >
             <View style={{
               width: "100%",
-              // maxWidth: 600,
               alignItems: 'center',
-              // justifyContent: 'center',
+              paddingBottom: 100,
             }}>
-
-              {/* <Text style={{
-                color: "#fff",
-                fontSize: 16,
-              }}>Agregar un paquete.</Text> */}
               <View style={{
                 width: "100%",
                 maxWidth: 800,
@@ -128,54 +157,41 @@ class ClientePaqueteRegistroPage extends Component {
                   if (!this.state.task.fecha_fin) {
                     this.state.paquete = paquete;
                     this.state.task.fecha_fin = new SDate();
-                    this.state.task.fecha_fin.addDay(paquete.dias-1);
+                    this.state.task.fecha_fin.addDay(paquete.dias - 1);
                     this.state.task.dias = paquete.dias;
                     this.setState({ ...this.state });
                   }
                 }} />
-                <Text style={{
-                  width: "95%",
-                  fontSize: 12,
-                  color: "#fff",
-                  marginTop: 8,
-                  marginBottom: 4,
-                }}>Clientes</Text>
-                {this.getClientes()}
-                <Text style={{
-                  fontSize: 12,
-                  color: "#fff",
-                  marginTop: 8,
-                  marginBottom: 4,
-                }}>Selecciona la fecha inicio</Text>
-                <SCalendar task={this.state.task} onChange={({ fecha_inicio, fecha_fin }) => {
-                  this.setState({ task: { ...this.state.task, fecha_inicio, fecha_fin } })
-                }} />
-
-                {/* <Text style={{
-                  color: "#fff",
-                  fontSize: 16,
-                }}>Se va a asignar un paquete al usuario {this.key_usuario}.</Text> */}
-                <ActionButtom label={"Crear"} cargando={this.props.state.paqueteUsuarioReducer.estado == "cargando"} onPress={() => {
-                  console.log(this.state.usuariosData)
-                  SPopupOpen({
-                    key: "confirmarPaquete",
-                    content: (
-                      <ConfirmarPaquete data={{
-                        key_paquete: this.key_paquete,
-                        key_usuario: this.key_usuario,
-                        usuarios: this.state.usuarios,
-                        usuariosData: this.state.usuariosData,
-                        fecha_inicio: this.state.task.fecha_inicio.toString("yyyy-MM-dd"),
-                        fecha_fin: this.state.task.fecha_fin.toString("yyyy-MM-dd")
-                      }} />
-                    )
-                  })
-
-                }} />
               </View>
-
+              <Text style={{
+                width: "95%",
+                fontSize: 12,
+                color: "#fff",
+                marginTop: 8,
+                marginBottom: 4,
+              }}>Clientes</Text>
+              {this.getClientes()}
+              <SButtom props={{
+                type: "danger",
+              }} onPress={() => {
+                SPopupOpen({
+                  key: "confirmarPaquete",
+                  content: (
+                    <ConfirmarPaquete data={{
+                      key_paquete: this.key_paquete,
+                      key_usuario: this.key_usuario,
+                      usuarios: this.state.usuarios,
+                      usuariosData: this.state.usuariosData,
+                      fecha_inicio: this.state.task.fecha_inicio.toString("yyyy-MM-dd"),
+                      fecha_fin: this.state.task.fecha_fin.toString("yyyy-MM-dd")
+                    }} />
+                  )
+                })
+              }}>
+                Continuar
+              </SButtom>
             </View>
-          </SSCrollView>
+          </SScrollView2>
         </View>
 
       </View>

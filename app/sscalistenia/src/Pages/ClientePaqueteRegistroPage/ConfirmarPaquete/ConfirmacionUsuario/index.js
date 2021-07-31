@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import FotoPerfilUsuario from '../../../../Component/FotoPerfilUsuario';
 import AppParams from '../../../../Params';
-import { SView, SBackground, SInput, SText, SScrollView, SButtom, SPopupClose } from '../../../../SComponent';
+import { SView, SBackground, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2 } from '../../../../SComponent';
 
 class ConfirmacionUsuario extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ class ConfirmacionUsuario extends Component {
     return <SButtom
       props={{
         type: "danger",
-        variant: "confirm"
+        variant: "default"
       }}
       style={{
         marginTop: 10,
@@ -131,7 +131,7 @@ class ConfirmacionUsuario extends Component {
         overflow: "hidden"
       }}>
         <SBackground />
-        <SScrollView disableHorizontal={true} style={{
+        <SScrollView2 disableHorizontal={true} style={{
           width: "100%",
           height: "100%",
         }} >
@@ -164,9 +164,16 @@ class ConfirmacionUsuario extends Component {
             {this.getInput("CI", SInput.TYPE(""), true, "xs-10 md-10")}
             {this.getInput("Telefono", SInput.TYPE("phone"), true, "xs-10 md-10")}
             {this.getInput("Correo", SInput.TYPE("email"), true, "xs-10 md-10")}
-            {this.getBtn()}
+            <SView props={{
+              col: "xs-12",
+              variant:"center"
+            }} style={{
+              height:100
+            }}>
+              {this.getBtn()}
+            </SView>
           </SView>
-        </SScrollView>
+        </SScrollView2>
       </SView>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { SThread } from '../../SComponent';
 import Svg from '../../Svg';
 import STextImput from '../STextImput';
 
@@ -109,8 +110,9 @@ export default class Buscador extends Component<Tprops> {
 
                         onChangeText={(txt) => {
                             this.state.value = txt;
-                            this.props.repaint();
-
+                            new SThread(500, "onChangeBuscador", true).start(() => {
+                                this.props.repaint();
+                            })
                         }}
                     />
 

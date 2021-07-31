@@ -7,6 +7,7 @@ import SDate from '../../../SDate';
 import SThread from '../../../../Component/SThread';
 import { STheme } from '../../../STheme';
 import SBackground from '../../../SBackground';
+import { SScrollView2 } from '../../../../SComponent';
 type typeResp = {
     year: Number,
     month: Number,
@@ -158,7 +159,7 @@ export default class SIFechaAlert extends Component<typeProps> {
 
                 <SText options={{
                     variant: "h3",
-                    type:"primary"
+                    type: "primary"
                 }}>
                     {obj.data}
 
@@ -188,7 +189,7 @@ export default class SIFechaAlert extends Component<typeProps> {
             }}>
 
             </SView>
-            <SScrollView disableHorizontal
+            <SScrollView2 disableHorizontal
                 ref={(ref) => { this.scroll[key] = ref }}
                 // reverse
                 onScrollEnd={(evt) => {
@@ -206,7 +207,7 @@ export default class SIFechaAlert extends Component<typeProps> {
                         height: 80
                     }}></SView>
                 </SView>
-            </SScrollView>
+            </SScrollView2>
 
         </SView>;
     }
@@ -224,7 +225,7 @@ export default class SIFechaAlert extends Component<typeProps> {
             props={{
                 col: "xs-6",
                 variant: "center",
-                withoutFeedback:true
+                withoutFeedback: true
             }}
             style={{
                 height: 200,

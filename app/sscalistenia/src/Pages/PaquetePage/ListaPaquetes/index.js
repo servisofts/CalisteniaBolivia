@@ -6,7 +6,7 @@ import Svg from '../../../Svg';
 import AppParams from '../../../Params';
 import Buscador from '../../../Component/Buscador';
 import SOrdenador from '../../../Component/SOrdenador';
-import { SScrollView, SView } from '../../../SComponent';
+import { SScrollView, SScrollView2, SView } from '../../../SComponent';
 
 export default class ListaPaquetes extends Component {
     constructor(props) {
@@ -56,25 +56,25 @@ export default class ListaPaquetes extends Component {
             // if (obj.estado != 1) {
             //     return <View />
             // }
-            return (<SView 
+            return (<SView
                 props={{
-                    col:"xs-11 md-8 xl-6"
+                    col: "xs-11 md-8 xl-6"
                 }}
                 style={{
-                backgroundColor: "#66000044",
-                marginBottom: 8,
-                borderRadius: 8,
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                padding: 4,
-                // height: 100,
-            }} onPress={() => {
-                // if (obj.url) {
-                // console.log(obj)
-                this.props.onPress(key);
-                // }
-            }}>
+                    backgroundColor: "#66000044",
+                    marginBottom: 8,
+                    borderRadius: 8,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    padding: 4,
+                    // height: 100,
+                }} onPress={() => {
+                    // if (obj.url) {
+                    // console.log(obj)
+                    this.props.onPress(key);
+                    // }
+                }}>
 
                 <View style={{
                     justifyContent: "center",
@@ -172,16 +172,23 @@ export default class ListaPaquetes extends Component {
             }}>
                 <Buscador ref={(ref) => {
                     if (!this.state.buscador) this.setState({ buscador: ref });
-                }} repaint={() => { this.setState({ ...this.state }) }} />
+                }} repaint={() => { this.setState({ ...this.state }) }}
+                    eliminados />
                 <SView style={{
                     width: "100%",
                     flex: 1,
                 }}>
-                    <SScrollView disableHorizontal style={{
-                        height: "100%",
-                    }} contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}>
-                        {this.getItems()}
-                    </SScrollView>
+                    <SScrollView2 disableHorizontal style={{
+                        width: "100%",
+                    }}>
+                        <SView props={{
+                            variant: "center",
+                        }} style={{
+                            width: "100%",
+                        }}>
+                            {this.getItems()}
+                        </SView>
+                    </SScrollView2>
                 </SView>
 
             </View>

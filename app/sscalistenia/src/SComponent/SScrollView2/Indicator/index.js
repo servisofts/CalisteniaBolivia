@@ -41,6 +41,9 @@ class Indicator extends Component<typeScroll> {
         if (this.state.scroll) {
             var propsScrll = this.state.scroll.getProps();
             var layoutScroll = this.state.scroll.getLayout();
+            if (!layoutScroll) {
+                return;
+            }
             var centerScroll = {
                 x: (contentOffset.x - layoutMeasurement.width) / contentSize.width,
                 y: (contentOffset.y - layoutMeasurement.height) / contentSize.height,
@@ -126,7 +129,7 @@ class Indicator extends Component<typeScroll> {
                     justifyContent: "center",
                     alignItems: "center",
                     padding: 4,
-                    cursor:"pointer"
+                    cursor: "pointer"
                 }}>
                 <View style={{
                     width: "100%",

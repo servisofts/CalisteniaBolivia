@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, ViewStyle, Platform } from 'react-native';
+import SThread from '../../SThread';
 import Indicator from '../Indicator';
 
 type typeScroll = {
@@ -37,11 +38,16 @@ class Scroll extends Component<typeScroll> {
     isHorizontal() {
         return this.props.horizontal;
     }
+    noscroll() {
+        window.scrollTo(0, 0);
+    }
     setEnabled(bool) {
         if (Platform.OS == "web") {
             if (!bool) {
                 document.ontouchmove = preventDefault;
+                window.addEventListener("scroll", this.noscroll);
             } else {
+                window.removeEventListener("scroll", this.noscroll);
                 document.ontouchmove = () => { }
             }
         }
@@ -50,6 +56,9 @@ class Scroll extends Component<typeScroll> {
     }
     moveScroll({ x, y }) {
         this.scrollRef.scrollTo({ x, y, animated: false })
+    }
+    scrollTo({ x, y }, animated) {
+        this.scrollRef.scrollTo({ x, y, animated: animated })
     }
     render() {
         return (
@@ -87,9 +96,24 @@ class Scroll extends Component<typeScroll> {
                     if (this.indicator) {
                         this.indicator.onScroll(evt.nativeEvent);
                     }
+                    if (this.props.onScrollEnd) {
+                        new SThread(350, "scroll_move", true).start(() => {
+                            this.props.onScrollEnd(this.scrolldata);
+                        })
+                    }
 
                 }}
                 style={{
+                    ...(this.props.disableHorizontal ? {
+                        width: "100%",
+                    } : {})
+
+                }}
+                contentContainerStyle={{
+                    ...(this.props.disableHorizontal ? {
+                        maxWidth: "100%",
+                        minWidth: "100%",
+                    } : {}),
                 }}
             >
                 {this.props.children}

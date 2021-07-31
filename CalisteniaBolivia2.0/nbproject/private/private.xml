@@ -3,7 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Controlador/EliminarEgresoChequeProAct.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Controlador/EliminarEgresoChequeProInact.java</file>
             <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Utils/Conexion.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Modelo/ReciboBD.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Modelo/Conversor.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Controlador/EliminarEgresoChequePerInact.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Modelo/contratoCali.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Controlador/ServletLogueo.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Controlador/ServletLogin.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Modelo/Recibo.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/src/java/Modelo/ClienteBD.java</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/web/reciboBox.jsp</file>
+            <file>file:/Users/rickypazd/Documents/GitHub/CalisteniaBolivia/CalisteniaBolivia2.0/web/recibo.jsp</file>
         </group>
     </open-files>
 </project-private>

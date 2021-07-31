@@ -14,6 +14,9 @@ export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
 }
 
 export const SSRolesPermisosGetPages = () => {
+    if(!INSTANCE){
+        return null;
+    }
     return INSTANCE.getPages();
 }
 

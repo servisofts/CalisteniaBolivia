@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import qs from 'qs';
@@ -97,15 +96,6 @@ class ClientesPage extends Component {
         if (this.props.state.usuarioReducer.estado == "cargando") {
           return <ActivityIndicator color={"#fff"} />
         }
-        var object = {
-          component: "usuario",
-          version: "2.0",
-          type: "getAll",
-          estado: "cargando",
-          cabecera: cabecera,
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-        }
-        this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         return <ActivityIndicator color={"#fff"} />
       }
       var reducer = this.props.state.usuarioRolReducer;
@@ -114,28 +104,22 @@ class ClientesPage extends Component {
         if (reducer.estado == "cargando") {
           return <ActivityIndicator color={"#fff"} />
         }
-        this.props.state.socketReducer.session[AppParams.socket.name].send({
-          component: "usuarioRol",
-          type: "getAll",
-          estado: "cargando",
-          key_rol: "d16d800e-5b8d-48ae-8fcb-99392abdf61f",
-        }, true);
         return <ActivityIndicator color={"#fff"} />
       }
-      
-    /*  var usuariosActivos = this.props.state.usuariosActivosReducer;
+      var usuariosActivos = this.props.state.usuarioReducer;
+
       if (!usuariosActivos) {
         if (reducer.estado == "cargando") {
           return <ActivityIndicator color={"#fff"} />
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send({
           component: "usuario",
-          type: "getActivos",
+          type: "getAllActivos",
           estado: "cargando",
         }, true);
         return <ActivityIndicator color={"#fff"} />
       }
-      */
+
 
       if (!this.state.buscador) {
         return <ActivityIndicator color={"#fff"} />
