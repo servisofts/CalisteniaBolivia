@@ -94,6 +94,10 @@ public class Manejador {
                     new Entrenamiento(data, session);
                     break;
                 }
+                case "cliente": {
+                    new Cliente(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }

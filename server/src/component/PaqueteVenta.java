@@ -101,6 +101,8 @@ public class PaqueteVenta {
                 paquete_venta_usuario = new JSONObject();
                 paquete_venta_usuario.put("key", UUID.randomUUID().toString());
                 paquete_venta_usuario.put("key_usuario",clientes.getJSONObject(i).getString("key"));
+                paquete_venta_usuario.put("fecha_inicio",clientes.getJSONObject(i).getString("fecha_inicio"));
+                paquete_venta_usuario.put("fecha_fin",clientes.getJSONObject(i).getString("fecha_fin"));
                 paquete_venta_usuario.put("key_paquete_venta",paquete_venta.get("key"));
                 paquete_venta_usuario.put("fecha_on",fecha_on);
                 paquete_venta_usuario.put("estado",1);
@@ -113,13 +115,12 @@ public class PaqueteVenta {
 
 
 
-            obj.put("data", paquete_venta);
+            obj.put("data", paquete_venta); 
+            obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
 
 
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
-
+            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
             
 
             JSONObject mail = new JSONObject();

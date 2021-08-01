@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import util.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -138,7 +139,7 @@ public class Usuario {
             String key_usuario = obj.getString("key_usuario_modificado");
             // SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB,
             // objNotificacion.toString());
-            SSServerAbstract.sendUser(obj.toString(), key_usuario);
+            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(key_usuario));
             // System.out.println(obj.toString());
         }
 
