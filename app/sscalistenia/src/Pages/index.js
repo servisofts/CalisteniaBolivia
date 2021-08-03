@@ -51,7 +51,7 @@ import EntrenamientoPage from './EntrenamientoPage'
 import CalendarioPage from './CalendarioPage'
 import ProveedoresPage from './Proveedor/ProveedoresPage'
 import ProveedorRegistroPage from './Proveedor/ProveedorRegistroPage'
-
+import Caja from "./Caja"
 import SSRolesPermisos from '../SSRolesPermisos/Pages';
 import SComponent from '../SComponent/Pages';
 export const getPages = () => {
@@ -105,8 +105,8 @@ export const getPages = () => {
         CalendarioPage,
         ProveedoresPage,
         ProveedorRegistroPage,
+        ...Caja,
         ...SComponent,
-
         ...SSRolesPermisos
     }
 }

@@ -23,7 +23,7 @@ var styleImput = {
 }
 
 class SucursalRegistroPage extends Component {
-    static navigationOptions = ({ navigation }) => {    
+    static navigationOptions = ({ navigation }) => {
         return {
             headerShown: false,
         }
@@ -55,6 +55,14 @@ class SucursalRegistroPage extends Component {
     }
 
     render() {
+        if (this.props.state.sucursalReducer.estado == "exito" && this.props.state.sucursalReducer.type == "registro") {
+            this.props.state.sucursalReducer.estado = ""
+            this.props.navigation.goBack();
+        }
+        if (this.props.state.sucursalReducer.estado == "exito" && this.props.state.sucursalReducer.type == "editar") {
+            this.props.state.sucursalReducer.estado = ""
+            this.props.navigation.goBack();
+        }
         return (
             <View style={{
                 flex: 1,
@@ -109,7 +117,7 @@ class SucursalRegistroPage extends Component {
                             </View>
                             <InputDireccion
                                 ref={(ref) => { this.direccion = ref }}
-                                navigation={this.props.navigation} 
+                                navigation={this.props.navigation}
                                 defaultValue={this.data}
                                 label={"Ubicacion de la sucursal"}
                                 style={styleImput}
@@ -163,7 +171,7 @@ class SucursalRegistroPage extends Component {
 
                         </View>
                     </SSCrollView>
-                
+
                 </View>
 
             </View>
