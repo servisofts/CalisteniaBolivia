@@ -98,6 +98,10 @@ public class Manejador {
                     new Cliente(data, session);
                     break;
                 }
+                case "caja": {
+                    new Caja(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }

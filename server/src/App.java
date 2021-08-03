@@ -1,7 +1,6 @@
 import Config.Config;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
-import component.Migrador;
 import conexion.Conexion;
 import conexion.ConexionMySql;
 import util.console;
@@ -14,6 +13,7 @@ public class App {
             console.error("Server closed.");
             return;
         }
+        
         SSL.getKeyStore();
         // Registrar mi certificado default si no existe
         if (!SSL.defaultCert()) { 
@@ -30,6 +30,6 @@ public class App {
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
         ConexionMySql.setConexion(Config.getJSON("data_base_mysql")); 
-        new Migrador().run();
+        //new Migrador().run();
     }
 }
