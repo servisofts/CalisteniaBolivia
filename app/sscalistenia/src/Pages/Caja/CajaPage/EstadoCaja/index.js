@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../../Params';
 import { SButtom, SInput, SText, STheme, SView } from '../../../../SComponent';
-import AperturaCaja from '../AperturaCaja';
 
 class EstadoCaja extends Component {
     constructor(props) {

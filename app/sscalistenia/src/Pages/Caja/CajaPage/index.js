@@ -4,7 +4,6 @@ import BackgroundImage from '../../../Component/BackgroundImage';
 import BarraSuperior from '../../../Component/BarraSuperior';
 import CalisPage from '../../../Component/CalisPage';
 import { SText, STheme, SView } from '../../../SComponent';
-import AperturaCaja from './AperturaCaja';
 import EstadoCaja from './EstadoCaja';
 import Sucursal from './Sucursal';
 
