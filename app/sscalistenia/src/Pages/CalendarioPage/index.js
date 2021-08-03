@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../Component/BarraSuperior';
 import SSCrollView from '../../Component/SScrollView';
+import { SCalendar, SScrollView2, SView } from '../../SComponent';
 import Svg from '../../Svg';
-import Calendario from './Calendario';
 
 class CalendarioPage extends Component {
   static navigationOptions = {
@@ -35,11 +35,22 @@ class CalendarioPage extends Component {
           flex: 1,
           width: "100%",
         }}>
-
-          <SSCrollView>
-            <Calendario />
-          </SSCrollView>
-
+          <SScrollView2 disableHorizontal>
+            <SView props={{
+              col: "xs-12",
+              variant: "center",
+            }}>
+              <SView props={{
+                col: "xs-12 md-6 xl-4",
+              }}>
+                <SCalendar
+                  onChange={(evt)=>{
+                      alert(evt.toString())
+                  }}
+                />
+              </SView>
+            </SView>
+          </SScrollView2>
         </View>
 
       </View>

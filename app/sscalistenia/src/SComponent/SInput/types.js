@@ -3,12 +3,14 @@ import { StyleSheet, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyl
 import { SInput } from "."
 import SDate from "../SDate"
 import { SPopupClose, SPopupOpen } from "../SPopup"
+import { SText } from "../SText"
 import { STheme } from "../STheme"
+import { SView } from "../SView"
 import SIFechaPicker from "./SInputTypes"
 import SIDialCodeAlert from "./SInputTypes/SIDialCodeAlert"
 import SIFechaAlert from "./SInputTypes/SIFechaAlert"
 
-export type TypeType = "default" | "fecha" | "password" | "email" | "phone"
+export type TypeType = "default" | "fecha" | "password" | "email" | "phone" | "number" | "money"
 type returnType = {
     props: TextInputProps,
     onPress: Function,
@@ -37,6 +39,10 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
             return phone(type, Parent);
         case "email":
             return email(type, Parent);
+        case "number":
+            return number(type, Parent);
+        case "money":
+            return money(type, Parent);
         default:
             return buildResp({
                 props: {
@@ -183,6 +189,71 @@ const fecha = (type: TypeType, Parent: SInput) => {
 
             },
             LabelStyle: {}
+        }
+    })
+}
+const number = (type: TypeType, Parent: SInput) => {
+    return buildResp({
+        props: {
+            keyboardType: "number-pad"
+        },
+        style: {
+            View: {},
+            InputText: {}
+        },
+        filter: (_value: String) => {
+            if (!_value) return _value;
+            var value = _value;
+            value = value.trim();
+            value = value.replace(/\D/, "");
+            return value;
+        },
+        verify: (value) => {
+            if (!value) return false;
+            return true;
+        }
+    })
+}
+const money = (type: TypeType, Parent: SInput) => {
+    return buildResp({
+        props: {
+            keyboardType: "number-pad",
+        },
+        style: {
+            View: {
+            },
+            InputText: {
+                flex:1,
+                marginEnd:4,
+                textAlign: "right",
+                fontSize: 16,
+            }
+        },
+        icon: (<SView style={{
+            width: 35,
+            height: "100%",
+        }} props={{ variant: "center" }}>
+            <SText style={{
+                color: "#fff",
+                fontSize: 16,
+            }}>Bs.</SText>
+        </SView>
+        ),
+        filter: (_value: String) => {
+            if (!_value) return _value;
+            var value = _value;
+            value = value.trim();
+            if (value.indexOf("\.") >= 0) {
+                var arr = value.split("\.");
+                value = arr[0].replace(/\D/, "") + "." + arr[1].replace(/\D/, "");
+            } else {
+                value = value.replace(/\D/, "");
+            }
+            return value;
+        },
+        verify: (value) => {
+            if (!value) return false;
+            return true;
         }
     })
 }

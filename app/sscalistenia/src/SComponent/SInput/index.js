@@ -162,7 +162,7 @@ export class SInput extends Component<IProps> {
                 <SView props={{
                     col: "xs-12",
                     direction: "row",
-                }} style={{ flex: 1, height: "100%" }}>
+                }} style={{ flex: 1, height: "100%", overflow: "hidden" , }}>
                     {this.getIcon()}
                     <TextInput
                         value={valueFilter}
@@ -174,7 +174,7 @@ export class SInput extends Component<IProps> {
                                 if (this.type.filter) {
                                     text = this.type.filter(text)
                                 }
-                                 if (this.type.onChangeText) {
+                                if (this.type.onChangeText) {
                                     text = this.type.onChangeText(text)
                                 }
                             }

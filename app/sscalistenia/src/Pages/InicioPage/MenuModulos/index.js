@@ -4,6 +4,7 @@ import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRol
 import Svg from '../../../Svg';
 import SSCrollView from '../../../Component/SScrollView';
 import AppParams from '../../../Params';
+import { SView } from '../../../SComponent';
 export default class MenuModulos extends Component {
     constructor(props) {
         super(props);
@@ -89,12 +90,13 @@ export default class MenuModulos extends Component {
 
     render() {
         return (
-            <View style={{
-                flexWrap: "wrap",
-                flexDirection: "row",
+            <SView props={{
+                col: "xs-12",
+                direction: "row",
+                variant: "center"
             }}>
                 {this.getItems()}
-            </View>
+            </SView>
         );
     }
 }

@@ -13,6 +13,4 @@ export default {
     SComponentDocumentacion: Documentacion,
     InputDemo,
     SComponentDemoPage: DemoPage,
- 
-
 }

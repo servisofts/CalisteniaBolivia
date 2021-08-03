@@ -17,6 +17,7 @@ import SImage from './SImage';
 import SBackground from './SBackground';
 import SSound from './SSound';
 import SDate from './SDate';
+import SCalendar from './SCalendar';
 export {
     SDate,
     STheme,
@@ -36,7 +37,8 @@ export {
     SScrollView,
     SScrollView2,
     SImage,
-    SBackground
+    SBackground,
+    SCalendar
 }
 export class SComponentClass extends Component {
     constructor(props) {
@@ -61,7 +63,7 @@ export class SComponentClass extends Component {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                alignItems:"stretch",
+                alignItems: "stretch",
                 overflow: "hidden",
                 ...(Platform.OS == "web" ? {
                     position: "fixed",

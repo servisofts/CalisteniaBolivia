@@ -78,7 +78,7 @@ export default class SC_Mes extends Component {
             </TouchableOpacity>
         </View>
     }
-    getSelector(date) {
+    getSelectorDrag(date) {
         return <SView
             {...this.pan.getPanHandlers()}
             ref={(ref) => { this.selector = ref }}
@@ -99,6 +99,26 @@ export default class SC_Mes extends Component {
 
         </SView>
     }
+
+    getSelect(isCurDate) {
+        if (!isCurDate) {
+            return <View />
+        }
+        return <SView
+            ref={(ref) => { this.selector = ref }}
+            props={{
+                animated: true
+            }}
+            style={{
+                position: "absolute",
+                borderRadius: 100,
+                width: 30,
+                height: 30,
+                backgroundColor: "#ff000066",
+            }}>
+
+        </SView>
+    }
     getBody() {
         var date = this.state.date.clone();
         date.setDay(1);
@@ -113,6 +133,7 @@ export default class SC_Mes extends Component {
                 var dateJson = date.toJson();
                 var isCurMonth = (dateJson.month == this.state.date.getMonth())
                 var isCurDate = date.isCurDate();
+                var dateClone = date.clone();
                 ITEM_semana.push(
                     <View style={{
                         flex: 1,
@@ -127,6 +148,13 @@ export default class SC_Mes extends Component {
                         <SView style={{
                             flex: 1,
                             width: "100%",
+                        }} onPress={() => {
+                            var fecha_fin = dateClone.clone();
+                            fecha_fin.addDay(this.props.task.dias - 1);
+                            this.props.onChange({
+                                fecha_inicio: dateClone,
+                                fecha_fin: fecha_fin
+                            })
                         }}
                             refData={(ref, key) => {
                                 if (key) {
@@ -149,7 +177,7 @@ export default class SC_Mes extends Component {
                                     },
                                 ]}>{date.toString("dd")}</Text>
                             </SView>
-
+                            {this.getSelect(isCurDate)}
                         </SView>
                         <Task date={date.clone()} task={this.props.task} />
                     </View >
@@ -172,7 +200,7 @@ export default class SC_Mes extends Component {
             alignItems: "center",
         }, this.props.style.border]}>
             {ITEM_mes}
-            {this.getSelector(date)}
+            {/* {this.getSelectorDrag(date)} */}
 
         </View>;
     }

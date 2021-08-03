@@ -44,6 +44,7 @@ export class SView extends Component<IProps> {
         this.state = {
             style: {}
         };
+        this.height = new Animated.Value(0);
         // if (this.props.refData) this.props.refData(this, props.data);
     }
     componentDidMount() {
@@ -110,6 +111,9 @@ export class SView extends Component<IProps> {
                 isSquare = true;
             }
         }
+        if (isSquare) {
+            Component = Animated.View
+        }
         // if (this.props.props.withoutFeedback) {
         //     childrens = <TouchableWithoutFeedback onPress={() => { }}>
         //         {this.props.children}
@@ -127,13 +131,18 @@ export class SView extends Component<IProps> {
                     if (this.props.onLayout) this.props.onLayout(evt);
                     if (isSquare) {
                         var width = evt.nativeEvent.layout.width;
-                        if (this.state.style.height) {
-                            if (this.state.style.height == width) {
-                                return;
-                            }
+                        // console.log(width)
+                        // console.log(size)
+                        this.height.setValue(width);
+                        // if (this.state.style.height) {
+                        //     if (this.state.style.height == width) {
+                        //         return;
+                        //     }
+                        // }
+                        if (this.state.style.height != this.height) {
+                            this.state.style.height = this.height;
+                            this.setState({ ...this.state })
                         }
-                        this.state.style.height = width;
-                        this.setState({ ...this.state })
                     }
                 }}
                 onPress={() => {

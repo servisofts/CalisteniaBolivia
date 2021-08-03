@@ -25,7 +25,8 @@ import locationGoogleReducer from './locationGoogleReducer';
 import sucursalReducer from './sucursalReducer';
 import SSRolesPermisos from '../SSRolesPermisos/Reducer';
 import entrenamientoReducer from './entrenamientoReducer';
-import paqueteVentaReducer from './paqueteVentaReducer'
+import paqueteVentaReducer from './paqueteVentaReducer';
+import cajaReducer from './cajaReducer';
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
@@ -53,5 +54,6 @@ export default combineReducers({
     paqueteUsuarioReducer,
     locationGoogleReducer,
     sucursalReducer,
+    cajaReducer,
     ...SSRolesPermisos
 });

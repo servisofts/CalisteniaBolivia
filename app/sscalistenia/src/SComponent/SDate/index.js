@@ -109,12 +109,15 @@ export default class SDate {
     }
     setDay(val) {
         this.date.setDate(val);
+        return this;
     }
     addDay(val) {
         this.date.setDate(this.getDay() + val);
+        return this;
     }
     addMonth(val) {
         this.date.setMonth(this.getMonth() - 1 + val);
+        return this;
     }
     getMonth() {
         return this.date.getMonth() + 1;

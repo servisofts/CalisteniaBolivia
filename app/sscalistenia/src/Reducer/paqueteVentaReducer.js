@@ -29,13 +29,21 @@ const registro = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
         action.clientes.map((cli) => {
-            if (state.usuario[cli.key]) {
-                state.usuario[cli.key][action.data.key] = action.data
+            if (state.usuario[cli.key_usuario]) {
+                state.usuario[cli.key_usuario][action.data.key] = {
+                    ...action.data,
+                    fecha_inicio: cli.fecha_inicio,
+                    fecha_fin: cli.fecha_fin,
+                }
+            }
+            if (state.data) {
+                state.data[cli.key_usuario][action.data.key] = {
+                    ...action.data,
+                    fecha_inicio: cli.fecha_inicio,
+                    fecha_fin: cli.fecha_fin,
+                }
             }
         })
-        if (state.data) {
-            state.data[action.data.key_usuario][action.data.key] = action.data;
-        }
         state.lastRegister = action.data;
     }
 }

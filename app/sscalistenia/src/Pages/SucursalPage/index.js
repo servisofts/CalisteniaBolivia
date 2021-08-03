@@ -182,7 +182,7 @@ class SucursalPage extends Component {
                     >
                         {getLista()}
                     </SSCrollView>
-                    <FloatButtom onPress={() => {
+                    <FloatButtom esconder={this.onSelect} onPress={() => {
                         this.props.navigation.navigate("SucursalRegistroPage")
                     }} />
                 </View>

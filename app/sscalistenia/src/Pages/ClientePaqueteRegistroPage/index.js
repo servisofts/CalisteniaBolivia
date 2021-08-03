@@ -11,8 +11,7 @@ import Svg from '../../Svg';
 import SSCrollView from '../../Component/SScrollView';
 import Paquete from '../../Component/Paquete';
 import Usuario from './Usuario';
-import SCalendar from '../../Component/SCalendar';
-import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2 } from '../../SComponent';
+import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SCalendar } from '../../SComponent';
 import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
@@ -28,11 +27,7 @@ class ClientePaqueteRegistroPage extends Component {
       servicios: {},
       usuarios: [this.props.navigation.getParam("key_usuario", false)],
       usuariosData: [],
-      task: {
-        descripcion: "Servicio",
-        fecha_inicio: new SDate(),
-        fecha_fin: false
-      }
+      tasks: {},
     };
 
   }
@@ -42,6 +37,12 @@ class ClientePaqueteRegistroPage extends Component {
     }
     var DATA = []
     for (let i = 0; i < this.state.paquete.participantes; i++) {
+      if (!this.state.tasks[i]) {
+        this.state.tasks[i] = {
+          fecha: new SDate(new SDate().toString("yyyy-MM-dd"), "yyyy-MM-dd"),
+          dias: this.state.paquete.dias
+        }
+      }
       DATA.push(<SView props={{
         col: "xs-12 sm-9 md-6 xl-4",
         variant: "center",
@@ -71,15 +72,18 @@ class ClientePaqueteRegistroPage extends Component {
             })
           }} />
         <SView props={{
-          col: "xs-12",
-          direction: "row"
+          col: "xs-10",
         }}>
-          {this.getCalendar()}
-          {/* <SInput props={{
-            col: "xs-6",
-            type: "fecha",
-            customStyle: "calistenia",
-          }} /> */}
+          <SCalendar
+            task={this.state.tasks[i]}
+            onChange={(date) => {
+              this.state.tasks[i] = {
+                fecha: date,
+                dias: this.state.paquete.dias
+              }
+              this.setState({ ...this.state })
+              // this.state.tasks[i]=;
+            }} />
           <SView style={{
             width: "100%",
             height: 100,
@@ -95,13 +99,7 @@ class ClientePaqueteRegistroPage extends Component {
       {DATA}
     </SView>
   }
-  getCalendar = () => {
-    return <SCalendar
-      task={this.state.task}
-      onChange={({ fecha_inicio, fecha_fin }) => {
-        this.setState({ task: { ...this.state.task, fecha_inicio, fecha_fin } })
-      }} />
-  }
+
   render() {
     this.key_usuario = this.props.navigation.getParam("key_usuario", false);
     this.key_paquete = this.props.navigation.getParam("key_paquete", false);
@@ -154,11 +152,8 @@ class ClientePaqueteRegistroPage extends Component {
                   marginBottom: 8,
                 }}>Datos de venta</Text>
                 <Paquete key_paquete={this.key_paquete} onLoad={(paquete) => {
-                  if (!this.state.task.fecha_fin) {
+                  if (!this.state.paquete) {
                     this.state.paquete = paquete;
-                    this.state.task.fecha_fin = new SDate();
-                    this.state.task.fecha_fin.addDay(paquete.dias - 1);
-                    this.state.task.dias = paquete.dias;
                     this.setState({ ...this.state });
                   }
                 }} />
@@ -182,8 +177,7 @@ class ClientePaqueteRegistroPage extends Component {
                       key_usuario: this.key_usuario,
                       usuarios: this.state.usuarios,
                       usuariosData: this.state.usuariosData,
-                      fecha_inicio: this.state.task.fecha_inicio.toString("yyyy-MM-dd"),
-                      fecha_fin: this.state.task.fecha_fin.toString("yyyy-MM-dd")
+                      tasks: this.state.tasks,
                     }} />
                   )
                 })

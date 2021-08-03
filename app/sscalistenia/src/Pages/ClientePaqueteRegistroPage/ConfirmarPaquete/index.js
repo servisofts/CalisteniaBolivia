@@ -20,11 +20,13 @@ class ConfirmarPaquete extends Component {
     }
 
     sendServer(data) {
-        var clientes = this.props.data.usuariosData.map((obj) => {
+        var clientes = this.props.data.usuariosData.map((obj, i) => {
+            var tsk = this.props.data.tasks[i];
+            console.log(tsk);
             return {
                 ...obj,
-                fecha_inicio: this.props.data.fecha_inicio,
-                fecha_fin: this.props.data.fecha_fin,
+                fecha_inicio: tsk.fecha.toString("yyyy-MM-dd"),
+                fecha_fin: tsk.fecha.addDay(tsk.dias).toString("yyyy-MM-dd"),
             }
         });
 
@@ -147,7 +149,7 @@ class ConfirmarPaquete extends Component {
                 withoutFeedback: true,
             }} style={{
                 borderRadius: 8,
-                height: 350
+                minHeight: 350
             }}>
                 <BackgroundImage contraste={"#66000044"} />
                 <View style={{
@@ -230,7 +232,7 @@ class ConfirmarPaquete extends Component {
                                 }}># Personas: {paquete.participantes}</SText>
 
                             </SView>
-                            <SView props={{
+                            {/* <SView props={{
                                 col: "xs-6",
                                 variant: "center",
                                 style: {
@@ -251,7 +253,7 @@ class ConfirmarPaquete extends Component {
                                 <SText props={{
                                     type: "primary"
                                 }}>hasta {this.props.data.fecha_fin}</SText>
-                            </SView>
+                            </SView> */}
                             <SView props={{
                                 col: "xs-12",
                                 direction: "row"
