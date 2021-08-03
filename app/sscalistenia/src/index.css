@@ -13,6 +13,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -21,8 +22,17 @@ body {
      -moz-user-select: none; /* Old versions of Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
           user-select: none;
+          touch-action: none !important;
+          -webkit-overflow-scrolling: touch !important;
+            
+}
+.is-momentumScrollable {
+  -webkit-overflow-scrolling: touch;
 }
 
+div{
+  -webkit-overflow-scrolling: auto;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -46,6 +56,7 @@ body {
   display: flex;
   height: 100%;
   width: 100%;
+  -webkit-overflow-scrolling: auto;
   /* overflow: auto; */
 }
 img {
@@ -56,8 +67,8 @@ img {
   user-drag: none;
 }
 div::-webkit-scrollbar {
-  width: 4px;               /* width of the entire scrollbar */
-  height: 4px;
+  width:8px;               /* width of the entire scrollbar */
+  height:8px;
 }
 
 div::-webkit-scrollbar-track {

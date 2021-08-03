@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SThemeChange, STheme } from '../../SComponent';
+import DeleteBtn from './DeleteBtn';
 
 
 type typeConfig = {
-    type: "default" | "outline" | "secondary",
-    variant: "default",
+    type: "default" | "outline" | "secondary" | "danger",
+    variant: "default" | "confirm",
 }
 
 type typeProps = {
@@ -14,6 +15,7 @@ type typeProps = {
     options: typeConfig,
     props: typeConfig,
     onPress: Function,
+    onPressValidation: Funcion,
     //callBack:Function,
 }
 
@@ -35,7 +37,7 @@ export class SButtom extends Component<typeProps> {
     //---RENDER
     getTypes() {
         return {
-            default: StyleSheet.create({
+            default: {
                 touchable: {
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -45,8 +47,8 @@ export class SButtom extends Component<typeProps> {
                     color: STheme().colorSecondary,
                     ...this.props.styleText,
                 }
-            }),
-            secondary: StyleSheet.create({
+            },
+            secondary: {
                 touchable: {
                     borderRadius: 4,
                     backgroundColor: STheme().colorSecondary,
@@ -61,8 +63,8 @@ export class SButtom extends Component<typeProps> {
                     ...this.props.styleText,
 
                 }
-            }),
-            outline: StyleSheet.create({
+            },
+            outline: {
                 touchable: {
                     borderRadius: 4,
                     backgroundColor: STheme().colorPrimary,
@@ -75,12 +77,24 @@ export class SButtom extends Component<typeProps> {
                     color: STheme().colorSecondary,
                     ...this.props.styleText
                 }
-            }),
+            },
+            danger: {
+                touchable: {
+                    borderRadius: 4,
+                    backgroundColor: STheme().colorDanger,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                text: {
+                    color: STheme().colorPrimary,
+                    ...this.props.styleText
+                }
+            },
         }
     }
     getVariant(theme) {
         return {
-            "default": StyleSheet.create({
+            "default": {
                 touchable: {
                     width: 100,
                     height: 40,
@@ -88,7 +102,16 @@ export class SButtom extends Component<typeProps> {
                 text: {
                     fontSize: 12,
                 }
-            }),
+            },
+            "confirm": {
+                touchable: {
+                    width: 100,
+                    height: 40,
+                },
+                text: {
+                    fontSize: 12,
+                }
+            },
         }
     }
     //---RENDER
@@ -99,13 +122,21 @@ export class SButtom extends Component<typeProps> {
         //---RETURN
         var variant = this.variant[this.getOption("variant")]
         var style = this.styleType[this.getOption("type")]
+        var Component = TouchableOpacity;
+        if (this.props.props) {
+            if (this.props.props.variant == "confirm") {
+                Component = DeleteBtn
+            }
+        }
         return (
-            <TouchableOpacity style={[variant.touchable, style.touchable]}
+            <Component style={{ ...variant.touchable, ...style.touchable, ...this.props.style }}
+                styleText={{ ...variant.text, ...style.text }}
                 onPress={() => {
+                    // if (!this.props.onPressValidation()) return;
                     if (this.props.onPress) this.props.onPress();
                 }}>
                 <Text style={[variant.text, style.text]}> {this.props.children}</Text>
-            </TouchableOpacity >
+            </Component >
         );
     }
 }
@@ -117,5 +148,6 @@ SButtom.defaultProps = {
     style: {
         // width: 100,
         // height: 40,
-    }
+    },
+    onPressValidation: () => { return true }
 };

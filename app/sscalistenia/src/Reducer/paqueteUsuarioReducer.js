@@ -50,7 +50,6 @@ const registro = (state, action) => {
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        console.log("ecito");
         if (action.key_usuario) {
             state.data[action.key_usuario] = action.data;
         }

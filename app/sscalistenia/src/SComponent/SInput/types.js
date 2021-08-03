@@ -14,6 +14,7 @@ type returnType = {
     onPress: Function,
     verify: Function,
     filter: Function,
+    onChangeText: Function,
     icon: Component,
     style: {
         View: ViewStyle,
@@ -50,21 +51,37 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
     }
 }
 const phone = (type: TypeType, Parent: SInput) => {
-    var dialcode = Parent.getData().dialCode;
-    if (!dialcode) {
-        dialcode = {}
+    var value = Parent.getValue();
+    var arr = value.split(" ");
+    var dialcodeTxt = "+591"
+    if (arr.length > 1) {
+        dialcodeTxt = arr[0];
+        value = arr[1];
     }
+    var dialcode = SIDialCodeAlert.getDialCode(dialcodeTxt)
     return buildResp({
         props: {
             keyboardType: "phone-pad",
         },
+        onChangeText: (text) => {
+            return dialcode.dialCode + " " + text;
+        },
         verify: (value) => {
             if (!value) return false;
+            var arr = value.split(" ");
+            if (arr.length > 1) {
+                value = arr[1];
+            }
             const countOfNumber = dialcode.mask.match(/9/g).length
             const isVerified = countOfNumber === value?.length;
             return isVerified;
         },
-        filter: (_value: String) => {
+        filter: (value: String) => {
+            var _value = value;
+            var arr = _value.split(" ");
+            if (arr.length > 1) {
+                _value = arr[1];
+            }
             let unmaskedPhoneNumber = (_value.match(/\d+/g) || []).join('');
             if (unmaskedPhoneNumber.length === 0) {
                 return ""
@@ -85,7 +102,7 @@ const phone = (type: TypeType, Parent: SInput) => {
             return phoneNumber;
         },
         icon: (
-            SIDialCodeAlert.getOpenButtom(dialcode.dialCode, Parent.getStyle().InputText, (value) => {
+            SIDialCodeAlert.getOpenButtom(dialcodeTxt, Parent.getStyle().InputText, (value) => {
                 Parent.setData({ dialCode: value })
             })
         ),

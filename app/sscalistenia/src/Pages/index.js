@@ -106,6 +106,7 @@ export const getPages = () => {
         ProveedoresPage,
         ProveedorRegistroPage,
         ...SComponent,
+
         ...SSRolesPermisos
     }
 }

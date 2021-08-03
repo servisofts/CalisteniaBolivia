@@ -20,8 +20,12 @@ class MapaAutoComplete extends Component {
             longitudeDelta: 0.08,
         }
         if (this.props.value) {
-            region.latitude = this.props.value.latitude
-            region.longitude = this.props.value.longitude
+            console.log(this.props.value.latitude);
+            if (this.props.value.latitude && this.props.value.longitude) {
+                region.latitude = this.props.value.latitude
+                region.longitude = this.props.value.longitude
+            }
+
         }
         this.state = {
             region: region
@@ -133,7 +137,7 @@ class MapaAutoComplete extends Component {
                         onRegionChangeComplete={(region) => this.OnRegionChangeComplete(region)}>
                     </SMapView>
                     <MarkerMedio />
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={{
                             position: "absolute",
                             bottom: 200,
@@ -148,7 +152,7 @@ class MapaAutoComplete extends Component {
                                 height: 50,
                                 fill: "#000"
                             }} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         );

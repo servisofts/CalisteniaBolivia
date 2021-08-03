@@ -51,20 +51,18 @@ class PaquetePage extends Component {
           width: "100%",
         }}>
 
-          <SSCrollView>
-            <ListaPaquetes {...this.props} onPress={(key) => {
-              if (this.type == "select") {
-                if (this.onResult) {
-                  this.props.navigation.goBack();
-                  this.onResult(key);
-                }
-                return;
+          <ListaPaquetes {...this.props} onPress={(key) => {
+            if (this.type == "select") {
+              if (this.onResult) {
+                this.props.navigation.goBack();
+                this.onResult(key);
               }
-              this.props.navigation.navigate("PaqueteRegistroPage", {
-                key: key,
-              });
-            }} />
-          </SSCrollView>
+              return;
+            }
+            this.props.navigation.navigate("PaqueteRegistroPage", {
+              key: key,
+            });
+          }} />
           <FloatButtom label={"+"} onPress={() => {
             this.props.navigation.navigate("PaqueteRegistroPage");
           }} />

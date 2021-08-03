@@ -24,7 +24,7 @@ export default class Task extends Component {
         // if (!) {
         //     return <View />
         // }
-        if (this.props.date.isBefore(this.props.task.fecha_inicio) || this.props.date.isAfter(this.props.task.fecha_fin)) {
+        if (this.props.date.isBefore(this.props.task.fecha_inicio) && !this.props.date.equalDay(this.props.task.fecha_inicio) || this.props.date.isAfter(this.props.task.fecha_fin) && !this.props.date.equalDay(this.props.task.fecha_fin)) {
             return <View />
         }
         return (

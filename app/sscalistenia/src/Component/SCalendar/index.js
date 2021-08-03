@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import SC_Mes from './SC_Mes';
 
-export default class SCalendar extends Component {
+type SCalendarPropsType = {
+
+}
+
+export default class SCalendar extends Component<SCalendarPropsType> {
   constructor(props) {
     super(props);
     this.state = {

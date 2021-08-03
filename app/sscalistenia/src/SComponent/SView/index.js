@@ -44,6 +44,11 @@ export class SView extends Component<IProps> {
         this.state = {
             style: {}
         };
+        // if (this.props.refData) this.props.refData(this, props.data);
+    }
+    componentDidMount() {
+        if (this.props.refData) this.props.refData(this, this.props.data);
+
     }
     getOption(option) {
         return !this.props.props[option] ? 'default' : this.props.props[option]
@@ -61,6 +66,9 @@ export class SView extends Component<IProps> {
     }
     getProp(key) {
         return this.props[key];
+    }
+    getData() {
+        return this.props.data;
     }
     render() {
         this.buildStyle();
@@ -111,7 +119,7 @@ export class SView extends Component<IProps> {
             <Component
                 {...props}
                 ref={(ref) => {
-                    if (this.props.ref) this.props.ref(this);
+
                     // return this;
                 }}
                 onLayout={(evt) => {

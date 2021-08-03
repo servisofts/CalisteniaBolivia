@@ -12,9 +12,9 @@ import Config.Config;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
-public class Servicio {
+public class servicio {
 
-    public Servicio(JSONObject data, SSSessionAbstract session) {
+    public servicio(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
@@ -35,6 +35,7 @@ public class Servicio {
                 defaultType(data, session);
         }
     }
+    
 
     public void defaultType(JSONObject obj, SSSessionAbstract session) {
         SocketCliete.send("usuario", obj, session);

@@ -9,10 +9,17 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 class BarraSuperior extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            value: this.props.value,
+            value: "",
             lastSelect: false
         };
+        if (this.props.value) {
+            if (this.props.value.direccion) {
+                this.state.value = this.props.value.direccion;
+                this.state.lastSelect = this.props.value;
+            }
+        }
         // console.log(this.props.value)
         this.props.dispatch({
             component: "locationGoogle",
@@ -52,11 +59,14 @@ class BarraSuperior extends Component {
 
         if (this.props.value != this.state.lastSelect) {
             let data = this.props.value;
-            this.setState({
-                value: data.direccion,
-                lastSelect: data,
-            })
-            this.preventRender = true;
+            if (data.direccion) {
+                this.setState({
+                    value: data.direccion,
+                    lastSelect: data,
+                })
+                this.preventRender = true;
+            }
+
         }
 
         return (

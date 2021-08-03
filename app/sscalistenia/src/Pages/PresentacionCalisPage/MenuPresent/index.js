@@ -13,7 +13,7 @@ export default class MenuPresent extends Component {
         return [
             { descripcion: "Ingresar", icon: "Login", route: "LoginPage" },
             // { descripcion: "Finanzas", icon: "Finanza" },
-            { descripcion: "Sistema antiguo", icon: "Santiguo", link: "https://calisteniabolivia.com" },
+            { descripcion: "Sistema antiguo", icon: "Santiguo", link: "https://old.calisteniabolivia.com" },
             // { descripcion: "Ajustes", icon: "Ajustes" },
         ].map((obj) => {
             return (<TouchableOpacity style={{

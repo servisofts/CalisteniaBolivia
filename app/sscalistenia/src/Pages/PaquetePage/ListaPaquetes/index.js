@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 import Svg from '../../../Svg';
-import SSCrollView from '../../../Component/SScrollView';
+
 import AppParams from '../../../Params';
 import Buscador from '../../../Component/Buscador';
 import SOrdenador from '../../../Component/SOrdenador';
+import { SScrollView, SScrollView2, SView } from '../../../SComponent';
 
 export default class ListaPaquetes extends Component {
     constructor(props) {
@@ -55,21 +56,25 @@ export default class ListaPaquetes extends Component {
             // if (obj.estado != 1) {
             //     return <View />
             // }
-            return (<TouchableOpacity style={{
-                width: "96%",
-                backgroundColor: "#66000044",
-                marginBottom: 8,
-                borderRadius: 8,
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                padding: 4,
-            }} onPress={() => {
-                // if (obj.url) {
-                // console.log(obj)
-                this.props.onPress(key);
-                // }
-            }}>
+            return (<SView
+                props={{
+                    col: "xs-11 md-8 xl-6"
+                }}
+                style={{
+                    backgroundColor: "#66000044",
+                    marginBottom: 8,
+                    borderRadius: 8,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    padding: 4,
+                    // height: 100,
+                }} onPress={() => {
+                    // if (obj.url) {
+                    // console.log(obj)
+                    this.props.onPress(key);
+                    // }
+                }}>
 
                 <View style={{
                     justifyContent: "center",
@@ -100,7 +105,7 @@ export default class ListaPaquetes extends Component {
                 </View>
                 <View style={{
                     flex: 1,
-                    height: "100%",
+                    // height: "100%",
                     justifyContent: "center",
                     // alignItems: "center"
                 }}>
@@ -140,7 +145,7 @@ export default class ListaPaquetes extends Component {
                     }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
                 </View>
 
-            </TouchableOpacity>)
+            </SView>)
         })
         // return [
         //     { descripcion: "RRHH", icon: "Usuarios", route: "RRHHPage" },
@@ -159,6 +164,7 @@ export default class ListaPaquetes extends Component {
         return (
             <View style={{
                 width: "100%",
+                flex: 1,
                 // flexWrap: "wrap",
                 // flexDirection: "row",
                 alignItems: "center"
@@ -166,12 +172,25 @@ export default class ListaPaquetes extends Component {
             }}>
                 <Buscador ref={(ref) => {
                     if (!this.state.buscador) this.setState({ buscador: ref });
-                }} repaint={() => { this.setState({ ...this.state }) }} />
-                {this.getItems()}
-                <View style={{
+                }} repaint={() => { this.setState({ ...this.state }) }}
+                    eliminados />
+                <SView style={{
                     width: "100%",
-                    height: 50,
-                }}></View>
+                    flex: 1,
+                }}>
+                    <SScrollView2 disableHorizontal style={{
+                        width: "100%",
+                    }}>
+                        <SView props={{
+                            variant: "center",
+                        }} style={{
+                            width: "100%",
+                        }}>
+                            {this.getItems()}
+                        </SView>
+                    </SScrollView2>
+                </SView>
+
             </View>
         );
     }

@@ -33,7 +33,6 @@ const store = createStore(
 
 SSSocket.init(store);
 
-// const Container = SSNavigation.init(store);
 
 
 const isNative = Platform.OS !== 'web';

@@ -38,11 +38,18 @@ export default class SPopupComponent extends Component {
                 width: "100%",
                 height: "100%",
                 position: "absolute",
-                backgroundColor: "#ffffff44",
+                backgroundColor: "#dddddd66",
                 justifyContent: "center",
                 alignItems: "center",
                 // ...this.props.style
             }}>
+                    {/* <View style={{
+                        position:"absolute",
+                        width:"100%",
+                        height:"100%",
+                    }}>
+
+                    </View> */}
                     <View style={{
                         width: "100%",
                         // height:"100%",
@@ -50,6 +57,7 @@ export default class SPopupComponent extends Component {
                         maxHeight: "90%",
                         alignItems: "center",
                         justifyContent: "center",
+                        overflow:"hidden",
                     }}>
                         <TouchableWithoutFeedback
                             accessibilityViewIsModal

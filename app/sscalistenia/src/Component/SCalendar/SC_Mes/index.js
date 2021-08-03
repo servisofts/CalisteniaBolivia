@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity, Animated } from 'react-native';
 import CalendarFunctions from '../CalendarFunctions';
-import SDate from '../SDate';
+import { SDate } from '../../../SComponent'
 import Task from './Task';
 import { SView, STheme, SAPanResponder } from '../../../SComponent'
 
@@ -9,33 +9,12 @@ export default class SC_Mes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: new SDate()
+            date: new SDate(),
+
         };
         this.anim = new Animated.ValueXY({ x: 0, y: 0 });
-        this.pan = new SAPanResponder({
-            onGrand: (e, gs) => {
-                this.startWidth = this.anim.x._value;
-                this.anim.flattenOffset();
-                // this.anim.setOffset({
-                //     x: this.anim.x._value,
-                //     y: this.anim.y._value
-                // });
-            },
-            onMove: (e, gs) => {
-                // if (this.startWidth + gs.dx <= 10) {
-                //     return;
-                // }
-                this.anim.setValue({ x: this.startWidth + gs.dx, y: 0 })
-            },
-            onRelease: () => {
-                // this.state.width = this.anim.x._value;
-                // this.props.reload();
-                // this.props.changeSize(this.layout.width + 1 - this.startWidth)
-                // this.anim.extractOffset();
-                // this.scroll.setEnabled(true)
-
-            }
-        });
+        this.createPan();
+        this.refDay = {};
 
     }
     getSDate() {
@@ -99,25 +78,26 @@ export default class SC_Mes extends Component {
             </TouchableOpacity>
         </View>
     }
-    getSelector({ isCurDate, isCurMonth, date }) {
-        if (this.state.date.equalDay(date)) {
-            return <SView
-                {...this.pan.getPanHandlers()}
-                props={{
-                    animated: true
-                }}
-                style={{
-                    position: "absolute",
-                    borderRadius: 100,
-                    width: 30,
-                    height: 30,
-                    backgroundColor: "#ff000066",
-                    transform: [{ translateX: this.anim.x }]
-                }}>
+    getSelector(date) {
+        return <SView
+            {...this.pan.getPanHandlers()}
+            ref={(ref) => { this.selector = ref }}
+            props={{
+                animated: true
+            }}
+            style={{
+                position: "absolute",
+                borderRadius: 100,
+                width: 30,
+                height: 30,
+                backgroundColor: "#ff000066",
+                transform: [
+                    { translateX: this.anim.x },
+                    { translateY: this.anim.y }
+                ]
+            }}>
 
-            </SView>
-        }
-        return <View />
+        </SView>
     }
     getBody() {
         var date = this.state.date.clone();
@@ -144,10 +124,15 @@ export default class SC_Mes extends Component {
                         borderColor: "#66000044",
                         backgroundColor: (isCurMonth ? "#66000011" : "#66000044")
                     }}>
-                        <View style={{
+                        <SView style={{
                             flex: 1,
                             width: "100%",
-                        }}>
+                        }}
+                            refData={(ref, key) => {
+                                if (key) {
+                                    this.refDay[key] = ref;
+                                }
+                            }} data={date.toString("yyyy-MM-dd")}>
                             <SView
                                 props={{
                                 }}
@@ -164,8 +149,8 @@ export default class SC_Mes extends Component {
                                     },
                                 ]}>{date.toString("dd")}</Text>
                             </SView>
-                            {this.getSelector({ isCurDate, isCurMonth, date })}
-                        </View>
+
+                        </SView>
                         <Task date={date.clone()} task={this.props.task} />
                     </View >
                 )
@@ -187,6 +172,8 @@ export default class SC_Mes extends Component {
             alignItems: "center",
         }, this.props.style.border]}>
             {ITEM_mes}
+            {this.getSelector(date)}
+
         </View>;
     }
     render() {
@@ -204,5 +191,66 @@ export default class SC_Mes extends Component {
                 {this.getBody()}
             </View>
         );
+    }
+
+    createPan() {
+        this.pan = new SAPanResponder({
+            onGrand: (e, gs) => {
+                this.startAnim = {
+                    x: this.anim.x._value,
+                    y: this.anim.y._value,
+                }
+                this.anim.flattenOffset();
+            },
+            onMove: (e, gs) => {
+                // if (this.startWidth + gs.dx <= 10) {
+                //     return;
+                // }
+                this.anim.setValue({ x: this.startAnim.x + gs.dx, y: this.startAnim.y + gs.dy })
+                if (this.refDay) {
+                    var layoutSelc = this.selector.getLayout();
+                    var layoutSelcCenter = {
+                        x: layoutSelc.left + this.anim.x._value + (layoutSelc.width / 2),
+                        y: layoutSelc.top + this.anim.y._value + (layoutSelc.height / 2)
+                    }
+                    Object.keys(this.refDay).map((keyDay) => {
+                        var objDay: SView = this.refDay[keyDay];
+                        if (objDay) {
+                            var layoutDay = objDay.getLayout();
+                            // console.log(layoutDay);
+                            if (
+                                (layoutDay.left < layoutSelcCenter.x && layoutDay.left + layoutDay.width > layoutSelcCenter.x)
+                                && (layoutDay.top < layoutSelcCenter.y && layoutDay.top + layoutDay.height > layoutSelcCenter.y)
+                            ) {
+                                if (this.props.onChange) {
+                                    if (this.props.task) {
+                                        var fecha_inicio = new SDate(keyDay, "yyyy-MM-dd");
+                                        if (fecha_inicio.isBefore(this.state.date) || fecha_inicio.equalDay(this.state.date)) {
+                                            fecha_inicio = this.state.date;
+                                        }
+                                        var fecha_fin = fecha_inicio.clone();
+                                        fecha_fin.addDay(this.props.task.dias - 1);
+                                        if (!fecha_inicio || !fecha_fin) {
+                                            console.log("das")
+                                            return;
+                                        }
+                                        if (fecha_inicio.equalDay(this.props.task.fecha_inicio) && fecha_fin.equalDay(this.props.task.fecha_fin)) {
+                                            return;
+                                        }
+
+                                        this.props.onChange({
+                                            fecha_inicio: fecha_inicio,
+                                            fecha_fin: fecha_fin
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            onRelease: () => {
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { SThemeChange, SThemeClass, STheme } from './STheme';
 import { SContainer } from './SContainer';
 import { SText } from './SText';
@@ -12,10 +12,15 @@ import { SView } from './SView';
 import SThread from './SThread';
 import SAPanResponder from './SAnimated/SAPanResponder'
 import SScrollView from './SScrollView'
+import SScrollView2 from './SScrollView2'
 import SImage from './SImage';
 import SBackground from './SBackground';
+import SSound from './SSound';
+import SDate from './SDate';
 export {
+    SDate,
     STheme,
+    SSound,
     SText,
     SButtom,
     SContainer,
@@ -29,6 +34,7 @@ export {
     SThread,
     SAPanResponder,
     SScrollView,
+    SScrollView2,
     SImage,
     SBackground
 }
@@ -51,10 +57,17 @@ export class SComponentClass extends Component {
     render() {
         return (<SView
             style={{
+                top: 0,
+                left: 0,
                 width: "100%",
                 height: "100%",
-                flex: 1,
+                alignItems:"stretch",
                 overflow: "hidden",
+                ...(Platform.OS == "web" ? {
+                    position: "fixed",
+                } : {
+                    flex: 1,
+                })
             }}>
             <SSize repaint={() => this.repaint()} >
                 {this.getChildrens()}
