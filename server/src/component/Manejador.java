@@ -102,6 +102,10 @@ public class Manejador {
                     new Caja(data, session);
                     break;
                 }
+                case "tipoPago": {
+                    new TipoPago(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
