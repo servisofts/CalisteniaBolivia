@@ -692,11 +692,12 @@ public class ClienteBD {
                     }
                 }
             }else{
-            cl=cn.prepareCall("call MostrarMembresiasActivas2(?,?,?)");
+            cl=cn.prepareCall("call MostrarMembresiasActivas(?,?,?)");
             nombre="%"+nombre+"%";
             cl.setString(1, nombre);
             cl.setString(2, nombre);
             cl.setString(3, nombre);
+            
             ResultSet rs= cl.executeQuery();
             while(rs.next())
             {       

@@ -22,33 +22,57 @@ public class Migrador extends Thread {
     @Override
     public void run() {
         //sincronizarContactos();
+        recrearMenbresias();
     }
 
     public static void recrearMenbresias(){
         try{
-            String consulta =  "delete from paquete_usuario";
+
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+
+            String consulta =  "delete from paquete_venta_usuario";
+            Conexion.ejecutarUpdate(consulta);
+            consulta =  "delete from paquete_venta";
             Conexion.ejecutarUpdate(consulta);
 
-            consulta =  "select * from contratomembresia";
+            consulta =  "select contratomembresia.*, paquete.precioPaquete as monto from contratomembresia, paquete where contratomembresia.idPaquete = paquete.idPaquete";
             PreparedStatement ps = ConexionMySql.preparedStatement(consulta);
             ResultSet rs = ps.executeQuery();
             String key_usuario;
-            JSONArray paquetes_usuarios = new JSONArray();
-            JSONObject paquete_usuario;
+            
+            JSONObject paquete_venta_usuario;
+            JSONObject paquete_venta;
+
             System.out.print("migrando");
             int error = 1;
+            String idPaquete="";
+            double monto=0;
             while(rs.next()){
                 key_usuario = getKeyUsuarioIdMigracion(rs.getString("idCliente"));
                 if(key_usuario.length()>0){
-                    paquete_usuario = new JSONObject();
-                    paquete_usuario.put("key", UUID.randomUUID().toString());
-                    paquete_usuario.put("fecha_inicio", rs.getString("fechaInicio"));
-                    paquete_usuario.put("fecha_fin", rs.getString("fechaFin"));
-                    paquete_usuario.put("key_usuario", key_usuario);
-                    paquete_usuario.put("key_paquete", rs.getString("idPAquete"));
-                    paquete_usuario.put("fecha_on", "now()");
-                    paquete_usuario.put("estado", 1);
-                    paquetes_usuarios.put(paquete_usuario);
+
+                    idPaquete = rs.getString("idPAquete");
+                    monto = rs.getDouble("monto");
+
+                    paquete_venta = new JSONObject();
+                    paquete_venta.put("key", UUID.randomUUID().toString());
+                    paquete_venta.put("monto", monto);
+                    paquete_venta.put("key_paquete", idPaquete);
+                    paquete_venta.put("fecha_on", fecha_on);
+                    paquete_venta.put("estado", 1);
+                    Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
+
+                    paquete_venta_usuario = new JSONObject();
+                    paquete_venta_usuario.put("key", UUID.randomUUID().toString());
+                    paquete_venta_usuario.put("fecha_inicio", rs.getString("fechaInicio"));
+                    paquete_venta_usuario.put("fecha_fin", rs.getString("fechaFin"));
+                    paquete_venta_usuario.put("key_usuario", key_usuario);
+                    paquete_venta_usuario.put("key_paquete_venta", paquete_venta.getString("key"));
+                    paquete_venta_usuario.put("fecha_on", fecha_on);
+                    paquete_venta_usuario.put("estado", 1);
+                    Conexion.insertArray("paquete_venta_usuario", new JSONArray().put(paquete_venta_usuario));
+
                     System.out.print(".");
                 }else{
                     System.out.print(error);
@@ -56,7 +80,7 @@ public class Migrador extends Thread {
                 }
             }
             System.out.print("fin");
-            Conexion.insertArray("paquete_usuario", paquetes_usuarios);
+            
             rs.close();
             ps.close();
         }catch(Exception e){

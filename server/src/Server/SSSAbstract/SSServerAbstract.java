@@ -100,28 +100,7 @@ public abstract class SSServerAbstract implements SSServerInterface {
         };
         t.start();
     }
-    public static void sendUser(String mensaje, String key_usr) {
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                ArrayList<String> devices = USUARIOS.get(key_usr);
-                if (devices == null) {
-                    return;
-                }
-                for (String idDevice : devices) {
-                    String idSession = DEVICES.get(idDevice);
-                    for (Map.Entry me : SERVIDORES.entrySet()) {
-                        SSServerAbstract server = SERVIDORES.get(me.getKey());
-                        if (server.getSessiones().get(idSession) != null) {
-                            server.getSessiones().get(idSession).send(mensaje);
-                        }
-                    }
-
-                }
-            }
-        };
-        t.start();
-    }
+    
 
     public static void sendUsers(String mensaje, JSONArray key_usrs) {
         Thread t = new Thread() {

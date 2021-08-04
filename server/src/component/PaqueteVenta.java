@@ -101,6 +101,8 @@ public class PaqueteVenta {
                 paquete_venta_usuario = new JSONObject();
                 paquete_venta_usuario.put("key", UUID.randomUUID().toString());
                 paquete_venta_usuario.put("key_usuario",clientes.getJSONObject(i).getString("key"));
+                paquete_venta_usuario.put("fecha_inicio",clientes.getJSONObject(i).getString("fecha_inicio"));
+                paquete_venta_usuario.put("fecha_fin",clientes.getJSONObject(i).getString("fecha_fin"));
                 paquete_venta_usuario.put("key_paquete_venta",paquete_venta.get("key"));
                 paquete_venta_usuario.put("fecha_on",fecha_on);
                 paquete_venta_usuario.put("estado",1);
@@ -113,28 +115,30 @@ public class PaqueteVenta {
 
 
 
-            obj.put("data", paquete_venta);
+            JSONArray clients = new JSONArray(clientes.toString()); 
+
+            obj.put("data", paquete_venta); 
+            obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
 
 
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
-
+            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
             
 
             JSONObject mail = new JSONObject();
             
-            mail.put("__FECHA__",paquete_venta.getString("fecha_inicio"));
+            
             mail.put("__ID_PEDIDO__",paquete_venta.getString("key"));
             mail.put("__PAQUETE__",paquete_venta.getString("nombre_paquete"));
-            mail.put("__RENOVACION__",paquete_venta.getString("fecha_fin"));
             mail.put("__MONTO__",paquete_venta.get("monto").toString());
             mail.put("__KEY_PAQUETE__",paquete_venta.getString("key_paquete")+"?fecha="+new Date().toString());
             
-            for(int i = 0; i<obj.getJSONArray("clientes").length(); i++){
-                JSONObject cliente = obj.getJSONArray("clientes").getJSONObject(i);
+            for(int i = 0; i<clients.length(); i++){
+                JSONObject cliente = clients.getJSONObject(i);
+                mail.put("__FECHA__",cliente.getString("fecha_inicio"));
+                mail.put("__RENOVACION__",cliente.getString("fecha_fin"));
                 mail.put("__MAIL__",cliente.getString("Correo"));
-                mail.put("__KEY_USUARIO_CLIENTE__",cliente.getString("key")+"?fecha="+new Date().toString());
+                mail.put("__KEY_USUARIO_CLIENTE__",paquete_venta_usuarios.getJSONObject(i).getString("key")+"?fecha="+new Date().toString());
                 mail.put("__CI__",cliente.getString("CI"));
                 new Email(Email.TIPO_RECIBO, mail);
             }

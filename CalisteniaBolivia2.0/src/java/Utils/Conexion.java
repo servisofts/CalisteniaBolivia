@@ -16,16 +16,16 @@ public class Conexion {
 //            }
 //        }
         try{
-          //String url="jdbc:mysql://www.calisteniaboliviasc.com:3306/calisten_CalisteniaBolivia2.0?user=calisten&password=Uh52R03ipx&noAccessToProcedureBodies=true";
+          String url="jdbc:mysql://sa.calisteniabolivia.com:3306/calisten_calistenia?user=calisten_calisten&password=calistenia123..&noAccessToProcedureBodies=true";
           //String usu="calisten";
           //String pass="Uh52R03ipx";  
-          String url="jdbc:mysql://192.168.0.199:3306/calisten_calistenia?characterEncoding=utf8&noAccessToProcedureBodies=true";
-          String usu="calistenia";
-          String pass="Calistenia123..";
+//          String url="jdbc:mysql://192.168.0.199:3306/calisten_calistenia?characterEncoding=utf8";
+//          String usu="calistenia";
+//          String pass="Calistenia123..";
             Class.forName("com.mysql.jdbc.Driver");
             //8084
-          cn=DriverManager.getConnection(url,usu,pass);
-         //cn=DriverManager.getConnection("jdbc:mysql://www.calisteniaboliviasc.com:3306/calisten_CalisteniaBolivia2.0","calisten","Uh52R03ipx");
+          cn=DriverManager.getConnection(url);
+            //cn=DriverManager.getConnection("jdbc:mysql://www.calisteniaboliviasc.com:3306/calisten_CalisteniaBolivia2.0","calisten","Uh52R03ipx");
             System.out.println("Conexion Satisfactoria");
         }
         catch(Exception e){

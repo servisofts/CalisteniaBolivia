@@ -189,7 +189,7 @@ public class Old {
 
             obj.put("data", file);
             obj.put("estado", "exito");
-            SSServerAbstract.sendUser(obj.toString(),obj.getString("key_usuario"));
+            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -319,7 +319,7 @@ public class Old {
             obj.put("estado", "exito");
             obj.put("data", documentos);
             
-            SSServerAbstract.sendUser(obj.toString(),obj.getString("key_usuario"));
+            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
             //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         }catch(Exception e){
             e.printStackTrace();
