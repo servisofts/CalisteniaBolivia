@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../../Params';
 import { SButtom, SInput, SText, STheme, SView } from '../../../../SComponent';
-import AperturaCaja from '../AperturaCaja';
 
 class EstadoCaja extends Component {
     constructor(props) {
@@ -65,6 +64,44 @@ class EstadoCaja extends Component {
             </SView>
         );
     }
+    getBtnClose() {
+        if (!this.activa) {
+            return <View />
+        }
+        return <SButtom props={{ type: "danger", variant: "confirm" }}
+            onPress={() => {
+                var value = this.inputr.getValue();
+                if (!value) {
+                    value = this.state.montoDefault;
+                }
+                var obj = {
+                    component: "caja",
+                    type: "cierre",
+                    estado: "cargando",
+                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                    data: {
+                        ...this.activa,
+                    }
+                }
+                this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
+            }}>Cierre caja</SButtom>
+    }
+    cierre() {
+        if (!this.activa) {
+            return <View />
+        }
+        return (
+            <SView props={{
+                variant: "center",
+                col: "xs-10",
+            }} style={{
+                flex: 1,
+            }}>
+                <SInput ref={(ref) => { this.inputr = ref }} props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto de apertura", variant: "small" }} placeholder={this.state.montoDefault} />,
+                {this.getBtnClose()}
+            </SView>
+        );
+    }
     render() {
         this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (!this.props.sucursal) {
@@ -86,6 +123,7 @@ class EstadoCaja extends Component {
             }} >
 
                 {this.apertura()}
+                {this.cierre()}
                 <SText style={{
                     position: "absolute",
                     right: 4,

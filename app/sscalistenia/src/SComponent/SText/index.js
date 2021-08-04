@@ -110,7 +110,7 @@ export class SText extends Component<typeProps> {
         // }
 
         return (
-            <Text style={[variant.text, style.text, this.props.style]}>{VAL} </Text>
+            <Text style={[variant.text, style.text, this.props.style]}>{VAL}</Text>
         );
     }
 }

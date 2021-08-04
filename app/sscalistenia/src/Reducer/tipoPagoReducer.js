@@ -1,21 +1,23 @@
 const initialState = {
     estado: "Not Found",
     data: false,
-    usuario: {}
 }
 
 export default (state, action) => {
     if (!state) return initialState
-    if (action.component == "caja") {
+    if (action.component == "tipoPago") {
         switch (action.type) {
             case "registro":
                 registro(state, action);
                 break;
-            case "cierre":
-                cierre(state, action);
+            case "editar":
+                editar(state, action);
                 break;
-            case "getActiva":
-                getActiva(state, action);
+            case "getAll":
+                getAll(state, action);
+                break;
+            case "anular":
+                anular(state, action);
                 break;
         }
         state.type = action.type;
@@ -28,24 +30,33 @@ export default (state, action) => {
 const registro = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        state.usuario[action.data.key_usuario] = action.data;
         if (state.data) {
             state.data[action.data.key] = action.data;
         }
         state.lastRegister = action.data;
     }
 }
-const getActiva = (state, action) => {
+const editar = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        state.usuario[action.data.key_usuario] = action.data;
-        state.lastRegister = action.data;
+        if (state.data) {
+            state.data[action.data.key] = action.data;
+        }
+        state.lastEdit = action.data;
     }
 }
-const cierre = (state, action) => {
+const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        delete state.usuario[action.data.key_usuario];
-        // state.lastRegister = action.data;
+        state.data = action.data;
+    }
+}
+
+const anular = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        if (state.data) {
+            delete state.data[action.key];
+        }
     }
 }
