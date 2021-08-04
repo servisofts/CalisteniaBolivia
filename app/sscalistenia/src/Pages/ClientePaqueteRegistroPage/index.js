@@ -12,7 +12,6 @@ import SSCrollView from '../../Component/SScrollView';
 import Paquete from '../../Component/Paquete';
 import Usuario from './Usuario';
 import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SCalendar } from '../../SComponent';
-import ConfirmarPaquete from './ConfirmarPaquete';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class ClientePaqueteRegistroPage extends Component {
@@ -103,10 +102,7 @@ class ClientePaqueteRegistroPage extends Component {
   render() {
     this.key_usuario = this.props.navigation.getParam("key_usuario", false);
     this.key_paquete = this.props.navigation.getParam("key_paquete", false);
-    if (this.props.state.paqueteVentaReducer.estado == "exito" && this.props.state.paqueteVentaReducer.type == "registro") {
-      this.props.state.paqueteVentaReducer.estado = "";
-      this.props.navigation.goBack();
-    }
+
 
 
 
@@ -169,17 +165,17 @@ class ClientePaqueteRegistroPage extends Component {
               <SButtom props={{
                 type: "danger",
               }} onPress={() => {
-                SPopupOpen({
-                  key: "confirmarPaquete",
-                  content: (
-                    <ConfirmarPaquete data={{
-                      key_paquete: this.key_paquete,
-                      key_usuario: this.key_usuario,
-                      usuarios: this.state.usuarios,
-                      usuariosData: this.state.usuariosData,
-                      tasks: this.state.tasks,
-                    }} />
-                  )
+                this.props.navigation.navigate("ClientePaqueteRegistroConfirmacion",{
+                  data: {
+                    key_paquete: this.key_paquete,
+                    key_usuario: this.key_usuario,
+                    usuarios: this.state.usuarios,
+                    usuariosData: this.state.usuariosData,
+                    tasks: this.state.tasks,
+                  },
+                  onFinish:()=>{
+                    this.props.navigation.goBack();
+                  }
                 })
               }}>
                 Continuar

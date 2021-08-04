@@ -162,38 +162,44 @@ export class SInput extends Component<IProps> {
                 <SView props={{
                     col: "xs-12",
                     direction: "row",
-                }} style={{ flex: 1, height: "100%", overflow: "hidden" , }}>
+                }} style={{ flex: 1, height: "100%", overflow: "hidden", }}>
                     {this.getIcon()}
-                    <TextInput
-                        value={valueFilter}
-                        {...type.props}
-                        {...this.props}
-                        onChangeText={(_text) => {
-                            var text = _text;
-                            if (this.type) {
-                                if (this.type.filter) {
-                                    text = this.type.filter(text)
+                    <SView style={{
+                        flex: 1,
+                        // backgroundColor:"#f0f",
+                        height: "100%"
+                    }}>
+                        <TextInput
+                            value={valueFilter}
+                            {...type.props}
+                            {...this.props}
+                            onChangeText={(_text) => {
+                                var text = _text;
+                                if (this.type) {
+                                    if (this.type.filter) {
+                                        text = this.type.filter(text)
+                                    }
+                                    if (this.type.onChangeText) {
+                                        text = this.type.onChangeText(text)
+                                    }
                                 }
-                                if (this.type.onChangeText) {
-                                    text = this.type.onChangeText(text)
-                                }
-                            }
-                            this.state.value = text
-                            this.setState({ value: this.state.value })
-                            this.verify()
-                        }}
-                        style={[
-                            this.customStyle.InputText,
-                            type.style.InputText,
-                            {
-                                flex: 1,
-                                height: "100%",
-                                outline: "none",
+                                this.state.value = text
+                                this.setState({ value: this.state.value })
+                                this.verify()
+                            }}
+                            style={[
+                                this.customStyle.InputText,
+                                type.style.InputText,
+                                {
+                                    flex: 1,
+                                    height: "100%",
+                                    outline: "none",
 
-                            }]}
-                        placeholderTextColor={this.customStyle.placeholder.color}
+                                }]}
+                            placeholderTextColor={this.customStyle.placeholder.color}
 
-                    />
+                        />
+                    </SView>
                 </SView>
                 {this.getLabel()}
             </Component >

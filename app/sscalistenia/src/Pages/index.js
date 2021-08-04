@@ -54,6 +54,8 @@ import ProveedorRegistroPage from './Proveedor/ProveedorRegistroPage'
 import Caja from "./Caja"
 import SSRolesPermisos from '../SSRolesPermisos/Pages';
 import SComponent from '../SComponent/Pages';
+import TipoPago from './TipoPago'
+import ClientePaqueteRegistroConfirmacion from './ClientePaqueteRegistroConfirmacion'
 export const getPages = () => {
     return {
         // TestRNF,
@@ -105,6 +107,8 @@ export const getPages = () => {
         CalendarioPage,
         ProveedoresPage,
         ProveedorRegistroPage,
+        ClientePaqueteRegistroConfirmacion,
+        ...TipoPago,
         ...Caja,
         ...SComponent,
         ...SSRolesPermisos

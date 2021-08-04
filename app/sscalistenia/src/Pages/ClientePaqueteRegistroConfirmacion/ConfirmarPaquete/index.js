@@ -5,8 +5,9 @@ import BackgroundImage from '../../../Component/BackgroundImage';
 import DeleteBtn from '../../../Component/DeleteBtn';
 import STextImput from '../../../Component/STextImput';
 import AppParams from '../../../Params';
-import { SView, SText, SPopupClose, SPopupOpen, SButtom } from '../../../SComponent';
+import { SView, SText, SPopupClose, SPopupOpen, SButtom, SScrollView2 } from '../../../SComponent';
 import Svg from '../../../Svg';
+import TiposDePago from '../../TipoPago/TiposDePago';
 import ConfirmacionUsuario from './ConfirmacionUsuario';
 
 class ConfirmarPaquete extends Component {
@@ -41,7 +42,7 @@ class ConfirmarPaquete extends Component {
         // alert(JSON.stringify(object));
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
 
-        SPopupClose("confirmarPaquete");
+        // SPopupClose("confirmarPaquete");
     }
     getTextDetail({ label, value }) {
         return <Text style={{ color: "#fff", marginBottom: 8, }}>{label}: {value}</Text>
@@ -125,6 +126,15 @@ class ConfirmarPaquete extends Component {
                 }}>Presion sobre cada usuario para confirmar sus datos para el recibo.</SText>
             </SView>
         }
+        if (!this.state.tipoPago && this.paquete.precio > 0) {
+            return <SView props={{
+                col: "xs-10 md-8"
+            }}>
+                <SText props={{ type: "primary" }} style={{
+                    textAlign: "center"
+                }}>Seleccione el metodo de pago.</SText>
+            </SView>
+        }
         return <SButtom props={{
             type: "danger",
             variant: "confirm"
@@ -139,138 +149,123 @@ class ConfirmarPaquete extends Component {
             })
         }} >Pagar</SButtom>
     }
+    getTiposPago() {
+        if (!this.paquete) {
+            return <View />
+        }
+        if (this.paquete.precio <= 0) {
+            return <View />
+        }
+        return <TiposDePago value={this.state.tipoPago} onChange={(tipo) => {
+            this.setState({ tipoPago: tipo });
+        }} />
+    }
     render() {
+        if (this.props.state.paqueteVentaReducer.estado == "exito" && this.props.state.paqueteVentaReducer.type == "registro") {
+            this.props.state.paqueteVentaReducer.estado = "";
+            var onFInish = this.props.navigation.getParam("onFinish")
+            if (onFInish) {
+                onFInish();
+
+            }
+            this.props.navigation.goBack();
+        }
         // var usuario = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key_usuario];
         var paquete = this.props.state.paqueteReducer.data[this.props.data.key_paquete];
         this.paquete = paquete;
         return (
             <SView props={{
-                col: "xs-11 md-8 xl-6",
+                col: "xs-11.5 md-8 xl-6",
                 withoutFeedback: true,
             }} style={{
                 borderRadius: 8,
-                minHeight: 350
+                maxHeight: "100%",
+                height: 450,
             }}>
-                <BackgroundImage contraste={"#66000044"} />
-                <View style={{
-                    width: "100%",
-                    flex: 1,
-                    borderRadius: 10,
-                    overflow: "hidden",
-                    alignItems: "center",
-                    paddingBottom: 8,
-
-                }}>
+                <SScrollView2 disableHorizontal>
                     <View style={{
                         width: "100%",
-                        padding: 8,
                         flex: 1,
+                        borderRadius: 10,
+                        overflow: "hidden",
                         alignItems: "center",
-                        // justifyContent: "center"
+                        paddingBottom: 8,
+
                     }}>
-                        <Text style={{ color: "#fff", fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
                         <View style={{
-                            justifyContent: "center",
+                            width: "100%",
+                            padding: 8,
+                            flex: 1,
                             alignItems: "center",
-                            borderRadius: 4,
-                            overflow: "hidden",
-                            width: 60,
-                            height: 60,
-                            backgroundColor: "#ff999933"
+                            // justifyContent: "center"
                         }}>
-                            {this.props.state.imageReducer.getImage(AppParams.urlImages + "paquete_" + paquete.key, {
-                                resizeMode: "cover",
-                                objectFit: "cover"
-                            })}
-                        </View>
-                        <SView props={{
-                            col: "xs-12",
-                            direction: "row",
-                        }} style={{
-                            justifyContent: "center"
-                        }}>
-                            <SView props={{
-                                variant: "center",
-                                col: "xs-12",
+                            <Text style={{ color: "#fff", fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
+                            <View style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 4,
+                                overflow: "hidden",
+                                width: 60,
+                                height: 60,
+                                backgroundColor: "#ff999933"
                             }}>
-                                <SText props={{
-                                    type: "primary",
-                                    variant: "h4"
-                                }}>{paquete.descripcion}</SText>
-                            </SView>
+                                {this.props.state.imageReducer.getImage(AppParams.urlImages + "paquete_" + paquete.key, {
+                                    resizeMode: "cover",
+                                    objectFit: "cover"
+                                })}
+                            </View>
                             <SView props={{
                                 col: "xs-12",
-                                variant: "center",
-                            }}>
-                                <SText props={{
-                                    type: "primary",
-                                    variant: "h4"
-                                }}>Bs. {paquete.precio}</SText>
-                            </SView>
-
-                            <SView props={{
-                                col: "xs-6",
-                                variant: "center",
-                                style: {
-                                    height: 25,
-                                }
-                            }}>
-                                <SText props={{
-                                    type: "primary"
-                                }}># De días: {paquete.dias}</SText>
-                            </SView>
-
-                            <SView props={{
-                                col: "xs-6",
-                                variant: "center",
-                                style: {
-                                    height: 25,
-                                }
-                            }}>
-                                <SText props={{
-                                    type: "primary"
-                                }}># Personas: {paquete.participantes}</SText>
-
-                            </SView>
-                            {/* <SView props={{
-                                col: "xs-6",
-                                variant: "center",
-                                style: {
-                                    height: 25,
-                                }
-                            }}>
-                                <SText props={{
-                                    type: "primary"
-                                }}>Desde {this.props.data.fecha_inicio}</SText>
-                            </SView>
-                            <SView props={{
-                                col: "xs-6",
-                                variant: "center",
-                                style: {
-                                    height: 25,
-                                }
-                            }}>
-                                <SText props={{
-                                    type: "primary"
-                                }}>hasta {this.props.data.fecha_fin}</SText>
-                            </SView> */}
-                            <SView props={{
-                                col: "xs-12",
-                                direction: "row"
+                                direction: "row",
                             }} style={{
-                                marginTop: 8,
-                                justifyContent: "space-evenly",
-                                alignItems: "center"
+                                justifyContent: "center"
                             }}>
-                                {this.getUsuarios()}
-                            </SView>
-                        </SView>
+                                <SView props={{
+                                    variant: "center",
+                                    col: "xs-12",
+                                }}>
+                                    <SText props={{
+                                        type: "primary",
+                                        variant: "h4"
+                                    }}>{paquete.descripcion}</SText>
+                                </SView>
+                                <SView props={{
+                                    col: "xs-12",
+                                    variant: "center",
+                                }}>
+                                    <SText props={{
+                                        type: "primary",
+                                        variant: "h4"
+                                    }}>Bs. {paquete.precio}</SText>
+                                </SView>
+                                <SView props={{
+                                    col: "xs-12 md-8 xl-6",
+                                    variant: "center",
+                                }} style={{
+                                    minHeight: 50,
+                                }}>
+                                    {this.getTiposPago()}
 
+                                </SView>
+
+                                <SView props={{
+                                    col: "xs-12",
+                                    direction: "row"
+                                }} style={{
+                                    marginTop: 8,
+                                    justifyContent: "space-evenly",
+                                    alignItems: "center"
+                                }}>
+                                    {this.getUsuarios()}
+                                </SView>
+                            </SView>
+
+                        </View>
+                        <View style={{ alignItems: "center", paddingBottom: 8, }}>
+                            {this.getPagar()}
+                        </View>
                     </View>
-                    <View style={{ alignItems: "center", paddingBottom: 8, }}>
-                        {this.getPagar()}
-                    </View>
-                </View>
+                </SScrollView2>
             </SView>
         );
     }

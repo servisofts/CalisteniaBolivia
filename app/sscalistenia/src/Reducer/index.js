@@ -27,6 +27,7 @@ import SSRolesPermisos from '../SSRolesPermisos/Reducer';
 import entrenamientoReducer from './entrenamientoReducer';
 import paqueteVentaReducer from './paqueteVentaReducer';
 import cajaReducer from './cajaReducer';
+import tipoPagoReducer from './tipoPagoReducer';
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
@@ -55,5 +56,6 @@ export default combineReducers({
     locationGoogleReducer,
     sucursalReducer,
     cajaReducer,
+    tipoPagoReducer,
     ...SSRolesPermisos
 });
