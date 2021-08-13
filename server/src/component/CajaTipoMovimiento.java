@@ -70,8 +70,7 @@ public class CajaTipoMovimiento {
             Conexion.historico(obj.getString("key_usuario"), caja_tipo_movimiento.getString("key"), "caja_tipo_movimiento_editar", caja_tipo_movimiento);
             obj.put("data", caja_tipo_movimiento);
             obj.put("estado", "exito");
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -86,7 +85,6 @@ public class CajaTipoMovimiento {
         if(!f.exists()) f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
-        //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 }

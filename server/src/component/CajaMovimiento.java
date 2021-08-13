@@ -22,6 +22,12 @@ public class CajaMovimiento {
             case "getAll":
                 getAll(data, session);
             break;
+            case "getAllActivas":
+                getAllActivas(data, session);
+            break;
+            case "getByKeyCaja":
+                getByKeyCaja(data, session);
+                break;
             case "getByKey":
                 getByKey(data, session);
                 break;
@@ -43,11 +49,38 @@ public class CajaMovimiento {
         SocketCliete.send("usuario", obj, session);
     }
 
+
     public void getAll(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_all('caja_movimiento') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_getAll", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllActivas(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_all_activas() as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_get_all_activas", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+    
+    public void getByKeyCaja(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_all('caja_movimiento', 'key_caja', '"+obj.getString("key_caja")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_getAll", data);
+            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_getByKeyCaja", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -90,8 +123,7 @@ public class CajaMovimiento {
             obj.put("data", caja_movimiento);
             obj.put("estado", "exito");
 
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
@@ -107,8 +139,7 @@ public class CajaMovimiento {
             Conexion.historico(obj.getString("key_usuario"), caja_movimiento.getString("key"), "caja_movimiento_editar", caja_movimiento);
             obj.put("data", caja_movimiento);
             obj.put("estado", "exito");
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -123,7 +154,6 @@ public class CajaMovimiento {
         if(!f.exists()) f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
-        //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 }

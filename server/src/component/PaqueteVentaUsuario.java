@@ -84,8 +84,7 @@ public class PaqueteVentaUsuario {
             obj.put("estado", "exito");
 
 
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
 
             JSONObject cliente = obj.getJSONObject("cliente");
 
@@ -118,8 +117,7 @@ public class PaqueteVentaUsuario {
             Conexion.historico(obj.getString("key_usuario"), paquete_venta_usuario.getString("key"), "paquete_venta_usuario_editar", paquete_venta_usuario);
             obj.put("data", paquete_venta_usuario);
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -134,7 +132,6 @@ public class PaqueteVentaUsuario {
         if(!f.exists()) f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 }

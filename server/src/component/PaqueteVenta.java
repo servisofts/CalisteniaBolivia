@@ -135,8 +135,15 @@ public class PaqueteVenta {
             obj.put("estado", "exito");
 
 
-            SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
-            
+            SSServerAbstract.sendAllServer(obj.toString());
+            //SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
+            JSONObject send_movimiento = new JSONObject();
+            send_movimiento.put("component", "cajaMovimiento");
+            send_movimiento.put("type", "registro");
+            send_movimiento.put("data", caja_movimiento);
+            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
+            send_movimiento.put("estado", "exito");
+            SSServerAbstract.sendAllServer(send_movimiento.toString());
 
             JSONObject mail = new JSONObject();
             

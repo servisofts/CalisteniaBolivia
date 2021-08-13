@@ -21,7 +21,7 @@ public class App {
             console.error("Server closed.");
             return;
         }
-        //Cargar el pem del servidor  
+        //Cargar el pem del servidor
         if (!SSL.servicioCert()) {
             console.error("Server closed.");
             return;
@@ -31,7 +31,7 @@ public class App {
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
         SSInit.initFunctions();
-        ConexionMySql.setConexion(Config.getJSON("data_base_mysql")); 
+        ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
         //new Migrador().run();
     }
 }
