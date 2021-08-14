@@ -1,7 +1,5 @@
 package util;
 
-import org.w3c.dom.Text;
-
 public class console {
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -30,7 +28,10 @@ public class console {
     public static void log( String color,String txt){
         System.out.println(color+txt+ANSI_RESET);
     }
-       public static void error(String txt){
+    public static void logln( String color,String txt){
+        System.out.print(color+txt+ANSI_RESET);
+    }
+    public static void error(String txt){
         System.out.println(ANSI_RED_BACKGROUND+ANSI_WHITE+txt+ANSI_RESET);
     }
 }

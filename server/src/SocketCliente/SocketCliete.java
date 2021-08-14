@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -19,7 +18,6 @@ import Config.Config;
 import SSL.SSL;
 import Server.SSSAbstract.SSSessionAbstract;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SocketCliete extends Thread {
@@ -58,7 +56,7 @@ public class SocketCliete extends Thread {
     }
 
     public static void Start(JSONObject config) {
-       console.log(console.ANSI_RED,"**Conectando con 'servisofts." + config.getJSONObject("cert").getString("OU")
+       console.log(console.ANSI_YELLOW,"**Conectando con 'servisofts." + config.getJSONObject("cert").getString("OU")
                 + "' Direccion: " + config.getString("ip") + ":" + config.getInt("puerto") + " **");
 
         // CONFIGURAMNO EL CLIENTE SOCKET Y CORREMOS EL HILO
@@ -122,7 +120,7 @@ public class SocketCliete extends Thread {
         response = new PrintWriter(socket.getOutputStream(), true);
         request = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.config = config;
-        console.log(console.ANSI_RED,"** Connectando con el server " + config.getJSONObject("cert").getString("OU") + " **");
+        console.log(console.ANSI_YELLOW,"** Connectando con el server " + config.getJSONObject("cert").getString("OU") + " **");
         // System.out.println("SocketCliete is Running...");
         Clientes.put(config.getJSONObject("cert").getString("OU"), this);
         ConexinesFallidas.remove(config.getJSONObject("cert").getString("OU"));

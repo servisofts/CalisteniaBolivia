@@ -2,6 +2,7 @@ package component;
 
 import org.json.JSONObject;
 
+import SSComponent.SSManejador;
 import Server.SSSAbstract.SSSessionAbstract;
 import SocketCliente.SocketCliete;
 import util.console;
@@ -67,7 +68,7 @@ public class Manejador {
                     break;
                 }
                 case "servicio": {
-                    new Servicio(data, session);
+                    new servicio(data, session);
                     break;
                 }
                 case "paquete": {
@@ -106,6 +107,14 @@ public class Manejador {
                     new TipoPago(data, session);
                     break;
                 }
+                case "cajaMovimiento": {
+                    new CajaMovimiento(data, session);
+                    break;
+                }
+                case "cajaTipoMovimiento": {
+                    new CajaTipoMovimiento(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
@@ -135,5 +144,6 @@ public class Manejador {
                 SocketCliete.send("roles_permisos", data, session);
             break;
         }
+        SSManejador.navigate(data, session);
     }
 }

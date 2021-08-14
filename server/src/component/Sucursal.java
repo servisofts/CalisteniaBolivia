@@ -74,8 +74,7 @@ public class Sucursal {
             obj.put("data", sucursal);
             obj.put("estado", "exito");
 
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
@@ -89,8 +88,7 @@ public class Sucursal {
             Conexion.editObject("sucursal", sucursal);
             obj.put("data", sucursal);
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -104,7 +102,6 @@ public class Sucursal {
         if(!f.exists()) f.mkdirs();
         obj.put("dir", f.getPath()+"/"+obj.getString("key"));
         obj.put("estado", "exito");
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 }

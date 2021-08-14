@@ -125,7 +125,6 @@ public class TipoSeguimiento {
             obj.put("data", documentos);
             
             SSServerAbstract.sendAllServer(obj.toString());
-            //SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         }catch(Exception e){
             e.printStackTrace();
         }
