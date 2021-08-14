@@ -36,6 +36,9 @@ interface IProps extends ViewProps {
     style: ViewStyle,
     props: typeConfig,
     onPress: Function,
+    col: TypeCol,
+    row: boolean,
+    flex: number,
 }
 
 export class SView extends Component<IProps> {
@@ -71,11 +74,23 @@ export class SView extends Component<IProps> {
     getData() {
         return this.props.data;
     }
+    getFlex() {
+        if (!this.props.flex) return {}
+        if (this.props.flex != 0) {
+            if (typeof this.props.flex == "boolean") {
+                return { flex: 1 };
+            }
+        }
+        return { flex: this.props.flex };
+    }
     render() {
         this.buildStyle();
         this.variant = Variant(this.getOption("variant"));
         this.customStyle = CustomStyles(this.getOption("customStyle"))
         var size = SSize.getSize(this.getOption("col"))
+        if (this.props.col) {
+            size = SSize.getSize(this.props.col);
+        }
         var props = { ...this.props }
         var Component = View;
         if (this.props.animated || this.props.props.animated) {
@@ -119,6 +134,7 @@ export class SView extends Component<IProps> {
         //         {this.props.children}
         //     </TouchableWithoutFeedback>
         // }
+
         return (
             <Component
                 {...props}
@@ -157,8 +173,8 @@ export class SView extends Component<IProps> {
                         ...size,
                         ...this.style,
 
-                        ...(this.getOption("direction") == "row" ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
-
+                        ...(this.getOption("direction") == "row" || this.props.row ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
+                        ...(this.getFlex())
                     }, {
                         ...this.state.style,
                     }

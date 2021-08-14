@@ -3,9 +3,11 @@ import { View, Text } from 'react-native';
 import BackgroundImage from '../../../Component/BackgroundImage';
 import BarraSuperior from '../../../Component/BarraSuperior';
 import CalisPage from '../../../Component/CalisPage';
-import { SText, STheme, SView } from '../../../SComponent';
+import { SScrollView, SScrollView2, SText, STheme, SView } from '../../../SComponent';
 import EstadoCaja from './EstadoCaja';
+import Movimientos from './Movimientos';
 import Sucursal from './Sucursal';
+import Menu from './Menu/index';
 
 export default class CajaPage extends Component {
   static navigationOptions = {
@@ -14,7 +16,8 @@ export default class CajaPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sucursal: false
+      sucursal: false,
+      montoEnCaja: 0,
     };
   }
 
@@ -22,17 +25,37 @@ export default class CajaPage extends Component {
     return (<CalisPage {...this.props} title={"Caja"}>
       <SView props={{
         col: "xs-12",
-        variant: "center",
       }} style={{
-        marginTop: 8,
+        flex: 1,
+        width: "100%",
       }}>
+        <SScrollView2 disableHorizontal style={{
+          width: "100%"
+        }}>
+          <SView props={{
+            col: "xs-12",
+            variant: "center",
+          }} style={{
+            marginTop: 8,
+          }}>
 
-        <Sucursal navigation={this.props.navigation} key_sucursal={this.state.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => { this.setState({ sucursal: suc }) }} />
-        <EstadoCaja navigation={this.props.navigation} sucursal={this.state.sucursal} setKeySucursal={(suc) => {
-          if (!this.state.key_sucursal) {
-            this.setState({ key_sucursal: suc })
-          }
-        }} />
+            <Sucursal navigation={this.props.navigation} key_sucursal={this.state.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => { this.setState({ sucursal: suc }) }} />
+            <EstadoCaja
+              montoEnCaja={this.state.montoEnCaja}
+              navigation={this.props.navigation}
+              sucursal={this.state.sucursal}
+              setKeySucursal={(suc) => {
+                if (!this.state.key_sucursal) {
+                  this.setState({ key_sucursal: suc })
+                }
+              }} />
+            <Menu />
+            <Movimientos />
+          </SView>
+          <SView style={{
+            height: 20,
+          }}></SView>
+        </SScrollView2>
       </SView>
     </CalisPage>
     );

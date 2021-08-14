@@ -29,6 +29,18 @@ class ClientesPage extends Component {
     // SSNavigation.setProps(props);
 
   }
+  componentDidMount() {
+    var object = {
+      component: "usuario",
+      version: "2.0",
+      type: "getAll",
+      estado: "cargando",
+      cabecera: "registro_administrador",
+      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    }
+    this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+    
+  }
   sendMail = (to) => {
     if (Platform.OS == "web") return;
     var subject = "Solicitud";

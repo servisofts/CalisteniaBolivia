@@ -19,6 +19,17 @@ const Carga = (props) => {
         if (!props.state.socketReducer.session[AppParams.socket.name].isOpen) {
             return props.state.socketReducer.session[AppParams.socket.name].estado;
         }
+        if (props.state.usuarioReducer.data) {
+            if (Object.keys(props.state.usuarioReducer.data).length == 0) {
+                SSStorage.getItem("db_usuarios", (resp) => {
+                    if (!resp) {
+                        return;
+                    }
+                    props.state.usuarioReducer.data = JSON.parse(resp);
+                })
+            }
+        }
+
         if (!props.state.usuarioReducer.usuarioCargado) {
             SSStorage.getItem(AppParams.storage.urlLog, (value) => {
                 props.state.usuarioReducer.usuarioCargado = true;
@@ -52,7 +63,7 @@ const Carga = (props) => {
         setMensaje(mensajeTemp);
         return <View />;
     }
-    new SThread(2000, "hiloVerificarEntrada",true).start(() => {
+    new SThread(2000, "hiloVerificarEntrada", true).start(() => {
 
         if (!props.state.usuarioReducer.usuarioLog) {
             // props.navigation.replace("LoginPage");

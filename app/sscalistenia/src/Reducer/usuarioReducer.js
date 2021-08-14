@@ -50,6 +50,7 @@ const getAll = (state, action) => {
     state.estado = action.estado;
     if (action.estado === "exito") {
         state.data[action.cabecera] = action.data;
+        SSStorage.setItem("db_usuarios", JSON.stringify(state.data));
     }
 }
 const getById = (state, action) => {

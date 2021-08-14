@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../Params';
 import { SText, SView } from '../../../SComponent';
+import Svg from '../../../Svg/index';
 type TiposDePagoType = {
     value: String,
     onChange: (tipoPago) => {}
@@ -45,7 +46,7 @@ class TiposDePago extends Component<TiposDePagoType> {
             height: "90%",
             backgroundColor: "#000000aa",
             borderRadius: 8,
-        }} onPress={()=>{
+        }} onPress={() => {
             this.props.onChange(obj)
         }}>
 
@@ -54,9 +55,18 @@ class TiposDePago extends Component<TiposDePagoType> {
     getLista() {
         var data = this.getAll();
         if (!data) return <ActivityIndicator color={"#fff"} />
+
         return Object.keys(data).map((key) => {
             var obj = data[key];
-            if (obj)
+            if (obj) {
+                var Icono;
+                switch (obj.key) {
+                    case "1": Icono = <Svg name={"money"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "2": Icono = <Svg name={"card"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "3": Icono = <Svg name={"qr"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "4": Icono = <Svg name={"cheque"} style={{ width: "100%", height: "100%" }} />; break;
+                }
+
                 return <SView props={{
                     col: "xs-3",
                     variant: ["col-square", "center"]
@@ -74,6 +84,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                             borderRadius: 4,
                             backgroundColor: "#66000044"
                         }}>
+                        {Icono}
                     </SView>
                     <SText style={{
                         color: "#fff",
@@ -82,6 +93,7 @@ class TiposDePago extends Component<TiposDePagoType> {
 
                     {this.getSelect(obj)}
                 </SView>
+            }
         })
     }
     render() {

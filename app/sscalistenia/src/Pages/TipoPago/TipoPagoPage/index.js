@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Page from '../../../Component/Page';
 import AppParams from '../../../Params';
 import { SScrollView2, SText, SView } from '../../../SComponent';
+import Svg from '../../../Svg/index';
 class TipoPagoPage extends Component {
     static navigationOptions = {
         headerShown: false,
@@ -32,20 +33,53 @@ class TipoPagoPage extends Component {
     getLista() {
         var data = this.getAll();
         if (!data) return <ActivityIndicator color={"#fff"} />
+
         return Object.keys(data).map((key) => {
             var obj = data[key];
-            if (obj)
+
+            if (obj) {
+                var Icono;
+                switch (obj.key) {
+                    case "1": Icono = <Svg name={"money"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "2": Icono = <Svg name={"card"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "3": Icono = <Svg name={"qr"} style={{ width: "100%", height: "100%" }} />; break;
+                    case "4": Icono = <Svg name={"cheque"} style={{ width: "100%", height: "100%" }} />; break;
+                }
                 return <SView props={{
                     col: "xs-11 md-7 xl-4",
+                    direction: "row"
                 }} style={{
                     marginTop: 8,
                     height: 50,
                     backgroundColor: "#66000044",
                     borderRadius: 4,
+                    justifyContent: "center",
+                    alignItems: "center"
                 }}>
-                    <SText style={{ color: "#fff" }}>{obj.descripcion}</SText>
-                </SView>
+                    <SView
+                        props={{
+                            variant: "center"
+                        }}
+                        style={{
+                            padding: 0,
+                            margin: 0,
+                            width: 45,
+                            height: 45,
+                            borderRadius: 4,
+                            backgroundColor: "#66000044"
+                        }}>
+                        {Icono}
+                    </SView>
+                    <SView style={{
+                        flex: 1,
+                    }}>
+                        {/* <SText style={{ marginStart: 8, color: "#fff" }}>{obj.key}</SText> */}
+                        <SText style={{ marginStart: 8, color: "#fff" }}>{obj.descripcion}</SText>
+                    </SView>
+                </SView >
+            }
         })
+
     }
     render() {
 

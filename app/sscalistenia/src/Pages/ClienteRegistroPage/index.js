@@ -165,11 +165,11 @@ class ClienteRegistroPage extends Component {
                 }}>
                   {this.getInput("Nombres", SInput.TYPE(""), true, "xs-12 md-10")}
                   {this.getInput("Apellidos", SInput.TYPE(""), true, "xs-12 md-10")}
-                  {this.getInput("CI", SInput.TYPE(""), true, "xs-12 md-5")}
-                  {this.getInput("Fecha nacimiento", SInput.TYPE("fecha"), true, "xs-12 md-5")}
-                  {this.getInput("Correo", SInput.TYPE("email"), true, "xs-12 md-9")}
-                  {this.getInput("Telefono", SInput.TYPE("phone"), true, "xs-12 md-9")}
-                  {this.getInput("Password", SInput.TYPE("password"), true, "xs-12 md-9")}
+                  {this.getInput("CI", SInput.TYPE(""), true, "xs-12 md-4.5")}
+                  {this.getInput("Fecha nacimiento", SInput.TYPE("fecha"), true, "xs-12 md-4.5")}
+                  {this.getInput("Correo", SInput.TYPE("email"), true, "xs-12 md-10")}
+                  {this.getInput("Telefono", SInput.TYPE("phone"), true, "xs-12 md-10")}
+                  {this.getInput("Password", SInput.TYPE("password"), true, "xs-12 md-10")}
                 </SView>
                 <ActionButtom label={this.props.state.usuarioReducer.estado == "cargando" ? "cargando" : this.TextButom}
                   onPress={() => {

@@ -26,7 +26,7 @@ class EstadoCaja extends Component {
 
     getBtn() {
         if (!this.props.sucursal) {
-            return <View />
+            return <SText style={{ color: "#644", fontSize: 10 }}>Seleccione su sucursal para continuar</SText>
         }
         return <SButtom props={{ type: "danger", variant: "confirm" }}
             onPress={() => {
@@ -68,23 +68,56 @@ class EstadoCaja extends Component {
         if (!this.activa) {
             return <View />
         }
-        return <SButtom props={{ type: "danger", variant: "confirm" }}
+        return <SButtom props={{ type: "danger", variant: "confirm", }}
+            style={{
+                width: 100,
+                height: 30,
+            }}
             onPress={() => {
-                var value = this.inputr.getValue();
-                if (!value) {
-                    value = this.state.montoDefault;
-                }
+                // var value = this.inputr.getValue();
+                // if (!value) {
+                // value = this.state.montoDefault;
+                // }
                 var obj = {
                     component: "caja",
                     type: "cierre",
                     estado: "cargando",
                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                     data: {
+                        monto: this.total,
                         ...this.activa,
                     }
                 }
                 this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
-            }}>Cierre caja</SButtom>
+            }}>cerrar la caja</SButtom>
+    }
+    getMontoEnCaja() {
+        if (!this.activa) {
+            return <View />
+        }
+        var reducer = this.props.state.cajaMovimientoReducer;
+        var data = reducer.data[this.activa.key];
+        if (!data) {
+            return false;
+        }
+        var total = 0;
+        var keys = Object.keys(data);
+        for (var i = 0; i < keys.length; i++) {
+            var obj = data[keys[i]];
+            total += obj.monto;
+        }
+        this.total = total;
+
+        return <SView style={{
+            width: 150,
+            height: 50,
+            backgroundColor: "#ffffff22",
+            borderRadius: 8,
+        }} props={{
+            variant: "center"
+        }}>
+            <SText style={{ fontSize: 18, color: "#Fff" }}> {total}</SText>
+        </SView>
     }
     cierre() {
         if (!this.activa) {
@@ -96,8 +129,10 @@ class EstadoCaja extends Component {
                 col: "xs-10",
             }} style={{
                 flex: 1,
+                justifyContent: "space-evenly"
             }}>
-                <SInput ref={(ref) => { this.inputr = ref }} props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto de apertura", variant: "small" }} placeholder={this.state.montoDefault} />,
+
+                {this.getMontoEnCaja()}
                 {this.getBtnClose()}
             </SView>
         );
@@ -116,7 +151,7 @@ class EstadoCaja extends Component {
                 col: "xs-11 md-6 xl-4",
                 variant: "center"
             }} style={{
-                height: 160,
+                height: 150,
                 backgroundColor: "#66000044",
                 borderRadius: 8,
                 marginTop: 8,

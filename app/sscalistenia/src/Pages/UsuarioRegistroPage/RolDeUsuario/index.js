@@ -26,7 +26,7 @@ const RolDeUsuario = (props) => {
 
     var key_usuario = props.data.key;
     if (!key_usuario) {
-        return <View />
+        return <Text>Cargando</Text>
     }
     var usuarioRol = props.state.usuarioRolReducer.usuario[key_usuario];
     if (!usuarioRol) {
@@ -48,7 +48,6 @@ const RolDeUsuario = (props) => {
 
     const getRoles = () => {
         var isAddSuperUsuario = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "add_rol_super_usuario" })
-
         var Lista = Object.keys(data).map((key) => {
             var obj = data[key];
             var isActivo = false;
@@ -71,7 +70,7 @@ const RolDeUsuario = (props) => {
                 margin: 8,
                 borderRadius: 10,
                 borderWidth: 1,
-                // borderColor: "#ffffff44",
+                borderColor: "#ffffff44",
                 backgroundColor: STheme.color.card,
                 // padding:4,
 
@@ -149,6 +148,8 @@ const RolDeUsuario = (props) => {
             flexDirection: "row",
             flexWrap: "wrap",
             width: "100%",
+            height:"100%",
+            
         }}>
             {Lista}
         </View>
@@ -167,8 +168,7 @@ const RolDeUsuario = (props) => {
         borderRadius: 8,
         // padding: 8,
         minHeight: 220,
-        marginBottom: 32,
-
+        marginBottom: 32
     }}>
         <Text style={{
             padding: 8,

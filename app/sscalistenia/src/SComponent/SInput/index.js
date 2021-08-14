@@ -192,6 +192,7 @@ export class SInput extends Component<IProps> {
                                 type.style.InputText,
                                 {
                                     flex: 1,
+                                    width:"100%",
                                     height: "100%",
                                     outline: "none",
 

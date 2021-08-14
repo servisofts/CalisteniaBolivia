@@ -1,6 +1,11 @@
+type TypeOrdenar = {
+    key: String,
+    order: "asc" | "desc",
+    peso: Number
+}
 export default class SOrdenador {
 
-    constructor(arrProps) {
+    constructor(arrProps:TypeOrdenar[]) {
         this.arrProps = arrProps;
     }
     ordernarObject(data) {

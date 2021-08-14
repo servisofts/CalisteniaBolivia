@@ -14,7 +14,7 @@ export type propsType = {
 const Themas = {
     default: {
         colorPrimary: "#ffffff",
-        colorSecondary: "#000000",
+        colorSecondary: "#ffffff",
         backgroundColor: "#222222",
         colorDanger: "#C31C37",
         colorOpaque:"#444444"

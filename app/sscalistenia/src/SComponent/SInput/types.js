@@ -10,7 +10,7 @@ import SIFechaPicker from "./SInputTypes"
 import SIDialCodeAlert from "./SInputTypes/SIDialCodeAlert"
 import SIFechaAlert from "./SInputTypes/SIFechaAlert"
 
-export type TypeType = "default" | "fecha" | "password" | "email" | "phone" | "number" | "money"
+export type TypeType = "default" | "fecha" | "date" | "password" | "email" | "phone" | "number" | "money" | "text"
 type returnType = {
     props: TextInputProps,
     onPress: Function,
@@ -33,6 +33,8 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
     switch (type) {
         case "fecha":
             return fecha(type, Parent);
+        case "date":
+            return fecha(type, Parent);
         case "password":
             return password(type, Parent);
         case "phone":
@@ -43,6 +45,8 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
             return number(type, Parent);
         case "money":
             return money(type, Parent);
+        case "text":
+            return text(type, Parent);
         default:
             return buildResp({
                 props: {
@@ -58,6 +62,9 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
 }
 const phone = (type: TypeType, Parent: SInput) => {
     var value = Parent.getValue();
+    if(!value){
+        value = "";
+    }
     var arr = value.split(" ");
     var dialcodeTxt = "+591"
     if (arr.length > 1) {
@@ -84,6 +91,7 @@ const phone = (type: TypeType, Parent: SInput) => {
         },
         filter: (value: String) => {
             var _value = value;
+            if(!_value) _value = "";
             var arr = _value.split(" ");
             if (arr.length > 1) {
                 _value = arr[1];
@@ -134,6 +142,9 @@ const email = (type: TypeType, Parent: SInput) => {
         },
         filter: (_value: String) => {
             var value = _value;
+            if(!value){
+                value= "";
+            }
             value = value.trim();
             value = value.split(" ")[0];
             return value;
@@ -214,6 +225,21 @@ const number = (type: TypeType, Parent: SInput) => {
         }
     })
 }
+const text = (type: TypeType, Parent: SInput) => {
+    return buildResp({
+        props: {
+            keyboardType: "default"
+        },
+        style: {
+            View: {},
+            InputText: {}
+        },
+        verify: (value) => {
+            if (!value) return false;
+            return true;
+        }
+    })
+}
 const money = (type: TypeType, Parent: SInput) => {
     return buildResp({
         props: {
@@ -223,8 +249,8 @@ const money = (type: TypeType, Parent: SInput) => {
             View: {
             },
             InputText: {
-                flex:1,
-                marginEnd:4,
+                flex: 1,
+                marginEnd: 4,
                 textAlign: "right",
                 fontSize: 16,
             }

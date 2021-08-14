@@ -52,6 +52,7 @@ import CalendarioPage from './CalendarioPage'
 import ProveedoresPage from './Proveedor/ProveedoresPage'
 import ProveedorRegistroPage from './Proveedor/ProveedorRegistroPage'
 import Caja from "./Caja"
+import Finanzas from "./Finanzas"
 import SSRolesPermisos from '../SSRolesPermisos/Pages';
 import SComponent from '../SComponent/Pages';
 import TipoPago from './TipoPago'
@@ -110,6 +111,7 @@ export const getPages = () => {
         ClientePaqueteRegistroConfirmacion,
         ...TipoPago,
         ...Caja,
+        ...Finanzas,
         ...SComponent,
         ...SSRolesPermisos
     }

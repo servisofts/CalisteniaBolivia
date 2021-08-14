@@ -28,6 +28,9 @@ import entrenamientoReducer from './entrenamientoReducer';
 import paqueteVentaReducer from './paqueteVentaReducer';
 import cajaReducer from './cajaReducer';
 import tipoPagoReducer from './tipoPagoReducer';
+import cajaMovimientoReducer from './cajaMovimientoReducer';
+import cajaTipoMovimientoReducer from './cajaTipoMovimientoReducer';
+
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
@@ -57,5 +60,7 @@ export default combineReducers({
     sucursalReducer,
     cajaReducer,
     tipoPagoReducer,
+    cajaMovimientoReducer,
+    cajaTipoMovimientoReducer,
     ...SSRolesPermisos
 });

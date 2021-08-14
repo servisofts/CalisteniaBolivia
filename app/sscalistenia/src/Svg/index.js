@@ -24,6 +24,16 @@ import Editar from '../img/Editar.svg';
 import NoDelete from '../img/noDelete.svg';
 import Cerrar from '../img/cerrar.svg';
 
+import Card from '../img/card.svg';
+import Cheque from '../img/cheque.svg';
+import Qr from '../img/qr.svg';
+import Money from '../img/money.svg';
+
+
+import Arrg from '../img/arrg.svg';
+import Arrr from '../img/arrr.svg';
+
+
 type typeName = "logo"
     | "logoBlanco"
     | "see"
@@ -46,7 +56,13 @@ type typeName = "logo"
     | "Delete"
     | "noDelete"
     | "Editar"
-    | "Cerrar"
+    | "car"
+    | "cheque"
+    | "qr"
+    | "money"
+    | "arrg"
+    | "arrr"
+    
 
 type svgProps = {
     name: typeName,
@@ -104,6 +120,18 @@ const Svg = (props: svgProps) => {
             return (Platform.OS == "web" ? <img style={props.style} src={Editar} /> : <Editar style={props.style} />);
         case "Cerrar":
             return (Platform.OS == "web" ? <img style={props.style} src={Cerrar} /> : <Cerrar style={props.style} />);
+        case "card":
+            return (Platform.OS == "web" ? <img style={props.style} src={Card} /> : <Card style={props.style} />);
+        case "cheque": 
+            return (Platform.OS == "web" ? <img style={props.style} src={Cheque} /> : <Cheque style={props.style} />);
+        case "qr":
+            return (Platform.OS == "web" ? <img style={props.style} src={Qr} /> : <Qr style={props.style} />);
+        case "money":
+            return (Platform.OS == "web" ? <img style={props.style} src={Money} /> : <Money style={props.style} />);
+        case "arrg":
+            return (Platform.OS == "web" ? <img style={props.style} src={Arrg} /> : <Arrg style={props.style} />);
+        case "arrr":
+            return (Platform.OS == "web" ? <img style={props.style} src={Arrr} /> : <Arrr style={props.style} />);
         default: return <Text>Not Found</Text>
     }
 }
