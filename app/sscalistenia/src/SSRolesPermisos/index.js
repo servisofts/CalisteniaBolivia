@@ -87,6 +87,10 @@ class SSRolesPermisos extends Component {
                 console.log("CARGANDO PAGINAS")
                 return <View />
             }
+            if (this.props.state.usuarioPageReducer.estado == "error") {
+                alert("error");
+                return <View />
+            }
             this.getPermisos();
             return <View />
         }

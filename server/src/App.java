@@ -30,8 +30,8 @@ public class App {
         SocketCliete.enableReconect(true);
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
-        SSInit.initFunctions();
-        ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
+        // SSInit.initFunctions();
+        // ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
         //new Migrador().run();
     }
 }

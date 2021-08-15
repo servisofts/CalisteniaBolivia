@@ -1,6 +1,6 @@
 {
     "ss": "servisofts.calistenia",
-    "production":false,
+    "production":true,
     "socket_client": {
         "servicio": {
             "puerto": 10001,
@@ -45,6 +45,6 @@
     },
     "socket_server": {
         "puerto": 10018,
-        "ip": "192.168.0.207"
+        "ip": "192.168.0.3"
     }
 }

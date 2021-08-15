@@ -144,6 +144,6 @@ public class Manejador {
                 SocketCliete.send("roles_permisos", data, session);
             break;
         }
-        SSManejador.navigate(data, session);
+        // SSManejador.navigate(data, session);
     }
 }
