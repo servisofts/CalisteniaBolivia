@@ -8,6 +8,7 @@ import EstadoCaja from './EstadoCaja';
 import Movimientos from './Movimientos';
 import Sucursal from './Sucursal';
 import Menu from './Menu/index';
+import FloatButtom from '../../../Component/FloatButtom/index';
 
 export default class CajaPage extends Component {
   static navigationOptions = {
@@ -17,6 +18,7 @@ export default class CajaPage extends Component {
     super(props);
     this.state = {
       sucursal: false,
+      activa: false,
       montoEnCaja: 0,
     };
   }
@@ -50,12 +52,23 @@ export default class CajaPage extends Component {
                 }
               }} />
             <Menu />
-            <Movimientos />
+            <Movimientos setActiva={(caja) => {
+              if (!this.state.activa) {
+                this.setState({ activa: caja })
+              }
+            }} />
           </SView>
           <SView style={{
             height: 20,
           }}></SView>
+
         </SScrollView2>
+        <FloatButtom label={"+"} onPress={() => {
+          if (!this.state.activa.key) {
+            return null;
+          }
+          this.props.navigation.navigate("CajaMovimientoRegistroPage", { key_caja: this.state.activa.key });
+        }} />
       </SView>
     </CalisPage>
     );

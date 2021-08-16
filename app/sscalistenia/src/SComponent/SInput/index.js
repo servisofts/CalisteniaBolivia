@@ -9,7 +9,7 @@ import SSize from '../SSize';
 import { SText } from '../SText';
 import { SView } from '../SView';
 
-type typeConfig = {
+export type typeConfigInpust = {
     style: ViewStyle,
     customStyle: TypeStyles,
     type: TypeType,
@@ -17,13 +17,16 @@ type typeConfig = {
     variant: TypeVariant,
     col: TypeCol,
     icon: Component,
+    value: String,
     label: String,
     onStateChange: Function,
+    placeholder: String,
+    onPress: Function,
 }
 
 interface IProps extends TextInputProps {
     style: ViewStyle,
-    props: typeConfig,
+    props: typeConfigInpust,
     onPress: Function,
 }
 // export type SInputProps = IProps;
@@ -37,6 +40,8 @@ export class SInput extends Component<IProps> {
             error: false,
             data: {}
         };
+        if (this.props.value) this.state.value = this.props.value;
+        if (this.props.props) if (this.props.props.value) this.state.value = this.props.props.value;
     }
     getOption(option) {
         return !this.props.props[option] ? 'default' : this.props.props[option]
@@ -123,9 +128,12 @@ export class SInput extends Component<IProps> {
         var type = Type(this.getOption("type"), this);
         this.type = type;
         var Component = View;
-        if (this.props.onPress || type.onPress) {
+        if (this.props.onPress || type.onPress || this.props.props.onPress) {
             Component = TouchableOpacity;
         }
+
+        if (this.props.value) this.state.value = this.props.value;
+        if (this.props.props) if (this.props.props.value) this.state.value = this.props.props.value;
         var valueFilter = this.state.value;
         if (this.type.filter) {
             valueFilter = this.type.filter(valueFilter);
@@ -143,6 +151,9 @@ export class SInput extends Component<IProps> {
                 }}
                 onPress={() => {
                     if (this.props.onPress) this.props.onPress({
+                        layout: this.layout
+                    });
+                    if (this.props.props.onPress) this.props.props.onPress({
                         layout: this.layout
                     });
                     if (type.onPress) type.onPress({
@@ -192,7 +203,7 @@ export class SInput extends Component<IProps> {
                                 type.style.InputText,
                                 {
                                     flex: 1,
-                                    width:"100%",
+                                    width: "100%",
                                     height: "100%",
                                     outline: "none",
 

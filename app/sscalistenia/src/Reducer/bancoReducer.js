@@ -1,12 +1,11 @@
 const initialState = {
     estado: "Not Found",
     data: false,
-    monto: {}
 }
 
 export default (state, action) => {
     if (!state) return initialState
-    if (action.component == "sucursal") {
+    if (action.component == "banco") {
         switch (action.type) {
             case "registro":
                 registro(state, action);
@@ -19,9 +18,6 @@ export default (state, action) => {
                 break;
             case "anular":
                 anular(state, action);
-                break;
-            case "getMontoCaja":
-                getMontoCaja(state, action);
                 break;
         }
         state.type = action.type;
@@ -62,11 +58,5 @@ const anular = (state, action) => {
         if (state.data) {
             delete state.data[action.key];
         }
-    }
-}
-const getMontoCaja = (state, action) => {
-    state.estado = action.estado
-    if (action.estado == "exito") {
-        state.monto[action.key_sucursal] = action.data;
     }
 }

@@ -57,6 +57,8 @@ import SSRolesPermisos from '../SSRolesPermisos/Pages';
 import SComponent from '../SComponent/Pages';
 import TipoPago from './TipoPago'
 import ClientePaqueteRegistroConfirmacion from './ClientePaqueteRegistroConfirmacion'
+import Banco from './Banco'
+
 export const getPages = () => {
     return {
         // TestRNF,
@@ -113,6 +115,7 @@ export const getPages = () => {
         ...Caja,
         ...Finanzas,
         ...SComponent,
+        ...Banco,
         ...SSRolesPermisos
     }
 }

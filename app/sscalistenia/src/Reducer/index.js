@@ -30,7 +30,9 @@ import cajaReducer from './cajaReducer';
 import tipoPagoReducer from './tipoPagoReducer';
 import cajaMovimientoReducer from './cajaMovimientoReducer';
 import cajaTipoMovimientoReducer from './cajaTipoMovimientoReducer';
-
+import bancoReducer from './bancoReducer';
+import cuentaBancoReducer from './cuentaBancoReducer';
+import cuentaBancoMovimientoReducer from './cuentaBancoMovimientoReducer';
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
@@ -62,5 +64,8 @@ export default combineReducers({
     tipoPagoReducer,
     cajaMovimientoReducer,
     cajaTipoMovimientoReducer,
+    bancoReducer,
+    cuentaBancoReducer,
+    cuentaBancoMovimientoReducer,
     ...SSRolesPermisos
 });

@@ -97,8 +97,15 @@ class ClienteRegistroPage extends Component {
             col: "xs-12",
             variant: "center",
             customStyle: "primary",
-          }} style={{ height: "100%", borderRadius: 8, }}>
-            <SText options={{ variant: "h3" }}>El usuario ya existe</SText>
+          }} style={{ height: 200, borderRadius: 8, }}>
+            <BackgroundImage />
+            <SView style={{
+              width: "100%",
+              height: "100%",
+            }} center>
+              <SText style={{ fontSize: 16, }}>El usuario ya existe</SText>
+              <SText style={{ fontSize: 12, }}>Comuniquese con atencion al cliente para recuperar su usuario.</SText>
+            </SView>
           </SView>
         )
       })

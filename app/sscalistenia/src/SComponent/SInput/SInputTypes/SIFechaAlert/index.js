@@ -174,9 +174,9 @@ export default class SIFechaAlert extends Component<typeProps> {
     //     this.scroll["day"].scrollToEnd();
     // }, 2000)
     // }
-    getLista = (key) => {
+    getLista = (key,size) => {
         return <SView props={{
-            col: "xs-4",
+            col:size,
             height: "100%",
             variant: "center"
         }}>
@@ -223,7 +223,7 @@ export default class SIFechaAlert extends Component<typeProps> {
     render() {
         return <SView
             props={{
-                col: "xs-6",
+                col: "xs-11 md-6",
                 variant: "center",
                 withoutFeedback: true
             }}
@@ -239,9 +239,9 @@ export default class SIFechaAlert extends Component<typeProps> {
                 width: "100%",
                 height: 200,
             }}>
-                {this.getLista("day")}
-                {this.getLista("month")}
-                {this.getLista("year")}
+                {this.getLista("day","xs-3")}
+                {this.getLista("month","xs-6")}
+                {this.getLista("year","xs-3")}
             </SView>
         </SView>
     }

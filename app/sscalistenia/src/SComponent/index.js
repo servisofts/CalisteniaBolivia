@@ -17,8 +17,10 @@ import SImage from './SImage';
 import SBackground from './SBackground';
 import SSound from './SSound';
 import SDate from './SDate';
+import SForm from './SForm';
 import SCalendar from './SCalendar';
 export {
+    SForm,
     SDate,
     STheme,
     SSound,

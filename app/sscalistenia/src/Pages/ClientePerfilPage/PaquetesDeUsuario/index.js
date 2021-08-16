@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import { SDateFormat, SFechaFormat } from '../../../Component/SFecha';
 import AppParams from '../../../Params';
 import SOrdenador from '../../../Component/SOrdenador';
+import { SPopupClose, SPopupOpen } from '../../../SComponent/SPopup/index';
+import { SText } from '../../../SComponent/SText/index';
+import { SView } from '../../../SComponent/SView/index';
+import BackgroundImage from '../../../Component/BackgroundImage/index';
+import { SButtom } from '../../../SComponent';
 
 class PaquetesDeUsuario extends Component {
     constructor(props) {
@@ -12,7 +17,19 @@ class PaquetesDeUsuario extends Component {
 
         };
     }
-
+    componentDidMount() {
+        this.getCaja()
+    }
+    getCaja() {
+        var obj = {
+            component: "caja",
+            type: "getActiva",
+            estado: "cargando",
+            key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+        }
+        this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
+        return null;
+    }
     getPaquete(key) {
         let reducer = this.props.state.paqueteReducer;
         let data = reducer.data;
@@ -151,6 +168,33 @@ class PaquetesDeUsuario extends Component {
             justifyContent: "center",
             padding: 4,
         }} onPress={() => {
+            if (!this.caja) {
+                SPopupOpen({
+                    key: "errorPaquete",
+                    content: (
+                        <SView props={{
+                            col: "xs-12",
+                            variant: "center",
+                            customStyle: "primary",
+                        }} style={{ height: 200, borderRadius: 8, }}>
+                            <BackgroundImage />
+                            <SView style={{
+                                width: "100%",
+                                height: "100%",
+                            }} center>
+                                <SText style={{ fontSize: 16, }}>No tiene una caja abierta.</SText>
+                                <SText style={{ fontSize: 12, }}>Dirijase a caja y abra una caja para continuar.</SText>
+                                <SButtom props={{ type: "outline" }} onPress={() => {
+                                    this.props.navigation.navigate("CajaPage")
+                                    SPopupClose("errorPaquete");
+                                }}>Ir a caja</SButtom>
+                            </SView>
+                        </SView>
+                    )
+                })
+                return;
+            }
+
             this.props.navigation.navigate("PaquetePage", {
                 type: "select",
                 onResult: (key) => {
@@ -168,7 +212,7 @@ class PaquetesDeUsuario extends Component {
         </TouchableOpacity>
     }
     render() {
-
+        this.caja = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         return (
             <View style={{
                 width: "100%",
