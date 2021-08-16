@@ -7,7 +7,7 @@
         "deviceKey": "calistenia_deviceKey",
         "fbtoken": "FIREBASE_TOKEN"
     },
-    "_urlImages": "http://192.168.0.18:30018/",
+    "_urlImages": "http://192.168.0.199:30018/",
     "urlImages": "https://calistenia.servisofts.com/images/",
     "servicios": {
         "_calistenia": "http://192.168.0.199:30018/",

@@ -1,12 +1,13 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../Params';
 import * as SImageImput from '../SImageImput';
 type tprop = {
     data: Object,
-    component: String
+    component: String,
+    style: ViewStyle
 }
 class FotoPerfilComponent extends Component<tprop> {
     constructor(props) {
@@ -16,12 +17,19 @@ class FotoPerfilComponent extends Component<tprop> {
     }
     render() {
         var data = this.props.data;
+        if (!data) {
+            return <View />
+        }
+        if (!data.key) {
+            return <View />
+        }
         return (<TouchableOpacity style={{
-            width: "90%",
-            height: "90%",
+            width: "100%",
+            height: "100%",
             backgroundColor: "#ff999933",
             borderRadius: 8,
             overflow: "hidden",
+            ...this.props.style
         }} onPress={() => {
             SImageImput.choseFile({
                 servicio: AppParams.socket.name,

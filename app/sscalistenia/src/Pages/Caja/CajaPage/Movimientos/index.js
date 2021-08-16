@@ -57,10 +57,14 @@ class Movimientos extends Component {
         }
         return data;
     }
-    getIcon(type) {
+    getIcon(monto) {
+        return <Svg name={(monto >= 0 ? "arrg" : "arrr")} style={{ width: 34, height: 34, }} />
+    }
+    getIconTipo(type, monto) {
         switch (type.key) {
-            case "3": return <Svg name="arrg" style={{ width: 34, height: 34, }} />;
-            case "4": return <Svg name="arrr" style={{ width: 34, height: 34, }} />;
+            case "1": return <Svg name="Add" style={{ width: 34, height: 34, }} />; //apertura
+            case "3": return <Svg name="Paquete" style={{ width: 34, height: 34, }} />; //venta_servicio
+            case "4": return <Svg name={"Caja"} style={{ width: 34, height: 34, }} />; //movimiento de caja
             default: return <Svg name="Add" style={{ width: 34, height: 34, }} />;
         }
     }
@@ -69,7 +73,7 @@ class Movimientos extends Component {
         if (!movimientos) return <ActivityIndicator color={"#fff"} />;
         var tipoMovimientos = this.getCajaTipoMovimientos();
         if (!tipoMovimientos) return <ActivityIndicator color={"#fff"} />;
-        
+
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
             return (
@@ -94,7 +98,15 @@ class Movimientos extends Component {
                             justifyContent: "center",
                             alignItems: "center",
                         }}>
-                            {this.getIcon(timpoMovimiento)}
+                            {this.getIconTipo(timpoMovimiento, movimientos[key].monto)}
+                        </SView>
+                        <SView style={{
+                            width: 40,
+                            height: "100%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                            {this.getIcon(movimientos[key].monto)}
                         </SView>
                         <View style={{
                             width: 100,
@@ -113,6 +125,7 @@ class Movimientos extends Component {
     render() {
         this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (!this.activa) return <View />;
+        if (this.props.setActiva) this.props.setActiva(this.activa);
         return (
             <SView props={{
                 col: "xs-12",
@@ -123,6 +136,11 @@ class Movimientos extends Component {
                 <SText props={{ type: "primary" }}>Movimientos</SText>
                 <SView props={{ col: "xs-12 md-8 xl-6" }}>
                     {this.getLista()}
+                    <SView col={"xs-12"} style={{
+                        height:50,
+                    }}>
+
+                    </SView>
                 </SView>
             </SView>
         )

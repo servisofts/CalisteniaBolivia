@@ -38,7 +38,9 @@ interface IProps extends ViewProps {
     onPress: Function,
     col: TypeCol,
     row: boolean,
+    center: boolean,
     flex: number,
+    withoutFeedback: Boolean
 }
 
 export class SView extends Component<IProps> {
@@ -102,7 +104,7 @@ export class SView extends Component<IProps> {
                 Component = Animated.createAnimatedComponent(Component);
             }
         }
-        if (this.props.props.withoutFeedback) {
+        if (this.props.props.withoutFeedback || this.props.withoutFeedback) {
             Component = TouchableOpacity;
             props.activeOpacity = 1;
             // if (this.props.animated) {
@@ -174,7 +176,8 @@ export class SView extends Component<IProps> {
                         ...this.style,
 
                         ...(this.getOption("direction") == "row" || this.props.row ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
-                        ...(this.getFlex())
+                        ...(this.getFlex()),
+                        ...(this.props.center ? { alignItems: "center", justifyContent: "center" } : {})
                     }, {
                         ...this.state.style,
                     }

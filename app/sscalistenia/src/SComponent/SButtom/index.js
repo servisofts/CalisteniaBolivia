@@ -4,12 +4,12 @@ import { SThemeChange, STheme } from '../../SComponent';
 import DeleteBtn from './DeleteBtn';
 
 
-type typeConfig = {
-    type: "default" | "outline" | "secondary" | "danger",
+export type typeConfig = {
+    type: "default" | "outline" | "secondary" | "danger" | "success",
     variant: "default" | "confirm",
 }
 
-type typeProps = {
+export type typeProps = {
     style: TouchableOpacity.Style,
     styleText: Text.Style,
     options: typeConfig,
@@ -67,7 +67,6 @@ export class SButtom extends Component<typeProps> {
             outline: {
                 touchable: {
                     borderRadius: 4,
-                    backgroundColor: STheme().colorPrimary,
                     borderWidth: 1,
                     borderColor: STheme().colorSecondary,
                     justifyContent: 'center',
@@ -82,6 +81,18 @@ export class SButtom extends Component<typeProps> {
                 touchable: {
                     borderRadius: 4,
                     backgroundColor: STheme().colorDanger,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                text: {
+                    color: STheme().colorPrimary,
+                    ...this.props.styleText
+                }
+            },
+            success: {
+                touchable: {
+                    borderRadius: 4,
+                    backgroundColor: STheme().colorSuccess,
                     justifyContent: 'center',
                     alignItems: 'center',
                 },

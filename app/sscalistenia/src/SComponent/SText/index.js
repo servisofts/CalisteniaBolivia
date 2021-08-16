@@ -10,6 +10,7 @@ type typeProps = {
     style: TextStyle,
     options: typeConfig,
     props: typeConfig,
+    fontSize: number,
     // onPress: Function,
     //callBack:Function,
 };
@@ -110,7 +111,9 @@ export class SText extends Component<typeProps> {
         // }
 
         return (
-            <Text style={[variant.text, style.text, this.props.style]}>{VAL}</Text>
+            <Text style={[variant.text, style.text, this.props.style, {
+                ...(this.props.fontSize ? { fontSize: this.props.fontSize } : {}),
+            }]}>{VAL}</Text>
         );
     }
 }

@@ -7,7 +7,7 @@ import NaviDrawer from '../../Component/NaviDrawer';
 import NaviDrawerButtom from '../../Component/NaviDrawer/NaviDrawerButtom';
 import SCarrusel from '../../Component/SCarrusel';
 import SImage from '../../Component/SImage';
-import SSCrollView from '../../Component/SScrollView';
+import { SScrollView2 } from '../../SComponent';
 import * as SSNavigation from '../../SSNavigation'
 import Svg from '../../Svg';
 import Graphic1 from './Graphic1';
@@ -29,7 +29,7 @@ class InicioPage extends Component {
 
   render() {
     return (<>
-      <View style={{
+      <View style={{  
         flex: 1,
         width: "100%",
         height: "100%",
@@ -44,7 +44,7 @@ class InicioPage extends Component {
           flex: 1,
           width: "100%",
         }}>
-          <SSCrollView>
+          <SScrollView2 disableHorizontal>
             <View style={{
               width: "100%",
               // height: 170,
@@ -55,7 +55,7 @@ class InicioPage extends Component {
 
             </View>
             <MenuModulos navigation={this.props.navigation} {...this.props} />
-          </SSCrollView>
+          </SScrollView2>
         </View>
         {/* <NaviDrawerButtom open={() => {
           this.state.naviDrawer.open();

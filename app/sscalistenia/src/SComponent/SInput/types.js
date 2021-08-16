@@ -10,7 +10,7 @@ import SIFechaPicker from "./SInputTypes"
 import SIDialCodeAlert from "./SInputTypes/SIDialCodeAlert"
 import SIFechaAlert from "./SInputTypes/SIFechaAlert"
 
-export type TypeType = "default" | "fecha" | "date" | "password" | "email" | "phone" | "number" | "money" | "text"
+export type TypeType = "default" | "fecha" | "date" | "password" | "email" | "phone" | "number" | "money" | "text" | "select"
 type returnType = {
     props: TextInputProps,
     onPress: Function,
@@ -47,6 +47,8 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
             return money(type, Parent);
         case "text":
             return text(type, Parent);
+        case "select":
+            return select(type, Parent);
         default:
             return buildResp({
                 props: {
@@ -62,7 +64,7 @@ export const Type = (type: TypeType, Parent: SInput): returnType => {
 }
 const phone = (type: TypeType, Parent: SInput) => {
     var value = Parent.getValue();
-    if(!value){
+    if (!value) {
         value = "";
     }
     var arr = value.split(" ");
@@ -91,7 +93,7 @@ const phone = (type: TypeType, Parent: SInput) => {
         },
         filter: (value: String) => {
             var _value = value;
-            if(!_value) _value = "";
+            if (!_value) _value = "";
             var arr = _value.split(" ");
             if (arr.length > 1) {
                 _value = arr[1];
@@ -142,8 +144,8 @@ const email = (type: TypeType, Parent: SInput) => {
         },
         filter: (_value: String) => {
             var value = _value;
-            if(!value){
-                value= "";
+            if (!value) {
+                value = "";
             }
             value = value.trim();
             value = value.split(" ")[0];
@@ -233,6 +235,25 @@ const text = (type: TypeType, Parent: SInput) => {
         style: {
             View: {},
             InputText: {}
+        },
+        verify: (value) => {
+            if (!value) return false;
+            return true;
+        }
+    })
+}
+const select = (type: TypeType, Parent: SInput) => {
+    return buildResp({
+        props: {
+            keyboardType: "default",
+            editable: false,
+        },
+        style: {
+            View: {},
+            InputText: {}
+        },
+        onPress: () => {
+            
         },
         verify: (value) => {
             if (!value) return false;

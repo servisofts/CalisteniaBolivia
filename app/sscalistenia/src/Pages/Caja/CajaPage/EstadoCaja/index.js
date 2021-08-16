@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../../Params';
 import { SButtom, SInput, SText, STheme, SView } from '../../../../SComponent';
+import { SPopupOpen } from '../../../../SComponent/SPopup/index';
+import PopupCerrar from './PopupCerrar';
 
 class EstadoCaja extends Component {
     constructor(props) {
@@ -30,10 +32,10 @@ class EstadoCaja extends Component {
         }
         return <SButtom props={{ type: "danger", variant: "confirm" }}
             onPress={() => {
-                var value = this.inputr.getValue();
-                if (!value) {
-                    value = this.state.montoDefault;
-                }
+                // var value = this.inputr.getValue();
+                // if (!value) {
+                // value = this.state.montoDefault;
+                // }
                 var obj = {
                     component: "caja",
                     type: "registro",
@@ -41,12 +43,38 @@ class EstadoCaja extends Component {
                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                     data: {
                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                        monto: value,
+                        monto: this.montoCaja,
                         key_sucursal: this.props.sucursal.key
                     }
                 }
                 this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
             }}>Abrir</SButtom>
+    }
+    getMontoCajaAntigua() {
+        if (!this.props.sucursal) {
+            return <View />
+        }
+        var data = this.props.state.sucursalReducer.monto[this.props.sucursal.key];
+        if (!data) {
+            if (this.props.state.sucursalReducer.estado == "cargando") {
+                return <View />
+            }
+            var obj = {
+                component: "sucursal",
+                type: "getMontoCaja",
+                estado: "cargando",
+                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                key_sucursal: this.props.sucursal.key
+            }
+            this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
+            return <View />
+        }
+        if (!data.monto) {
+            data.monto = 0;
+        }
+        this.montoCaja = data.monto;
+        // return <SText>{JSON.stringify(data,"\s","\t")}</SText>
+        return <SInput props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", value: data.monto + "" }} editable={false} />
     }
     apertura() {
         if (this.activa) {
@@ -57,10 +85,12 @@ class EstadoCaja extends Component {
                 variant: "center",
                 col: "xs-10",
             }} style={{
-                flex: 1,
             }}>
-                <SInput ref={(ref) => { this.inputr = ref }} props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto de apertura", variant: "small" }} placeholder={this.state.montoDefault} />,
+                {this.getMontoCajaAntigua()}
+                <SView col={"xs-12"} style={{ height: 20, }}></SView>
+                {/* <SInput ref={(ref) => { this.inputr = ref }} props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto de apertura", variant: "small" }} placeholder={this.state.montoDefault} />, */}
                 {this.getBtn()}
+                <SView col={"xs-12"} style={{ height: 20, }}></SView>
             </SView>
         );
     }
@@ -68,32 +98,29 @@ class EstadoCaja extends Component {
         if (!this.activa) {
             return <View />
         }
-        return <SButtom props={{ type: "danger", variant: "confirm", }}
+        if (this.getMonto() < 0) {
+            return <View />
+        }
+        return <SButtom props={{ type: "danger", variant: "default", }}
             style={{
                 width: 100,
                 height: 30,
             }}
             onPress={() => {
+                SPopupOpen({
+                    key: "cerrarCaja",
+                    content: <PopupCerrar data={this.activa} total={this.total} navigation={this.props.navigation} />
+                })
                 // var value = this.inputr.getValue();
                 // if (!value) {
                 // value = this.state.montoDefault;
                 // }
-                var obj = {
-                    component: "caja",
-                    type: "cierre",
-                    estado: "cargando",
-                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                    data: {
-                        monto: this.total,
-                        ...this.activa,
-                    }
-                }
-                this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
+
             }}>cerrar la caja</SButtom>
     }
-    getMontoEnCaja() {
+    getMonto() {
         if (!this.activa) {
-            return <View />
+            return 0
         }
         var reducer = this.props.state.cajaMovimientoReducer;
         var data = reducer.data[this.activa.key];
@@ -107,7 +134,12 @@ class EstadoCaja extends Component {
             total += obj.monto;
         }
         this.total = total;
-
+        return this.total
+    }
+    getMontoEnCaja() {
+        if (!this.activa) {
+            return <View></View>
+        }
         return <SView style={{
             width: 150,
             height: 50,
@@ -116,7 +148,7 @@ class EstadoCaja extends Component {
         }} props={{
             variant: "center"
         }}>
-            <SText style={{ fontSize: 18, color: "#Fff" }}> {total}</SText>
+            <SText style={{ fontSize: 18, color: "#Fff" }}> {this.getMonto()}</SText>
         </SView>
     }
     cierre() {
@@ -133,7 +165,9 @@ class EstadoCaja extends Component {
             }}>
 
                 {this.getMontoEnCaja()}
+                <SView col={"xs-12"} style={{ height: 50, }}></SView>
                 {this.getBtnClose()}
+                <SView col={"xs-12"} style={{ height: 50, }}></SView>
             </SView>
         );
     }
@@ -146,15 +180,20 @@ class EstadoCaja extends Component {
                 }
             }
         }
+        if (this.props.state.cajaReducer.estado == "exito" && this.props.state.cajaReducer.type == "registro") {
+            this.props.state.cajaReducer.estado = "";
+            this.props.state.sucursalReducer.monto = {};
+        }
+
         return (
             <SView props={{
                 col: "xs-11 md-6 xl-4",
                 variant: "center"
             }} style={{
-                height: 150,
                 backgroundColor: "#66000044",
                 borderRadius: 8,
                 marginTop: 8,
+                minHeight: 50,
             }} >
 
                 {this.apertura()}

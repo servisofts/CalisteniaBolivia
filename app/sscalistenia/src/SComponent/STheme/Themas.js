@@ -8,6 +8,7 @@ export type propsType = {
     colorSecondary: ColorPropType,
     backgroundColor: ColorPropType,
     colorDanger: ColorPropType,
+    colorSuccess: ColorPropType,
     colorOpaque: ColorPropType,
 
 }
@@ -17,14 +18,16 @@ const Themas = {
         colorSecondary: "#ffffff",
         backgroundColor: "#222222",
         colorDanger: "#C31C37",
-        colorOpaque:"#444444"
+        colorOpaque:"#444444",
+        colorSuccess: "#8BCB2A",
     },
     dark: {
         colorPrimary: "#000000",
         colorSecondary: "#ffffff",
         backgroundColor: "#dddddd",
         colorDanger: "#C31C37",
-        colorOpaque:"#884444"
+        colorOpaque:"#884444",
+        colorSuccess: "#8BCB2A",
 
     }
 };
