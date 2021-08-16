@@ -1,9 +1,7 @@
 import Config.Config;
-import SSComponent.SSInit;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
 import conexion.Conexion;
-import conexion.ConexionMySql;
 import util.console;
 
 public class App {

@@ -17,7 +17,7 @@
     },
     "data_base": {
         "puerto": 5432,
-        "pass": "fullparts123.",
+        "pass": "postgres",
         "ip": "192.168.0.18",
         "bd_name": "servisofts.calistenia",
         "user": "postgres"
@@ -45,6 +45,6 @@
     },
     "socket_server": {
         "puerto": 10018,
-        "ip": "192.168.0.3"
+        "ip": "192.168.0.199"
     }
 }

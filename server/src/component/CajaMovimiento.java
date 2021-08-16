@@ -108,13 +108,10 @@ public class CajaMovimiento {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
            
-            JSONObject caja_movimiento = new JSONObject();
+            JSONObject caja_movimiento = obj.getJSONObject("data");
             caja_movimiento.put("key", UUID.randomUUID().toString());
-            caja_movimiento.put("key_caja_movimiento", caja_movimiento.getString("key"));
-            caja_movimiento.put("key_caja_movimiento_tipo_movimiento", 1);
-            caja_movimiento.put("descripcion", "apertura");
-            caja_movimiento.put("monto", caja_movimiento.getDouble("monto"));
-            caja_movimiento.put("data", "");
+            caja_movimiento.put("key_caja_tipo_movimiento", 4);
+            caja_movimiento.put("key_tipo_pago", 1);
             caja_movimiento.put("fecha_on", fecha_on);
             caja_movimiento.put("estado", 1);
             Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));

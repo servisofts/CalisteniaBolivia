@@ -125,7 +125,31 @@ public class Caja {
             caja.put("key",UUID.randomUUID().toString());
             caja.put("fecha_on",fecha_on);
             caja.put("estado",1);
+            
+
+            JSONObject monto_caja = Sucursal.getMontoCaja(caja.getString("key_sucursal"));
+            if(monto_caja.has("monto")){
+                if(monto_caja.getDouble("monto") != caja.getDouble("monto")){
+                    obj.put("data", caja);
+                    obj.put("estado", "error");
+                    obj.put("error", "Montos de caja inconsistente, hable con su poroveedor de sistemas.");
+                    SSServerAbstract.sendAllServer(obj.toString());
+                    return;
+                }    
+                JSONObject caja_movimiento = new JSONObject();
+                caja_movimiento.put("key", UUID.randomUUID().toString());
+                caja_movimiento.put("key_caja", monto_caja.getString("key"));
+                caja_movimiento.put("key_caja_tipo_movimiento", 5);
+                caja_movimiento.put("descripcion", "apertura");
+                caja_movimiento.put("monto", caja.getDouble("monto")*-1);
+                caja_movimiento.put("data", "");
+                caja_movimiento.put("fecha_on", fecha_on);
+                caja_movimiento.put("estado", 1);
+                Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));
+            }
+
             Conexion.insertArray("caja", new JSONArray().put(caja));
+
 
             JSONObject caja_movimiento = new JSONObject();
             caja_movimiento.put("key", UUID.randomUUID().toString());
@@ -171,19 +195,38 @@ public class Caja {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
             JSONObject caja = obj.getJSONObject("data");
+            caja.put("key",caja.getString("key_caja"));
             caja.put("fecha_off", fecha_on);
             Conexion.editObject("caja", caja);
 
             JSONObject caja_movimiento = new JSONObject();
             caja_movimiento.put("key", UUID.randomUUID().toString());
-            caja_movimiento.put("key_caja", caja.getString("key"));
+            caja_movimiento.put("key_caja", caja.getString("key_caja"));
             caja_movimiento.put("key_caja_tipo_movimiento", 2);
             caja_movimiento.put("descripcion", "cierre");
             caja_movimiento.put("monto", caja.getDouble("monto"));
-            caja_movimiento.put("data", "");
+            caja_movimiento.put("data", new JSONObject().put("key_cuenta_banco", caja.getString("key_cuenta_banco")));
             caja_movimiento.put("fecha_on", fecha_on);
             caja_movimiento.put("estado", 1);
             Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));
+
+            JSONObject cuentaBancoMovimiento = new JSONObject();
+            cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
+            cuentaBancoMovimiento.put("descripcion", "Ingreso por cierre de caja");
+            cuentaBancoMovimiento.put("key_cuenta_banco", caja.getString("key_cuenta_banco"));
+            cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
+            cuentaBancoMovimiento.put("monto", caja.getDouble("monto")*-1);
+            cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
+            cuentaBancoMovimiento.put("fecha_on", fecha_on);
+            cuentaBancoMovimiento.put("estado", 1);
+            Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
+
+            JSONObject sendcuentaBancoMovimiento = new JSONObject();
+            sendcuentaBancoMovimiento.put("component", "cuentaBancoMovimiento");
+            sendcuentaBancoMovimiento.put("type", "registro");
+            sendcuentaBancoMovimiento.put("data", cuentaBancoMovimiento);
+            sendcuentaBancoMovimiento.put("estado", "exito");
+            SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
 
             Conexion.historico(obj.getString("key_usuario"), caja.getString("key"), "caja_registro", caja);
             obj.put("data", caja);

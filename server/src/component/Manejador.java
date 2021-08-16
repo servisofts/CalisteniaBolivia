@@ -115,6 +115,14 @@ public class Manejador {
                     new CajaTipoMovimiento(data, session);
                     break;
                 }
+                case "cuentaBanco": {
+                    new CuentaBanco(data, session);
+                    break;
+                }
+                case "cuentaBancoMovimiento": {
+                    new CuentaBancoMovimiento(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
@@ -143,7 +151,7 @@ public class Manejador {
             case "usuarioPage":
                 SocketCliete.send("roles_permisos", data, session);
             break;
+            default: SSManejador.navigate(data, session);
         }
-        // SSManejador.navigate(data, session);
     }
 }
