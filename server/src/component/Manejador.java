@@ -99,6 +99,10 @@ public class Manejador {
                     new Cliente(data, session);
                     break;
                 }
+                case "clientesActivos": {
+                    new ClientesActivos(data, session);
+                    break;
+                }
                 case "caja": {
                     new Caja(data, session);
                     break;

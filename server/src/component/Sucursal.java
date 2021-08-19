@@ -125,7 +125,7 @@ public class Sucursal {
         String url = Config.getJSON().getJSONObject("files").getString("url");
         File f = new File(url+"sucursal/");
         if(!f.exists()) f.mkdirs();
-        obj.put("dir", f.getPath()+"/"+obj.getString("key"));
+        obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
         SSServerAbstract.sendAllServer(obj.toString());
     }
