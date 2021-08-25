@@ -121,29 +121,53 @@ public class PaqueteVenta {
                     key_tipo_pago = paquete_venta.getString("key_tipo_pago");
                 }
             }
-            JSONObject caja_movimiento = Caja.addVentaServicio(caja_activa.getString("key"), obj.getString("key_usuario"), key_tipo_pago, paquete_venta.getDouble("monto"), paquete_venta.getJSONObject("data"));
-            paquete_venta.put("key_caja_movimiento", caja_movimiento.getString("key"));
+
+            
+            
+            if(key_tipo_pago.equals("1")){
+                JSONObject caja_movimiento = Caja.addVentaServicio(caja_activa.getString("key"), obj.getString("key_usuario"), key_tipo_pago, paquete_venta.getDouble("monto"), paquete_venta.getJSONObject("data"));
+                paquete_venta.put("key_caja_movimiento", caja_movimiento.getString("key"));
+
+                JSONObject send_movimiento = new JSONObject();
+                send_movimiento.put("component", "cajaMovimiento");
+                send_movimiento.put("type", "registro");
+                send_movimiento.put("data", caja_movimiento);
+                send_movimiento.put("key_usuario", obj.getString("key_usuario"));
+                send_movimiento.put("estado", "exito");
+                SSServerAbstract.sendAllServer(send_movimiento.toString());
+            }else{
+                JSONObject cuentaBancoMovimiento = new JSONObject();
+                cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
+                cuentaBancoMovimiento.put("descripcion", "Ingreso por venta de servicio");
+                cuentaBancoMovimiento.put("key_cuenta_banco", "f633e4d0-f4a5-40ec-9a4e-4fd108e52946");
+                cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
+                cuentaBancoMovimiento.put("monto", paquete_venta.getDouble("monto"));
+                //cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
+                cuentaBancoMovimiento.put("fecha_on", fecha_on);
+                cuentaBancoMovimiento.put("estado", 1);
+                Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
+
+                JSONObject sendcuentaBancoMovimiento = new JSONObject();
+                sendcuentaBancoMovimiento.put("component", "cuentaBancoMovimiento");
+                sendcuentaBancoMovimiento.put("type", "registro");
+                sendcuentaBancoMovimiento.put("data", cuentaBancoMovimiento);
+                sendcuentaBancoMovimiento.put("estado", "exito");
+                SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
+            }
+            
 
             Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
             Conexion.insertArray("paquete_venta_usuario", paquete_venta_usuarios);
             Conexion.historico(obj.getString("key_usuario"), paquete_venta.getString("key"), "paquete_venta_registro", paquete_venta);
 
             JSONArray clients = new JSONArray(clientes.toString()); 
-
             obj.put("data", paquete_venta); 
             obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
 
-
             SSServerAbstract.sendAllServer(obj.toString());
             //SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
-            JSONObject send_movimiento = new JSONObject();
-            send_movimiento.put("component", "cajaMovimiento");
-            send_movimiento.put("type", "registro");
-            send_movimiento.put("data", caja_movimiento);
-            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
-            send_movimiento.put("estado", "exito");
-            SSServerAbstract.sendAllServer(send_movimiento.toString());
+            
 
             JSONObject mail = new JSONObject();
             
