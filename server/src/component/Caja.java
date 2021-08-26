@@ -28,6 +28,9 @@ public class Caja {
             case "getActiva":
                 getActiva(data, session);
                 break;
+            case "getByFecha":
+                getByFecha(data, session);
+                break;
             case "getActivas":
                 getActivas(data, session);
                 break;
@@ -71,6 +74,19 @@ public class Caja {
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             Conexion.historico(obj.getString("key_usuario"), "caja_get_activa", data);
 
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public void getByFecha(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_by_fecha('caja','key','"+obj.getString("fecha_inicio")+"','"+obj.getString("fecha_fin")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "caja_get_by_fecha", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {

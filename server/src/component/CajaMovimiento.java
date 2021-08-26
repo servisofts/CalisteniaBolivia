@@ -25,6 +25,9 @@ public class CajaMovimiento {
             case "getAllActivas":
                 getAllActivas(data, session);
             break;
+            case "getByFecha":
+                getByFecha(data, session);
+            break;
             case "getByKeyCaja":
                 getByKeyCaja(data, session);
                 break;
@@ -68,6 +71,19 @@ public class CajaMovimiento {
             String consulta =  "select get_all_activas() as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_get_all_activas", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public void getByFecha(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select movimientos_get_by_fecha('"+obj.getString("fecha_inicio")+"','"+obj.getString("fecha_fin")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_get_by_fecha", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {

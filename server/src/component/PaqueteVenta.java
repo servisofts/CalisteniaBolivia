@@ -161,6 +161,10 @@ public class PaqueteVenta {
             Conexion.historico(obj.getString("key_usuario"), paquete_venta.getString("key"), "paquete_venta_registro", paquete_venta);
 
             JSONArray clients = new JSONArray(clientes.toString()); 
+
+            paquete_venta.put("key_sucursal", caja_activa.getString("key_sucursal"));
+            paquete_venta.put("key_usuario", caja_activa.getString("key_usuario"));
+
             obj.put("data", paquete_venta); 
             obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
