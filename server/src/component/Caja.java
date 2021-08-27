@@ -190,7 +190,7 @@ public class Caja {
     }
 
 
-    public static JSONObject addVentaServicio(String key_caja, String key_usuario, String key_tipo_pago, double monto, JSONObject data) throws SQLException{
+    public static JSONObject addVentaServicio(String key_caja, String key_usuario, String key_tipo_pago, double monto, String fecha_on, JSONObject data) throws SQLException{
         JSONObject caja_movimiento = new JSONObject();
         caja_movimiento.put("key", UUID.randomUUID().toString());
         caja_movimiento.put("key_caja", key_caja);
@@ -199,7 +199,7 @@ public class Caja {
         caja_movimiento.put("descripcion", "Venta de servicio");
         caja_movimiento.put("monto", monto);
         caja_movimiento.put("data", data);
-        caja_movimiento.put("fecha_on", "now()");
+        caja_movimiento.put("fecha_on", fecha_on);
         caja_movimiento.put("estado", 1);
         Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));
         
