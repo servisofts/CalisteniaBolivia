@@ -73,7 +73,7 @@ export default class SSize extends Component {
     } else {
       maxMedida = getMax("xs")
     }
-    
+
     switch (maxMedida.col) {
       case "xl":
         return { width: ((maxMedida.val * 100) / 12) + "%" }

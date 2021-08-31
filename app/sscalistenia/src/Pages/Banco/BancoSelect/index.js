@@ -39,7 +39,7 @@ class BancoSelect extends Component {
             var obj = data[key];
             return (
                 <SView col={"xs-12"} key={obj.key} style={{
-                    borderRadius: 4,
+                    borderRadius: 8,
                     marginBottom: 8,
                     backgroundColor: "#66000044",
                 }} row>
@@ -83,9 +83,10 @@ class BancoSelect extends Component {
     }
     render() {
         return (
-            <SView col={"xs-12"} style={{
+            <SView col={"xs-12 md-9 xl-7"} style={{
                 height: 1000,
-                maxHeight: "100%"
+                maxHeight: "100%",
+                borderRadius: 8,
 
             }}>
                 <BackgroundImage />
@@ -93,7 +94,10 @@ class BancoSelect extends Component {
                     width: "100%",
                 }}>
                     <SView col={"xs-12"} center>
-                        <SView col={"xs-11 md-7 xl-6"} center>
+                        <SView col={"xs-11.5"} style={{
+                            height: 16
+                        }} />
+                        <SView col={"xs-11.5"} center>
                             {this.getAllBancos()}
 
                         </SView>

@@ -158,6 +158,8 @@ class SessionWeb {
     }
     send(mensaje, isDispatch) {
         // this.colaMensaje.setMensaje(mensaje);
+        if (!this.socket) { this.onError({ error: "No se encontro socket" }); return; }
+        if (!this.socket.send) { this.onError({ error: "No se encontro socket" }); return; }
         this.socket.send(JSON.stringify(mensaje) + "\n");
         if (isDispatch) this.store.dispatch(mensaje);
         if (isDispatch) this.hiloTimeOut(mensaje);

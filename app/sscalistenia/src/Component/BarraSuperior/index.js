@@ -17,7 +17,7 @@ class BarraSuperior extends Component {
     startAnimation() {
         Animated.timing(this.state.anim, {
             toValue: 100,
-            duration: !this.props.duration ? 1000 : this.props.duration,
+            duration: !this.props.duration ? 300 : this.props.duration,
         }).start();
     }
     componentDidMount() {
@@ -36,7 +36,7 @@ class BarraSuperior extends Component {
                 justifyContent: "center",
                 // borderRadius:,
                 borderBottomEndRadius: 30,
-                borderTopLeftRadius:8,
+                borderTopLeftRadius: 8,
                 overflow: "hidden",
                 // alignItems:"center"
                 // backgroundColor: "#fff"
@@ -49,7 +49,7 @@ class BarraSuperior extends Component {
                     this.props.navigation.navigate("UsuarioPerfilPage")
                 }}>
 
-                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_"+this.props.state.usuarioReducer.usuarioLog.key, {
+                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, {
                         width: "100%",
                         height: "100%",
                     })}
@@ -113,16 +113,24 @@ class BarraSuperior extends Component {
                 width: "100%",
                 height: 45,
                 flexDirection: "row",
-                backgroundColor: "#fff",
+                // backgroundColor: "#fff",
                 transform: [
                     {
-                        translateX: this.state.anim.interpolate({
+                        translateY: this.state.anim.interpolate({
                             inputRange: [0, 100],
-                            outputRange: [Dimensions.get("window").width * -1, 0]
+                            outputRange: [-45, 0]
                         })
                     }
                 ]
             }}>
+                <View style={{
+                    width: 135,
+                    height: "100%",
+                    position: "absolute",
+                    right: 0,
+                    backgroundColor: "#fff",
+                }}>
+                </View>
                 <View style={{
                     flex: 1,
                     flexDirection: "row",
@@ -132,6 +140,7 @@ class BarraSuperior extends Component {
                     borderColor: "#000",
                     // overflow: "hidden",
                 }}>
+
                     <TouchableOpacity style={{
                         width: 45,
                         height: "100%",
@@ -165,6 +174,7 @@ class BarraSuperior extends Component {
                     width: 100,
                     height: "100%",
                     padding: 4,
+                    // backgroundColor: "#fff"
                 }}>
                     <Svg resource={require("../../img/calistenia.svg")} style={{
                         with: "100%",

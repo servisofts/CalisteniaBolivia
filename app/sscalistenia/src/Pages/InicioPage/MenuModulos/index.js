@@ -4,7 +4,7 @@ import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRol
 import Svg from '../../../Svg';
 import SSCrollView from '../../../Component/SScrollView';
 import AppParams from '../../../Params';
-import { SView } from '../../../SComponent';
+import { SText, SView } from '../../../SComponent';
 export default class MenuModulos extends Component {
     constructor(props) {
         super(props);
@@ -15,13 +15,6 @@ export default class MenuModulos extends Component {
     getItems = () => {
 
         var pages = SSRolesPermisosGetPages();
-        // var pages = {
-        //     as: {
-        //         url: "UsuarioPage",
-        //         key: "as",
-        //         descripcion: "Usuario Page"
-        //     }
-        // }
         if (!pages) {
             return <View />
         }
@@ -35,56 +28,40 @@ export default class MenuModulos extends Component {
             if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
                 return <View />
             }
-            return (<TouchableOpacity style={{
-                width: 110,
-                height: 110,
-                margin: 4,
-                alignItems: "center",
-                justifyContent: "center"
-            }} onPress={() => {
-                if (obj.url) {
-                    // console.log(obj)
-                    this.props.navigation.navigate(obj.url);
-                }
-            }}>
-                <View style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 16,
-                    overflow: "hidden",
-                    width: 92,
-                    height: 92,
-                }}>
-                    {this.props.state.imageReducer.getImage(urlImage, {
-                        resizeMode: "cover",
-                        objectFit: "cover"
-                    })}
-                </View>
-                <View style={{
-                    height: 22,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <Text style={{
-                        color: "#ffffff",
-                        fontSize: 12,
-                        textAlign: "center",
-                    }}>{obj.descripcion}</Text>
-                </View>
 
-            </TouchableOpacity>)
+
+            return (
+                <SView col={"xs-3 md-2 xl-1"} props={{
+                    variant: ["col-square", "center"]
+                }} >
+                    <SView style={{
+                        width:"70%",
+                        height:"70%",
+                        borderRadius: 16,
+                        overflow: "hidden",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor:"#44000044",
+                        padding:2,
+                    }} onPress={() => {
+                        this.props.navigation.navigate(obj.url);
+                    }}>
+                        {this.props.state.imageReducer.getImage(urlImage, {
+                            resizeMode: "cover",
+                            objectFit: "cover"
+                        })}
+                    </SView>
+                    <SView col={"xs-12"} flex style={{
+                        alignItems: "center",
+                        paddingTop: 4,
+                    }}>
+                        <SText style={{
+                            textAlign: "center",
+                        }}>{obj.descripcion}</SText>
+                    </SView>
+                </SView >
+            )
         })
-        // return [
-        //     { descripcion: "RRHH", icon: "Usuarios", route: "RRHHPage" },
-        //     { descripcion: "Usuarios", icon: "Usuarios", route: "UsuarioPage" },
-        //     { descripcion: "Roles", icon: "Usuarios", route: "RolPage" },
-        //     { descripcion: "Paginas", icon: "Usuarios", route: "PermisoPagePage" },
-        //     { descripcion: "Servisofts", icon: "Ssmenu", route: "ServisoftsPage" },
-        //     { descripcion: "Ajustes", icon: "Ajustes", route: "UsuarioPerfilPage" },
-        // ].map((obj) => {
-
-        // })
 
     }
 

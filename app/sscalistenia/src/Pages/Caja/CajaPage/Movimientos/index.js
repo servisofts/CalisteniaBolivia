@@ -5,7 +5,7 @@ import AppParams from '../../../../Params';
 import { SView, SText, SDate } from '../../../../SComponent/';
 import Svg from '../../../../Svg';
 import SOrdenador from '../../../../Component/SOrdenador/index';
-
+import Actions from '../../../../Actions'
 class Movimientos extends Component {
     constructor(props) {
         super(props);
@@ -60,6 +60,30 @@ class Movimientos extends Component {
     getIcon(monto) {
         return <Svg name={(monto >= 0 ? "arrg" : "arrr")} style={{ width: 34, height: 34, }} />
     }
+    getUsuario(data) {
+        if (!data.data) return <View />
+        if (!data.data.key_usuario) return <View />
+        var usuarios = Actions.Usuario.getAll(this.props);
+        if (!usuarios) return <View />
+        var usr = usuarios[data.data.key_usuario];
+        if (!usr) return <View />
+        return <SText style={{
+            textTransform: "capitalize",
+            color: "#999"
+        }}>{usr.Nombres} {usr.Apellidos}</SText>
+    }
+    getIconTipoPago(type, data) {
+        // alert(JSON.stringify(data))
+        // return <SText>{JSON.stringify(data.data)}</SText>
+        if (!data.data) return <Svg name={"money"} style={{ width: 34, height: 34, }} />;
+        switch (data.data.key_tipo_pago) {
+            case "1": return <Svg name={"money"} style={{ width: 34, height: 34, }} />;
+            case "2": return <Svg name={"card"} style={{ width: 34, height: 34, }} />;
+            case "3": return <Svg name={"qr"} style={{ width: 34, height: 34, }} />;
+            case "4": return <Svg name={"cheque"} style={{ width: 34, height: 34, }} />;
+            default: return <Svg name={"money"} style={{ width: 34, height: 34, }} />;
+        }
+    }
     getIconTipo(type, monto) {
         switch (type.key) {
             case "1": return <Svg name="Add" style={{ width: 34, height: 34, }} />; //apertura
@@ -76,6 +100,8 @@ class Movimientos extends Component {
 
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
+            var monto = movimientos[key].monto;
+            if(monto % 1 != 0) monto = monto.toFixed(2);
             return (
                 <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
                     <View style={{ backgroundColor: "#66000044", width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
@@ -87,10 +113,20 @@ class Movimientos extends Component {
                             props={{ direction: "row" }}
                         >
                             <SView col={"xs-12"} >
-                                <Text style={{ color: "#fff", fontSize: 16 }}>{movimientos[key].descripcion}</Text>
-                                <Text style={{ color: "#fff", fontSize: 10 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+                                <Text style={{ color: "#fff", fontSize: 14 }}>{movimientos[key].descripcion}</Text>
+                                <Text style={{ color: "#999", fontSize: 10 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+                                {this.getUsuario(movimientos[key])}
                             </SView>
 
+                        </SView>
+
+                        <SView style={{
+                            width: 40,
+                            height: "100%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                            {this.getIconTipoPago(timpoMovimiento, movimientos[key])}
                         </SView>
                         <SView style={{
                             width: 40,
@@ -109,12 +145,14 @@ class Movimientos extends Component {
                             {this.getIcon(movimientos[key].monto)}
                         </SView>
                         <View style={{
-                            width: 100,
+                            width: 90,
                             height: 50,
                             justifyContent: "center",
-                            alignItems: "center"
+                            alignItems: "center",
+                            flexDirection: "row"
                         }}>
-                            <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {movimientos[key].monto}</Text>
+                            <Text style={{ color: "#fff", fontSize: 10, height: 20, }}>Bs.</Text>
+                            <Text style={{ color: "#fff", fontSize: 16, }}>{monto}</Text>
                         </View>
                     </View>
                 </View >
@@ -137,7 +175,7 @@ class Movimientos extends Component {
                 <SView props={{ col: "xs-12 md-8 xl-6" }}>
                     {this.getLista()}
                     <SView col={"xs-12"} style={{
-                        height:50,
+                        height: 50,
                     }}>
 
                     </SView>

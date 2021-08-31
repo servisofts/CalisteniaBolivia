@@ -23,11 +23,15 @@ class ConfirmarPaquete extends Component {
     sendServer(data) {
         var clientes = this.props.data.usuariosData.map((obj, i) => {
             var tsk = this.props.data.tasks[i];
-            console.log(tsk);
+            var data = this.props.data.dataPagos[i];
+            // if(!data){
+
+            // }
             return {
                 ...obj,
                 fecha_inicio: tsk.fecha.toString("yyyy-MM-dd"),
                 fecha_fin: tsk.fecha.addDay(tsk.dias).toString("yyyy-MM-dd"),
+                data
             }
         });
 
@@ -118,7 +122,12 @@ class ConfirmarPaquete extends Component {
         if (!this.paquete) {
             return <View />
         }
-        if (this.paquete.participantes != Object.keys(this.state.confirmados).length) {
+        var usrs = {};
+        this.props.data.usuariosData.map((obj) => {
+            usrs[obj.key] = true;
+        })
+
+        if (Object.keys(usrs).length != Object.keys(this.state.confirmados).length) {
             return <SView props={{
                 col: "xs-10 md-8"
             }}>
@@ -127,15 +136,15 @@ class ConfirmarPaquete extends Component {
                 }}>Presion sobre cada usuario para confirmar sus datos para el recibo.</SText>
             </SView>
         }
-        if (!this.state.tipoPago && this.paquete.precio > 0) {
-            return <SView props={{
-                col: "xs-10 md-8"
-            }}>
-                <SText props={{ type: "primary" }} style={{
-                    textAlign: "center"
-                }}>Seleccione el metodo de pago.</SText>
-            </SView>
-        }
+        // if (!this.state.tipoPago && this.paquete.precio > 0) {
+        //     return <SView props={{
+        //         col: "xs-10 md-8"
+        //     }}>
+        //         <SText props={{ type: "primary" }} style={{
+        //             textAlign: "center"
+        //         }}>Seleccione el metodo de pago.</SText>
+        //     </SView>
+        // }
 
         // if(){
 
@@ -147,29 +156,29 @@ class ConfirmarPaquete extends Component {
         } onPress={() => {
             var IsValid = true;
             var dataFinal = {};
-            var key_tipo_pago = null;
-            if (this.paquete.precio > 0) {
-                key_tipo_pago = this.state.tipoPago.key
-                this.state.tipoPago.data.map((campo) => {
-                    var imput: SInput = this.camposInputs[campo.dato];
-                    if (!imput.verify()) {
-                        IsValid = false;
-                    }
-                    dataFinal[campo.dato] = imput.getValue();
-                })
-                if (!IsValid) {
-                    alert("Faltan Datos");
-                    return;
-                }
-            }
+            // var key_tipo_pago = null;
+            // if (this.paquete.precio > 0) {
+            //     key_tipo_pago = this.state.tipoPago.key
+            //     this.state.tipoPago.data.map((campo) => {
+            //         var imput: SInput = this.camposInputs[campo.dato];
+            //         if (!imput.verify()) {
+            //             IsValid = false;
+            //         }
+            //         dataFinal[campo.dato] = imput.getValue();
+            //     })
+            //     if (!IsValid) {
+            //         alert("Faltan Datos");
+            //         return;
+            //     }
+            // }
             this.sendServer({
                 descripcion: "",
                 // key_usuario: usuario.key,
                 key_paquete: this.paquete.key,
-                key_tipo_pago,
+                // key_tipo_pago,
                 monto: this.paquete.precio,
                 nombre_paquete: this.paquete.descripcion,
-                data: dataFinal
+                // data: dataFinal
             })
         }} > Pagar</SButtom >
     }
@@ -294,7 +303,7 @@ class ConfirmarPaquete extends Component {
                                                 variant: "h4"
                                             }}>Bs. {paquete.precio}</SText>
                                         </SView>
-                                        <SView props={{
+                                        {/* <SView props={{
                                             col: "xs-12 sm-10 md-8 xl-6",
                                             variant: "center",
                                         }} style={{
@@ -302,8 +311,8 @@ class ConfirmarPaquete extends Component {
                                         }}>
                                             {this.getTiposPago()}
 
-                                        </SView>
-                                        {this.getCamposRequeridos()}
+                                        </SView> */}
+                                        {/* {this.getCamposRequeridos()} */}
                                         <SView props={{
                                             col: "xs-12",
                                             direction: "row"

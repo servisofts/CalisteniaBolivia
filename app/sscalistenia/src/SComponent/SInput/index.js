@@ -77,6 +77,9 @@ export class SInput extends Component<IProps> {
         return isValid
     }
     setValue(val) {
+        if (this.props.onChangeText) {
+           this.props.onChangeText(val)
+        }
         this.setState({ value: val });
     }
     getValue() {
@@ -194,6 +197,7 @@ export class SInput extends Component<IProps> {
                                         text = this.type.onChangeText(text)
                                     }
                                 }
+                                if (this.props.onChangeText) this.props.onChangeText(text);
                                 this.state.value = text
                                 this.setState({ value: this.state.value })
                                 this.verify()

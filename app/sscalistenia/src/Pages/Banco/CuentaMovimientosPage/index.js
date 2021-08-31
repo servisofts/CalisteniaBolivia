@@ -51,10 +51,15 @@ class CuentaMovimientosPage extends Component {
         }
 
         var data = reducer.data[this.data.key];
+
         return new SOrdenador([
             { key: "fecha_on", order: "desc", peso: 1 }
         ]).ordernarObject(data).map((key) => {
             var obj = data[key];
+            var monto = obj.monto;
+            if (monto) {
+                if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
+            }
             return (
                 <SView col={"xs-12"} key={obj.key} style={{
                     borderRadius: 4,
@@ -68,7 +73,7 @@ class CuentaMovimientosPage extends Component {
                         <SView style={{
                             width: 40,
                             height: 40,
-                            borderRadius:8,
+                            borderRadius: 8,
                             overflow: "hidden",
                         }}>
                             {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + obj.key_usuario, {
@@ -101,7 +106,7 @@ class CuentaMovimientosPage extends Component {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {obj.monto}</Text>
+                        <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {monto}</Text>
                     </View>
                 </SView>
             );

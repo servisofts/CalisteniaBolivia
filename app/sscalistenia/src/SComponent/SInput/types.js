@@ -186,7 +186,8 @@ const fecha = (type: TypeType, Parent: SInput) => {
                 key: "fechaPicker",
                 content: <SIFechaAlert
                     props={{
-                        defaultValue: new SDate(Parent.getValue(), format)
+                        defaultValue: new SDate(Parent.getValue(), format),
+                        maxYear: 2050,
                     }}
                     onChange={(val) => {
                         // console.log(val);
@@ -253,7 +254,7 @@ const select = (type: TypeType, Parent: SInput) => {
             InputText: {}
         },
         onPress: () => {
-            
+
         },
         verify: (value) => {
             if (!value) return false;

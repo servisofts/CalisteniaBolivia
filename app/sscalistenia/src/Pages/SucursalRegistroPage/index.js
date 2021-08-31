@@ -9,6 +9,7 @@ import AppParams from '../../Params';
 import FotoPerfilComponent from '../../Component/FotoPerfilComponent';
 import SSCrollView from '../../Component/SScrollView';
 import { connect } from 'react-redux';
+import Parametros from './Parametros';
 
 var styleImput = {
     width: "80%",
@@ -168,7 +169,7 @@ class SucursalRegistroPage extends Component {
                                     }}
                                 />
                             </View>
-
+                            <Parametros data={this.data} />
                         </View>
                     </SSCrollView>
 

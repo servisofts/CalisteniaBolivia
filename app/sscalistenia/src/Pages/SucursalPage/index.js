@@ -120,12 +120,12 @@ class SucursalPage extends Component {
                                 borderRadius: 100,
                                 overflow: "hidden"
                             }}>
-                                {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + key, {
+                                {this.props.state.imageReducer.getImage(AppParams.urlImages + "sucursal_" + key, {
                                     width: "100%",
                                     objectFit: "cover",
                                     resizeMode: "cover",
 
-                                })} */}
+                                })}
                             </View>
                             <View style={{
                                 flex: 1,

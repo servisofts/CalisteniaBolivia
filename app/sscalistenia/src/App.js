@@ -24,7 +24,6 @@ import BarraDeDesconeccion from './SSSocket/BarraDeDesconeccion';
 import DropDown from './Component/DropDown';
 import SSRolesPermisos from './SSRolesPermisos';
 import { SComponentClass } from './SComponent';
-
 const store = createStore(
   Reducer,
   {},
@@ -45,10 +44,9 @@ const App = () => {
         <StatusBar barStyle={'light-content'} backgroundColor={"#000"} />
         <BarraDeDesconeccion socketName={AppParams.socket.name} color={"#000000"} visible={false} />
         <SSRolesPermisos />
-        <SComponentClass >
-          <SSNavigation />
-        </SComponentClass>
-
+          <SComponentClass >
+            <SSNavigation />
+          </SComponentClass>
       </SafeAreaView>
     </Provider>
 

@@ -86,15 +86,17 @@ class ClienteRegistroPage extends Component {
     // alert(JSON.stringify(object));
     this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
   }
+
   render() {
 
     if (this.props.state.usuarioReducer.estado == "error" && this.props.state.usuarioReducer.type == "registro") {
       this.props.state.usuarioReducer.estado = "";
+      var error = this.props.state.usuarioReducer.error;
       SPopupOpen({
         key: "errorRegistro",
         content: (
           <SView props={{
-            col: "xs-12",
+            col: "xs-12 md-8 xl-6",
             variant: "center",
             customStyle: "primary",
           }} style={{ height: 200, borderRadius: 8, }}>
@@ -104,7 +106,11 @@ class ClienteRegistroPage extends Component {
               height: "100%",
             }} center>
               <SText style={{ fontSize: 16, }}>El usuario ya existe</SText>
-              <SText style={{ fontSize: 12, }}>Comuniquese con atencion al cliente para recuperar su usuario.</SText>
+              <SText style={{ fontSize: 12, }}>{`Nombre: ${error["Nombres"] + " " + error["Apellidos"]}`}</SText>
+              <SText style={{ fontSize: 12, }}>{`Correo: ${error["Correo"]}`}</SText>
+              <SText style={{ fontSize: 12, }}>{`Fecha nacimiento: ${error["Fecha nacimiento"]}`}</SText>
+              <SText style={{ fontSize: 12, }}>{`CI: ${error["CI"]}`}</SText>
+              <SText style={{ fontSize: 12, }}>{`Telefono: ${error["Telefono"]}`}</SText>
             </SView>
           </SView>
         )

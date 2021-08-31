@@ -91,6 +91,7 @@ export default class SScrollView2 extends Component<SType> {
                             disableHorizontal={this.props.disableHorizontal}
                             ref={(ref) => { this.setRef("scrollh", ref) }}
                             horizontal={true}
+                            onScroll={this.props.onScroll}
                             {...!this.props.onScrollEnd ? {} : {
                                 onScrollEnd: (evt) => {
                                     this.props.onScrollEnd({
@@ -108,6 +109,7 @@ export default class SScrollView2 extends Component<SType> {
                                 <Scroll
                                     disableHorizontal={this.props.disableHorizontal}
                                     ref={(ref) => { this.setRef("scrollv", ref) }}
+                                    onScroll={this.props.onScroll}
                                     {...!this.props.onScrollEnd ? {} : {
                                         onScrollEnd: (evt) => {
                                             this.props.onScrollEnd({
