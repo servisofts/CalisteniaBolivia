@@ -61,7 +61,7 @@ public class SSComponent {
             obj.put("data", data);
             obj.put("estado", "exito");
             obj.remove("nombre_tabla");
-        } catch (SQLException e) {
+        } catch (SQLException e) { 
             obj.put("estado", "error");
             e.printStackTrace();
         }
@@ -75,6 +75,7 @@ public class SSComponent {
             JSONObject data = obj.getJSONObject("data");
             data.put("key",UUID.randomUUID().toString());
             data.put("fecha_on",fecha_on);
+
             data.put("estado",1);
 
             createTable(obj);
@@ -84,7 +85,7 @@ public class SSComponent {
             obj.put("data", data);
             obj.put("estado", "exito");
             obj.remove("nombre_tabla");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
@@ -101,7 +102,7 @@ public class SSComponent {
             obj.put("data", data);
             obj.put("estado", "exito");
             obj.remove("nombre_tabla");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -118,10 +119,10 @@ public class SSComponent {
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
         obj.remove("nombre_tabla");
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 
-    private static void capitalTransform(JSONObject obj){
+    public static void capitalTransform(JSONObject obj){
         Matcher m = Pattern.compile("[/A-Z]").matcher(obj.getString("component"));
         StringBuffer sb = new StringBuffer();
         while (m.find()) {

@@ -99,6 +99,10 @@ public class Manejador {
                     new Cliente(data, session);
                     break;
                 }
+                case "clientesActivos": {
+                    new ClientesActivos(data, session);
+                    break;
+                }
                 case "caja": {
                     new Caja(data, session);
                     break;
@@ -113,6 +117,14 @@ public class Manejador {
                 }
                 case "cajaTipoMovimiento": {
                     new CajaTipoMovimiento(data, session);
+                    break;
+                }
+                case "cuentaBanco": {
+                    new CuentaBanco(data, session);
+                    break;
+                }
+                case "cuentaBancoMovimiento": {
+                    new CuentaBancoMovimiento(data, session);
                     break;
                 }
                 default:
@@ -143,7 +155,7 @@ public class Manejador {
             case "usuarioPage":
                 SocketCliete.send("roles_permisos", data, session);
             break;
+            default: SSManejador.navigate(data, session);
         }
-        // SSManejador.navigate(data, session);
     }
 }

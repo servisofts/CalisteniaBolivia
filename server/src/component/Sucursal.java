@@ -19,6 +19,9 @@ public class Sucursal {
             case "getAll":
                 getAll(data, session);
             break;
+            case "getMontoCaja":
+                getMontoCaja(data, session);
+            break;
             case "getByKey":
                 getByKey(data, session);
                 break;
@@ -49,6 +52,28 @@ public class Sucursal {
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+    }
+
+    public void getMontoCaja(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_monto_caja('"+obj.getString("key_sucursal")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getMontoCaja(String key_sucursal) {
+        try {
+            String consulta =  "select get_monto_caja('"+key_sucursal+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -100,7 +125,7 @@ public class Sucursal {
         String url = Config.getJSON().getJSONObject("files").getString("url");
         File f = new File(url+"sucursal/");
         if(!f.exists()) f.mkdirs();
-        obj.put("dir", f.getPath()+"/"+obj.getString("key"));
+        obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
         SSServerAbstract.sendAllServer(obj.toString());
     }

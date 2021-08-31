@@ -93,7 +93,8 @@ public class PaqueteVenta {
             paquete_venta.put("key",UUID.randomUUID().toString());
             paquete_venta.put("fecha_on",fecha_on);
             paquete_venta.put("estado",1);
-
+            Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
+            
             JSONObject caja_activa = Caja.getActiva(obj.getString("key_usuario"));
             if(caja_activa == null){
                 obj.put("estado", "error");
@@ -104,6 +105,18 @@ public class PaqueteVenta {
             JSONArray clientes = obj.getJSONArray("clientes");
             JSONArray paquete_venta_usuarios = new JSONArray();
             JSONObject paquete_venta_usuario;
+
+            JSONObject data;
+            JSONObject caja_movimiento;
+
+
+            JSONObject send_movimiento = new JSONObject();
+            send_movimiento.put("component", "cajaMovimiento");
+            send_movimiento.put("type", "registro");
+            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
+            send_movimiento.put("estado", "exito");
+
+            double monto;
             for (int i = 0; i < clientes.length(); i++) {
                 paquete_venta_usuario = new JSONObject();
                 paquete_venta_usuario.put("key", UUID.randomUUID().toString());
@@ -111,54 +124,70 @@ public class PaqueteVenta {
                 paquete_venta_usuario.put("fecha_inicio",clientes.getJSONObject(i).getString("fecha_inicio"));
                 paquete_venta_usuario.put("fecha_fin",clientes.getJSONObject(i).getString("fecha_fin"));
                 paquete_venta_usuario.put("key_paquete_venta",paquete_venta.get("key"));
+                paquete_venta_usuario.put("key_caja",caja_activa.get("key"));
                 paquete_venta_usuario.put("fecha_on",fecha_on);
                 paquete_venta_usuario.put("estado",1);
                 paquete_venta_usuarios.put(paquete_venta_usuario);
-            }
-            String key_tipo_pago = null;
-            if(paquete_venta.has("key_tipo_pago")){
-                if(!paquete_venta.isNull("key_tipo_pago")){
-                    key_tipo_pago = paquete_venta.getString("key_tipo_pago");
-                }
-            }
-            JSONObject caja_movimiento = Caja.addVentaServicio(caja_activa.getString("key"), obj.getString("key_usuario"), key_tipo_pago, paquete_venta.getDouble("monto"), paquete_venta.getJSONObject("data"));
-            paquete_venta.put("key_caja_movimiento", caja_movimiento.getString("key"));
 
-            Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
+
+                data = clientes.getJSONObject(i).getJSONObject("data");
+                monto=0;
+                for (int j = 0; j < JSONObject.getNames(data).length; j++) {                    
+                    try{
+                        data.getJSONObject(JSONObject.getNames(data)[j]);
+                        monto += data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto");
+                        data.getJSONObject(JSONObject.getNames(data)[j]).put("key_paquete_venta_usuario", paquete_venta_usuario.getString("key"));
+                        data.getJSONObject(JSONObject.getNames(data)[j]).put("key_tipo_pago", JSONObject.getNames(data)[j]);
+                        data.getJSONObject(JSONObject.getNames(data)[j]).put("key_usuario", clientes.getJSONObject(i).getString("key"));
+
+                        caja_movimiento = Caja.addVentaServicio(
+                            caja_activa.getString("key"), 
+                            obj.getString("key_usuario"), 
+                            "1",
+                            data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto"),
+                            fecha_on,
+                            data.getJSONObject(JSONObject.getNames(data)[j])
+                        );
+                        send_movimiento.put("data", caja_movimiento);
+                        SSServerAbstract.sendAllServer(send_movimiento.toString());
+                    }catch(Exception e){}
+                }
+
+                clientes.getJSONObject(i).put("monto", monto);
+                //clientes.getJSONObject(i).put("key_tipo_pago", JSONObject.getNames(data)[j]);
+
+            }
+          
+            
             Conexion.insertArray("paquete_venta_usuario", paquete_venta_usuarios);
             Conexion.historico(obj.getString("key_usuario"), paquete_venta.getString("key"), "paquete_venta_registro", paquete_venta);
 
-            JSONArray clients = new JSONArray(clientes.toString()); 
+            paquete_venta.put("key_sucursal", caja_activa.getString("key_sucursal"));
+            paquete_venta.put("key_usuario", caja_activa.getString("key_usuario"));
 
             obj.put("data", paquete_venta); 
             obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
 
-
             SSServerAbstract.sendAllServer(obj.toString());
             //SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
-            JSONObject send_movimiento = new JSONObject();
-            send_movimiento.put("component", "cajaMovimiento");
-            send_movimiento.put("type", "registro");
-            send_movimiento.put("data", caja_movimiento);
-            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
-            send_movimiento.put("estado", "exito");
-            SSServerAbstract.sendAllServer(send_movimiento.toString());
+            
 
             JSONObject mail = new JSONObject();
             
             
             mail.put("__ID_PEDIDO__",paquete_venta.getString("key"));
             mail.put("__PAQUETE__",paquete_venta.getString("nombre_paquete"));
-            mail.put("__MONTO__",paquete_venta.get("monto").toString());
             mail.put("__KEY_PAQUETE__",paquete_venta.getString("key_paquete")+"?fecha="+new Date().toString());
-            
-            for(int i = 0; i<clients.length(); i++){
-                JSONObject cliente = clients.getJSONObject(i);
+            JSONObject cliente;
+            for(int i = 0; i<clientes.length(); i++){
+                cliente = clientes.getJSONObject(i);
                 mail.put("__FECHA__",cliente.getString("fecha_inicio"));
                 mail.put("__RENOVACION__",cliente.getString("fecha_fin"));
                 mail.put("__MAIL__",cliente.getString("Correo"));
                 mail.put("__KEY_USUARIO_CLIENTE__",paquete_venta_usuarios.getJSONObject(i).getString("key")+"?fecha="+new Date().toString());
+                //mail.put("__KEY_TIPO_PAGO__",cliente.getString("key_tipo_pago"));
+                mail.put("__MONTO__",cliente.getDouble("monto"));
                 mail.put("__CI__",cliente.getString("CI"));
                 new Email(Email.TIPO_RECIBO, mail);
             }

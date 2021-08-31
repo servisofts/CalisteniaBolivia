@@ -7,8 +7,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
-import java.util.UUID;
-import java.util.regex.Pattern;
 
 import Config.Config;
 import java.util.List;
@@ -21,11 +19,9 @@ import component.Documento;
 import component.Manejador;
 import conexion.Conexion;
 
-import java.nio.file.Files;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
-import java.nio.file.Paths;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -138,12 +134,12 @@ public class ServerHttp {
                 No te olvides de setear la variable dir en tu type de subida para que guarden los documentos
                 */
                 if (obj.has("dirs")) {
-                    //File aux;
+                    File aux;
                     
                     for (int i = 0; i < documentos.size(); i++) {
-                        //aux = new File(obj.getJSONArray("dirs").getString(i));
-                        FilesManager.guardar_file(documentos.get(i).getFile(), obj.getJSONArray("dirs").getString(i));
-                        //copyInputStreamToFile(documentos.get(i).getFile(), aux);
+                        aux = new File(obj.getJSONArray("dirs").getString(i));
+                        //FilesManager.guardar_file(documentos.get(i).getFile(), obj.getJSONArray("dirs").getString(i));
+                        copyInputStreamToFile(documentos.get(i).getFile(), aux);
                         switch(obj.getString("component")){
                             case "SFile":
                         //        obj.getJSONArray("data").getJSONObject(i).put("tamano", aux.length()+"");

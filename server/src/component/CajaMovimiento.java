@@ -25,6 +25,9 @@ public class CajaMovimiento {
             case "getAllActivas":
                 getAllActivas(data, session);
             break;
+            case "getByFecha":
+                getByFecha(data, session);
+            break;
             case "getByKeyCaja":
                 getByKeyCaja(data, session);
                 break;
@@ -75,6 +78,19 @@ public class CajaMovimiento {
             e.printStackTrace();
         }
     }
+
+    public void getByFecha(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select movimientos_get_by_fecha('"+obj.getString("fecha_inicio")+"','"+obj.getString("fecha_fin")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_get_by_fecha", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
     
     public void getByKeyCaja(JSONObject obj, SSSessionAbstract session) {
         try {
@@ -108,13 +124,10 @@ public class CajaMovimiento {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
            
-            JSONObject caja_movimiento = new JSONObject();
+            JSONObject caja_movimiento = obj.getJSONObject("data");
             caja_movimiento.put("key", UUID.randomUUID().toString());
-            caja_movimiento.put("key_caja_movimiento", caja_movimiento.getString("key"));
-            caja_movimiento.put("key_caja_movimiento_tipo_movimiento", 1);
-            caja_movimiento.put("descripcion", "apertura");
-            caja_movimiento.put("monto", caja_movimiento.getDouble("monto"));
-            caja_movimiento.put("data", "");
+            caja_movimiento.put("key_caja_tipo_movimiento", 4);
+            caja_movimiento.put("key_tipo_pago", 1);
             caja_movimiento.put("fecha_on", fecha_on);
             caja_movimiento.put("estado", 1);
             Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));

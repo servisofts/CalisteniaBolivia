@@ -1,13 +1,10 @@
 import Config.Config;
-import SSComponent.SSInit;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
 import conexion.Conexion;
-import conexion.ConexionMySql;
 import util.console;
 
 public class App {
-    
     public static void main(String[] args) throws Exception {
         System.setProperty("org.eclipse.jetty.util.log.announce", "false");
         if (!Config.validate()) {
