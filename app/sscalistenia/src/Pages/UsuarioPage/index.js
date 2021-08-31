@@ -15,6 +15,7 @@ import Buscador from '../../Component/Buscador';
 import FloatButtom from '../../Component/FloatButtom';
 import DeleteBtn from '../../Component/DeleteBtn';
 import { SSRolesPermisosValidate } from '../../SSRolesPermisos';
+import { SScrollView2, SView } from '../../SComponent';
 
 class UsuarioPage extends Component {
   static navigationOptions = {
@@ -41,7 +42,7 @@ class UsuarioPage extends Component {
       key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
     }
     this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-    
+
   }
   sendMail = (to) => {
     if (Platform.OS == "web") return;
@@ -258,8 +259,8 @@ class UsuarioPage extends Component {
           flex: 1,
           width: "100%",
         }}>
-          <SSCrollView
-            style={{ width: "100%" }}
+          <SScrollView2
+            disableHorizontal
             onScroll={(evt) => {
               var evn = evt.nativeEvent;
               var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
@@ -271,14 +272,13 @@ class UsuarioPage extends Component {
                 this.setState({ ...this.state })
               }
             }}
-            contentContainerStyle={{
-              alignItems: "center"
-            }}
           >
-            {getLista()}
-          </SSCrollView>
+            <SView col={"xs-12"} center>
+              {getLista()}
+            </SView>
+          </SScrollView2>
           <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
-            this.props.navigation.navigate("UsuarioRegistroPage")
+            this.props.navigation.navigate("ClienteRegistroPage")
           }} />
         </View>
       </View>

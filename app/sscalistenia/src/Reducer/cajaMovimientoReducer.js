@@ -1,8 +1,11 @@
 const initialState = {
     estado: "Not Found",
     data: {},
-    usuario: {},
     activas: false,
+    fechas: {
+        fecha_inicio: false,
+        fecha_fin: false,
+    },
 }
 
 export default (state, action) => {
@@ -11,6 +14,9 @@ export default (state, action) => {
         switch (action.type) {
             case "getByKeyCaja":
                 getByKeyCaja(state, action);
+                break;
+            case "getByFecha":
+                getByFecha(state, action);
                 break;
             case "getAllActivas":
                 getAllActivas(state, action);
@@ -29,6 +35,21 @@ export default (state, action) => {
     return state;
 }
 
+const getByFecha = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        if (state.data) {
+            state.fechas = {
+                fecha_inicio: action.fecha_inicio,
+                fecha_fin: action.fecha_fin,
+            }
+            state.data = {
+                ...state.data,
+                ...action.data
+            };
+        }
+    }
+}
 const getAllActivas = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {

@@ -32,7 +32,7 @@ class PresentacionCalisPage extends Component {
         <ScrollView style={{
           width: "100%",
           flex: 1,
-        }}  disableScrollViewPanResponder={true} >
+        }} disableScrollViewPanResponder={true} >
           <View style={{
             width: "100%",
             // justifyContent: "center",
@@ -57,23 +57,26 @@ class PresentacionCalisPage extends Component {
             }}>
               <SCarrusel time={5000}>
                 {[
-                  require("../../img/portadas/1.jpg"),
-                  require("../../img/portadas/2.jpg"),
+                  require("../../img/portadas/14.jpg"),
+                  require("../../img/portadas/15.jpg"),
+                  require("../../img/portadas/10.jpg"),
                   require("../../img/portadas/3.jpg"),
-                  require("../../img/portadas/4.jpg"),
                   require("../../img/portadas/5.jpg"),
                   require("../../img/portadas/6.jpg"),
                   require("../../img/portadas/7.jpg"),
+                  require("../../img/portadas/2.jpg"),
+                  require("../../img/portadas/1.jpg"),
+                  require("../../img/portadas/4.jpg"),
                   require("../../img/portadas/8.jpg"),
                   require("../../img/portadas/9.jpg"),
-                  require("../../img/portadas/10.jpg"),
                   require("../../img/portadas/11.jpg"),
                   require("../../img/portadas/12.jpg"),
                   require("../../img/portadas/13.jpg"),
-                  require("../../img/portadas/14.jpg"),
-                  require("../../img/portadas/15.jpg"),
+
+
+
                 ].map((img) => {
-                  return <SImage source={img} style={{  width: "100%", maxHeight: "100%", maxWidth: 700, objectFit: "contain", resizeMode: "center"}} />
+                  return <SImage source={img} style={{ width: "100%", maxHeight: "100%", maxWidth: 700, objectFit: "contain", resizeMode: "center" }} />
                 })}
               </SCarrusel>
             </View>

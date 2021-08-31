@@ -219,7 +219,7 @@ export default class SCalendar extends Component<CalendarProps> {
                 variant: "center",
                 col: "xs-12"
             }}>
-                <Text style={{ fontSize: 16 }}>{this.state.date.toString("MONTH")}</Text>
+                {/* <Text style={{ fontSize: 16 }}>{this.state.date.toString("MONTH")}</Text> */}
                 <SView props={{
                     col: "xs-12",
                     direction: "row",

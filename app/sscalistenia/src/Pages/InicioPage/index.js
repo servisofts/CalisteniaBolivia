@@ -49,7 +49,7 @@ class InicioPage extends Component {
               width: "100%",
               // height: 170,
               // minHeight: 200,
-              height: 50,
+              height: 24,
               // overflow: "hidden",
             }}>
 

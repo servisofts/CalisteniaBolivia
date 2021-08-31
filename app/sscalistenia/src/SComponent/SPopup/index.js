@@ -3,6 +3,8 @@ import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ScrollView } fr
 // import Svg from '../../Svg';
 import { SScrollView } from '../../SComponent'
 import { SView } from '../SView';
+import Alert from './Alert';
+import Confirm from './Confirm';
 import SPopupComponent from './SPopupComponent';
 
 var INSTANCE = false;
@@ -16,6 +18,20 @@ export const SPopupClose = (key) => {
 }
 export default class SPopup extends Component {
 
+    static alert(title) {
+        INSTANCE.open({
+            key: 'alert',
+            content: <Alert title={title} />,
+            style: {}
+        });
+    }
+    static confirm(title, callback) {
+        INSTANCE.open({
+            key: 'confirm',
+            content: <Confirm title={title} onPress={callback} />,
+            style: {}
+        });
+    }
 
     constructor(props) {
         super(props);

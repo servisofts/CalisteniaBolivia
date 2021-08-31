@@ -12,8 +12,8 @@ export const init = (): NavigationNavigator => {
         Pages.getPages(),
         {
             defaultNavigationOptions: ({ navigation }) => ({
-                headerTintColor: "#000",
-                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                // headerTintColor: "#000",
+                // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 cardStyle: {
                     backgroundColor: STheme().backgroundColor
                 }

@@ -9,6 +9,7 @@ import { SText } from '../../../SComponent/SText/index';
 import { SView } from '../../../SComponent/SView/index';
 import BackgroundImage from '../../../Component/BackgroundImage/index';
 import { SButtom } from '../../../SComponent';
+import Actions from '../../../Actions';
 
 class PaquetesDeUsuario extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class PaquetesDeUsuario extends Component {
             key_usuario: this.props.state.usuarioReducer.usuarioLog.key
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
-        return null;
+        // return null;
     }
     getPaquete(key) {
         let reducer = this.props.state.paqueteReducer;
@@ -47,7 +48,24 @@ class PaquetesDeUsuario extends Component {
         }
         return data[key];
     }
-
+    getSucursal(key_sucursal) {
+        var data = Actions.Sucursal.getAll(this.props);
+        if (!data) return <View />
+        var obj = data[key_sucursal]
+        if (!obj) return <View />
+        return <SView>
+            <SText>Sucursal: {obj.descripcion}</SText>
+        </SView>
+    }
+    getUsuario(key_usuario) {
+        var data = Actions.Usuario.getAll(this.props);
+        if (!data) return <View />
+        var obj = data[key_usuario]
+        if (!obj) return <View />
+        return <SView>
+            <SText>Admin: {obj.Nombres}</SText>
+        </SView>
+    }
     getLista() {
         let reducer = this.props.state.paqueteVentaReducer;
         let data = reducer.usuario[this.props.key_usuario];
@@ -79,7 +97,7 @@ class PaquetesDeUsuario extends Component {
             return <TouchableOpacity style={{
                 width: "96%",
                 backgroundColor: "#66000044",
-                height: 50,
+                height: 80,
                 marginBottom: 8,
                 borderRadius: 8,
                 alignItems: "center",
@@ -104,7 +122,7 @@ class PaquetesDeUsuario extends Component {
                         borderRadius: 4,
                         overflow: "hidden",
                         width: 40,
-                        height: 40,
+                        height: 70,
                         backgroundColor: "#ff999933"
                     }}>
                         {this.props.state.imageReducer.getImage(urlImagePaquete, {
@@ -114,7 +132,7 @@ class PaquetesDeUsuario extends Component {
                     </View>
                     <View style={{
                         flex: 4,
-                        height: 20,
+                        height: 60,
                         justifyContent: "center",
                         // alignItems: "center"
                         paddingStart: 8,
@@ -123,8 +141,9 @@ class PaquetesDeUsuario extends Component {
                             color: "#ffffff",
                             fontSize: 14,
                         }}>{paquete.descripcion}</Text>
+                        {this.getSucursal(obj.key_sucursal)}
+                        {this.getUsuario(obj.key_usuario)}
                     </View>
-
                     <View style={{
                         flex: 1,
                         height: 20,

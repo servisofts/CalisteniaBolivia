@@ -73,6 +73,7 @@ class EstadoCaja extends Component {
             data.monto = 0;
         }
         this.montoCaja = data.monto;
+        // if (this.montoCaja % 1 != 0) this.montoCaja = this.montoCaja.toFixed(2);
         // return <SText>{JSON.stringify(data,"\s","\t")}</SText>
         return <SInput props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", value: data.monto + "" }} editable={false} />
     }
@@ -125,7 +126,7 @@ class EstadoCaja extends Component {
         var reducer = this.props.state.cajaMovimientoReducer;
         var data = reducer.data[this.activa.key];
         if (!data) {
-            return false;
+            return 0;
         }
         var total = 0;
         var keys = Object.keys(data);
@@ -133,8 +134,8 @@ class EstadoCaja extends Component {
             var obj = data[keys[i]];
             total += obj.monto;
         }
-        this.total = total;
-        return this.total
+        if (total % 1 != 0) total = total.toFixed(2);
+        return total;
     }
     getMontoEnCaja() {
         if (!this.activa) {
@@ -194,14 +195,14 @@ class EstadoCaja extends Component {
                 borderRadius: 8,
                 marginTop: 8,
                 minHeight: 50,
-            }} >
+            }} center>
 
                 {this.apertura()}
                 {this.cierre()}
                 <SText style={{
                     position: "absolute",
                     right: 4,
-                    top: 0,
+                    bottom: 4,
                     fontSize: 10,
                     color: STheme().colorOpaque
                 }}>Estado de caja:  {!this.activa ? "Cerrada" : "Activa"}</SText>

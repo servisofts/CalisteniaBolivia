@@ -2,7 +2,12 @@ const initialState = {
     estado: "Not Found",
     usuario: {},
     data: false,
+    keys: {},
     activas: false,
+    fechas: {
+        fecha_inicio: false,
+        fecha_fin: false,
+    },
 }
 
 export default (state, action) => {
@@ -11,6 +16,10 @@ export default (state, action) => {
         switch (action.type) {
             case "getAll":
                 getAll(state, action);
+                break;
+            case "getByKey":
+                getByKey(state, action);
+                break;
                 break;
             case "getActivas":
                 getActivas(state, action);
@@ -24,8 +33,12 @@ export default (state, action) => {
             case "getActiva":
                 getActiva(state, action);
                 break;
+            case "getByFecha":
+                getByFecha(state, action);
+                break;
         }
         state.type = action.type;
+        state.estado = action.estado;
         state.lastSend = new Date();
         state = { ...state };
     }
@@ -38,6 +51,17 @@ const getAll = (state, action) => {
         state.data = action.data;
     }
 }
+const getByFecha = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.dataFechas = {};
+        state.fechas = {
+            fecha_inicio: action.fecha_inicio,
+            fecha_fin: action.fecha_fin,
+        }
+        state.dataFechas = action.data;
+    }
+}
 const getActivas = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
@@ -46,6 +70,15 @@ const getActivas = (state, action) => {
             state.usuario[obj.key_usuario] = obj;
         })
         state.activas = true;
+    }
+}
+const getByKey = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.keys = {
+            ...state.keys,
+            ...action.data
+        };
     }
 }
 const registro = (state, action) => {

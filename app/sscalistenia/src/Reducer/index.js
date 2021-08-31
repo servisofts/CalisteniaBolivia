@@ -33,12 +33,15 @@ import cajaTipoMovimientoReducer from './cajaTipoMovimientoReducer';
 import bancoReducer from './bancoReducer';
 import cuentaBancoReducer from './cuentaBancoReducer';
 import cuentaBancoMovimientoReducer from './cuentaBancoMovimientoReducer';
+import clientesActivosReducer from './clientesActivosReducer';
+import sucursalTipoPagoCuentaBancoReducer from './sucursalTipoPagoCuentaBancoReducer';
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
     cabeceraDatoReducer,
     socketReducer,
     usuarioReducer,
+    clientesActivosReducer,
     permisoReducer,
     permisoPageReducer,
     imageReducer,
@@ -67,5 +70,6 @@ export default combineReducers({
     bancoReducer,
     cuentaBancoReducer,
     cuentaBancoMovimientoReducer,
+    sucursalTipoPagoCuentaBancoReducer,
     ...SSRolesPermisos
 });

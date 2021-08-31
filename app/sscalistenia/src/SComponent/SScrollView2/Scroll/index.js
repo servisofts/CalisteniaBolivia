@@ -87,6 +87,9 @@ class Scroll extends Component<typeScroll> {
                 }}
                 onScroll={(evt) => {
                     this.scrolldata = evt.nativeEvent;
+                    if (this.props.onScroll) {
+                        this.props.onScroll(evt);
+                    }
                     if (!this.enabled) {
                         return;
                     }

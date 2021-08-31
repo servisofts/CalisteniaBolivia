@@ -50,7 +50,7 @@ export default class TipoMovimiento extends Component {
     }
     render() {
         return (
-            <SView col={"xs-11 md-7 xl-6"} row>
+            <SView col={"xs-11"} row>
 
                 {this.getTipo("1")}
                 {this.getTipo("2")}

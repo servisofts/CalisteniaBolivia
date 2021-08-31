@@ -58,7 +58,8 @@ import SComponent from '../SComponent/Pages';
 import TipoPago from './TipoPago'
 import ClientePaqueteRegistroConfirmacion from './ClientePaqueteRegistroConfirmacion'
 import Banco from './Banco'
-
+import VentasPage from './VentasPage/index';
+import AjustesPage from './AjustesPage'
 export const getPages = () => {
     return {
         // TestRNF,
@@ -70,7 +71,8 @@ export const getPages = () => {
         InicioPage,
         UsuarioPage,
         UsuarioPerfilPage,
-        "AjustesPage": UsuarioPerfilPage,
+        AjustesPage,
+        UsuarioPerfilPage,
         UsuarioRegistroPage,
         CarpetasPage,
         FilePerfil,
@@ -88,6 +90,7 @@ export const getPages = () => {
         ProcesoPerfilPage,
         ProcesoComentarioRegistroPage,
         ProcesoSeguimietoRegistroPage,
+        VentasPage,
         ClientesPage,
         ClientesPageSelect,
         ClienteRegistroPage,

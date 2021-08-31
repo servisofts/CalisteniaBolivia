@@ -1,6 +1,7 @@
 const initialState = {
     estado: "Not Found",
     data: {},
+    dataAll: false,
 }
 
 export default (state, action) => {
@@ -31,6 +32,7 @@ export default (state, action) => {
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
+        state.dataAll = action.data;
         if (action.key_banco && !state.data[action.key_banco]) {
             state.data[action.key_banco] = {};
         }
