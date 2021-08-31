@@ -127,6 +127,10 @@ public class Manejador {
                     new CuentaBancoMovimiento(data, session);
                     break;
                 }
+                case "sucursalTipoPagoCuentaBanco": {
+                    new SucursalTipoPagoCuentaBanco(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
