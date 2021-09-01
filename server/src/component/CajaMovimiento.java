@@ -57,7 +57,6 @@ public class CajaMovimiento {
         try {
             String consulta =  "select get_all('caja_movimiento') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_getAll", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -70,7 +69,6 @@ public class CajaMovimiento {
         try {
             String consulta =  "select get_all_activas() as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_get_all_activas", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -96,12 +94,21 @@ public class CajaMovimiento {
         try {
             String consulta =  "select get_all('caja_movimiento', 'key_caja', '"+obj.getString("key_caja")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "caja_movimiento_getByKeyCaja", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getTotales(String key_caja) {
+        try {
+            String consulta =  "select caja_get_totales('"+key_caja+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new JSONObject();
         }
     }
 
@@ -127,7 +134,8 @@ public class CajaMovimiento {
             JSONObject caja_movimiento = obj.getJSONObject("data");
             caja_movimiento.put("key", UUID.randomUUID().toString());
             caja_movimiento.put("key_caja_tipo_movimiento", 4);
-            caja_movimiento.put("key_tipo_pago", 1);
+            caja_movimiento.put("key_tipo_pago", "1");
+            caja_movimiento.put("data", new JSONObject().put("key_tipo_pago", caja_movimiento.getString("key_tipo_pago")));
             caja_movimiento.put("fecha_on", fecha_on);
             caja_movimiento.put("estado", 1);
             Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));
