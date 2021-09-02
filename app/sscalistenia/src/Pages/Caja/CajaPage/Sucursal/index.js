@@ -23,6 +23,8 @@ class Sucursal extends Component {
             { iterations: 1000 },
         ).start();
     }
+
+  
     getSucursal() {
         if (!this.state.key_sucursal) {
             if (!this.state.value) {
@@ -57,9 +59,11 @@ class Sucursal extends Component {
                 this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
                 return <View />
             }
+
             if (!this.state.value) {
                 if (this.props.setSucursal) {
                     this.state.value = data[this.state.key_sucursal];
+
                     this.props.setSucursal(data[this.state.key_sucursal])
                     return <View />;
                 }
@@ -81,12 +85,12 @@ class Sucursal extends Component {
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
-                    {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + key, {
+                    {this.props.state.imageReducer.getImage(AppParams.urlImages + "sucursal_" + this.state.value.key, {
                                     width: "100%",
                                     objectFit: "cover",
                                     resizeMode: "cover",
 
-                                })} */}
+                                })}
                 </View>
             </SView>
             <SView style={{ flex: 1, height: "100%" }} props={{
@@ -115,7 +119,7 @@ class Sucursal extends Component {
                 borderRadius: 8,
                 marginTop: 8,
             }} onPress={() => {
-                if (this.state.key_sucursal) {
+                if (this.props.key_caja) {
                     return;
                 }
                 this.props.navigation.navigate("SucursalPage", {
@@ -136,6 +140,7 @@ class Sucursal extends Component {
                     color: STheme().colorOpaque,
                     fontSize: 10,
                 }}>Sucursal</SText>
+
                 {this.getSucursal()}
             </SView>
         );

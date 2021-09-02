@@ -10,8 +10,6 @@
     "_urlImages": "http://192.168.0.199:30018/",
     "urlImages": "https://calistenia.servisofts.com/images/",
     "servicios": {
-        "_calistenia": "http://192.168.0.199:30018/",
-        "calistenia": "https://calistenia.servisofts.com/images/",
         "roles_permisos": "https://rolespermisos.servisofts.com/images/"
     }
 }

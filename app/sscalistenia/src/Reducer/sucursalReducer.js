@@ -1,7 +1,8 @@
 const initialState = {
     estado: "Not Found",
     data: false,
-    monto: {}
+    monto: {},
+    cajaActiva: {}
 }
 
 export default (state, action) => {
@@ -22,6 +23,9 @@ export default (state, action) => {
                 break;
             case "getMontoCaja":
                 getMontoCaja(state, action);
+                break;
+            case "getCajaActiva":
+                getCajaActiva(state, action);
                 break;
         }
         state.type = action.type;
@@ -68,5 +72,11 @@ const getMontoCaja = (state, action) => {
     state.estado = action.estado
     if (action.estado == "exito") {
         state.monto[action.key_sucursal] = action.data;
+    }
+}
+const getCajaActiva = (state, action) => {
+    state.estado = action.estado
+    if (action.estado == "exito") {
+        state.cajaActiva[action.key_sucursal] = action.data;
     }
 }

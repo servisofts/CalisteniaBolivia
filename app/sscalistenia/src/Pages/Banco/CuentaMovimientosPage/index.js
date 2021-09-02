@@ -29,15 +29,23 @@ class CuentaMovimientosPage extends Component {
             this.data = {};
         } else {
             this.data = this.props.state["cuentaBancoReducer"].data[this.key_banco][key];
+            
         }
 
 
     }
+    componentDidMount(){
+        this.getAll(true)
+    }
+    componentWillUnmount() {
+        this.props.state[ReducerName].data= {};
+        if(this.props.onBack) this.props.onBack();
+    }
 
-    getAll = () => {
+    getAll = (force) => {
         var reducer = this.props.state[ReducerName];
-        if (!reducer.data[this.data.key]) {
-            if (reducer.estado == "cargando") {
+        if (!reducer.data[this.data.key] || force) {
+            if (reducer.estado == "cargando" && !force) {
                 return <Text>Carfando</Text>;
             }
             this.props.state.socketReducer.session[AppParams.socket.name].send({

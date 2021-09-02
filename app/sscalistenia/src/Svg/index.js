@@ -21,6 +21,7 @@ import Login from '../img/login.svg';
 import Add from '../img/add.svg';
 import Delete from '../img/delete.svg';
 import Editar from '../img/Editar.svg';
+import EditarOutline from '../img/EditarOutline.svg';
 import NoDelete from '../img/noDelete.svg';
 import Cerrar from '../img/cerrar.svg';
 
@@ -58,6 +59,7 @@ type typeName = "logo"
     | "Delete"
     | "noDelete"
     | "Editar"
+    | "EditarOutline"
     | "car"
     | "cheque"
     | "qr"
@@ -122,6 +124,8 @@ const Svg = (props: svgProps) => {
             return (Platform.OS == "web" ? <img style={props.style} src={NoDelete} /> : <NoDelete style={props.style} />);
         case "Editar":
             return (Platform.OS == "web" ? <img style={props.style} src={Editar} /> : <Editar style={props.style} />);
+        case "EditarOutline":
+            return (Platform.OS == "web" ? <img style={props.style} src={EditarOutline} /> : <EditarOutline style={props.style} />);
         case "Cerrar":
             return (Platform.OS == "web" ? <img style={props.style} src={Cerrar} /> : <Cerrar style={props.style} />);
         case "card":
