@@ -131,7 +131,6 @@ public class PaqueteVenta {
                 paquete_venta_usuario.put("estado",1);
                 paquete_venta_usuarios.put(paquete_venta_usuario);
 
-
                 data = clientes.getJSONObject(i).getJSONObject("data");
                 monto=0;
                 for (int j = 0; j < JSONObject.getNames(data).length; j++) {                    
@@ -167,13 +166,12 @@ public class PaqueteVenta {
                             send_movimiento.put("data", caja_movimiento);
                             SSServerAbstract.sendAllServer(send_movimiento.toString());
                             
-
                             JSONObject cuentaBancoMovimiento = new JSONObject();
                             cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
-                            cuentaBancoMovimiento.put("descripcion", "Ingreso por cierre de caja");
+                            cuentaBancoMovimiento.put("descripcion", "Ingreso por venta de servicio.");
                             cuentaBancoMovimiento.put("key_cuenta_banco", data.getString("key_cuenta_banco"));
                             cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
-                            cuentaBancoMovimiento.put("monto", monto);
+                            cuentaBancoMovimiento.put("monto", data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto"));
                             cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
                             cuentaBancoMovimiento.put("fecha_on", formatter.format(new Date()));
                             cuentaBancoMovimiento.put("estado", 1);
@@ -186,9 +184,6 @@ public class PaqueteVenta {
                             sendcuentaBancoMovimiento.put("estado", "exito");
                             SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
                         }
-
-
-                        
                     }catch(Exception e){}
                 }
 

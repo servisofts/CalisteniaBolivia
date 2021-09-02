@@ -22,6 +22,9 @@ public class Sucursal {
             case "getMontoCaja":
                 getMontoCaja(data, session);
             break;
+            case "getCajaActiva":
+                getCajaActiva(data, session);
+            break;
             case "getByKey":
                 getByKey(data, session);
                 break;
@@ -58,6 +61,18 @@ public class Sucursal {
     public void getMontoCaja(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_monto_caja('"+obj.getString("key_sucursal")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    private void getCajaActiva(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select caja_get_activa_sucursal('"+obj.getString("key_sucursal")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");
