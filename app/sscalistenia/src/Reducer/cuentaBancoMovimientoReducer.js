@@ -1,6 +1,6 @@
 const initialState = {
     estado: "Not Found",
-    data: {},
+    data: false,
 }
 
 export default (state, action) => {
@@ -31,22 +31,16 @@ export default (state, action) => {
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        if (action.key_cuenta_banco) {
-            Object.keys(action.data).map((key) => {
-                var obj = action.data[key];
-                if (!state.data[obj.key_cuenta_banco]) {
-                    state.data[obj.key_cuenta_banco] = {};
-                }
-                state.data[obj.key_cuenta_banco][obj.key] = obj;
-            });
-
-        }
-
+        state.data = {}
+        state.data = action.data;
     }
 }
 const getAllByKeyCuentaBanco = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
+        if (!state.data) {
+            state.data = {}
+        }
         if (action.key_cuenta_banco) {
             state.data[action.key_cuenta_banco] = action.data;
         }
@@ -56,6 +50,9 @@ const getAllByKeyCuentaBanco = (state, action) => {
 const registro = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
+        if (!state.data) {
+            return;
+        }
         if (state.data[action.data.key_cuenta_banco]) {
             state.data[action.data.key_cuenta_banco][action.data.key] = action.data;
         }
@@ -64,6 +61,9 @@ const registro = (state, action) => {
 const editar = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
+        if (!state.data) {
+            return;
+        }
         if (state.data[action.data.key_cuenta_banco]) {
             state.data[action.data.key_cuenta_banco][action.data.key] = action.data;
         }

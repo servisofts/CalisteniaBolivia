@@ -177,7 +177,7 @@ class EstadoCaja extends Component {
         if (!this.props.sucursal) {
             if (this.activa) {
                 if (this.props.setKeySucursal) {
-                    this.props.setKeySucursal(this.activa.key_sucursal);
+                    this.props.setKeySucursal(this.activa.key_sucursal,this.activa.key);
                 }
             }
         }

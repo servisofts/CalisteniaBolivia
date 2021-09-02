@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AppParams from '../../../../Params/index';
 import SOrdenador from '../../../../Component/SOrdenador/index';
 import MovimientosGraphic from './MovimientosGraphic';
-
+import FechasBetween from '../../../../Component/FechasBetween';
 class ListaCajas extends Component {
     constructor(props) {
         super(props);
@@ -214,49 +214,11 @@ class ListaCajas extends Component {
             }} style={{
                 flex: 1,
             }}>
-                <SView col={"xs-12"} style={{
-                    height: 40,
-                    alignItems: "center",
-                    justifyContent: "center"
-                }} row>
-                    <SView col={"xs-6 md-4 xl-3"} style={{ height: "100%", padding: 4, }}>
-                        <SInput props={{
-                            type: "fecha",
-                            customStyle: "primary",
-                            placeholder: "Fecha Inicio",
-                        }} style={{
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: 4,
-                            backgroundColor: "#66000044",
-                        }}
-                            defaultValue={this.state.fecha.fecha_inicio}
-                            onChangeText={(val) => {
-                                this.state.fecha.fecha_inicio = val
-                                this.setState({ ...this.state })
-                            }}
-                        />
-                    </SView>
-                    <SView col={"xs-6 md-4 xl-3"} style={{ height: "100%", padding: 4, }}>
-                        <SInput props={{
-                            type: "fecha",
-                            customStyle: "primary",
-                            placeholder: "Fecha Inicio",
-                        }}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: 4,
-                                backgroundColor: "#66000044",
-                            }}
-                            defaultValue={this.state.fecha.fecha_fin}
-                            onChangeText={(val) => {
-                                this.state.fecha.fecha_fin = val
-                                this.setState({ ...this.state })
-                            }}
-                        />
-                    </SView>
-                </SView>
+                <FechasBetween onChange={(fecha_inicio,fecha_fin)=>{
+                    this.state.fecha.fecha_inicio = fecha_inicio
+                    this.state.fecha.fecha_fin = fecha_fin
+                    this.setState({ ...this.state })
+                }}/>
                 <SScrollView2 disableHorizontal style={{
                     width: "100%",
                 }}>

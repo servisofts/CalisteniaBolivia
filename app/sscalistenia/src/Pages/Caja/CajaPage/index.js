@@ -9,7 +9,8 @@ import Movimientos from './Movimientos';
 import Sucursal from './Sucursal';
 import Menu from './Menu/index';
 import FloatButtom from '../../../Component/FloatButtom/index';
-
+import CajasActivas from './CajasActivas';
+var _sucursal;
 export default class CajaPage extends Component {
   static navigationOptions = {
     headerShown: false,
@@ -17,13 +18,14 @@ export default class CajaPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sucursal: false,
+      sucursal: _sucursal,
       activa: false,
       montoEnCaja: 0,
     };
   }
 
   render() {
+    _sucursal = this.state.sucursal;
     return (<CalisPage {...this.props} title={"Caja"}>
       <SView props={{
         col: "xs-12",
@@ -41,14 +43,23 @@ export default class CajaPage extends Component {
             marginTop: 8,
           }}>
 
-            <Sucursal navigation={this.props.navigation} key_sucursal={this.state.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => { this.setState({ sucursal: suc }) }} />
+            <Sucursal
+              navigation={this.props.navigation}
+              key_sucursal={this.state.key_sucursal}
+              sucursal={this.state.sucursal}
+              key_caja={this.state.key_caja}
+              setSucursal={(suc) => {
+                this.setState({ sucursal: suc, key_sucursal: suc.key });
+              }}
+            />
+            <CajasActivas sucursal={this.state.sucursal} />
             <EstadoCaja
               montoEnCaja={this.state.montoEnCaja}
               navigation={this.props.navigation}
               sucursal={this.state.sucursal}
-              setKeySucursal={(suc) => {
+              setKeySucursal={(suc, key_caja) => {
                 if (!this.state.key_sucursal) {
-                  this.setState({ key_sucursal: suc })
+                  this.setState({ key_sucursal: suc, key_caja: key_caja });
                 }
               }} />
             <Menu />

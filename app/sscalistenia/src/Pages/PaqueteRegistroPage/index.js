@@ -91,17 +91,18 @@ class PaqueteRegistroPage extends Component {
       style={{
         width: 100,
         height: 40,
-        margin:8,
+        margin: 8,
       }}
+      title={(!this.data.estado ? "RECUPERAR" : "ELIMINAR")}
       onDelete={() => {
         var object = {
           component: "paquete",
-          type:  "editar",
+          type: "editar",
           estado: "cargando",
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
           data: {
             ...this.data,
-            estado: 0,
+            estado: !this.data.estado ? 1 : 0,
           },
         }
         // alert(JSON.stringify(object));
