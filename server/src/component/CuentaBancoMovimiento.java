@@ -40,7 +40,7 @@ public class CuentaBancoMovimiento extends SSComponent {
 
     public static void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_movimientos_bancarios('"+obj.getString("fecha_inicio")+"','"+obj.getString("fecha_fin")+"') as json";
+            String consulta =  "select get_movimientos_bancarios() as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             Conexion.historico(obj.getString("key_usuario"), "cuenta_banco_movimiento_getAll", data);
 
