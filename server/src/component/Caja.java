@@ -260,7 +260,7 @@ public class Caja {
                 if(pago.getString("key").equals("1") || pago.getString("key").equals("4")){
                     monto = pago.getDouble("monto");
                     if(pago.getString("key").equals("1")){
-                        monto = monto<200?monto:monto-200;
+                        monto = monto<obj.getJSONObject("data").getDouble("monto_salvar")?monto:monto-obj.getJSONObject("data").getDouble("monto_salvar");
                     }
 
                     caja_movimiento = new JSONObject();
