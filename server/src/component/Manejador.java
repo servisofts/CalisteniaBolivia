@@ -131,6 +131,10 @@ public class Manejador {
                     new SucursalTipoPagoCuentaBanco(data, session);
                     break;
                 }
+                case "tipoGasto": {
+                    new TipoGasto(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }

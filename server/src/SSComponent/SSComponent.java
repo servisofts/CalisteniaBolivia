@@ -21,16 +21,19 @@ import conexion.Conexion;
 public class SSComponent {
     
     public static void navigate(JSONObject obj, SSSessionAbstract session){
-        
-        switch (obj.getString("type")) {
-            case "getAll": getAll(obj, session); break;
-            case "getByKey": getByKey(obj, session); break;
-            case "registro": registro(obj, session); break;
-            case "editar": editar(obj, session); break;
-            case "subirFoto": subirFoto(obj, session); break;
-            default: defaultType(obj, session);
+        try{
+            switch (obj.getString("type")) {
+                case "getAll": getAll(obj, session); break;
+                case "getByKey": getByKey(obj, session); break;
+                case "registro": registro(obj, session); break;
+                case "editar": editar(obj, session); break;
+                case "subirFoto": subirFoto(obj, session); break;
+                default: defaultType(obj, session);
+            }
+            obj.remove("nombre_tabla");
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        obj.remove("nombre_tabla");
     }
 
     public static void defaultType(JSONObject obj, SSSessionAbstract session) {
