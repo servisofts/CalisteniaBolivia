@@ -17,6 +17,10 @@ export default class TipoMovimiento extends Component {
                     icon: "arrr",
                     label: 'Egreso'
                 },
+                '3': {
+                    icon: "Traspaso",
+                    label: 'Traspaso'
+                },
             }
         };
     }
@@ -35,7 +39,7 @@ export default class TipoMovimiento extends Component {
     }
     getTipo(tipo) {
         var obj = this.state.tipos[tipo];
-        return <SView col={"xs-6"} center onPress={() => {
+        return <SView col={"xs-4"} center onPress={() => {
             if (this.props.onChange) this.props.onChange(tipo);
             this.setState({ selec: tipo })
         }}>
@@ -54,6 +58,7 @@ export default class TipoMovimiento extends Component {
 
                 {this.getTipo("1")}
                 {this.getTipo("2")}
+                {this.getTipo("3")}
             </SView>
         );
     }

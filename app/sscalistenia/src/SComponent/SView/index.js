@@ -26,6 +26,7 @@ type typeProps = {
     style: ViewStyle,
     props: typeConfig,
     onPress: Function,
+    height: any,
     // ViewPropTypes,
     // TouchableOpacityProps,
     //callBack:Function,
@@ -40,6 +41,7 @@ interface IProps extends ViewProps {
     row: boolean,
     center: boolean,
     flex: number,
+    height: any,
     withoutFeedback: Boolean
 }
 
@@ -177,7 +179,8 @@ export class SView extends Component<IProps> {
 
                         ...(this.getOption("direction") == "row" || this.props.row ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
                         ...(this.getFlex()),
-                        ...(this.props.center ? { alignItems: "center", justifyContent: "center" } : {})
+                        ...(this.props.center ? { alignItems: "center", justifyContent: "center" } : {}),
+                        ...(this.props.height == true ? { height: "100%" } : !this.props.height ? {  } : { height: this.props.height }),
                     }, {
                         ...this.state.style,
                     }

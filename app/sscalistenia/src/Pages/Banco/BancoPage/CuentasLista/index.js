@@ -20,6 +20,18 @@ class CuentasLista extends Component {
         }
         return reducer.data[key_cuenta_banco];
     }
+    getAllMontoCuenta = (key_cuenta_banco) => {
+        var movimientos = this.getMovimientos(key_cuenta_banco);
+        if (!movimientos) {
+            return 0;
+        }
+        var monto = 0;
+        Object.keys(movimientos).map((key) => {
+            monto += movimientos[key].monto;
+        })
+        if (monto % 1 > 0) monto = monto.toFixed(2);
+        return monto;
+    }
     getAll = () => {
         var reducer = this.props.state.cuentaBancoReducer;
         var keyBanco = this.props.data.key;
@@ -52,11 +64,13 @@ class CuentasLista extends Component {
                         this.props.onSelect(obj);
                         return;
                     }
-                    this.props.navigation.navigate("CuentaMovimientosPage", { key_banco: this.props.data.key, key: obj.key, onBack: () => {
-                            if(this.props.onBack){
+                    this.props.navigation.navigate("CuentaMovimientosPage", {
+                        key_banco: this.props.data.key, key: obj.key, onBack: () => {
+                            if (this.props.onBack) {
                                 this.props.onBack();
                             }
-                    } });
+                        }
+                    });
                 }}>
                     <SView style={{
                         width: "100%",
@@ -80,12 +94,21 @@ class CuentasLista extends Component {
                                     fontSize: 10,
                                 }} >{obj.codigo}</SText>
                             </SView>
-
+                            <SView style={{
+                                height: "100%",
+                                justifyContent: "center",
+                                paddingStart: 4,
+                                paddingEnd: 4,
+                                // alignItems: "center",
+                            }}>
+                                <SText style={{
+                                }} >{`Bs. ${this.getAllMontoCuenta(obj.key)}`}</SText>
+                            </SView>
                         </SView>
                         <SView col={"xs-12"} style={{
                             flex: 1,
                         }}>
-                            <MovimientosGraphic data={this.getMovimientos( obj.key )} />
+                            <MovimientosGraphic data={this.getMovimientos(obj.key)} />
                         </SView>
                     </SView>
 

@@ -4,7 +4,7 @@ import Page from '../../../Component/Page';
 import FloatButtom from '../../../Component/FloatButtom/index';
 import { connect } from 'react-redux';
 import AppParams from '../../../Params/index';
-import { SScrollView2, SView } from '../../../SComponent';
+import { SPopup, SScrollView2, SView } from '../../../SComponent';
 import { SText } from '../../../SComponent/SText/index';
 import CuentaBancoLista from '../CuentaBancoLista/index';
 import BancoItem from '../BancoItem/index';
@@ -12,6 +12,7 @@ import CuentaBancoItem from '../CuentaBancoItem';
 import Svg from '../../../Svg';
 import SDate from '../../../SComponent/SDate/index';
 import SOrdenador from '../../../Component/SOrdenador/index';
+import FechasBetween from '../../../Component/FechasBetween/index';
 let component = "cuentaBancoMovimiento";
 let ReducerName = "cuentaBancoMovimientoReducer";
 
@@ -22,6 +23,7 @@ class CuentaMovimientosPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            monto_total: 0,
         };
         var key = props.navigation.getParam("key", null);
         this.key_banco = props.navigation.getParam("key_banco", null);
@@ -29,19 +31,35 @@ class CuentaMovimientosPage extends Component {
             this.data = {};
         } else {
             this.data = this.props.state["cuentaBancoReducer"].data[this.key_banco][key];
-            
+
         }
 
 
     }
-    componentDidMount(){
+    componentDidMount() {
         this.getAll(true)
     }
     componentWillUnmount() {
-        this.props.state[ReducerName].data= {};
-        if(this.props.onBack) this.props.onBack();
+        // this.props.state[ReducerName].data= {};
+        if (this.props.onBack) this.props.onBack();
     }
-
+    getTraspaso(obj) {
+        if (obj.tipo_movimiento != "3") {
+            return <View />
+        }
+        return <> <SView style={{
+            width: 34,
+        }} center>
+            <SView>
+                <Svg name={"Traspaso"} style={{ width: 34 }} />
+                {/* <SText>{obj.key_tipo_pago}</SText> */}
+            </SView>
+        </SView>
+            <SView style={{
+                width: 8,
+            }} />
+        </>
+    }
     getAll = (force) => {
         var reducer = this.props.state[ReducerName];
         if (!reducer.data[this.data.key] || force) {
@@ -57,17 +75,29 @@ class CuentaMovimientosPage extends Component {
             }, true);
             return <View />
         }
-
+        if (!this.state.fecha_inicio || !this.state.fecha_fin) {
+            return <View />
+        }
         var data = reducer.data[this.data.key];
-
-        return new SOrdenador([
+        var fecha_i = new SDate(this.state.fecha_inicio, "yyyy-MM-dd");
+        var fecha_f = new SDate(this.state.fecha_fin, "yyyy-MM-dd");
+        var monto_total = 0;
+        var CONTAINER = new SOrdenador([
             { key: "fecha_on", order: "desc", peso: 1 }
         ]).ordernarObject(data).map((key) => {
             var obj = data[key];
             var monto = obj.monto;
+            if (obj.monto == 0) {
+                return <View />
+            }
             if (monto) {
                 if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
             }
+            var sdate = new SDate(obj.fecha_on)
+            if ((!sdate.equalDay(fecha_i) && !sdate.equalDay(fecha_f)) && (sdate.isBefore(fecha_i) || sdate.isAfter(fecha_f))) {
+                return <View />
+            }
+            monto_total += parseFloat(monto);
             return (
                 <SView col={"xs-12"} key={obj.key} style={{
                     borderRadius: 4,
@@ -101,6 +131,7 @@ class CuentaMovimientosPage extends Component {
                         </SView>
 
                     </SView>
+                    {this.getTraspaso(obj)}
                     <SView style={{
                         width: 34,
                     }} center>
@@ -120,6 +151,12 @@ class CuentaMovimientosPage extends Component {
             );
         })
 
+        if (monto_total != this.state.monto_total) {
+            this.state.monto_total = monto_total.toFixed(2);
+            this.setState({ monto_total: monto_total });
+        }
+        return CONTAINER;
+
     }
     render() {
         return (
@@ -135,8 +172,21 @@ class CuentaMovimientosPage extends Component {
                         <CuentaBancoItem key_banco={this.key_banco} key_cuenta_banco={this.data.key} />
 
                         <SView col={"xs-11 md-7 xl-6"} center>
-                            <SView col={"xs-12"} style={{ height: 36, justifyContent: "flex-end" }}>
-                                <SText>Movimientos</SText>
+                            <FechasBetween onChange={(fi, ff) => {
+                                this.setState({
+                                    fecha_inicio: fi,
+                                    fecha_fin: ff
+                                })
+                            }} />
+                            <SView col={"xs-12"} style={{ height: 36, }} center row>
+                                <SView flex height style={{
+                                    justifyContent: "center",
+                                }}>
+                                    <SText>Movimientos</SText>
+                                </SView>
+                                <SView center height>
+                                    <SText>Bs. {this.state.monto_total}</SText>
+                                </SView>
                             </SView>
                             {this.getAll()}
 

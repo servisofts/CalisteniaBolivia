@@ -18,6 +18,7 @@ class TiposDePago extends Component<TiposDePagoType> {
         this.state = {
             cantDecimal: 2,
             cuenta: {},
+            montoASalvar: 200,
             total_salvar: {},
             total_depocito: {},
             enabledClose: true,
@@ -108,7 +109,7 @@ class TiposDePago extends Component<TiposDePagoType> {
             type: "danger",
             variant: "confirm",
         }} onPress={() => {
-            if (this.props.onPress) this.props.onPress();
+            if (this.props.onPress) this.props.onPress(this.state.montoASalvar);
         }}>Cerrar</SButtom>
     }
     getDetallePago(obj) {
@@ -133,7 +134,7 @@ class TiposDePago extends Component<TiposDePagoType> {
             </SView>
         } else {
             var monto = this.getMonto(obj);
-            var montoASalvar = 200;
+            var montoASalvar = this.state.montoASalvar;
             if (monto < montoASalvar) {
                 montoASalvar = monto;
             }
@@ -174,6 +175,8 @@ class TiposDePago extends Component<TiposDePagoType> {
             var obj = data[key];
             if (obj) {
                 var Icono;
+                if (obj.key == "2") return <View />
+                if (obj.key == "3") return <View />
                 switch (obj.key) {
                     case "1": Icono = <Svg name={"money"} style={{ width: "100%", height: "100%" }} />; break;
                     case "2": Icono = <Svg name={"card"} style={{ width: "100%", height: "100%" }} />; break;
@@ -186,7 +189,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                 if (cuenta) {
                     if (cuentaBanco[cuenta.key_cuenta_banco]) {
                         this.state.cuenta[key] = cuentaBanco[cuenta.key_cuenta_banco];
-                        if(!cuentaBanco[cuenta.key_cuenta_banco]){
+                        if (!cuentaBanco[cuenta.key_cuenta_banco]) {
                             this.state.enabledClose = false;
                         }
                     }
@@ -261,14 +264,18 @@ class TiposDePago extends Component<TiposDePagoType> {
         })
     }
     render() {
+        var totalCaja = this.getMontoTotalEnCaja();
+        if (this.state.montoASalvar > totalCaja) {
+            this.state.montoASalvar = totalCaja;
+        }
         return (
             <SView props={{
                 col: "xs-11.8",
                 variant: "center",
-            }} center>
+            }} center >
                 {this.getLista()}
 
-                <SView col={"xs-12"} >
+                < SView col={"xs-12"} >
                     <SView col={"xs-12"} row style={{
                     }}>
                         <SView props={{
@@ -295,7 +302,20 @@ class TiposDePago extends Component<TiposDePagoType> {
                                         <SText style={{ fontSize: 10, color: "#999" }}>{`Total en caja`}</SText>
                                     </SView>
                                     <SView col={"xs-4"} center>
-                                        <SText style={{ fontSize: 16 }}>Bs. {this.getMontoTotalSalvar()}</SText>
+                                        <SInput props={{
+                                            customStyle: "transparent",
+                                            type: "money"
+
+                                        }}
+                                            onChangeText={(e) => {
+                                                if (e > totalCaja) {
+                                                    this.setState({ montoASalvar: totalCaja })
+                                                    return;
+                                                }
+                                                this.setState({ montoASalvar: e })
+                                            }}
+                                            value={this.state.montoASalvar + ""} />
+                                        {/* <SText style={{ fontSize: 16 }}>Bs. {}</SText> */}
                                         <SText style={{ fontSize: 10, color: "#999" }}>{`Total a salvar`}</SText>
                                     </SView>
                                     <SView col={"xs-4"} center>
@@ -312,9 +332,20 @@ class TiposDePago extends Component<TiposDePagoType> {
                         height: 80,
                     }}>
                         {this.getEnabledClose()}
+
                     </SView>
-                </SView>
-            </SView>
+                    <SView col={"xs-12"} center height={16} />
+                    <SView col={"xs-12"} center>
+                        <SView col={"xs-11.5"} center>
+                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total en caja: Es el monto que debería tener en su caja contando el valor de los cheques.`}</SText>
+                            <SView col={"xs-12"} center height={8} />
+                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total a salvar: Es el monto que se dejara en caja para realizar la siguiente apertura.`}</SText>
+                            <SView col={"xs-12"} center height={8} />
+                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total a depositar: Es el monto que se debería depositar a la cuenta de banco una vez se cierra la caja.`}</SText>
+                        </SView>
+                    </SView>
+                </SView >
+            </SView >
         );
     }
 }

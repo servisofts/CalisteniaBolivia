@@ -10,6 +10,8 @@ import Sucursal from './Sucursal';
 import Menu from './Menu/index';
 import FloatButtom from '../../../Component/FloatButtom/index';
 import CajasActivas from './CajasActivas';
+import * as SSStorage from '../../../SSStorage';
+
 var _sucursal;
 export default class CajaPage extends Component {
   static navigationOptions = {
@@ -22,6 +24,11 @@ export default class CajaPage extends Component {
       activa: false,
       montoEnCaja: 0,
     };
+  }
+  componentDidMount() {
+    SSStorage.getItem("sucursal", (vl) => {
+      this.setState({ key_sucursal: vl });
+    })
   }
 
   render() {
@@ -49,6 +56,7 @@ export default class CajaPage extends Component {
               sucursal={this.state.sucursal}
               key_caja={this.state.key_caja}
               setSucursal={(suc) => {
+                SSStorage.setItem("sucursal", suc.key)
                 this.setState({ sucursal: suc, key_sucursal: suc.key });
               }}
             />

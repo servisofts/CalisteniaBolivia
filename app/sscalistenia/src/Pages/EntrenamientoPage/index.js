@@ -10,6 +10,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import SImage from '../../Component/SImage';
 import Cronometro from './Cronometro';
+import Sucursal from './Sucursal';
+import * as SSStorage from '../../SSStorage';
+import Page from '../../Component/Page';
+import { SView } from '../../SComponent';
 
 
 class EntrenamientoPage extends Component {
@@ -22,11 +26,15 @@ class EntrenamientoPage extends Component {
         };
     }
     componentDidMount() {
-        this.props.dispatch({
-            component: "image",
-            type: "cambio",
-            url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
+        // this.props.dispatch({
+        //     component: "image",
+        //     type: "cambio",
+        //     url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
+        // })
+        SSStorage.getItem("sucursal", (vl) => {
+            this.setState({ key_sucursal: vl });
         })
+
     }
     getPerfil() {
         var usuario = this.props.state.usuarioReducer.usuarioLog
@@ -132,36 +140,24 @@ class EntrenamientoPage extends Component {
     render() {
 
         return (
-            <View style={{
-                width: "100%",
-                height: "100%",
-            }}>
-                <BarraSuperior duration={500} title={"Entrenar"} navigation={this.props.navigation} goBack={() => {
-                    this.props.navigation.goBack();
-                }} />
-                <View style={{
-                    width: "100%",
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    // backgroundColor: "#000"
-                }}>
-                    <BackgroundImage
-                    // source={require("../../img/fondos/color/1.jpg")}
+            <Page navigation={this.props.navigation} title={"Entrenamiento"}>
+                <SView center col={"xs-12"}>
+                    <SView height={8}/>
+                    <Sucursal
+                        navigation={this.props.navigation}
+                        key_sucursal={this.state.key_sucursal}
+                        sucursal={this.state.sucursal}
+                        key_caja={this.state.key_caja}
+                        setSucursal={(suc) => {
+                            SSStorage.setItem("sucursal", suc.key)
+                            this.setState({ sucursal: suc, key_sucursal: suc.key });
+                        }}
                     />
-                    <View style={{
-                        width: "90%",
-                        borderRadius: 8,
-                        height: "90%",
-                        maxWidth: 500,
-                        backgroundColor: "#66000022",
-                        alignItems: "center"
-                    }}>
-                        {/* <Cronometro /> */}
-                        {this.getBtnEntrenar()}
-                    </View>
-                </View>
-            </View>
+                    <SView height={16}/>
+                    <Cronometro />
+                    {/* {this.getBtnEntrenar()} */}
+                </SView>
+            </Page>
         );
     }
 }

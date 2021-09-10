@@ -5,7 +5,7 @@ import DeleteBtn from './DeleteBtn';
 
 
 export type typeConfig = {
-    type: "default" | "outline" | "secondary" | "danger" | "success",
+    type: "default" | "outline" | "secondary" | "danger" | "success" ,
     variant: "default" | "confirm",
 }
 
