@@ -18,11 +18,12 @@ export default class SMarker extends Component {
                 tracksViewChanges={false}
                 {...this.props}
             >
-                <Image
+                 {this.props.children}
+                {/* <Image
                     source={require('../../../img/marker.png')}
                     style={{ width: 25, height: 32, resizeMode: "cover" }}
 
-                />
+                /> */}
             </Marker>
         );
     }
