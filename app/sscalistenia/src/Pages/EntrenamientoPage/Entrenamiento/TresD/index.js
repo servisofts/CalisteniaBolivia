@@ -37,7 +37,7 @@ class TresD extends Component {
 
     getObjeto3d() {
         return (
-            <SView col={"xs-12"}>
+            <SView col={"xs-12"} style={{color:"#ffffff"}}>
                 <Canvas>
                     <ambientLight color={"#FFF"} intensity={100}/>
                     <pointLight position={[10, 10, 10]} />
