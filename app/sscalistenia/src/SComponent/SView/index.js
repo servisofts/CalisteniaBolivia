@@ -26,6 +26,7 @@ type typeProps = {
     style: ViewStyle,
     props: typeConfig,
     onPress: Function,
+    height: any,
     // ViewPropTypes,
     // TouchableOpacityProps,
     //callBack:Function,
@@ -40,7 +41,10 @@ interface IProps extends ViewProps {
     row: boolean,
     center: boolean,
     flex: number,
-    withoutFeedback: Boolean
+    height: any,
+    withoutFeedback: Boolean,
+    card: boolean,
+    colSquare: boolean,
 }
 
 export class SView extends Component<IProps> {
@@ -87,6 +91,7 @@ export class SView extends Component<IProps> {
     }
     render() {
         this.buildStyle();
+        
         this.variant = Variant(this.getOption("variant"));
         this.customStyle = CustomStyles(this.getOption("customStyle"))
         var size = SSize.getSize(this.getOption("col"))
@@ -118,7 +123,7 @@ export class SView extends Component<IProps> {
             }}>{this.props.children}</SText>
         }
         var variantArr = this.getOption('variant')
-        var isSquare = false;
+        var isSquare = this.props.colSquare;
         if (typeof variantArr == "string") {
             if (variantArr == "col-square") {
                 isSquare = true;
@@ -177,7 +182,9 @@ export class SView extends Component<IProps> {
 
                         ...(this.getOption("direction") == "row" || this.props.row ? { flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", } : {}),
                         ...(this.getFlex()),
-                        ...(this.props.center ? { alignItems: "center", justifyContent: "center" } : {})
+                        ...(this.props.center ? { alignItems: "center", justifyContent: "center" } : {}),
+                        ...(this.props.height == true ? { height: "100%" } : !this.props.height ? {} : { height: this.props.height }),
+                        ...(this.props.card ? { borderRadius: 4, backgroundColor: "#66000044" } : {}),
                     }, {
                         ...this.state.style,
                     }

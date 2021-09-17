@@ -16,6 +16,9 @@ export default (state, action) => {
             case "registro":
                 registro(state, action);
                 break;
+            case "traspaso":
+                traspaso(state, action);
+                break;
             case "editar":
                 editar(state, action);
                 break;
@@ -31,8 +34,13 @@ export default (state, action) => {
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        state.data = {}
-        state.data = action.data;
+        if (!state.data) {
+            state.data = {}
+        }
+        state.data = {
+            ...state.data,
+            ...action.data
+        };
     }
 }
 const getAllByKeyCuentaBanco = (state, action) => {
@@ -56,6 +64,20 @@ const registro = (state, action) => {
         if (state.data[action.data.key_cuenta_banco]) {
             state.data[action.data.key_cuenta_banco][action.data.key] = action.data;
         }
+    }
+}
+const traspaso = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        if (!state.data) {
+            return;
+        }
+        // if (state.data[action.data.key_cuenta_banco]) {
+        //     state.data[action.data.key_cuenta_banco][action.data.key] = action.data;
+        // }
+        // if (state.data[action.data.key_cuenta_banco_to]) {
+        //     state.data[action.data.key_cuenta_banco_to][action.data.key] = action.data;
+        // }
     }
 }
 const editar = (state, action) => {

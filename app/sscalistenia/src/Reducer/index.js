@@ -35,6 +35,9 @@ import cuentaBancoReducer from './cuentaBancoReducer';
 import cuentaBancoMovimientoReducer from './cuentaBancoMovimientoReducer';
 import clientesActivosReducer from './clientesActivosReducer';
 import sucursalTipoPagoCuentaBancoReducer from './sucursalTipoPagoCuentaBancoReducer';
+import TipoGasto from '../Pages/TipoGasto';
+
+import asistenciaReducer from './asistenciaReducer';
 export default combineReducers({
     paqueteVentaReducer,
     entrenamientoReducer,
@@ -71,5 +74,7 @@ export default combineReducers({
     cuentaBancoReducer,
     cuentaBancoMovimientoReducer,
     sucursalTipoPagoCuentaBancoReducer,
+    asistenciaReducer,
+    ...TipoGasto.Reducer,
     ...SSRolesPermisos
 });

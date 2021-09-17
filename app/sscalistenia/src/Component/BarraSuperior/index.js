@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import RelojCaja from '../../Pages/Caja/RelojCaja';
+import RelojEntrenamiento from '../../Pages/EntrenamientoPage/Entrenamiento/RelojEntrenamiento';
 import AppParams from '../../Params';
 import Svg from '../../Svg';
 import SImage from '../SImage';
@@ -182,6 +184,8 @@ class BarraSuperior extends Component {
                         fill: "#000"
                     }} />
                 </View>
+                <RelojEntrenamiento navigation={this.props.navigation} />
+                <RelojCaja navigation={this.props.navigation} />
             </Animated.View>
         );
     }

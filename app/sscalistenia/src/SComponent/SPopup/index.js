@@ -18,6 +18,16 @@ export const SPopupClose = (key) => {
 }
 export default class SPopup extends Component {
 
+    static open({ key, content }) {
+        INSTANCE.open({
+            key: key,
+            content: content,
+            style: {}
+        });
+    }
+    static close(key) {
+        INSTANCE.close(key);
+    }
     static alert(title) {
         INSTANCE.open({
             key: 'alert',

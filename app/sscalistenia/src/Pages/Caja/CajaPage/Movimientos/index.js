@@ -101,7 +101,7 @@ class Movimientos extends Component {
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
             var monto = movimientos[key].monto;
-            if(monto % 1 != 0) monto = monto.toFixed(2);
+            if (monto % 1 != 0) monto = monto.toFixed(2);
             return (
                 <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
                     <View style={{ backgroundColor: "#66000044", width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
@@ -159,6 +159,75 @@ class Movimientos extends Component {
             )
         })
     }
+    getDetalle(mensaje, icon) {
+        return <SView col={"xs-4 md-3 xl-2"} center style={{
+            height: 70,
+        }}>
+            <SView style={{
+                width: 35,
+                height: 35,
+                justifyContent: "center",
+                alignItems: "center",
+            }}>
+                {icon}
+            </SView>
+            <SText style={{
+                fontSize: 10,
+                textAlign:"center"
+            }}>{mensaje}</SText>
+        </SView>
+    }
+    getTipoPago() {
+        var reducer = this.props.state.tipoPagoReducer;
+        var data = reducer.data;
+        if (!data) {
+            if (reducer.estado == "cargando") return false;
+            var object = {
+                component: "tipoPago",
+                type: "getAll",
+                estado: "cargando",
+                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+            }
+            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            return false;
+        }
+        return data;
+    }
+    getInfo() {
+        var tiposPagos = this.getTipoPago();
+        if (!tiposPagos) return <View />
+        return <SView center col={"xs-12 md-10 xl-8"} row>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Informacion</SText>
+            </SView>
+            {this.getDetalle("Ingreso de caja", this.getIcon(1))}
+            {this.getDetalle("Egreso de caja", this.getIcon(-1))}
+
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Tipos de pagos</SText>
+            </SView>
+            {Object.keys(tiposPagos).map((key, index) => {
+                return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }))
+            })}
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
+            </SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
+            </SView>
+            {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }))}
+            {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}
+            {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
+
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={62} center></SView>
+
+        </SView>
+
+    }
 
     render() {
         this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
@@ -171,6 +240,8 @@ class Movimientos extends Component {
             }} style={{
                 marginTop: 16,
             }}>
+
+                <SView style={{ height: 16 }}></SView>
                 <SText props={{ type: "primary" }}>Movimientos</SText>
                 <SView props={{ col: "xs-12 md-8 xl-6" }}>
                     {this.getLista()}
@@ -180,6 +251,8 @@ class Movimientos extends Component {
 
                     </SView>
                 </SView>
+                {this.getInfo()}
+
             </SView>
         )
     }

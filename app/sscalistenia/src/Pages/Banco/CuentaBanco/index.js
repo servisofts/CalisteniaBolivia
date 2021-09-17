@@ -75,6 +75,9 @@ class CuentaBanco extends Component {
         if (!this.props.data) {
             return <View />
         }
+        if (!this.props.data.key) {
+            return <View />
+        }
 
         return (
             <SView col={"xs-12"} center style={{

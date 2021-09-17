@@ -2,6 +2,9 @@ import AppParams from "../Params";
 export default class index {
     static component = "usuario"
     static reducerName = "usuarioReducer";
+    static getLoged(props) {
+        return props.state.usuarioReducer.usuarioLog;
+    }
     static getByKey(key_usuario, props) {
         var reducer = props.state[index.reducerName];
         var data = reducer.data["registro_administrador"];

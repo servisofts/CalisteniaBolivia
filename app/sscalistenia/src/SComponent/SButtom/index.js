@@ -139,6 +139,10 @@ export class SButtom extends Component<typeProps> {
                 Component = DeleteBtn
             }
         }
+        var CHIL = this.props.children
+        if (typeof CHIL == "string") {
+            CHIL = <Text style={[variant.text, style.text]}> {this.props.children}</Text>
+        }
         return (
             <Component style={{ ...variant.touchable, ...style.touchable, ...this.props.style }}
                 styleText={{ ...variant.text, ...style.text }}
@@ -146,7 +150,7 @@ export class SButtom extends Component<typeProps> {
                     // if (!this.props.onPressValidation()) return;
                     if (this.props.onPress) this.props.onPress();
                 }}>
-                <Text style={[variant.text, style.text]}> {this.props.children}</Text>
+                    {CHIL}
             </Component >
         );
     }

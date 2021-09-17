@@ -99,15 +99,12 @@ class BancoPage extends Component {
 
     }
     getAllMovimientosCuenta(force) {
-        if (!this.state.fecha_incio || !this.state.fecha_fin) return;
         if (!this.props.state.cuentaBancoMovimientoReducer.data || force) {
             if (this.props.state.cuentaBancoMovimientoReducer.estado == "cargando" && !force) return;
             this.props.state.socketReducer.session[AppParams.socket.name].send({
                 component: "cuentaBancoMovimiento",
                 type: "getAll",
                 key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                fecha_inicio: this.state.fecha_incio,
-                fecha_fin: this.state.fecha_fin,
                 estado: "cargando"
             }, true);
             return;
@@ -126,11 +123,11 @@ class BancoPage extends Component {
                 }}>
                     <SView col={"xs-12"} center>
                         <SView col={"xs-11 md-7 xl-6"} center>
-                            <FechasBetween onChange={(fecha_incio, fecha_fin) => {
+                            {/* <FechasBetween onChange={(fecha_incio, fecha_fin) => {
                                 this.state.fecha_incio = fecha_incio;
                                 this.state.fecha_fin = fecha_fin;
                                 this.getAllMovimientosCuenta(true);
-                            }} />
+                            }} /> */}
                             {this.getAllBancos()}
 
                         </SView>

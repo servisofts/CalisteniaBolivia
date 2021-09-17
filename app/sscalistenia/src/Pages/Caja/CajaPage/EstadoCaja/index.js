@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import AppParams from '../../../../Params';
-import { SButtom, SInput, SText, STheme, SView } from '../../../../SComponent';
+import { SButtom, SInput, SText, STheme, SView, SPopup } from '../../../../SComponent';
 import { SPopupOpen } from '../../../../SComponent/SPopup/index';
 import PopupCerrar from './PopupCerrar';
 
@@ -85,11 +85,13 @@ class EstadoCaja extends Component {
             <SView props={{
                 variant: "center",
                 col: "xs-10",
-            }} style={{
+            }} center style={{
             }}>
                 {this.getMontoCajaAntigua()}
-                <SView col={"xs-12"} style={{ height: 20, }}></SView>
+                <SView col={"xs-12"} style={{ height: 4, }}></SView>
                 {/* <SInput ref={(ref) => { this.inputr = ref }} props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto de apertura", variant: "small" }} placeholder={this.state.montoDefault} />, */}
+                {this.getInfo()}
+                <SView col={"xs-12"} style={{ height: 16, }}></SView>
                 {this.getBtn()}
                 <SView col={"xs-12"} style={{ height: 20, }}></SView>
             </SView>
@@ -146,10 +148,11 @@ class EstadoCaja extends Component {
             height: 50,
             backgroundColor: "#ffffff22",
             borderRadius: 8,
-        }} props={{
-            variant: "center"
-        }}>
-            <SText style={{ fontSize: 18, color: "#Fff" }}> {this.getMonto()}</SText>
+        }} center>
+            <SView row >
+                <SText style={{ fontSize: 10, color: "#Fff" }}> Bs. </SText>
+                <SText style={{ fontSize: 18, color: "#Fff" }}>{this.getMonto()}</SText>
+            </SView>
         </SView>
     }
     cierre() {
@@ -164,7 +167,11 @@ class EstadoCaja extends Component {
                 flex: 1,
                 justifyContent: "space-evenly"
             }}>
-
+                <SView style={{
+                    width: "100%",
+                }} center>
+                    <SText style={{ color: "#999", fontSize: 10, }}>{"Monto actual en caja."}</SText>
+                </SView>
                 {this.getMontoEnCaja()}
                 <SView col={"xs-12"} style={{ height: 50, }}></SView>
                 {this.getBtnClose()}
@@ -172,12 +179,25 @@ class EstadoCaja extends Component {
             </SView>
         );
     }
+    getInfo() {
+        if (!this.props.sucursal) {
+            return <View />
+        }
+        if (this.activa) {
+            return <View />
+        }
+        return <SView style={{
+            width: "100%",
+        }} center>
+            <SText style={{ color: "#999", fontSize: 10, }}>{"El monto en caja, representa el monto salvado en el último cierre de caja de esta sucursal."}</SText>
+        </SView>
+    }
     render() {
         this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (!this.props.sucursal) {
             if (this.activa) {
                 if (this.props.setKeySucursal) {
-                    this.props.setKeySucursal(this.activa.key_sucursal,this.activa.key);
+                    this.props.setKeySucursal(this.activa.key_sucursal, this.activa.key);
                 }
             }
         }
@@ -198,7 +218,10 @@ class EstadoCaja extends Component {
             }} center>
 
                 {this.apertura()}
+
+
                 {this.cierre()}
+
                 <SText style={{
                     position: "absolute",
                     right: 4,

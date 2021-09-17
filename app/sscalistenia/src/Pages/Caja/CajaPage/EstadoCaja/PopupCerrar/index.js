@@ -42,12 +42,13 @@ class PopupCerrar extends Component {
                 <BackgroundImage />
                 <SScrollView2 disableHorizontal>
                     <SView col={"xs-12"} center>
+                        <SView col={"xs-12"} center height={32} />
                         <SText fontSize={20}>Cerrar caja</SText>
                         <SView col={"xs-12"} style={{
-                            height: 16,
+                            height: 32,
                         }}></SView>
                         <SView col={"xs-12 md-10 xl-9"}>
-                            <TiposDePago key_sucursal={this.props.data.key_sucursal} movimientos={MovimientosCaja} preventEdit onPress={() => {
+                            <TiposDePago key_sucursal={this.props.data.key_sucursal} movimientos={MovimientosCaja} preventEdit onPress={(montoSalvar) => {
                                 var obj = {
                                     component: "caja",
                                     type: "cierre",
@@ -57,6 +58,7 @@ class PopupCerrar extends Component {
                                         key_caja: this.props.data.key,
                                         // key_cuenta_banco: this.state.cuenta.key,
                                         // monto: data.monto * -1,
+                                        monto_salvar: montoSalvar,
                                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                     }
                                 }

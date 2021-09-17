@@ -17,6 +17,7 @@ import Buscador from '../../Component/Buscador';
 import { SDate, SScrollView2, SText } from '../../SComponent';
 import { SView } from '../../SComponent/SView/index';
 import Actions from '../../Actions';
+import Paquete_Item from './Paquete_Item';
 class ClientesPage extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
@@ -238,11 +239,11 @@ class ClientesPage extends Component {
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
                 {this.getSucursal(vijencia["caja"].key_sucursal)}
                 {this.getUsuario(vijencia["caja"].key_usuario)}
-                <SView row>
+                {/* <SView row>
                   <Text style={{ fontSize: 10, color: "#fff", }}>{new SDate(vijencia.fecha_on).toString("dd/MM/yyyy")}</Text>
                   <Text style={{ fontSize: 10, color: "#fff", }}>{" - "}</Text>
                   <Text style={{ fontSize: 10, color: "#fff", }}>{new SDate(vijencia.fecha_fin).toString("dd/MM/yyyy")}</Text>
-                </SView>
+                </SView> */}
                 
                 <Text style={{ fontSize: 10, color: "#fff", }}>{vijencia.paquete.nombre}</Text>
               </View>
@@ -268,6 +269,7 @@ class ClientesPage extends Component {
             </View>
 
           </View>
+          <Paquete_Item data={vijencia} paquete={vijencia.paquete}/>
         </TouchableOpacity>
       })
     }

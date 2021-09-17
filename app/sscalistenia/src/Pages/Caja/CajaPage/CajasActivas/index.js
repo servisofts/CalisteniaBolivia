@@ -14,6 +14,7 @@ class CajasActivas extends Component {
     componentDidMount() {
         this.getAlguienEnCaja(true);
     }
+    
     getAlguienEnCaja(force) {
         if (!this.props.sucursal) {
             return;

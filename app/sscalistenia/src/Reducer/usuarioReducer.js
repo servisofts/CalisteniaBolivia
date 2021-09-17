@@ -7,7 +7,9 @@ const initialState = {
 }
 
 export default (state, action) => {
-    if (!state) return initialState
+    if (!state) {
+        return initialState
+    }
     if (action.component == "usuario") {
         if (action.version != "2.0") {
             return state;

@@ -10,6 +10,12 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import SImage from '../../Component/SImage';
 import Cronometro from './Cronometro';
+import Sucursal from './Sucursal';
+import * as SSStorage from '../../SSStorage';
+import Page from '../../Component/Page';
+import { SLoad, SText, SView } from '../../SComponent';
+import IniciarEntrenamiento from './IniciarEntrenamiento';
+import Entrenamiento from './Entrenamiento';
 
 
 class EntrenamientoPage extends Component {
@@ -22,100 +28,26 @@ class EntrenamientoPage extends Component {
         };
     }
     componentDidMount() {
-        this.props.dispatch({
-            component: "image",
-            type: "cambio",
-            url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
+        SSStorage.getItem("sucursal", (vl) => {
+            this.setState({ key_sucursal: vl });
         })
-    }
-    getPerfil() {
-        var usuario = this.props.state.usuarioReducer.usuarioLog
-        return (
-            <View style={{
-                width: "95%",
-                height: 130,
-                borderBottomWidth: 1,
-                borderColor: "#aaa",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row"
-            }}>
-                <View style={{
-                    width: 100,
-                    height: 100,
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <TouchableOpacity style={{
-                        width: "90%",
-                        height: "90%",
-                        backgroundColor: "#66000022",
-                        borderRadius: 8,
-                        overflow: "hidden",
-                    }} onPress={() => {
-                        SImageImput.choseFile({
-                            servicio: AppParams.socket.name,
-                            component: "usuario",
-                            type: "subirFoto",
-                            estado: "cargando",
-                            key: usuario.key,
-                            key_usuario: usuario.key,
-                        }, (resp) => {
-                            this.props.dispatch({
-                                component: "image",
-                                type: "cambio",
-                                url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
-                            })
-                            // this.state.repaint = new Date().getTime()
-                            // this.setState({ ...this.state });
-                        });
-                    }}>
-                        {/* {"foto"} */}
-                        {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, {
-                            width: "100%",
-                            height: "100%",
-                        })}
 
-                    </TouchableOpacity>
-                </View>
-                <View style={{
-                    flex: 1,
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center"
-                    // backgroundColor:"#000"
-                }}>
-                    <View style={{
-                        width: "95%",
-                        flex: 1,
-                        alignItems: "center",
-                        flexDirection: "row"
-                    }}>
-                        <Text style={{
-                            flex: 5,
-                            fontSize: 20,
-                            fontWeight: "bold",
-                            color: "#fff"
-                        }}>{usuario["Nombres"] + " " + usuario["Apellidos"]} </Text>
-                    </View>
-                    <View style={{
-                        width: "95%",
-                        flex: 1,
-                    }}>
-                        <Text style={{
-                            width: "90%",
-                            fontSize: 14,
-                            color: "#bbb"
-                        }}>{usuario["Correo"]} </Text>
-                        <Text style={{
-                            width: "90%",
-                            fontSize: 14,
-                            color: "#bbb"
-                        }}>{usuario["Telefono"]} </Text>
-                    </View>
-                </View>
-            </View>
-        )
+    }
+    getEntrenamientoUsuario() {
+        var reducer = this.props.state.entrenamientoReducer;
+        var data = reducer.entrenamiento;
+        if (!data) {
+            if (reducer.estado == "cargando") return;
+            var objSend = {
+                component: "entrenamiento",
+                type: "getByKeyUsuario",
+                estado: "cargando",
+                key_usuario: this.props.state.usuarioReducer.usuarioLog.key
+            }
+            this.props.state.socketReducer.session[AppParams.socket.name].send(objSend, true);
+            return;
+        }
+        return data;
     }
     getBtnEntrenar() {
         return <TouchableOpacity style={{
@@ -129,39 +61,48 @@ class EntrenamientoPage extends Component {
             }}>Nuevo entrenamiento</Text>
         </TouchableOpacity>
     }
+    getEntrenamiento(entrenamiento) {
+        return <>
+            <Entrenamiento data={entrenamiento} />
+        </>
+    }
+    getIniciar() {
+        return <SView center col={"xs-12"}>
+            <SView height={8} />
+            <Sucursal
+                navigation={this.props.navigation}
+                key_sucursal={this.state.key_sucursal}
+                sucursal={this.state.sucursal}
+                key_caja={this.state.key_caja}
+                setSucursal={(suc) => {
+                    SSStorage.setItem("sucursal", suc.key)
+                    this.setState({ sucursal: suc, key_sucursal: suc.key });
+                }}
+            />
+            <SView height={16} />
+            {/* <Cronometro /> */}
+            <IniciarEntrenamiento sucursal={this.state.sucursal} />
+
+        </SView>
+    }
+    getComponent() {
+        var entrenamiento = this.getEntrenamientoUsuario();
+        if (!entrenamiento) {
+            return <SLoad />
+        }
+        if (!entrenamiento.key) {
+            return this.getIniciar();
+        } else {
+            return this.getEntrenamiento(entrenamiento);
+        }
+    }
+
     render() {
 
         return (
-            <View style={{
-                width: "100%",
-                height: "100%",
-            }}>
-                <BarraSuperior duration={500} title={"Entrenar"} navigation={this.props.navigation} goBack={() => {
-                    this.props.navigation.goBack();
-                }} />
-                <View style={{
-                    width: "100%",
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    // backgroundColor: "#000"
-                }}>
-                    <BackgroundImage
-                    // source={require("../../img/fondos/color/1.jpg")}
-                    />
-                    <View style={{
-                        width: "90%",
-                        borderRadius: 8,
-                        height: "90%",
-                        maxWidth: 500,
-                        backgroundColor: "#66000022",
-                        alignItems: "center"
-                    }}>
-                        {/* <Cronometro /> */}
-                        {this.getBtnEntrenar()}
-                    </View>
-                </View>
-            </View>
+            <Page navigation={this.props.navigation} title={"Entrenamiento"} >
+                {this.getComponent()}
+            </Page>
         );
     }
 }

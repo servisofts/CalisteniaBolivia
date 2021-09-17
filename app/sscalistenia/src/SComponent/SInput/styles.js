@@ -6,7 +6,7 @@ import { STheme } from "../STheme"
 //Tamanhos y fomas
 
 
-type Typesp = "default" | "primary" | "secondary" | "calistenia"
+type Typesp = "default" | "primary" | "secondary" | "calistenia" | "transparent"
 
 
 export type TypeStyles = Typesp | [Typesp]
@@ -78,6 +78,31 @@ const getType = (type: TypeStyles) => {
                     borderWidth: 1,
                     borderColor: STheme().colorSecondary,
                     borderRadius: 4,
+                },
+                "LabelStyle": {
+
+                },
+                "InputText": {
+                    padding: 4,
+                    color: STheme().colorSecondary,
+                    ...(Platform.OS != "web" ? {} : { placeholderTextColor: STheme().colorOpaque + "aa" }),
+                },
+                "placeholder": {
+                    color: STheme().colorOpaque + "aa"
+                },
+                "error": {
+                    borderColor: STheme().colorDanger,
+                    // color: STheme().colorPrimary + "66"
+                },
+            })
+        case "transparent":
+            return StyleSheet.create({
+                "View": {
+                    // backgroundColor: STheme().colorPrimary,
+                    borderWidth: 1,
+                    borderColor: STheme().colorPrimary,
+                    borderRadius: 4,
+                    flex:1,
                 },
                 "LabelStyle": {
 

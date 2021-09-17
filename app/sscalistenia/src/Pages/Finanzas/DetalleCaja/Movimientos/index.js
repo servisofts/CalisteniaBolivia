@@ -68,7 +68,9 @@ class Movimientos extends Component {
         var usr = usuarios[data.data.key_usuario];
         if (!usr) return <View />
         return <SText style={{
-            textTransform: "capitalize"
+            textTransform: "capitalize",
+            fontSize: 10,
+            color: "#999"
         }}>{usr.Nombres} {usr.Apellidos}</SText>
     }
     getIconTipoPago(type, data) {
@@ -100,8 +102,8 @@ class Movimientos extends Component {
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
             return (
-                <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
-                    <View style={{ backgroundColor: "#66000044", width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
+                <View key={index} style={{ width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
+                    <View style={{ backgroundColor: "#66000044", width: "100%", minHeight: 50, borderRadius: 4, flexDirection: "row", }}>
                         <SView style={{
                             flex: 1,
                             height: "100%",
@@ -110,51 +112,131 @@ class Movimientos extends Component {
                             props={{ direction: "row" }}
                         >
                             <SView col={"xs-12"} >
+                                <Text style={{ color: "#999", fontSize: 9 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                                 <Text style={{ color: "#fff", fontSize: 14 }}>{movimientos[key].descripcion}</Text>
-                                <Text style={{ color: "#fff", fontSize: 10 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                                 {this.getUsuario(movimientos[key])}
                             </SView>
 
                         </SView>
 
+
                         <SView style={{
-                            width: 40,
-                            height: "100%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}>
-                            {this.getIconTipoPago(timpoMovimiento, movimientos[key])}
+                            width: 200,
+                            paddingBottom: 4,
+                            paddingTop: 4,
+                        }} center row>
+                            <SView row col={"xs-12 sm-8"} center>
+                                <SView style={{
+                                    width: 40,
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }} center>
+                                    {this.getIconTipoPago(timpoMovimiento, movimientos[key])}
+                                </SView>
+                                <SView style={{
+                                    width: 40,
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }} center>
+                                    {this.getIconTipo(timpoMovimiento, movimientos[key].monto)}
+                                </SView>
+                                <SView style={{
+                                    width: 40,
+                                    height: "100%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }} center>
+                                    {this.getIcon(movimientos[key].monto)}
+                                </SView>
+                            </SView>
+                            <SView col={"xs-12 sm-4"} center>
+                                <View style={{
+                                    height: 50,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    flexDirection: "row"
+                                }}>
+                                    <Text style={{ color: "#fff", fontSize: 10, height: 20, }}>Bs.</Text>
+                                    <Text style={{ color: "#fff", fontSize: 14, }}>{movimientos[key].monto}</Text>
+                                </View>
+                            </SView>
                         </SView>
-                        <SView style={{
-                            width: 40,
-                            height: "100%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}>
-                            {this.getIconTipo(timpoMovimiento, movimientos[key].monto)}
-                        </SView>
-                        <SView style={{
-                            width: 40,
-                            height: "100%",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}>
-                            {this.getIcon(movimientos[key].monto)}
-                        </SView>
-                        <View style={{
-                            width: 90,
-                            height: 50,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            flexDirection: "row"
-                        }}>
-                            <Text style={{ color: "#fff", fontSize: 10, height: 20, }}>Bs.</Text>
-                            <Text style={{ color: "#fff", fontSize: 16, }}>{movimientos[key].monto}</Text>
-                        </View>
+
                     </View>
                 </View >
             )
         })
+    }
+    getDetalle(mensaje, icon) {
+        return <SView col={"xs-4 md-3 xl-2"} center style={{
+            height: 70,
+        }}>
+            <SView style={{
+                width: 35,
+                height: 35,
+                justifyContent: "center",
+                alignItems: "center",
+            }}>
+                {icon}
+            </SView>
+            <SText style={{
+                fontSize: 10,
+                textAlign: "center"
+            }}>{mensaje}</SText>
+        </SView>
+    }
+    getTipoPago() {
+        var reducer = this.props.state.tipoPagoReducer;
+        var data = reducer.data;
+        if (!data) {
+            if (reducer.estado == "cargando") return false;
+            var object = {
+                component: "tipoPago",
+                type: "getAll",
+                estado: "cargando",
+                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+            }
+            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            return false;
+        }
+        return data;
+    }
+    getInfo() {
+        var tiposPagos = this.getTipoPago();
+        if (!tiposPagos) return <View />
+        return <SView center col={"xs-12 md-10 xl-8"} row >
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Informacion</SText>
+            </SView>
+            {this.getDetalle("Ingreso de caja", this.getIcon(1))}
+            {this.getDetalle("Egreso de caja", this.getIcon(-1))}
+
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Tipos de pagos</SText>
+            </SView>
+            {Object.keys(tiposPagos).map((key, index) => {
+                return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }))
+            })}
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
+            </SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center>
+                <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
+            </SView>
+            {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }))}
+            {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}
+            {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
+
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={62} center></SView>
+
+        </SView>
+
     }
 
     render() {
@@ -174,9 +256,9 @@ class Movimientos extends Component {
                     <SView col={"xs-12"} style={{
                         height: 50,
                     }}>
-
                     </SView>
                 </SView>
+                {this.getInfo()}
             </SView>
         )
     }

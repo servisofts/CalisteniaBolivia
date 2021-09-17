@@ -32,9 +32,11 @@ export default class SPopupComponent extends Component {
     }
     render() {
         return (
-            <TouchableWithoutFeedback onPress={() => {
+            <TouchableWithoutFeedback 
+            onPressIn={() => {
                 this.props.close();
-            }}><View style={{
+            }}
+           ><View style={{
                 width: "100%",
                 height: "100%",
                 position: "absolute",

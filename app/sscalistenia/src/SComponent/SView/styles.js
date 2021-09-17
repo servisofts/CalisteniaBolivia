@@ -6,7 +6,7 @@ import { STheme } from "../STheme"
 //Tamanhos y fomas
 
 
-type Typesp = "default" | "primary" | "secondary"
+type Typesp = "default" | "primary" | "secondary" | "card"
 
 
 export type TypeStyles = Typesp | [Typesp]
@@ -23,6 +23,15 @@ const getType = (type: TypeStyles) => {
             return StyleSheet.create({
                 "View": {
                     backgroundColor: STheme().colorPrimary,
+                }
+            })
+        case "card":
+            return StyleSheet.create({
+                "View": {
+                    backgroundColor: "#66000066",
+                    borderRadius: 4,
+                    minHeight: 30,
+                    padding: 4,
                 }
             })
         default:
