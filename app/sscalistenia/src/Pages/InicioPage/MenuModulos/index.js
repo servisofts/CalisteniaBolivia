@@ -28,21 +28,19 @@ export default class MenuModulos extends Component {
             if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
                 return <View />
             }
-
-
             return (
-                <SView col={"xs-3 md-2 xl-1"} props={{
+                <SView col={"xs-3 md-2 lg-1.5 xl-1"} props={{
                     variant: ["col-square", "center"]
                 }} >
                     <SView style={{
-                        width:"70%",
-                        height:"70%",
+                        width: "70%",
+                        height: "70%",
                         borderRadius: 16,
                         overflow: "hidden",
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor:"#44000044",
-                        padding:2,
+                        backgroundColor: "#44000044",
+                        padding: 2,
                     }} onPress={() => {
                         this.props.navigation.navigate(obj.url);
                     }}>
@@ -67,12 +65,14 @@ export default class MenuModulos extends Component {
 
     render() {
         return (
-            <SView props={{
-                col: "xs-12",
-                direction: "row",
-                variant: "center"
-            }}>
-                {this.getItems()}
+            <SView col={"xs-12"} center>
+                <SView props={{
+                    col: "xs-11",
+                    direction: "row",
+                    variant: "center"
+                }}>
+                    {this.getItems()}
+                </SView>
             </SView>
         );
     }

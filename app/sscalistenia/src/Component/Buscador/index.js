@@ -7,10 +7,14 @@ import STextImput from '../STextImput';
 type Tprops = {
     repaint: Function,
     placeholder: String,
-    contador: boolean
+    contador: boolean,
+    minLength: number,
 }
 
 export default class Buscador extends Component<Tprops> {
+    static defaultProps = {
+        minLength: -1,
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +29,9 @@ export default class Buscador extends Component<Tprops> {
         }
         var lista_keys = Object.keys(data);
         var val = this.state.value.trim() || "";
+        if (val.length <= this.props.minLength) {
+            return {}
+        }
         // var arrPalabras = val.replaceAll(" ", "|");
         var arrPalabras = val.split(" ");
         var arr2 = [];

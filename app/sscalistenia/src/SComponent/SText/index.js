@@ -11,6 +11,8 @@ type typeProps = {
     options: typeConfig,
     props: typeConfig,
     fontSize: number,
+    color: string,
+    center: boolean,
     // onPress: Function,
     //callBack:Function,
 };
@@ -113,6 +115,8 @@ export class SText extends Component<typeProps> {
         return (
             <Text style={[variant.text, style.text, this.props.style, {
                 ...(this.props.fontSize ? { fontSize: this.props.fontSize } : {}),
+                ...(this.props.color ? { color: this.props.color } : {}),
+                ...(this.props.center ? { textAlign: "center" } : {}),
             }]}>{VAL}</Text>
         );
     }

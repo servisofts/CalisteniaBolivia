@@ -92,6 +92,7 @@ const registro = (state, action) => {
 const getActiva = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
+        state.lastGetActiva = new Date().getTime();
         state.usuario[action.data.key_usuario] = action.data;
         state.lastRegister = action.data;
     }

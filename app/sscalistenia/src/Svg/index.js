@@ -31,12 +31,16 @@ import Qr from '../img/qr.svg';
 import Money from '../img/money.svg';
 
 
+import Off from '../img/off.svg';
+
+
 import Arrg from '../img/arrg.svg';
 import Arrr from '../img/arrr.svg';
 
 import Caja from '../img/caja.svg';
 import Paquete from '../img/paquete.svg';
-import Traspaso  from '../img/traspaso.svg'
+import Traspaso from '../img/traspaso.svg'
+import Alert from '../img/alert.svg';
 type typeName = "logo"
     | "logoBlanco"
     | "see"
@@ -54,6 +58,7 @@ type typeName = "logo"
     | "Codigo"
     | "Server"
     | "Santiguo"
+    | "off"
     | "Login"
     | "Add"
     | "Delete"
@@ -69,6 +74,7 @@ type typeName = "logo"
     | "caja"
     | "paquete"
     | "Traspaso"
+    | "Alert"
 
 
 type svgProps = {
@@ -139,6 +145,8 @@ const Svg = (props: svgProps) => {
             return (Platform.OS == "web" ? <img style={props.style} src={Money} /> : <Money style={props.style} />);
         case "arrg":
             return (Platform.OS == "web" ? <img style={props.style} src={Arrg} /> : <Arrg style={props.style} />);
+        case "Alert":
+            return (Platform.OS == "web" ? <img style={props.style} src={Alert} /> : <Alert style={props.style} />);
         case "arrr":
             return (Platform.OS == "web" ? <img style={props.style} src={Arrr} /> : <Arrr style={props.style} />);
         case "Caja":
@@ -147,6 +155,8 @@ const Svg = (props: svgProps) => {
             return (Platform.OS == "web" ? <img style={props.style} src={Paquete} /> : <Paquete style={props.style} />);
         case "Traspaso":
             return (Platform.OS == "web" ? <img style={props.style} src={Traspaso} /> : <Traspaso style={props.style} />);
+        case "Off":
+            return (Platform.OS == "web" ? <img style={props.style} src={Off} /> : <Off style={props.style} />);
         default: return <Text>Not Found</Text>
     }
 }

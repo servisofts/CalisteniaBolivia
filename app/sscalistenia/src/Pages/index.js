@@ -62,6 +62,7 @@ import VentasPage from './VentasPage/index';
 import AjustesPage from './AjustesPage'
 import TipoGasto from './TipoGasto'
 import ExcelPage from './ExcelPage'
+import SucursalMapaPage from './SucursalMapaPage'
 export const getPages = () => {
     return {
         // TestRNF,
@@ -117,6 +118,7 @@ export const getPages = () => {
         ProveedorRegistroPage,
         ClientePaqueteRegistroConfirmacion,
         ExcelPage,
+        SucursalMapaPage,
         ...TipoGasto.Pages,
         ...TipoPago,
         ...Caja,

@@ -16,9 +16,14 @@ export default (state, action) => {
             case "getAll":
                 getAll(state, action);
                 break;
+            case "eliminar":
+                eliminar(state, action);
+                break;
 
         }
         state.type = action.type;
+        state.estado = action.estado;
+        state.error = action.error;
         state.lastSend = new Date();
         state = { ...state };
     }
@@ -47,19 +52,20 @@ const registro = (state, action) => {
         state.lastRegister = action.data;
     }
 }
-// const editar = (state, action) => {
-//     state.estado = action.estado
-//     if (action.estado === "exito") {
-//         if (state.data) {
-
-//             state.data[action.data.key_paquete][action.data.key_servicio] = action.data;
-//             if (action.data.estado == 0) {
-//                 delete state.data[action.data.key_paquete][action.data.key_servicio]
-//             }
-//         }
-//         state.lastRegister = action.data;
-//     }
-// }
+const eliminar = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        action.clientes.map((cli) => {
+            if (state.usuario[cli]) {
+                delete state.usuario[cli][action.data.key];
+            }
+            if (state.data) {
+                delete state.data[cli][action.data.key];
+            }
+        })
+        state.lastRegister = action.data;
+    }
+}
 const getAllByUsuario = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {

@@ -45,7 +45,12 @@ class ConfirmarPaquete extends Component {
         }
         // alert(JSON.stringify(object));
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+        var onFInish = this.props.navigation.getParam("onFinish")
+        if (onFInish) {
+            onFInish();
 
+        }
+        this.props.navigation.goBack();
         // SPopupClose("confirmarPaquete");
     }
     getTextDetail({ label, value }) {

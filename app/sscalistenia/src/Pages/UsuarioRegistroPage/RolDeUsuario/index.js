@@ -64,8 +64,8 @@ const RolDeUsuario = (props) => {
                 }
             }
             return <TouchableOpacity style={{
-                width: "45%",
-                maxWidth: 200,
+                width: "40%",
+                maxWidth: 170,
                 height: 160,
                 margin: 8,
                 borderRadius: 10,

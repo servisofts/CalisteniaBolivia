@@ -19,7 +19,10 @@ import SSound from './SSound';
 import SDate from './SDate';
 import SForm from './SForm';
 import SCalendar from './SCalendar';
+import { SF } from './Functions';
+import SLoad from './SLoad';
 export {
+    SF,
     SForm,
     SDate,
     STheme,
@@ -41,7 +44,9 @@ export {
     SScrollView2,
     SImage,
     SBackground,
-    SCalendar
+    SCalendar,
+    SLoad
+  
 }
 export class SComponentClass extends Component {
     constructor(props) {

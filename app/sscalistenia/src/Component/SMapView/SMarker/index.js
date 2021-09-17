@@ -9,6 +9,7 @@ const SMarker = (props) => {
             props.onPress();
         }}>
         {props.contenido}
+        {props.children}
     </div>
 }
 export default SMarker;
