@@ -63,8 +63,10 @@ import AjustesPage from './AjustesPage'
 import TipoGasto from './TipoGasto'
 import ExcelPage from './ExcelPage'
 import SucursalMapaPage from './SucursalMapaPage'
+import Page3D from './Page3D';
 export const getPages = () => {
     return {
+        Page3D,
         // TestRNF,
         CargaPage,
         LobyPage,
