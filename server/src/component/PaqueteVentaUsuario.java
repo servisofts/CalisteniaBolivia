@@ -29,6 +29,9 @@ public class PaqueteVentaUsuario {
             case "registro":
                 registro(data, session);
             break;
+            case "eliminar":
+                eliminar(data, session);
+            break;
             case "editar":
                 editar(data, session);
             break;
@@ -83,7 +86,6 @@ public class PaqueteVentaUsuario {
             obj.put("data", paquete_venta_usuario);
             obj.put("estado", "exito");
 
-
             SSServerAbstract.sendAllServer(obj.toString());
 
             JSONObject cliente = obj.getJSONObject("cliente");
@@ -101,8 +103,6 @@ public class PaqueteVentaUsuario {
 
             new Email(Email.TIPO_RECIBO, mail);
 
-
-
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
@@ -115,6 +115,25 @@ public class PaqueteVentaUsuario {
             JSONObject paquete_venta_usuario = obj.getJSONObject("data");
             Conexion.editObject("paquete_venta_usuario", paquete_venta_usuario);
             Conexion.historico(obj.getString("key_usuario"), paquete_venta_usuario.getString("key"), "paquete_venta_usuario_editar", paquete_venta_usuario);
+            obj.put("data", paquete_venta_usuario);
+            obj.put("estado", "exito");
+            SSServerAbstract.sendAllServer(obj.toString());
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminar(JSONObject obj, SSSessionAbstract session) {
+        try {
+            JSONObject paquete_venta_usuario = obj.getJSONObject("data");
+            paquete_venta_usuario.put("estado", 0);
+            Conexion.editObject("paquete_venta_usuario", paquete_venta_usuario);
+            Conexion.historico(obj.getString("key_usuario"), paquete_venta_usuario.getString("key"), "paquete_venta_usuario_eliminar", paquete_venta_usuario);
+
+            
+            
             obj.put("data", paquete_venta_usuario);
             obj.put("estado", "exito");
             SSServerAbstract.sendAllServer(obj.toString());

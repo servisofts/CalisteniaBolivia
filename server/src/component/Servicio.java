@@ -12,7 +12,7 @@ import Config.Config;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
-public class Servicio {
+public class Servicio{
 
     public Servicio(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
