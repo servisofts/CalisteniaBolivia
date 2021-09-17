@@ -14,7 +14,6 @@
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/google-signin": "^5.0.0",
-    "@react-three/fiber": "^7.0.7",
     "android": "0.0.8",
     "google-map-react": "^2.1.6",
     "moment": "^2.29.1",
@@ -39,6 +38,7 @@
     "react-navigation-stack": "^2.10.1",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.0",
+    "react-three-fiber": "^6.0.13",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "three": "^0.132.2",

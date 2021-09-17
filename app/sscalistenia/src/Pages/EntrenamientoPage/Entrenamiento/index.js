@@ -6,7 +6,6 @@ import Cronometro from '../Cronometro';
 import Participantes from './Participantes';
 // import RelojEntrenamiento from './RelojEntrenamiento';
 import Terminar from './Terminar';
-import TresD from './TresD';
 
 class Entrenamiento extends Component {
     constructor(props) {
@@ -25,8 +24,6 @@ class Entrenamiento extends Component {
 
                     {/* <SView height={28} /> */}
                     {/* <Cronometro/> */}
-                    <SView height={28} />
-                    <TresD  entrenamiento={this.props.data} />
                     <SView height={28} />
                     <Participantes entrenamiento={this.props.data} />
                     <SView style={{
