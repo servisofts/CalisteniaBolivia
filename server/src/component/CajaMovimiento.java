@@ -177,4 +177,19 @@ public class CajaMovimiento {
         obj.put("estado", "exito");
         SSServerAbstract.sendAllServer(obj.toString());
     }
+
+    public static JSONObject getMovimientosVentaServicio(String key_caja, String key_paquete_venta_usuario){
+        try{
+            String consulta = "SELECT "+
+                        " jsonb_object_agg(caja_movimiento.key, to_json(caja_movimiento.*))::json as json "+
+                        "FROM caja_movimiento "+
+                        "WHERE caja_movimiento.key_caja = '"+key_caja+"' "+
+                        "and caja_movimiento.key_caja_tipo_movimiento = '3' "+
+                        "and caja_movimiento.data ->> 'key_paquete_venta_usuario' = '"+key_paquete_venta_usuario+"' "+
+                        "and caja_movimiento.descripcion = 'Venta de servicio'";
+            return Conexion.ejecutarConsultaObject(consulta);
+        }catch(Exception e){
+            return null;
+        }
+    }
 }

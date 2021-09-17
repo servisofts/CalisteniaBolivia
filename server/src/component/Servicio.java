@@ -12,9 +12,9 @@ import Config.Config;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
-public class servicio {
+public class Servicio{
 
-    public servicio(JSONObject data, SSSessionAbstract session) {
+    public Servicio(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);

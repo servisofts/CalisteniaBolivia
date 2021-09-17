@@ -22,6 +22,12 @@ public class Entrenamiento {
             case "getByKey":
                 getByKey(data, session);
                 break;
+            case "getByKeyUsuario":
+                getByKeyUsuario(data, session);
+                break;
+            case "editar":
+                editar(data, session);
+                break;
             case "registro":
                 registro(data, session);
             break;
@@ -61,6 +67,21 @@ public class Entrenamiento {
         }
     }
 
+    public void editar(JSONObject obj, SSSessionAbstract session) {
+        try {
+            JSONObject entrenamiento = obj.getJSONObject("data");
+            Conexion.editObject("entrenamiento", entrenamiento);
+            Conexion.historico(obj.getString("key_usuario"), entrenamiento.getString("key"), "entrenamiento_editar", entrenamiento);
+            obj.put("data", entrenamiento);
+            obj.put("estado", "exito");
+            SSServerAbstract.sendAllServer(obj.toString());
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject entrenamiento = obj.getJSONObject("data");
@@ -71,13 +92,24 @@ public class Entrenamiento {
             obj.put("data", entrenamiento);
             obj.put("estado", "exito");
 
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
         }
 
+    }
+
+    public void getByKeyUsuario(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select entrenamiento_get_activo('"+obj.getString("key_usuario")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
     }
 
     public void subirFoto(JSONObject obj, SSSessionAbstract session) {

@@ -115,4 +115,17 @@ public class CuentaBancoMovimiento extends SSComponent {
             e.printStackTrace();
         }
     }
+
+    public static JSONObject getByKeyCajaMovimiento(String key_caja_movimiento){
+        try{
+            String consulta = "select \n"+
+            " to_json(cuenta_banco_movimiento.*)::json as json "+
+            "from cuenta_banco_movimiento\n"+
+            "where cuenta_banco_movimiento.data ->> 'key_caja_movimiento' = '"+key_caja_movimiento+"'";
+            return Conexion.ejecutarConsultaObject(consulta);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

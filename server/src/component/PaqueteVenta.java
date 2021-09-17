@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+
 import conexion.*;
 import SocketCliente.SocketCliete;
 import org.json.JSONArray;
@@ -34,6 +35,9 @@ public class PaqueteVenta {
             break;
             case "editar":
                 editar(data, session);
+            break;
+            case "eliminar":
+                eliminar(data, session);
             break;
             case "subirFoto":
                 subirFoto(data, session);
@@ -154,6 +158,8 @@ public class PaqueteVenta {
 
                         if(JSONObject.getNames(data)[j].equals("2") || JSONObject.getNames(data)[j].equals("3")){
                             
+                            String keyMovimientoOld = caja_movimiento.getString("key");
+
                             data.put("key_cuenta_banco", cajaTipoPagoCuentaBanco.getJSONObject(JSONObject.getNames(data)[j]).getString("key_cuenta_banco"));
                             caja_movimiento = Caja.addTraspasoBanco(
                                 caja_activa.getString("key"), 
@@ -172,7 +178,7 @@ public class PaqueteVenta {
                             cuentaBancoMovimiento.put("key_cuenta_banco", data.getString("key_cuenta_banco"));
                             cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
                             cuentaBancoMovimiento.put("monto", data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto"));
-                            cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
+                            cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", keyMovimientoOld));
                             cuentaBancoMovimiento.put("fecha_on", formatter.format(new Date()));
                             cuentaBancoMovimiento.put("estado", 1);
                             Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
@@ -198,13 +204,13 @@ public class PaqueteVenta {
 
             paquete_venta.put("key_sucursal", caja_activa.getString("key_sucursal"));
             paquete_venta.put("key_usuario", caja_activa.getString("key_usuario"));
-
+            paquete_venta.put("key_caja", caja_activa.getString("key"));
             obj.put("data", paquete_venta); 
             obj.put("clientes", paquete_venta_usuarios); 
             obj.put("estado", "exito");
 
             SSServerAbstract.sendAllServer(obj.toString());
-            //SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
+            // SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
             
 
             JSONObject mail = new JSONObject();
@@ -223,7 +229,11 @@ public class PaqueteVenta {
                 //mail.put("__KEY_TIPO_PAGO__",cliente.getString("key_tipo_pago"));
                 mail.put("__MONTO__",cliente.getDouble("monto"));
                 mail.put("__CI__",cliente.getString("CI"));
-                new Email(Email.TIPO_RECIBO, mail);
+                try {
+                    new Email(Email.TIPO_RECIBO, mail);
+                } catch (Exception e) {
+                    //TODO: handle exception
+                }
             }
             
 
@@ -234,6 +244,112 @@ public class PaqueteVenta {
 
     }
 
+    public void eliminar(JSONObject obj, SSSessionAbstract session) {
+        try {
+
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+
+            JSONObject paquete_venta = obj.getJSONObject("data");
+
+            String consulta =  "select paquete_venta_usuario_get_all('"+paquete_venta.getString("key")+"') as json";
+            
+            JSONObject paquetes_venta_usuario = Conexion.ejecutarConsultaObject(consulta);
+            JSONObject paquete_venta_usuario;
+
+            JSONObject caja_activa = Caja.getActiva(obj.getString("key_usuario"));
+            if(caja_activa.isEmpty()){
+                obj.put("estado", "error");
+                obj.put("error", "No cuenta con una caja abierta.");
+                SSServerAbstract.sendAllServer(obj.toString());
+                return;
+            }
+
+            JSONObject send_movimiento = new JSONObject();
+            send_movimiento.put("component", "cajaMovimiento");
+            send_movimiento.put("type", "registro");
+            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
+            send_movimiento.put("estado", "exito");
+
+            JSONObject caja_movimientos;
+            JSONObject caja_movimiento;
+            JSONObject cuentaBancoMovimiento;
+
+            JSONArray usuarios = new JSONArray();
+
+            if(!paquetes_venta_usuario.isEmpty())
+            for (int i = 0; i < JSONObject.getNames(paquetes_venta_usuario).length; i++) {
+                paquete_venta_usuario = paquetes_venta_usuario.getJSONObject(JSONObject.getNames(paquetes_venta_usuario)[i]);
+
+                usuarios.put(paquete_venta_usuario.getString("key_usuario"));
+
+                caja_movimientos = CajaMovimiento.getMovimientosVentaServicio(paquete_venta_usuario.getString("key_caja"), paquete_venta_usuario.getString("key"));
+                if(!caja_movimientos.isEmpty())
+                for (int j = 0; j < JSONObject.getNames(caja_movimientos).length; j++) {
+                    caja_movimiento = caja_movimientos.getJSONObject(JSONObject.getNames(caja_movimientos)[j]);
+
+                    String key_caja_old = caja_movimiento.getString("key");
+
+
+                    if(caja_movimiento.getString("key_tipo_pago").equals("2") || caja_movimiento.getString("key_tipo_pago").equals("3")){
+                        cuentaBancoMovimiento = CuentaBancoMovimiento.getByKeyCajaMovimiento(key_caja_old);
+                        
+                        if(cuentaBancoMovimiento.has("key")){
+                            cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
+                            cuentaBancoMovimiento.put("descripcion", "Anulacion de venta de servicio.");
+                            cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
+                            cuentaBancoMovimiento.put("monto", cuentaBancoMovimiento.getDouble("monto")*-1);
+                            cuentaBancoMovimiento.put("fecha_on", formatter.format(new Date()));
+                            cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
+                            Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
+                
+                            JSONObject sendcuentaBancoMovimiento = new JSONObject();
+                            sendcuentaBancoMovimiento.put("component", "cuentaBancoMovimiento");
+                            sendcuentaBancoMovimiento.put("type", "registro");
+                            sendcuentaBancoMovimiento.put("data", cuentaBancoMovimiento);
+                            sendcuentaBancoMovimiento.put("estado", "exito");
+                            SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
+                        }
+
+
+                    }else{
+                        caja_movimiento = Caja.addAnulacionServicio(
+                            caja_activa.getString("key"), 
+                            obj.getString("key_usuario"), 
+                            caja_movimiento.getString("key_tipo_pago"),
+                            caja_movimiento.getDouble("monto"),
+                            formatter.format(new Date()),
+                            caja_movimiento.getJSONObject("data") 
+                        );
+                        send_movimiento.put("data", caja_movimiento);
+                        SSServerAbstract.sendAllServer(send_movimiento.toString());
+                    }
+                }
+                JSONObject edit = new JSONObject();
+                edit.put("key", paquete_venta_usuario.getString("key"));
+                edit.put("estado", 0);
+                Conexion.editObject("paquete_venta_usuario", edit);
+                edit.put("key", paquete_venta_usuario.getString("key_paquete_venta"));
+                Conexion.editObject("paquete_venta", edit);
+            }
+
+            paquete_venta.put("estado", 0);
+            
+            send_movimiento.put("component", "paqueteVenta");
+            send_movimiento.put("type", "eliminar");
+            send_movimiento.put("key_usuario", obj.getString("key_usuario"));
+            send_movimiento.put("estado", "exito");
+            send_movimiento.put("data", paquete_venta);
+            send_movimiento.put("clientes", usuarios);
+            SSServerAbstract.sendAllServer(send_movimiento.toString());
+
+
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject paquete_venta = obj.getJSONObject("data");
@@ -241,8 +357,7 @@ public class PaqueteVenta {
             Conexion.historico(obj.getString("key_usuario"), paquete_venta.getString("key"), "paquete_venta_editar", paquete_venta);
             obj.put("data", paquete_venta);
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendAllServer(obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -260,4 +375,15 @@ public class PaqueteVenta {
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
     }
+
+    public static JSONObject getPaqueteVentaUsuarioActivo(String key_usuario){
+        try {
+            String consulta =  "select get_paquete_venta_usuario_activo('"+key_usuario+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }    
+    }
+
 }
