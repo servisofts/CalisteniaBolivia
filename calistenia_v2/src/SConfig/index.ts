@@ -6,14 +6,15 @@ const SThemeProps: SThemeThemes = {
         barColor: "#ffffff",
         primary: "#ffffff",
         secondary: "#000000",
-        background: "#cccccc"
+        background: "#cccccc",
+
     },
     dark: {
         barStyle: "light-content",
         barColor: "#000000",
         primary: "#000000",
         secondary: "#ffffff",
-        background: "#222222"
+        background: "#000000"
     }
 }
 

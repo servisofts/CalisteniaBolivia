@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import socketReducer from './socketReducer';
-
-
+import Usuario from '../Pages/Usuario';
+import RolesPermisosReducer from '../SSRolesPermisos/Reducer'
 const reducers = combineReducers({
-    socketReducer,
+    ...Usuario.Reducers,
+    ...RolesPermisosReducer
 });
 
 export default (state, action) => {

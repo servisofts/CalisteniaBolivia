@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { SPage, SText, SThread, SView, SNavigation, STheme, SIcon } from 'servisofts-component';
-// import Usuario from '../Usuario';
+import Usuario from '../Usuario';
 import { connect } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
+import LogoAnimado from './LogoAnimado';
 
 class CargaPage extends Component {
     constructor(props) {
@@ -15,25 +16,22 @@ class CargaPage extends Component {
     }
     render() {
         new SThread(2500, "cargaHilo", true).start(() => {
-            // if (!Usuario.getUsuarioLogueado(this.props)) {
-            // SNavigation.replace("login");
-            // } else {
-            SNavigation.replace("inicio");
-            // }
+            if (!Usuario.Actions.getUsuarioLogueado(this.props)) {
+                SNavigation.replace("presentacion");
+            } else {
+                SNavigation.replace("inicio");
+
+            }
         });
         return (
             <SPage
                 hidden
                 title="CargaPage"
             >
-                <SView center flex backgroundColor={STheme.color.barColor}>
+                <SView center flex>
                     <SView
-                        col={"xs-11 sm-10 md-8 lg-6 xl-4"}>
-                        <SIcon
-                            name={"Logo"}
-                            fill={STheme.color.secondary}
-                        />
-                        <ActivityIndicator color={STheme.color.secondary} size={"large"} />
+                        col={"xs-11 sm-10 md-9 lg-8 xl-6"}>
+                        <LogoAnimado />
                     </SView>
                 </SView>
             </SPage>
