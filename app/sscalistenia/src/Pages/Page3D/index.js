@@ -1,50 +1,55 @@
-import React, { Component, useRef, useState } from 'react'
-import { Text, View } from 'react-native'
-import { Canvas, useFrame } from 'react-three-fiber'
-import { SView } from '../../SComponent';
+import * as THREE from 'three';
+import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from 'react';
+import { Canvas, useRender } from 'react-three-fiber';
+import Scene from './Scene';
+import useModel from './helpers/useModel';
+import './styles.css';
 
-function Box(props) {
-    // This reference will give us direct access to the THREE.Mesh object
-    const ref = useRef()
-    // Set up state for the hovered and active state
-    const [hovered, setHover] = useState(false)
-    const [active, setActive] = useState(false)
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    // useFrame((state, delta) => (ref.current.rotation.x += 0.01))
-    // Return the view, these are regular Threejs elements expressed in JSX
-    return (
-        <mesh
-            {...props}
-            ref={ref}
-            scale={active ? 1.5 : 1}
-            onClick={(event) => setActive(!active)}
-            onPointerOver={(event) => setHover(true)}
-            onPointerOut={(event) => setHover(false)}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-        </mesh>
-    )
-}
+const Bird = () => {
+    const { scene, geometries, center, animations } = useModel('/Stork.glb');
+    const clock = useRef(new THREE.Clock());
+    const mixer = useRef();
+  
+    useEffect(() => {
+      mixer.current = new THREE.AnimationMixer(scene);
+      const action = mixer.current.clipAction(animations[0]);
+      action.play();
+    }, [animations, scene]);
+  
+    useRender(state => {
+      if (mixer.current) {
+        const delta = clock.current.getDelta();
+        mixer.current.update(delta);
+        //console.log(mixer.current.time)
+      }
+      state.camera.rotation.z -= 0.005;
+    });
+    return geometries.map(geom => <mesh key={geom.uuid} position={center} geometry={geom} castShadow receiveShadow />);
+  };
 export default class Page3D extends Component {
     static navigationOptions = {
         header: null
     }
 
+    
+
     render() {
         return (
-            <SView height style={{
-                backgroundColor: '#000',
-            }}>
-                {/* <Canvas style={{
-                    width: '100%',
-                    height: '100%',
+            <>
+              <Canvas
+                //invalidateFrameloop
+                camera={{ position: [0, 0, 10], fov: 65 }}
+                onCreated={({ gl, scene }) => {
+                  scene.background = new THREE.Color('lightblue');
+                  gl.shadowMap.enabled = true;
+                  gl.shadowMap.type = THREE.PCFSoftShadowMap;
                 }}>
-                    <ambientLight />
-                    <pointLight position={[10, 10, 10]} />
-                    <Box position={[-1.2, 0, 0]} />
-                    <Box position={[1.2, 0, 0]} />
-                </Canvas> */}
-            </SView>
-        );
+                <Scene>
+                  <Bird />
+                </Scene>
+              </Canvas>
+            </>
+          );
     }
 }

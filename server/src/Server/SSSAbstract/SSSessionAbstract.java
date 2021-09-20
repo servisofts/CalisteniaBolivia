@@ -2,6 +2,7 @@ package Server.SSSAbstract;
 
 import org.json.JSONObject;
 
+import Config.Config;
 import Server.SSSInterface.SSSessionInterface;
 import component.Manejador;
 
@@ -28,7 +29,7 @@ public abstract class SSSessionAbstract implements SSSessionInterface {
     public void onOpen() {
         JSONObject data = new JSONObject();
         data.put("id", getIdSession());
-        data.put("socket", "glup");
+        data.put("socket", Config.getJSON().getString("nombre"));
         data.put("component", "servicio");
         data.put("type", "init");
         data.put("data", "Bienvenido al servidor servisofts. Aganos el favor de identificarse.");
