@@ -6,11 +6,21 @@ import Presentacion from './Presentacion';
 
 import Usuario from './Usuario';
 import SSRolesPermisosPages from '../SSRolesPermisos/Pages';
+import AjustesPage from './AjustesPage';
+import Sucursal from './Sucursal';
+import TipoPago from './TipoPago';
+import Paquete from './Paquete';
+import Servicio from './Servicio';
 const Pages: SPageListProps = {
     "inicio": InicioPage,
     "carga": CargaPage,
     "presentacion": Presentacion,
+    AjustesPage,
     ...Usuario.Pages,
-    ...SSRolesPermisosPages
+    ...Sucursal.Pages,
+    ...SSRolesPermisosPages,
+    ...TipoPago.Pages,
+    ...Paquete.Pages,
+    ...Servicio.Pages
 }
 export default Pages;

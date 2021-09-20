@@ -20,7 +20,7 @@ export const choseFile = (props, callback) => {
             body: body,
             mode: 'no-cors',
         };
-        var servicios = SSocket.api.root;
+        var servicios = SSocket.api;
         // console.log(props);
         var url = servicios[props.servicio];
         if (!url) {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { SInput, SText, SThread, SView } from 'servisofts-component';
-// import Svg from '../../Svg';
+import { SInput, SText, SThread, SView, SIcon } from 'servisofts-component';
 // import STextImput from '../STextImput';
 
 type Tprops = {
@@ -81,7 +80,7 @@ export default class Buscador extends Component<Tprops> {
                 width: 25,
                 height: 25,
             }}>
-            <Svg name={(!this.state.verEliminados ? "noDelete" : "Delete")} style={{
+            <SIcon name={(!this.state.verEliminados ? "NoDelete" : "Delete")} style={{
                 width: 25,
                 height: 25,
             }} />
@@ -89,9 +88,9 @@ export default class Buscador extends Component<Tprops> {
     }
     render() {
         return (
-            <SView col={"xs-12"} height={50} >
+            <SView col={"xs-12"} height={50} center>
                 <View style={{
-                    width: "98%",
+                    width: "90%",
                     // backgroundColor: "#fff",
                     justifyContent: "center",
                     alignItems: "center",
@@ -110,7 +109,7 @@ export default class Buscador extends Component<Tprops> {
                         <SInput placeholder={this.props.placeholder ? this.props.placeholder : "Buscar..."} style={{
                             width: "100%",
                             color: "#fff",
-                            padding: 0,
+                            padding: 4,
                             paddingLeft: 8,
                             paddingRigth: 8,
                         }}
@@ -128,15 +127,15 @@ export default class Buscador extends Component<Tprops> {
                     {this.getVerEliminados()}
 
                 </View>
-                <SView col={"xs-12"} style={{
+                {/* <SView col={"xs-12"} style={{
                     alignItems: "flex-end",
                     maxWidth: 600,
                 }}>
                     <SText style={{
                         color: "#999", fontSize: 10,
-                        
+
                     }}>Resultados ({this.state.cantidad})</SText>
-                </SView>
+                </SView> */}
             </SView>
         );
     }

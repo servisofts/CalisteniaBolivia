@@ -102,7 +102,7 @@ class RolRegistroPage extends Component {
                   overflow: 'hidden',
                 }} onPress={() => {
                   SImageImput.choseFile({
-                    servicio: "roles_permisos",
+                    servicio: "rp",
                     component: "rol",
                     type: "subirFoto",
                     estado: "cargando",

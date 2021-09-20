@@ -66,7 +66,7 @@ import SucursalMapaPage from './SucursalMapaPage'
 import Page3D from './Page3D';
 export const getPages = () => {
     return {
-        Page3D,
+        // Page3D,
         // TestRNF,
         CargaPage,
         LobyPage,

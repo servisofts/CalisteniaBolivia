@@ -209,7 +209,7 @@ class PermisoCrearPage extends Component {
               //   return <View />;
               // }
               SImageImput.choseFile({
-                servicio: "roles_permisos",
+                servicio: "rp",
                 component: "permiso",
                 type: "subirFoto",
                 estado: "cargando",

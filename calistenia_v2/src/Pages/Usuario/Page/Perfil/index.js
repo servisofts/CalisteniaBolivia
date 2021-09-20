@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { SDate, SImage, SNavigation, SPage } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
+import * as SImageImput from '../../../../Components/SImageImput';
 import CerrarSession from './CerrarSession';
 
 // import AppParams from '../../Params';
@@ -55,20 +56,20 @@ class Perfil extends Component {
                         borderRadius: 8,
                         overflow: "hidden",
                     }} onPress={() => {
-                        // SImageImput.choseFile({
-                        //     servicio: AppParams.socket.name,
-                        //     component: "usuario",
-                        //     type: "subirFoto",
-                        //     estado: "cargando",
-                        //     key: usuario.key,
-                        //     key_usuario: usuario.key,
-                        // }, (resp) => {
-                        //     this.props.dispatch({
-                        //         component: "image",
-                        //         type: "cambio",
-                        //         url: AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
-                        //     })
-                        // });
+                        SImageImput.choseFile({
+                            servicio: "root",
+                            component: "usuario",
+                            type: "subirFoto",
+                            estado: "cargando",
+                            key: usuario.key,
+                            key_usuario: usuario.key,
+                        }, (resp) => {
+                            this.props.dispatch({
+                                component: "image",
+                                type: "cambio",
+                                url: SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
+                            })
+                        });
                     }}>
                         <SImage src={`${SSocket.api.root}${"usuario_" + this.props.state.usuarioReducer.usuarioLog.key}`} style={{
                             width: "100%",
@@ -145,7 +146,7 @@ class Perfil extends Component {
                         alignItems: "center"
                     }}>
                         {this.getPerfil()}
-                        <CerrarSession  />
+                        <CerrarSession />
                     </View>
                 </View>
             </SPage>

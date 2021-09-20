@@ -29,8 +29,8 @@ class InicioPage extends Component {
             if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
                 return null;
             }
-            var urlImage = "https://rolespermisos.servisofts.com/images/" + "page/" + obj.key;
-            return <SView col={"xs-3 sm-2.5 md-2 lg-1.5 xl-1"} colSquare style={{
+            var urlImage = SSocket.api.rp + "page/" + obj.key;
+            return <SView col={"xs-3 sm-2.5 md-2 lg-1.5 xl-1.3"} colSquare style={{
                 padding: 4,
             }}>
                 <SView flex onPress={() => {
@@ -46,7 +46,7 @@ class InicioPage extends Component {
                     </SView>
                     <SHr />
                     <SView center>
-                        <SText center fontSize={12}>{obj.descripcion}</SText>
+                        <SText center fontSize={12}>{obj.url}</SText>
                     </SView>
                 </SView>
             </SView>

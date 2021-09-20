@@ -47,4 +47,75 @@ export default class Actions {
         }
         SSocket.send(object);
     }
+    static editar(data, props) {
+        var object = {
+            component: "usuario",
+            type: "editar",
+            version: "2.0",
+            estado: "cargando",
+            cabecera: "registro_administrador",
+            key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            data: data,
+        }
+        SSocket.send(object);
+    }
+    static getAll(props) {
+        var cabecera = "registro_administrador";
+        var data = props.state.usuarioReducer.data[cabecera];
+        if (!data) {
+            if (props.state.usuarioReducer.estado == "cargando") {
+                return;
+            }
+            var object = {
+                component: "usuario",
+                version: "2.0",
+                type: "getAll",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            }
+            SSocket.send(object);
+            return;
+        }
+        return data;
+    }
+    static getByKey(key, props) {
+        var cabecera = "registro_administrador";
+        var data = props.state.usuarioReducer.data[cabecera];
+        if (!data) {
+            if (props.state.usuarioReducer.estado == "cargando") {
+                return;
+            }
+            var object = {
+                component: "usuario",
+                version: "2.0",
+                type: "getAll",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            }
+            SSocket.send(object);
+            return;
+        }
+        var obj = data[key]
+        return obj;
+    }
+    static getAllClientesActivos(props) {
+        var cabecera = "registro_administrador";
+        var data = props.state.clientesActivosReducer.data;
+        if (!data) {
+            if (props.state.clientesActivosReducer.estado == "cargando") {
+                return;
+            }
+            var object = {
+                component: "clientesActivos",
+                type: "getAll",
+                estado: "cargando",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            }
+            SSocket.send(object);
+            return;
+        }
+        return data;
+    }
 }

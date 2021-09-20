@@ -5,9 +5,11 @@ import { SThread } from "servisofts-component";
 import SSocket from "servisofts-socket";
 // import AppParams from "../Params";
 // import Reducer from "./Reducer";
+import Events from "./Events";
 let INSTANCE = false;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
+    if (!INSTANCE) return null;
     var isValid = INSTANCE.isValid({ page, permiso });
     if (isAlert && !isValid) {
         alert("No tiene permisos. Contactese con el administrador.")
@@ -24,6 +26,7 @@ export const SSRolesPermisosGetPages = () => {
 }
 
 class SSRolesPermisos extends Component {
+    static Events = Events;
     constructor(props) {
         super(props);
     }

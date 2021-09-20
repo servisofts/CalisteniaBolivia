@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { SLoad } from 'servisofts-component';
 import { SButtom, SDate, SForm, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import Usuario from '..';
 import BackgroundImage from '../../../Components/BackgroundImage';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
+import RolDeUsuario from './RolDeUsuario';
 
 class RegistroCliente extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+        this.key = SNavigation.getParam("key");
+
     }
     getForm() {
+
         return <SForm
             ref={(ref) => { this.form = ref; }}
             props={{
@@ -22,17 +27,25 @@ class RegistroCliente extends Component {
                 customStyle: "calistenia",
             }}
             inputs={{
-                Nombres: { label: "Usuario", isRequired: true, },
-                Apellidos: { label: "Apellidos", isRequired: true, },
-                CI: { label: "CI", isRequired: true, },
-                "Fecha nacimiento": { label: "Fecha de nacimiento", type: "date", isRequired: true, },
-                Correo: { label: "Correo", type: "email", isRequired: true, },
-                Telefono: { label: "Telefono", type: "phone", isRequired: true, },
-                Password: { label: "Password", type: "password", isRequired: true, },
+                Nombres: { label: "Usuario", isRequired: true, defaultValue: this.usr.Nombres, },
+                Apellidos: { label: "Apellidos", isRequired: true, defaultValue: this.usr.Apellidos, },
+                CI: { label: "CI", isRequired: true, defaultValue: this.usr.CI, },
+                "Fecha nacimiento": { label: "Fecha de nacimiento", type: "date", isRequired: true, defaultValue: this.usr["Fecha nacimiento"], },
+                Correo: { label: "Correo", type: "email", isRequired: true, defaultValue: this.usr.Correo, },
+                Telefono: { label: "Telefono", type: "phone", isRequired: true, defaultValue: this.usr.Telefono, },
+                Password: { label: "Password", type: "password", isRequired: true, defaultValue: this.usr.Password, },
             }}
             onSubmit={(values) => {
-                // alert();
-                Usuario.Actions.registro_cliente(values, this.props);
+                if (this.key) {
+                    Usuario.Actions.editar({
+                        ...this.usr,
+                        ...values
+                    }, this.props);
+
+                } else {
+                    Usuario.Actions.registro_cliente(values, this.props);
+                }
+
             }}
         />
     }
@@ -55,42 +68,69 @@ class RegistroCliente extends Component {
         </SView>
     }
 
+    getEliminar() {
+        if (!this.key) return;
+        return <>
+            <SButtom props={{
+                type: "danger",
+                variant: "confirm"
+            }}
+                onPress={() => {
+                    Usuario.Actions.editar({
+                        ...this.usr,
+                        estado: 0,
+                    }, this.props);
+                }}
+            >{("Eliminar")}</SButtom>
+            <SView width={16} />
+
+        </>
+    }
     render() {
+
         var error = Usuario.Actions.getError("registro", this.props);
         if (error) {
             SPopup.open({ key: "errorRegistro", content: this.alertError(error) });
         }
-        if (Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("inicio");
-        }
         if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "registro") {
             this.props.state.usuarioReducer.estado = "";
-            this.props.navigation.goBack();
+            SNavigation.goBack();
         }
         if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "editar") {
             this.props.state.usuarioReducer.estado = "";
-            this.props.navigation.goBack();
+            SNavigation.goBack();
         }
+
+        if (this.key) {
+            this.usr = Usuario.Actions.getByKey(this.key, this.props);
+            if (!this.usr) return <SLoad />
+        } else {
+            this.usr = {}
+        }
+
         return (
             <SPage>
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={8} />
-                        <SText fontSize={20} bold>Registra tu usuario!</SText>
+                        <SText fontSize={20} bold>{`${this.key?"Edita el":"Registra tu"} usuario!`}</SText>
                         <SView height={8} />
                         {this.getForm()}
                         <SView height={16} />
                         <SView col={"xs-11"} row center>
+                            {this.getEliminar()}
                             <SButtom props={{
                                 type: "outline"
                             }}
                                 onPress={() => {
                                     this.form.submit();
                                 }}
-                            >Crear</SButtom>
-                        </SView>
-                    </SView>
+                            >{(this.key ? "Editar" : "Crear")}</SButtom>
 
+                        </SView>
+                        <SView height={36} />
+                    </SView>
+                    <RolDeUsuario data={this.usr} />
                 </SView>
             </SPage>
         );

@@ -73,8 +73,12 @@ class RolPage extends Component {
         onPress={() => {
           var object = {
             component: "rol",
-            type: "anular",
+            type: "editar",
             estado: "cargando",
+            data: {
+              ...obj,
+              estado: 0,
+            },
             key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             key: obj.key
           }
@@ -105,7 +109,7 @@ class RolPage extends Component {
 
       return Object.keys(permisos).map((key) => {
         var obj = permisos[key];
-
+        if(obj.estado == 0) return;
         var urlImage = Config.url + "rol/" + obj.key;
         return <View style={{
           width: "95%",
