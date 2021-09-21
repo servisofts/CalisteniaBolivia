@@ -47,7 +47,7 @@ class RolPage extends Component {
       if (!SSRolesPermisosValidate({ page: "rolPage", permiso: "editar" })) {
         // return <View />
       }
-      
+
       return (<ActionButtom label="EDITAR"
         onPress={() => {
           this.props.navigation.navigate("RolRegistroPage", { key: obj.key });
@@ -71,9 +71,13 @@ class RolPage extends Component {
       return (<DeleteBtn onDelete={() => {
         var object = {
           component: "rol",
-          type: "anular",
+          type: "editar",
           estado: "cargando",
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+          data: {
+            ...obj,
+            estado: 0,
+          },
           key: obj.key
         }
         this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
