@@ -6,13 +6,15 @@ import Sucursal from '../Pages/Sucursal';
 import TipoPago from '../Pages/TipoPago';
 import Paquete from '../Pages/Paquete';
 import Servicio from '../Pages/Servicio';
+import Banco from '../Pages/Banco';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
     ...Sucursal.Reducers,
     ...TipoPago.Reducers,
     ...Paquete.Reducers,
-    ...Servicio.Reducers
+    ...Servicio.Reducers,
+    ...Banco.Reducers
 });
 
 export default (state, action) => {
