@@ -3,7 +3,7 @@ import Actions from './Actions'
 
 import Lista from './Pages/Lista'
 const Pages: SPageListProps = {
-    "entrenamiento/lista":Lista
+    // "entrenamiento/lista":Lista
 }
 
 import entrenamientoReducer from './Reducer/entrenamientoReducer'
