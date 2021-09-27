@@ -8,15 +8,6 @@ import { SPage } from 'servisofts-component';
 import { Environment } from '@react-three/drei'
 import Model from './Model'
 
-const AnimateFrame = (props) => {
-    useFrame(({ clock }) => {
-        if(!props.meshRef) return;
-        props.meshRef.rotation.x += 0.01;
-        props.meshRef.rotation.y += 0.01;
-    });
-    return null;
-  }
-
 class Lista extends Component {
     constructor(props) {
         super(props);
@@ -33,8 +24,8 @@ class Lista extends Component {
                     </mesh>
                     <AnimateFrame meshRef={this.myMesh} /> */}
                     <Suspense fallback={null}>
-                        <Model />
-                        <Environment preset="sunset" background />
+                        {/* <Model/> */}
+                        {/* <Environment preset="sunset" background /> */}
                     </Suspense>
                 </Canvas>
             </SPage>

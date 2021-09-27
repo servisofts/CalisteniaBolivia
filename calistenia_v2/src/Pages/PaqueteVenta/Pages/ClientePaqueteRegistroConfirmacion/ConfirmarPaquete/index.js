@@ -82,7 +82,6 @@ class ConfirmarPaquete extends Component {
             }
             return <SView style={{
                 width: 80,
-                height: 80,
                 alignItems: "center",
             }} onPress={() => {
                 SPopupOpen({
@@ -100,11 +99,10 @@ class ConfirmarPaquete extends Component {
                     alignItems: "center",
                     borderRadius: 100,
                     overflow: "hidden",
-                    backgroundColor: "#66000044",
+                    backgroundColor: "#660000",
                 }}>
                     <SImage src={SSocket.api.root + "usuario_" + obj.key} />
                     {this.getIsConfirm(isConfirmado)}
-
                 </View>
                 <SText props={{
                     type: "primary"
@@ -291,10 +289,7 @@ class ConfirmarPaquete extends Component {
 
                                         </SView> */}
                                         {/* {this.getCamposRequeridos()} */}
-                                        <SView props={{
-                                            col: "xs-12",
-                                            direction: "row"
-                                        }} style={{
+                                        <SView col={"xs-12"} row style={{
                                             marginTop: 8,
                                             justifyContent: "space-evenly",
                                             alignItems: "center"
