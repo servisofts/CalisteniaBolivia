@@ -27,11 +27,11 @@ class Lista extends Component {
         return (
             <SPage title={"Entrenamientos"}>
                 <Canvas>
-                    <mesh ref={(ref)=> this.myMesh = ref}> 
+                    {/* <mesh ref={(ref)=> this.myMesh = ref}> 
                         <boxGeometry />
                         <meshBasicMaterial color={"#ff0000"} />
                     </mesh>
-                    <AnimateFrame meshRef={this.myMesh} />
+                    <AnimateFrame meshRef={this.myMesh} /> */}
                     <Suspense fallback={null}>
                         <Model />
                         <Environment preset="sunset" background />
