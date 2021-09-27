@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { SLoad, SNavigation, SPage, SSCrollView } from 'servisofts-component';
+import { SLoad, SNavigation, SPage, SSCrollView, SScrollView2, SView } from 'servisofts-component';
 import Usuario from '../..';
 // import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
+import PaquetesDeUsuario from './PaquetesDeUsuario';
 // import PaquetesDeUsuario from './PaquetesDeUsuario';
 // import SSCrollView from '../../Component/SScrollView';
 
@@ -67,15 +68,14 @@ class ClientePerfilPage extends Component {
         <BarraSuperior duration={500} title={"Perfil de cliente"} navigation={this.props.navigation} goBack={() => {
           SNavigation.goBack()
         }} {...this.props} />
-        <View style={{
-          flex: 1,
-          width: "100%",
-        }}>
-          <SSCrollView disableHorizontal>
+        <SScrollView2 disableHorizontal>
+          <SView col={"xs-12"} center>
             {this.getPerfil()}
-            {/* <PaquetesDeUsuario key_usuario={this.key} navigation={this.props.navigation} /> */}
-          </SSCrollView>
-        </View>
+            <SView col={"xs-11 md-8 xl-6"} center>
+              <PaquetesDeUsuario key_usuario={this.key} navigation={this.props.navigation} />
+            </SView>
+          </SView>
+        </SScrollView2>
       </SPage >
     );
   }

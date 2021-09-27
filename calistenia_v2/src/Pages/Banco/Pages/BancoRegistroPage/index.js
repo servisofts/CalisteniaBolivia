@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 // import Page from '../../../Component/Page/index';
-import { SForm, SNavigation, SPage, SScrollView2, SView, SImage } from 'servisofts-component'
+import { SForm, SNavigation, SPage, SScrollView2, SView, SImage, SLoad } from 'servisofts-component'
 import { connect } from 'react-redux';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent/index';
 import CuentaBanco from '../CuentaBanco';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
+import Banco from '../..';
 
 let ReducerName = "bancoReducer";
 let component = "banco";
@@ -19,12 +20,10 @@ class BancoRegistroPage extends Component {
         super(props);
         this.state = {
         };
-        var key = SNavigation.getParam("key");
-        if (!key) {
-            this.data = {};
-        } else {
-            this.data = this.props.state[ReducerName].data[key];
-        }
+        this.key_banco = SNavigation.getParam("key");
+        // if (!this.key_banco) {
+        this.data = {};
+
 
     }
 
@@ -37,6 +36,11 @@ class BancoRegistroPage extends Component {
         if (reducer.estado == "exito" && reducer.type == "editar") {
             reducer.estado = "";
             this.props.navigation.goBack();
+        }
+        if (this.key_banco) {
+            var bancos = Banco.Actions.getAllBancos(this.props);
+            if (!bancos) return <SLoad />
+            this.data = bancos[this.key_banco];
         }
         return (
             <SPage
@@ -59,7 +63,8 @@ class BancoRegistroPage extends Component {
                     <SView col={"xs-12"} center >
                         <SForm
                             props={{
-                                col: "xs-11 md-8 xl-6"
+                                col: "xs-11 md-8 xl-6",
+                                center: true,
                             }}
                             inputProps={{
                                 customStyle: "calistenia",

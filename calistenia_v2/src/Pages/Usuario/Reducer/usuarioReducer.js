@@ -4,6 +4,7 @@ import { SStorage } from 'servisofts-component'
 const initialState = {
     estado: "",
     data: {},
+    usuarioLog:{}
 }
 
 export default (state, action) => {

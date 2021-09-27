@@ -50,9 +50,12 @@ class Login extends Component {
         if (error) {
             SPopup.alert("Usuario no encontrado, Verifique sus datos.");
         }
-        if (Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("inicio");
-            return null;
+        if (this.props.state.usuarioReducer.type == "login") {
+            this.props.state.usuarioReducer.type="";
+            if (Usuario.Actions.getUsuarioLogueado(this.props)) {
+                SNavigation.replace("inicio");
+                return null;
+            }
         }
         return (
             <SPage>

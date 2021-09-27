@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import { connect } from 'react-redux';
-import { SPopup, SScrollView2, SView, SText, SDate, SOrdenador, SPage, SNavigation, SImage } from 'servisofts-component';
+import { SPopup, SScrollView2, SView, SText, SDate, SOrdenador, SPage, SNavigation, SImage, SIcon, SHr } from 'servisofts-component';
 import CuentaBancoLista from '../CuentaBancoLista/index';
 import BancoItem from '../BancoItem/index';
 import CuentaBancoItem from '../CuentaBancoItem';
-// import Svg from '../../../Svg';
 import FechasBetween from '../../../../Components/FechasBetween/index';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import SSocket from 'servisofts-socket';
@@ -47,9 +46,8 @@ class CuentaMovimientosPage extends Component {
         return <> <SView style={{
             width: 34,
         }} center>
-            <SView>
-                <Svg name={"Traspaso"} style={{ width: 34 }} />
-                {/* <SText>{obj.key_tipo_pago}</SText> */}
+            <SView width={30}>
+                <SIcon name={"Traspaso"} />
             </SView>
         </SView>
             <SView style={{
@@ -96,54 +94,56 @@ class CuentaMovimientosPage extends Component {
             }
             monto_total += parseFloat(monto);
             return (
-                <SView col={"xs-12"} key={obj.key} style={{
-                    borderRadius: 4,
-                    marginBottom: 8,
-                    backgroundColor: "#66000044",
-                }} row center>
-                    <SView style={{
-                        width: 50,
-                        height: 50,
-                    }} center >
+                <>
+                    <SView col={"xs-12"} key={obj.key} style={{
+                        borderRadius: 4,
+                        backgroundColor: "#66000044",
+                    }} row center>
                         <SView style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 8,
-                            overflow: "hidden",
-                        }}>
-                            <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} />
+                            width: 50,
+                            height: 50,
+                        }} center >
+                            <SView style={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: 8,
+                                overflow: "hidden",
+                            }}>
+                                <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} />
+                            </SView>
                         </SView>
-                    </SView>
-                    <SView style={{
-                        flex: 1,
-                        height: "100%",
-                        padding: 4,
-                    }}
-                        props={{ direction: "row" }}
-                    >
-                        <SView col={"xs-12"} >
-                            <Text style={{ color: "#fff", fontSize: 16 }}>{obj.descripcion}</Text>
-                            <Text style={{ color: "#fff", fontSize: 10 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
-                        </SView>
+                        <SView style={{
+                            flex: 1,
+                            height: "100%",
+                            padding: 4,
+                        }}
+                            props={{ direction: "row" }}
+                        >
+                            <SView col={"xs-12"} >
+                                <Text style={{ color: "#fff", fontSize: 16 }}>{obj.descripcion}</Text>
+                                <Text style={{ color: "#fff", fontSize: 10 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+                            </SView>
 
-                    </SView>
-                    {this.getTraspaso(obj)}
-                    <SView style={{
-                        width: 34,
-                    }} center>
-                        <SView>
-                            <Svg name={(obj.monto >= 0 ? "arrg" : "arrr")} style={{ width: 34 }} />
                         </SView>
+                        {this.getTraspaso(obj)}
+                        <SView style={{
+                            width: 34,
+                        }} center>
+                            <SView width={34}>
+                                <SIcon name={(obj.monto >= 0 ? "Ingreso" : "Egreso")} />
+                            </SView>
+                        </SView>
+                        <View style={{
+                            width: 100,
+                            height: 50,
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                            <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {monto}</Text>
+                        </View>
                     </SView>
-                    <View style={{
-                        width: 100,
-                        height: 50,
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
-                        <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {monto}</Text>
-                    </View>
-                </SView>
+                    <SHr />
+                </>
             );
         })
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SView, SForm, SInput, SPopup, SPopupClose, SPopupOpen, SScrollView2, SNavigation } from 'servisofts-component'
+import { SView, SForm, SInput, SPopup, SPopupClose, SPopupOpen, SScrollView2, SNavigation, SPage } from 'servisofts-component'
 import { connect } from 'react-redux';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent/index';
 import CuentaBanco from '../CuentaBanco';
@@ -8,6 +8,7 @@ import TipoMovimiento from './TipoMovimiento';
 import Sucursal from './Sucursal';
 import BancoSelect from "../BancoSelect"
 import SSocket from 'servisofts-socket';
+import BarraSuperior from '../../../../Components/BarraSuperior';
 let ReducerName = "cuentaBancoMovimientoReducer";
 let component = "cuentaBancoMovimiento";
 
@@ -46,19 +47,24 @@ class CuentaBancoMovimientoRegistroPage extends Component {
         }
         return <>
             <SView col={"xs-12"} height={16}></SView>
-            <SInput
-                props={{
-                    label: `${this.state.cuenta.descripcion}`,
-                    type: "select",
-                    customStyle: "calistenia",
-                    isRequired: true,
-                    placeholder: "Cuenta",
-                    style: {
-                        height: 50,
-                    },
-                    value: this.state.cuenta.codigo,
-                    col: "xs-11 md-6 xl-4",
-                    onPress: () => {
+            <SView col="xs-11 md-6 xl-4">
+                <SInput
+                    editable={false}
+                    props={{
+
+                        label: `${this.state.cuenta.descripcion}`,
+                        // type: "select",
+                        customStyle: "calistenia",
+                        isRequired: true,
+                        placeholder: "Cuenta",
+                        style: {
+                            height: 50,
+                        },
+
+
+                    }}
+                    value={this.state.cuenta.codigo}
+                    onPress={() => {
                         // if (this.props.preventEdit) return;
                         SPopupOpen({
                             key: "selectbanco",
@@ -78,7 +84,6 @@ class CuentaBancoMovimientoRegistroPage extends Component {
                                 //         }, this.props)
                                 //     }
                                 // }
-
                                 this.state.cuenta = cuenta_banco;
                                 this.setState({ ...this.state });
                             }} />
@@ -88,8 +93,8 @@ class CuentaBancoMovimientoRegistroPage extends Component {
 
                         //     }
                         // });
-                    },
-                }} />
+                    }} />
+            </SView>
             <SView col={"xs-12"} height={16}></SView>
         </>
     }
@@ -98,16 +103,20 @@ class CuentaBancoMovimientoRegistroPage extends Component {
         var reducer = this.props.state[ReducerName]
         if (reducer.estado == "exito" && reducer.type == "registro") {
             reducer.estado = "";
-            this.props.navigation.goBack();
+            SNavigation.goBack();
+            // this.props.navigation.goBack();
         }
         if (reducer.estado == "exito" && reducer.type == "editar") {
             reducer.estado = "";
-            this.props.navigation.goBack();
+            SNavigation.goBack();
+            // this.props.navigation.goBack();
         }
         return (
-            <Page title={"Nuevo Movimiento"}
-                navigation={this.props.navigation}
+            <SPage hidden
             >
+                <BarraSuperior goBack={() => {
+                    SNavigation.goBack();
+                }} />
                 <SScrollView2
                     style={{ width: "100%" }}
                     disableHorizontal
@@ -201,7 +210,7 @@ class CuentaBancoMovimientoRegistroPage extends Component {
                         />
                     </SView>
                 </SScrollView2>
-            </Page>
+            </SPage>
         );
     }
 }

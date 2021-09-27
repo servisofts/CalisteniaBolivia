@@ -42,7 +42,9 @@ class index extends Component {
                 width: "100%",
                 height: 10,
                 backgroundColor: '#00000044',
-                alignItems: "flex-end"
+                alignItems: "flex-end",
+                overflow: 'hidden',
+                borderRadius: 10,
 
             }}>
                 <Animated.View style={{

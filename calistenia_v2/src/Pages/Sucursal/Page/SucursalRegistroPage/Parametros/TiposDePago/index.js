@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
+// import TipoPago from '../../../../../TipoPago';
+// import Actions from '../../../../Actions';
+import { SInput, SPopup, SPopupClose, SPopupOpen, SText, SView } from 'servisofts-component';
+import Sucursal from '../../../..';
+import Banco from '../../../../../Banco';
+import BancoSelect from '../../../../../Banco/Pages/BancoSelect';
 import TipoPago from '../../../../../TipoPago';
-import Actions from '../../../../Actions';
-import AppParams from '../../../../Params';
-import { SInput, SPopup, SPopupClose, SPopupOpen, SText, SView } from '../../../../SComponent';
-import Svg from '../../../../Svg/index';
-import BancoSelect from '../../../Banco/BancoSelect';
 type TiposDePagoType = {
     value: String,
     preventEdit: Boolean,
@@ -34,7 +35,7 @@ class TiposDePago extends Component<TiposDePagoType> {
         //     this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
         //     return false;
         // }
-        return TipoPago.Actions.getAll(this.props);
+        return TipoPago.Actions.getAll(this.props)
     }
     getMonto(obj) {
         var total = 0;
@@ -61,8 +62,8 @@ class TiposDePago extends Component<TiposDePagoType> {
     }
     getLista() {
         var data = this.getAll();
-        var sucursalTipoPagoCuentaBanco = Actions.SucursalTipoPagoCuentaBanco.getByKeySucursal(this.props.key_sucursal, this.props);
-        var cuentaBanco = Actions.CuentaBanco.getAll(this.props);
+        var sucursalTipoPagoCuentaBanco = Sucursal.SucursalTipoPagoCuentaBanco.getByKeySucursal(this.props.key_sucursal, this.props);
+        var cuentaBanco = Banco.Actions.getAllCuentaBancos(this.props);
         if (!data) return <ActivityIndicator color={"#fff"} />
         if (!sucursalTipoPagoCuentaBanco) return <ActivityIndicator color={"#fff"} />
         if (!cuentaBanco) return <ActivityIndicator color={"#fff"} />
@@ -71,13 +72,7 @@ class TiposDePago extends Component<TiposDePagoType> {
             var obj = data[key];
             if (obj) {
                 var Icono;
-                switch (obj.key) {
-                    case "1": Icono = <Svg name={"money"} style={{ width: "100%", height: "100%" }} />; break;
-                    case "2": Icono = <Svg name={"card"} style={{ width: "100%", height: "100%" }} />; break;
-                    case "3": Icono = <Svg name={"qr"} style={{ width: "100%", height: "100%" }} />; break;
-                    case "4": Icono = <Svg name={"cheque"} style={{ width: "100%", height: "100%" }} />; break;
-                }
-
+                Icono = TipoPago.Actions.getIcon(obj.key);
                 if (!this.state.cuenta[key]) this.state.cuenta[key] = {};
                 var cuenta = sucursalTipoPagoCuentaBanco[obj.key];
                 if (cuenta) {
@@ -86,99 +81,96 @@ class TiposDePago extends Component<TiposDePagoType> {
                     }
                 }
                 return <SView col={"xs-12"} row style={{
-                    marginTop: 8,
                 }}>
-                    <SView props={{
-                        col: "xs-3 md-2",
-                        variant: ["center"]
-                    }} style={{
-                        height: 95,
-                    }}>
+                    <SView
+                        col={"xs-3"}
+                        center
+                        style={{
+                            height: 100,
+                            // width: 100,
+                        }}>
                         <SView
-                            props={{
-                                variant: "center"
-                            }}
                             style={{
-                                padding: 0,
-                                margin: 0,
-                                width: "60%",
-                                height: "60%",
+                                // width: "60%",
                                 borderRadius: 4,
-                                // backgroundColor: "#66000044"
                             }}>
-                            {Icono}
+                            <SView width={40}>
+                                {Icono}
+                            </SView>
                         </SView>
-                        <SText style={{
-                            color: "#fff",
-                            textAlign: "center",
-                            textTransform: "capitalize"
-                        }}>{obj.descripcion}</SText>
+                        <SView col={"xs-12"} center>
+                            <SText style={{
+                                color: "#fff",
+                                textAlign: "center",
+                                textTransform: "capitalize"
+                            }} center>{obj.descripcion}</SText>
+
+                        </SView>
 
                     </SView>
                     <SView flex style={{
                         height: "100%",
                     }}>
                         <SInput
+                            editable={false}
+                            value={this.state.cuenta[key].codigo}
                             props={{
                                 label: `${this.state.cuenta[key].descripcion}`,
-                                type: "select",
+                                // type: "select",
                                 customStyle: "calistenia",
                                 isRequired: true,
                                 placeholder: "Cuenta",
                                 style: {
                                     height: 50,
                                 },
-                                value: this.state.cuenta[key].codigo,
-                                col: "xs-11.5",
-                                onPress: () => {
-                                    if (this.props.preventEdit) return;
-                                    SPopupOpen({
-                                        key: "selectbanco",
-                                        content: <BancoSelect onSelect={(cuenta_banco) => {
-                                            SPopupClose("selectbanco");
-                                            if (!this.props.preventEdit) {
-                                                if (!cuenta) {
-                                                    Actions.SucursalTipoPagoCuentaBanco.registro({
-                                                        key_sucursal: this.props.key_sucursal,
-                                                        key_tipo_pago: obj.key,
-                                                        key_cuenta_banco: cuenta_banco.key
-                                                    }, this.props)
-                                                } else {
-                                                    Actions.SucursalTipoPagoCuentaBanco.editar({
-                                                        ...cuenta,
-                                                        key_cuenta_banco: cuenta_banco.key
-                                                    }, this.props)
-                                                }
+
+                            }} onPress={() => {
+                                if (this.props.preventEdit) return;
+                                SPopupOpen({
+                                    key: "selectbanco",
+                                    content: <BancoSelect onSelect={(cuenta_banco) => {
+                                        SPopupClose("selectbanco");
+                                        if (!this.props.preventEdit) {
+                                            if (!cuenta) {
+                                                Sucursal.SucursalTipoPagoCuentaBanco.registro({
+                                                    key_sucursal: this.props.key_sucursal,
+                                                    key_tipo_pago: obj.key,
+                                                    key_cuenta_banco: cuenta_banco.key
+                                                }, this.props)
+                                            } else {
+                                                Sucursal.SucursalTipoPagoCuentaBanco.editar({
+                                                    ...cuenta,
+                                                    key_cuenta_banco: cuenta_banco.key
+                                                }, this.props)
                                             }
+                                        }
 
-                                            this.state.cuenta[key] = cuenta_banco;
-                                            this.setState({ ...this.state });
-                                        }} />
-                                    })
-                                    // this.props.navigation.navigate("BancoPage", {
-                                    //     onSelect: (cuenta) => {
+                                        this.state.cuenta[key] = cuenta_banco;
+                                        this.setState({ ...this.state });
+                                    }} />
+                                })
+                                // this.props.navigation.navigate("BancoPage", {
+                                //     onSelect: (cuenta) => {
 
-                                    //     }
-                                    // });
-                                },
+                                //     }
+                                // });
                             }} />
                     </SView>
-                    <SView col={"xs-2"} center style={{
+                    {/* <SView col={"xs-2"} center style={{
                         height: "100%",
                         paddingTop: 16,
                     }}>
                         {this.getMonto(obj)}
-                    </SView>
+                    </SView> */}
                 </SView>
             }
         })
     }
     render() {
         return (
-            <SView props={{
-                col: "xs-11.8",
-                variant: "center",
-            }} center>
+            <SView
+                col={"xs-11.8"}
+                center>
                 {this.getLista()}
             </SView>
         );

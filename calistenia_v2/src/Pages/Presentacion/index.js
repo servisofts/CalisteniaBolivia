@@ -12,10 +12,10 @@ class Presentacion extends Component {
     }
 
     render() {
-        if (Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("inicio");
-            return null;
-        }
+        // if (Usuario.Actions.getUsuarioLogueado(this.props)) {
+        //     SNavigation.replace("inicio");
+        //     return null;
+        // }
         return (
             <SPage hidden>
                 <SView flex center>

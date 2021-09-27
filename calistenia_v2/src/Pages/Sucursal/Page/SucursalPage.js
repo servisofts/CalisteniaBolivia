@@ -13,11 +13,17 @@ class SucursalPage extends Component {
         super(props);
         this.state = {
         };
+        this.onSelect = SNavigation.getParam("onSelect");
+        if (typeof this.onSelect !== "function") {
+            // SNavigation.goBack();
+            this.onSelect = null;
+        }
     }
     getLista() {
         var data = Sucursal.Actions.getAll(this.props);
         if (!data) return <SLoad />;
         // return 
+
         return Object.keys(data).map((key) => {
             return <SucursalItem key_sucursal={key} onPress={(obj) => {
                 if (this.onSelect) {

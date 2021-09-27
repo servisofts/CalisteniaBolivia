@@ -49,4 +49,5 @@ export default class Actions {
         }
         return data[key_sucursal];
     }
+    
 }

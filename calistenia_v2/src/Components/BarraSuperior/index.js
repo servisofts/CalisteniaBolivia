@@ -3,7 +3,8 @@ import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native
 import { connect } from 'react-redux';
 import { SIcon, SImage, SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-// import RelojCaja from '../../Pages/Caja/RelojCaja';
+import RelojCaja from '../../Pages/Caja/Page/RelojCaja';
+import LogoAnimado from '../../Pages/CargaPage/LogoAnimado';
 // import RelojEntrenamiento from '../../Pages/EntrenamientoPage/Entrenamiento/RelojEntrenamiento';
 // import AppParams from '../../Params';
 // import Svg from '../../Svg';
@@ -134,7 +135,11 @@ class BarraSuperior extends Component {
                         backgroundColor: "#000",
                         justifyContent: "center",
                         alignItems: "center",
-                    }} activeOpacity={0.9} onPress={this.props.goBack}>
+                    }} activeOpacity={0.9} onPress={() => {
+                        if (this.props.goBack) {
+                            this.props.goBack()
+                        }
+                    }}>
                         {!this.props.goBack ? <View /> : <SIcon name={"Arrow"} width={25} />}
 
                     </TouchableOpacity>
@@ -154,15 +159,15 @@ class BarraSuperior extends Component {
 
                 <View style={{
                     width: 100,
-                    height: "100%",
-                    padding: 10,
+                    padding: 4,
                     // backgroundColor: "#fff"
                 }}>
-                    <SIcon name={"Arrow"} width={10} height={10} />
+                    <LogoAnimado fill={"#222222"} duration={1000} />
+                    {/* <SIcon name={""} width={10} height={10} /> */}
 
                 </View>
                 {/* <RelojEntrenamiento navigation={this.props.navigation} /> */}
-                {/* <RelojCaja navigation={this.props.navigation} /> */}
+                <RelojCaja navigation={this.props.navigation} />
             </Animated.View>
         );
     }

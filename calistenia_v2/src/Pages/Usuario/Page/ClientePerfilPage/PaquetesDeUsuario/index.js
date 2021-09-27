@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SDateFormat, SFechaFormat } from '../../../Component/SFecha';
-import AppParams from '../../../Params';
-import SOrdenador from '../../../Component/SOrdenador';
-import { SPopupClose, SPopupOpen } from '../../../SComponent/SPopup/index';
-import { SText } from '../../../SComponent/SText/index';
-import { SView } from '../../../SComponent/SView/index';
-import BackgroundImage from '../../../Component/BackgroundImage/index';
-import { SButtom, SF, SLoad, SPopup } from '../../../SComponent';
-import Actions from '../../../Actions';
-import Svg from '../../../Svg';
+import { SText, SView, SButtom, SLoad, SPopup, SPopupClose, SPopupOpen, SOrdenador, SImage, SPage, SIcon, SNavigation } from 'servisofts-component';
 import Paquete_Item from './Paquete_Item';
-import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
+import { SSRolesPermisosValidate } from '../../../../../SSRolesPermisos';
+import SSocket from 'servisofts-socket';
+import Sucursal from '../../../../Sucursal';
+import Usuario from '../../..';
 class PaquetesDeUsuario extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +24,7 @@ class PaquetesDeUsuario extends Component {
             estado: "cargando",
             key_usuario: this.props.state.usuarioReducer.usuarioLog.key
         }
-        this.props.state.socketReducer.session[AppParams.socket.name].send(obj, true);
+        SSocket.send(obj, true);
         // return null;
     }
     getPaquete(key) {
@@ -45,13 +39,14 @@ class PaquetesDeUsuario extends Component {
                 estado: "cargando",
                 key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             }
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            SSocket.send(object, true);
             return false;
         }
         return data[key];
     }
     getSucursal(key_sucursal) {
-        var data = Actions.Sucursal.getAll(this.props);
+
+        var data = Sucursal.Actions.getAll(this.props);
         if (!data) return <View />
         var obj = data[key_sucursal]
         if (!obj) return <View />
@@ -60,7 +55,7 @@ class PaquetesDeUsuario extends Component {
         </SView>
     }
     getUsuario(key_usuario) {
-        var data = Actions.Usuario.getAll(this.props);
+        var data = Usuario.Actions.getAll(this.props);
         if (!data) return <View />
         var obj = data[key_usuario]
         if (!obj) return <View />
@@ -99,9 +94,9 @@ class PaquetesDeUsuario extends Component {
                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                     data: obj
                 }
-                this.props.state.socketReducer.session[AppParams.socket.name].send(objSen, true);
+                SSocket.send(objSen, true);
             }}>
-            <Svg name={"Delete"} style={{
+            <SIcon name={"Delete"} style={{
                 width: 19,
                 height: 19,
             }} />
@@ -119,7 +114,7 @@ class PaquetesDeUsuario extends Component {
                 estado: "cargando",
                 key_usuario: this.props.key_usuario
             }
-            this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+            SSocket.send(object, true);
             return <View />
         }
 
@@ -131,7 +126,7 @@ class PaquetesDeUsuario extends Component {
         ).map((key) => {
             var obj = data[key];
             var paquete = this.getPaquete(obj.key_paquete);
-            var urlImagePaquete = AppParams.urlImages + "paquete_" + obj.key_paquete;
+            var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete;
             if (!paquete) {
                 return <SLoad />
             }
@@ -167,10 +162,11 @@ class PaquetesDeUsuario extends Component {
                         height: 40,
                         backgroundColor: "#ff999933"
                     }}>
-                        {this.props.state.imageReducer.getImage(urlImagePaquete, {
+                        <SImage src={urlImagePaquete} />
+                        {/* {this.props.state.imageReducer.getImage(urlImagePaquete, {
                             resizeMode: "cover",
                             objectFit: "cover"
-                        })}
+                        })} */}
                     </View>
                     <View style={{
                         flex: 4,
@@ -195,7 +191,7 @@ class PaquetesDeUsuario extends Component {
                         <Text style={{
                             color: "#ffffff",
                             fontSize: 14,
-                        }}>Bs. {SF.formatMoney(obj.monto)}</Text>
+                        }}>Bs. {obj.monto}</Text>
                     </View>
 
                     {/* <View style={{
@@ -234,12 +230,8 @@ class PaquetesDeUsuario extends Component {
                 SPopupOpen({
                     key: "errorPaquete",
                     content: (
-                        <SView props={{
-                            col: "xs-12",
-                            variant: "center",
-                            customStyle: "primary",
-                        }} style={{ height: 200, borderRadius: 8, }}>
-                            <BackgroundImage />
+                        <SView col={"xs-11 md-8"} backgroundColor={"#000000"} center style={{ height: 200, borderRadius: 8, }}>
+                            {SPage.backgroundComponent}
                             <SView style={{
                                 width: "100%",
                                 height: "100%",
@@ -259,10 +251,11 @@ class PaquetesDeUsuario extends Component {
 
             this.props.navigation.navigate("PaquetePage", {
                 type: "select",
-                onResult: (key) => {
+                onSelect: (obj) => {
+                    SNavigation.goBack();
                     this.props.navigation.navigate("ClientePaqueteRegistroPage", {
                         key_usuario: this.props.key_usuario,
-                        key_paquete: key,
+                        key_paquete: obj.key,
                     });
                 }
             });

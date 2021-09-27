@@ -21,16 +21,19 @@ class UsuarioPage extends Component {
 
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    if(this.props.state.usuarioReducer.usuarioLog){
+      var object = {
+        component: "usuario",
+        version: "2.0",
+        type: "getAll",
+        estado: "cargando",
+        cabecera: "registro_administrador",
+        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+      }
+      SSocket.send(object);
+  
     }
-    SSocket.send(object);
-
+    
   }
   pagination = (listaKeys) => {
     if (!listaKeys) {

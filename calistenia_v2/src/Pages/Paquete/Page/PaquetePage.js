@@ -14,6 +14,7 @@ class PaquetePage extends Component {
         super(props);
         this.state = {
         };
+        this.onSelect = SNavigation.getParam("onSelect");
     }
     getLista() {
 
@@ -30,7 +31,6 @@ class PaquetePage extends Component {
             return <PaqueteItem key_paquete={key} onPress={(obj) => {
                 if (this.onSelect) {
                     this.onSelect(obj);
-                    this.props.navigation.goBack();
                     return;
                 }
                 SNavigation.navigate("PaquetePage/perfil", {

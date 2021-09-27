@@ -4,6 +4,7 @@ import { SButtom, SForm, SLoad, SNavigation, SPage, SScrollView2, SText, SView }
 import Sucursal from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent';
+import Parametros from './Parametros';
 
 class SucursalRegistro extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class SucursalRegistro extends Component {
     getForm() {
 
         return <SForm
-            ref={(ref) => {this.form = ref}}
+            ref={(ref) => { this.form = ref }}
             props={{
                 col: "xs-12"
             }}
@@ -63,7 +64,6 @@ class SucursalRegistro extends Component {
                         this.form.submit();
                     }}
                 >{(this.key_sucursal ? "Editar" : "Crear")}</SButtom>
-
             </SView>
         </SView>)
     }
@@ -85,6 +85,7 @@ class SucursalRegistro extends Component {
                     <SView center col={"xs-12"}>
                         {this.getPerfil()}
                     </SView>
+                    <Parametros data={this.data} />
                 </SScrollView2>
 
             </SPage>

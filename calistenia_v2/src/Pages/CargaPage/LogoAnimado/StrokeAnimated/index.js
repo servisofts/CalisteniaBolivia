@@ -13,11 +13,12 @@ export default class StrokeAnimated extends Component {
             anim: new Animated.ValueXY({ x: 0, y: 0 }),
         };
     }
-    static defaultprops = {
+    static defaultProps = {
         d: "",
         fill: "#fff",
         stroke: "#fff",
         strokeWidth: 0,
+        duration: 2500
     }
     componentDidMount() {
         this.fadeIn();
@@ -25,7 +26,7 @@ export default class StrokeAnimated extends Component {
     fadeIn = (time) => {
         Animated.timing(this.state.anim, {
             toValue: { x: 1, y: 1 },
-            duration: 2500
+            duration: this.props.duration
         }).start();
     }
     render() {
@@ -40,8 +41,8 @@ export default class StrokeAnimated extends Component {
                     outputRange: [0, 300]
                 })}
                 fill={this.state.anim.y.interpolate({
-                    inputRange: [0, 0.99,1],
-                    outputRange: ["#00000000",this.props.fill + "00" ,this.props.fill + "ff"]
+                    inputRange: [0, 0.99, 1],
+                    outputRange: ["#00000000", this.props.fill + "00", this.props.fill + "ff"]
                 })}
                 key={this.props.key}
             />

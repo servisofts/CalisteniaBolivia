@@ -18,6 +18,7 @@ class VentasPage extends Component {
         curPage: 1,
       }
     };
+    this.select = SNavigation.getParam("select");
 
   }
   componentDidMount() {
@@ -104,6 +105,11 @@ class VentasPage extends Component {
           borderRadius: 10,
           backgroundColor: "#66000044"
         }} onPress={() => {
+          if (this.select) {
+            this.select(obj);
+            SNavigation.goBack();
+            return;
+          }
           SNavigation.navigate("ClientePerfilPage", {
             key: key
           })

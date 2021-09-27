@@ -1,5 +1,6 @@
 import { SPageListProps } from 'servisofts-component'
 import Actions from './Actions'
+import SucursalTipoPagoCuentaBanco from './SucursalTipoPagoCuentaBanco'
 
 import SucursalPage from './Page/SucursalPage'
 import SucursalRegistroPage from './Page/SucursalRegistroPage'
@@ -10,13 +11,16 @@ const Pages: SPageListProps = {
 }
 
 import sucursalReducer from './Reducer/sucursalReducer'
+import sucursalTipoPagoCuentaBancoReducer from './Reducer/sucursalTipoPagoCuentaBancoReducer'
 const Reducers = {
-    sucursalReducer
+    sucursalReducer,
+    sucursalTipoPagoCuentaBancoReducer
 }
 
 
 export default {
     Pages,
     Actions,
-    Reducers
+    Reducers,
+    SucursalTipoPagoCuentaBanco
 };

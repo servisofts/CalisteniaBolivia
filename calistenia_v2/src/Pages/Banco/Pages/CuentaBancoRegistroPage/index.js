@@ -65,66 +65,70 @@ class CuentaBancoRegistroPage extends Component {
             <SPage
                 hidden
             >
-                <BarraSuperior title={"Registro de " + component} goBack={()=>{
+                <BarraSuperior title={"Registro de " + component} goBack={() => {
                     SNavigation.goBack();
-                }}/>
-                <SView col={"xs-12"} center >
-                    <FotoPerfilComponent data={this.data} component={component} style={{
-                        width: 150,
-                        height: 150,
-                    }} />
+                }} />
+                <SView col={"xs-12"} center>
+                    <SView col={"xs-11 md-7 xl-5"} center>
+                        <SView col={"xs-12"} center >
+                            <FotoPerfilComponent data={this.data} component={component} style={{
+                                width: 150,
+                                height: 150,
+                            }} />
+                        </SView>
+                        <SForm
+                            props={{
+                                center: true,
+                                col: "xs-12"
+                            }}
+                            inputProps={{
+                                customStyle: "calistenia",
+                            }}
+                            inputs={{
+                                descripcion: {
+                                    type: 'text',
+                                    label: 'Descripcion',
+                                    defaultValue: this.data.descripcion,
+                                    isRequired: true,
+                                    col: "xs-11 md-8 xl-6"
+                                },
+                                codigo: {
+                                    type: 'text',
+                                    label: 'Codigo',
+                                    defaultValue: this.data.codigo,
+                                    isRequired: true,
+                                    col: "xs-11 md-8 xl-6"
+                                },
+                                // moneda: {
+                                //     type: 'text',
+                                //     label: 'Moneda',
+                                //     defaultValue: this.data.moneda,
+                                //     isRequired: true,
+                                //     col: "xs-11 md-8 xl-6"
+                                // }
+                            }}
+                            onSubmitProps={{
+                                type: "outline"
+                            }}
+                            onSubmit={(data) => {
+                                var object = {
+                                    component: component,
+                                    type: this.data.key ? "editar" : "registro",
+                                    estado: "cargando",
+                                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                                    data: {
+                                        key_banco: this.key_banco,
+                                        ...this.data,
+                                        ...data,
+                                    },
+                                }
+                                SSocket.send(object);
+                            }}
+                            onSubmitName={this.data.key ? "Editar" : "Registro"}
+                        />
+                        {this.getEliminar()}
+                    </SView>
                 </SView>
-                <SForm
-                    props={{
-                        variant: "center",
-                        col: "xs-12"
-                    }}
-                    inputProps={{
-                        customStyle: "calistenia",
-                    }}
-                    inputs={{
-                        descripcion: {
-                            type: 'text',
-                            label: 'Descripcion',
-                            defaultValue: this.data.descripcion,
-                            isRequired: true,
-                            col: "xs-11 md-8 xl-6"
-                        },
-                        codigo: {
-                            type: 'text',
-                            label: 'Codigo',
-                            defaultValue: this.data.codigo,
-                            isRequired: true,
-                            col: "xs-11 md-8 xl-6"
-                        },
-                        // moneda: {
-                        //     type: 'text',
-                        //     label: 'Moneda',
-                        //     defaultValue: this.data.moneda,
-                        //     isRequired: true,
-                        //     col: "xs-11 md-8 xl-6"
-                        // }
-                    }}
-                    onSubmitProps={{
-                        type: "outline"
-                    }}
-                    onSubmit={(data) => {
-                        var object = {
-                            component: component,
-                            type: this.data.key ? "editar" : "registro",
-                            estado: "cargando",
-                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                            data: {
-                                key_banco: this.key_banco,
-                                ...this.data,
-                                ...data,
-                            },
-                        }
-                        SSocket.send(object);
-                    }}
-                    onSubmitName={this.data.key ? "Editar" : "Registro"}
-                />
-                {this.getEliminar()}
             </SPage>
         );
     }

@@ -3,12 +3,12 @@ export default class index {
     static component = "sucursalTipoPagoCuentaBanco"
     static reducerName = "sucursalTipoPagoCuentaBancoReducer";
     static getByKeySucursal(key_sucursal, props) {
-        var reducer = props.state[index.reducerName];
+        var reducer = props.state["sucursalTipoPagoCuentaBanco"];
         var data = reducer.data[key_sucursal];
         if (!data) {
             if (reducer.estado == "cargando") return;
             props.state.socketReducer.session[AppParams.socket.name].send({
-                component: index.component,
+                component: "sucursalTipoPagoCuentaBanco",
                 type: "getByKeySucursal",
                 estado: "cargando",
                 key_sucursal: key_sucursal,
@@ -20,10 +20,10 @@ export default class index {
     }
 
     static registro({ key_sucursal, key_cuenta_banco, key_tipo_pago }, props) {
-        var reducer = props.state[index.reducerName];
+        var reducer = props.state["sucursalTipoPagoCuentaBanco"];
         if (reducer.estado == "cargando") return;
         props.state.socketReducer.session[AppParams.socket.name].send({
-            component: index.component,
+            component: "sucursalTipoPagoCuentaBanco",
             type: "registro",
             estado: "cargando",
             data: {
@@ -36,10 +36,10 @@ export default class index {
         return;
     }
     static editar(data, props) {
-        var reducer = props.state[index.reducerName];
+        var reducer = props.state["sucursalTipoPagoCuentaBanco"];
         if (reducer.estado == "cargando") return;
         props.state.socketReducer.session[AppParams.socket.name].send({
-            component: index.component,
+            component: "sucursalTipoPagoCuentaBanco",
             type: "editar",
             estado: "cargando",
             data,

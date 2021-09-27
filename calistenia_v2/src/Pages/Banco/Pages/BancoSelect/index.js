@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import { connect } from 'react-redux';
-import { SText, SScrollView2, SView, SPage } from 'servisofts-component';
+import { SText, SScrollView2, SView, SPage, SImage, SHr } from 'servisofts-component';
 import CuentaBancoLista from '../CuentaBancoLista/index';
 import SSocket from 'servisofts-socket';
 let component = "banco";
@@ -35,44 +35,46 @@ class BancoSelect extends Component {
         return Object.keys(data).map((key) => {
             var obj = data[key];
             return (
-                <SView col={"xs-12"} key={obj.key} style={{
-                    borderRadius: 8,
-                    marginBottom: 8,
-                    backgroundColor: "#66000044",
-                }} row>
-                    <SView col={"xs-12"} row style={{
-                        height: 60,
-                    }}>
-                        <SView style={{
-                            width: 60,
+                <>
+                    <SView col={"xs-12"} key={obj.key} style={{
+                        borderRadius: 8,
+                        backgroundColor: "#66000044",
+                    }} row>
+                        <SView col={"xs-12"} row style={{
                             height: 60,
-                        }} center>
-                            <SView style={{
-                                width: 45,
-                                height: 45,
-                                borderRadius: 8,
-                                overflow: "hidden"
-                            }}>
-                                <SImage src={SSocket.api.root + component + "_" + obj.key} />
-                            </SView>
-
-                        </SView>
-                        <SView style={{
-                            height: "100%",
-                            justifyContent: "center",
                         }}>
-                            <SText style={{
-                                fontSize: 16,
-                            }} >{obj.descripcion}</SText>
+                            <SView style={{
+                                width: 60,
+                                height: 60,
+                            }} center>
+                                <SView style={{
+                                    width: 45,
+                                    height: 45,
+                                    borderRadius: 8,
+                                    overflow: "hidden"
+                                }}>
+                                    <SImage src={SSocket.api.root + component + "_" + obj.key} />
+                                </SView>
+
+                            </SView>
+                            <SView style={{
+                                height: "100%",
+                                justifyContent: "center",
+                            }}>
+                                <SText style={{
+                                    fontSize: 16,
+                                }} >{obj.descripcion}</SText>
+                            </SView>
+                        </SView>
+
+                        <SView col={"xs-12"} style={{
+                            height: "100%",
+                        }}>
+                            <CuentaBancoLista data={obj} navigation={this.props.navigation} onSelect={this.props.onSelect} />
                         </SView>
                     </SView>
-
-                    <SView col={"xs-12"} style={{
-                        height: "100%",
-                    }}>
-                        <CuentaBancoLista data={obj} navigation={this.props.navigation} onSelect={this.props.onSelect} />
-                    </SView>
-                </SView>
+                    <SHr />
+                </>
             );
         })
 
@@ -82,6 +84,7 @@ class BancoSelect extends Component {
             <SView col={"xs-12 md-9 xl-7"} style={{
                 height: 1000,
                 maxHeight: "100%",
+                backgroundColor: "#000",
                 borderRadius: 8,
 
             }}>

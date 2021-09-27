@@ -7,6 +7,9 @@ import TipoPago from '../Pages/TipoPago';
 import Paquete from '../Pages/Paquete';
 import Servicio from '../Pages/Servicio';
 import Banco from '../Pages/Banco';
+import Caja from '../Pages/Caja';
+import PaqueteVenta from '../Pages/PaqueteVenta';
+import Entrenamiento from '../Pages/Entrenamiento';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
@@ -14,7 +17,10 @@ const reducers = combineReducers({
     ...TipoPago.Reducers,
     ...Paquete.Reducers,
     ...Servicio.Reducers,
-    ...Banco.Reducers
+    ...Banco.Reducers,
+    ...Caja.Reducers,
+    ...PaqueteVenta.Reducers,
+    ...Entrenamiento.Pages
 });
 
 export default (state, action) => {

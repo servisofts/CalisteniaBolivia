@@ -10,8 +10,11 @@ import AjustesPage from './AjustesPage';
 import Sucursal from './Sucursal';
 import TipoPago from './TipoPago';
 import Paquete from './Paquete';
+import PaqueteVenta from './PaqueteVenta';
 import Servicio from './Servicio';
 import Banco from './Banco';
+import Caja from './Caja';
+import Entrenamiento from './Entrenamiento';
 const Pages: SPageListProps = {
     "inicio": InicioPage,
     "carga": CargaPage,
@@ -23,6 +26,9 @@ const Pages: SPageListProps = {
     ...TipoPago.Pages,
     ...Paquete.Pages,
     ...Servicio.Pages,
-    ...Banco.Pages
+    ...Banco.Pages,
+    ...Caja.Pages,
+    ...PaqueteVenta.Pages,
+    ...Entrenamiento.Pages
 }
 export default Pages;

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SText, SView } from '../../../SComponent';
+import { SDate, SText, SView } from 'servisofts-component';
 
 class index extends Component {
     constructor(props) {
@@ -24,16 +24,16 @@ class index extends Component {
         this.animation.setValue(faltantes / maxDay);
         return <View style={{
             width: "100%",
-            padding:4,
+            padding: 4,
         }}>
             <SView col={"xs-12"} row>
                 <SView col={"xs-6"}>
-                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_inicio,"yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
+                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_inicio, "yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
                 </SView>
                 <SView col={"xs-6"} style={{
                     alignItems: 'flex-end',
                 }}>
-                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_fin,"yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
+                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_fin, "yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
                 </SView>
             </SView>
             <SView height={4} />
@@ -42,6 +42,8 @@ class index extends Component {
                 height: 10,
                 backgroundColor: '#00000044',
                 alignItems: "flex-end",
+                overflow: 'hidden',
+                borderRadius: 10,
             }}>
                 <Animated.View style={{
                     width: this.animation.interpolate({
