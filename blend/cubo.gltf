@@ -20,7 +20,7 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "Cube",
+            "name" : "face6",
             "translation" : [
                 0,
                 0.9421519041061401,
@@ -47,7 +47,7 @@
         },
         {
             "mesh" : 3,
-            "name" : "Cube.003",
+            "name" : "face4",
             "translation" : [
                 0,
                 0.9421519041061401,
