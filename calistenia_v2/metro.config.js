@@ -27,8 +27,8 @@ module.exports = (async () => {
       }),
     },
     watchFolders: [
-      path.resolve(__dirname, '../../servisofts-component/dist'),
-      path.resolve(__dirname, '../../servisofts-socket/dist'),
+      //path.resolve(__dirname, '../../servisofts-component/dist'),
+      //path.resolve(__dirname, '../../servisofts-socket/dist'),
     ],
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
