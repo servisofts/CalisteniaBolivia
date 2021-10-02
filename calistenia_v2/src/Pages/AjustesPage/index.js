@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { SIcon, SPage, SText, SView } from 'servisofts-component'
 import PerfilUsuario from './PerfilUsuario'
+import xlsx from  'xlsx-color'
 
 export default class AjustesPage extends Component {
     static navigationOptions = {
@@ -14,13 +15,65 @@ export default class AjustesPage extends Component {
         }
     }
 
+    exportXlsx(){
+        var xf = "./prueba.xlsx";
+        var spreadsheet = xlsx.utils.book_new();
+        var sheets = {
+            "Hoja 1": [
+              ["key", "Nombre", "Apellido", "Otro"],
+              ["xxx", "Ruddy", "Paz", "que se yo"],
+              ["xxx", "Ruddy", "Paz", "ni versasd"],
+              ["xxx", "Ruddy", "Paz", "MD¡asd"],
+              ["xxx", "Ruddy", "error2", "M2"],
+            ]
+          };
+          
+          for (var sheet of Object.keys(sheets)) {
+            xlsx.utils.book_append_sheet(
+              spreadsheet,
+              xlsx.utils.aoa_to_sheet(sheets[sheet]),
+              sheet
+            );
+          }
+          
+          var fill = {
+              patternType: "solid",
+              fgColor: { rgb: "FF0000" }
+          };
+          
+          var font = {
+              color : {
+                  rgb : "FFFFFF"
+              },
+              bold : true
+          };
+          var border = {
+              bottom : {
+                  style : "thin",
+                  color : {
+                      theme : 5,
+                      tint : "1",
+                      rgb: "000000"
+                  }
+              }
+          };
+          
+          spreadsheet.Sheets["Hoja 1"]["A1"].s = { fill, font, border };
+          spreadsheet.Sheets["Hoja 1"]["B1"].s = { fill };
+          spreadsheet.Sheets["Hoja 1"]["C1"].s = { fill };
+          spreadsheet.Sheets["Hoja 1"]["D1"].s = { fill };
+          
+          
+          xlsx.writeFile(spreadsheet, xf);
+    }
+
     getOptions({ title, icon }, isLine) {
         return <SView col={"xs-12"} style={{
             height: 50,
             backgroundColor: "#66000066",
             // borderRadius: 4,
         }} center row onPress={() => {
-
+            this.exportXlsx();
         }}>
             <SView style={{
                 width: 60,

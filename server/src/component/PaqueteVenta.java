@@ -137,6 +137,7 @@ public class PaqueteVenta {
 
                 data = clientes.getJSONObject(i).getJSONObject("data");
                 monto=0;
+                try{
                 for (int j = 0; j < JSONObject.getNames(data).length; j++) {                    
                     try{
                         data.getJSONObject(JSONObject.getNames(data)[j]);
@@ -192,6 +193,7 @@ public class PaqueteVenta {
                         }
                     }catch(Exception e){}
                 }
+            }catch(Exception e){}
 
                 clientes.getJSONObject(i).put("monto", monto);
                 //clientes.getJSONObject(i).put("key_tipo_pago", JSONObject.getNames(data)[j]);

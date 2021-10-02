@@ -15,43 +15,7 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "face6",
-            "translation" : [
-                0,
-                0.9421519041061401,
-                0
-            ]
-        },
-        {
-            "mesh" : 1,
-            "name" : "face3",
-            "translation" : [
-                0,
-                0.9421519041061401,
-                0
-            ]
-        },
-        {
-            "mesh" : 2,
-            "name" : "face2",
-            "translation" : [
-                0,
-                0.9421519041061401,
-                0
-            ]
-        },
-        {
-            "mesh" : 3,
-            "name" : "face4",
-            "translation" : [
-                0,
-                0.9421519041061401,
-                0
-            ]
-        },
-        {
-            "mesh" : 4,
-            "name" : "face5",
+            "name" : "cubo",
             "translation" : [
                 0,
                 0.9421519041061401,
@@ -107,11 +71,7 @@
     "materials" : [
         {
             "doubleSided" : true,
-<<<<<<< HEAD
-            "name" : "face6",
-=======
             "name" : "face2",
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
                     0.8000000715255737,
@@ -196,11 +156,7 @@
     ],
     "meshes" : [
         {
-<<<<<<< HEAD
-            "name" : "face6",
-=======
             "name" : "cubo",
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
             "primitives" : [
                 {
                     "attributes" : {
@@ -210,16 +166,7 @@
                     },
                     "indices" : 3,
                     "material" : 0
-<<<<<<< HEAD
-                }
-            ]
-        },
-        {
-            "name" : "face3",
-            "primitives" : [
-=======
                 },
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
                 {
                     "attributes" : {
                         "POSITION" : 4,
@@ -228,16 +175,7 @@
                     },
                     "indices" : 7,
                     "material" : 1
-<<<<<<< HEAD
-                }
-            ]
-        },
-        {
-            "name" : "face2",
-            "primitives" : [
-=======
                 },
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
                 {
                     "attributes" : {
                         "POSITION" : 8,
@@ -246,16 +184,7 @@
                     },
                     "indices" : 11,
                     "material" : 2
-<<<<<<< HEAD
-                }
-            ]
-        },
-        {
-            "name" : "face4",
-            "primitives" : [
-=======
                 },
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
                 {
                     "attributes" : {
                         "POSITION" : 12,
@@ -264,16 +193,7 @@
                     },
                     "indices" : 7,
                     "material" : 3
-<<<<<<< HEAD
-                }
-            ]
-        },
-        {
-            "name" : "face5",
-            "primitives" : [
-=======
                 },
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
                 {
                     "attributes" : {
                         "POSITION" : 15,
@@ -282,16 +202,7 @@
                     },
                     "indices" : 18,
                     "material" : 4
-<<<<<<< HEAD
-                }
-            ]
-        },
-        {
-            "name" : "face1",
-            "primitives" : [
-=======
                 },
->>>>>>> 0b27622fcdbfc22dfa6ea889af39b3a52822f132
                 {
                     "attributes" : {
                         "POSITION" : 19,
