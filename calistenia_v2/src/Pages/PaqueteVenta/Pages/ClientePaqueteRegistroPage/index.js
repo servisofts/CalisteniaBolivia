@@ -226,8 +226,10 @@ class ClientePaqueteRegistroPage extends Component {
                     return;
                   }
                   if (monto < this.state.paquete.precio) {
-                    SPopup.confirm(`Bs. ${monto} no es suficiente para el paquete, esta seguro de continuar? `, () => {
-                      this.continue();
+                    SPopup.confirm({
+                      title: `Bs. ${monto} no es suficiente para el paquete, esta seguro de continuar? `, onPress: () => {
+                        this.continue();
+                      }
                     })
                     return;
                   }

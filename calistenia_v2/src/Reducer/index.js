@@ -10,6 +10,7 @@ import Banco from '../Pages/Banco';
 import Caja from '../Pages/Caja';
 import PaqueteVenta from '../Pages/PaqueteVenta';
 import Entrenamiento from '../Pages/Entrenamiento';
+import Asistencia from '../Pages/Asistencia';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
@@ -20,7 +21,8 @@ const reducers = combineReducers({
     ...Banco.Reducers,
     ...Caja.Reducers,
     ...PaqueteVenta.Reducers,
-    ...Entrenamiento.Pages
+    ...Entrenamiento.Reducers,
+    ...Asistencia.Reducers
 });
 
 export default (state, action) => {

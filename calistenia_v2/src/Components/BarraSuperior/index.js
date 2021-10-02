@@ -5,6 +5,7 @@ import { SIcon, SImage, SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import RelojCaja from '../../Pages/Caja/Page/RelojCaja';
 import LogoAnimado from '../../Pages/CargaPage/LogoAnimado';
+import RelojEntrenamiento from '../../Pages/Entrenamiento/Pages/EntrenamientoPage/Entrenamiento/RelojEntrenamiento';
 // import RelojEntrenamiento from '../../Pages/EntrenamientoPage/Entrenamiento/RelojEntrenamiento';
 // import AppParams from '../../Params';
 // import Svg from '../../Svg';
@@ -166,7 +167,7 @@ class BarraSuperior extends Component {
                     {/* <SIcon name={""} width={10} height={10} /> */}
 
                 </View>
-                {/* <RelojEntrenamiento navigation={this.props.navigation} /> */}
+                <RelojEntrenamiento navigation={this.props.navigation} />
                 <RelojCaja navigation={this.props.navigation} />
             </Animated.View>
         );

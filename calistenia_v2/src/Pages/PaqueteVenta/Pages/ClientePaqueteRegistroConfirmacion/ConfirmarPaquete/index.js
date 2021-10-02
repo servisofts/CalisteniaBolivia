@@ -20,14 +20,13 @@ class ConfirmarPaquete extends Component {
         var clientes = this.props.data.usuariosData.map((obj, i) => {
             var tsk = this.props.data.tasks[i];
             var data = this.props.data.dataPagos[i];
-            // if(!data){
-
-            // }
+            if(!data) data = {};
+            alert(JSON.stringify(data))
             return {
                 ...obj,
                 fecha_inicio: tsk.fecha.toString("yyyy-MM-dd"),
                 fecha_fin: tsk.fecha.addDay(tsk.dias).toString("yyyy-MM-dd"),
-                data
+                data: data
             }
         });
 
@@ -182,7 +181,7 @@ class ConfirmarPaquete extends Component {
         return this.state.tipoPago.data.map((campo) => {
             return <SInput
                 ref={(ref) => { this.camposInputs[campo.dato] = ref; }}
-                props={{
+                {...{
                     col: "xs-12",
                     label: campo.dato,
                     customStyle: "calistenia",

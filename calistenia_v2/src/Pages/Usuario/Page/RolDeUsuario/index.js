@@ -6,12 +6,12 @@ import SSocket from 'servisofts-socket';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 const RolDeUsuario = (props) => {
+    if (!props.data) return <View />;
+    if (!props.data.key) return <View />;
 
     if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "ver_rol" })) {
         return <View />
     }
-    if (!props.data) return <View />;
-    if (!props.data.key) return <View />;
     var data = props.state.rolReducer.data;
     if (!data) {
         if (props.state.rolReducer.estado == "cargando") {

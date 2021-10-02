@@ -74,7 +74,7 @@ class EstadoCaja extends Component {
         this.montoCaja = data.monto;
         // if (this.montoCaja % 1 != 0) this.montoCaja = this.montoCaja.toFixed(2);
         // return <SText>{JSON.stringify(data,"\s","\t")}</SText>
-        return <SInput props={{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", }} value={data.monto + ""} editable={false} />
+        return <SInput {...{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", }} value={data.monto + ""} editable={false} />
     }
     apertura() {
         if (this.activa) {

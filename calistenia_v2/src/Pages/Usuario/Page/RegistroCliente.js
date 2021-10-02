@@ -14,23 +14,30 @@ class RegistroCliente extends Component {
         this.state = {
         };
         this.key = SNavigation.getParam("key");
+        this.key_rol = SNavigation.getParam("key_rol");
+        if (!this.key_rol) {
+            this.key_rol = "d16d800e-5b8d-48ae-8fcb-99392abdf61f";
+        }
 
     }
     getForm() {
 
         return <SForm
             ref={(ref) => { this.form = ref; }}
-            props={{
-                col: "xs-12"
+            row
+            style={{
+                justifyContent: "space-between",
             }}
             inputProps={{
+                col: "xs-12",
                 customStyle: "calistenia",
+
             }}
             inputs={{
                 Nombres: { label: "Usuario", isRequired: true, defaultValue: this.usr.Nombres, },
                 Apellidos: { label: "Apellidos", isRequired: true, defaultValue: this.usr.Apellidos, },
-                CI: { label: "CI", isRequired: true, defaultValue: this.usr.CI, },
-                "Fecha nacimiento": { label: "Fecha de nacimiento", type: "date", isRequired: true, defaultValue: this.usr["Fecha nacimiento"], },
+                CI: { label: "CI", isRequired: true, defaultValue: this.usr.CI, col: "xs-5.5" },
+                "Fecha nacimiento": { label: "Fecha de nacimiento", type: "date", isRequired: true, defaultValue: this.usr["Fecha nacimiento"], col: "xs-6" },
                 Correo: { label: "Correo", type: "email", isRequired: true, defaultValue: this.usr.Correo, },
                 Telefono: { label: "Telefono", type: "phone", isRequired: true, defaultValue: this.usr.Telefono, },
                 Password: { label: "Password", type: "password", isRequired: true, defaultValue: this.usr.Password, },
@@ -43,7 +50,7 @@ class RegistroCliente extends Component {
                     }, this.props);
 
                 } else {
-                    Usuario.Actions.registro_cliente(values, this.props);
+                    Usuario.Actions.registro(values, this.key_rol, this.props);
                 }
 
             }}
@@ -113,7 +120,7 @@ class RegistroCliente extends Component {
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={8} />
-                        <SText fontSize={20} bold>{`${this.key?"Edita el":"Registra tu"} usuario!`}</SText>
+                        <SText fontSize={20} bold>{`${this.key ? "Edita el" : "Registra tu"} usuario!`}</SText>
                         <SView height={8} />
                         {this.getForm()}
                         <SView height={16} />

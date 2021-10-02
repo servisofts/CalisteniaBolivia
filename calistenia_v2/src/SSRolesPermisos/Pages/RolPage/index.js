@@ -10,10 +10,6 @@ import SSocket from 'servisofts-socket';
 
 
 class RolPage extends Component {
-  static navigationOptions = {
-    title: "Lista de roles.",
-    headerShown: false,
-  }
   constructor(props) {
     super(props);
     this.state = {
@@ -94,9 +90,6 @@ class RolPage extends Component {
         if (reducer.estado == "cargando") {
           return <ActivityIndicator color={STheme.color.secondary} />
         }
-        if (reducer.estado == "error") {
-          return <Text>error</Text>
-        }
         var object = {
           component: "rol",
           type: "getAll",
@@ -104,7 +97,7 @@ class RolPage extends Component {
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
         }
         SSocket.send(object)
-        return <View />
+        return <ActivityIndicator color={STheme.color.secondary} />
       }
 
       return Object.keys(permisos).map((key) => {
@@ -177,9 +170,8 @@ class RolPage extends Component {
             width: "100%",
           }}>
             <SSCrollView disableHorizontal >
-              <SView center>
+              <SView center col={"xs-12"}>
                 {getLista()}
-
               </SView>
             </SSCrollView>
 

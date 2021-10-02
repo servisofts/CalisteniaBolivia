@@ -50,7 +50,7 @@ class CuentaBancoMovimientoRegistroPage extends Component {
             <SView col="xs-11 md-6 xl-4">
                 <SInput
                     editable={false}
-                    props={{
+                   {...{
 
                         label: `${this.state.cuenta.descripcion}`,
                         // type: "select",

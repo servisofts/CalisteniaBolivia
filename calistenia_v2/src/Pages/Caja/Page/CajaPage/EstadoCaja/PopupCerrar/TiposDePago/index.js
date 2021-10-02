@@ -286,7 +286,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                                         <SText style={{ fontSize: 10, color: "#999" }}>{`Total en caja`}</SText>
                                     </SView>
                                     <SView col={"xs-4"} center>
-                                        <SInput props={{
+                                        <SInput {...{
                                             type: "money",
                                             col: "xs-12",
                                         }}

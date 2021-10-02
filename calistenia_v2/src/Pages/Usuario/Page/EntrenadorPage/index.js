@@ -18,7 +18,7 @@ class EntrenadorPage extends Component {
         curPage: 1,
       }
     };
-
+    this.key_rol = "b5b4a616-dd16-4443-b859-39245f50c8df";
   }
   componentDidMount() {
     var object = {
@@ -72,7 +72,7 @@ class EntrenadorPage extends Component {
 
     const getLista = () => {
       var data = Usuario.Actions.getAll(this.props);
-      var dataRU = SSRolesPermisos.Events.getUsuarioRol("b5b4a616-dd16-4443-b859-39245f50c8df", this.props)
+      var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
       if (!data) return <SLoad />
       if (!dataRU) return <SLoad />
       if (!this.state.buscador) {
@@ -181,7 +181,9 @@ class EntrenadorPage extends Component {
             </SView>
           </SScrollView2>
           <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
-            SNavigation.navigate("registro")
+            SNavigation.navigate("registro",{
+              key_rol: this.key_rol
+            })
           }} />
         </View>
       </SPage>

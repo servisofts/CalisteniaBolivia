@@ -114,7 +114,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         <SInput
                             editable={false}
                             value={this.state.cuenta[key].codigo}
-                            props={{
+                            {...{
                                 label: `${this.state.cuenta[key].descripcion}`,
                                 // type: "select",
                                 customStyle: "calistenia",

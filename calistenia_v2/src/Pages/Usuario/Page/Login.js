@@ -19,17 +19,20 @@ class Login extends Component {
             }}
             inputProps={{
                 customStyle: "calistenia",
+                separation:16,
             }}
             inputs={{
                 usuario: {
-                    label: "Usuario", isRequired: true, keyboardType: "email-address", autoCapitalize: "none", autoFocus: true, onKeyPress: (evt) => {
+                    placeholder: "Email",
+                    isRequired: true, keyboardType: "email-address", autoCapitalize: "none", autoFocus: true, onKeyPress: (evt) => {
                         if (evt.key === "Enter") {
                             this.form.focus("password");
                         }
                     }
                 },
                 password: {
-                    label: "Password", type: "password", isRequired: true, onKeyPress: (evt) => {
+                    placeholder: "Password",
+                    type: "password", isRequired: true, onKeyPress: (evt) => {
                         if (evt.key === "Enter") {
                             this.form.submit();
                         }

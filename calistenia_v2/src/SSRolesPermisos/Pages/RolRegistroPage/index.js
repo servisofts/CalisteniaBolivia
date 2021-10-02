@@ -17,7 +17,7 @@ class RolRegistroPage extends Component {
       repaintImage: new Date().getTime()
     };
     var styleImput = {
-      width: "80%",
+      width: "100%",
       padding: 8,
       height: 50,
       margin: 8,
@@ -33,17 +33,18 @@ class RolRegistroPage extends Component {
       this.TextButom = "EDITAR";
       this.data = this.props.state.rolReducer.data[key];
       if (!this.data) {
-        alert("NO HAY DATA");
+        //  SNavigation.goBack();
+        this.data = {}
       }
     }
     this.imputs = {
       descripcion: new SInput({
         placeholder: "Descripcion o nombre",
         defaultValue: this.data.descripcion,
+        isRequired: true,
         // autoCapitalize: "none",
         style: styleImput
-      }),
-
+      })
     }
   }
   componentDidMount() { // B
@@ -88,7 +89,7 @@ class RolRegistroPage extends Component {
                 width: "100%",
                 maxWidth: 600,
                 alignItems: 'center',
-                // justifyContent: 'center',
+                justifyContent: 'center',
               }}>
 
                 <TouchableOpacity style={{
@@ -130,6 +131,7 @@ class RolRegistroPage extends Component {
                 {Object.keys(this.imputs).map((key) => {
                   return this.imputs[key].getComponent();
                 })}
+
               </View>
               <View style={{
                 height: 50,
