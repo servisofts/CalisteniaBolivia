@@ -20,7 +20,9 @@ export default class AjustesPage extends Component {
         var spreadsheet = xlsx.utils.book_new();
         var sheets = {
             "Hoja 1": [
+                //titulos
               ["key", "Nombre", "Apellido", "Otro"],
+                //contenido 
               ["xxx", "Ruddy", "Paz", "que se yo"],
               ["xxx", "Ruddy", "Paz", "ni versasd"],
               ["xxx", "Ruddy", "Paz", "MD¡asd"],
