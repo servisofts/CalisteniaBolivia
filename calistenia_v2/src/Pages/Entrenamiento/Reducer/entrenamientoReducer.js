@@ -1,7 +1,8 @@
 const initialState = {
     estado: "Not Found",
     data: {},
-    entrenamientos:{}
+    entrenamientos: {},
+    all: false,
 }
 
 export default (state, action) => {
@@ -62,7 +63,7 @@ const getByKeyUsuario = (state, action) => {
         if (state.data) {
             if (!state.data[action.data.key_usuario]) state.data[action.data.key_usuario] = {};
             state.data[action.data.key_usuario] = action.data;
-        }   
+        }
         state.entrenamiento = action.data;
     }
 }
@@ -70,10 +71,11 @@ const getByKeyUsuario = (state, action) => {
 const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        console.log("ecito");
-        if (action.key_usuario) {
-            state.data[action.key_usuario] = action.data;
-        }
+        state.all = true;
+        Object.keys(action.data).map(key => {
+            var obj = action.data[key];
+            state.data[obj.key_usuario] = obj;
+        })
     }
 }
 

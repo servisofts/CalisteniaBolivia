@@ -13,8 +13,11 @@ export default class Cubo extends Component {
         if (!this._ref) return;
         if (this.cubo.animations.length) {
             this.mixer = new THREE.AnimationMixer(this.cubo.scene);
+            
             this.cubo.animations.map(clip => {
                 const action = this.mixer.clipAction(clip)
+                action.clampWhenFinished = true
+                action.setLoop(THREE.LoopOnce,1)
                 action.play();
             });
         }

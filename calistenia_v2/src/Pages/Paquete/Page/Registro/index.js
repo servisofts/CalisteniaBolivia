@@ -19,22 +19,25 @@ class Registro extends Component {
 
         return <SForm
             ref={(ref) => { this.form = ref }}
+            col={"xs-12"}
+            row
             props={{
                 col: "xs-12",
                 dir: "row",
             }}
             style={{
-                // justifyContent: "space-between",
-                justifyContent: "center"
+                justifyContent: "space-between",
+                // justifyContent: ""
             }}
             inputProps={{
                 customStyle: "calistenia",
+                col: "xs-12"
             }}
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
-                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: this.data.precio, style: { width: "48%", marginStart: "25%", marginEnd: "25%" } },
-                dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, style: { width: "48%", marginEnd: "2%" } },
-                participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, style: { width: "48%", marginStart: "2%" } },
+                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: this.data.precio, col: "xs-5.5" },
+                dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
+                participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
             }}
             onSubmit={(data) => {
                 var serviciosSelec = Object.keys(this.state.servicios);

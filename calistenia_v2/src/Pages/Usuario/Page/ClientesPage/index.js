@@ -42,7 +42,7 @@ class ClientesPage extends Component {
     if (listaKeys.length <= 0) {
       return [];
     }
-    var pageLimit = 50
+    var pageLimit = 20
     var tamanho = listaKeys.length;
     var nroBotones = Math.ceil(tamanho / pageLimit);
     if (this.state.pagination.curPage > nroBotones) {
@@ -219,9 +219,9 @@ class ClientesPage extends Component {
               {getLista()}
             </SView>
           </SScrollView2>
-          <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
+          {/* <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
             SNavigation.navigate("registro")
-          }} />
+          }} /> */}
         </View>
       </SPage>
     );

@@ -48,19 +48,20 @@ class TiposDePago extends Component<TiposDePagoType> {
                 if (campo.dato == "monto") {
                     if (this.props.calcularFaltante) {
                         value = parseFloat(this.props.paquete.precio) - this.props.calcularFaltante();
+                        value = value.toFixed(2);
                     }
                 }
             }
-            if (value) {
-                value = parseFloat(value);
-                if (value % 1 != 0) { value = value.toFixed(2) }
-            }
+            // if (value) {
+                // value = parseFloat(value);
+                // if (value % 1 != 0) { value = value.toFixed(2) }
+            // }
             return <SInput
                 ref={(ref) => { this.camposInputs[campo.dato] = ref; }}
                 defaultValue={value + ""}
                 selectTextOnFocus={true}
                 col="xs-12"
-                props={{
+                {...{
                     label: campo.dato,
                     customStyle: "calistenia",
                     type: campo.type,
@@ -157,7 +158,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         position: "absolute",
                         top: 0,
                         right: 0,
-                        width: 50,
+                        width: "100%",
                         height: 20,
                         backgroundColor: "#66000066",
                         justifyContent: "center",

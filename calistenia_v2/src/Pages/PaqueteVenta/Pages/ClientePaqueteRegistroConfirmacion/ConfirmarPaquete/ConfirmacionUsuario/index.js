@@ -39,7 +39,7 @@ class ConfirmacionUsuario extends Component {
           return <View />
         }
       }}
-      props={{
+      {...{
         isRequired: required,
         type: type,
         col: size,

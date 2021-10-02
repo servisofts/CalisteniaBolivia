@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView, ActityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
 import { SImage, SOrdenador, STheme } from 'servisofts-component';
@@ -46,8 +46,8 @@ class PermisosDelRol extends Component {
                 key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
             }
             SSocket.send(object)
-
-            return <View />
+            // return <ActivityIndicator color={STheme.color.secondary} />
+            return null;
         }
 
         const getPermisos = (page) => {
