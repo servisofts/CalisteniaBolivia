@@ -6,8 +6,9 @@ const Pages: SPageListProps = {
     FinanzaPage
 }
 
-
+import reporteReducer from './Reducer/reporteReducer'
 const Reducers = {
+    reporteReducer
 }
 
 
