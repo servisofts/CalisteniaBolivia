@@ -55,6 +55,7 @@ export default class AjustesPage extends Component {
                         height: "100%",
                         alignItems: "center"
                     }}>
+                    
                         <SView col={"xs-12"} style={{ height: 24 }} />
                         <SView style={{
                             width: "100%",

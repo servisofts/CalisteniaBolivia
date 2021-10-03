@@ -139,6 +139,10 @@ public class Manejador {
                     new Asistencia(data, session);
                     break;
                 }
+                case "reporte": {
+                    new Reporte(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
