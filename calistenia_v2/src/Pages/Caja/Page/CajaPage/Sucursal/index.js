@@ -87,7 +87,7 @@ class Sucursal extends Component {
             </SView>
             <SView style={{ flex: 1, height: "100%" }} center>
                 <SText style={{ color: "#fff", fontSize: 14, }}>{this.state.value.descripcion}</SText>
-                <SText style={{ color: STheme.color.card, fontSize: 12, }}>{this.state.value.direccion}</SText>
+                <SText style={{ color: STheme.color.darkGray, fontSize: 12, }}>{this.state.value.direccion}</SText>
             </SView>
             <SView style={{ width: 50, height: 50, }} ></SView>
         </>
@@ -119,7 +119,7 @@ class Sucursal extends Component {
                     position: "absolute",
                     right: 4,
                     top: 0,
-                    color: STheme.color.card,
+                    color: STheme.color.darkGray,
                     fontSize: 10,
                 }}>Sucursal</SText>
 

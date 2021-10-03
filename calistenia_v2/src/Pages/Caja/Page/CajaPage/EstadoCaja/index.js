@@ -208,12 +208,13 @@ class EstadoCaja extends Component {
                 {this.apertura()}
                 {this.cierre()}
                 <SText style={{
+                    width:100,
                     position: "absolute",
                     right: 4,
                     bottom: 4,
                     fontSize: 10,
-                    color: STheme.color.card
-                }}>Estado de caja:  {!this.activa ? "Cerrada" : "Activa"}</SText>
+                    color: STheme.color.darkGray
+                }} center>Estado de caja:  {!this.activa ? "Cerrada" : "Activa"}</SText>
             </SView>
         );
     }
