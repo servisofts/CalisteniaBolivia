@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import React, { Component } from 'react'
 import * as THREE from 'three'
+
 export default class Cubo extends Component {
     constructor(props) {
         super(props)
