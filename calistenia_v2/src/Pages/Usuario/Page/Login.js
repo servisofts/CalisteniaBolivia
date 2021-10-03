@@ -62,9 +62,9 @@ class Login extends Component {
         }
         return (
             <SPage>
-                <SView center>
+                <SView center col={"xs-12"}>
                     <SView col={"xs-11 md-6 xl-4"} center>
-                        <SView col={"xs-8"}>
+                        <SView col={"xs-8"} height={140}>
                             <LogoAnimado />
                         </SView>
                         <SView height={32} />

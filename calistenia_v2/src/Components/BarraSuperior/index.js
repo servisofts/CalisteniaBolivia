@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Animated, Dimensions, TouchableOpacity, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { SIcon, SImage, SNavigation } from 'servisofts-component';
+import { SIcon, SImage, SNavigation, SView, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import RelojCaja from '../../Pages/Caja/Page/RelojCaja';
 import LogoAnimado from '../../Pages/CargaPage/LogoAnimado';
@@ -27,12 +27,14 @@ class BarraSuperior extends Component {
         }).start();
     }
     componentDidMount() {
-
         this.startAnimation();
     }
 
     getUser() {
         if (!this.props.state.usuarioReducer.usuarioLog) {
+            return <View />
+        }
+        if (!this.props.state.usuarioReducer.usuarioLog.key) {
             return <View />
         }
         return (<>
@@ -96,6 +98,28 @@ class BarraSuperior extends Component {
             // fontFamily:"myFont"
         }}>{text}</Text>)
     }
+    getBack() {
+        if (this.props.preventBack) {
+            return <View />
+        }
+        // if (!SNavigation.lastRoute) {
+        //     return <View />
+        // }
+        // if (!SNavigation.lastRoute.navigation.canGoBack()) {
+        //     return <View />
+        // }
+        return <SView width height style={{
+            justifyContent: 'center',
+        }}>
+            <SView onPress={() => {
+                SNavigation.goBack();
+            }} style={{
+                maxWidth: 35,
+            }} center height>
+                <SIcon width={25} height={25} name={"Arrow"} fill={STheme.color.secondary} />
+            </SView>
+        </SView>
+    }
     render() {
         return (
             <Animated.View style={{
@@ -129,21 +153,9 @@ class BarraSuperior extends Component {
                     borderColor: "#000",
                     // overflow: "hidden",
                 }}>
-
-                    <TouchableOpacity style={{
-                        width: 45,
-                        height: "100%",
-                        backgroundColor: "#000",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }} activeOpacity={0.9} onPress={() => {
-                        if (this.props.goBack) {
-                            this.props.goBack()
-                        }
-                    }}>
-                        {!this.props.goBack ? <View /> : <SIcon name={"Arrow"} width={25} />}
-
-                    </TouchableOpacity>
+                    <SView height width={50} center>
+                        {this.getBack()}
+                    </SView>
                     <View style={{
                         flex: 1,
 

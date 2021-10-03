@@ -10,7 +10,9 @@ const initialState = {
 export default (state, action) => {
     if (!state) {
         SStorage.getItem("usr_log", (resp) => {
+            
             initialState.usuarioLog = JSON.parse(resp);
+            
         })
         return initialState
     }

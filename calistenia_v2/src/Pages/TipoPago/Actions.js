@@ -1,3 +1,4 @@
+import React from "react";
 import { SIcon } from "servisofts-component";
 import SSocket from "servisofts-socket";
 

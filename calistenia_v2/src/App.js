@@ -15,6 +15,7 @@ import SConfig from './SConfig';
 import SSocket, { setProps } from 'servisofts-socket'
 import BackgroundImage from './Components/BackgroundImage';
 import SSRolesPermisos from './SSRolesPermisos';
+import BarraSuperior from './Components/BarraSuperior';
 setProps(SConfig.SocketProps);
 
 const store = createStore(
@@ -27,19 +28,20 @@ const App = (props) => {
     return (
         <Provider store={store}>
             <SComponentContainer
-                // debug
+                debug
                 socket={SSocket}
                 assets={Assets}
                 background={<BackgroundImage />}
                 theme={{ initialTheme: "dark", themes: SConfig.SThemeProps }}>
                 <SNavigation props={{
                     prefixes: ["https://component.servisofts.com", "component.servisofts://"],
-                    pages: Pages
+                    pages: Pages,
+                    navBar: BarraSuperior
                 }} />
                 <SSocket identificarse={(props) => {
                     var usuario = props.state.usuarioReducer.usuarioLog;
                     return {
-                        data: usuario? usuario: {},
+                        data: usuario ? usuario : {},
                         deviceKey: "as-asa-as",
                     }
                 }} />

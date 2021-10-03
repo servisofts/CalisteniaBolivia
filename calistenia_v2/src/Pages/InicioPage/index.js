@@ -23,46 +23,26 @@ class InicioPage extends Component {
         }
         return (
             <SPage
-                // title="Inicio"
-                hidden
+                title="Inicio"
                 preventBack
-                disableScroll
             >
-                <BarraSuperior title={"Inicio"} />
-                <SScrollView2 disableHorizontal>
-                    <SView
-                        height
-                        col={"xs-12"}
-                        center
-                        style={{
-                            justifyContent: 'start',
-                        }}
-                        onPress={() => {
-                            this.icons.stopAnimation();
-                        }}
-                        activeOpacity={1}
-                    >
-                        <SView col={"xs-11"} row >
-                            <Iconos ref={(ref) => { this.icons = ref }} />
-                        </SView>
-
-                        {/* <BotonesPaginas
-                        history={this.props.history}
-                        data={[
-                            // {
-                            //     label: "Salir", icon: <SIcon name={"Salir"} />, onPress: () => {
-                            //         
-                            //     }
-                            // },
-                            // { url: "tarifa", label: "Tarifas", icon: <SIcon name={"Tarifas"} /> },
-                            // { url: "parametros", label: "Parametros", icon: <SIcon name={"Parametros"} /> },
-                            // { url: "palabra_restringida", label: "Palabra restringida", icon: <SIcon name={"Parametros"} /> },
-                            // { url: "motivo_cancelacion", label: "motivo cancelacion", icon: <SIcon name={"Parametros"} /> },
-                        ]}
-                    /> */}
+                <SView
+                    height
+                    col={"xs-12"}
+                    center
+                    style={{
+                        justifyContent: 'flex-start',
+                    }}
+                    onPress={() => {
+                        this.icons.stopAnimation();
+                    }}
+                    activeOpacity={1}
+                >
+                    <SView col={"xs-11"} row >
+                        <Iconos ref={(ref) => { this.icons = ref }} />
                     </SView>
-                </SScrollView2>
 
+                </SView>
             </SPage>
         );
     }

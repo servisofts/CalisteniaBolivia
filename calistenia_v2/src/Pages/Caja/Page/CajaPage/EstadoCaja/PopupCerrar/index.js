@@ -37,14 +37,16 @@ class PopupCerrar extends Component {
                     backgroundColor: "#000",
                 }}>
                 {SPage.backgroundComponent}
-                <SScrollView2 disableHorizontal>
-                    <SView col={"xs-12"} center>
+                <SScrollView2 disableHorizontal style={{
+                    // flex: 1,
+                }}>
+                    <SView col={"xs-12"} center withoutFeedback>
                         <SView col={"xs-12"} center height={32} />
                         <SText fontSize={20}>Cerrar caja</SText>
                         <SView col={"xs-12"} style={{
                             height: 32,
                         }}></SView>
-                        <SView col={"xs-12 md-10 xl-9"}>
+                        <SView col={"xs-12 md-10 xl-9"} flex>
                             <TiposDePago key_sucursal={this.props.data.key_sucursal} movimientos={MovimientosCaja} preventEdit onPress={(montoSalvar) => {
                                 var obj = {
                                     component: "caja",
@@ -66,81 +68,6 @@ class PopupCerrar extends Component {
                         <SView col={"xs-12"} style={{
                             height: 16,
                         }}></SView>
-                        {/* <SForm props={{
-                            variant: "center",
-                            col: "xs-11",
-                            // direction: "row",
-                        }}
-                            inputProps={{
-                                customStyle: "calistenia",
-                            }}
-                            inputs={{
-                                // cuenta: {
-                                //     label: 'Cuenta',
-                                //     type: "select",
-                                //     isRequired: true,
-                                //     placeholder: "Cuenta",
-                                //     value: this.state.cuenta.descripcion,
-                                //     col: "xs-11",
-                                //     onPress: () => {
-                                //         SPopupOpen({
-                                //             key: "selectbanco",
-                                //             content: <BancoSelect onSelect={(cuenta_banco) => {
-                                //                 SPopupClose("selectbanco");
-                                //                 this.setState({ cuenta: cuenta_banco });
-                                //             }} />
-                                //         })
-                                //         // this.props.navigation.navigate("BancoPage", {
-                                //         //     onSelect: (cuenta) => {
-
-                                //         //     }
-                                //         // });
-                                //     },
-                                // },
-                                monto_caja: {
-                                    type: 'money',
-                                    label: 'monto en caja',
-                                    defaultValue: this.props.total + "",
-                                    isRequired: true,
-                                    disabled: true,
-                                    col: "xs-11 md-8"
-                                },
-                                monto: {
-                                    type: 'money',
-                                    label: 'monto a depocitar',
-                                    placeholder: '0.00',
-                                    value: this.getMenos200() + "",
-                                    // defaultValue: this.getMenos200()+"",
-                                    isRequired: true,
-                                    col: "xs-11 md-8"
-                                },
-                            }}
-                            onSubmitProps={{
-                                type: "danger",
-                                variant: "default"
-                            }}
-                            onSubmitName={"Cerrar"}
-                            onSubmit={(data) => {
-                                var obj = {
-                                    component: "caja",
-                                    type: "cierre",
-                                    estado: "cargando",
-                                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                    data: {
-                                        key_caja: this.props.data.key,
-                                        key_cuenta_banco: this.state.cuenta.key,
-                                        monto: data.monto * -1,
-                                        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                    }
-                                }
-                               SSocket.send(obj, true);
-                                SPopupClose("cerrarCaja")
-                            }}
-                        >
-
-                        </SForm> */}
-
-
                     </SView>
                 </SScrollView2>
             </SView>

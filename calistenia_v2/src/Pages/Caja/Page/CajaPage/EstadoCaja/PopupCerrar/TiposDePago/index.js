@@ -259,11 +259,11 @@ class TiposDePago extends Component<TiposDePagoType> {
             this.state.montoASalvar = totalCaja;
         }
         return (
-            <SView col={"xs-11.8"} center >
+            <SView col={"xs-11.8"} center flex>
                 {this.getLista()}
 
-                < SView col={"xs-12"} >
-                    <SView col={"xs-12"} row style={{
+                < SView col={"xs-12"} flex >
+                    <SView col={"xs-12"} flex row style={{
                     }}>
                         <SView col="xs-3 md-2" center style={{
                             height: "100%",
@@ -293,8 +293,8 @@ class TiposDePago extends Component<TiposDePagoType> {
                                             style={{
                                                 height: 30,
                                                 borderWidth: 1,
-                                                borderColor:"#666",
-                                                borderRadius:4,
+                                                borderColor: "#666",
+                                                borderRadius: 4,
                                             }}
                                             onChangeText={(e) => {
                                                 if (e > totalCaja) {

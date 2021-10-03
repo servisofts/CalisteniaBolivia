@@ -116,6 +116,9 @@ class RelojEntrenamiento extends Component {
     }
 
     render() {
+        if (!this.props.state.usuarioReducer.usuarioLog) {
+            return <View />
+        }
         var data = this.getEntrenamientoUsuario();
         if (!data) return <View />;
         if (!data.key) return <View />;

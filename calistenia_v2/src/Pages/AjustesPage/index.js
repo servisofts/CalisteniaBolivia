@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Platform } from 'react-native'
 import { SIcon, SPage, SText, SView } from 'servisofts-component'
 import PerfilUsuario from './PerfilUsuario'
-import xlsx from  'xlsx-color'
-
+import xlsx from 'xlsx-color'
+import FileViewer from 'react-native-file-viewer';
+var RNFS = require('react-native-fs');
 export default class AjustesPage extends Component {
     static navigationOptions = {
         headerShown: false,
@@ -15,56 +16,80 @@ export default class AjustesPage extends Component {
         }
     }
 
-    exportXlsx(){
+    exportXlsx =async () => {
         var xf = "./prueba.xlsx";
         var spreadsheet = xlsx.utils.book_new();
         var sheets = {
             "Hoja 1": [
-              ["key", "Nombre", "Apellido", "Otro"],
-              ["xxx", "Ruddy", "Paz", "que se yo"],
-              ["xxx", "Ruddy", "Paz", "ni versasd"],
-              ["xxx", "Ruddy", "Paz", "MD¡asd"],
-              ["xxx", "Ruddy", "error2", "M2"],
+                ["key", "Nombre", "Apellido", "Otro"],
+                ["xxx", "Ruddy", "Paz", "que se yo"],
+                ["xxx", "Ruddy", "Paz", "ni versasd"],
+                ["xxx", "Ruddy", "Paz", "MD¡asd"],
+                ["xxx", "Ruddy", "error2", "M2"],
             ]
-          };
-          
-          for (var sheet of Object.keys(sheets)) {
+        };
+
+        for (var sheet of Object.keys(sheets)) {
             xlsx.utils.book_append_sheet(
-              spreadsheet,
-              xlsx.utils.aoa_to_sheet(sheets[sheet]),
-              sheet
+                spreadsheet,
+                xlsx.utils.aoa_to_sheet(sheets[sheet]),
+                sheet
             );
-          }
-          
-          var fill = {
-              patternType: "solid",
-              fgColor: { rgb: "FF0000" }
-          };
-          
-          var font = {
-              color : {
-                  rgb : "FFFFFF"
-              },
-              bold : true
-          };
-          var border = {
-              bottom : {
-                  style : "thin",
-                  color : {
-                      theme : 5,
-                      tint : "1",
-                      rgb: "000000"
-                  }
-              }
-          };
-          
-          spreadsheet.Sheets["Hoja 1"]["A1"].s = { fill, font, border };
-          spreadsheet.Sheets["Hoja 1"]["B1"].s = { fill };
-          spreadsheet.Sheets["Hoja 1"]["C1"].s = { fill };
-          spreadsheet.Sheets["Hoja 1"]["D1"].s = { fill };
-          
-          
-          xlsx.writeFile(spreadsheet, xf);
+        }
+
+        var fill = {
+            patternType: "solid",
+            fgColor: { rgb: "FF0000" }
+        };
+
+        var font = {
+            color: {
+                rgb: "FFFFFF"
+            },
+            bold: true
+        };
+        var border = {
+            bottom: {
+                style: "thin",
+                color: {
+                    theme: 5,
+                    tint: "1",
+                    rgb: "000000"
+                }
+            }
+        };
+
+        spreadsheet.Sheets["Hoja 1"]["A1"].s = { fill, font, border };
+        spreadsheet.Sheets["Hoja 1"]["B1"].s = { fill };
+        spreadsheet.Sheets["Hoja 1"]["C1"].s = { fill };
+        spreadsheet.Sheets["Hoja 1"]["D1"].s = { fill };
+
+        const fileFInal = xlsx.write(spreadsheet, { bookType: 'xlsx', type: 'binary' });
+        var pathDirectori="";
+        if (Platform.OS == "android") {
+            // pathDirectori = RNFS.ExternalDirectoryPath;
+            pathDirectori = RNFS.DownloadDirectoryPath;
+        } else {
+            pathDirectori = RNFS.DocumentDirectoryPath;
+        }
+        var path = pathDirectori + '/Download';
+        await RNFS.mkdir(path, {}).catch((err) => {
+            console.log(err)
+        })
+        var finalpath = path + '/prueba.xlsx';
+        RNFS.writeFile(finalpath , fileFInal, 'ascii').then((r) => {
+            console.log('Success');
+            FileViewer.open(finalpath, { showOpenWithDialog: true })
+            .then(() => {
+                // success
+            })
+            .catch(error => {
+                // error
+            });
+        }).catch((e) => {
+            console.log('Error', e);
+        });
+        //   xlsx.writeFile(spreadsheet, xf);
     }
 
     getOptions({ title, icon }, isLine) {

@@ -27,8 +27,8 @@ export default class Item extends Component {
                     ]
                 }}
             >
-                <SView col={"xs-12"} flex center>
-                    <SView col={"xs-7"} height={"58%"} onPressIn={() => {
+                <SView col={"xs-12"} height center>
+                    <SView col={"xs-7"} colSquare onPressIn={() => {
                         this.inOnPress = true;
                         new SThread(700, "onLongPress", true).start(() => {
                             if (this.inOnPress) {

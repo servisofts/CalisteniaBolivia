@@ -19,7 +19,7 @@ class Presentacion extends Component {
         return (
             <SPage hidden>
                 <SView flex center>
-                    <SView col={"xs-10 md-6 xl-4"}>
+                    <SView col={"xs-10 md-6 xl-4"} height={200}>
                         <LogoAnimado />
                     </SView>
                     <SHr height={48} />

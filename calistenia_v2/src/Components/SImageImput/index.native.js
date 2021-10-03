@@ -1,7 +1,9 @@
 import { Platform } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import AppParams from '../../Params';
+import SSocket from 'servisofts-socket';
+
+// import AppParams from '../../Params';
 
 export const choseFile = (props, callback) => {
     var options = {
@@ -25,7 +27,7 @@ export const choseFile = (props, callback) => {
             return {}
         } else {
             // alert("");
-            ImageResizer.createResizedImage("data:image/jpeg;base64," + response.data, 400, 400, 'PNG', 100).then((uri) => {
+            ImageResizer.createResizedImage("data:image/jpeg;base64," + response.data, 1024, 1024, 'PNG', 100).then((uri) => {
                 UploadFile({
                     data: uri,
                     type: "image/png",
@@ -54,8 +56,9 @@ const UploadFile = (props, callback) => {
             : props.data.uri.replace('file://', ''),
     };
 
-    var servicios = AppParams.servicios;
-    var url = servicios[props.obj.servicio];
+    var servicios = SSocket.api;
+    // console.log(props);
+    var url = servicios[props.servicio];
     if (!url) {
         return false;
     }

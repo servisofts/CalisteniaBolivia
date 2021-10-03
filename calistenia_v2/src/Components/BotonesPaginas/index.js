@@ -31,7 +31,9 @@ export default class BotonesPaginas extends Component<BotonesType> {
                     SNavigation.navigate(url, params)
                 }}>
                 <SView
-                    col={"xs-10"} colSquare center
+                    col={"xs-10"}
+                    colSquare
+                    center
                     style={{
                         borderRadius: 8,
                         overflow: 'hidden',

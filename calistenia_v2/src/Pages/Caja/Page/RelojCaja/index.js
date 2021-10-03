@@ -20,6 +20,9 @@ class RelojCaja extends Component {
         this.contar();
     }
     getActiva() {
+        if (!this.props.state.usuarioReducer.usuarioLog) {
+            return null;
+        }
         var reducer = this.props.state.cajaReducer;
         var data = reducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (this.getCajaActiva()) return;
@@ -52,7 +55,6 @@ class RelojCaja extends Component {
     }
 
     getCajaActiva() {
-
         var reducer = this.props.state.cajaReducer;
         var data = reducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         return data;
@@ -118,7 +120,9 @@ class RelojCaja extends Component {
     }
 
     render() {
-
+        if (!this.props.state.usuarioReducer.usuarioLog) {
+            return <View />
+        }
         var data = this.getCajaActiva();
         if (!data) {
             this.getActiva()
