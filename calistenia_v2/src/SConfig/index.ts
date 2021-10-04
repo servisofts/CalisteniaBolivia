@@ -2,12 +2,12 @@ import { SSocketProps } from 'servisofts-socket'
 import { SThemeThemes } from 'servisofts-component'
 const SThemeProps: SThemeThemes = {
     default: {
-        barStyle: "dark-content",
-        barColor: "#ffffff",
-        primary: "#ffffff",
-        secondary: "#000000",
-        background: "#cccccc",
-        card:"#66000044"
+        barStyle: "light-content",
+        barColor: "#000000",
+        primary: "#000000",
+        secondary: "#ffffff",
+        background: "#220000",
+        card:"#99222266"
 
     },
     dark: {

@@ -9,15 +9,15 @@ export default class TipoMovimiento extends Component {
         this.state = {
             selec: this.props.value,
             tipos: {
-                '1': {
+                'ingreso': {
                     icon: "Ingreso",
                     label: 'Ingreso'
                 },
-                '2': {
+                'egreso': {
                     icon: "Egreso",
                     label: 'Egreso'
                 },
-                '3': {
+                'traspaso': {
                     icon: "Traspaso",
                     label: 'Traspaso'
                 },
@@ -54,9 +54,9 @@ export default class TipoMovimiento extends Component {
         return (
             <SView col={"xs-11 md-7 xl-6"} row>
 
-                {this.getTipo("1")}
-                {this.getTipo("2")}
-                {this.getTipo("3")}
+                {this.getTipo("ingreso")}
+                {this.getTipo("egreso")}
+                {this.getTipo("traspaso")}
             </SView>
         );
     }

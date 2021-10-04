@@ -11,6 +11,7 @@ import Usuario from '../..';
 import Paquete_Item from './Paquete_Item';
 import { SText } from 'servisofts-component';
 import Sucursal from '../../../Sucursal';
+import SucursalSelect from './SucursalSelect';
 
 class ClientesPage extends Component {
 
@@ -97,6 +98,11 @@ class ClientesPage extends Component {
 
       var objFinal = {};
       Object.keys(ClientesActivos).map((key) => {
+        if (this.state.key_sucursal) {
+          if (this.state.key_sucursal != ClientesActivos[key]["caja"].key_sucursal) {
+            return null
+          }
+        }
         objFinal[key] = {
           ...data[key],
           vijencia: ClientesActivos[key],
@@ -116,6 +122,7 @@ class ClientesPage extends Component {
       ).map((key) => {
         var obj = data[key];
         var vijencia = objFinal[key]["vijencia"];
+
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -191,10 +198,7 @@ class ClientesPage extends Component {
       })
     }
     return (
-      <SPage hidden disableScroll>
-        <BarraSuperior title={"Clientes"} navigation={this.props.navigation} goBack={() => {
-          SNavigation.goBack();
-        }} />
+      <SPage disableScroll title={"Clientes"}>
         <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
@@ -216,6 +220,12 @@ class ClientesPage extends Component {
             }}
           >
             <SView col={"xs-12"} center>
+
+              <SucursalSelect key_sucursal={this.state.key_sucursal}
+                sucursal={this.state.sucursal} setSucursal={(suc) => {
+                  // SStorage.setItem("sucursal", suc.key)
+                  this.setState({ sucursal: suc, key_sucursal: suc.key });
+                }} />
               {getLista()}
             </SView>
           </SScrollView2>

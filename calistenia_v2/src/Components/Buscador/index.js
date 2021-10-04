@@ -127,15 +127,16 @@ export default class Buscador extends Component<Tprops> {
                     {this.getVerEliminados()}
 
                 </View>
-                {/* <SView col={"xs-12"} style={{
-                    alignItems: "flex-end",
-                    maxWidth: 600,
+                <SView style={{
+                    // alignItems: "flex-end",
+                    // width: "90%",
+                    // backgroundColor: "#ff000022",
                 }}>
                     <SText style={{
                         color: "#999", fontSize: 10,
 
                     }}>Resultados ({this.state.cantidad})</SText>
-                </SView> */}
+                </SView>
             </SView>
         );
     }
