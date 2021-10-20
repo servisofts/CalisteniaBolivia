@@ -301,7 +301,12 @@ public class Caja {
                     cuentaBancoMovimiento.put("monto", monto);
                     cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", caja_movimiento.getString("key")));
                     cuentaBancoMovimiento.put("fecha_on", fecha_on);
-                    cuentaBancoMovimiento.put("estado", 1);
+                    cuentaBancoMovimiento.put("estado", 1); 
+                    cuentaBancoMovimiento.put("key_sucursal", caja.getString("key_sucursal"));
+                    cuentaBancoMovimiento.put("key_tipo_gasto", "1");
+                    cuentaBancoMovimiento.put("tipo_movimiento", "ingreso");
+                    cuentaBancoMovimiento.put("key_tipo_pago", pago.getString("key"));
+
                     Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
         
                     JSONObject sendcuentaBancoMovimiento = new JSONObject();

@@ -55,6 +55,17 @@ public class Cliente {
         }
     }
 
+    public static JSONObject getActivosPaqueteVenta(String key_paquete_venta) {
+        try {
+            String consulta =  "select get_clientes_activos_paquete_venta('"+key_paquete_venta+"') as json";
+            return  Conexion.ejecutarConsultaObject(consulta);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void defaultType(JSONObject obj, SSSessionAbstract session) {
         SocketCliete.send("usuario", obj, session);
     }

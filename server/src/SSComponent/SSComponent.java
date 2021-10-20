@@ -77,7 +77,9 @@ public class SSComponent {
             String fecha_on = formatter.format(new Date());
             JSONObject data = obj.getJSONObject("data");
             data.put("key",UUID.randomUUID().toString());
-            data.put("fecha_on",fecha_on);
+            if(!data.has("fecha_on")){
+                data.put("fecha_on",fecha_on);
+            }
 
             data.put("estado",1);
 

@@ -22,6 +22,9 @@ public class Entrenamiento {
             case "getByKey":
                 getByKey(data, session);
                 break;
+            case "getByDate":
+                getByDate(data, session);
+                break;
             case "getByKeyUsuario":
                 getByKeyUsuario(data, session);
                 break;
@@ -58,6 +61,18 @@ public class Entrenamiento {
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_by_key('entrenamiento','"+obj.getString("key")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public void getByDate(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_by_date('entrenamiento','"+obj.getString("fecha")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");

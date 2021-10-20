@@ -182,6 +182,10 @@ public class PaqueteVenta {
                             cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", keyMovimientoOld));
                             cuentaBancoMovimiento.put("fecha_on", formatter.format(new Date()));
                             cuentaBancoMovimiento.put("estado", 1);
+                            cuentaBancoMovimiento.put("key_sucursal", caja_activa.getString("key_sucursal"));
+                            cuentaBancoMovimiento.put("key_tipo_gasto", "1");
+                            cuentaBancoMovimiento.put("tipo_movimiento", "ingreso");
+                            cuentaBancoMovimiento.put("key_tipo_pago", JSONObject.getNames(data)[j]);
                             Conexion.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
                 
                             JSONObject sendcuentaBancoMovimiento = new JSONObject();
@@ -212,8 +216,16 @@ public class PaqueteVenta {
             obj.put("estado", "exito");
 
             SSServerAbstract.sendAllServer(obj.toString());
-            // SSServerAbstract.sendUsers(obj.toString(), new JSONArray().put(obj.getString("key_usuario")));
-            
+
+
+            //Esto es para que se actualicen los clientes activos en tiempo real 
+            JSONObject sendClientesActivos = new JSONObject();
+            sendClientesActivos.put("component", "clientesActivos");
+            sendClientesActivos.put("type", "registro");
+            sendClientesActivos.put("data", Cliente.getActivosPaqueteVenta(paquete_venta.getString("key")));
+            sendClientesActivos.put("estado", "exito");
+            sendClientesActivos.put("key_usuario", obj.getString("key_usuario"));
+            SSServerAbstract.sendAllServer(sendClientesActivos.toString());
 
             JSONObject mail = new JSONObject();
             
