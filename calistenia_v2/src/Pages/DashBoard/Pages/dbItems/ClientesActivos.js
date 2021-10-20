@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SText, SView } from 'servisofts-component';
+import { SIcon, SLoad, SText, SView, SNavigation } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Usuario from '../../../Usuario';
 
@@ -20,7 +20,9 @@ class ClientesActivos extends Component {
             <SView col={"xs-12"} center >
                 <SText fontSize={10}>{`Clientes activos`}</SText>
             </SView>
-            <SView col={"xs-4"} height={50}>
+            <SView col={"xs-4"} height={50} onPress={() => {
+                SNavigation.navigate("ClientesPage");
+            }}>
                 <SIcon name={"Usuarios_cliente"} />
             </SView>
             <SView col={"xs-8"} center>

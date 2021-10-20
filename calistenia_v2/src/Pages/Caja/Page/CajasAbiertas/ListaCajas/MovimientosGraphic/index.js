@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SOrdenador, SDate, SView, SText } from 'servisofts-component';
+import { SView, SText, SDate, SOrdenador } from 'servisofts-component';
 import { Line, Rect, Svg } from 'react-native-svg';
 
 var FColor = {
@@ -56,30 +56,16 @@ export default class MovimientosGraphic extends Component {
             </SView>
         })
     }
-    getListaMes() {
-        var lista = this.getListaOrdenada();
-        var arr = [];
-        var total = 0;
-        lista.map((key, i) => {
-            var obj = this.props.data[key];
-            if (obj.fecha_on.indexOf("2021-10") > -1) {
-                arr.push(key);
-            } else {
-                total += obj.monto;
-            }
-        })
-        return { lista: arr, total: total };
-
-    }
     getLines() {
         var montoMinimo = this.getMontoMinimo();
         var montoMaximo = this.getMontoMaximo();
         var { width, height } = this.state.layout;
-        var { lista, total } = this.getListaMes();
+        var lista = this.getListaOrdenada();
         if (lista.length > 1) {
             var i = 0;
             var x = 0;
             var y = 0;
+            var total = 0;
             var media = width / (lista.length - 1);
             return lista.map((key) => {
                 var obj = this.props.data[key];
@@ -137,7 +123,6 @@ export default class MovimientosGraphic extends Component {
                 >
                     {this.getSvg()}
                 </SView>
-
                 <SText style={{
                     fontSize: 10,
                     position: "absolute",

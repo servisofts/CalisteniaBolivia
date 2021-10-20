@@ -71,7 +71,7 @@ class Perfil extends Component {
                             })
                         });
                     }}>
-                        <SImage src={`${SSocket.api.root}${"usuario_" + this.props.state.usuarioReducer.usuarioLog.key}`} style={{
+                        <SImage src={`${SSocket.api.root}${"usuario_" + this.props.state.usuarioReducer.usuarioLog.key+`?date=${new Date().getTime()}`}`} style={{
                             width: "100%",
                             height: "100%",
                         }} />

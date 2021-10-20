@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SPage, STable, SText } from 'servisofts-component';
-import Actions from '../Actions';
-
+import { SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable, SText, SView } from 'servisofts-component';
+import BotonesPaginas from '../../../Components/BotonesPaginas';
 
 class FinanzaPage extends Component {
     constructor(props) {
@@ -11,36 +10,58 @@ class FinanzaPage extends Component {
         this.state = {
         };
     }
-
+    getItem({ title, icon, url, onPress }) {
+        return <SView col={"xs-3 sm-2.5 md-2 lg-1.5 xl-1.3"} colSquare style={{
+            padding: 4,
+        }}
+        >
+            <SView col={"xs-12"} height center>
+                <SView col={"xs-7"} colSquare onPress={() => {
+                    if (onPress) {
+                        onPress();
+                        return;
+                    }
+                    SNavigation.navigate(url);
+                }} >
+                    <SIcon name={icon} />
+                </SView>
+                <SHr />
+                <SView center height={16}>
+                    <SText center fontSize={12}>{title}</SText>
+                </SView>
+            </SView>
+        </SView>
+    }
     getLista() {
-        var movimientos = Actions.getMovimientosBancarios(this.props)
-        if (!movimientos) return <SLoad />
-        return <STable
-            header={[
-                { key: "key", label: "fecha", width: 100, order: "desc" },
-                { key: "ingreso/efectivo", label: "Ingreso efectivo", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />), },
-                { key: "ingreso/transferencia", label: "Ingreso transferencia", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "ingreso/cheque", label: "Ingreso cheque", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "ingreso/tarjeta", label: "Ingreso tarjeta", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "egreso/efectivo", label: "Egreso efectivo", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
-                { key: "egreso/transferencia", label: "Egreso transferencia", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
-                { key: "egreso/cheque", label: "Egreso cheque", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
-                { key: "egreso/tarjeta", label: "Egreso tarjeta", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
-                // { key: "egreso/cheque", label: "egreso cheque", width: 140, render: (item) => { return item ? item : "0" } },
-                // { key: "egreso/tarjeta", label: "egreso tarjeta", width: 140, render: (item) => { return item ? item : "0" } },
-            ]}
-            limit={100}
-            data={movimientos}
-        />
+        return <>
+            {this.getItem({ title: "Reporte de bancos", icon: "Money", url: "ReporteBancos" })}
+            {this.getItem({ title: "Cajas activas", icon: "Caja", url: "CajasAbiertas" })}
+            {/* {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })} */}
+            {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })}
+            {this.getItem({
+                title: "Reporte Asistencias", icon: "Entrenamiento", onPress: () => {
+                    SPopup.dateBetween("Reporte de asistencia", (evt) => {
+                        // alert(JSON.stringify(evt));
+                        SNavigation.navigate("ReporteAsistencia", evt);
+                    });
+                }
+            })}
+            {this.getItem({
+                title: "Paquetes vendidos", icon: "Paquete", onPress: () => {
+                    SPopup.dateBetween("Paquetes vendidos", (evt) => {
+                        // alert(JSON.stringify(evt));
+                        SNavigation.navigate("PaquetesVendidos", evt);
+                    });
+                }
+            })}
+        </>
     }
     render() {
-        var movimientos = Actions.getMovimientosBancarios(this.props)
-        if (!movimientos) return <SLoad />
-
         return (
-            <SPage title={"Finanzas"} disableScroll>
-                {/* <SText>{JSON.stringify(movimientos, "\n", "\t")}</SText> */}
-                {this.getLista()}
+            <SPage title={"Finanzas"}>
+                <SView col={"xs-12"} row>
+                    {this.getLista()}
+                </SView>
             </SPage>
         );
     }

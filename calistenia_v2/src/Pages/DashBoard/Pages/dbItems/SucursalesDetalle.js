@@ -27,9 +27,11 @@ class SucursalesDetalle extends Component {
         return Object.keys(sucursales).map((key, index) => {
             var sucursal = sucursales[key];
             var cantidad = 0;
+            var monto = 0;
             Object.keys(clientesActivos).map((key_cli) => {
                 var cliente = clientesActivos[key_cli];
                 if (cliente["caja"].key_sucursal == key) {
+                    monto += cliente["paquete"].precio;
                     cantidad++;
                 }
             })
@@ -44,16 +46,18 @@ class SucursalesDetalle extends Component {
             Object.keys(entrenamientos).map((key_entre) => {
                 var entrenamiento = entrenamientos[key_entre];
                 if (entrenamiento.key_sucursal == key) {
-                    cantidad_entrenamiento++;
+                    if (entrenamiento.estado == 1) {
+                        cantidad_entrenamiento++;
+                    }
                 }
             })
-            return <SView col={"xs-11 md-6 xl-3"} key={index} height={90} style={{
+            return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
                 padding: 4,
             }}>
-                <SView center col={"xs-12"} height card row style={{
+                <SView center col={"xs-12"} height card style={{
                     padding: 4,
                 }}>
-                    <SView center col={"xs-3"}>
+                    <SView center col={"xs-12"} height={65} center>
                         <SView width={45} height={45}>
                             <SImage src={SSocket.api.root + "sucursal_" + key} />
                         </SView>
@@ -61,11 +65,11 @@ class SucursalesDetalle extends Component {
                             <SText center fontSize={12} bold>{sucursal.descripcion}</SText>
                         </SView>
                     </SView>
-                    <SView center col={"xs-9"} row height style={{
+                    <SView center col={"xs-12"} row style={{
                         padding: 4,
                     }}>
-                        <SView col={"xs-12"} height card row center>
-                            <SView col={"xs-4"} height={60} center>
+                        <SView col={"xs-12"} height={80} card row center>
+                            <SView col={"xs-4"} height center>
                                 <SView width={40} height={40} center>
                                     <SIcon name="Usuarios_cliente" />
                                     <SView center style={{
@@ -79,8 +83,9 @@ class SucursalesDetalle extends Component {
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Clientes'}</SText>
+                                <SText center fontSize={10}>{`Bs. ${monto.toLocaleString('de-DE')}`}</SText>
                             </SView>
-                            <SView col={"xs-4"} height={60} center>
+                            <SView col={"xs-4"} height center>
                                 <SView width={40} height={40} center>
                                     <SIcon name="Caja" />
                                     <SView center style={{
@@ -94,8 +99,9 @@ class SucursalesDetalle extends Component {
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Cajas'}</SText>
+                                <SText center fontSize={10}>{" "}</SText>
                             </SView>
-                            <SView col={"xs-4"} height={60} center>
+                            <SView col={"xs-4"} center>
                                 <SView width={40} height={40} center>
                                     <SIcon name="Entrenamiento" />
                                     <SView center style={{
@@ -106,9 +112,11 @@ class SucursalesDetalle extends Component {
                                         borderRadius: 8
                                     }}>
                                         <SText center fontSize={18} bold>{cantidad_entrenamiento}</SText>
+                                        
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Entrenando'}</SText>
+                                <SText center fontSize={10}>{" "}</SText>
                             </SView>
 
                         </SView>

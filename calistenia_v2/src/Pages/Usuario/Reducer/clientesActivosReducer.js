@@ -10,6 +10,9 @@ export default (state, action) => {
             case "getAll":
                 getAll(state, action);
                 break;
+            case "registro":
+                registro(state, action);
+                break;
         }
         state.type = action.type;
         state.lastSend = new Date();
@@ -22,5 +25,13 @@ const getAll = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
         state.data = action.data;
+    }
+}
+const registro = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        if (state.data) {
+            state.data[action.data.key_usuario] = action.data;
+        }
     }
 }

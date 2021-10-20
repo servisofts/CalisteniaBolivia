@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SText, SView } from 'servisofts-component';
+import { SIcon, SLoad, SNavigation, SText, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
 import Usuario from '../../../Usuario';
@@ -28,7 +28,9 @@ class CajasActivas extends Component {
                     <SText bold fontSize={18} center>{`${cant}`}</SText>
                 </SView>
             </SView>
-            <SView col={"xs-4"} height={50}>
+            <SView col={"xs-4"} height={50} onPress={()=>{
+                SNavigation.navigate("CajasAbiertas")
+            }}>
                 <SIcon name={"Caja"} />
             </SView>
 

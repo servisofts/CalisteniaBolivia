@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native'
 import { SHr, SImage, SNavigation, SText, SThread, SView } from 'servisofts-component';
 
 export default class Item extends Component {
@@ -29,7 +28,7 @@ export default class Item extends Component {
                 }}
             >
                 <SView col={"xs-12"} height center>
-                    <SView col={"xs-7"} height={"59%"} onPressIn={() => {
+                    <SView col={"xs-7"} colSquare onPressIn={() => {
                         this.inOnPress = true;
                         new SThread(700, "onLongPress", true).start(() => {
                             if (this.inOnPress) {
@@ -50,14 +49,13 @@ export default class Item extends Component {
                             this.inOnPress = false;
 
                         }} >
-                        {/* <Image source={{ uri: urlImage}} style={{ resizeMode: "contain", width: "100%", height: "100%", }}/> */}
                         <SImage src={urlImage} style={{
                             width: "100%",
                             height: "100%",
                         }} />
                     </SView>
-                    {/* <SHr /> */}
-                    <SView center flex>
+                    <SHr />
+                    <SView center>
                         <SText center fontSize={12}>{obj.descripcion}</SText>
                     </SView>
                 </SView>

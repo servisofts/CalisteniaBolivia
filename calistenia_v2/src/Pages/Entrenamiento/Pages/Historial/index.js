@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SImage, SLoad, SPage, SText, SView, SNavigation } from 'servisofts-component';
+import { SDate, SHr, SImage, SLoad, SOrdenador, SPage, SText, SView } from 'servisofts-component';
 import Entrenamiento from '../..';
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
-import RelojEntrenamiento from './RelojEntrenamiento';
 import SSocket from 'servisofts-socket';
 import Asistencia from '../../../Asistencia';
+import RelojEntrenamiento from '../Lista/RelojEntrenamiento';
+import FechaSingle from '../../../../Components/FechaSingle';
 
 class Lista extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            fecha: new SDate().toString("yyyy-MM-dd"),
+        };
 
     }
     componentDidMount() {
-        Entrenamiento.Actions.getAll(this.props, true);
+        // Entrenamiento.Actions.getByDate(this.props, true);
     }
     getSucursal = (key) => {
         var sucursal = Sucursal.Actions.getByKey(key, this.props);
@@ -76,13 +79,31 @@ class Lista extends Component {
             </SView>
         </SView>
     }
+    getEstado = (obj) => {
+        if (obj.estado == 1) {
+            return <SView col={"xs-12"} height={60} center>
+                <RelojEntrenamiento data={obj} />
+            </SView>
+        }
+        return <SView col={"xs-12"} height={60} center>
+            <SView width={100} height={50} backgroundColor={obj.estado == 1 ? "#060" : "#600"} style={{
+                borderRadius: 8,
+            }} center>
+                <SText fontSize={16} bold>{new SDate(obj.fecha_fin).toString("hh:mm")}</SText>
+            </SView>
+            <SText color={"#999"} fontSize={12}>{"Hora de finalizacion."}</SText>
+        </SView>
+    }
     getLista() {
-        var data = Entrenamiento.Actions.getAll(this.props);
+        var data = Entrenamiento.Actions.getByDate(this.state.fecha,this.props);
         var usuarios = Usuario.Actions.getAll(this.props);
         var sucursales = Sucursal.Actions.getAll(this.props);
         if (!data) return <SLoad />
-        return Object.keys(data).map((key) => {
+        return new SOrdenador([
+            { key: "fecha_on", order: "desc", peso: 1 }
+        ]).ordernarObject(data).map((key, i) => {
             var obj = data[key];
+            if (i > 20) return null;
             if (!obj.key) return <SView />;
             return <>
                 <SHr height={16} />
@@ -93,17 +114,16 @@ class Lista extends Component {
                         alignItems: "flex-end",
                     }}>
                         <SText fontSize={10} color={"#999"}>{`${new SDate(obj.fecha_on).toString("dd de MONTH, yyyy")}`}</SText>
+                        <SText fontSize={10} color={"#999"}>{`${new SDate(obj.fecha_on).toString("hh:mm")}`}</SText>
                     </SView>
                     {this.getSucursal(obj.key_sucursal)}
                     <SHr height={16} />
                     {this.getUsuario(obj.key_usuario)}
                     <SHr height={16} />
                     {/* <SText>{`Hora de inicio: ${new SDate(obj.fecha_on).toString("hh:mm")}`}</SText> */}
-                    <SView col={"xs-12"} center>
-                        <RelojEntrenamiento data={obj} />
-                    </SView>
                     <SHr height={16} />
-                    {this.getAsistencia(obj)}
+                    {this.getEstado(obj)}
+                    {/* {this.getAsistencia(obj)} */}
                     {/* <SText>{`json: ${JSON.stringify(obj, "\n", "\t")}`}</SText> */}
                 </SView>
             </>
@@ -111,15 +131,13 @@ class Lista extends Component {
     }
     render() {
         return (
-            <SPage title={"Entrenamientos"}>
+            <SPage title={"Entrenamientos historicos"}>
                 <SView center>
-                    <SView col={"xs-11 md-8 xl-6"} card style={{
-                        padding: 4,
-                    }} height={40} center onPress={() => {
-                        SNavigation.navigate("entrenamientos_historial")
-                    }}>
-                        <SText fontSize={16} bold color={"#999"}>Ver historial</SText>
-                    </SView>
+                    <FechaSingle onChange={(fecha) => {
+                        this.setState({
+                            fecha: fecha,
+                        });
+                    }} />
                     {this.getLista()}
                     <SHr height={32} />
                 </SView>

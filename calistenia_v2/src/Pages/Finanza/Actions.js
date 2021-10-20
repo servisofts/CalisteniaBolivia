@@ -17,10 +17,50 @@ export default class Actions {
                 component: Actions.component,
                 type: "getMovimientosBancarios",
                 estado: "cargando",
-                data:{
-                    fecha_desde:"2020-01-01",
-                    fecha_hasta:"2021-12-01"
+                data: {
+                    fecha_desde: "2020-01-01",
+                    fecha_hasta: "2035-12-01"
                 },
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
+    static getPaquetesVendidos(dataProps, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer.paquetesVendidos;
+        if (reducer.data_paquetesVendidos != JSON.stringify(dataProps)) {
+            reducer.data_paquetesVendidos = JSON.stringify(dataProps);
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getPaquetesVendidos",
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
+    static getReporteAsistencia(dataProps, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer.reporteAsistencia;
+        if (reducer.data_reporteAsistencia != JSON.stringify(dataProps)) {
+            reducer.data_reporteAsistencia = JSON.stringify(dataProps);
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getReporteAsistencia",
+                estado: "cargando",
+                data: dataProps,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key
             })
             return;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
 import { SButtom, SInput, SText, STheme, SView, SPopup, SPopupOpen } from 'servisofts-component';
 import PopupCerrar from './PopupCerrar';
+import PopupConfirmarCierre from './PopupConfirmarCierre';
 
 class EstadoCaja extends Component {
     constructor(props) {
@@ -105,16 +106,36 @@ class EstadoCaja extends Component {
                 height: 30,
             }}
             onPress={() => {
-                SPopupOpen({
-                    key: "cerrarCaja",
-                    content: <PopupCerrar data={this.activa} total={this.total} navigation={this.props.navigation} />
+                SPopup.open({
+                    key: "ConfirmarCierreCaja",
+                    content: < PopupConfirmarCierre data={this.activa} onSelect={(select) => {
+                        if (select == "banco") {
+                            SPopupOpen({
+                                key: "cerrarCaja",
+                                content: <PopupCerrar data={this.activa} total={this.total} navigation={this.props.navigation} />
+                            })
+                        } else {
+                            var total = this.getMonto()
+                            var obj = {
+                                component: "caja",
+                                type: "cierre",
+                                estado: "cargando",
+                                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                                data: {
+                                    key_caja: this.activa.key,
+                                    monto_salvar: total,
+                                    key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                                }
+                            }
+                            SSocket.send(obj);
+                        }
+                        SPopup.close("ConfirmarCierreCaja");
+                    }} />
                 })
-                // var value = this.inputr.getValue();
-                // if (!value) {
-                // value = this.state.montoDefault;
-                // }
 
-            }}>cerrar la caja</SButtom>
+
+            }
+            }> cerrar la caja</SButtom >
     }
     getMonto() {
         if (!this.activa) {
@@ -208,7 +229,7 @@ class EstadoCaja extends Component {
                 {this.apertura()}
                 {this.cierre()}
                 <SText style={{
-                    width:100,
+                    width: 100,
                     position: "absolute",
                     right: 4,
                     bottom: 4,

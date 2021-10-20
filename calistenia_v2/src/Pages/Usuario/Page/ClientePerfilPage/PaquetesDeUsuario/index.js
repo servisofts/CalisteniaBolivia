@@ -126,7 +126,7 @@ class PaquetesDeUsuario extends Component {
         ).map((key) => {
             var obj = data[key];
             var paquete = this.getPaquete(obj.key_paquete);
-            var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete;
+            var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete+`?date=${new Date().getTime()}`;
             if (!paquete) {
                 return <SLoad />
             }

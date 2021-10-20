@@ -136,7 +136,7 @@ class VentasPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario_" + key+`?date=${new Date().getTime()/500}`} />
 
               </View>
               <View style={{
@@ -185,7 +185,7 @@ class VentasPage extends Component {
               {getLista()}
             </SView>
           </SScrollView2>
-          <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
+          <FloatButtom  onPress={() => {
             SNavigation.navigate("registro")
           }} />
         </View>

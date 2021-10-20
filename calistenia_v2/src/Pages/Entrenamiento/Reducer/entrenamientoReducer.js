@@ -18,6 +18,9 @@ export default (state, action) => {
             case "getAll":
                 getAll(state, action);
                 break;
+            case "getByDate":
+                getByDate(state, action);
+                break;
             case "editar":
                 editar(state, action);
                 break;
@@ -76,6 +79,13 @@ const getAll = (state, action) => {
             var obj = action.data[key];
             state.data[obj.key_usuario] = obj;
         })
+    }
+}
+const getByDate = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.date_last = action.fecha;
+        state.date = action.data;
     }
 }
 

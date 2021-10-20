@@ -26,13 +26,13 @@ export default class TipoMovimiento extends Component {
     }
 
     getSelect(key) {
-        // if (this.state.selec == key) return <View />
+        if (this.state.selec == key) return <View />
         return <SView style={{
             position: "absolute",
             width: "100%",
             height: "100%",
-            maxWidth: 70,
-            backgroundColor: "#000000",
+            // maxWidth: 70,
+            backgroundColor: "#000000aa",
         }} center>
 
         </SView>

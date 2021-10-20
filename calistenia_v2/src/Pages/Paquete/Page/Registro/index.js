@@ -35,7 +35,7 @@ class Registro extends Component {
             }}
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
-                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: this.data.precio, col: "xs-5.5" },
+                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio).toFixed(2) || null, col: "xs-5.5" },
                 dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
                 participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
             }}
@@ -68,10 +68,10 @@ class Registro extends Component {
             onPress={() => {
                 Paquete.Actions.editar({
                     ...data,
-                    estado: 0,
+                    estado: (data.estado == 1 ? 0 : 1),
                 }, serviciosSelec, this.props);
             }}
-        >{"Eliminar"}</SButtom>
+        >{data.estado == 1 ? "Eliminar" : "Recuperar"}</SButtom>
             <SView col={"xs-1"} />
         </>
     }

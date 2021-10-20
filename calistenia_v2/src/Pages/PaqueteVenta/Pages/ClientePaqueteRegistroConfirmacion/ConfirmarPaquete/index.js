@@ -64,7 +64,7 @@ class ConfirmarPaquete extends Component {
                     backgroundColor: "#000000aa",
                     padding: 16
                 }}>
-                <SIcon name={"Delete"} />
+                <SIcon name={"Cerrar"} fill={"#fff"} />
                 {/* <Svg name={"Cerrar"} /> */}
             </SView>
         }

@@ -131,7 +131,7 @@ class EntrenadorPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario_" + key+`?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{
