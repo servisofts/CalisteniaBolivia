@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Platform } from 'react-native';
-import { SImage } from 'servisofts-component';
+import { SGradient, SImage } from 'servisofts-component';
 type type = {
     source: Object,
     contraste: String
@@ -24,9 +24,9 @@ export default class BackgroundImage extends Component<type> {
             left: 0,
             position: "absolute",
             // opacity: 0.8,
-            // backgroundColor: "#000",
             ...this.props.style,
         }}>
+            <SGradient colors={["#000000","#66000022"]}/>
             <SImage src={source} style={{
                 width: "100%",
                 height: "100%",

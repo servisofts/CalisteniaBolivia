@@ -18,4 +18,19 @@ export default class index {
         }
         return data;
     }
+    static getActivas(props) {
+        var reducer = props.state[index.reducerName];
+        var data = reducer.activas;
+        if (!data) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: index.component,
+                type: "getActivas",
+                estado: "cargando",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            })
+            return;
+        }
+        return reducer.usuario;
+    }
 }

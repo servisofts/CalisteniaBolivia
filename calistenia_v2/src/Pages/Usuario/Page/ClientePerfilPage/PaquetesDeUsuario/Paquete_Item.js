@@ -16,7 +16,19 @@ class index extends Component {
     getLineProgreso = () => {
         var fecha_inicio = new SDate(this.props.data.fecha_inicio);
         var fecha_fin = new SDate(this.props.data.fecha_fin);
-
+        //  return <SText>{fecha_fin.toString()}</SText>
+        if (fecha_fin.isBefore(new SDate().addDay(-1))) {
+            return <SView col={"xs-12"} row>
+                <SView col={"xs-6"}>
+                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_inicio, "yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
+                </SView>
+                <SView col={"xs-6"} style={{
+                    alignItems: 'flex-end',
+                }}>
+                    <SText fontSize={10} style={{ color: "#999" }}>{new SDate(this.props.data.fecha_fin, "yyyy-MM-dd").toString("dd de MONTH, yyyy")}</SText>
+                </SView>
+            </SView>
+        }
         var maxDay = fecha_inicio.diff(fecha_fin);
         var fecha_actual = new SDate();
         var faltantes = fecha_actual.diff(fecha_fin);

@@ -12,6 +12,12 @@ export default (state, action) => {
             case "getMovimientosBancarios":
                 getMovimientosBancarios(state, action);
                 break;
+            case "getPaquetesVendidos":
+                getPaquetesVendidos(state, action);
+                break;
+            case "getReporteAsistencia":
+                getReporteAsistencia(state, action);
+                break;
         }
         state.type = action.type;
         state.lastSend = new Date();
@@ -29,6 +35,18 @@ const getMovimientosBancarios = (state, action) => {
             var obj = action.data[key];
             state.data[key] = obj;
         })
+    }
+}
+const getPaquetesVendidos = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.paquetesVendidos = action.data;
+    }
+}
+const getReporteAsistencia = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.reporteAsistencia = action.data;
     }
 }
 

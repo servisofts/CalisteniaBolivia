@@ -14,6 +14,7 @@ class FotoPerfilComponent extends Component<tprop> {
     constructor(props) {
         super(props);
         this.state = {
+            update: new Date().getTime()
         };
     }
     render() {
@@ -45,12 +46,12 @@ class FotoPerfilComponent extends Component<tprop> {
                     type: "cambio",
                     url: SSocket.api.root + this.props.component + "_" + data.key,
                 })
-                // this.state.repaint = new Date().getTime()
-                // this.setState({ ...this.state });
+                this.state.update = new Date().getTime()
+                this.setState({ ...this.state });
             });
         }}>
             {/* {"foto"} */}
-            <SImage src={SSocket.api.root + this.props.component + "_" + data.key} />
+            <SImage src={SSocket.api.root + this.props.component + "_" + data.key+"?date="+this.state.update} />
 
         </TouchableOpacity>
         )

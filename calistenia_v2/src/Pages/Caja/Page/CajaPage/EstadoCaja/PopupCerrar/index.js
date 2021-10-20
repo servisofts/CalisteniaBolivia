@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 // import AppParams from '../../../../../Params/index';
 import { connect } from 'react-redux';
-import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage } from 'servisofts-component';
+import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage, SPopup } from 'servisofts-component';
 import TiposDePago from './TiposDePago';
 import Caja from '../../../..';
 import SSocket from 'servisofts-socket';
@@ -22,6 +22,7 @@ class PopupCerrar extends Component {
         return val;
     }
 
+    
 
     render() {
         var MovimientosCaja = Caja.CajaMovimiento.getByKeyCaja(this.props.data.key, this.props)
@@ -55,8 +56,6 @@ class PopupCerrar extends Component {
                                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                     data: {
                                         key_caja: this.props.data.key,
-                                        // key_cuenta_banco: this.state.cuenta.key,
-                                        // monto: data.monto * -1,
                                         monto_salvar: montoSalvar,
                                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                     }

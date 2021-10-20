@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SView, SForm, SInput, SPopup, SPopupClose, SPopupOpen, SScrollView2, SNavigation, SPage } from 'servisofts-component'
+import { SView, SForm, SInput, SPopup, SPopupClose, SPopupOpen, SScrollView2, SNavigation, SPage, SDate } from 'servisofts-component'
 import { connect } from 'react-redux';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent/index';
 import CuentaBanco from '../CuentaBanco';
@@ -22,7 +22,7 @@ class CuentaBancoMovimientoRegistroPage extends Component {
             cuenta: {
                 descripcion: "Cuenta a transferir"
             },
-            tipoSelect: "1"
+            tipoSelect: "ingreso"
         };
         this.key_banco = SNavigation.getParam("key_banco", null);
         this.key_cuenta_banco = SNavigation.getParam("key_cuenta_banco", null);
@@ -35,14 +35,14 @@ class CuentaBancoMovimientoRegistroPage extends Component {
     }
     getName() {
         switch (this.state.tipoSelect) {
-            case "1": return "Ingreso";
-            case "2": return "Egreso";
-            case "3": return "Traspaso";
+            case "ingreso": return "Ingreso";
+            case "egreso": return "Egreso";
+            case "traspaso": return "Traspaso";
         }
         return "";
     }
     getBancoSelect() {
-        if (this.state.tipoSelect != "3") {
+        if (this.state.tipoSelect != "traspaso") {
             return <View />
         }
         return <>
@@ -50,7 +50,7 @@ class CuentaBancoMovimientoRegistroPage extends Component {
             <SView col="xs-11 md-6 xl-4">
                 <SInput
                     editable={false}
-                   {...{
+                    {...{
 
                         label: `${this.state.cuenta.descripcion}`,
                         // type: "select",
@@ -164,12 +164,21 @@ class CuentaBancoMovimientoRegistroPage extends Component {
                                         height: 100
                                     }
                                 },
+                                fecha_on: {
+                                    type: 'date',
+                                    label: 'Fecha',
+                                    // placeholder: '0.00',
+                                    defaultValue: new SDate().toString("yyyy-MM-dd"),
+                                    isRequired: true,
+                                    col: "xs-12",
+
+                                },
                             }}
                             onSubmitProps={{
-                                type: (this.state.tipoSelect != "1" ? "danger" : "success")
+                                type: (this.state.tipoSelect != "ingreso" ? "danger" : "success")
                             }}
                             onSubmit={(data) => {
-                                if (this.state.tipoSelect == "3") {
+                                if (this.state.tipoSelect == "traspaso") {
                                     if (!this.state.cuenta.key) {
                                         SPopup.alert("Seleccione la cuenta a transferir")
                                         return;
@@ -181,9 +190,12 @@ class CuentaBancoMovimientoRegistroPage extends Component {
                                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                         data: {
                                             ...data,
+                                            fecha_on: data.fecha_on+new SDate().toString("Thh:mm:ss"),
                                             tipo_movimiento: this.state.tipoSelect,
                                             key_cuenta_banco: this.key_cuenta_banco,
                                             key_cuenta_banco_to: this.state.cuenta.key,
+                                            key_tipo_gasto: "1",
+                                            key_tipo_pago: "1",
                                             key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                             monto: data.monto,
                                         },
@@ -198,10 +210,13 @@ class CuentaBancoMovimientoRegistroPage extends Component {
                                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                                     data: {
                                         ...data,
+                                        fecha_on: data.fecha_on+new SDate().toString("Thh:mm:ss"),
                                         tipo_movimiento: this.state.tipoSelect,
                                         key_cuenta_banco: this.key_cuenta_banco,
+                                        key_tipo_gasto: "1",
+                                        key_tipo_pago: "1",
                                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                                        monto: data.monto * (this.state.tipoSelect != "1" ? -1 : 1),
+                                        monto: data.monto * (this.state.tipoSelect != "ingreso" ? -1 : 1),
                                     },
                                 }
                                 SSocket.send(object)

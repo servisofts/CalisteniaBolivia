@@ -25,7 +25,7 @@ class SucursalRegistro extends Component {
             }}
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', required: true, defaultValue: this.data.descripcion },
-                direccion: { label: 'Direccion', type: 'text', required: true, defaultValue: this.data.direccion },
+                direccion: { label: 'Direccion', type: 'direccion', defaultValue: this.data.direccion, latLng: { latitude: this.data.latitude, longitude: this.data.longitude } },
             }}
             onSubmit={(data) => {
                 if (this.key_sucursal) {

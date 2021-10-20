@@ -44,17 +44,17 @@ export default class FechasBetween extends Component<TypeProps> {
                     justifyContent: "center"
                 }} row>
                 <SView col={"xs-6 md-4 xl-3"} style={{ height: "100%", padding: 4, }}>
-                    <SInput props={{
-                        type: "date",
+                    <SInput
+                        type="date"
                         // customStyle: "primary",
-                        placeholder: "Fecha Inicio",
-                    }} style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: 4,
-                        backgroundColor: "#66000044",
-                        borderColor: "#666"
-                    }}
+                        placeholder="Fecha Inicio"
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: 4,
+                            backgroundColor: "#66000044",
+                            borderColor: "#666"
+                        }}
                         defaultValue={this.state.fecha_inicio}
                         onChangeText={(val) => {
                             this.onChange("fecha_inicio", val);
@@ -64,11 +64,10 @@ export default class FechasBetween extends Component<TypeProps> {
                     />
                 </SView>
                 <SView col={"xs-6 md-4 xl-3"} style={{ height: "100%", padding: 4, }}>
-                    <SInput props={{
-                        type: "date",
+                    <SInput
+                        type="date"
                         // customStyle: "primary",
-                        placeholder: "Fecha Fin",
-                    }}
+                        placeholder="Fecha Fin"
                         style={{
                             width: "100%",
                             height: "100%",

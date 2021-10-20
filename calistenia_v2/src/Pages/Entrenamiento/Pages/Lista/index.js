@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SImage, SLoad, SPage, SText, SView } from 'servisofts-component';
+import { SDate, SHr, SImage, SLoad, SPage, SText, SView, SNavigation } from 'servisofts-component';
 import Entrenamiento from '../..';
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
@@ -113,6 +113,13 @@ class Lista extends Component {
         return (
             <SPage title={"Entrenamientos"}>
                 <SView center>
+                    <SView col={"xs-11 md-8 xl-6"} card style={{
+                        padding: 4,
+                    }} height={40} center onPress={() => {
+                        SNavigation.navigate("entrenamientos_historial")
+                    }}>
+                        <SText fontSize={16} bold color={"#999"}>Ver historial</SText>
+                    </SView>
                     {this.getLista()}
                     <SHr height={32} />
                 </SView>
@@ -121,6 +128,6 @@ class Lista extends Component {
     }
 }
 const initStates = (state) => {
-    return { state }    
+    return { state }
 };
 export default connect(initStates)(Lista);

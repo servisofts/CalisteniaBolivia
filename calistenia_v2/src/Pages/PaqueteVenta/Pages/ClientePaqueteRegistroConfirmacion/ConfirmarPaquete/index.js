@@ -21,7 +21,7 @@ class ConfirmarPaquete extends Component {
             var tsk = this.props.data.tasks[i];
             var data = this.props.data.dataPagos[i];
             if(!data) data = {};
-            alert(JSON.stringify(data))
+            // alert(JSON.stringify(data))
             return {
                 ...obj,
                 fecha_inicio: tsk.fecha.toString("yyyy-MM-dd"),
@@ -64,7 +64,7 @@ class ConfirmarPaquete extends Component {
                     backgroundColor: "#000000aa",
                     padding: 16
                 }}>
-                <SIcon name={"Delete"} />
+                <SIcon name={"Cerrar"} fill={"#fff"} />
                 {/* <Svg name={"Cerrar"} /> */}
             </SView>
         }

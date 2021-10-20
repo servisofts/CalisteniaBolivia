@@ -56,16 +56,30 @@ export default class MovimientosGraphic extends Component {
             </SView>
         })
     }
+    getListaMes() {
+        var lista = this.getListaOrdenada();
+        var arr = [];
+        var total = 0;
+        lista.map((key, i) => {
+            var obj = this.props.data[key];
+            if (obj.fecha_on.indexOf("2021-10") > -1) {
+                arr.push(key);
+            } else {
+                total += obj.monto;
+            }
+        })
+        return { lista: arr, total: total };
+
+    }
     getLines() {
         var montoMinimo = this.getMontoMinimo();
         var montoMaximo = this.getMontoMaximo();
         var { width, height } = this.state.layout;
-        var lista = this.getListaOrdenada();
+        var { lista, total } = this.getListaMes();
         if (lista.length > 1) {
             var i = 0;
             var x = 0;
             var y = 0;
-            var total = 0;
             var media = width / (lista.length - 1);
             return lista.map((key) => {
                 var obj = this.props.data[key];

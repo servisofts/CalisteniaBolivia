@@ -28,7 +28,7 @@ const App = (props) => {
     return (
         <Provider store={store}>
             <SComponentContainer
-                debug
+                // debug
                 socket={SSocket}
                 assets={Assets}
                 background={<BackgroundImage />}

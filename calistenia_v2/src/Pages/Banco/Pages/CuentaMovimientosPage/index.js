@@ -40,7 +40,7 @@ class CuentaMovimientosPage extends Component {
         if (this.props.onBack) this.props.onBack();
     }
     getTraspaso(obj) {
-        if (obj.tipo_movimiento != "3") {
+        if (obj.tipo_movimiento != "traspaso") {
             return <View />
         }
         return <> <SView style={{

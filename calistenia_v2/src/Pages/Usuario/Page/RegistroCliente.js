@@ -5,6 +5,7 @@ import { SLoad } from 'servisofts-component';
 import { SButtom, SDate, SForm, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import Usuario from '..';
 import BackgroundImage from '../../../Components/BackgroundImage';
+import FotoPerfilComponent from '../../../Components/FotoPerfilComponent';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
 import RolDeUsuario from './RolDeUsuario';
 
@@ -122,6 +123,9 @@ class RegistroCliente extends Component {
                         <SView height={8} />
                         <SText fontSize={20} bold>{`${this.key ? "Edita el" : "Registra tu"} usuario!`}</SText>
                         <SView height={8} />
+                        <SView col={"xs-6"} height={150}>
+                            <FotoPerfilComponent data={this.usr} component={"usuario"} />
+                        </SView>
                         {this.getForm()}
                         <SView height={16} />
                         <SView col={"xs-11"} row center>
