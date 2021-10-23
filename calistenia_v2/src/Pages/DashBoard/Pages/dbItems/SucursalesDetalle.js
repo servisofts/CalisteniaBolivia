@@ -31,7 +31,7 @@ class SucursalesDetalle extends Component {
             Object.keys(clientesActivos).map((key_cli) => {
                 var cliente = clientesActivos[key_cli];
                 if (cliente["caja"].key_sucursal == key) {
-                    monto += cliente["paquete"].precio;
+                    // monto += cliente["paquete"].precio;
                     cantidad++;
                 }
             })
@@ -83,7 +83,7 @@ class SucursalesDetalle extends Component {
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Clientes'}</SText>
-                                <SText center fontSize={10}>{`Bs. ${monto.toLocaleString('de-DE')}`}</SText>
+                                {/* <SText center fontSize={10}>{`Bs. ${monto.toLocaleString('de-DE')}`}</SText> */}
                             </SView>
                             <SView col={"xs-4"} height center>
                                 <SView width={40} height={40} center>
