@@ -18,6 +18,9 @@ export default (state, action) => {
             case "getReporteAsistencia":
                 getReporteAsistencia(state, action);
                 break;
+            default:
+                defaultType(state, action);
+                break;
         }
         state.type = action.type;
         state.lastSend = new Date();
@@ -47,6 +50,14 @@ const getReporteAsistencia = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
         state.reporteAsistencia = action.data;
+    }
+}
+const defaultType = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        var name = action.name_in_reducer;
+        if (!name) return;
+        state[name] = action.data;
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SLoad, SNavigation, SPage, STable, SText } from 'servisofts-component';
+import { SDate, SIcon, SLoad, SNavigation, SPage, STable2, SText } from 'servisofts-component';
 import Usuario from '../../Usuario';
 import Actions from '../Actions';
 
@@ -22,7 +22,7 @@ class ReporteAsistencia extends Component {
         if (!data) return <SLoad />
         if (!usuarios) return <SLoad />
         // return <SText>{JSON.stringify(movimientos)}</SText>
-        return <STable
+        return <STable2
             header={[
                 { key: "index", label: "#", width: 40 },
                 // { key: "key", label: "Key", width: 150 },

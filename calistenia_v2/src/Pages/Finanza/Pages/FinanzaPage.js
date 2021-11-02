@@ -10,6 +10,16 @@ class FinanzaPage extends Component {
         this.state = {
         };
     }
+    getItemFecha({ title, icon, url, onPress }) {
+        return this.getItem({
+            title: title, icon: icon, onPress: () => {
+                SPopup.dateBetween(title, (evt) => {
+                    // alert(JSON.stringify(evt));
+                    SNavigation.navigate(url, evt);
+                });
+            }
+        })
+    }
     getItem({ title, icon, url, onPress }) {
         return <SView col={"xs-3 sm-2.5 md-2 lg-1.5 xl-1.3"} colSquare style={{
             padding: 4,
@@ -46,14 +56,9 @@ class FinanzaPage extends Component {
                     });
                 }
             })}
-            {this.getItem({
-                title: "Paquetes vendidos", icon: "Paquete", onPress: () => {
-                    SPopup.dateBetween("Paquetes vendidos", (evt) => {
-                        // alert(JSON.stringify(evt));
-                        SNavigation.navigate("PaquetesVendidos", evt);
-                    });
-                }
-            })}
+            {this.getItemFecha({ title: "Paquetes vendidos", icon: "Paquete", url: "PaquetesVendidos" })}
+            {this.getItemFecha({ title: "Ingresos & egresos manuales", icon: "Traspaso", url: "IngresosEgresos" })}
+            {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>
     }
     render() {

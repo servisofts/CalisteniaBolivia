@@ -32,6 +32,7 @@ export default class Actions {
         var data = reducer.paquetesVendidos;
         if (reducer.data_paquetesVendidos != JSON.stringify(dataProps)) {
             reducer.data_paquetesVendidos = JSON.stringify(dataProps);
+            reducer.paquetesVendidos = false;
             force = true;
         }
         if (!data || force) {
@@ -51,6 +52,7 @@ export default class Actions {
         var reducer = props.state[Actions.reducerName];
         var data = reducer.reporteAsistencia;
         if (reducer.data_reporteAsistencia != JSON.stringify(dataProps)) {
+            reducer.reporteAsistencia = false;
             reducer.data_reporteAsistencia = JSON.stringify(dataProps);
             force = true;
         }
@@ -66,5 +68,35 @@ export default class Actions {
             return;
         }
         return data;
+    }
+
+    //DEFAULT FUNCTION GET REPORTE
+    static _getReporte(dataProps, props, force, name, type) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer[name];
+        if (reducer["data_" + name] != JSON.stringify(dataProps)) {
+            reducer[name] = false;
+            reducer["data_" + name] = JSON.stringify(dataProps);
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: type,
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                name_in_reducer: name,
+            })
+            return;
+        }
+        return data;
+    }
+
+    static getReporteIngresosEgresos(dataProps, props, force) {
+        const name = "reporteIngresosEgresos";
+        const type = "getReporteIngresosEgresos";
+        return this._getReporte(dataProps, props, force, name, type);
     }
 }
