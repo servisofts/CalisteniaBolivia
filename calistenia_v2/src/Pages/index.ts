@@ -18,6 +18,7 @@ import Entrenamiento from './Entrenamiento';
 import Asistencia from './Asistencia';
 import Finanza from './Finanza';
 import DashBoard from './DashBoard';
+import Manual from './Manual';
 const Pages: SPageListProps = {
     "inicio": InicioPage,
     "carga": CargaPage,
@@ -35,6 +36,7 @@ const Pages: SPageListProps = {
     ...Entrenamiento.Pages,
     ...Asistencia.Pages,
     ...Finanza.Pages,
-    ...DashBoard.Pages
+    ...DashBoard.Pages,
+    ...Manual.Pages
 }
 export default Pages;

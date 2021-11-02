@@ -20,7 +20,7 @@ class ConfirmarPaquete extends Component {
         var clientes = this.props.data.usuariosData.map((obj, i) => {
             var tsk = this.props.data.tasks[i];
             var data = this.props.data.dataPagos[i];
-            if(!data) data = {};
+            if (!data) data = {};
             // alert(JSON.stringify(data))
             return {
                 ...obj,
@@ -38,15 +38,14 @@ class ConfirmarPaquete extends Component {
             data,
             clientes: clientes,
         }
-        // alert(JSON.stringify(object));
-        SSocket.send(object);
-        var onFInish = SNavigation.getParam("onFinish")
-        if (onFInish) {
-            onFInish();
-
-        }
-        SNavigation.goBack();
-        // SPopupClose("confirmarPaquete");
+        console.log(object)
+        SNavigation.navigate("EsperandoVenta")
+        // SSocket.send(object);
+        // var onFInish = SNavigation.getParam("onFinish")
+        // if (onFInish) {
+        //     onFInish();
+        // }
+        // SNavigation.goBack();
     }
     getTextDetail({ label, value }) {
         return <Text style={{ color: "#fff", marginBottom: 8, }}>{label}: {value}</Text>

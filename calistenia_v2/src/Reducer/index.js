@@ -12,6 +12,7 @@ import PaqueteVenta from '../Pages/PaqueteVenta';
 import Entrenamiento from '../Pages/Entrenamiento';
 import Asistencia from '../Pages/Asistencia';
 import Finanza from '../Pages/Finanza';
+import Manual from '../Pages/Manual';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
@@ -24,7 +25,8 @@ const reducers = combineReducers({
     ...PaqueteVenta.Reducers,
     ...Entrenamiento.Reducers,
     ...Asistencia.Reducers,
-    ...Finanza.Reducers
+    ...Finanza.Reducers,
+    ...Manual.Reducers
 });
 
 export default (state, action) => {

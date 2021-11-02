@@ -3,9 +3,11 @@ import Actions from './Actions'
 
 import ClientePaqueteRegistroPage from './Pages/ClientePaqueteRegistroPage'
 import ClientePaqueteRegistroConfirmacion from './Pages/ClientePaqueteRegistroConfirmacion'
+import EsperandoVenta from './Pages/EsperandoVenta'
 const Pages: SPageListProps = {
     ClientePaqueteRegistroPage,
-    ClientePaqueteRegistroConfirmacion
+    ClientePaqueteRegistroConfirmacion,
+    EsperandoVenta
 }
 
 import paqueteVentaReducer from './Reducer/paqueteVentaReducer'
