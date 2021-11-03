@@ -13,6 +13,7 @@ export default class ClientePaqueteRegistroConfirmacion extends Component {
         };
     }
 
+
     render() {
         return (
             <SPage
