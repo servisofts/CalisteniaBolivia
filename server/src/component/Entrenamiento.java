@@ -66,13 +66,13 @@ public class Entrenamiento {
             obj.put("estado", "exito");
         } catch (SQLException e) {
             obj.put("estado", "error");
-            e.printStackTrace();
+            e.printStackTrace();      
         }
     }
 
     public void getByDate(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_date('entrenamiento','"+obj.getString("fecha")+"') as json";
+            String consulta =  "select entrenamiento_get_by_date('"+obj.getString("fecha")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");

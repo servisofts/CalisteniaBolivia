@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { SButtom, SHr, SPage, SText, SView } from 'servisofts-component';
+import { jsPDF } from "jspdf";
 
 class Manual extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+
     }
+
+   
+  
 
     render() {
         return (
-            <View>
-                <Text> Manual </Text>
-            </View>
+            <SPage title="Manual">
+                <SView col="xs-12" center>
+                    <SView onPress={this.pdf}>
+                        <SText>Pdf</SText>
+                    </SView>
+                </SView>
+            </SPage>
         );
     }
 }

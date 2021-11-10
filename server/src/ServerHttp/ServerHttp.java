@@ -93,18 +93,19 @@ public class ServerHttp {
                 }
 
             });
+
             t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             t.getResponseHeaders().add("Content-type", "text/plain");
             t.sendResponseHeaders(200, 0);
-            
-        if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
-            t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
-            t.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
-            t.sendResponseHeaders(204, -1);
-            return;
-        }
+                
+            if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                t.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+                t.sendResponseHeaders(204, -1);
+                return;
+            }
 
-            
+                
             String data = "";
             InputStream file = null;
             String nombre="";
