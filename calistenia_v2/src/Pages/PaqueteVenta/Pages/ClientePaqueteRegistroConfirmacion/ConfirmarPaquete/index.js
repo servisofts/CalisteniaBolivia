@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SView, SText, SPopupClose, SPopupOpen, SButtom, SScrollView2, SInput, SImage, SIcon, SLoad, SNavigation } from 'servisofts-component';
+import { SView, SText, SPopupClose, SPopupOpen, SButtom, SScrollView2, SInput, SImage, SIcon, SLoad, SNavigation, SUuid } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Paquete from '../../../../Paquete';
 import ConfirmacionUsuario from './ConfirmacionUsuario';
@@ -21,7 +21,6 @@ class ConfirmarPaquete extends Component {
             var tsk = this.props.data.tasks[i];
             var data = this.props.data.dataPagos[i];
             if (!data) data = {};
-            // alert(JSON.stringify(data))
             return {
                 ...obj,
                 fecha_inicio: tsk.fecha.toString("yyyy-MM-dd"),
@@ -29,7 +28,7 @@ class ConfirmarPaquete extends Component {
                 data: data
             }
         });
-
+        data.key = SUuid();
         var object = {
             component: "paqueteVenta",
             type: "registro",
@@ -38,13 +37,12 @@ class ConfirmarPaquete extends Component {
             data,
             clientes: clientes,
         }
-        console.log(object)
-        SNavigation.navigate("EsperandoVenta")
-        // SSocket.send(object);
+        SSocket.send(object);
         // var onFInish = SNavigation.getParam("onFinish")
         // if (onFInish) {
         //     onFInish();
         // }
+        SNavigation.navigate("EsperandoVenta", { key: data.key })
         // SNavigation.goBack();
     }
     getTextDetail({ label, value }) {
@@ -199,15 +197,15 @@ class ConfirmarPaquete extends Component {
         </SView>)
     }
     render() {
-        if (this.props.state.paqueteVentaReducer.estado == "exito" && this.props.state.paqueteVentaReducer.type == "registro") {
-            this.props.state.paqueteVentaReducer.estado = "";
-            var onFInish = SNavigation.getParam("onFinish")
-            if (onFInish) {
-                onFInish();
+        // if (this.props.state.paqueteVentaReducer.estado == "exito" && this.props.state.paqueteVentaReducer.type == "registro") {
+        //     this.props.state.paqueteVentaReducer.estado = "";
+        //     var onFInish = SNavigation.getParam("onFinish")
+        //     if (onFInish) {
+        //         onFInish();
 
-            }
-            SNavigation.goBack();
-        }
+        //     }
+        //     SNavigation.goBack();
+        // }
         // var usuario = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key_usuario];
         var paquete = Paquete.Actions.getByKey(this.props.data.key_paquete, this.props);
         if (!paquete) return <SLoad />

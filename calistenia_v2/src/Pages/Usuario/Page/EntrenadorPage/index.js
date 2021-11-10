@@ -131,7 +131,7 @@ class EntrenadorPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key+`?date=${new Date().getTime()}`} />
+                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{
@@ -152,7 +152,7 @@ class EntrenadorPage extends Component {
       })
     }
     return (
-      <SPage hidden>
+      <SPage hidden disableScroll>
         <BarraSuperior title={"Entrenadores"} navigation={this.props.navigation} goBack={() => {
           SNavigation.goBack();
         }} />
@@ -160,8 +160,7 @@ class EntrenadorPage extends Component {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
-        <View style={{
-          flex: 1,
+        <SView flex style={{
           width: "100%",
         }}>
           <SScrollView2
@@ -176,16 +175,17 @@ class EntrenadorPage extends Component {
               }
             }}
           >
-            <SView col={"xs-12"} center>
+            <SView col={"xs-12"} center height>
               {getLista()}
             </SView>
           </SScrollView2>
-          <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
-            SNavigation.navigate("registro",{
-              key_rol: this.key_rol
-            })
-          }} />
-        </View>
+
+        </SView>
+        <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
+          SNavigation.navigate("registro", {
+            key_rol: this.key_rol
+          })
+        }} />
       </SPage>
     );
   }

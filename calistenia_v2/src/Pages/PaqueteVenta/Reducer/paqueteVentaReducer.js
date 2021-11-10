@@ -1,6 +1,7 @@
 const initialState = {
     estado: "Not Found",
-    usuario: {}
+    usuario: {},
+    recibo: {}
 }
 
 export default (state, action) => {
@@ -18,6 +19,9 @@ export default (state, action) => {
                 break;
             case "eliminar":
                 eliminar(state, action);
+                break;
+            case "getRecibo":
+                getRecibo(state, action);
                 break;
 
         }
@@ -82,6 +86,12 @@ const getAll = (state, action) => {
         if (action.key_usuario) {
             state.data[action.key_usuario] = action.data;
         }
+    }
+}
+const getRecibo = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.recibo[action.key] = action.data;
     }
 }
 

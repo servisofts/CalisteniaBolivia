@@ -21,6 +21,14 @@ export default class Actions {
         }
         SSocket.send(object);
     }
+    static getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
     static getAll(props) {
         var data = props.state.sucursalReducer.data;
         if (!data) {
@@ -49,5 +57,5 @@ export default class Actions {
         }
         return data[key_sucursal];
     }
-    
+
 }

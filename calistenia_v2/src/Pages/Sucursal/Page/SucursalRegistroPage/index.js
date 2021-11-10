@@ -26,6 +26,7 @@ class SucursalRegistro extends Component {
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', required: true, defaultValue: this.data.descripcion },
                 direccion: { label: 'Direccion', type: 'direccion', defaultValue: this.data.direccion, latLng: { latitude: this.data.latitude, longitude: this.data.longitude } },
+                color: { label: 'Color', type: 'text', placeholder: "#660000", required: true, defaultValue: this.data.color },
             }}
             onSubmit={(data) => {
                 if (this.key_sucursal) {

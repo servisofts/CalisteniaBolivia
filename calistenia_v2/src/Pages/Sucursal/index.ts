@@ -17,10 +17,15 @@ const Reducers = {
     sucursalTipoPagoCuentaBancoReducer
 }
 
+import SucursalSelect from './Component/SucursalSelect'
+const Component = {
+    SucursalSelect
+}
 
 export default {
     Pages,
     Actions,
     Reducers,
-    SucursalTipoPagoCuentaBanco
+    SucursalTipoPagoCuentaBanco,
+    Component
 };

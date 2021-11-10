@@ -11,9 +11,16 @@ export default class FechasBetween extends Component<TypeProps> {
     constructor(props) {
         super(props);
         var fecha_inicio = new SDate();
+        if (this.props.fecha_inicio) {
+            fecha_inicio = new SDate(this.props.fecha_inicio, "yyyy-MM-dd");
+        }
+        var fecha_fin = new SDate();
+        if (this.props.fecha_fin) {
+            fecha_fin = new SDate(this.props.fecha_fin, "yyyy-MM-dd");
+        }
         this.state = {
             fecha_inicio: fecha_inicio.toString("yyyy-MM-dd"),
-            fecha_fin: new SDate().toString("yyyy-MM-dd"),
+            fecha_fin: fecha_fin.toString("yyyy-MM-dd"),
         };
         this.props.onChange(this.state.fecha_inicio, this.state.fecha_fin);
     }

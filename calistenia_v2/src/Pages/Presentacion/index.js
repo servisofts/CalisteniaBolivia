@@ -17,13 +17,13 @@ class Presentacion extends Component {
         //     return null;
         // }
         return (
-            <SPage hidden>
-                <SView flex center>
+            <SPage hidden disableScroll>
+                <SView flex center col={"xs-12"}>
                     <SView col={"xs-10 md-6 xl-4"} height={200}>
                         <LogoAnimado />
                     </SView>
                     <SHr height={48} />
-                    <SView width={100} colSquare onPress={() => {
+                    <SView height={130} colSquare center onPress={() => {
                         SNavigation.navigate('login');
                     }}>
                         <SIcon name={"Salir"} />

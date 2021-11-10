@@ -115,6 +115,7 @@ class BancoPage extends Component {
         return (
             <SPage
                 hidden
+                disableScroll
             >
                 <BarraSuperior
                     goBack={() => {

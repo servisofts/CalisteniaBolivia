@@ -44,6 +44,7 @@ class BancoRegistroPage extends Component {
         }
         return (
             <SPage
+                disableScroll
                 hidden
             >
                 <BarraSuperior title={"Registro de " + component} goBack={() => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SImage, SLoad, SOrdenador, SPage, SText, SView } from 'servisofts-component';
+import { SDate, SHr, SImage, SLoad, SNavigation, SOrdenador, SPage, SText, SView } from 'servisofts-component';
 import Entrenamiento from '../..';
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
@@ -13,8 +13,10 @@ class Lista extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fecha: new SDate().toString("yyyy-MM-dd"),
+            sucursal: null,
+            fecha: SNavigation.getParam("fecha", new SDate("").toString("yyyy-MM-dd")),
         };
+        this.key_sucursal = SNavigation.getParam("key_sucursal");
 
     }
     componentDidMount() {
@@ -34,7 +36,7 @@ class Lista extends Component {
                 justifyContent: "center",
             }}>
                 <SText>{`${sucursal.descripcion}`}</SText>
-                <SText fontSize={10} color={"#999"}>{`${sucursal.direccion}`}</SText>
+                <SText fontSize={10} color={"#999"}>{`${!sucursal.direccion ? "" : sucursal.direccion}`}</SText>
             </SView>
         </SView>
     }
@@ -95,7 +97,7 @@ class Lista extends Component {
         </SView>
     }
     getLista() {
-        var data = Entrenamiento.Actions.getByDate(this.state.fecha,this.props);
+        var data = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
         var usuarios = Usuario.Actions.getAll(this.props);
         var sucursales = Sucursal.Actions.getAll(this.props);
         if (!data) return <SLoad />
@@ -103,12 +105,17 @@ class Lista extends Component {
             { key: "fecha_on", order: "desc", peso: 1 }
         ]).ordernarObject(data).map((key, i) => {
             var obj = data[key];
-            if (i > 20) return null;
+            // if (i > 20) return null;
             if (!obj.key) return <SView />;
+            if (this.state.sucursal) {
+                if (obj.key_sucursal != this.state.sucursal.key) return null;
+            }
             return <>
                 <SHr height={16} />
                 <SView col={"xs-11 md-8 xl-6"} key={key} card style={{
                     padding: 4,
+                }} center onPress={() => {
+                    SNavigation.navigate("entrenamiento_perfil", { key_entrenamiento: obj.key })
                 }}>
                     <SView col={"xs-12"} style={{
                         alignItems: "flex-end",
@@ -120,7 +127,7 @@ class Lista extends Component {
                     <SHr height={16} />
                     {this.getUsuario(obj.key_usuario)}
                     <SHr height={16} />
-                    {/* <SText>{`Hora de inicio: ${new SDate(obj.fecha_on).toString("hh:mm")}`}</SText> */}
+                    <SText>{`# de personas que entrenaron: ${obj.cantidad}`}</SText>
                     <SHr height={16} />
                     {this.getEstado(obj)}
                     {/* {this.getAsistencia(obj)} */}
@@ -129,15 +136,41 @@ class Lista extends Component {
             </>
         });
     }
+    getTotal() {
+        var data = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
+        if(!data) return <SLoad />
+        var total = 0;
+        var total_personas = 0;
+        Object.keys(data).map((key, i) => {
+            var obj = data[key];
+            // if (i > 20) return null;
+            if (!obj.key) return <SView />;
+            if (this.state.sucursal) {
+                if (obj.key_sucursal != this.state.sucursal.key) return null;
+            }
+            total_personas+=obj.cantidad;
+            total++;
+        });
+        return <SView col={"xs-12"} center>
+            <SHr />
+            <SText color={"#999"}>{`Entrenamientos ( ${total} )`} </SText>
+            <SText color={"#999"}>{`Personas que entrenaron ( ${total_personas} ) `}</SText>
+            <SHr />
+        </SView>
+    }
     render() {
         return (
             <SPage title={"Entrenamientos historicos"}>
                 <SView center>
-                    <FechaSingle onChange={(fecha) => {
+                    <FechaSingle fecha_inicio={this.state.fecha} onChange={(fecha) => {
                         this.setState({
                             fecha: fecha,
                         });
                     }} />
+                    <Sucursal.Component.SucursalSelect key_sucursal={this.key_sucursal} sucursal={this.state.sucursal} setSucursal={(obj) => {
+                        this.setState({ sucursal: obj });
+                    }} />
+                    {this.getTotal()}
                     {this.getLista()}
                     <SHr height={32} />
                 </SView>

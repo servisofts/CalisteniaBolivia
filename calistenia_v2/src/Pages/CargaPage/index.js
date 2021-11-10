@@ -27,8 +27,9 @@ class CargaPage extends Component {
             <SPage
                 hidden
                 title="CargaPage"
+                disableScroll
             >
-                <SView center flex>
+                <SView col={"xs-12"} center flex>
                     <SView col={"xs-11 sm-10 md-9 lg-8 xl-6"} height={300}>
                         <LogoAnimado />
                     </SView>

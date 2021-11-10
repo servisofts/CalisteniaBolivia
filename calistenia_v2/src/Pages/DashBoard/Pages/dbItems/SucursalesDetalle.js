@@ -12,7 +12,9 @@ class SucursalesDetalle extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoad: false,
         };
+    
     }
 
     getLista() {
@@ -24,6 +26,7 @@ class SucursalesDetalle extends Component {
         if (!sucursales) return <SLoad />;
         if (!clientesActivos) return <SLoad />;
         if (!cajas) return <SLoad />
+
         return Object.keys(sucursales).map((key, index) => {
             var sucursal = sucursales[key];
             var cantidad = 0;
@@ -112,7 +115,7 @@ class SucursalesDetalle extends Component {
                                         borderRadius: 8
                                     }}>
                                         <SText center fontSize={18} bold>{cantidad_entrenamiento}</SText>
-                                        
+
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Entrenando'}</SText>
@@ -126,13 +129,9 @@ class SucursalesDetalle extends Component {
         })
     }
     getContent() {
-        var sucursales = Sucursal.Actions.getAll(this.props);
-        var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
-        if (!sucursales) return <SLoad />;
-        if (!clientesActivos) return <SLoad />;
         return <SView col={"xs-12"} center row>
             <SView col={"xs-12"} center >
-                <SText fontSize={10}>{`Sucursales`}</SText>
+                <SText fontSize={16}>{`Sucursales`}</SText>
             </SView>
             <SView col={"xs-12"} center row style={{
                 // justifyContent: "space-between"
