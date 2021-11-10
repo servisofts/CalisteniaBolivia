@@ -40,7 +40,7 @@ export default class CajaPage extends Component {
   }
   render() {
     _sucursal = this.state.sucursal;
-    return (<SPage title={"Caja"} hidden>
+    return (<SPage title={"Caja"} hidden disableScroll>
       <BarraSuperior title={"Caja"} goBack={() => {
         SNavigation.goBack();
       }} />

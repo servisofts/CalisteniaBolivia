@@ -68,14 +68,14 @@ class ClientePerfilPage extends Component {
         <BarraSuperior duration={500} title={"Perfil de cliente"} navigation={this.props.navigation} goBack={() => {
           SNavigation.goBack()
         }} {...this.props} />
-        <SScrollView2 disableHorizontal>
+        <ScrollView>
           <SView col={"xs-12"} center>
             {this.getPerfil()}
             <SView col={"xs-11 md-8 xl-6"} center>
               <PaquetesDeUsuario key_usuario={this.key} navigation={this.props.navigation} />
             </SView>
           </SView>
-        </SScrollView2>
+        </ScrollView>
       </SPage >
     );
   }

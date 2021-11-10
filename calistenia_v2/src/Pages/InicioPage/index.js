@@ -30,15 +30,9 @@ class InicioPage extends Component {
                     height
                     col={"xs-12"}
                     center
-                    style={{
-                        justifyContent: 'flex-start',
-                    }}
-                    onPress={() => {
-                        this.icons.stopAnimation();
-                    }}
                     activeOpacity={1}
                 >
-                    <SView col={"xs-11"} row >
+                    <SView col={"xs-12"} row height >
                         <Iconos ref={(ref) => { this.icons = ref }} />
                     </SView>
 

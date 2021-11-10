@@ -35,7 +35,7 @@ class RegistroCliente extends Component {
 
             }}
             inputs={{
-                Nombres: { label: "Usuario", isRequired: true, defaultValue: this.usr.Nombres, },
+                Nombres: { label: "Nombres", isRequired: true, defaultValue: this.usr.Nombres, },
                 Apellidos: { label: "Apellidos", isRequired: true, defaultValue: this.usr.Apellidos, },
                 CI: { label: "CI", isRequired: true, defaultValue: this.usr.CI, col: "xs-5.5" },
                 "Fecha nacimiento": { label: "Fecha de nacimiento", type: "date", isRequired: true, defaultValue: this.usr["Fecha nacimiento"], col: "xs-6" },
@@ -117,15 +117,13 @@ class RegistroCliente extends Component {
         }
 
         return (
-            <SPage>
+            <SPage title={"Registro"}>
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={8} />
                         <SText fontSize={20} bold>{`${this.key ? "Edita el" : "Registra tu"} usuario!`}</SText>
                         <SView height={8} />
-                        <SView col={"xs-6"} height={150}>
-                            <FotoPerfilComponent data={this.usr} component={"usuario"} />
-                        </SView>
+                        {this.key ? <SView col={"xs-6"} height={150}> <FotoPerfilComponent data={this.usr} component={"usuario"} /> </SView> : null}
                         {this.getForm()}
                         <SView height={16} />
                         <SView col={"xs-11"} row center>

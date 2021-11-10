@@ -2,6 +2,7 @@ const initialState = {
     estado: "Not Found",
     data: {},
     entrenamientos: {},
+    data_key: {},
     all: false,
 }
 
@@ -14,6 +15,9 @@ export default (state, action) => {
                 break;
             case "getByKeyUsuario":
                 getByKeyUsuario(state, action);
+                break;
+            case "getByKey":
+                getByKey(state, action);
                 break;
             case "getAll":
                 getAll(state, action);
@@ -68,6 +72,15 @@ const getByKeyUsuario = (state, action) => {
             state.data[action.data.key_usuario] = action.data;
         }
         state.entrenamiento = action.data;
+    }
+}
+const getByKey = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.data_key= {
+            ...state.data_key,
+            ...action.data
+        }
     }
 }
 

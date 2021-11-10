@@ -155,7 +155,7 @@ class RolPage extends Component {
       })
     }
     return (
-      <SPage title={"Roles de usuario"}>
+      <SPage title={"Roles de usuario"} disableScroll>
         <View style={{
           flex: 1,
           width: "100%",

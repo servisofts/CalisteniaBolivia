@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SImage, SLoad, SPage, SText, SView, SNavigation } from 'servisofts-component';
+import { SDate, SHr, SImage, SLoad, SPage, SText, SView, SNavigation, SIcon } from 'servisofts-component';
 import Entrenamiento from '../..';
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
@@ -83,7 +83,12 @@ class Lista extends Component {
         if (!data) return <SLoad />
         return Object.keys(data).map((key) => {
             var obj = data[key];
-            if (!obj.key) return <SView />;
+            if (!obj.key) return <SView col={"xs-12"} center>
+                <SHr height={50} />
+                <SIcon name={"Alert"} width={50} height={50} />
+                <SHr height={16} />
+                <SText center>No existen entrenamientos en curso</SText>
+            </SView>;
             return <>
                 <SHr height={16} />
                 <SView col={"xs-11 md-8 xl-6"} key={key} card style={{

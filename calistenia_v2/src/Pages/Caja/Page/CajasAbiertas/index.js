@@ -18,6 +18,7 @@ export default class CajasAbiertas extends Component {
             <SPage
                 navigation={this.props.navigation}
                 title="Cajas abiertas"
+                disableScroll
             >
                 <ListaCajas navigation={this.props.navigation} />
             </SPage>

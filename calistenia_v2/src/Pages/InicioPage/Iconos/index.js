@@ -20,6 +20,7 @@ export default class Iconos extends Component {
                 delay: 0,
                 easing: Easing.linear,
                 duration: 200,
+                useNativeDriver: true,
             }),
             { iterations: 1000 },
         ).start();

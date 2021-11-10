@@ -24,6 +24,7 @@ class BarraSuperior extends Component {
         Animated.timing(this.state.anim, {
             toValue: 100,
             duration: !this.props.duration ? 300 : this.props.duration,
+            useNativeDriver: true,
         }).start();
     }
     componentDidMount() {

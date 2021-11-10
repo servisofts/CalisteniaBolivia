@@ -10,7 +10,7 @@ type TypeProps = {
 export default class FechaSingle extends Component<TypeProps> {
     constructor(props) {
         super(props);
-        var fecha_inicio = new SDate();
+        var fecha_inicio = new SDate(this.props.fecha_inicio, "yyyy-MM-dd");
         this.state = {
             fecha_inicio: fecha_inicio.toString("yyyy-MM-dd"),
             fecha_fin: new SDate().toString("yyyy-MM-dd"),
@@ -36,14 +36,14 @@ export default class FechaSingle extends Component<TypeProps> {
     render() {
         return (
             <SView col={"xs-12"}
-                height={40}
+                height={50}
                 style={{
-                    height: 40,
+                    height: 50,
                     // backgroundColor: "#ff0000",
                     alignItems: "center",
                     justifyContent: "center"
                 }} row>
-                <SView col={"xs-6 md-4 xl-3"} style={{ height: "100%", padding: 4, }}>
+                <SView col={"xs-11 md-6 xl-4"} style={{ height: "100%", padding: 4, }}>
                     <SInput
                         type="date"
                         // customStyle: "primary",
