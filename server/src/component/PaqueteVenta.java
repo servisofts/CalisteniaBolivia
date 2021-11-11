@@ -30,6 +30,9 @@ public class PaqueteVenta {
             case "getByKey":
                 getByKey(data, session);
                 break;
+            case "getRecibo":
+                getRecibo(data, session);
+                break;
             case "registro":
                 registro(data, session);
             break;
@@ -89,12 +92,26 @@ public class PaqueteVenta {
         }
     }
 
+    public void getRecibo(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta =  "select get_by_key('paquete_venta','"+obj.getString("key")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), "paquete_venta_getByKey", data);
+
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
             JSONObject paquete_venta = obj.getJSONObject("data");
-            paquete_venta.put("key",UUID.randomUUID().toString());
+            //paquete_venta.put("key",UUID.randomUUID().toString());
             paquete_venta.put("fecha_on",fecha_on);
             paquete_venta.put("estado",1);
             Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
