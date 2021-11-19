@@ -23,11 +23,12 @@ class DetalleCaja extends Component {
         return (
             <SPage
                 title="Detalle de caja "
+                disableScroll
             >
                 {/* <SText>{JSON.stringify(caja)}</SText> */}
                 <SScrollView2 disableHorizontal>
                     <SView col={"xs-12"} center>
-                        <SView col={"xs-11.8 md-8 xl-6"}>
+                        <SView col={"xs-11.8 md-8 xl-6"} center>
                             <Perfil key_usuario={caja.key_usuario} />
                         </SView>
                         <Movimientos caja={caja} />

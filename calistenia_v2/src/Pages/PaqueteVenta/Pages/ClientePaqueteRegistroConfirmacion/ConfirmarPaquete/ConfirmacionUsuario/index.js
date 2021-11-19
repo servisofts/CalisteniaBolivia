@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import FotoPerfilUsuario from '../../../../Component/FotoPerfilUsuario';
 // import AppParams from '../../../../Params';
-import { SView, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2, SPage } from 'servisofts-component';
+import { SView, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2, SPage, SHr } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import FotoPerfilUsuario from '../../../../../../Components/FotoPerfilUsuario';
 
@@ -126,7 +126,6 @@ class ConfirmacionUsuario extends Component {
       <SView
         col={"xs-10 md-7 xl-5"}
         withoutFeedback
-        center
         style={{
           borderRadius: 8,
           height: 550,
@@ -138,7 +137,6 @@ class ConfirmacionUsuario extends Component {
         {SPage.backgroundComponent}
         <SScrollView2 disableHorizontal={true} style={{
           width: "100%",
-          height: "100%",
         }} >
           <SView
             center
@@ -177,6 +175,7 @@ class ConfirmacionUsuario extends Component {
             }}>
               {this.getBtn()}
             </SView>
+            <SHr height={150}/>
           </SView>
         </SScrollView2>
       </SView>

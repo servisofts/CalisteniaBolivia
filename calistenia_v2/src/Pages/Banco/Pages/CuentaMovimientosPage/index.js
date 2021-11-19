@@ -167,6 +167,7 @@ class CuentaMovimientosPage extends Component {
                     }} />
                 <SScrollView2 disableHorizontal style={{
                     width: "100%",
+                    height: "100%",
                 }}>
                     <SView col={"xs-12"} center>
                         <BancoItem key_banco={this.key_banco} />

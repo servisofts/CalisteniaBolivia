@@ -40,6 +40,7 @@ class CajaMovimientoRegistroPage extends Component {
         }
         return (
             <SPage title={"Nuevo Movimiento"}
+            disableScroll
             >
                 <SScrollView2
                     style={{ width: "100%" }}

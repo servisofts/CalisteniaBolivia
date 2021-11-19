@@ -19,6 +19,7 @@ export default class ClientePaqueteRegistroConfirmacion extends Component {
             <SPage
                 // navigation={this.props.navigation}
                 title={"Verifica los datos."}
+                disableScroll
             >
                 <ConfirmarPaquete
                     {...this.props}

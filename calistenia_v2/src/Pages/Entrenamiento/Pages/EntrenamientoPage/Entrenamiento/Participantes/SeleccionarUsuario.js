@@ -89,6 +89,7 @@ class SeleccionarUsuario extends Component {
     var data = Sucursal.Actions.getAll(this.props);
     if (!data) return <View />
     var obj = data[key_sucursal]
+    if(!obj) return <View />
     return <SView>
       <SText>Sucursal: {obj.descripcion}</SText>
     </SView>

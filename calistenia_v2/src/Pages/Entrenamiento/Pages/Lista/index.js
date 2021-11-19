@@ -81,14 +81,18 @@ class Lista extends Component {
         var usuarios = Usuario.Actions.getAll(this.props);
         var sucursales = Sucursal.Actions.getAll(this.props);
         if (!data) return <SLoad />
-        return Object.keys(data).map((key) => {
-            var obj = data[key];
-            if (!obj.key) return <SView col={"xs-12"} center>
-                <SHr height={50} />
+        if (Object.keys(data).length == 0) {
+            return (<SView col={"xs-12"} center>
                 <SIcon name={"Alert"} width={50} height={50} />
                 <SHr height={16} />
                 <SText center>No existen entrenamientos en curso</SText>
-            </SView>;
+            </SView >)
+        }
+        return Object.keys(data).map((key) => {
+            var obj = data[key];
+            if (!obj.key) {
+                return null;
+            }
             return <>
                 <SHr height={16} />
                 <SView col={"xs-11 md-8 xl-6"} key={key} card style={{
@@ -98,6 +102,7 @@ class Lista extends Component {
                         alignItems: "flex-end",
                     }}>
                         <SText fontSize={10} color={"#999"}>{`${new SDate(obj.fecha_on).toString("dd de MONTH, yyyy")}`}</SText>
+                        <SText fontSize={10} color={"#999"}>{`${new SDate(obj.fecha_on).toString("hh:mm")}`}</SText>
                     </SView>
                     {this.getSucursal(obj.key_sucursal)}
                     <SHr height={16} />

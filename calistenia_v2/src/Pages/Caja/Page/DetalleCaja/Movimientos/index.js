@@ -61,7 +61,7 @@ class Movimientos extends Component {
     getUsuario(data) {
         if (!data.data) return <View />
         if (!data.data.key_usuario) return <View />
-        var usuarios =Usuario.Actions.getAll(this.props);
+        var usuarios = Usuario.Actions.getAll(this.props);
         if (!usuarios) return <View />
         var usr = usuarios[data.data.key_usuario];
         if (!usr) return <View />
@@ -242,14 +242,11 @@ class Movimientos extends Component {
         if (!this.activa) return <View />;
         if (this.props.setActiva) this.props.setActiva(this.activa);
         return (
-            <SView props={{
-                col: "xs-12",
-                variant: "center"
-            }} style={{
+            <SView col={"xs-12"} center style={{
                 marginTop: 16,
             }}>
                 <SText props={{ type: "primary" }}>Movimientos</SText>
-                <SView props={{ col: "xs-12 md-8 xl-6" }}>
+                <SView col="xs-12 md-8 xl-6">
                     {this.getLista()}
                     <SView col={"xs-12"} style={{
                         height: 50,
