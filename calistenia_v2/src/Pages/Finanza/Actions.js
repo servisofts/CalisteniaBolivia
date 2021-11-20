@@ -8,19 +8,25 @@ const config = {
 export default class Actions {
     static component = "reporte"
     static reducerName = "reporteReducer";
-    static getMovimientosBancarios(props, force) {
+    static getMovimientosBancarios(fecha_desde, fecha_hasta, props, force) {
         var reducer = props.state[Actions.reducerName];
+        var dataProps = {
+            fecha_desde: fecha_desde,
+            fecha_hasta: fecha_hasta
+        };
         var data = reducer.data;
-        if (!reducer.all || force) {
+        if (reducer.data_movBanco != JSON.stringify(dataProps)) {
+            reducer.data_movBanco = JSON.stringify(dataProps);
+            reducer.data = false;
+            force = true;
+        }
+        if (!data || force) {
             if (reducer.estado == "cargando") return;
             SSocket.send({
                 component: Actions.component,
                 type: "getMovimientosBancarios",
                 estado: "cargando",
-                data: {
-                    fecha_desde: "2020-01-01",
-                    fecha_hasta: "2035-12-01"
-                },
+                data: dataProps,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key
             })
             return;

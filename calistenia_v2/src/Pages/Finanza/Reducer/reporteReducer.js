@@ -33,7 +33,7 @@ export default (state, action) => {
 const getMovimientosBancarios = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        state.all = true;
+        state.data = {}
         Object.keys(action.data).map(key => {
             var obj = action.data[key];
             state.data[key] = obj;

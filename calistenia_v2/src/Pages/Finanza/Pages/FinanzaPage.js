@@ -44,7 +44,7 @@ class FinanzaPage extends Component {
     }
     getLista() {
         return <>
-            {this.getItem({ title: "Reporte de bancos", icon: "Money", url: "ReporteBancos" })}
+            {this.getItemFecha({ title: "Reporte de bancos", icon: "Money", url: "ReporteBancos" })}
             {this.getItem({ title: "Cajas activas", icon: "Caja", url: "CajasAbiertas" })}
             {/* {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })} */}
             {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })}
