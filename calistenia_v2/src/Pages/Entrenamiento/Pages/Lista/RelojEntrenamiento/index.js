@@ -69,15 +69,13 @@ class RelojEntrenamiento extends Component {
         var hh = h % 24;
         // hh = hh < 10 ? '0' + hh : hh;
         var d = Math.floor(h / 23);
-
         // var hh = Math.floor(time / (1000 * 60 * 60))
         // var mm = Math.floor(time / (1000 * 60));
         // var ss = Math.floor((time / 1000) % 60);
-
         var decimas = 0
 
         return <AnimatedLines layout={{
-            width: 100,
+            width: 150,
             height: 40,
         }}>
             <Text style={{ color: "#666", fontSize: 9, }}>{"Tiempo entrenando"}</Text>
@@ -90,6 +88,13 @@ class RelojEntrenamiento extends Component {
                 flexDirection: "row"
             }}>
                 {/* <SView></SView> */}
+                {d > 0 ? <><SView height={17} style={{ justifyContent: "flex-end", }} >
+                    <SText style={{ fontSize: 17, }}>{`${d}`}</SText>
+                </SView>
+                    <SView height={17} style={{ justifyContent: "flex-end", }} >
+                        <SText style={{ fontSize: 12 }}>{" días, "}</SText>
+                    </SView>
+                </> : null}
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
                     <SText style={{ fontSize: 17, }}>{hh}</SText>
                 </SView>
@@ -109,8 +114,8 @@ class RelojEntrenamiento extends Component {
                     <SText style={{ fontSize: 12 }}>{"s "}</SText>
                 </SView>
 
-                {/* <Text style={{ color: "#666", fontSize: 10, position: "absolute", bottom: 4, }}>{new SDate(this.props.inicio).toString("yyyy-MM-dd hh:mm:ss")}</Text> */}
             </View>
+            {/* <Text style={{ color: "#666", fontSize: 12, position: "absolute", bottom: -30, }}>{new SDate(this.entrenamiento.fecha_inicio).toString("yyyy-MM-dd hh:mm:ss")}</Text> */}
         </AnimatedLines>
     }
 
@@ -124,7 +129,7 @@ class RelojEntrenamiento extends Component {
         this.entrenamiento = data;
         return (
             <SView style={{
-                width: 100,
+                width: 150,
                 height: 45,
                 // backgroundColor: "#fff",
             }} card onPress={() => {

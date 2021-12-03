@@ -19,7 +19,7 @@ class PopupConfirmarCierre extends Component {
                 withoutFeedback
                 style={{
                     maxHeight: "90%",
-                    height: 400,
+                    height: 600,
                     borderRadius: 8,
                     backgroundColor: "#000",
                 }}>
@@ -28,7 +28,7 @@ class PopupConfirmarCierre extends Component {
                     padding: 8,
                 }}>
                     <SText fontSize={16}>Cerrar la caja!</SText>
-                    <SView col={"xs-12"} center flex >
+                    <SView col={"xs-12"} center >
                         <SView col={"xs-12"} center flex row>
                             <SView col={"xs-6"} center flex>
                                 <SView col={"xs-4"} colSquare onPress={() => {
@@ -47,6 +47,7 @@ class PopupConfirmarCierre extends Component {
                                 <SText>Enviar a banco</SText>
                             </SView>
                         </SView>
+                        <SHr />
                         <SView col={"xs-10"} center>
                             <SView col={"xs-12"} row center >
                                 <SIcon name={"Money"} style={{

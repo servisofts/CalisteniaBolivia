@@ -20,7 +20,7 @@ export default class Item extends Component {
                 height: "50%",
             }} />
             <SHr height={4} />
-            <SText center fontSize={12} font={"Roboto"}>{obj.descripcion}</SText>
+            <SText center fontSize={12} font={"Roboto-Bold"}>{obj.descripcion}</SText>
         </SView>
     }
     // render() {

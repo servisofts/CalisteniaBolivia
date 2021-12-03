@@ -33,7 +33,7 @@ class PopupCerrar extends Component {
                 withoutFeedback
                 style={{
                     maxHeight: "90%",
-                    height: 800,
+                    height: 1000,
                     borderRadius: 8,
                     backgroundColor: "#000",
                 }}>

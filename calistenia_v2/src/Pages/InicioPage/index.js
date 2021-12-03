@@ -32,7 +32,7 @@ class InicioPage extends Component {
                     center
                     activeOpacity={1}
                 >
-                    <SView col={"xs-12"} row height >
+                    <SView col={"xs-12"} row >
                         <Iconos ref={(ref) => { this.icons = ref }} />
                     </SView>
 

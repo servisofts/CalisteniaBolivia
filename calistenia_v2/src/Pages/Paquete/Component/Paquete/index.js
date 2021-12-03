@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage } from 'servisofts-component';
+import { SImage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 
 class Paquete extends Component {
@@ -34,7 +34,7 @@ class Paquete extends Component {
         return (
             <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000066",
+                backgroundColor: STheme.color.card,
                 height: 50,
                 marginBottom: 8,
                 borderRadius: 8,

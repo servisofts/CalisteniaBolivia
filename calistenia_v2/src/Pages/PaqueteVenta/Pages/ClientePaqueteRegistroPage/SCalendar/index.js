@@ -141,7 +141,7 @@ export default class SCalendar extends Component<CalendarProps> {
             var curDay = date.toJson();
             var curDayClone: SDate = date.clone();
             var isCurMont = (curDayClone.toString("MM") == this.state.date.toString("MM"))
-            return <SView col="xs-1.71" colSquare center>
+            return <SView col="xs-1.71" height={50} center>
                 <SView style={{
                     width: "94%",
                     height: "94%",

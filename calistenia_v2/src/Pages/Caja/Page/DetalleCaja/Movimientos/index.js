@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { connect } from 'react-redux';
-import { SView, SText, SDate, SOrdenador, SIcon } from 'servisofts-component';
+import { SView, SText, SDate, SOrdenador, SIcon, STheme, SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
 import Usuario from '../../../../Usuario';
 class Movimientos extends Component {
@@ -61,7 +61,7 @@ class Movimientos extends Component {
     getUsuario(data) {
         if (!data.data) return <View />
         if (!data.data.key_usuario) return <View />
-        var usuarios =Usuario.Actions.getAll(this.props);
+        var usuarios = Usuario.Actions.getAll(this.props);
         if (!usuarios) return <View />
         var usr = usuarios[data.data.key_usuario];
         if (!usr) return <View />
@@ -69,7 +69,11 @@ class Movimientos extends Component {
             textTransform: "capitalize",
             fontSize: 10,
             color: "#999"
-        }}>{usr.Nombres} {usr.Apellidos}</SText>
+        }} onPress={()=>{
+            SNavigation.navigate("ClientePerfilPage",{
+                key: usr.key
+            })
+        }}>{usr.Nombres} {usr.Apellidos} </SText>
     }
     getIconTipoPago(type, data) {
         // alert(JSON.stringify(data))
@@ -101,7 +105,7 @@ class Movimientos extends Component {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
             return (
                 <View key={index} style={{ width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
-                    <View style={{ backgroundColor: "#66000044", width: "100%", minHeight: 50, borderRadius: 4, flexDirection: "row", }}>
+                    <View style={{ backgroundColor: STheme.color.card, width: "100%", minHeight: 50, borderRadius: 4, flexDirection: "row", }}>
                         <SView style={{
                             flex: 1,
                             height: "100%",
@@ -113,6 +117,7 @@ class Movimientos extends Component {
                                 <Text style={{ color: "#999", fontSize: 9 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                                 <Text style={{ color: "#fff", fontSize: 14 }}>{movimientos[key].descripcion}</Text>
                                 {this.getUsuario(movimientos[key])}
+
                             </SView>
 
                         </SView>
@@ -205,14 +210,14 @@ class Movimientos extends Component {
         var tiposPagos = this.getTipoPago();
         if (!tiposPagos) return <View />
         return <SView center col={"xs-12 md-10 xl-8"} row >
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Informacion</SText>
             </SView>
             {this.getDetalle("Ingreso de caja", this.getIcon(1))}
             {this.getDetalle("Egreso de caja", this.getIcon(-1))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de pagos</SText>
             </SView>
@@ -222,7 +227,7 @@ class Movimientos extends Component {
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
             </SView>
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
             </SView>
@@ -230,7 +235,7 @@ class Movimientos extends Component {
             {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}
             {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={62} center></SView>
 
         </SView>
@@ -242,14 +247,11 @@ class Movimientos extends Component {
         if (!this.activa) return <View />;
         if (this.props.setActiva) this.props.setActiva(this.activa);
         return (
-            <SView props={{
-                col: "xs-12",
-                variant: "center"
-            }} style={{
+            <SView col={"xs-12"} center style={{
                 marginTop: 16,
             }}>
                 <SText props={{ type: "primary" }}>Movimientos</SText>
-                <SView props={{ col: "xs-12 md-8 xl-6" }}>
+                <SView col="xs-12 md-8 xl-6">
                     {this.getLista()}
                     <SView col={"xs-12"} style={{
                         height: 50,

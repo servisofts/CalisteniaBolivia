@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SPage, STable, SText } from 'servisofts-component';
+import { SDate, SIcon, SLoad, SNavigation, SPage, STable, SText } from 'servisofts-component';
 import Actions from '../Actions';
 
 
@@ -10,10 +10,13 @@ class ReporteBancos extends Component {
         super(props);
         this.state = {
         };
+        this.fecha_inicio = SNavigation.getParam("fecha_inicio", new SDate().toString("yyyy-MM-dd"));
+        this.fecha_fin = SNavigation.getParam("fecha_fin", new SDate().toString("yyyy-MM-dd"));
+        // this.props.state.reporteReducer.data = null;
     }
 
     getLista() {
-        var movimientos = Actions.getMovimientosBancarios(this.props)
+        var movimientos = Actions.getMovimientosBancarios(this.fecha_inicio, this.fecha_fin, this.props)
         if (!movimientos) return <SLoad />
         return <STable
             header={[
@@ -34,6 +37,7 @@ class ReporteBancos extends Component {
         />
     }
     render() {
+
         return (
             <SPage title={"ReporteBancos"} disableScroll>
                 {/* <SText>{JSON.stringify(movimientos, "\n", "\t")}</SText> */}

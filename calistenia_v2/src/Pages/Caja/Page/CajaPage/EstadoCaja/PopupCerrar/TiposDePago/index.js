@@ -204,7 +204,6 @@ class TiposDePago extends Component<TiposDePagoType> {
                                     width: "60%",
                                     height: "60%",
                                     borderRadius: 4,
-                                    // backgroundColor: "#66000044"
                                 }}>
                                 {Icono}
                             </SView>
@@ -230,22 +229,6 @@ class TiposDePago extends Component<TiposDePagoType> {
                                 {this.getDetallePago(obj)}
                             </SView>
                         </SView>
-                        {/* <SView col={"xs-2"} center style={{
-                        height: "100%",
-                        paddingTop: 16,
-                    }}>
-                        <SView style={{
-                            width: "100%",
-                            height: 50,
-                            backgroundColor: "#66000088",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: 4,
-                        }} >
-                            <SText>Bs. {this.getMonto(obj)}</SText>
-                        </SView>
-
-                    </SView> */}
 
                     </SView>
                     <SView col={"xs-12"} style={{ height: 16, borderTopWidth: 1, borderColor: "#66666644" }} />

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import qs from 'qs';
 import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform, ActivityIndicator } from 'react-native';
 import Buscador from '../../../../../../Components/Buscador';
-import { SView, SOrdenador, SImage, SDate, SScrollView2, SText, SPage, SIcon } from 'servisofts-component';
+import { SView, SOrdenador, SImage, SDate, SScrollView2, SText, SPage, SIcon, STheme } from 'servisofts-component';
 import Paquete_Item from './Paquete_Item';
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../../Sucursal';
@@ -89,6 +89,7 @@ class SeleccionarUsuario extends Component {
     var data = Sucursal.Actions.getAll(this.props);
     if (!data) return <View />
     var obj = data[key_sucursal]
+    if(!obj) return <View />
     return <SView>
       <SText>Sucursal: {obj.descripcion}</SText>
     </SView>
@@ -177,7 +178,7 @@ class SeleccionarUsuario extends Component {
           height: 100,
           margin: 4,
           borderRadius: 10,
-          backgroundColor: "#66000044"
+          backgroundColor: STheme.color.card
         }} onPress={() => {
           this.props.select(usr);
           // this.props.navigation.navigate("ClientePerfilPage", {

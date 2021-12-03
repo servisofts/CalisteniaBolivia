@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage } from 'servisofts-component';
+import { SImage, STheme } from 'servisofts-component';
 import { SLoad, SPopup, SText, SView } from 'servisofts-component';
 import SeleccionarUsuario from './SeleccionarUsuario';
 import SSocket from 'servisofts-socket'
@@ -22,7 +22,7 @@ class Participantes extends Component {
             padding: 10,
         }}>
             <SView height col={"xs-12"} center style={{
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
                 borderRadius: 8,
             }}>
                 {content}

@@ -13,8 +13,7 @@ export default class SCalendar extends Component<SCalendarPropsType> {
     };
     this.style = StyleSheet.create({
       border: {
-        // borderColor: "#66000044",
-        // borderBottomWidth: 1,
+        
       },
       text: {
         color: "#fff"

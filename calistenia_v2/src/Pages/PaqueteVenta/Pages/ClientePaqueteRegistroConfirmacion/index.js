@@ -19,10 +19,18 @@ export default class ClientePaqueteRegistroConfirmacion extends Component {
             <SPage
                 // navigation={this.props.navigation}
                 title={"Verifica los datos."}
+                disableScroll
             >
                 <ConfirmarPaquete
                     {...this.props}
-                    data={SNavigation.getParam("data")} />
+                    data={{
+                        key_paquete: SNavigation.getParam('key_paquete'),
+                        key_usuario:  SNavigation.getParam('key_usuario'),
+                        usuarios: SNavigation.getParam('usuarios'),
+                        usuariosData:  SNavigation.getParam('usuariosData'),
+                        tasks:  SNavigation.getParam('tasks'),
+                        dataPagos:  SNavigation.getParam('dataPagos'),
+                    }} />
             </SPage>
         );
     }

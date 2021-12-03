@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SView, SText, SImage } from 'servisofts-component';
+import { SView, SText, SImage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 // import  from '../../../Params/index';
 let component = "cuentaBanco";
@@ -41,7 +41,7 @@ class CuentaBanco extends Component {
                     <SView col={"xs-12"} style={{
                         height: 60,
                         borderRadius: 4,
-                        backgroundColor: "#66000044",
+                        backgroundColor: STheme.color.card,
                     }} onPress={() => {
                         this.props.navigation.navigate("CuentaBancoRegistroPage", { key_banco: this.props.data.key, key: obj.key });
                     }} row>
@@ -93,7 +93,7 @@ class CuentaBanco extends Component {
                     <SView col={"xs-12"} style={{
                         height: 60,
                         borderRadius: 4,
-                        backgroundColor: "#66000044",
+                        backgroundColor: STheme.color.card,
                     }} onPress={() => {
                         this.props.navigation.navigate("CuentaBancoRegistroPage", { key_banco: this.props.data.key });
                     }} center>

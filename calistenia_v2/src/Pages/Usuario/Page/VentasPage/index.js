@@ -5,7 +5,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
 import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation } from 'servisofts-component';
+import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 
@@ -18,7 +18,7 @@ class VentasPage extends Component {
         curPage: 1,
       }
     };
-    this.select = SNavigation.getParam("select");
+
 
   }
   componentDidMount() {
@@ -103,8 +103,10 @@ class VentasPage extends Component {
           height: 50,
           margin: 4,
           borderRadius: 10,
-          backgroundColor: "#66000044"
+          backgroundColor: STheme.color.card
         }} onPress={() => {
+          // return;
+          this.select = SNavigation.getParam("select");
           if (this.select) {
             this.select(obj);
             SNavigation.goBack();
@@ -136,7 +138,7 @@ class VentasPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key+`?date=${new Date().getTime()/500}`} />
+                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime() / 500}`} />
 
               </View>
               <View style={{
@@ -185,7 +187,7 @@ class VentasPage extends Component {
               {getLista()}
             </SView>
           </SScrollView2>
-          <FloatButtom  onPress={() => {
+          <FloatButtom onPress={() => {
             SNavigation.navigate("registro")
           }} />
         </View>

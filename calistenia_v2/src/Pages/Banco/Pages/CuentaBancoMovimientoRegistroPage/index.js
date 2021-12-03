@@ -113,6 +113,7 @@ class CuentaBancoMovimientoRegistroPage extends Component {
         }
         return (
             <SPage hidden
+            disableScroll
             >
                 <BarraSuperior goBack={() => {
                     SNavigation.goBack();

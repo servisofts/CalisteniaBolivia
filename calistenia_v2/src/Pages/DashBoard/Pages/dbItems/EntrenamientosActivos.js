@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SText, SView } from 'servisofts-component';
+import { SIcon, SLoad, SNavigation, SText, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
@@ -24,7 +24,9 @@ class EntrenamientosActivos extends Component {
             <SView col={"xs-12"} center >
                 <SText fontSize={10}>{`Entrenamientos activos`}</SText>
             </SView>
-            <SView col={"xs-4"} height={50}>
+            <SView col={"xs-4"} height={50} onPress={()=>{
+                 SNavigation.navigate("entrenamientos");
+            }}>
                 <SIcon name={"Entrenamiento"} />
             </SView>
             <SView col={"xs-8"} center height={40}>

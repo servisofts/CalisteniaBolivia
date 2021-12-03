@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable, SText, SView } from 'servisofts-component';
+import { SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable, SText, STheme, SView } from 'servisofts-component';
 import BotonesPaginas from '../../../Components/BotonesPaginas';
+import Sucursal from '../../Sucursal';
 
 class FinanzaPage extends Component {
     constructor(props) {
@@ -11,6 +12,16 @@ class FinanzaPage extends Component {
         };
     }
     getItemFecha({ title, icon, url, onPress }) {
+        return this.getItem({
+            title: title, icon: icon, onPress: () => {
+                SPopup.dateBetween(title, (evt) => {
+                    // alert(JSON.stringify(evt));
+                    SNavigation.navigate(url, evt);
+                });
+            }
+        })
+    }
+    getItemFechaSucursal({ title, icon, url, onPress }) {
         return this.getItem({
             title: title, icon: icon, onPress: () => {
                 SPopup.dateBetween(title, (evt) => {
@@ -44,7 +55,6 @@ class FinanzaPage extends Component {
     }
     getLista() {
         return <>
-            {this.getItem({ title: "Reporte de bancos", icon: "Money", url: "ReporteBancos" })}
             {this.getItem({ title: "Cajas activas", icon: "Caja", url: "CajasAbiertas" })}
             {/* {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })} */}
             {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })}
@@ -58,6 +68,8 @@ class FinanzaPage extends Component {
             })}
             {this.getItemFecha({ title: "Paquetes vendidos", icon: "Paquete", url: "PaquetesVendidos" })}
             {this.getItemFecha({ title: "Ingresos & egresos manuales", icon: "Traspaso", url: "IngresosEgresos" })}
+            {this.getItemFecha({ title: "Reporte de bancos", icon: "Card", url: "ReporteBancos" })}
+            {/* {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect" })} */}
             {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>
     }

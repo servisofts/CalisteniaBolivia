@@ -207,6 +207,7 @@ class ConfirmarPaquete extends Component {
         //     SNavigation.goBack();
         // }
         // var usuario = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key_usuario];
+        console.log(this.props.data.key_paquete)
         var paquete = Paquete.Actions.getByKey(this.props.data.key_paquete, this.props);
         if (!paquete) return <SLoad />
         this.paquete = paquete;

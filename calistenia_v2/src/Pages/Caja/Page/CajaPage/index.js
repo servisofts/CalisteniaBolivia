@@ -59,6 +59,7 @@ export default class CajaPage extends Component {
               sucursal={this.state.sucursal}
               key_caja={this.state.key_caja}
               setSucursal={(suc) => {
+                if(!suc) return null
                 SStorage.setItem("sucursal", suc.key)
                 this.setState({ sucursal: suc, key_sucursal: suc.key });
               }}

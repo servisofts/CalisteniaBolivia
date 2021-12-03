@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { connect } from 'react-redux';
-import { SView, SText, SDate, SOrdenador, SIcon } from 'servisofts-component';
+import { SView, SText, SDate, SOrdenador, SIcon, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../../../TipoPago';
 import Usuario from '../../../../Usuario';
@@ -98,7 +98,7 @@ class Movimientos extends Component {
             if (monto % 1 != 0) monto = monto.toFixed(2);
             return (
                 <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
-                    <View style={{ backgroundColor: "#66000044", width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
+                    <View style={{ backgroundColor: STheme.color.card, width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
                         <SView style={{
                             flex: 1,
                             height: "100%",
@@ -191,14 +191,14 @@ class Movimientos extends Component {
         var tiposPagos = this.getTipoPago();
         if (!tiposPagos) return <View />
         return <SView center col={"xs-12 md-10 xl-8"} row>
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Informacion</SText>
             </SView>
             {this.getDetalle("Ingreso de caja", this.getIcon(1))}
             {this.getDetalle("Egreso de caja", this.getIcon(-1))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de pagos</SText>
             </SView>
@@ -208,7 +208,7 @@ class Movimientos extends Component {
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
             </SView>
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
             </SView>
@@ -216,7 +216,7 @@ class Movimientos extends Component {
             {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}
             {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={62} center></SView>
 
         </SView>

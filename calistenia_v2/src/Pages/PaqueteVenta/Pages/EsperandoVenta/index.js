@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SLoad, SPage, SView, SText, SHr, SNavigation, SThread, SButtom } from 'servisofts-component';
+import { SLoad, SPage, SView, SText, SHr, SNavigation, SThread, SButtom, SScrollView2 } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Recibo from '../../Component/Recibo';
 
 class EsperandoVenta extends Component {
     constructor(props) {
@@ -39,22 +40,27 @@ class EsperandoVenta extends Component {
             });
             return this.isLoad();
         }
-        return <SView center col={"xs-12"} center>
-            <SText>{JSON.stringify(recibo)}</SText>
+        return <SView center col={"xs-12"} center flex>
+            <SHr />
+            <Recibo key_paquete_venta={key} />
             <SHr />
             <SView center>
                 <SButtom props={{
                     type: "danger"
-                }} onPress={()=>{
+                }} onPress={() => {
                     SNavigation.replace("inicio");
                 }}>Ir a inicio</SButtom>
             </SView>
+            <SHr height={100}/>
+
         </SView>
     }
     isLoad() {
         return <SView center>
+            <SHr height={64} />
             <SText fontSize={20}>Estamos verificando la venta.</SText>
             <SHr height={64} />
+            <SLoad />
             <SHr height={64} />
             <SText>Por favor aguardé sin recargar la ventana.</SText>
             <SHr />
@@ -63,9 +69,13 @@ class EsperandoVenta extends Component {
     render() {
         this.validate();
         return (
-            <SPage hidden>
-                <SView col={"xs-12"} flex center>
-                    {this.getRecibo()}
+            <SPage hidden disableScroll>
+                <SView col={"xs-12"} flex>
+                    <SScrollView2 disableHorizontal>
+                        <SView col={"xs-12"}>
+                            {this.getRecibo()}
+                        </SView>
+                    </SScrollView2>
                 </SView>
             </SPage>
         );

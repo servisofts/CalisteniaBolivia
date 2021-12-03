@@ -25,6 +25,26 @@ export const SSRolesPermisosGetPages = () => {
     return INSTANCE.getPages();
 }
 
+export const GetRoles = (props) => {
+    var reducer = props.state.rolReducer;
+    var data = reducer.data;
+    if (!data) {
+        if (reducer.estado == "cargando") {
+            return null;
+        }
+        var object = {
+            component: "rol",
+            type: "getAll",
+            estado: "cargando",
+            key_usuario: props.state.usuarioReducer.usuarioLog.key,
+        }
+        SSocket.send(object)
+        return null;
+
+    }
+    return data;
+}
+
 class SSRolesPermisos extends Component {
     static Events = Events;
     constructor(props) {

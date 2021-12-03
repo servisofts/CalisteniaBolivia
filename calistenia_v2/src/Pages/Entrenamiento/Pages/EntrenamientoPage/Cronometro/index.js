@@ -2,6 +2,7 @@ import moment from 'moment';
 import React, { Component } from 'react';
 import { View, Text, Animated } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { STheme } from 'servisofts-component';
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export default class Cronometro extends Component {
@@ -44,7 +45,7 @@ export default class Cronometro extends Component {
             width: 200,
             height: 100,
             borderRadius: 16,
-            backgroundColor: "#66000066",
+            backgroundColor: STheme.color.card,
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "row"
@@ -67,7 +68,7 @@ export default class Cronometro extends Component {
                 <TouchableOpacity style={{
                     width: 40,
                     height: 20,
-                    backgroundColor: "#66000066"
+                    backgroundColor: STheme.color.card
                 }} onPress={() => {
                     this.isRun = !this.isRun;
                     if (this.isRun) {

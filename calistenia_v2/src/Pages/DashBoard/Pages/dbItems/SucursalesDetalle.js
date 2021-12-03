@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SImage, SLoad, SText, STheme, SView } from 'servisofts-component';
+import { SIcon, SImage, SLoad, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
@@ -14,7 +14,7 @@ class SucursalesDetalle extends Component {
         this.state = {
             isLoad: false,
         };
-    
+
     }
 
     getLista() {
@@ -73,7 +73,9 @@ class SucursalesDetalle extends Component {
                     }}>
                         <SView col={"xs-12"} height={80} card row center>
                             <SView col={"xs-4"} height center>
-                                <SView width={40} height={40} center>
+                                <SView width={40} height={40} center onPress={() => {
+                                    SNavigation.navigate("ClientesPage", { key_sucursal: key });
+                                }}>
                                     <SIcon name="Usuarios_cliente" />
                                     <SView center style={{
                                         position: "absolute",
@@ -88,8 +90,10 @@ class SucursalesDetalle extends Component {
                                 <SText center fontSize={10}>{'Clientes'}</SText>
                                 {/* <SText center fontSize={10}>{`Bs. ${monto.toLocaleString('de-DE')}`}</SText> */}
                             </SView>
-                            <SView col={"xs-4"} height center>
-                                <SView width={40} height={40} center>
+                            <SView col={"xs-4"} height center >
+                                <SView width={40} height={40} center onPress={() => {
+                                    SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
+                                }}>
                                     <SIcon name="Caja" />
                                     <SView center style={{
                                         position: "absolute",
@@ -105,7 +109,9 @@ class SucursalesDetalle extends Component {
                                 <SText center fontSize={10}>{" "}</SText>
                             </SView>
                             <SView col={"xs-4"} center>
-                                <SView width={40} height={40} center>
+                                <SView width={40} height={40} center onPress={() => {
+                                    SNavigation.navigate("entrenamientos", { key_sucursal: key });
+                                }}>
                                     <SIcon name="Entrenamiento" />
                                     <SView center style={{
                                         position: "absolute",

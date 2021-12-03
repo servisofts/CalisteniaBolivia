@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text } from 'react-native'
-import { SImage, SLoad, SPage, SText } from 'servisofts-component';
+import { SImage, SLoad, SPage, SText, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Sucursal from '..';
 type Props = {
@@ -26,7 +26,7 @@ class SucursalItem extends Component<Props> {
                 height: 50,
                 margin: 4,
                 borderRadius: 10,
-                backgroundColor: "#66000044"
+                backgroundColor: STheme.color.card
             }} onPress={() => {
                 if (this.props.onPress) this.props.onPress(obj);
                 // if (this.onSelect) {

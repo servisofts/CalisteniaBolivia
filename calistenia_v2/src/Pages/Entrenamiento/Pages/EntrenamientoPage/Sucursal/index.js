@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { SText, SView, SImage } from 'servisofts-component';
+import { SText, SView, SImage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
 class Sucursal extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ class Sucursal extends Component {
                     height: "100%",
                     backgroundColor: this.animatedSelec.interpolate({
                         inputRange: [0, 1],
-                        outputRange: ["#66000044", "#66000000"],
+                        outputRange: [STheme.color.card, "#66000000"],
                     }),
 
                 }} center animated>
@@ -97,7 +97,7 @@ class Sucursal extends Component {
         return (
             <SView col="xs-11 md-6 xl-4" center row style={{
                 height: 50,
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
                 borderRadius: 8,
                 marginTop: 8,
             }} onPress={() => {

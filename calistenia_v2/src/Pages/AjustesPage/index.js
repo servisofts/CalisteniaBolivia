@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Platform } from 'react-native'
-import { SIcon, SPage, SText, SView } from 'servisofts-component'
+import { SIcon, SPage, SText, STheme, SView } from 'servisofts-component'
 import PerfilUsuario from './PerfilUsuario'
 // import xlsx from 'xlsx-color'
 // var RNFS = require('react-native-fs');
@@ -19,10 +19,10 @@ export default class AjustesPage extends Component {
     getOptions({ title, icon }, isLine) {
         return <SView col={"xs-12"} style={{
             height: 50,
-            backgroundColor: "#66000066",
+            backgroundColor: STheme.color.card,
             // borderRadius: 4,
         }} center row onPress={() => {
-            this.exportXlsx();
+            // this.exportXlsx();
         }}>
             <SView style={{
                 width: 60,
@@ -50,12 +50,11 @@ export default class AjustesPage extends Component {
             >
                 <SView col={"xs-12"} center flex>
                     <SView col={"xs-11 sm-9 md-7 lg-5 xl-4"} style={{
-                        // backgroundColor: "#66000022",
                         borderRadius: 6,
                         height: "100%",
                         alignItems: "center"
                     }}>
-                    
+
                         <SView col={"xs-12"} style={{ height: 24 }} />
                         <SView style={{
                             width: "100%",

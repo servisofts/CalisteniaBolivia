@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { Component } from 'react';
 import { View, Text, Animated, TouchableOpacity } from 'react-native';
-import { SView } from 'servisofts-component'
+import { STheme, SView } from 'servisofts-component'
 const delay = ms => new Promise(res => setTimeout(res, ms));
 export default class Reloj extends Component {
     constructor(props) {
@@ -46,7 +46,7 @@ export default class Reloj extends Component {
             width: 200,
             height: 100,
             borderRadius: 16,
-            backgroundColor: "#66000066",
+            backgroundColor: STheme.color.card,
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "row"
@@ -68,7 +68,7 @@ export default class Reloj extends Component {
             <Text style={{ color: "#666", fontSize: 10, position: "absolute", top: 4, }}>{"Hora actual"}</Text>
         </View>
     }
-    render() {  
+    render() {
         return (
             <View>
                 {this.getTime()}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 // import Svg from '../../Svg';
-import { SImage, SNavigation, SText, SView } from 'servisofts-component';
+import { SImage, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../../../Usuario';
 type Props = {
@@ -20,7 +20,7 @@ class index extends Component<Props> {
         if (!usr) return <ActivityIndicator />
         return <SView col={"xs-12"} style={{
             // height: 120,
-            backgroundColor: "#66000066",
+            backgroundColor: STheme.color.card,
             // borderRadius: 4,
         }} center >
             <SView col={"xs-12"} row style={{

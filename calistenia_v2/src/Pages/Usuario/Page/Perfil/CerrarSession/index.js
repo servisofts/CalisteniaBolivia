@@ -15,10 +15,9 @@ class CerrarSession extends Component {
             <TouchableOpacity style={{
                 margin: 4,
                 width: 100,
-                height: 35,
+                height: 40,
                 borderColor: "#ddd",
-                borderWidth: 1,
-                borderRadius: 8,
+                borderRadius: 4,
                 backgroundColor: "#99000099",
                 justifyContent: "center",
                 alignItems: "center"

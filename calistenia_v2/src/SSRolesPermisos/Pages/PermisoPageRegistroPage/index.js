@@ -32,7 +32,8 @@ class PermisoPageRegistroPage extends Component {
       this.TextButom = "EDITAR";
       this.data = this.props.state.pageReducer.data[key];
       if (!this.data) {
-        alert("NO HAY DATA");
+        SNavigation.goBack();
+        return;
       }
     }
 
@@ -125,7 +126,7 @@ class PermisoPageRegistroPage extends Component {
                 //   return <View />;
                 // }
                 choseFile({
-                  servicio: "roles_permisos",
+                  servicio: "rp",
                   component: "page",
                   type: "subirFoto",
                   estado: "cargando",

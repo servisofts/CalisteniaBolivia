@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import { connect } from 'react-redux';
-import { SScrollView2, SView, SText, SImage, SPage, SNavigation, SIcon } from 'servisofts-component'
+import { SScrollView2, SView, SText, SImage, SPage, SNavigation, SIcon, STheme } from 'servisofts-component'
 import CuentasLista from './CuentasLista';
 import FechasBetween from '../../../../Components/FechasBetween';
 import SSocket from 'servisofts-socket';
@@ -40,7 +40,7 @@ class BancoPage extends Component {
                 <SView col={"xs-12"}>
                     <SView col={"xs-12"} key={obj.key} style={{
                         borderRadius: 4,
-                        backgroundColor: "#66000044",
+                        backgroundColor: STheme.color.card,
                     }} onPress={() => {
                         this.props.navigation.navigate("BancoRegistroPage", { key: obj.key });
                     }} row>

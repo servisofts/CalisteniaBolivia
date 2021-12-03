@@ -221,7 +221,7 @@ class EstadoCaja extends Component {
 
         return (
             <SView col="xs-11 md-6 xl-4" style={{
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
                 borderRadius: 8,
                 marginTop: 8,
                 minHeight: 50,
