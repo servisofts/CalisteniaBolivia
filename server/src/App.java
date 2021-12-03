@@ -5,6 +5,7 @@ import conexion.Conexion;
 import util.console;
 
 public class App {
+    
     public static void main(String[] args) throws Exception {
         System.setProperty("org.eclipse.jetty.util.log.announce", "false");
         if (!Config.validate()) {

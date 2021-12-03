@@ -154,27 +154,41 @@ public class Caja {
             caja.put("estado",1);
             
 
-            JSONObject monto_caja = Sucursal.getMontoCaja(caja.getString("key_sucursal"));
-            if(monto_caja.has("monto")){
-                if(monto_caja.getDouble("monto") != caja.getDouble("monto")){
-                    obj.put("data", caja);
-                    obj.put("estado", "error");
-                    obj.put("error", "Montos de caja inconsistente, hable con su poroveedor de sistemas.");
-                    SSServerAbstract.sendAllServer(obj.toString());
-                    return;
-                }    
+            JSONArray montos_caja = Sucursal.getMontoCajaArray(caja.getString("key_sucursal"));
+            double monto=0;
+            for (int i = 0; i < montos_caja.length(); i++) {
+                monto += montos_caja.getJSONObject(i).getDouble("monto");
+            }
+            
+            if(monto != caja.getDouble("monto")){
+                obj.put("data", caja);
+                obj.put("estado", "error");
+                obj.put("error", "Montos de caja inconsistente, hable con su poroveedor de sistemas.");
+                SSServerAbstract.sendAllServer(obj.toString());
+                return;
+            }    
+
+            JSONArray cajas_movimiento = new JSONArray();
+            
+            JSONObject monto_caja;
+            for (int i = 0; i < montos_caja.length(); i++) {
+                monto_caja = montos_caja.getJSONObject(i);
+
                 JSONObject caja_movimiento = new JSONObject();
                 caja_movimiento.put("key", UUID.randomUUID().toString());
                 caja_movimiento.put("key_caja", monto_caja.getString("key"));
                 caja_movimiento.put("key_caja_tipo_movimiento", 5);
                 caja_movimiento.put("key_tipo_pago", "1");
                 caja_movimiento.put("descripcion", "Transferencia por apertura");
-                caja_movimiento.put("monto", caja.getDouble("monto")*-1);
+                caja_movimiento.put("monto", monto_caja.getDouble("monto")*-1);
                 caja_movimiento.put("data", new JSONObject().put("key_tipo_pago", caja_movimiento.getString("key_tipo_pago")));
                 caja_movimiento.put("fecha_on", fecha_on);
                 caja_movimiento.put("estado", 1);
-                Conexion.insertArray("caja_movimiento", new JSONArray().put(caja_movimiento));
+
+                cajas_movimiento.put(caja_movimiento);
             }
+            
+            Conexion.insertArray("caja_movimiento", cajas_movimiento);
 
             Conexion.insertArray("caja", new JSONArray().put(caja));
 

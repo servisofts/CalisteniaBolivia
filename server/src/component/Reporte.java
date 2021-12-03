@@ -8,6 +8,9 @@ import conexion.Conexion;
 public class Reporte {
     public Reporte(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
+            case "getReporteGeneral":
+                getReporteGeneral(data, session);
+            break;
             case "getMovimientosBancarios":
                 getMovimientosBancarios(data, session);
             break;
@@ -27,6 +30,22 @@ public class Reporte {
 
     public void defaultType(JSONObject obj, SSSessionAbstract session) {
         SocketCliete.send("usuario", obj, session);
+    }
+    
+    public void getReporteGeneral(JSONObject obj, SSSessionAbstract session) {
+        try{
+            JSONObject data = obj.getJSONObject("data");
+            String consulta =  "select get_reporte_general('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            if(data.has("key_sucursal")){
+                consulta =  "select get_reporte_general('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"', '"+data.getString("key_sucursal")+"') as json";
+            }
+            JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", reporte);
+            obj.put("estado", "exito");
+        }catch(Exception e){
+            obj.put("error", e.getLocalizedMessage());
+            obj.put("estado", "error");
+        }
     }
 
     public void getMovimientosBancarios(JSONObject obj, SSSessionAbstract session) {

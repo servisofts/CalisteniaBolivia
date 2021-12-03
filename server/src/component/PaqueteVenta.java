@@ -94,7 +94,7 @@ public class PaqueteVenta {
 
     public void getRecibo(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key('paquete_venta','"+obj.getString("key")+"') as json";
+            String consulta =  "select get_recibo('"+obj.getString("key")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             Conexion.historico(obj.getString("key_usuario"), "paquete_venta_getByKey", data);
 

@@ -82,10 +82,10 @@ public class Sucursal {
         }
     }
 
-    public static JSONObject getMontoCaja(String key_sucursal) {
+    public static JSONArray getMontoCajaArray(String key_sucursal) {
         try {
-            String consulta =  "select get_monto_caja('"+key_sucursal+"') as json";
-            return Conexion.ejecutarConsultaObject(consulta);
+            String consulta =  "select get_monto_caja_array('"+key_sucursal+"') as json";
+            return Conexion.ejecutarConsultaArray(consulta);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
