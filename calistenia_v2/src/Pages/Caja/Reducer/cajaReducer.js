@@ -101,6 +101,12 @@ const cierre = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
         delete state.usuario[action.data.key_usuario];
+        if (state.data) {
+            delete state.data[action.data.key];
+        }
+        if (state.keys) {
+            delete state.keys[action.data.key];
+        }
         // state.lastRegister = action.data;
     }
 }

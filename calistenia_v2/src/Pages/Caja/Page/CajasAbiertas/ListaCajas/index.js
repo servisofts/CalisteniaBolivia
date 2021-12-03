@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { SOrdenador, SDate, SView, SScrollView2, SText, SImage, SNavigation } from 'servisofts-component';
+import { SOrdenador, SDate, SView, SScrollView2, SText, SImage, SNavigation,STheme } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
 import SSocket from 'servisofts-socket'
+import Caja from '../../..';
+import Sucursal from '../../../../Sucursal';
 class ListaCajas extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            sucursal: null
         };
         this.anim = new Animated.Value(0);
+        this.key_sucursal = SNavigation.getParam("key_sucursal");
     }
     componentDidMount() {
         this.startAnimated();
@@ -130,6 +134,12 @@ class ListaCajas extends Component {
             if (!key) return <View />
             if (!obj) return <View />
             if (!obj.key_usuario) return <View />
+            if (this.state.sucursal) {
+                if (obj.key_sucursal != this.state.sucursal.key) {
+                    return null;
+                }
+
+            }
             var usuario = this.getUsuarios(obj.key_usuario);
             usuario.key = obj.key_usuario;
             var movimientos = this.getMovimientos(obj.key);
@@ -146,7 +156,7 @@ class ListaCajas extends Component {
                 style={{
                     borderRadius: 4,
                     height: 140,
-                    backgroundColor: "#66000044",
+                    backgroundColor: STheme.color.card,
                     marginTop: 8,
                     padding: 4,
                 }}>
@@ -158,7 +168,7 @@ class ListaCajas extends Component {
                         }),
                     }}
                     row onPress={() => {
-                        
+
                         SNavigation.navigate("DetalleCaja", { key: obj.key });
                     }}>
                     {this.getFoto(sucursal)}
@@ -191,7 +201,10 @@ class ListaCajas extends Component {
         return (
             <SView col={"xs-12"} style={{
                 flex: 1,
-            }}>
+            }} center>
+                <Sucursal.Component.SucursalSelect key_sucursal={this.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => {
+                    this.setState({ sucursal: suc });
+                }} />
                 <SScrollView2 disableHorizontal style={{
                     width: "100%",
                 }}>

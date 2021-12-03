@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage, SLoad } from 'servisofts-component';
+import { SImage, SLoad, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usr from '../../../../Usuario';
 
@@ -17,7 +17,7 @@ class Usuario extends Component {
         if (!this.props.key_usuario) {
             return <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000066",
+                backgroundColor: STheme.color.card,
                 height: 50,
                 marginBottom: 8,
                 borderRadius: 8,
@@ -36,14 +36,14 @@ class Usuario extends Component {
         }
         var obj = Usr.Actions.getByKey(this.props.key_usuario, this.props);
         if (!obj) {
-            return <SLoad/>
+            return <SLoad />
         }
         this.obj = obj;
         this.props.onLoad(obj);
         return (
             <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000066",
+                backgroundColor: STheme.color.card,
                 height: 50,
                 marginBottom: 8,
                 borderRadius: 8,

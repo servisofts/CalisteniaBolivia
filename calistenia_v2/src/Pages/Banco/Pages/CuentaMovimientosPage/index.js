@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import { connect } from 'react-redux';
-import { SPopup, SScrollView2, SView, SText, SDate, SOrdenador, SPage, SNavigation, SImage, SIcon, SHr } from 'servisofts-component';
+import { SPopup, SScrollView2, SView, SText, SDate, SOrdenador, SPage, SNavigation, SImage, SIcon, SHr, STheme } from 'servisofts-component';
 import CuentaBancoLista from '../CuentaBancoLista/index';
 import BancoItem from '../BancoItem/index';
 import CuentaBancoItem from '../CuentaBancoItem';
@@ -97,7 +97,7 @@ class CuentaMovimientosPage extends Component {
                 <>
                     <SView col={"xs-12"} key={obj.key} style={{
                         borderRadius: 4,
-                        backgroundColor: "#66000044",
+                        backgroundColor: STheme.color.card,
                     }} row center>
                         <SView style={{
                             width: 50,

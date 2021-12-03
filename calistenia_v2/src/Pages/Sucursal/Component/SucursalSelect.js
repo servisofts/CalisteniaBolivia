@@ -38,7 +38,7 @@ class SucursalSelect extends Component<_Props> {
                     height: "100%",
                     backgroundColor: this.animatedSelec.interpolate({
                         inputRange: [0, 1],
-                        outputRange: ["#66000044", "#66000000"],
+                        outputRange: [STheme.color.card, "#66000000"],
                     }),
 
                 }} props={{
@@ -102,7 +102,7 @@ class SucursalSelect extends Component<_Props> {
         return (
             <SView col="xs-11 md-6 xl-4" center row style={{
                 height: 50,
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
                 borderRadius: 8,
             }} onPress={() => {
                 if (this.props.key_caja) {

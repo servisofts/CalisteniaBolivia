@@ -5,7 +5,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
 import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation } from 'servisofts-component';
+import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 
@@ -103,7 +103,7 @@ class EntrenadorPage extends Component {
           height: 50,
           margin: 4,
           borderRadius: 10,
-          backgroundColor: "#66000044"
+          backgroundColor: STheme.color.card
         }} onPress={() => {
           SNavigation.navigate("registro", {
             key: key

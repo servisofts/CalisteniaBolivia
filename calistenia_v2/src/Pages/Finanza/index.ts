@@ -6,12 +6,17 @@ import ReporteBancos from './Pages/ReporteBancos'
 import PaquetesVendidos from './Pages/PaquetesVendidos'
 import ReporteAsistencia from './Pages/ReporteAsistencia'
 import IngresosEgresos from './Pages/IngresosEgresos'
+import EstadoFinanciero from './Pages/EstadoFinanciero'
+import EstadoFinancieroSelect from './Pages/EstadoFinancieroSelect'
 const Pages: SPageListProps = {
     FinanzaPage,
     ReporteBancos,
     PaquetesVendidos,
     ReporteAsistencia,
-    IngresosEgresos
+    IngresosEgresos,
+    EstadoFinanciero,
+    EstadoFinancieroSelect
+
 }
 
 import reporteReducer from './Reducer/reporteReducer'

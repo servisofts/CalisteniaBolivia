@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SView, SText } from 'servisofts-component';
+import { SView, SText, STheme } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
 let component = "cuentaBanco";
 
@@ -78,7 +78,7 @@ class CuentasLista extends Component {
                         width: "100%",
                         height: 250,
                         borderRadius: 4,
-                        backgroundColor: "#66000044",
+                        backgroundColor: STheme.color.card,
                     }}>
                         <SView style={{
                             width: "100%",

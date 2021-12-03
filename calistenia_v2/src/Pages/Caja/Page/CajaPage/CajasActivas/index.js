@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import Actions from '../../../../Actions';
-import { SImage, SText, SView } from 'servisofts-component';
+import { SImage, SText, STheme, SView } from 'servisofts-component';
 import Usuario from '../../../../Usuario';
 import SSocket from 'servisofts-socket';
 
@@ -48,7 +48,7 @@ class CajasActivas extends Component {
                 width: "100%",
             }} center>
                 <View style={{
-                    backgroundColor: "#66000044",
+                    backgroundColor: STheme.color.card,
                     width: 40,
                     height: 40,
                     borderRadius: 100,

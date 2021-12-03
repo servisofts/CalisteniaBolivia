@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SPage, SButtom, SInput, SScrollView2, SText, SView, SPopupClose, SPopupOpen } from 'servisofts-component';
+import { SPage, SButtom, SInput, SScrollView2, SText, SView, SPopupClose, SPopupOpen, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../../../TipoPago';
 type TiposDePagoType = {
@@ -53,8 +53,8 @@ class TiposDePago extends Component<TiposDePagoType> {
                 }
             }
             // if (value) {
-                // value = parseFloat(value);
-                // if (value % 1 != 0) { value = value.toFixed(2) }
+            // value = parseFloat(value);
+            // if (value % 1 != 0) { value = value.toFixed(2) }
             // }
             return <SInput
                 ref={(ref) => { this.camposInputs[campo.dato] = ref; }}
@@ -160,7 +160,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         right: 0,
                         width: "100%",
                         height: 20,
-                        backgroundColor: "#66000066",
+                        backgroundColor: STheme.color.card,
                         justifyContent: "center",
                         alignItems: "center",
                         borderRadius: 100,
@@ -214,7 +214,6 @@ class TiposDePago extends Component<TiposDePagoType> {
                             padding: 0,
                             margin: 0,
                             borderRadius: 4,
-                            // backgroundColor: "#66000044"
                         }}>
                         <SView height center>
                             {Icono}

@@ -7,7 +7,7 @@ const SThemeProps: SThemeThemes = {
         primary: "#000000",
         secondary: "#ffffff",
         background: "#000000",
-        card: "#66000044"
+        card: "#44000088"
     },
     dark: {
         barStyle: "light-content",
@@ -15,7 +15,7 @@ const SThemeProps: SThemeThemes = {
         primary: "#000000",
         secondary: "#ffffff",
         background: "#000000",
-        card: "#66000044"
+        card: "#44000088"
     }
 }
 
@@ -23,12 +23,12 @@ const SocketProps: SSocketProps = {
     name: 'calistenia',
 
     // -- Producción --
-    // host: 'calistenia.servisofts.com',
-    // ssl: true,
+    host: 'calistenia.servisofts.com',
+    ssl: true,
 
     // -- Producción --
-    host: '192.168.0.199',
-    ssl: false,
+    // host: '192.168.0.199',
+    // ssl: false,
 
     // --CONFIGURACIONES--
     port: {

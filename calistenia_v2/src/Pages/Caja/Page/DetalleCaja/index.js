@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import { SHr, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
 import Caja from '../..';
+import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
 import Perfil from './Perfil';
 
@@ -30,6 +31,8 @@ class DetalleCaja extends Component {
                     <SView col={"xs-12"} center>
                         <SView col={"xs-11.8 md-8 xl-6"} center>
                             <Perfil key_usuario={caja.key_usuario} />
+                            <SHr/>
+                            <Cabecera caja={caja} />
                         </SView>
                         <Movimientos caja={caja} />
                     </SView>

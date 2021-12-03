@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SDate, SInput, SView } from 'servisofts-component';
+import { SDate, SInput, STheme, SView } from 'servisofts-component';
 
 type TypeProps = {
     fecha_inicio: "yyyy-MM-dd",
@@ -52,7 +52,7 @@ export default class FechaSingle extends Component<TypeProps> {
                             width: "100%",
                             height: "100%",
                             borderRadius: 4,
-                            backgroundColor: "#66000044",
+                            backgroundColor: STheme.color.card,
                             borderColor: "#666"
                         }}
                         defaultValue={this.state.fecha_inicio}

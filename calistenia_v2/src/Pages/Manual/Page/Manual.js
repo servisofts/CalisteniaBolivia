@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SIcon, SImage, SLoad, SPage, SText, SView } from 'servisofts-component';
+import { SButtom, SHr, SIcon, SImage, SLoad, SPage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import SSRolesPermisos, { GetRoles } from '../../../SSRolesPermisos';
 import TipoPago from '../../TipoPago';
@@ -156,14 +156,14 @@ class Manual extends Component {
         var tiposPagos = this.getTipoPago();
         if (!tiposPagos) return <SView />
         return <SView center col={"xs-12 md-10 xl-8"} row center>
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Informacion</SText>
             </SView>
             {this.getDetalle("Ingreso de caja", this.getIcon(1))}
             {this.getDetalle("Egreso de caja", this.getIcon(-1))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de pagos</SText>
             </SView>
@@ -173,7 +173,7 @@ class Manual extends Component {
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
             </SView>
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
             </SView>
@@ -181,7 +181,7 @@ class Manual extends Component {
             {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}
             {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
 
-            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: "#66000066" }}></SView>
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={62} center></SView>
 
         </SView>

@@ -140,8 +140,8 @@ export default class SC_Mes extends Component {
                         justifyContent: "center",
                         // borderRadius:8,
                         borderBottomWidth: 1,
-                        borderColor: "#66000044",
-                        backgroundColor: (isCurMonth ? "#66000011" : "#66000044")
+                        borderColor: STheme.color.card,
+                        backgroundColor: (isCurMonth ? "#66000011" : STheme.color.card)
                     }}>
                         <SView style={{
                             flex: 1,

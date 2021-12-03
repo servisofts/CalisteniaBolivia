@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SOrdenador, SDate, SView, SText } from 'servisofts-component';
+import { SOrdenador, SDate, SView, SText, STheme } from 'servisofts-component';
 import { Line, Rect, Svg } from 'react-native-svg';
 
 var FColor = {
@@ -110,9 +110,9 @@ export default class MovimientosGraphic extends Component {
         }
         var { width, height } = this.state.layout;
         return <Svg height="100%" width="100%" viewBox={`0 0 ${this.state.layout.width} ${this.state.layout.height}`}>
-            <Line x1="0" y1={height / 2} x2={width} y2={height / 2} stroke="#66000044" strokeWidth="2" />
-            <Line x1="0" y1={height} x2={width} y2={height} stroke="#66000044" strokeWidth="1" />
-            <Line x1="0" y1={0} x2={width} y2={0} stroke="#66000044" strokeWidth="2" />
+            <Line x1="0" y1={height / 2} x2={width} y2={height / 2} stroke={STheme.color.card} strokeWidth="2" />
+            <Line x1="0" y1={height} x2={width} y2={height} stroke={STheme.color.card} strokeWidth="1" />
+            <Line x1="0" y1={0} x2={width} y2={0} stroke={STheme.color.card} strokeWidth="2" />
             {this.getLines()}
         </Svg>
     }

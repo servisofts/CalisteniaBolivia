@@ -5,7 +5,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
 import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation } from 'servisofts-component';
+import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import Paquete_Item from './Paquete_Item';
@@ -17,7 +17,9 @@ class ClientesPage extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
+      key_sucursal: SNavigation.getParam("key_sucursal", ""),
       pagination: {
         curPage: 1,
       }
@@ -130,7 +132,7 @@ class ClientesPage extends Component {
           height: 100,
           margin: 4,
           borderRadius: 10,
-          backgroundColor: "#66000044"
+          backgroundColor: STheme.color.card,
         }} onPress={() => {
           SNavigation.navigate("ClientePerfilPage", {
             key: key

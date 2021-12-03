@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { SInput, SText, SThread, SView, SIcon } from 'servisofts-component';
+import { SInput, SText, SThread, SView, SIcon, STheme } from 'servisofts-component';
 // import STextImput from '../STextImput';
 
 type Tprops = {
@@ -101,7 +101,7 @@ export default class Buscador extends Component<Tprops> {
                         flex: 1,
                         maxWidth: 600,
                         height: 30,
-                        backgroundColor: "#ff000022",
+                        backgroundColor: STheme.color.card,
                         justifyContent: "center",
                         borderRadius: 8,
                         alignItems: "center",
@@ -130,7 +130,6 @@ export default class Buscador extends Component<Tprops> {
                 <SView style={{
                     // alignItems: "flex-end",
                     // width: "90%",
-                    // backgroundColor: "#ff000022",
                 }}>
                     <SText style={{
                         color: "#999", fontSize: 10,

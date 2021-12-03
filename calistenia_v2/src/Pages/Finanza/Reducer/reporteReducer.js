@@ -12,6 +12,9 @@ export default (state, action) => {
             case "getMovimientosBancarios":
                 getMovimientosBancarios(state, action);
                 break;
+            case "getReporteGeneral":
+                getReporteGeneral(state, action);
+                break;
             case "getPaquetesVendidos":
                 getPaquetesVendidos(state, action);
                 break;
@@ -38,6 +41,12 @@ const getMovimientosBancarios = (state, action) => {
             var obj = action.data[key];
             state.data[key] = obj;
         })
+    }
+}
+const getReporteGeneral = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.dataEstado = action.data;
     }
 }
 const getPaquetesVendidos = (state, action) => {

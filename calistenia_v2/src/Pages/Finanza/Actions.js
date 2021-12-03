@@ -33,6 +33,31 @@ export default class Actions {
         }
         return data;
     }
+    static getEstadoFinanciero(fecha_desde, fecha_hasta, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var dataProps = {
+            fecha_desde: fecha_desde,
+            fecha_hasta: fecha_hasta
+        };
+        var data = reducer.dataEstado;
+        if (reducer.data_estadoFinanciero != JSON.stringify(dataProps)) {
+            reducer.data_estadoFinanciero = JSON.stringify(dataProps);
+            reducer.dataEstado = false;
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getReporteGeneral",
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
     static getPaquetesVendidos(dataProps, props, force) {
         var reducer = props.state[Actions.reducerName];
         var data = reducer.paquetesVendidos;

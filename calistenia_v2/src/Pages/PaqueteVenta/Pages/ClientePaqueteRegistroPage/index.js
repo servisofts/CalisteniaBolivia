@@ -19,7 +19,8 @@ class ClientePaqueteRegistroPage extends Component {
       tipoPago: {},
       tasks: {},
     };
-
+    this.key_usuario = SNavigation.getParam("key_usuario", false);
+    this.key_paquete = SNavigation.getParam("key_paquete", false);
   }
   getCalendaio(i, usuario) {
     if (!usuario) return <View />
@@ -72,7 +73,7 @@ class ClientePaqueteRegistroPage extends Component {
         }}
           onPress={() => {
 
-            SNavigation.navigate("VentasPage", {
+            SNavigation.navigate("VentasSelect", {
               select: (data) => {
                 this.state.usuariosData[i] = data;
                 this.state.usuarios[i] = data.key;
@@ -104,18 +105,12 @@ class ClientePaqueteRegistroPage extends Component {
   }
   continue() {
     SNavigation.navigate("ClientePaqueteRegistroConfirmacion", {
-      data: {
-        key_paquete: this.key_paquete,
-        key_usuario: this.key_usuario,
-        usuarios: this.state.usuarios,
-        usuariosData: this.state.usuariosData,
-        tasks: this.state.tasks,
-        dataPagos: this.state.tipoPago
-      },
-      onFinish: () => {
-        SNavigation.goBack();
-        // this.props.navigation.goBack();
-      }
+      key_paquete: this.key_paquete,
+      key_usuario: this.key_usuario,
+      usuarios: this.state.usuarios,
+      usuariosData: this.state.usuariosData,
+      tasks: this.state.tasks,
+      dataPagos: this.state.tipoPago
     })
   }
   calcularFaltante() {
@@ -145,8 +140,7 @@ class ClientePaqueteRegistroPage extends Component {
     return 0;
   }
   render() {
-    this.key_usuario = SNavigation.getParam("key_usuario", false);
-    this.key_paquete = SNavigation.getParam("key_paquete", false);
+
 
     return (
       <View style={{

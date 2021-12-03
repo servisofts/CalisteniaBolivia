@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import Svg, { Line, Text } from 'react-native-svg';
 import { connect } from 'react-redux';
-import { SLoad, SText, SView, SDate, SPopup, SNavigation } from 'servisofts-component';
+import { SLoad, SText, SView, SDate, SPopup, SNavigation, STheme } from 'servisofts-component';
 import FechasBetween from '../../../../../Components/FechasBetween';
 import Finanza from '../../../../Finanza';
 import Sucursal from '../../../../Sucursal';
@@ -149,7 +149,7 @@ class Grafico extends Component {
                 <Line
                     x1={`${(a * i) + space}% `} y1={`${100}%`}
                     x2={`${(a * i) + space}% `} y2={`${0}}%`}
-                    stroke={"#66000066"} strokeWidth="1"
+                    stroke={STheme.color.card} strokeWidth="1"
                 />
                 <Text
                     fill="#fff"

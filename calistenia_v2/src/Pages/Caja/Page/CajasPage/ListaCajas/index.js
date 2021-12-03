@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, Animated } from 'react-native';
-import { SView, SScrollView2, SText, SInput, SDate, SOrdenador, SImage, SNavigation } from 'servisofts-component';
+import { SView, SScrollView2, SText, SInput, SDate, SOrdenador, SImage, SNavigation, STheme } from 'servisofts-component';
 import { connect } from 'react-redux';
 import MovimientosGraphic from './MovimientosGraphic';
 import FechasBetween from '../../../../../Components/FechasBetween';
 import SSocket from 'servisofts-socket'
+import Sucursal from '../../../../Sucursal';
 class ListaCajas extends Component {
     constructor(props) {
         super(props);
@@ -138,6 +139,12 @@ class ListaCajas extends Component {
             if (!key) return <View />
             if (!obj) return <View />
             if (!obj.key_usuario) return <View />
+            if(this.state.sucursal){
+                if(obj.key_sucursal != this.state.sucursal.key){
+                    return null;
+                }
+
+            }
             var usuario = this.getUsuarios(obj.key_usuario);
             usuario.key = obj.key_usuario;
             // var movimientos = this.getMovimientos(obj.key);
@@ -161,7 +168,7 @@ class ListaCajas extends Component {
                 style={{
                     borderRadius: 4,
                     height: 140,
-                    backgroundColor: "#66000044",
+                    backgroundColor: STheme.color.card,
                     marginTop: 8,
                     padding: 4,
                 }}>
@@ -209,11 +216,14 @@ class ListaCajas extends Component {
         return (
             <SView col={"xs-12"} style={{
                 flex: 1,
-            }}>
+            }} center>
                 <FechasBetween onChange={(fecha_inicio, fecha_fin) => {
                     this.state.fecha.fecha_inicio = fecha_inicio
                     this.state.fecha.fecha_fin = fecha_fin
                     this.setState({ ...this.state })
+                }} />
+                <Sucursal.Component.SucursalSelect sucursal={this.state.sucursal} setSucursal={(suc)=>{
+                    this.setState({ sucursal: suc });
                 }} />
                 <SScrollView2 disableHorizontal style={{
                     width: "100%",

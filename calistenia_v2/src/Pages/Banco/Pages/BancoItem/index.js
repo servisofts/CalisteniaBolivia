@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 // import Page from '../../../../Components/Page';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import { connect } from 'react-redux';
-import { SScrollView2, SView, SText, SImage } from 'servisofts-component';
+import { SScrollView2, SView, SText, SImage, STheme } from 'servisofts-component';
 import CuentaBancoLista from '../CuentaBancoLista/index';
 import SSocket from 'servisofts-socket';
 let component = "banco";
@@ -40,7 +40,7 @@ class BancoItem extends Component {
             <SView col={"xs-12"} key={obj.key} style={{
                 borderRadius: 4,
                 marginBottom: 8,
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
             }} row>
                 <SView col={"xs-12"} row style={{
                     height: 60,

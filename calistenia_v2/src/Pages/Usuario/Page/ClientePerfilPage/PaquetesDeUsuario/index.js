@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SText, SView, SButtom, SLoad, SPopup, SPopupClose, SPopupOpen, SOrdenador, SImage, SPage, SIcon, SNavigation } from 'servisofts-component';
+import { SText, SView, SButtom, SLoad, SPopup, SPopupClose, SPopupOpen, SOrdenador, SImage, SPage, SIcon, SNavigation, STheme } from 'servisofts-component';
 import Paquete_Item from './Paquete_Item';
 import { SSRolesPermisosValidate } from '../../../../../SSRolesPermisos';
 import SSocket from 'servisofts-socket';
@@ -126,25 +126,22 @@ class PaquetesDeUsuario extends Component {
         ).map((key) => {
             var obj = data[key];
             var paquete = this.getPaquete(obj.key_paquete);
-            var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete+`?date=${new Date().getTime()}`;
+            var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete + `?date=${new Date().getTime()}`;
             if (!paquete) {
                 return <SLoad />
             }
             return <TouchableOpacity style={{
                 width: "96%",
-                backgroundColor: "#66000044",
+                backgroundColor: STheme.color.card,
                 height: 100,
                 marginBottom: 8,
                 borderRadius: 8,
                 alignItems: "center",
                 justifyContent: "center",
             }} onPress={() => {
-                // if (obj.url) {
-                // console.log(obj)
-                // this.props.navigation.navigate("PaqueteRegistroPage", {
-                //     key: key,
-                // });
-                // }
+                SNavigation.navigate("EsperandoVenta", {
+                    key: key,
+                });
             }}>
                 <View style={{
                     flex: 1,
@@ -218,7 +215,7 @@ class PaquetesDeUsuario extends Component {
     getBtnAdd = () => {
         return <TouchableOpacity style={{
             width: "96%",
-            backgroundColor: "#66000044",
+            backgroundColor: STheme.color.card,
             height: 50,
             marginBottom: 8,
             borderRadius: 8,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage, SText, SView } from 'servisofts-component';
+import { SImage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 
 class PerfilUsuario extends Component {
@@ -15,7 +15,7 @@ class PerfilUsuario extends Component {
         var usr = this.props.state.usuarioReducer.usuarioLog;
         return <SView col={"xs-12"} style={{
             // height: 120,
-            backgroundColor: "#66000066",
+            backgroundColor: STheme.color.card,
             borderRadius: 4,
             overflow: "hidden"
         }} center >

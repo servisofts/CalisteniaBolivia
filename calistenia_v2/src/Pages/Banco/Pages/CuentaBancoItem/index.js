@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SView, SText } from 'servisofts-component';
+import { SView, SText, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 let component = "cuentaBanco";
 
@@ -71,7 +71,7 @@ class CuentaBancoItem extends Component {
                     width: "100%",
                     height: "100%",
                     borderRadius: 4,
-                    backgroundColor: "#66000044",
+                    backgroundColor: STheme.color.card,
                 }} row>
                 
                     <SView style={{
