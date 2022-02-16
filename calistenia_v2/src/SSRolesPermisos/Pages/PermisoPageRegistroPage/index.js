@@ -40,28 +40,33 @@ class PermisoPageRegistroPage extends Component {
     this.imputs = {
       descripcion: new SInput({
         placeholder: "Descripcion o nombre",
+        label: "Descripcion o nombre",
         // autoCapitalize: "none",
         defaultValue: this.data.descripcion,
-        style: styleImput
+        customStyle:"calistenia",
       }),
       url: new SInput({
         placeholder: "Direccion o url",
+        label: "Direccion o url",
         defaultValue: this.data.url,
         // autoCapitalize: "none",
-        style: styleImput
+        customStyle:"calistenia",
       }),
       style: new SInput({
         placeholder: "estilo",
+        label: "estilo",
         defaultValue: this.data.style,
+        customStyle:"calistenia",
         // autoCapitalize: "none",
-        style: styleImput
+        // style: styleImput
       }),
       is_page: new SInput({
         type: "Check",
         placeholder: "Es pagina?",
+        label: "Es pagina?",
         defaultValue: this.data.is_page,
         // autoCapitalize: "none",
-        style: styleImput
+        customStyle:"calistenia",
       }),
     }
   }

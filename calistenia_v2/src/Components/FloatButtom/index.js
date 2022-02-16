@@ -12,7 +12,7 @@ const FloatButtom = (props) => {
             style={{
                 position: "absolute",
                 right: 10,
-                bottom: 10,
+                bottom: 32,
                 width: 50,
                 height: 50,
                 // borderWidth: STheme.color.secondary + "22",

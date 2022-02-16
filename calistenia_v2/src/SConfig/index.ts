@@ -23,11 +23,11 @@ const SocketProps: SSocketProps = {
     name: 'calistenia',
 
     // -- Producción --
-    host: 'calistenia.servisofts.com',
-    ssl: true,
+    // host: 'calistenia.servisofts.com',
+    // ssl: true,
     // -- Producción --
-    // host: '192.168.0.199',
-    // ssl: false,
+    host: '192.168.0.199',
+    ssl: false,
 
     // --CONFIGURACIONES--
     port: {

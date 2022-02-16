@@ -113,7 +113,7 @@ export default class Buscador extends Component<Tprops> {
                             paddingLeft: 8,
                             paddingRigth: 8,
                         }}
-                            autoFocus={true}
+                            // autoFocus={true}
 
                             onChangeText={(txt) => {
                                 this.state.value = txt;

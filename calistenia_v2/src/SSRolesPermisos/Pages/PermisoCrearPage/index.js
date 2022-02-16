@@ -43,15 +43,16 @@ class PermisoCrearPage extends Component {
     this.imputs = {
       descripcion: new SInput({
         placeholder: "Descripcion o nombre",
+        label: "Descripcion o nombre",
         defaultValue: this.data.descripcion,
+        customStyle:"calistenia",
         // autoCapitalize: "none",
-        style: styleImput
       }),
       type: new SInput({
+        label: "Descripcion o nombre",
         placeholder: "type o tipo",
         defaultValue: this.data.type,
-        // secureTextEntry: true,
-        style: styleImput
+        customStyle:"calistenia",
       })
     }
   }

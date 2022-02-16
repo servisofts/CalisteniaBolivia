@@ -14,6 +14,7 @@ import Asistencia from '../Pages/Asistencia';
 import Finanza from '../Pages/Finanza';
 import Manual from '../Pages/Manual';
 import Billetera from '../Pages/Billetera';
+import Inversiones from '../Pages/Inversiones';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
@@ -28,7 +29,8 @@ const reducers = combineReducers({
     ...Asistencia.Reducers,
     ...Finanza.Reducers,
     ...Manual.Reducers,
-    ...Billetera.Reducers
+    ...Billetera.Reducers,
+    ...Inversiones.Reducers,
 });
 
 export default (state, action) => {
