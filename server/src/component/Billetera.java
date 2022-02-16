@@ -2,19 +2,26 @@ package component;
 
 import java.io.File;
 import Config.Config;
+import java.text.DateFormat;
+import Server.SSSAbstract.SSServerAbstract;
 import org.json.JSONArray;
 import java.util.UUID;
-import Server.SSSAbstract.SSServerAbstract;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.sql.SQLException;
 import conexion.Conexion;
 import SocketCliente.SocketCliete;
 import Server.SSSAbstract.SSSessionAbstract;
 import org.json.JSONObject;
 
-public class Entrenamiento
+public class Billetera
 {
-    public Entrenamiento(final JSONObject data, final SSSessionAbstract session) {
+    public Billetera(final JSONObject data, final SSSessionAbstract session) {
         switch (data.getString("type")) {
+            case "anular": {
+                this.anular(data, session);
+                return;
+            }
             case "editar": {
                 this.editar(data, session);
                 return;
@@ -23,20 +30,16 @@ public class Entrenamiento
                 this.getAll(data, session);
                 return;
             }
+            case "getByCodigo": {
+                this.getByCodigo(data, session);
+                return;
+            }
             case "registro": {
                 this.registro(data, session);
                 return;
             }
             case "subirFoto": {
                 this.subirFoto(data, session);
-                return;
-            }
-            case "getByDate": {
-                this.getByDate(data, session);
-                return;
-            }
-            case "getByKeyUsuario": {
-                this.getByKeyUsuario(data, session);
                 return;
             }
             case "getByKey": {
@@ -55,7 +58,7 @@ public class Entrenamiento
     
     public void getAll(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            final String consulta = "select get_all('entrenamiento') as json";
+            final String consulta = "select get_all('billetera', 'key_cuenta_banco', '" + obj.getString("key_cuenta_banco") + "') as json";
             final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", (Object)data);
             obj.put("estado", (Object)"exito");
@@ -68,7 +71,7 @@ public class Entrenamiento
     
     public void getByKey(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            final String consulta = "select get_by_key('entrenamiento','" + obj.getString("key") + "') as json";
+            final String consulta = "select get_by_key('billetera', '" + obj.getString("key") + "') as json";
             final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", (Object)data);
             obj.put("estado", (Object)"exito");
@@ -79,12 +82,43 @@ public class Entrenamiento
         }
     }
     
-    public void getByDate(final JSONObject obj, final SSSessionAbstract session) {
+    public void getByCodigo(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            final String consulta = "select entrenamiento_get_by_date('" + obj.getString("fecha") + "') as json";
+            final String consulta = "select billetera_get_by_codigo('" + obj.getString("codigo") + "') as json";
             final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", (Object)data);
             obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
+            e.printStackTrace();
+        }
+    }
+    
+    public static JSONObject getByCodigo(final String codigo) {
+        try {
+            final String consulta = "select billetera_get_by_codigo('" + codigo + "') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void registro(final JSONObject obj, final SSSessionAbstract session) {
+        try {
+            final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            final String fecha_on = formatter.format(new Date());
+            final JSONObject billetera = obj.getJSONObject("data");
+            billetera.put("key", (Object)UUID.randomUUID().toString());
+            billetera.put("fecha_on", (Object)fecha_on);
+            billetera.put("estado", 1);
+            billetera.put("estado_entrega", (Object)"pendiente");
+            Conexion.insertArray("billetera", new JSONArray().put((Object)billetera));
+            obj.put("data", (Object)billetera);
+            obj.put("estado", (Object)"exito");
+            SSServerAbstract.sendAllServer(obj.toString());
         }
         catch (SQLException e) {
             obj.put("estado", (Object)"error");
@@ -94,10 +128,9 @@ public class Entrenamiento
     
     public void editar(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            final JSONObject entrenamiento = obj.getJSONObject("data");
-            Conexion.editObject("entrenamiento", entrenamiento);
-            Conexion.historico(obj.getString("key_usuario"), entrenamiento.getString("key"), "entrenamiento_editar", entrenamiento);
-            obj.put("data", (Object)entrenamiento);
+            final JSONObject billetera = obj.getJSONObject("data");
+            Conexion.editObject("billetera", billetera);
+            obj.put("data", (Object)billetera);
             obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
         }
@@ -108,56 +141,27 @@ public class Entrenamiento
         }
     }
     
-    public void registro(final JSONObject obj, final SSSessionAbstract session) {
+    public void anular(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            final JSONObject entrenamiento = obj.getJSONObject("data");
-            entrenamiento.put("key", (Object)UUID.randomUUID().toString());
-            entrenamiento.put("fecha_on", (Object)"now()");
-            entrenamiento.put("estado", 1);
-            Conexion.insertArray("entrenamiento", new JSONArray().put((Object)entrenamiento));
-            obj.put("data", (Object)entrenamiento);
+            Conexion.anular("billetera", obj.getString("key"));
             obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
         }
         catch (SQLException e) {
             obj.put("estado", (Object)"error");
-            e.printStackTrace();
-        }
-    }
-    
-    public void getByKeyUsuario(final JSONObject obj, final SSSessionAbstract session) {
-        try {
-            final String consulta = "select entrenamiento_get_activo('" + obj.getString("key_usuario") + "') as json";
-            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", (Object)data);
-            obj.put("estado", (Object)"exito");
-        }
-        catch (SQLException e) {
-            obj.put("estado", (Object)"error");
+            obj.put("error", (Object)e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
     
     public void subirFoto(final JSONObject obj, final SSSessionAbstract session) {
         final String url = Config.getJSON().getJSONObject("files").getString("url");
-        final File f = new File(String.valueOf(url) + "entrenamiento/");
+        final File f = new File(String.valueOf(url) + "billetera/");
         if (!f.exists()) {
             f.mkdirs();
         }
         obj.put("dir", (Object)(String.valueOf(f.getPath()) + "/" + obj.getString("key")));
         obj.put("estado", (Object)"exito");
-        SSServerAbstract.sendServer("ServerSocketWeb", obj.toString());
-        SSServerAbstract.sendServer("ServerSocket", obj.toString());
-    }
-    
-    public static JSONObject getEntrenamiento(final String fecha_on, final String key_sucursal) {
-        try {
-            final String consulta = "select to_json(entrenamiento.*) as json\nfrom entrenamiento\nwhere entrenamiento.key_sucursal like '" + key_sucursal + "'\n" + "and to_char(entrenamiento.fecha_inicio, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') like '" + fecha_on + "%'";
-            return Conexion.ejecutarConsultaObject(consulta);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        SSServerAbstract.sendAllServer(obj.toString());
     }
 }

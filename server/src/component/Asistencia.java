@@ -1,138 +1,183 @@
 package component;
 
 import java.io.File;
-import java.sql.SQLException;
+import Config.Config;
+import java.util.Calendar;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
-import conexion.*;
-import SocketCliente.SocketCliete;
+import Server.SSSAbstract.SSServerAbstract;
 import org.json.JSONArray;
+import java.util.UUID;
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
+import java.sql.SQLException;
+import conexion.Conexion;
+import SocketCliente.SocketCliete;
+import Server.SSSAbstract.SSSessionAbstract;
 import org.json.JSONObject;
 
-import Config.Config;
-import Server.SSSAbstract.SSServerAbstract;
-import Server.SSSAbstract.SSSessionAbstract;
-
-public class Asistencia {
-
-    public Asistencia(JSONObject data, SSSessionAbstract session) {
+public class Asistencia
+{
+    public Asistencia(final JSONObject data, final SSSessionAbstract session) {
         switch (data.getString("type")) {
-            case "getAll":
-                getAll(data, session);
-            break;
-            case "getByKey":
-                getByKey(data, session);
-                break;
-            case "getByKeyEntrenamiento":
-                getByKeyEntrenamiento(data, session);
-                break;
-            case "registro":
-                registro(data, session);
-            break;
-            case "editar":
-                editar(data, session);
-            break;
-            case "subirFoto":
-                subirFoto(data, session);
-            break;
+            case "getByKeyEntrenamiento": {
+                this.getByKeyEntrenamiento(data, session);
+                return;
+            }
+            case "editar": {
+                this.editar(data, session);
+                return;
+            }
+            case "getAll": {
+                this.getAll(data, session);
+                return;
+            }
+            case "registro": {
+                this.registro(data, session);
+                return;
+            }
+            case "subirFoto": {
+                this.subirFoto(data, session);
+                return;
+            }
+            case "getByKeySucursal": {
+                this.getByKeySucursal(data, session);
+                return;
+            }
+            case "getByKey": {
+                this.getByKey(data, session);
+                return;
+            }
             default:
-                defaultType(data, session);
+                break;
         }
+        this.defaultType(data, session);
     }
-
-    public void defaultType(JSONObject obj, SSSessionAbstract session) {
+    
+    public void defaultType(final JSONObject obj, final SSSessionAbstract session) {
         SocketCliete.send("usuario", obj, session);
     }
-
-    public void getAll(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getAll(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select get_all('asistencia') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+            final String consulta = "select get_all('asistencia') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void getByKeyEntrenamiento(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getByKeySucursal(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key_entrenamiento('"+obj.getString("key_entrenamiento")+"') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta); 
-
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+            final String consulta = "select get_by_key_sucursal('" + obj.getString("key_sucursal") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void getByKey(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getByKeyEntrenamiento(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key('asistencia','"+obj.getString("key")+"') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            final String consulta = "select get_by_key_entrenamiento('" + obj.getString("key_entrenamiento") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
+            e.printStackTrace();
+        }
+    }
+    
+    public void getByKey(final JSONObject obj, final SSSessionAbstract session) {
+        try {
+            final String consulta = "select get_by_key('asistencia','" + obj.getString("key") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             Conexion.historico(obj.getString("key_usuario"), "asistencia_getByKey", data);
-
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void registro(JSONObject obj, SSSessionAbstract session) {
+    
+    public void registro(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-            String fecha_on = formatter.format(new Date());
-            JSONObject asistencia = obj.getJSONObject("data");
-
-            JSONObject paqueteVentaUsuario = PaqueteVenta.getPaqueteVentaUsuarioActivo(asistencia.getString("key_usuario")); 
-
-            asistencia.put("key",UUID.randomUUID().toString());
-            asistencia.put("fecha_on",fecha_on);
-            asistencia.put("estado",1);
-            asistencia.put("key_paquete_venta_usuario",paqueteVentaUsuario.getString("key"));            
-            Conexion.insertArray("asistencia", new JSONArray().put(asistencia));
-
+            final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            final Calendar cal = new GregorianCalendar();
+            final String fecha_on = formatter.format(cal.getTime());
+            cal.set(12, 0);
+            cal.set(13, 0);
+            cal.set(14, 0);
+            final String fecha_inicio = formatter.format(cal.getTime());
+            cal.add(10, 1);
+            final String fecha_fin = formatter.format(cal.getTime());
+            final JSONObject asistencia = obj.getJSONObject("data");
+            final JSONObject paqueteVentaUsuario = PaqueteVenta.getPaqueteVentaUsuarioActivo(asistencia.getString("key_usuario"));
+            JSONObject entrenamiento = Entrenamiento.getEntrenamiento(fecha_on.substring(0, 13), asistencia.getString("key_sucursal"));
+            if (entrenamiento.isEmpty()) {
+                entrenamiento = new JSONObject();
+                entrenamiento.put("key", (Object)UUID.randomUUID().toString());
+                entrenamiento.put("descripcion", (Object)"automatico");
+                entrenamiento.put("key_sucursal", (Object)asistencia.getString("key_sucursal"));
+                entrenamiento.put("key_usuario", (Object)obj.getString("key_usuario"));
+                entrenamiento.put("fecha_on", (Object)fecha_on);
+                entrenamiento.put("fecha_inicio", (Object)fecha_inicio);
+                entrenamiento.put("fecha_fin", (Object)fecha_fin);
+                entrenamiento.put("estado", 1);
+                Conexion.insertArray("entrenamiento", new JSONArray().put((Object)entrenamiento));
+            }
+            asistencia.put("key", (Object)UUID.randomUUID().toString());
+            asistencia.put("key_entrenamiento", (Object)entrenamiento.getString("key"));
+            asistencia.put("fecha_on", (Object)fecha_on);
+            asistencia.put("estado", 1);
+            asistencia.put("key_paquete_venta_usuario", (Object)paqueteVentaUsuario.getString("key"));
+            Conexion.insertArray("asistencia", new JSONArray().put((Object)asistencia));
             Conexion.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_registro", asistencia);
-            obj.put("data", asistencia);
-            obj.put("estado", "exito");
-
+            obj.put("data", (Object)asistencia);
+            obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
-
     }
-
-    public void editar(JSONObject obj, SSSessionAbstract session) {
+    
+    public void editar(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            JSONObject asistencia = obj.getJSONObject("data");
+            final JSONObject asistencia = obj.getJSONObject("data");
             Conexion.editObject("asistencia", asistencia);
             Conexion.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_editar", asistencia);
-            obj.put("data", asistencia);
-            obj.put("estado", "exito");
+            obj.put("data", (Object)asistencia);
+            obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
-        } catch (SQLException e) {
-            obj.put("estado", "error");
-            obj.put("error", e.getLocalizedMessage());
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
+            obj.put("error", (Object)e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
-
-    public void subirFoto(JSONObject obj, SSSessionAbstract session) {
-        String url = Config.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url+"asistencia/");
+    
+    public void subirFoto(final JSONObject obj, final SSSessionAbstract session) {
+        final String url = Config.getJSON().getJSONObject("files").getString("url");
+        final File f = new File(String.valueOf(url) + "asistencia/");
         Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "asistencia_subirFoto", new JSONObject());
-        if(!f.exists()) f.mkdirs();
-        obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
-        obj.put("estado", "exito");
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        obj.put("dirs", (Object)new JSONArray().put((Object)(String.valueOf(f.getPath()) + "/" + obj.getString("key"))));
+        obj.put("estado", (Object)"exito");
         SSServerAbstract.sendAllServer(obj.toString());
     }
 }
