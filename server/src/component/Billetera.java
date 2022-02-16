@@ -17,8 +17,7 @@ import org.json.JSONObject;
 public class Billetera
 {
     public Billetera(final JSONObject data, final SSSessionAbstract session) {
-        final String string;
-        switch (string = data.getString("type")) {
+        switch (data.getString("type")) {
             case "anular": {
                 this.anular(data, session);
                 return;

@@ -14,8 +14,7 @@ import org.json.JSONObject;
 public class Entrenamiento
 {
     public Entrenamiento(final JSONObject data, final SSSessionAbstract session) {
-        final String string;
-        switch (string = data.getString("type")) {
+        switch (data.getString("type")) {
             case "editar": {
                 this.editar(data, session);
                 return;

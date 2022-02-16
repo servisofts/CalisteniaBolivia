@@ -18,8 +18,7 @@ import org.json.JSONObject;
 public class Asistencia
 {
     public Asistencia(final JSONObject data, final SSSessionAbstract session) {
-        final String string;
-        switch (string = data.getString("type")) {
+        switch (data.getString("type")) {
             case "getByKeyEntrenamiento": {
                 this.getByKeyEntrenamiento(data, session);
                 return;
