@@ -54,7 +54,7 @@ class EntrenamientoPage extends Component {
     }
     getEntrenamiento(entrenamiento) {
         return <>
-            <Entrenamiento data={entrenamiento} />
+            <Entrenamiento sucursal={this.state.sucursal}  />
         </>
     }
     getIniciar() {
@@ -77,12 +77,18 @@ class EntrenamientoPage extends Component {
         </SView>
     }
     getComponent() {
+        return <>
+            {this.getIniciar()}
+            {this.getEntrenamiento()}
+
+        </>
         var entrenamiento = this.getEntrenamientoUsuario();
         if (!entrenamiento) {
             return <SLoad />
         }
+
         if (!entrenamiento.key) {
-            return this.getIniciar();
+            return
         } else {
             return this.getEntrenamiento(entrenamiento);
         }
@@ -92,7 +98,7 @@ class EntrenamientoPage extends Component {
 
         return (
             <SPage title={"Entrenamiento"} hidden disableScroll>
-                <BarraSuperior title={"Entrenamiento"} goBack={()=>{
+                <BarraSuperior title={"Entrenamiento"} goBack={() => {
                     SNavigation.goBack();
                 }} />
                 <SScrollView2 disableHorizontal>

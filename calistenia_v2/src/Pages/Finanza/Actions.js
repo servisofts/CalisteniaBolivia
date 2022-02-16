@@ -33,12 +33,16 @@ export default class Actions {
         }
         return data;
     }
-    static getEstadoFinanciero(fecha_desde, fecha_hasta, props, force) {
+    static getEstadoFinanciero(fecha_desde, fecha_hasta, key_sucursal, props, force) {
         var reducer = props.state[Actions.reducerName];
         var dataProps = {
             fecha_desde: fecha_desde,
-            fecha_hasta: fecha_hasta
+            fecha_hasta: fecha_hasta,
+
         };
+        if (key_sucursal){
+            dataProps.key_sucursal = key_sucursal;
+        }
         var data = reducer.dataEstado;
         if (reducer.data_estadoFinanciero != JSON.stringify(dataProps)) {
             reducer.data_estadoFinanciero = JSON.stringify(dataProps);

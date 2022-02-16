@@ -87,9 +87,7 @@ class BancoPage extends Component {
                     </SView>
                     <SView col={"xs-12"} style={{
                     }}>
-                        <CuentasLista data={obj} navigation={this.props.navigation} onBack={() => {
-                            this.setState({ ...this.state })
-                        }} />
+                        <CuentasLista data={obj} navigation={this.props.navigation} />
                     </SView>
                     <SView height={32}/>
                 </SView>

@@ -25,8 +25,8 @@ class Entrenamiento extends Component {
                     {/* <SView height={28} /> */}
                     {/* <Cronometro/> */}
                     <SView height={28} />
-                    <Participantes entrenamiento={this.props.data} />
-                    <SView style={{
+                    <Participantes entrenamiento={this.props.data} sucursal={this.props.sucursal} />
+                    {/* <SView style={{
                         position: 'absolute',
                         width: 80,
                         height: 80,
@@ -35,7 +35,7 @@ class Entrenamiento extends Component {
                         alignItems: 'center',
                     }} >
                         <Terminar data={this.props.data} />
-                    </SView>
+                    </SView> */}
                 </SView>
                 {/* <Reloj inicio={this.props.data.fecha_inicio} /> */}
             </>

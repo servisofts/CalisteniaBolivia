@@ -34,7 +34,7 @@ class PaquetesVendidos extends Component {
                 { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
                 { key: "sucursal", label: "Sucursal", width: 150 },
                 { key: "tipo_pago", label: "Tipo Pago", width: 150 },
-                { key: "caja_movimiento/monto", label: "Monto", width: 100 },
+                { key: "caja_movimiento/monto", label: "Monto", sumar: true, width: 100 },
                 { key: "paquete/descripcion", label: "Paquete", width: 150 },
                 { key: "caja/key_usuario", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
                 // { key: "", label: "Sucursal", width: 150 },

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage, STheme } from 'servisofts-component';
+import { SHr, SIcon, SImage, STheme } from 'servisofts-component';
 import { SLoad, SPopup, SText, SView } from 'servisofts-component';
 import SeleccionarUsuario from './SeleccionarUsuario';
 import SSocket from 'servisofts-socket'
@@ -38,7 +38,8 @@ class Participantes extends Component {
                         Asistencia.Actions.registro({
                             descripcion: "",
                             key_usuario: usr.key,
-                            key_entrenamiento: this.props.entrenamiento.key
+                            key_sucursal: this.props.sucursal?.key,
+                            // key_entrenamiento: this.props.entrenamiento.key
                         }, this.props)
                         SPopup.close("selectUser");
                     }} />
@@ -53,20 +54,42 @@ class Participantes extends Component {
         if (!usuarios) {
             return <SLoad />
         }
+        console.log(data);
         return (
             <SView col={"xs-12"} center>
                 <SView col={"xs-7"} colSquare >
                     <SImage src={SSocket.api.root + "usuario_" + data.key_usuario} />
                 </SView>
                 <SText center fontSize={10}>{`${usuarios.Nombres} ${usuarios.Apellidos}`}</SText>
+                <SView style={{
+                    position: "absolute",
+                    width: 20,
+                    height: 20,
+                    top: -4,
+                    right: -4,
+                }} onPress={() => {
+                    SPopup.confirm({
+                        "title": "Eliminar asistencia",
+                        message: "¿Esta seguro de eliminar esta asistencia?",
+                        onPress: () => {
+
+                            Asistencia.Actions.eliminar(data, this.props.sucursal.key, this.props)
+                        }
+                    })
+
+                }}>
+                    <SIcon name={"Delete"} />
+                </SView>
             </SView>
         )
     }
     getListaUsuarios = () => {
-        var data = Asistencia.Actions.getByKeyEntrenamiento({ key_entrenamiento: this.props.entrenamiento.key }, this.props);
+        if (!this.props.sucursal) return <SView />
+        var data = Asistencia.Actions.getByKeySucursal({ key_sucursal: this.props.sucursal.key }, this.props);
         if (!data) return <SLoad />
         return Object.keys(data).map((key) => {
             var obj = data[key];
+            if (obj.estado != 1) return null;
             return this.getItem(this.getUsuario(obj));
         })
     }
@@ -77,8 +100,9 @@ class Participantes extends Component {
                 <SView height={8} />
                 <SText color={"#999"}>Ingrese el participante</SText>
                 <SView height={4} />
-                <SView col={"xs-12"} row >
+                <SView col={"xs-12"} row>
                     {this.getAdd()}
+                    <SHr />
                     {this.getListaUsuarios()}
                 </SView>
 

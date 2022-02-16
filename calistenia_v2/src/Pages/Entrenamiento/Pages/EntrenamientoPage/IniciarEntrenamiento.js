@@ -20,10 +20,10 @@ class IniciarEntrenamiento extends Component {
         }
         return (
             <SView col={"xs-12"} center>
-                <SView col={"xs-11 md-8 xl-6"} center height={200} card>
+                <SView col={"xs-11 md-8 xl-6"} center height={140} card>
                     <Reloj />
-                    <SView height={16} />
-                    <SButtom props={{
+                    {/* <SView height={16} /> */}
+                    {/* <SButtom props={{
                         type: "danger",
                         variant: "confirm"
                     }} onPress={() => {
@@ -38,9 +38,9 @@ class IniciarEntrenamiento extends Component {
                             }
                         }
                         SSocket.send(objSend);
-                    }}>Entrenar</SButtom>
-                    <SView height={8} />
-                    <Text style={{ color: "#666", fontSize: 10, }}>{"Preciona el boton entrenar para iniciar un entrenamiento."}</Text>
+                    }}>Entrenar</SButtom> */}
+                    {/* <SView height={8} /> */}
+                    {/* <Text style={{ color: "#666", fontSize: 10, }}>{"Preciona el boton entrenar para iniciar un entrenamiento."}</Text> */}
                 </SView>
 
             </SView>

@@ -24,7 +24,7 @@ class CajaMovimientoRegistroPage extends Component {
         // } else {
         //     this.data = this.props.state["bancoReducer"].data[key];
         // }
-
+        this.props.state[ReducerName].estado =""
     }
 
     render() {

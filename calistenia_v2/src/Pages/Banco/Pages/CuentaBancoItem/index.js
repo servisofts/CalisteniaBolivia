@@ -36,12 +36,13 @@ class CuentaBancoItem extends Component {
         Object.keys(data).map((key) => {
             total += data[key].monto;
         })
-        return total + "";
+        return total.toFixed(2) + "";
     }
     getAll = () => {
         var reducer = this.props.state.cuentaBancoReducer;
         var keyBanco = this.props.key_banco;
-        if (!reducer.data[keyBanco]) {
+        var data = reducer.data[keyBanco];
+        if (!data) {
             if (reducer.estado == "cargando") {
                 return <Text>Cargando</Text>;
             }
@@ -54,26 +55,21 @@ class CuentaBancoItem extends Component {
             })
             return <Text></Text>;
         }
-
-        var data = reducer.data[keyBanco];
-        if (!data) {
-            return <Text></Text>;
-        }
         // return Object.keys(data).map((key) => {
         var obj = data[this.props.key_cuenta_banco];
+        if (!obj) return <Text></Text>;
         if (obj.estado == 0) return <View />
         return (
-            <SView col={"xs-11 md-7 xl-6"} key={obj.key} style={{
+            <SView col={"xs-11.6"} key={obj.key} style={{
                 height: 50,
-                padding: 4,
             }} >
                 <SView style={{
                     width: "100%",
                     height: "100%",
                     borderRadius: 4,
                     backgroundColor: STheme.color.card,
-                }} row>
-                
+                }} row center>
+
                     <SView style={{
                         flex: 1,
                         height: "100%",
@@ -81,27 +77,29 @@ class CuentaBancoItem extends Component {
                         paddingStart: 4,
                         // alignItems: "center",
                     }}>
-                        <SText style={{
-                        }} >{obj.descripcion}</SText>
-                        <SText style={{
-                            fontSize: 10,
-                        }} >{obj.codigo}</SText>
+                        <SText fontSize={16}>{obj.codigo}</SText>
+                        <SText color={STheme.color.lightGray} >{obj.descripcion}</SText>
+
                     </SView>
                     <SView style={{
-                        width: 60,
+                        width: 100,
                         height: 40,
                     }} center >
                         <SView style={{
-                            width: 55,
+                            width: 95,
                             height: 35,
-                            borderRadius: 4,
-                            borderWidth: 1,
                             overflow: "hidden",
-                            borderColor: "#ffffff44"
-                        }} center>
+                        }} center card>
                             <SText>{this.getTotal(obj.key)}</SText>
                         </SView>
                     </SView>
+                    <SView style={{
+                        width: 20,
+                        height: 40,
+                    }} center >
+                        <SText color={STheme.color.lightGray} >Bs.</SText>
+                    </SView>
+                    <SView width={8} />
                 </SView>
             </SView>
         );

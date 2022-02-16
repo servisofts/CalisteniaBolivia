@@ -9,9 +9,10 @@ import FloatButtom from '../../../../Components/FloatButtom/index';
 import CajasActivas from './CajasActivas';
 import { SPage, SStorage } from 'servisofts-component';
 import BarraSuperior from '../../../../Components/BarraSuperior';
+import { connect } from 'react-redux';
 
 var _sucursal;
-export default class CajaPage extends Component {
+ class CajaPage extends Component {
   static navigationOptions = {
     headerShown: false,
   }
@@ -40,6 +41,9 @@ export default class CajaPage extends Component {
   }
   render() {
     _sucursal = this.state.sucursal;
+    if (this.props.state.cajaReducer.usuario) {
+      this.state.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
+    }
     return (<SPage title={"Caja"} hidden disableScroll>
       <BarraSuperior title={"Caja"} goBack={() => {
         SNavigation.goBack();
@@ -59,7 +63,7 @@ export default class CajaPage extends Component {
               sucursal={this.state.sucursal}
               key_caja={this.state.key_caja}
               setSucursal={(suc) => {
-                if(!suc) return null
+                if (!suc) return null
                 SStorage.setItem("sucursal", suc.key)
                 this.setState({ sucursal: suc, key_sucursal: suc.key });
               }}
@@ -75,6 +79,8 @@ export default class CajaPage extends Component {
                 if (!this.state.key_sucursal) {
                   this.setState({ key_sucursal: suc, key_caja: key_caja });
                 }
+              }} setActiva={(caja) => {
+                this.setState({ activa: caja })
               }} />
             <Menu />
             <Movimientos setActiva={(caja) => {
@@ -94,3 +100,7 @@ export default class CajaPage extends Component {
     );
   }
 }
+const initStates = (state) => {
+  return { state }
+};
+export default connect(initStates)(CajaPage);

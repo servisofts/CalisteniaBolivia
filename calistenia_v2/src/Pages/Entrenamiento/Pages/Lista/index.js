@@ -93,6 +93,9 @@ class Lista extends Component {
             if (!obj.key) {
                 return null;
             }
+            // if (new SDate().isAfter(new SDate(obj.fecha_fin))) {
+            //     return null;
+            // }
             return <>
                 <SHr height={16} />
                 <SView col={"xs-11 md-8 xl-6"} key={key} card style={{
@@ -108,7 +111,8 @@ class Lista extends Component {
                     <SHr height={16} />
                     {this.getUsuario(obj.key_usuario)}
                     <SHr height={16} />
-                    {/* <SText>{`Hora de inicio: ${new SDate(obj.fecha_on).toString("hh:mm")}`}</SText> */}
+                    <SText>{`Hora de inicio: ${new SDate(obj.fecha_inicio).toString("hh:mm")}`}</SText>
+                    <SText>{`Hora de din: ${new SDate(obj.fecha_fin).toString("hh:mm")}`}</SText>
                     <SView col={"xs-12"} center>
                         <RelojEntrenamiento data={obj} />
                     </SView>

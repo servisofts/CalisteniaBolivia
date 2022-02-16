@@ -8,6 +8,7 @@ import ReporteAsistencia from './Pages/ReporteAsistencia'
 import IngresosEgresos from './Pages/IngresosEgresos'
 import EstadoFinanciero from './Pages/EstadoFinanciero'
 import EstadoFinancieroSelect from './Pages/EstadoFinancieroSelect'
+import UsuariosTabla from './Pages/UsuariosTabla'
 const Pages: SPageListProps = {
     FinanzaPage,
     ReporteBancos,
@@ -15,7 +16,8 @@ const Pages: SPageListProps = {
     ReporteAsistencia,
     IngresosEgresos,
     EstadoFinanciero,
-    EstadoFinancieroSelect
+    EstadoFinancieroSelect,
+    UsuariosTabla
 
 }
 

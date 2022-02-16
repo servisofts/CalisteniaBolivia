@@ -25,7 +25,6 @@ const SocketProps: SSocketProps = {
     // -- Producción --
     host: 'calistenia.servisofts.com',
     ssl: true,
-
     // -- Producción --
     // host: '192.168.0.199',
     // ssl: false,

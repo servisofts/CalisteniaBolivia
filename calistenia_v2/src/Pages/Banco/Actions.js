@@ -18,14 +18,14 @@ export default class Actions {
     static getAllCuentaBancos = (props) => {
         var reducer = props.state.cuentaBancoReducer;
         if (!reducer.dataAll) {
-            if (reducer.estado == "cargando") return;
+            if (reducer.estado == "cargando") return null;
             SSocket.send({
                 component: "cuentaBanco",
                 type: "getAll",
                 key_usuario: props.state.usuarioReducer.usuarioLog.key,
                 estado: "cargando"
             })
-            return;
+            return null;
         }
         return reducer.dataAll;
     }

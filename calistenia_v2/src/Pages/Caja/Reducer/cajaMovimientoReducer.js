@@ -84,16 +84,12 @@ const getByKeyCaja = (state, action) => {
 const registro = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
-        if (state.data) {
-            if (!state.data[action.data.key_caja]) {
-                state.data[action.data.key_caja] = {};
-            }
-            var objt = {}
-            objt[action.data.key] = action.data;
-            state.data[action.data.key_caja] = {
-                ...state.data[action.data.key_caja],
-                ...objt
-            };
+        if (!state.data[action.data.key_caja]) {
+            state.data[action.data.key_caja] = {};
         }
+        state.data[action.data.key_caja] = {
+            ...state.data[action.data.key_caja],
+            [action.data.key]: action.data
+        };
     }
 }

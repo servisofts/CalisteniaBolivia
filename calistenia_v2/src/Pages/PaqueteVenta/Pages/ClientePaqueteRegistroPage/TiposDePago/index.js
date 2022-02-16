@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SPage, SButtom, SInput, SScrollView2, SText, SView, SPopupClose, SPopupOpen, STheme } from 'servisofts-component';
+import { SPage, SButtom, SInput, SScrollView2, SText, SView, SPopupClose, SPopupOpen, STheme, SHr, SIcon, SPopup } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../../../TipoPago';
+import SeleccionarUsuario from '../SeleccionarUsuario';
 type TiposDePagoType = {
     value: String,
     onChange: (tipoPago) => {}
@@ -35,6 +36,12 @@ class TiposDePago extends Component<TiposDePagoType> {
         if (!this.state.tipoPago) {
             return <View />
         }
+        // if (this.props.state.billeteraReducer.codigo) {
+        //     return <SView>
+        //         <SText>{"Tiene un movimiento de billetera seleccionado"}</SText>
+        //     </SView>
+
+        // }
         this.camposInputs = {};
         return this.state.tipoPago.data.map((campo) => {
             var value = "";
@@ -70,16 +77,51 @@ class TiposDePago extends Component<TiposDePagoType> {
             />
         })
     }
+    getBilletera() {
+        if (this.state.tipoPago.descripcion != "transferencia") {
+            return <SView />
+        }
+        return <SView col={"xs-12"}>
+            <SHr />
+            <SHr />
+            <SView col={"xs-12"} height={50} center card onPress={() => {
+                SPopup.open({
+                    content: <SeleccionarUsuario onChange={(val) => {
+                        this.camposInputs["monto"].setValue(val.monto.toFixed(2));
+                        this.camposInputs["Banco"].setValue("Billetera");
+                        this.camposInputs["Código"].setValue(val.codigo);
+                        SPopup.close("selectUser");
+                    }} />,
+                    key: "selectUser"
+                })
+            }}>
+                <SView row col={"xs-12"} center>
+                    <SText fontSize={18} bold color={STheme.color.lightGray}>Billetera</SText>
+                    <SView width={16} />
+                    <SIcon name={"Billetera"} width={26} />
+                </SView>
+
+                {/* <SText>{JSON.stringify(this.props.state.billeteraReducer.codigo)}</SText> */}
+            </SView>
+            <SHr />
+            <SHr />
+        </SView>
+    }
     getCamposRequeridos() {
         if (!this.state.tipoPago) return <View />
+
+
         return (<SView col={"xs-12"} row center>
             {this.getListaCamposRequeridos()}
+            {this.getBilletera()}
+            {/* <SText>{JSON.stringify()}</SText> */}
             <SView style={{ width: "100%", height: 16 }}></SView>
             <SView col={"xs-12"} row >
                 <SView col={"xs-6"} center>
                     <SButtom props={{
                         type: "danger"
                     }} onPress={() => {
+                        this.props.state.billeteraReducer.codigo = null;
                         this.state.value[this.state.tipoPago.key] = false;
                         this.props.setTipoPago(false);
                         SPopupClose("dataPago")

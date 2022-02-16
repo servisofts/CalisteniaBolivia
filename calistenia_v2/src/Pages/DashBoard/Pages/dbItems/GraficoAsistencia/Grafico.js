@@ -160,21 +160,27 @@ class Grafico extends Component {
                     textAnchor="middle"
 
                 >
-                    {fecha.toString("MM/dd")}
+                    {fecha.toString("dd")}
                 </Text>
             </>
         })
 
     }
     render() {
+        if (this.state.fechaInicio != this.props.fechaInicio || this.state.fechaFin != this.props.fechaFin) {
+            this.setState({
+                fechaInicio: this.props.fechaInicio,
+                fechaFin: this.props.fechaFin
+            })
+        }
         return (
             <SView flex card>
-                <FechasBetween
+                {/* <FechasBetween
                     fecha_inicio={this.state.fechaInicio}
                     fecha_fin={this.state.fechaFin}
                     onChange={(fechaInicio, fechaFin) => {
                         this.setState({ fechaInicio, fechaFin })
-                    }} />
+                    }} /> */}
                 <Svg width="100%" height="100%">
                     {this.getInfoBottom()}
                     {this.getTiempo()}

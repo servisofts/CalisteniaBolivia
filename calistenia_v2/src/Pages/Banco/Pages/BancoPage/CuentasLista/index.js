@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SView, SText, STheme } from 'servisofts-component';
+import { SView, SText, STheme, SHr } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
 let component = "cuentaBanco";
 
@@ -57,29 +57,21 @@ class CuentasLista extends Component {
             var obj = data[key];
             if (obj.estado == 0) return <View />
             return (
-                <SView col={"xs-12"} key={obj.key} style={{
-                    // marginBottom: 8,
-                    paddingTop: 8,
-                    paddingBottom: 8,
+                <SView col={"xs-12"} key={obj.key} center style={{
+                    paddingTop: 4,
+                    paddingBottom: 4,
                 }} onPress={() => {
                     if (this.props.onSelect) {
                         this.props.onSelect(obj);
                         return;
                     }
                     this.props.navigation.navigate("CuentaMovimientosPage", {
-                        key_banco: this.props.data.key, key: obj.key, onBack: () => {
-                            if (this.props.onBack) {
-                                this.props.onBack();
-                            }
-                        }
+                        key_banco: this.props.data.key, key: obj.key
                     });
                 }}>
-                    <SView style={{
-                        width: "100%",
-                        height: 250,
-                        borderRadius: 4,
-                        backgroundColor: STheme.color.card,
-                    }}>
+                    <SView col={"xs-11.8"} style={{
+                        height: 60,
+                    }} center card>
                         <SView style={{
                             width: "100%",
                         }} row>
@@ -91,10 +83,12 @@ class CuentasLista extends Component {
                                 // alignItems: "center",
                             }}>
                                 <SText style={{
-                                }} >{obj.descripcion}</SText>
-                                <SText style={{
-                                    fontSize: 10,
+                                    fontSize: 16,
                                 }} >{obj.codigo}</SText>
+                                <SText style={{
+                                    color: "#999"
+                                }} >{obj.descripcion}</SText>
+
                             </SView>
                             <SView style={{
                                 height: "100%",
@@ -103,15 +97,20 @@ class CuentasLista extends Component {
                                 paddingEnd: 4,
                                 // alignItems: "center",
                             }}>
-                                <SText style={{
-                                }} >{`Bs. ${this.getAllMontoCuenta(obj.key)}`}</SText>
+                                <SView card style={{
+                                    padding: 4,
+                                }}>
+                                    <SText style={{
+                                    }} >{`Bs. ${this.getAllMontoCuenta(obj.key)}`}</SText>
+                                </SView>
+
                             </SView>
                         </SView>
-                        <SView col={"xs-12"} style={{
+                        {/* <SView col={"xs-12"} style={{
                             flex: 1,
                         }}>
                             <MovimientosGraphic data={this.getMovimientos(obj.key)} />
-                        </SView>
+                        </SView> */}
                     </SView>
 
                 </SView>
@@ -128,6 +127,7 @@ class CuentasLista extends Component {
             <SView col={"xs-12"} center row style={{
                 // marginBottom: 32,
             }}>
+                <SHr />
                 {this.getAll()}
             </SView>
         );

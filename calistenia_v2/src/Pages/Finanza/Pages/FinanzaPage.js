@@ -58,6 +58,7 @@ class FinanzaPage extends Component {
             {this.getItem({ title: "Cajas activas", icon: "Caja", url: "CajasAbiertas" })}
             {/* {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })} */}
             {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage" })}
+            {this.getItem({ title: "Usuarios", icon: "Usuarios_all", url: "UsuariosTabla" })}
             {this.getItem({
                 title: "Reporte Asistencias", icon: "Entrenamiento", onPress: () => {
                     SPopup.dateBetween("Reporte de asistencia", (evt) => {
@@ -69,7 +70,7 @@ class FinanzaPage extends Component {
             {this.getItemFecha({ title: "Paquetes vendidos", icon: "Paquete", url: "PaquetesVendidos" })}
             {this.getItemFecha({ title: "Ingresos & egresos manuales", icon: "Traspaso", url: "IngresosEgresos" })}
             {this.getItemFecha({ title: "Reporte de bancos", icon: "Card", url: "ReporteBancos" })}
-            {/* {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect" })} */}
+            {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect" })}
             {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>
     }

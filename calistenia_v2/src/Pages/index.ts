@@ -19,10 +19,13 @@ import Asistencia from './Asistencia';
 import Finanza from './Finanza';
 import DashBoard from './DashBoard';
 import Manual from './Manual';
+import Billetera from './Billetera';
+import Test from './Test';
 const Pages: SPageListProps = {
     "inicio": InicioPage,
     "carga": CargaPage,
     "presentacion": Presentacion,
+    "test": Test,
     AjustesPage,
     ...Usuario.Pages,
     ...Sucursal.Pages,
@@ -37,6 +40,7 @@ const Pages: SPageListProps = {
     ...Asistencia.Pages,
     ...Finanza.Pages,
     ...DashBoard.Pages,
-    ...Manual.Pages
+    ...Manual.Pages,
+    ...Billetera.Pages
 }
 export default Pages;

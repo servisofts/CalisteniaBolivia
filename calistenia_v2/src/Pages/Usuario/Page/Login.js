@@ -19,7 +19,7 @@ class Login extends Component {
             }}
             inputProps={{
                 customStyle: "calistenia",
-                separation:16,
+                separation: 16,
             }}
             inputs={{
                 usuario: {
@@ -53,8 +53,8 @@ class Login extends Component {
         if (error) {
             SPopup.alert("Usuario no encontrado, Verifique sus datos.");
         }
-        if (this.props.state.usuarioReducer.type == "login") {
-            this.props.state.usuarioReducer.type="";
+        if (this.props.state.usuarioReducer.type == "login" && this.props.state.usuarioReducer.estado != "error") {
+            this.props.state.usuarioReducer.type = "";
             if (Usuario.Actions.getUsuarioLogueado(this.props)) {
                 SNavigation.replace("inicio");
                 return null;

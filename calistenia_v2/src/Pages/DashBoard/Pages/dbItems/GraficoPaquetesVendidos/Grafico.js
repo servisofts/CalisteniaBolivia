@@ -25,8 +25,9 @@ class Grafico extends Component {
     getTiempo() {
         var fechaInicio = new SDate(this.state.fechaInicio, "yyyy-MM-dd");
         var fechaFin = new SDate(this.state.fechaFin, "yyyy-MM-dd");
+        console.log(fechaInicio.toString("yyyy-MM-dd"));
+        console.log(fechaFin.toString("yyyy-MM-dd"));
         var sucursales = Sucursal.Actions.getAll(this.props);
-
         var paquetes = Finanza.Actions.getPaquetesVendidos({
             fecha_desde: fechaInicio.toString("yyyy-MM-dd"),
             fecha_hasta: fechaFin.toString("yyyy-MM-dd")
@@ -71,9 +72,10 @@ class Grafico extends Component {
                     monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
                         monto: temp.monto + paquete.paquete.precio,
                         cantidad: temp.cantidad + 1,
-                        total: temp.total + paquete.paquete.precio
+                        total: temp.total + 1
                     };
-                    monto_por_sucursal[paquete.caja.key_sucursal] += paquete.paquete.precio;
+                    // monto_por_sucursal[paquete.caja.key_sucursal] += paquete.paquete.precio;
+                    monto_por_sucursal[paquete.caja.key_sucursal] += 1;
                     if (maximo_monto < monto_por_sucursal[paquete.caja.key_sucursal]) {
                         maximo_monto = monto_por_sucursal[paquete.caja.key_sucursal];
                     }
@@ -105,7 +107,7 @@ class Grafico extends Component {
 
                 monto_antiguo_suc[key_suc] = monto_actual_suc[key_suc];
                 if (suc_dia) {
-                    monto_actual_suc[key_suc] = monto_antiguo_suc[key_suc] + suc_dia.monto;
+                    monto_actual_suc[key_suc] = monto_antiguo_suc[key_suc] + suc_dia.cantidad;
                 }
                 return <>
                     <Line
@@ -146,7 +148,7 @@ class Grafico extends Component {
             x={`${x}%`} y={`${y - 1}%`}
             textAnchor="middle"
         >
-            {"Bs." + monto}
+            {monto}
         </Text>
     }
     getInfoBottom() {

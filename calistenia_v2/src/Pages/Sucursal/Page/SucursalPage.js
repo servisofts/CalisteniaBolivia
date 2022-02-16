@@ -40,7 +40,7 @@ class SucursalPage extends Component {
     render() {
         return (
             <SPage title={'SucursalPage'} hidden disableScroll>
-                <BarraSuperior title={"Clientes"} navigation={this.props.navigation} goBack={() => {
+                <BarraSuperior title={"Sucursales"} navigation={this.props.navigation} goBack={() => {
                     SNavigation.goBack();
                 }} />
                 <Buscador placeholder={"Buscar..."} ref={(ref) => {

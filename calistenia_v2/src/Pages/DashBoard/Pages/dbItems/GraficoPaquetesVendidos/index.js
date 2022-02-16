@@ -6,7 +6,7 @@ import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../Sucursal';
 import Grafico from './Grafico';
 
-class GraficoAsistencia extends Component {
+class GraficoPaquetesVendidos extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,21 +26,21 @@ class GraficoAsistencia extends Component {
                 }
                 this.setState({ select: { ...this.state.select } });
             }}>
-                <SView flex center card row style={{ overflow: 'hidden', }} >
+                <SView flex center card row style={{ overflow: 'hidden', }}>
                     <SView col={"xs-10 sm-4"} height center backgroundColor={!this.state.select[key] ? null : `${obj.color}66`}>
                         <SImage src={SSocket.api.root + "sucursal_" + key} style={{
                             width: '80%',
                             height: '80%',
                         }} />
                     </SView>
-                    <SView flex height style={{
+                    <SView flex height backgroundColor={!this.state.select[key] ? null : `${obj.color}66`} style={{
                         overflow: 'hidden',
-                    }} center backgroundColor={!this.state.select[key] ? null : `${obj.color}66`}>
+                    }} center>
                         <SText col={"xs-0 sm-12"} fontSize={12} style={{
                             overflow: 'hidden',
                         }}>{obj.descripcion}</SText>
                     </SView>
-                    <SView width={8} height backgroundColor={obj.color} />
+                    <SView width={8} height backgroundColor={`${obj.color}ff`} />
                 </SView>
             </SView>
         })
@@ -49,7 +49,7 @@ class GraficoAsistencia extends Component {
         return (
             <SView col={"xs-12"} row  >
                 <SView col={"xs-12"} center >
-                    <SText fontSize={16}>{`Cantidad de asistencias en entrenamientos`}</SText>
+                    <SText fontSize={16}>{`Cantidad de paquetes vendidos`}</SText>
                 </SView>
                 <SView
                     col={"xs-2 xl-1"} row>
@@ -58,16 +58,16 @@ class GraficoAsistencia extends Component {
                 <SView
                     col={"xs-10 xl-11"}
                     flex>
-                    <Grafico
+                    <Grafico 
                         fechaInicio={this.props.fechaInicio} fechaFin={this.props.fechaFin}
-                        select={this.state.select} setSucursal={(key) => {
-                            if (this.state.select[key]) {
-                                delete this.state.select[key];
-                            } else {
-                                this.state.select[key] = true;
-                            }
-                            this.setState({ select: { ...this.state.select } });
-                        }} />
+                    select={this.state.select} setSucursal={(key) => {
+                        if (this.state.select[key]) {
+                            delete this.state.select[key];
+                        } else {
+                            this.state.select[key] = true;
+                        }
+                        this.setState({ select: { ...this.state.select } });
+                    }} />
                 </SView>
             </SView>
         );
@@ -76,4 +76,4 @@ class GraficoAsistencia extends Component {
 const initStates = (state) => {
     return { state }
 };
-export default connect(initStates)(GraficoAsistencia);
+export default connect(initStates)(GraficoPaquetesVendidos);

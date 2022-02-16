@@ -49,7 +49,7 @@ class GraficoIngresos extends Component {
         return (
             <SView col={"xs-12"} row  >
                 <SView col={"xs-12"} center >
-                    <SText fontSize={16}>{`Ventas`}</SText>
+                    <SText fontSize={16}>{`Monto por paquetes vendidos`}</SText>
                 </SView>
                 <SView
                     col={"xs-2 xl-1"} row>
@@ -58,14 +58,16 @@ class GraficoIngresos extends Component {
                 <SView
                     col={"xs-10 xl-11"}
                     flex>
-                    <Grafico select={this.state.select} setSucursal={(key) => {
-                        if (this.state.select[key]) {
-                            delete this.state.select[key];
-                        } else {
-                            this.state.select[key] = true;
-                        }
-                        this.setState({ select: { ...this.state.select } });
-                    }} />
+                    <Grafico
+                        fechaInicio={this.props.fechaInicio} fechaFin={this.props.fechaFin}
+                        select={this.state.select} setSucursal={(key) => {
+                            if (this.state.select[key]) {
+                                delete this.state.select[key];
+                            } else {
+                                this.state.select[key] = true;
+                            }
+                            this.setState({ select: { ...this.state.select } });
+                        }} />
                 </SView>
             </SView>
         );

@@ -36,7 +36,7 @@ class index extends Component {
                 // { key: "paquete/descripcion", label: "Paquete", width: 150 },
                 { key: "key_usuario_cajero", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
                 { key: "descripcion", label: "descripcion", width: 400 },
-                { key: "monto", label: "Monto", width: 100, center:true, },
+                { key: "monto", label: "Monto", width: 100, sumar: true,center:true, },
                 {
                     key: "monto-tipo", label: "Tipo", width: 50, center: true,
                     render: (item) => {

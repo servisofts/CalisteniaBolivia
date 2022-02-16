@@ -82,18 +82,18 @@ class Lista extends Component {
         </SView>
     }
     getEstado = (obj) => {
-        if (obj.estado == 1) {
+        if (!new SDate().isAfter(new SDate(obj.fecha_fin))) {
             return <SView col={"xs-12"} height={60} center>
                 <RelojEntrenamiento data={obj} />
             </SView>
         }
         return <SView col={"xs-12"} height={60} center>
-            <SView width={100} height={50} backgroundColor={obj.estado == 1 ? "#060" : "#600"} style={{
+            <SView width={100} height={50} backgroundColor={!obj.fecha_fin? "#060" : "#600"} style={{
                 borderRadius: 8,
             }} center>
-                <SText fontSize={16} bold>{new SDate(obj.fecha_fin).toString("hh:mm")}</SText>
+                <SText fontSize={16} bold>{new SDate(obj.fecha_inicio).toString("hh:mm")}</SText>
             </SView>
-            <SText color={"#999"} fontSize={12}>{"Hora de finalizacion."}</SText>
+            <SText color={"#999"} fontSize={12}>{"Hora de inicio."}</SText>
         </SView>
     }
     getLista() {
