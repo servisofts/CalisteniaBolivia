@@ -1,139 +1,164 @@
 package component;
 
 import java.io.File;
-import java.sql.SQLException;
-import java.util.UUID;
-import conexion.*;
+import Config.Config;
 import org.json.JSONArray;
+import java.util.UUID;
+import Server.SSSAbstract.SSServerAbstract;
+import java.sql.SQLException;
+import conexion.Conexion;
+import SocketCliente.SocketCliete;
+import Server.SSSAbstract.SSSessionAbstract;
 import org.json.JSONObject;
 
-import Config.Config;
-import Server.SSSAbstract.SSServerAbstract;
-import Server.SSSAbstract.SSSessionAbstract;
-import SocketCliente.SocketCliete;
-
-public class Entrenamiento {
-
-    public Entrenamiento(JSONObject data, SSSessionAbstract session) {
-        switch (data.getString("type")) {
-            case "getAll":
-                getAll(data, session);
-            break;
-            case "getByKey":
-                getByKey(data, session);
-                break;
-            case "getByDate":
-                getByDate(data, session);
-                break;
-            case "getByKeyUsuario":
-                getByKeyUsuario(data, session);
-                break;
-            case "editar":
-                editar(data, session);
-                break;
-            case "registro":
-                registro(data, session);
-            break;
-            case "subirFoto":
-                subirFoto(data, session);
-            break;
+public class Entrenamiento
+{
+    public Entrenamiento(final JSONObject data, final SSSessionAbstract session) {
+        final String string;
+        switch (string = data.getString("type")) {
+            case "editar": {
+                this.editar(data, session);
+                return;
+            }
+            case "getAll": {
+                this.getAll(data, session);
+                return;
+            }
+            case "registro": {
+                this.registro(data, session);
+                return;
+            }
+            case "subirFoto": {
+                this.subirFoto(data, session);
+                return;
+            }
+            case "getByDate": {
+                this.getByDate(data, session);
+                return;
+            }
+            case "getByKeyUsuario": {
+                this.getByKeyUsuario(data, session);
+                return;
+            }
+            case "getByKey": {
+                this.getByKey(data, session);
+                return;
+            }
             default:
-                defaultType(data, session);
+                break;
         }
+        this.defaultType(data, session);
     }
-
-    public void defaultType(JSONObject obj, SSSessionAbstract session) {
+    
+    public void defaultType(final JSONObject obj, final SSSessionAbstract session) {
         SocketCliete.send("usuario", obj, session);
     }
-
-    public void getAll(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getAll(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select get_all('entrenamiento') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+            final String consulta = "select get_all('entrenamiento') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void getByKey(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getByKey(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key('entrenamiento','"+obj.getString("key")+"') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
-            e.printStackTrace();      
+            final String consulta = "select get_by_key('entrenamiento','" + obj.getString("key") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
         }
-    }
-
-    public void getByDate(JSONObject obj, SSSessionAbstract session) {
-        try {
-            String consulta =  "select entrenamiento_get_by_date('"+obj.getString("fecha")+"') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void editar(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getByDate(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            JSONObject entrenamiento = obj.getJSONObject("data");
+            final String consulta = "select entrenamiento_get_by_date('" + obj.getString("fecha") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
+            e.printStackTrace();
+        }
+    }
+    
+    public void editar(final JSONObject obj, final SSSessionAbstract session) {
+        try {
+            final JSONObject entrenamiento = obj.getJSONObject("data");
             Conexion.editObject("entrenamiento", entrenamiento);
             Conexion.historico(obj.getString("key_usuario"), entrenamiento.getString("key"), "entrenamiento_editar", entrenamiento);
-            obj.put("data", entrenamiento);
-            obj.put("estado", "exito");
+            obj.put("data", (Object)entrenamiento);
+            obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
-        } catch (SQLException e) {
-            obj.put("estado", "error");
-            obj.put("error", e.getLocalizedMessage());
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
+            obj.put("error", (Object)e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
-
-    public void registro(JSONObject obj, SSSessionAbstract session) {
+    
+    public void registro(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            JSONObject entrenamiento = obj.getJSONObject("data");
-            entrenamiento.put("key",UUID.randomUUID().toString());
-            entrenamiento.put("fecha_on","now()");
-            entrenamiento.put("estado",1);
-            Conexion.insertArray("entrenamiento", new JSONArray().put(entrenamiento));
-            obj.put("data", entrenamiento);
-            obj.put("estado", "exito");
-
+            final JSONObject entrenamiento = obj.getJSONObject("data");
+            entrenamiento.put("key", (Object)UUID.randomUUID().toString());
+            entrenamiento.put("fecha_on", (Object)"now()");
+            entrenamiento.put("estado", 1);
+            Conexion.insertArray("entrenamiento", new JSONArray().put((Object)entrenamiento));
+            obj.put("data", (Object)entrenamiento);
+            obj.put("estado", (Object)"exito");
             SSServerAbstract.sendAllServer(obj.toString());
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
-
     }
-
-    public void getByKeyUsuario(JSONObject obj, SSSessionAbstract session) {
+    
+    public void getByKeyUsuario(final JSONObject obj, final SSSessionAbstract session) {
         try {
-            String consulta =  "select entrenamiento_get_activo('"+obj.getString("key_usuario")+"') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            obj.put("data", data);
-            obj.put("estado", "exito");
-        } catch (SQLException e) {
-            obj.put("estado", "error");
+            final String consulta = "select entrenamiento_get_activo('" + obj.getString("key_usuario") + "') as json";
+            final JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", (Object)data);
+            obj.put("estado", (Object)"exito");
+        }
+        catch (SQLException e) {
+            obj.put("estado", (Object)"error");
             e.printStackTrace();
         }
     }
-
-    public void subirFoto(JSONObject obj, SSSessionAbstract session) {
-        String url = Config.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url+"entrenamiento/");
-        if(!f.exists()) f.mkdirs();
-        obj.put("dir", f.getPath()+"/"+obj.getString("key"));
-        obj.put("estado", "exito");
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+    
+    public void subirFoto(final JSONObject obj, final SSSessionAbstract session) {
+        final String url = Config.getJSON().getJSONObject("files").getString("url");
+        final File f = new File(String.valueOf(url) + "entrenamiento/");
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        obj.put("dir", (Object)(String.valueOf(f.getPath()) + "/" + obj.getString("key")));
+        obj.put("estado", (Object)"exito");
+        SSServerAbstract.sendServer("ServerSocketWeb", obj.toString());
+        SSServerAbstract.sendServer("ServerSocket", obj.toString());
+    }
+    
+    public static JSONObject getEntrenamiento(final String fecha_on, final String key_sucursal) {
+        try {
+            final String consulta = "select to_json(entrenamiento.*) as json\nfrom entrenamiento\nwhere entrenamiento.key_sucursal like '" + key_sucursal + "'\n" + "and to_char(entrenamiento.fecha_inicio, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') like '" + fecha_on + "%'";
+            return Conexion.ejecutarConsultaObject(consulta);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
