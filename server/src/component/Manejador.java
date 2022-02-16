@@ -143,6 +143,26 @@ public class Manejador {
                     new Reporte(data, session);
                     break;
                 }
+                case FondoInversion.nombre_tabla: {
+                    new FondoInversion(data, session);
+                    break;
+                }
+                case TipoComision.nombre_tabla: {
+                    new TipoComision(data, session);
+                    break;
+                }
+                case FondoInversionSucursal.nombre_tabla: {
+                    new FondoInversionSucursal(data, session);
+                    break;
+                }
+                case FondoInversionUsuario.nombre_tabla: {
+                    new FondoInversionUsuario(data, session);
+                    break;
+                }
+                case "billetera": {
+                    new Billetera(data, session);
+                    break;
+                }
                 default:
                     redirect(data, session);
             }
