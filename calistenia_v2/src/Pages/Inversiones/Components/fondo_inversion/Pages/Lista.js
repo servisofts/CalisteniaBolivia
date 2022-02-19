@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
+import { SDate, SIcon, SLoad, SMath, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
 import Parent from ".."
 import FloatButtom from '../../../../../Components/FloatButtom';
 class Lista extends Component {
@@ -17,11 +17,16 @@ class Lista extends Component {
         var struct = [];
         Parent.struct.metas.map((item) => {
             if (item.hidden) return null;
+            let render = null;
+            if (item.type == "date") {
+                render = (item) => { return new SDate(item).toString("dd/MM/yyyy") }
+            }
+            if (item.type == "money") {
+                render = (item) => { return SMath.formatMoney(item) }
+            }
             struct.push({
-                key: item.key,
-                label: item.label,
-                type: item.type,
-                width: item.width
+                ...item,
+                render
             })
         })
         return struct;
@@ -33,17 +38,17 @@ class Lista extends Component {
             header={[
                 { key: "index", label: "#", width: 50 },
                 ...this.createStruct(),
-                {
-                    key: "key-editar", label: "Editar", width: 50, center: true,
-                    component: (item) => {
-                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
-                            <SIcon name={"Edit"} width={35} />
-                        </SView>
-                    }
-                },
 
+                // {
+                //     key: "key-editar", label: "Editar", width: 50, center: true,
+                //     component: (item) => {
+                //         return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
+                //             <SIcon name={"Edit"} width={35} />
+                //         </SView>
+                //     }
+                // },
                 {
-                    key: "key-eliminar", label: "Eliminar", width: 70, center: true,
+                    key: "key-eliminar", label: "Eliminar", width: 80, center: true,
                     component: (key) => {
                         return <SView width={35} height={35} onPress={() => { SPopup.confirm({ title: "Eliminar", message: "¿Esta seguro de eliminar?", onPress: () => { Parent.Actions.eliminar(data[key], this.props) } }) }}>
                             <SIcon name={'Delete'} />
@@ -51,7 +56,7 @@ class Lista extends Component {
                     }
                 },
                 {
-                    key: "key-ver", label: "Ver", width: 50, center: true,
+                    key: "key-ver", label: "Ver", width: 80, center: true,
                     component: (item) => {
                         return <SView onPress={() => { SNavigation.navigate(Parent.component + "/perfil", { key: item }) }}>
                             <SIcon name={"Salir"} width={35} />
@@ -59,18 +64,26 @@ class Lista extends Component {
                     }
                 },
                 {
-                    key: "key-fondo_inversion_sucursal", label: "Sucursales", width: 50, center: true,
+                    key: "key-fondo_inversion_sucursal", label: "Sucursales", width: 80, center: true,
                     component: (item) => {
                         return <SView onPress={() => { SNavigation.navigate("fondo_inversion_sucursal", { key_fondo_inversion: item }) }}>
-                            <SIcon name={"Ajustes"} width={35} />
+                            <SIcon name={"Marker"} bgr={"#fff"} width={35} />
                         </SView>
                     }
                 },
                 {
-                    key: "key-fondo_inversion_usuario", label: "Inversionistas", width: 50, center: true,
+                    key: "key-fondo_inversion_usuario", label: "Inversionistas", width: 80, center: true,
                     component: (item) => {
                         return <SView onPress={() => { SNavigation.navigate("fondo_inversion_usuario", { key_fondo_inversion: item }) }}>
                             <SIcon name={"Usuarios_all"} width={35} />
+                        </SView>
+                    }
+                },
+                {
+                    key: "key-prevetna", label: "Preventas", width: 80, center: true,
+                    component: (item) => {
+                        return <SView onPress={() => { SNavigation.navigate("fondo_inversion_preventa", { key_fondo_inversion: item }) }}>
+                            <SIcon name={"Money"}  width={35}  />
                         </SView>
                     }
                 },
@@ -96,7 +109,7 @@ class Lista extends Component {
                 {this.getLista()}
                 <FloatButtom onPress={() => {
                     Parent.Actions._getReducer(this.props).estado = "";
-                    SNavigation.navigate(Parent.component + "/registro", { key_servicio: this.key_servicio });
+                    SNavigation.navigate(Parent.component + "/calculadora", { key_servicio: this.key_servicio });
                 }} />
             </SPage>
         );
