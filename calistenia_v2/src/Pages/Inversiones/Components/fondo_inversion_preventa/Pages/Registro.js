@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad, SDate } from 'servisofts-component';
+import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad, SDate, STheme } from 'servisofts-component';
 import Parent from '../index';
 import SSocket from 'servisofts-socket';
 
@@ -13,12 +13,12 @@ class Registro extends Component {
 
         Parent.struct.fk.map((item) => {
             this[item] = SNavigation.getParam(item);
-        })       
+        })
     }
     createStruct() {
         var resp = {};
         Parent.struct.metas.map((item) => {
-            if(item.hidden) return null;
+            if (item.hidden) return null;
             resp[item.key] = {
                 label: item.label,
                 isRequired: item.required,
@@ -38,9 +38,9 @@ class Registro extends Component {
             this.data = {};
             var params = {}
             Parent.struct.fk.map((item) => {
-                if (this[item])  this.data[item] = this[item]; 
+                if (this[item]) this.data[item] = this[item];
             })
-         
+
         }
         return <SForm
             center
@@ -56,7 +56,7 @@ class Registro extends Component {
 
             onSubmitName={"Guardar"}
             onSubmit={(values) => {
-                values.fecha = new SDate(values.fecha,"yyyy-MM-dd").toString();
+                values.fecha = new SDate(values.fecha, "yyyy-MM-dd").toString();
                 if (this.key) {
                     Parent.Actions.editar({ ...this.data, ...values }, this.props);
                 } else {
@@ -84,10 +84,15 @@ class Registro extends Component {
         }
 
         return (
-            <SPage title={'Registro de ' + Parent.component} center>
+            <SPage title={'Nueva preventa'} center>
                 <SView height={30}></SView>
+                <SText col={"xs-11 sm-9 md-7 lg-5 xl-4"} color={STheme.color.lightGray} center>{`Desde la siguiente fecha las acciones vendidas recibirán una comisión de el siguiente monto por cada paquete vendido.`}</SText>
+                <SHr />
+                <SHr />
                 {this.getContent()}
                 <SHr />
+                <SHr />
+
             </SPage>
         );
     }

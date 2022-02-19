@@ -44,6 +44,16 @@ class home extends Component {
                         icon: 'Ajustes',
                         url: 'fondo_inversion',
                     })}
+                    {this.getItem({
+                        title: 'Mis inversiones',
+                        icon: 'Ajustes',
+                        url: 'fondo_inversion',
+                    })}
+                    {this.getItem({
+                        title: 'Invertir',
+                        icon: 'Ajustes',
+                        url: 'invertir',
+                    })}
                 </SView>
 
             </SPage>

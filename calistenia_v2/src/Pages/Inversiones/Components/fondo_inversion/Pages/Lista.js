@@ -39,14 +39,14 @@ class Lista extends Component {
                 { key: "index", label: "#", width: 50 },
                 ...this.createStruct(),
 
-                // {
-                //     key: "key-editar", label: "Editar", width: 50, center: true,
-                //     component: (item) => {
-                //         return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
-                //             <SIcon name={"Edit"} width={35} />
-                //         </SView>
-                //     }
-                // },
+                {
+                    key: "key-editar", label: "Editar", width: 50, center: true,
+                    component: (item) => {
+                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
+                            <SIcon name={"Edit"} width={35} />
+                        </SView>
+                    }
+                },
                 {
                     key: "key-eliminar", label: "Eliminar", width: 80, center: true,
                     component: (key) => {

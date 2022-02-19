@@ -38,8 +38,6 @@ class Registro extends Component {
         } else {
             this.data = {};
         }
-        var data_tipo_comision = tipo_comision.Actions.getAll(this.props);
-        if (!data_tipo_comision) return <SLoad />
 
         return <SForm
             center
@@ -49,14 +47,9 @@ class Registro extends Component {
                 customStyle: "calistenia"
             }}
             inputs={{
-                ...this.createStruct(),
-                key_tipo_comision: {
-                    label: "Tipo de comision", type: "select", defaultValue:"", options: [
-                        { key: "", component: "vacio", },
-                        ...(Object.keys(data_tipo_comision).map((key) => { return { key: key, content: data_tipo_comision[key].descripcion } }))
-
-                    ]
-                }
+                // ...this.createStruct(),
+                descripcion: { label: "Descripción", defaultValue: this.data.descripcion, isRequired: true, type: "text" },
+                observacion: { label: "Observación", defaultValue: this.data.observacion, isRequired: false, type: "textArea" },
             }}
 
 

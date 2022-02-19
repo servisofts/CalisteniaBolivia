@@ -20,25 +20,32 @@ class Perfil extends Component {
         if (!data) return <SLoad />
         return <SView col={"xs-12"} center>
             <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} center card>
-                <SHr />
-                <SText fontSize={18}>{data.descripcion}</SText>
-                <SHr />
-                <SText fontSize={14}>{data.observacion}</SText>
-                <SHr />
-                <SHr />
-                <SText fontSize={16}>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
-                <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
-                <SHr />
-                <SText fontSize={18}>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
-                <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
-                <SHr />
-                <SView row center>
-                    <SIcon name={"Ingreso"} width={14} />
-                    <SView width={8} />
-                    <SText fontSize={16}>{`( 0 / ${data["cantidad_acciones"]} )`}</SText>
+                <SView col={"xs-11"} center>
+                    <SHr />
+                    <SText fontSize={18} bold>{data.descripcion}</SText>
+                    <SHr />
+                    <SText fontSize={14} color={STheme.color.lightGray}>{data.observacion}</SText>
+                    <SHr />
+                    <SHr />
+                    <SHr />
+                    <SText fontSize={16} bold>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
+                    <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
+                    <SHr />
+                    <SHr />
+                    <SHr />
+                    <SText fontSize={18} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
+                    <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
+                    <SHr />
+                    <SHr />
+                    <SHr />
+                    <SView row center>
+                        <SIcon name={"Ingreso"} width={14} />
+                        <SView width={8} />
+                        <SText fontSize={16} bold>{`( 0 / ${data["cantidad_acciones"]} )`}</SText>
+                    </SView>
+                    <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText>
+                    <SHr />
                 </SView>
-                <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText>
-                <SHr />
             </SView>
         </SView>
     }

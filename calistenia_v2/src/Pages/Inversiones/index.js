@@ -4,6 +4,7 @@ import fondo_inversion from './Components/fondo_inversion';
 import fondo_inversion_sucursal from './Components/fondo_inversion_sucursal';
 import fondo_inversion_usuario from './Components/fondo_inversion_usuario';
 import fondo_inversion_preventa from './Components/fondo_inversion_preventa';
+import invertir from './Components/invertir';
 export default {
     Pages:{
         "inversiones": home,
@@ -12,6 +13,7 @@ export default {
         ...fondo_inversion_sucursal.Pages,
         ...fondo_inversion_usuario.Pages,
         ...fondo_inversion_preventa.Pages,
+        ...invertir.Pages
     },
     Reducers:{
         ...tipo_comision.Reducers,

@@ -42,7 +42,7 @@ class Calculadora extends Component {
                     label: "Cantidad de acciones",
                     value: null,
                     type: "money",
-                    icon:" ",
+                    icon: " ",
                     isRequired: true,
                 },
                 "cantidad_meses": {
@@ -128,7 +128,7 @@ class Calculadora extends Component {
             if (reducer.estado == "exito") {
                 if (reducer.type == "registro") this.key = reducer.lastRegister?.key;
                 reducer.estado = "";
-                SNavigation.goBack();
+                SNavigation.replace("fondo_inversion_preventa/registro", { key_fondo_inversion: this.key });
             }
         }
 
@@ -140,6 +140,9 @@ class Calculadora extends Component {
                 <SHr />
                 <SView col={"xs-12"} center>
                     <SButtom type="danger" onPress={() => {
+                        if ((reducer.type == "registro" || reducer.type == "editar") && reducer.estado == "cargando") {
+                            return;
+                        }
                         var values = {};
                         var isExito = true;
                         Object.keys(this._ref).map((key) => {
