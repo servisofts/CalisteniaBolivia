@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Platform } from 'react-native'
-import { SIcon, SPage, SText, STheme, SView } from 'servisofts-component'
+import { SIcon, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component'
 import PerfilUsuario from './PerfilUsuario'
 // import xlsx from 'xlsx-color'
 // var RNFS = require('react-native-fs');
@@ -16,12 +16,13 @@ export default class AjustesPage extends Component {
     }
 
 
-    getOptions({ title, icon }, isLine) {
+    getOptions({ title, icon , url}, isLine) {
         return <SView col={"xs-12"} style={{
             height: 50,
             backgroundColor: STheme.color.card,
             // borderRadius: 4,
         }} center row onPress={() => {
+            SNavigation.navigate(url)
             // this.exportXlsx();
         }}>
             <SView style={{
@@ -69,9 +70,9 @@ export default class AjustesPage extends Component {
                             borderRadius: 8,
                             overflow: "hidden",
                         }}>
-                            {this.getOptions({ title: "Carrito", icon: "Carrito" })}
-                            {this.getOptions({ title: "Ajustes", icon: "Ajustes" })}
-                            {this.getOptions({ title: "Caja", icon: "Caja" }, true)}
+                            {this.getOptions({ title: "Manual de uso", icon: "Alert" ,url:"manual"})}
+                            {/* {this.getOptions({ title: "Ajustes", icon: "Ajustes" })} */}
+                            {/* {this.getOptions({ title: "Caja", icon: "Caja" }, true)} */}
                         </SView>
                     </SView>
                 </SView>

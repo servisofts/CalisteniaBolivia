@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad } from 'servisofts-component';
+import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad, SDate } from 'servisofts-component';
 import Parent from '../index';
 import SSocket from 'servisofts-socket';
-import tipo_comision from '../../tipo_comision';
 
 class Registro extends Component {
     constructor(props) {
@@ -14,12 +13,12 @@ class Registro extends Component {
 
         Parent.struct.fk.map((item) => {
             this[item] = SNavigation.getParam(item);
-        })
+        })       
     }
     createStruct() {
         var resp = {};
         Parent.struct.metas.map((item) => {
-            if (item.hidden) return null;
+            if(item.hidden) return null;
             resp[item.key] = {
                 label: item.label,
                 isRequired: item.required,
@@ -37,10 +36,12 @@ class Registro extends Component {
             if (!this.data) return <SLoad />
         } else {
             this.data = {};
+            var params = {}
+            Parent.struct.fk.map((item) => {
+                if (this[item])  this.data[item] = this[item]; 
+            })
+         
         }
-        var data_tipo_comision = tipo_comision.Actions.getAll(this.props);
-        if (!data_tipo_comision) return <SLoad />
-
         return <SForm
             center
             ref={(form) => { this.form = form; }}
@@ -50,18 +51,12 @@ class Registro extends Component {
             }}
             inputs={{
                 ...this.createStruct(),
-                key_tipo_comision: {
-                    label: "Tipo de comision", type: "select", defaultValue:"", options: [
-                        { key: "", component: "vacio", },
-                        ...(Object.keys(data_tipo_comision).map((key) => { return { key: key, content: data_tipo_comision[key].descripcion } }))
-
-                    ]
-                }
             }}
 
 
             onSubmitName={"Guardar"}
             onSubmit={(values) => {
+                values.fecha = new SDate(values.fecha,"yyyy-MM-dd").toString();
                 if (this.key) {
                     Parent.Actions.editar({ ...this.data, ...values }, this.props);
                 } else {

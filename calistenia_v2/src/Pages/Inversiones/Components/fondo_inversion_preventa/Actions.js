@@ -17,7 +17,7 @@ export default class Actions {
                 version: Parent.version,
                 type: "getAll",
                 estado: "cargando",
-                key_usuario: "",
+                key_usuario: props.state.usuarioReducer.usuarioLog?.key,
             })
             return null;
         }

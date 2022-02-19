@@ -17,6 +17,19 @@ class PaquetesVendidos extends Component {
 
     }
 
+    getDetallePago(data) {
+        switch (data.key_tipo_pago) {
+            case "1":
+                return `Número de serie: ${data["Número de serie"]}`;
+            case "3":
+                return `Banco: ${data["Banco"]}\nCodigo: ${data["Código"]} `;
+            case "2":
+                return `Nombre: ${data["Nombre"]}\nBanco: ${data["Banco"]}\nCodigo: ${data["Código"]} `;
+            case "4":
+                return `Beneficiario: ${data["Beneficiario"]}\nBanco: ${data["Banco"]}\nCodigo: ${data["Código"]} `;
+        }
+        return data.key_tipo_pago
+    }
     getLista() {
 
         var data = Actions.getPaquetesVendidos({
@@ -35,8 +48,14 @@ class PaquetesVendidos extends Component {
                 { key: "sucursal", label: "Sucursal", width: 150 },
                 { key: "tipo_pago", label: "Tipo Pago", width: 150 },
                 { key: "caja_movimiento/monto", label: "Monto", sumar: true, width: 100 },
+                {
+                    key: "caja_movimiento/data", label: "Detalle", width: 350, render: (item) => {
+                        return this.getDetallePago(item)
+                    }
+                },
                 { key: "paquete/descripcion", label: "Paquete", width: 150 },
                 { key: "caja/key_usuario", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
+
                 // { key: "", label: "Sucursal", width: 150 },
             ]}
             limit={100}

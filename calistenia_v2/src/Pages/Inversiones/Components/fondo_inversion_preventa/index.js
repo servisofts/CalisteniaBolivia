@@ -1,5 +1,5 @@
 //  COMPONENT CONFIG
-const component = "fondo_inversion"; // COMPONENT NAME 
+const component = "fondo_inversion_preventa"; // COMPONENT NAME 
 const version = "1.0";
 // ---------------------------------------
 import Actions from "./Actions";
@@ -10,7 +10,6 @@ import Lista from "./Pages/Lista";
 import Registro from "./Pages/Registro";
 import Perfil from "./Pages/Perfil";
 import Select from "./Pages/Select";
-import Calculadora from "./Pages/Calculadora";
 export default {
     component,
     version,
@@ -23,7 +22,6 @@ export default {
         [component + "/registro"]: Registro,
         [component + "/perfil"]: Perfil,
         [component + "/select"]: Select,
-        [component + "/calculadora"]: Calculadora,
         // "/:servicio/proyecto": { component: Lista }
     },
     struct: struct

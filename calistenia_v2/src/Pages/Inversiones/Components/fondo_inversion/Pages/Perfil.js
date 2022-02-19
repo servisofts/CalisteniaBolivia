@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SHr, SLoad, SNavigation, SPage, SText, SView } from 'servisofts-component';
+import { SHr, SIcon, SLoad, SMath, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
+import FloatButtom from '../../../../../Components/FloatButtom';
+import TimeLine from '../Components/TimeLine';
 class Perfil extends Component {
     constructor(props) {
         super(props);
@@ -16,18 +18,51 @@ class Perfil extends Component {
     getSceneData() {
         var data = Parent.Actions.getByKey(this.key, this.props);
         if (!data) return <SLoad />
-        return <SText>{JSON.stringify(data)}</SText>
+        return <SView col={"xs-12"} center>
+            <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} center card>
+                <SHr />
+                <SText fontSize={18}>{data.descripcion}</SText>
+                <SHr />
+                <SText fontSize={14}>{data.observacion}</SText>
+                <SHr />
+                <SHr />
+                <SText fontSize={16}>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
+                <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
+                <SHr />
+                <SText fontSize={18}>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
+                <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
+                <SHr />
+                <SView row center>
+                    <SIcon name={"Ingreso"} width={14} />
+                    <SView width={8} />
+                    <SText fontSize={16}>{`( 0 / ${data["cantidad_acciones"]} )`}</SText>
+                </SView>
+                <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText>
+                <SHr />
+            </SView>
+        </SView>
     }
 
 
     render() {
         return (
-            <SPage title={'Perfil'} disableScroll center>
-                {this.getSceneData()}
-                <SHr />
-                <SHr />
-                <SHr />
-            </SPage>
+            <>
+                <SPage title={'Perfil'}>
+                    <SHr />
+                    <SHr />
+                    {this.getSceneData()}
+                    <SHr />
+                    <SHr />
+                    <SHr />
+                    <SHr />
+                    <TimeLine key_fondo_inversion={this.key} />
+
+                    <SHr height={50} />
+                </SPage>
+                <FloatButtom onPress={() => {
+                    SNavigation.navigate("fondo_inversion_preventa/registro", { key_fondo_inversion: this.key });
+                }} />
+            </>
         );
     }
 }
