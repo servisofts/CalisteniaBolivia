@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SPage, SText, SView, SNavigation, SIcon, SHr } from 'servisofts-component';
+import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 
 class home extends Component {
     constructor(props) {
@@ -8,7 +9,11 @@ class home extends Component {
         this.state = {
         };
     }
+    
     getItem({ title, icon, url, onPress }) {
+        if (!SSRolesPermisosValidate({ page: url, permiso: "ver" })) {
+            return null;
+        }
         return <SView col={"xs-3 sm-2.5 md-2 lg-1.5 xl-1.3"} colSquare style={{
             padding: 4,
         }}
@@ -34,17 +39,6 @@ class home extends Component {
         return (
             <SPage title={'Inversiones'}>
                 <SView row col={"xs-12"}>
-                {this.getItem({
-                        title: 'Tipos de comisiones',
-                        icon: 'Alert',
-                        url: 'tipo_comision',
-                    })}
-                    {/* {this.getItem({
-                        title: 'Mis Inversiones',
-                        icon: 'Usuarios_Todos',
-                        url: 'InversionesPage',
-                    })} */}
-
                     {this.getItem({
                         title: 'Fondos de inversion',
                         icon: 'Ajustes',

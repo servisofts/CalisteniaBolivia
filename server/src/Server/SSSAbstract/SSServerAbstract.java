@@ -128,19 +128,33 @@ public abstract class SSServerAbstract implements SSServerInterface {
     }
 
     public static void sendServer(String tipo, String mensaje) {
-        SSServerAbstract servidor = SERVIDORES.get(tipo);
-        if (servidor != null) {
-            servidor.sendAll(mensaje);
-        }
+        new Thread() {
+            @Override
+            public void run() {
+                SSServerAbstract servidor = SERVIDORES.get(tipo);
+                if (servidor != null) {
+                    servidor.sendAll(mensaje);
+                }
+            }
+        }.start();
 
     }
 
     public static void sendAllServer(String mensaje) {
-        System.out.println("----------REPORTE DE SESSIONES--------");
-        for (Map.Entry me : SERVIDORES.entrySet()) {
-            SSServerAbstract server = SERVIDORES.get(me.getKey());
-            server.sendAll(mensaje);
-        }
+        new Thread() {
+            @Override
+            public void run() {
+                System.out.println("----------sendAllServer--------");
+                for (Map.Entry me : SERVIDORES.entrySet()) {
+                    try{
+                        SSServerAbstract server = SERVIDORES.get(me.getKey());
+                        server.sendAll(mensaje);
+                    }catch(Exception e){
+                        console.log(console.ANSI_RED, "--> ERROR: "+e.getMessage());
+                    }
+                }
+            }
+        }.start();
     }
 
     public static void verSessiones() {
