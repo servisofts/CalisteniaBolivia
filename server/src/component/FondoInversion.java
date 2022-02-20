@@ -27,6 +27,9 @@ public class FondoInversion {
             case "getByKey":
                 getByKey(data, session);
                 break;
+            case "getComisionActual":
+                getComisionActual(data, session);
+                break;
             case "registro":
                 registro(data, session);
             break;
@@ -55,6 +58,30 @@ public class FondoInversion {
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+    }
+
+    public void getComisionActual(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta = "select getComisionActual('"+obj.getString("key_fondo_inversion")+"') as json";
+            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), nombre_tabla+"_getComisionActual", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getComisionActual(String key_fondo_inversion) {
+        try {
+            String consulta = "select get_comision_actual('"+key_fondo_inversion+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
     

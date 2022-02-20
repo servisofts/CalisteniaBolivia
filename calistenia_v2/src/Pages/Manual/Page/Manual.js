@@ -421,6 +421,129 @@ class Manual extends Component {
             </SText>
         </SView>
     }
+    getFondoInversionAdmin() {
+        var roles = GetRoles(this.props);
+        if (!roles) return <SLoad />;
+        var obj = roles["47149d4e-4826-4ef9-9b22-5923471be112"];
+        return <SView col={"xs-12"} card style={{
+            padding: 8,
+        }}>
+            <SView col={"xs-12"} height={60} row center>
+                <SView width={45} height={45}>
+                    <SImage src={`${SSocket.api.rp}rol/${obj.key}`} />
+                </SView>
+                <SView flex style={{
+                    paddingLeft: 8,
+                }}>
+                    <SText fontSize={this.state.fontSize} font={"Roboto"} >{obj.descripcion}</SText>
+                </SView>
+            </SView>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Administrador de fondos de inversión
+            </SText>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Al momento de crear un fondo de inversión el administrador deberá colocar los siguientes datos:
+            </SText>
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_registro.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Este fondo de inversión será registrado en el sistema y podrá ser visualizado en el panel de fondos de inversión.
+                En este panel podrá:
+            </SText>
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_panel.png")} />
+            </SView>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, eliminar, editar los fondos de inversión.</SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar las sucursales que tiene asignadas.</SText>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El fondo de inversión podrá estar enfocado tanto para una como para varias sucursales, es decir si quisiera abrir 
+                una sucursal y un gimnacio para una misma empresa, podría abrir un fondo de inversión para ambas sucursales y los inversionistas
+                recibirán la comision correspondiente de ambas sucursales.
+            </SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar los inversionistas que tiene asignados.</SText>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El fondo de inversión cuenta con n inversionistas registrados, en este panel usted podra ver, editar, eliminar 
+                , aprobar y rechazar inversionistas.
+            </SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar preventas.</SText>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El fondo de inversión cuenta con n preventas, las preventas son los diferentes precios de comisión en la linea temporal antes 
+                de cerrar el ciclo de ventas.
+            </SText>
+            <SHr />
+        </SView>
+    }
+    getFondoInversionInversionista() {
+        var roles = GetRoles(this.props);
+        if (!roles) return <SLoad />;
+        var obj = roles["47149d4e-4826-4ef9-9b22-5923471be112"];
+        return <SView col={"xs-12"} card style={{
+            padding: 8,
+        }}>
+            <SView col={"xs-12"} height={60} row center>
+                <SView width={45} height={45}>
+                    <SImage src={`${SSocket.api.rp}rol/${obj.key}`} />
+                </SView>
+                <SView flex style={{
+                    paddingLeft: 8,
+                }}>
+                    <SText fontSize={this.state.fontSize} font={"Roboto"} >{obj.descripcion}</SText>
+                </SView>
+            </SView>
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >Inversionistas</SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >El inversionista tendrá acceso a los siguientes módulos:</SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Invertir.</SText>
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El inversionista tendrá la opción de ver todos los fondos de inversión disponibles para invertir.
+                Tendrá acceso a un pantallaso de las diferentes propuestas de inversión abiertas donde podrá elegir invertir en cualquiera de ellas.
+            </SText>
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_abiertas.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                En caso que decida seleccionar la opción invertir en alguna de ellas podrá ver los siguientes datos:
+            </SText>
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_invertir.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                En la parte inferior se puede ver el historico de los diferentes precios de preventa previamente parametrizados.
+            </SText>
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Mis inversiones.</SText>
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            
+        </SView>
+    }
     render() {
         return (
             <SPage title="Manual">
@@ -431,7 +554,7 @@ class Manual extends Component {
                     </SView>
                     <SHr height={25} />
                     <SView col="xs-11" >
-                        {this.getPresentacion()}
+                        {/*this.getPresentacion()}
                         {this.getRoles()}
                         <SHr height={32} />
                         {this.getRolCliente()}
@@ -440,9 +563,11 @@ class Manual extends Component {
                         <SHr height={32} />
                         {this.getRolEntrenador()}
                         <SHr height={32} />
-                        {this.getRolAdministrador()}
+                        {this.getRolAdministrador()*/}
                         <SHr height={32} />
-
+                        {this.getFondoInversionAdmin()}
+                        <SHr height={32} />
+                        {this.getFondoInversionInversionista()}
                     </SView>
                 </SView>
             </SPage>

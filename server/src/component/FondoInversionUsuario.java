@@ -33,6 +33,9 @@ public class FondoInversionUsuario {
             case "editar":
                 editar(data, session);
             break;
+            case "aprobar":
+                aprobar(data, session);
+            break;
             case "subirFoto":
                 subirFoto(data, session);
             break;
@@ -81,6 +84,9 @@ public class FondoInversionUsuario {
             data.put("key",UUID.randomUUID().toString());
             data.put("fecha_on",fecha_on);
             data.put("estado",1);
+
+            JSONObject comision_Actual =  FondoInversion.getComisionActual(data.getString("key_fondo_inversion"));
+            data.put("comision",comision_Actual.getDouble("monto"));
             Conexion.insertArray(nombre_tabla, new JSONArray().put(data));
 
             Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_registro", data);
@@ -97,6 +103,24 @@ public class FondoInversionUsuario {
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject data = obj.getJSONObject("data");
+            Conexion.editObject(nombre_tabla, data);
+            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_editar", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void aprobar(JSONObject obj, SSSessionAbstract session) {
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            JSONObject data = obj.getJSONObject("data");
+            data.put("fecha_aprobacion",fecha_on);
             Conexion.editObject(nombre_tabla, data);
             Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_editar", data);
             obj.put("data", data);
