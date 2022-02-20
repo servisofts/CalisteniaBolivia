@@ -46,12 +46,12 @@ class home extends Component {
                     })}
                     {this.getItem({
                         title: 'Mis inversiones',
-                        icon: 'Ajustes',
-                        url: 'fondo_inversion',
+                        icon: 'Cheque',
+                        url: 'mis_inversiones',
                     })}
                     {this.getItem({
                         title: 'Invertir',
-                        icon: 'Ajustes',
+                        icon: 'Carrito',
                         url: 'invertir',
                     })}
                 </SView>

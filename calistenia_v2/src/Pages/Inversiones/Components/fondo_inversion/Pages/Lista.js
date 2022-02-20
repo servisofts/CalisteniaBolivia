@@ -42,7 +42,7 @@ class Lista extends Component {
                 {
                     key: "key-editar", label: "Editar", width: 50, center: true,
                     component: (item) => {
-                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
+                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/calculadora", { key: item }) }}>
                             <SIcon name={"Edit"} width={35} />
                         </SView>
                     }

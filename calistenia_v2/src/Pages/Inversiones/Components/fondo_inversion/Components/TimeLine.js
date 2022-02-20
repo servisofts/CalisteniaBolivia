@@ -50,7 +50,7 @@ class TimeLine extends Component {
         var list = new SOrdenador([{ key: "fecha", order: "asc" }]).ordernarObject(fipd)
         list = list.filter(key => ((fipd[key].key_fondo_inversion == this.props.key_fondo_inversion) && (fipd[key].estado == 1)));
         list.push("fecha_inicio");
-        list.push("fecha_fin");
+        // list.push("fecha_fin");
         let monto_actual = 0;
         const LIST_ITEM = list.map((key) => {
             var itm = fipd[key];

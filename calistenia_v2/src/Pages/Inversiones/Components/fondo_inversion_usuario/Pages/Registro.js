@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad } from 'servisofts-component';
+import { SForm, SHr, SIcon, SNavigation, SPage, SText, SView, SLoad, SMath } from 'servisofts-component';
 import Parent from '../index';
 import SSocket from 'servisofts-socket';
 
@@ -13,12 +13,12 @@ class Registro extends Component {
 
         Parent.struct.fk.map((item) => {
             this[item] = SNavigation.getParam(item);
-        })       
+        })
     }
     createStruct() {
         var resp = {};
         Parent.struct.metas.map((item) => {
-            if(item.hidden) return null;
+            if (item.hidden) return null;
             resp[item.key] = {
                 label: item.label,
                 isRequired: item.required,
@@ -38,9 +38,9 @@ class Registro extends Component {
             this.data = {};
             var params = {}
             Parent.struct.fk.map((item) => {
-                if (this[item])  this.data[item] = this[item]; 
+                if (this[item]) this.data[item] = this[item];
             })
-         
+
         }
         return <SForm
             center
@@ -50,7 +50,7 @@ class Registro extends Component {
                 customStyle: "calistenia"
             }}
             inputs={{
-                ...this.createStruct(),
+                inversion: { label: "Inversion", type: "money", isRequired: true, defaultValue: SMath.formatMoney(this.data.inversion) },
             }}
 
 

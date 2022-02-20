@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SInput, SNavigation, SPage, SText, SThread, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SInput, SLoad, SNavigation, SPage, SText, SThread, SView } from 'servisofts-component';
 import Parent from '../index';
 
 class Calculadora extends Component {
@@ -76,6 +76,7 @@ class Calculadora extends Component {
 
             }
         };
+        this.key = SNavigation.getParam("key");
         this._ref = {};
     }
 
@@ -111,6 +112,22 @@ class Calculadora extends Component {
     }
 
     getInputs() {
+        if (this.key) {
+            var data = Parent.Actions.getByKey(this.key, this.props);
+            if (!data) return <SLoad />
+            this.data = data;
+            if (!this.state.isLoad) {
+                this.state.inputs.cantidad_acciones.value = data.cantidad_acciones;
+                this.state.inputs.precio_accion.value = data.precio_accion;
+                this.state.inputs.monto_maximo.value = data.monto_maximo;
+                this.state.inputs.fecha_inicio.value = new SDate(data.fecha_inicio).toString("yyyy-MM-dd");
+                this.state.inputs.fecha_fin.value = new SDate(data.fecha_fin).toString("yyyy-MM-dd");
+                this.state.inputs.cantidad_meses.value = data.cantidad_meses;
+                this.state.inputs.observacion.value = data.observacion;
+                this.state.inputs.descripcion.value = data.descripcion;
+                this.setState({ isLoad: true });
+            }
+        }
         return Object.keys(this.state.inputs).map((key) => {
             var obj = this.state.inputs[key];
             return <SView col={obj.col ?? "xs-6"} center>
@@ -126,9 +143,15 @@ class Calculadora extends Component {
         var reducer = this.props.state[Parent.component + "Reducer"];
         if (reducer.type == "registro" || reducer.type == "editar") {
             if (reducer.estado == "exito") {
-                if (reducer.type == "registro") this.key = reducer.lastRegister?.key;
                 reducer.estado = "";
-                SNavigation.replace("fondo_inversion_preventa/registro", { key_fondo_inversion: this.key });
+                if (reducer.type == "registro") {
+                    this.key = reducer.lastRegister?.key;
+                    SNavigation.replace("fondo_inversion_preventa/registro", { key_fondo_inversion: this.key });
+
+                } else {
+                    SNavigation.goBack();
+
+                }
             }
         }
 
@@ -152,7 +175,16 @@ class Calculadora extends Component {
                             values[key] = this._ref[key].getValue();
                         })
                         if (isExito) {
-                            Parent.Actions.registro(values, this.props);
+                            values.fecha_inicio = new SDate(values.fecha_inicio, "yyyy-MM-dd").toString();
+                            values.fecha_fin = new SDate(values.fecha_fin, "yyyy-MM-dd").toString();
+                            if (!this.key) {
+                                Parent.Actions.registro(values, this.props);
+                            } else {
+                                Parent.Actions.editar({
+                                    ...this.data,
+                                    ...values
+                                }, this.props);
+                            }
                         }
                     }}>Enviar</SButtom>
                 </SView>

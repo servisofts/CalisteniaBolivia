@@ -23,6 +23,43 @@ export default class Actions {
         }
         return data;
     }
+    static getByKeyFondo = (key_fondo, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        return Object.values(data).filter((key) => data[key].key_fondo_inversion = key_fondo);
+    }
+    static filtrar = (filtro, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        return Object.values(data).filter((itm) => {
+            var acept = true;
+            Object.keys(filtro).map((fil) => {
+                if (itm[fil] != filtro[fil]) acept = false;
+            })
+            return acept;
+        });
+    }
+    static getMisInversiones = (key_usuario, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        var monto = 0;
+        var cantidad = 0;
+
+        return Object.keys(data).filter((key) => (data[key].key_usuario_inversionista == key_usuario)).map((item) => {
+            return data[item]
+        });
+    }
+    static getMontoInvertido = (key_fondo, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        var monto = 0;
+        var cantidad = 0;
+        Object.keys(data).filter((key) => (data[key].key_fondo_inversion == key_fondo) && (data[key].fecha_aprobacion != null)).map((item) => {
+            monto += data[item].inversion;
+            cantidad++;
+        });
+        return { monto, cantidad };
+    }
 
     static getByKey = (key, props) => {
         var data = Actions.getAll(props);
@@ -38,6 +75,16 @@ export default class Actions {
             type: "registro",
             estado: "cargando",
             key_usuario: "",
+            data: data
+        })
+    }
+    static aprobar = (data, props) => {
+        SSocket.send({
+            component: Parent.component,
+            version: Parent.version,
+            type: "aprobar",
+            estado: "cargando",
+            key_usuario: props.state.usuarioReducer.usuarioLog.key,
             data: data
         })
     }
