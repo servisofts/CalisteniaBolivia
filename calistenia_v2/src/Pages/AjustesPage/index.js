@@ -70,7 +70,7 @@ export default class AjustesPage extends Component {
                             borderRadius: 8,
                             overflow: "hidden",
                         }}>
-                            {this.getOptions({ title: "Manual de uso", icon: "Alert" ,url:"manual"})}
+                            {/* {this.getOptions({ title: "Manual de uso", icon: "Alert" ,url:"manual"})} */}
                             {/* {this.getOptions({ title: "Ajustes", icon: "Ajustes" })} */}
                             {/* {this.getOptions({ title: "Caja", icon: "Caja" }, true)} */}
                         </SView>
