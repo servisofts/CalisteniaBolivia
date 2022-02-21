@@ -4,6 +4,7 @@ import { SDate, SHr, SIcon, SLoad, SMath, SNavigation, SPage, SText, STheme, SVi
 
 import fondo_inversion from '../../fondo_inversion';
 import fondo_inversion_usuario from '../../fondo_inversion_usuario';
+import ListaGanancias from '../Components/listaGanancias';
 
 class Perfil extends Component {
     constructor(props) {
@@ -23,18 +24,8 @@ class Perfil extends Component {
         if (!data_inversion_usuario) return null;
         return data_inversion_usuario.map((item) => {
             return <>
-                <SHr height={16} />
+                <SHr height={8} />
                 <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} card center row>
-                    <SHr />
-                    <SView col={"xs-6"} center>
-                        <SText>{new SDate(item.fecha_on).toString("dd/MM/yyyy hh:mm")}</SText>
-                    </SView>
-                    <SView col={"xs-6"} center>
-                        {!item.fecha_aprobacion ? <SIcon name={"Alert"} width={30} /> : null}
-                        <SText>{item.fecha_aprobacion ? "Aprobado" : "Esperando aprobacion..."}</SText>
-                    </SView>
-                    <SHr />
-                    <SHr />
                     <SHr />
                     <SView col={"xs-6"} center>
                         <SText bold>Bs. {SMath.formatMoney(item.inversion)}</SText>
@@ -44,7 +35,16 @@ class Perfil extends Component {
                         <SText bold>Bs. {SMath.formatMoney(item.comision)}</SText>
                         <SText color={STheme.color.lightGray}>Comision</SText>
                     </SView>
-
+                    <SView col={"xs-6"} center>
+                        {!item.fecha_aprobacion ? <SIcon name={"Alert"} width={30} /> : <SText bold fontSize={18}>Bs. {SMath.formatMoney(this.state.total_ventas * item.comision)}</SText>}
+                        <SText color={STheme.color.lightGray} >{item.fecha_aprobacion ? `Ganancia actual` : "Esperando aprobacion..."}</SText>
+                    </SView>
+                    <SText color={STheme.color.lightGray} style={{
+                        position: "absolute",
+                        bottom: 0,
+                        right: 0,
+                        width: 110,
+                    }} center fontSize={12}>{new SDate(item.fecha_on).toString("dd/MM/yyyy hh:mm")}</SText>
                     <SHr />
                 </SView>
             </>
@@ -93,6 +93,11 @@ class Perfil extends Component {
             <SPage title={'Perfil'} center>
                 {this.getSceneData()}
                 {this.getDetalle()}
+                <SHr />
+                <SHr />
+                <ListaGanancias key_fondo_inversion={this.key_fondo_inversion} onChangeTotal={(total) => {
+                    this.setState({ total_ventas: total });
+                }} />
 
             </SPage>
         );

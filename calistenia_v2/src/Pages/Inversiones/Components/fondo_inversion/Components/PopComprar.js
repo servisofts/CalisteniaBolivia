@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SInput, SLoad, SMath, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SHr, SInput, SLoad, SMath, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import Parent from '..';
 import fondo_inversion_usuario from '../../fondo_inversion_usuario';
 class Comprar extends Component {
@@ -45,6 +45,11 @@ class Comprar extends Component {
         </SView>
     }
     render() {
+        var reducer= fondo_inversion_usuario.Actions._getReducer(this.props);
+        if(reducer.estado=="exito" && reducer.type == "registro"){
+            reducer.estado = "";
+         
+        }
         return (
             <SView col={"xs-11 md-6"} height={400} backgroundColor={STheme.color.background} style={{
                 borderRadius: 10,
@@ -77,6 +82,8 @@ class Comprar extends Component {
                                         key_fondo_inversion: this.props.key_fondo_inversion,
                                         inversion: monto,
                                     }, this.props)
+                                    SNavigation.replace("mis_inversiones");
+                                    SPopup.close("popup_comprar");
                                 }
                             })
                         }

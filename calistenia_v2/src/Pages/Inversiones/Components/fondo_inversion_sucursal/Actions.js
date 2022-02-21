@@ -23,6 +23,16 @@ export default class Actions {
         }
         return data;
     }
+    static getByKeySucursal = (key_sucursal, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        return Object.values(data).filter((item) => item.key_sucursal == key_sucursal);
+    }
+    static getByKeyFondoInversion = (key_fondo_inversion, props) => {
+        var data = Actions.getAll(props);
+        if (!data) return null;
+        return Object.values(data).filter((item) => item.key_fondo_inversion == key_fondo_inversion);
+    }
 
     static getByKey = (key, props) => {
         var data = Actions.getAll(props);
