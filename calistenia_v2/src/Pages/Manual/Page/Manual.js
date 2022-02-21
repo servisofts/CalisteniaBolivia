@@ -438,12 +438,91 @@ class Manual extends Component {
                     <SText fontSize={this.state.fontSize} font={"Roboto"} >{obj.descripcion}</SText>
                 </SView>
             </SView>
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                Administrador de fondos de inversión
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={50} center>
+                <SView col={"xs-11"} height={50} center>
+                    <SImage src={require("./img/fondo_inversion.png")} />
+                </SView>
+                <SView col={"xs-11"} height={50} center>
+                    <SText center fontSize={this.state.fontSize} font={"Roboto"}  >
+                        Módulo de inversiones
+                    </SText>
+                </SView>
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                Bienvenido al módulo de inversiones, este modulo te permite realizar las siguientes acciones
             </SText>
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={100} center>
+                <SImage src={require("./img/fondo_inversion_actions.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                Fondos de inversión:
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                Si ingresa a la opción "Fondos de inversion" tendrá acceso al panel administrativo de inversiones, este panel contiene.
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                - Gestión de fondos de inversión.
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                - Gestión de sucursales, de las cuales quiere obtener el calculo de retorno inversión
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                - Gestión de inversionistas
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
+                - Gestión de preventas, Aprobar preventas, el inversionista podrá solicitar una preventa y del panel la tienes que aprobar.
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_panel.png")} />
+            </SView>
+            <SText fontSize={this.state.fontSize} font={"Roboto"} >
                 Al momento de crear un fondo de inversión el administrador deberá colocar los siguientes datos:
             </SText>
+            <SHr />
+            <SHr />
+            <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
                 <SImage src={require("./img/fondo_inversion_registro.png")} />
@@ -453,40 +532,17 @@ class Manual extends Component {
             <SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >
                 Este fondo de inversión será registrado en el sistema y podrá ser visualizado en el panel de fondos de inversión.
-                En este panel podrá:
             </SText>
             <SHr />
-            <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_panel.png")} />
-            </SView>
             <SHr />
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, eliminar, editar los fondos de inversión.</SText>
             <SHr />
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar las sucursales que tiene asignadas.</SText>
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                El fondo de inversión podrá estar enfocado tanto para una como para varias sucursales, es decir si quisiera abrir 
-                una sucursal y un gimnacio para una misma empresa, podría abrir un fondo de inversión para ambas sucursales y los inversionistas
-                recibirán la comision correspondiente de ambas sucursales.
-            </SText>
-            <SHr />
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar los inversionistas que tiene asignados.</SText>
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                El fondo de inversión cuenta con n inversionistas registrados, en este panel usted podra ver, editar, eliminar 
-                , aprobar y rechazar inversionistas.
-            </SText>
-            <SHr />
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Ver, editar, eliminar preventas.</SText>
-            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                El fondo de inversión cuenta con n preventas, las preventas son los diferentes precios de comisión en la linea temporal antes 
-                de cerrar el ciclo de ventas.
-            </SText>
             <SHr />
         </SView>
     }
     getFondoInversionInversionista() {
         var roles = GetRoles(this.props);
         if (!roles) return <SLoad />;
-        var obj = roles["47149d4e-4826-4ef9-9b22-5923471be112"];
+        var obj = roles["9321545b-b51c-423a-a43a-edeaf35cf6e8"];
         return <SView col={"xs-12"} card style={{
             padding: 8,
         }}>
@@ -535,13 +591,92 @@ class Manual extends Component {
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >- Mis inversiones.</SText>
             <SHr />
             <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_mias.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  > Inversión pendiente de aprobación.</SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                
+                La siguiente inversión se encuentra en estado pendiente de aprobación, hasta que vaya al panel administrativo
+                y le de aprobar, en ese momento el inversionista podrá ver su ganancia en éste fondo de inversión.
             </SText>
             <SHr />
             <SHr />
             <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_pendiente.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Una véz haya aprobado la inversión podrá ver los siguientes datos:
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_iniciado.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Al podrá ver los clientes registrados por día:
+            </SText>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+            <SView col={"xs-11"} height={300} center>
+                <SImage src={require("./img/fondo_inversion_iniciado.png")} />
+            </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
+        </SView>
+    }
+    getFondoInversionCotizacion() {
+        var roles = GetRoles(this.props);
+        if (!roles) return <SLoad />;
+        var obj = roles["9321545b-b51c-423a-a43a-edeaf35cf6e8"];
+        return <SView col={"xs-12"} card style={{
+            padding: 8,
+        }}>
             
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >Cotización</SText>
+            <SHr /><SHr /><SHr /><SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El módulo anteriormente mencionado, está desarrollado por completo y listo para su funcionamiento.
+            </SText>
+            <SHr /><SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                El precio de producto es de Bs. 7,000 sin factura y Bs. 10,000 con factura.
+            </SText>
+            <SHr /><SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                En estos momentos puede comenzar a usar el módulo por completo. Mientras el módulo se encuentre 
+                pendiente de pago en los servidores servisofts, todas las noches automaticamente se borrará la información del módulo.
+            </SText>
+            <SHr /><SHr />
+            <SText fontSize={this.state.fontSize} font={"Roboto"}  >
+                Para iniciar operaciones deberá tener cancelado el 100% del valor del módulo.
+            </SText>
+            <SHr /><SHr /><SHr /><SHr /><SHr /><SHr /><SHr />
         </SView>
     }
     render() {
@@ -568,6 +703,8 @@ class Manual extends Component {
                         {this.getFondoInversionAdmin()}
                         <SHr height={32} />
                         {this.getFondoInversionInversionista()}
+                        <SHr height={32} />
+                        {this.getFondoInversionCotizacion()}
                     </SView>
                 </SView>
             </SPage>
