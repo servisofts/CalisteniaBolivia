@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SPage, SText, SView, SLoad } from 'servisofts-component';
+import { SDate, SHr, SPage, SText, SView, SLoad, SPopup } from 'servisofts-component';
 import fondo_inversion from '../../fondo_inversion';
 import fondo_inversion_sucursal from '../../fondo_inversion_sucursal';
 import Finanza from '../../../../Finanza';
+import PopInscritos from './PopInscritos';
 class listaGanancias extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +44,13 @@ class listaGanancias extends Component {
                     <SView flex center>
                         <SView height={8} col={"xs-12"} card></SView>
                     </SView>
-                    <SView width={80} center>
+                    <SView width={80} center onPress={() => {
+                        SPopup.open({
+                            key: "Inscritos",
+                            title: "Inscritos",
+                            content: <PopInscritos ventas_del_dia={ventas_del_dia} fecha={fecha_inicio.toString("yyyy, MONTH dd")} />
+                        })
+                    }}>
                         <SText> {cantidad}</SText>
                     </SView>
                 </SView>
@@ -51,7 +58,7 @@ class listaGanancias extends Component {
             </SView>
         })
         if (this.state.total_ventas != total) {
-            if(this.props.onChangeTotal){
+            if (this.props.onChangeTotal) {
                 this.props.onChangeTotal(total);
             }
             this.setState({ total_ventas: total })
@@ -76,6 +83,10 @@ class listaGanancias extends Component {
     }
 
     render() {
+        var data = fondo_inversion.Actions.getByKey(this.props.key_fondo_inversion, this.props);
+        if (!data) return <SLoad />
+        var fecha_inicio = new SDate(data.fecha_inicio);
+        if (new SDate().isBefore(fecha_inicio)) return null;
         return (
             <SView col={"xs-12 md-8 xl-4"}>
                 <SHr />

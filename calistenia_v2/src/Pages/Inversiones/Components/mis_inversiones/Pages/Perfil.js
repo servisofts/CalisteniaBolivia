@@ -36,7 +36,7 @@ class Perfil extends Component {
                         <SText color={STheme.color.lightGray}>Comision</SText>
                     </SView>
                     <SView col={"xs-6"} center>
-                        {!item.fecha_aprobacion ? <SIcon name={"Alert"} width={30} /> : <SText bold fontSize={18}>Bs. {SMath.formatMoney(this.state.total_ventas * item.comision)}</SText>}
+                        {!item.fecha_aprobacion ? <SIcon name={"Alert"} width={30} /> : <SText bold fontSize={18}>Bs. {SMath.formatMoney(this.state.total_ventas??0 * item.comision)}</SText>}
                         <SText color={STheme.color.lightGray} >{item.fecha_aprobacion ? `Ganancia actual` : "Esperando aprobacion..."}</SText>
                     </SView>
                     <SText color={STheme.color.lightGray} style={{

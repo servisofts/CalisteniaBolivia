@@ -42,7 +42,7 @@ class ConfirmarPaquete extends Component {
         // if (onFInish) {
         //     onFInish();
         // }
-        SNavigation.navigate("EsperandoVenta", { key: data.key })
+        SNavigation.replace("EsperandoVenta", { key: data.key })
         // SNavigation.goBack();
     }
     getTextDetail({ label, value }) {
