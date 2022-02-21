@@ -444,7 +444,7 @@ class Manual extends Component {
             <SHr />
             <SView col={"xs-11"} height={50} center>
                 <SView col={"xs-11"} height={50} center>
-                    <SImage src={require("./img/fondo_inversion.png")} />
+                    <SImage src={require("./img/fondo_inversion.png")} enablePreview/>
                 </SView>
                 <SView col={"xs-11"} height={50} center>
                     <SText center fontSize={this.state.fontSize} font={"Roboto"}  >
@@ -466,7 +466,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={100} center>
-                <SImage src={require("./img/fondo_inversion_actions.png")} />
+                <SImage src={require("./img/fondo_inversion_actions.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
@@ -515,7 +515,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_panel.png")} />
+                <SImage src={require("./img/fondo_inversion_panel.png")} enablePreview/>
             </SView>
             <SText fontSize={this.state.fontSize} font={"Roboto"} >
                 Al momento de crear un fondo de inversión el administrador deberá colocar los siguientes datos:
@@ -525,7 +525,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_registro.png")} />
+                <SImage src={require("./img/fondo_inversion_registro.png")} enablePreview />
             </SView>
             <SHr />
             <SHr />
@@ -548,7 +548,7 @@ class Manual extends Component {
         }}>
             <SView col={"xs-12"} height={60} row center>
                 <SView width={45} height={45}>
-                    <SImage src={`${SSocket.api.rp}rol/${obj.key}`} />
+                    <SImage src={`${SSocket.api.rp}rol/${obj.key}`} enablePreview/>
                 </SView>
                 <SView flex style={{
                     paddingLeft: 8,
@@ -569,7 +569,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_abiertas.png")} />
+                <SImage src={require("./img/fondo_inversion_abiertas.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
@@ -579,7 +579,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_invertir.png")} />
+                <SImage src={require("./img/fondo_inversion_invertir.png")} enablePreview />
             </SView>
             <SHr />
             <SHr />
@@ -594,7 +594,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_mias.png")} />
+                <SImage src={require("./img/fondo_inversion_mias.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
@@ -614,7 +614,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_pendiente.png")} />
+                <SImage src={require("./img/fondo_inversion_pendiente.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
@@ -628,7 +628,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_iniciado.png")} />
+                <SImage src={require("./img/fondo_inversion_iniciado.png")} enablePreview />
             </SView>
             <SHr />
             <SHr />
@@ -642,7 +642,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_iniciado.png")} />
+                <SImage src={require("./img/fondo_inversion_iniciado.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
@@ -669,8 +669,7 @@ class Manual extends Component {
             </SText>
             <SHr /><SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                En estos momentos puede comenzar a usar el módulo por completo. Mientras el módulo se encuentre 
-                pendiente de pago en los servidores servisofts, todas las noches automaticamente se borrará la información del módulo.
+                Mientras el módulo se encuentre pendiente de pago en los servidores servisofts, a las 00:00 Horas automaticamente se reiniciará la información del módulo.
             </SText>
             <SHr /><SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >
@@ -705,6 +704,7 @@ class Manual extends Component {
                         {this.getFondoInversionInversionista()}
                         <SHr height={32} />
                         {this.getFondoInversionCotizacion()}
+                        <SHr /><SHr /><SHr /><SHr /><SHr />
                     </SView>
                 </SView>
             </SPage>
