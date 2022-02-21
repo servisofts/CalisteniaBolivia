@@ -508,7 +508,7 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"} >
-                - Gestión de preventas, Aprobar preventas, el inversionista podrá solicitar una preventa y del panel la tienes que aprobar.
+                - Gestión de preventas, Aprobar preventas, el inversionista podrá solicitar una preventa y quedará pendiente hasta que el administrador la apruebe.
             </SText>
             <SHr />
             <SHr />
@@ -517,6 +517,10 @@ class Manual extends Component {
             <SView col={"xs-11"} height={300} center>
                 <SImage src={require("./img/fondo_inversion_panel.png")} enablePreview/>
             </SView>
+            <SHr />
+            <SHr />
+            <SHr />
+            <SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"} >
                 Al momento de crear un fondo de inversión el administrador deberá colocar los siguientes datos:
             </SText>
@@ -635,14 +639,14 @@ class Manual extends Component {
             <SHr />
             <SHr />
             <SText fontSize={this.state.fontSize} font={"Roboto"}  >
-                Al podrá ver los clientes registrados por día:
+                Ahí podrá ver los clientes registrados por día:
             </SText>
             <SHr />
             <SHr />
             <SHr />
             <SHr />
             <SView col={"xs-11"} height={300} center>
-                <SImage src={require("./img/fondo_inversion_iniciado.png")} enablePreview/>
+                <SImage src={require("./img/fondo_inversion_inscritos.png")} enablePreview/>
             </SView>
             <SHr />
             <SHr />
