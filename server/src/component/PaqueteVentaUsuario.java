@@ -59,6 +59,16 @@ public class PaqueteVentaUsuario {
         }
     }
 
+    public static JSONObject getVentaDia(String key_usuario, String fecha_on) {
+        try {
+            String consulta =  "select get_venta_dia('"+key_usuario+"', '"+fecha_on+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_by_key('paquete_venta_usuario','"+obj.getString("key")+"') as json";

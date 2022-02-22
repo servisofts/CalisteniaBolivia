@@ -12,9 +12,9 @@ public class App {
             console.error("Server closed.");
             return;
         }
-        
+
         SSL.getKeyStore();
-        
+
         // Registrar mi certificado default si no existe
         if (!SSL.defaultCert()) { 
             console.error("Server closed.");
@@ -31,7 +31,7 @@ public class App {
         SocketCliete.enableReconect(true);
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
-        
+
         // SSInit.initFunctions();
         // ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
         //new Migrador().run();
