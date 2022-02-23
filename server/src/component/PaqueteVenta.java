@@ -118,11 +118,15 @@ public class PaqueteVenta
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            DateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
             String fecha_on = formatter.format(new Date());
+            String hoy = formatter1.format(new Date());
             JSONObject paquete_venta = obj.getJSONObject("data");
+
+            
             paquete_venta.put("fecha_on", fecha_on);
             paquete_venta.put("estado", 1);
-            Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
+            //Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
             JSONObject caja_activa = Caja.getActiva(obj.getString("key_usuario"));
             if (caja_activa == null) {
                 obj.put("estado", "error");
@@ -137,6 +141,20 @@ public class PaqueteVenta
             send_movimiento.put("type", "registro");
             send_movimiento.put("key_usuario", obj.getString("key_usuario"));
             send_movimiento.put("estado", "exito");
+
+            JSONObject venta_dia;
+
+            for (int i = 0; i < clientes.length(); ++i) {
+                venta_dia = PaqueteVentaUsuario.getVentaDia(clientes.getJSONObject(i).getString("key"), hoy);
+                if(!venta_dia.isEmpty()){
+                    obj.put("estado", "error");
+                    obj.put("error", "existe_venta");
+                    return;
+                }
+            }
+
+            Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
+
             for (int i = 0; i < clientes.length(); ++i) {
                 JSONObject paquete_venta_usuario = new JSONObject();
                 paquete_venta_usuario.put("key", UUID.randomUUID().toString());
