@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SImage, SLoad, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SImage, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../TipoPago';
 import Usuario from '../../Usuario';
@@ -17,7 +17,7 @@ class Recibo extends Component {
         return usuario.Nombres + " " + usuario.Apellidos;
     }
     getPagos(recibo, obj_usr) {
-        if(!recibo.caja_movimiento) return null;
+        if (!recibo.caja_movimiento) return null;
         return recibo.caja_movimiento.map((obj) => {
             if (obj.data.key_usuario != obj_usr.key_usuario) return null;
             var tipoPago = TipoPago.Actions.getByKey(obj.key_tipo_pago, this.props);
@@ -64,7 +64,7 @@ class Recibo extends Component {
 
     getTotal(recibo) {
         var total = 0;
-        if(!recibo.caja_movimiento) return "Bs. 0.00";
+        if (!recibo.caja_movimiento) return "Bs. 0.00";
         recibo.caja_movimiento.map((obj) => {
             total += parseFloat(obj.data.monto);
         })
@@ -85,6 +85,15 @@ class Recibo extends Component {
                 key: key
             });
             return <SLoad />
+        }
+        if (!recibo.paquete_venta) {
+            return <SView col={"xs-12"} center>
+                <SHr />
+                <SHr />
+                <SText fontSize={22} bold>Lo sentimos! no se pudo completar la venta, intente nuevamente.</SText>
+                <SHr />
+                <SHr />
+            </SView>
         }
         return <SView col={"xs-11 sm-10 md-8 lg-7 xl-5"} backgroundColor={"#fff"} center style={{
             borderRadius: 4,

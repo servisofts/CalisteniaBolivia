@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SPage, SText, SLoad, SDate, SView, SHr, SMath, STheme, SIcon, SButtom, SNavigation } from 'servisofts-component';
 import fondo_inversion from '../../fondo_inversion';
+import fondo_inversion_usuario from '../../fondo_inversion_usuario';
 class lista extends Component {
     constructor(props) {
         super(props);
@@ -9,7 +10,8 @@ class lista extends Component {
         };
     }
 
-    getItem(data = { key, descripcion, observacion, fecha_inicio, fecha_fin, estado, cantidad_acciones, precio_accion, monto_maximo }) {
+    getItem(data = { key, descripcion, observacion, fecha_inicio, fecha_fin, estado, cantidad_acciones, precio_accion, monto_maximo }, montoi) {
+
         return <>
             <SHr height={16} />
             <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} card center>
@@ -23,19 +25,26 @@ class lista extends Component {
                 <SHr />
                 <SView row col={"xs-11"}>
                     <SView center col={"xs-12"}>
-                        <SText fontSize={16} bold>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
+                        <SText fontSize={14} bold >{`( Bs. ${SMath.formatMoney(montoi.monto)} / Bs. ${SMath.formatMoney(data.monto_maximo)} )`}</SText>
+                        <SText fontSize={12} color={STheme.color.lightGray}>{"Monto recaudado"} </SText>
+
+                    </SView>
+                    <SHr />
+                    <SView center col={"xs-12"}>
+                        <SText fontSize={14} bold>{`Bs. ${SMath.formatMoney(data.monto_maximo - montoi.monto)}`}</SText>
+                        <SText fontSize={12} color={STheme.color.lightGray}>{"Monto disponible"} </SText>
+
                     </SView>
                     <SHr />
                     <SView center col={"xs-6"}>
-                        <SText fontSize={16} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
+                        <SText fontSize={14} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
                         <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
                     </SView>
                     <SView center col={"xs-6"}>
                         <SView row center>
                             <SIcon name={"Egreso"} width={14} />
                             <SView width={8} />
-                            <SText fontSize={16} bold>{`${data["cantidad_acciones"]}`}</SText>
+                            <SText fontSize={14} bold>{`( ${data["cantidad_acciones"] - montoi.cantidad} / ${data["cantidad_acciones"]} )`}</SText>
                         </SView>
                         <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
                     </SView>
@@ -54,6 +63,7 @@ class lista extends Component {
                     </SView>
                 </SView>
                 <SHr />
+
                 <SHr />
                 <SView style={{
                     width: 140,
@@ -75,11 +85,14 @@ class lista extends Component {
         if (!data) return <SLoad />
         var lista = Object.keys(data).filter(itm => {
             var obj = data[itm];
+
             return obj.estado == 1 && new SDate(obj.fecha_inicio).isAfter(new SDate());
         })
         return lista.map(key => {
+            var montoi = fondo_inversion_usuario.Actions.getMontoInvertido(key, this.props);
+            if (!montoi) return <SLoad />
             var obj = data[key];
-            return this.getItem(obj);
+            return this.getItem(obj, montoi);
         })
     }
     render() {

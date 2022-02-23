@@ -32,8 +32,8 @@ class lista extends Component {
                 <SHr />
                 <SView row col={"xs-11"}>
                     <SView center col={"xs-12"}>
-                        <SText fontSize={16} bold>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
+                        <SText fontSize={16} bold>Bs. {SMath.formatMoney(montoInvertido)}</SText>
+                        <SText fontSize={12} color={STheme.color.lightGray}>Monto invertido</SText>
                     </SView>
                     <SHr />
                     <SView center col={"xs-6"}>
@@ -41,12 +41,8 @@ class lista extends Component {
                         <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
                     </SView>
                     <SView center col={"xs-6"}>
-                        <SView row center>
-                            <SIcon name={"Egreso"} width={14} />
-                            <SView width={8} />
-                            <SText fontSize={16} bold>{`${data["cantidad_acciones"]}`}</SText>
-                        </SView>
-                        <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
+                        <SText fontSize={16} bold>{parseFloat(montoInvertido / data.precio_accion).toFixed(1)} </SText>
+                        <SText fontSize={12} color={STheme.color.lightGray}># Acciones:</SText>
                     </SView>
                 </SView>
                 <SHr />
@@ -64,18 +60,6 @@ class lista extends Component {
                 </SView>
                 <SHr />
                 <SHr />
-                <SHr />
-                <SHr />
-                <SView row col={"xs-11"}>
-                    <SView center col={"xs-6"}>
-                        <SText fontSize={16} bold>{SMath.formatMoney(montoInvertido)}</SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}>Monto invertido:</SText>
-                    </SView>
-                    <SView center col={"xs-6"}>
-                        <SText fontSize={16} bold>{parseFloat(montoInvertido / data.precio_accion).toFixed(1)} </SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}># Acciones:</SText>
-                    </SView>
-                </SView>
                 <SHr />
                 <SHr />
                 <SView style={{

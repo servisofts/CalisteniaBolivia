@@ -93,7 +93,15 @@ class Lista extends Component {
                     Parent.struct.fk.map((item) => {
                         if (this[item]) params[item] = this[item];
                     })
-                    SNavigation.navigate(Parent.component + "/registro", params);
+                    // SNavigation.navigate(Parent.component + "/registro", params);
+                    SNavigation.navigate("SucursalPage", {
+                        onSelect: (itm) => {
+                            Parent.Actions.registro({
+                                key_sucursal: itm.key,
+                                key_fondo_inversion: this.key_fondo_inversion
+                            }, this.props);
+                        }
+                    });
                 }} />
             </SPage>
         );

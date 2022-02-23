@@ -44,7 +44,7 @@ class PaquetesVendidos extends Component {
             header={[
                 { key: "index", label: "#", width: 40 },
                 { key: "fecha_on", label: "Fecha de registro", width: 150, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
-                { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
+                { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
                 { key: "sucursal", label: "Sucursal", width: 150 },
                 { key: "tipo_pago", label: "Tipo Pago", width: 150 },
                 { key: "caja_movimiento/monto", label: "Monto", sumar: true, width: 100 },
@@ -54,7 +54,7 @@ class PaquetesVendidos extends Component {
                     }
                 },
                 { key: "paquete/descripcion", label: "Paquete", width: 150 },
-                { key: "caja/key_usuario", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
+                { key: "caja/key_usuario", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
 
                 // { key: "", label: "Sucursal", width: 150 },
             ]}

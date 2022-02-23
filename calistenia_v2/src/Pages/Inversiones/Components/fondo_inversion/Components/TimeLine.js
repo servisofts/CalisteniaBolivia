@@ -96,6 +96,9 @@ class TimeLine extends Component {
             </>
         })
         if (this.state.monto_actual != monto_actual) {
+            if(this.props.onChangeComision){
+                this.props.onChangeComision(monto_actual);
+            }
             this.setState({ monto_actual: monto_actual });
         }
         return LIST_ITEM

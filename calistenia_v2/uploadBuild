@@ -1,0 +1,1 @@
+ scp -r build 10:/u01/docker/calistenia/entornos/calistenia/

@@ -28,7 +28,6 @@ const SocketProps: SSocketProps = {
     // -- Producción --
     // host: '192.168.0.199',
     // ssl: false,
-
     // --CONFIGURACIONES--
     port: {
         native: 10018,

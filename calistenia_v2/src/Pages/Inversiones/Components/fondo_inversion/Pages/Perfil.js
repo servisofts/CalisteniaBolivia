@@ -21,7 +21,7 @@ class Perfil extends Component {
         var data = Parent.Actions.getByKey(this.key, this.props);
         var montoi = fondo_inversion_usuario.Actions.getMontoInvertido(this.key, this.props);
         if (!data) return <SLoad />
-        if (!montoi) return <SLoad/>
+        if (!montoi) return <SLoad />
         return <SView col={"xs-12"} center>
             <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} center card>
                 <SView col={"xs-11"} center>
@@ -32,20 +32,39 @@ class Perfil extends Component {
                     <SHr />
                     <SHr />
                     <SHr />
-                    <SText fontSize={16} bold>Bs. {SMath.formatMoney(data["monto_maximo"])}</SText>
-                    <SText fontSize={12} color={STheme.color.lightGray}>Monto maximo</SText>
-                    <SHr />
-                    <SHr />
-                    <SHr />
-                    <SText fontSize={18} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
-                    <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
+                    <SView row col={"xs-11"}>
+                        <SView center col={"xs-12"}>
+                            <SText fontSize={14} bold >{`( Bs. ${SMath.formatMoney(montoi.monto)} / Bs. ${SMath.formatMoney(data.monto_maximo)} )`}</SText>
+                            <SText fontSize={12} color={STheme.color.lightGray}>{"Monto recaudado"} </SText>
+
+                        </SView>
+                        <SHr />
+                        <SView center col={"xs-12"}>
+                            <SText fontSize={14} bold>{`Bs. ${SMath.formatMoney(data.monto_maximo - montoi.monto)}`}</SText>
+                            <SText fontSize={12} color={STheme.color.lightGray}>{"Monto disponible"} </SText>
+
+                        </SView>
+                        <SHr />
+                        <SView center col={"xs-6"}>
+                            <SText fontSize={14} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
+                            <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
+                        </SView>
+                        <SView center col={"xs-6"}>
+                            <SView row center>
+                                <SIcon name={"Egreso"} width={14} />
+                                <SView width={8} />
+                                <SText fontSize={14} bold>{`( ${data["cantidad_acciones"] - montoi.cantidad} / ${data["cantidad_acciones"]} )`}</SText>
+                            </SView>
+                            <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
+                        </SView>
+                    </SView>
                     <SHr />
                     <SHr />
                     <SHr />
                     <SView row center>
                         <SIcon name={"Ingreso"} width={14} />
                         <SView width={8} />
-                        <SText fontSize={16} bold>{`( ${parseFloat(montoi["monto"]/data["precio_accion"]).toFixed(1)} / ${data["cantidad_acciones"]} )`}</SText>
+                        <SText fontSize={16} bold>{`( ${parseFloat(montoi["monto"] / data["precio_accion"]).toFixed(1)} / ${data["cantidad_acciones"]} )`}</SText>
                     </SView>
                     <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText>
                     <SHr />
@@ -56,6 +75,12 @@ class Perfil extends Component {
     }
 
     getButtomComprar() {
+        if (!this.state.comision) {
+            return <SView col={"xs-12"} center>
+                <SIcon name={"Carrito"} width={30} />
+                <SText>No existen preventas para esta día</SText>
+            </SView>
+        }
         return <SView col={"xs-12"} center>
             <SView style={{
                 width: 200,
@@ -91,7 +116,9 @@ class Perfil extends Component {
                     {this.getButtomComprar()}
                     <SHr />
                     <SHr />
-                    <TimeLine key_fondo_inversion={this.key} />
+                    <TimeLine key_fondo_inversion={this.key} onChangeComision={(monto) => {
+                        this.setState({ comision: monto })
+                    }} />
 
                     <SHr height={50} />
                 </SPage>
