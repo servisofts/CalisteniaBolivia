@@ -4,6 +4,9 @@ import { SLoad, SPage, SView, SText, SHr, SNavigation, SThread, SButtom, SScroll
 import SSocket from 'servisofts-socket';
 import Recibo from '../../Component/Recibo';
 
+import jspdf from 'jspdf'
+import Html2Canvas from 'html2canvas'
+
 class EsperandoVenta extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +16,20 @@ class EsperandoVenta extends Component {
 
 
 
-
+    imprimir() {
+        const input = document.getElementById('recibo');
+        Html2Canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf('p', 'mm', [canvas.width, canvas.height]);
+                const imgWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                const heightLeft = imgHeight;
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save('recibo.pdf');
+            });
+    }
     validate = () => {
         var reducer = this.props.state.paqueteVentaReducer;
         if (reducer.estado == "exito" && reducer.type == "registro") {
@@ -64,10 +80,10 @@ class EsperandoVenta extends Component {
         //     });
         //     return this.isLoad();
         // }
-       
+
         return <SView center col={"xs-12"} center flex>
             <SHr />
-            <Recibo key_paquete_venta={key} />
+            <SButtom type={"danger"} onPress={() => { this.imprimir() }}>{"IMPRIMIR"}</SButtom>
             <SHr />
             <SView center>
                 <SButtom props={{
@@ -76,6 +92,14 @@ class EsperandoVenta extends Component {
                     SNavigation.replace("inicio");
                 }}>Ir a inicio</SButtom>
             </SView>
+            <SHr />
+            <div id="recibo" style={{
+                width: "100%"
+            }}>
+                <Recibo key_paquete_venta={key} />
+            </div>
+
+
             <SHr height={100} />
 
         </SView>

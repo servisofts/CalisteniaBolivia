@@ -33,6 +33,10 @@ class Perfil extends Component {
     }
     getPerfil() {
         var usuario = this.props.state.usuarioReducer.usuarioLog
+        if(!usuario){
+            SNavigation.replace("presentacion")
+            return <View/>
+        }
         return (
             <View style={{
                 width: "95%",

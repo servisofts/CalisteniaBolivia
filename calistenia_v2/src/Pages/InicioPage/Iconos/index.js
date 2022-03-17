@@ -44,6 +44,9 @@ export default class Iconos extends Component {
             if (!obj.is_page) {
                 return null;
             }
+            if(SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })=="error"){
+                this.setState({...this.state})
+            }
             if (!SSRolesPermisosValidate({ page: obj.url, permiso: "ver" })) {
                 return null;
             }

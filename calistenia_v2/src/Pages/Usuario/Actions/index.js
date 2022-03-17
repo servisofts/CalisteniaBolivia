@@ -26,9 +26,17 @@ export default class Actions {
 
     static logout(props) {
         SStorage.removeItem("usr_log");
+    
+        props.state.usuarioPageReducer.data = false;
+        props.state.usuarioRolReducer.data = {}
+        props.state.usuarioRolReducer.rol = {}
+        props.state.usuarioRolReducer.usuario = {}
         props.state.usuarioReducer.usuarioLog = false;
         props.state.usuarioReducer.usuarioDatos = false;
-        SNavigation.replace("presentacion");
+        props.dispatch({
+            type: "USUARIO_LOGOUT"
+        })
+        SNavigation.navigate("presentacion");
     }
 
     static registro_cliente(data, props) {

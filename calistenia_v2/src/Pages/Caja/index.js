@@ -6,12 +6,14 @@ import CajaMovimientoRegistroPage from "./Page/CajaMovimientoRegistroPage"
 import CajasAbiertas from './Page/CajasAbiertas'
 import DetalleCaja from './Page/DetalleCaja'
 import CajasPage from './Page/CajasPage'
+import ReciboCaja from './Page/ReciboCaja'
 const Pages: SPageListProps = {
     CajaPage,
     CajaMovimientoRegistroPage,
     CajasAbiertas,
     DetalleCaja,
-    CajasPage
+    CajasPage,
+    ReciboCaja
 }
 
 

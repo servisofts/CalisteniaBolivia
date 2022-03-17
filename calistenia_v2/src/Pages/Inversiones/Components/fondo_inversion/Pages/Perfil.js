@@ -33,30 +33,30 @@ class Perfil extends Component {
                     <SHr />
                     <SHr />
                     <SView row col={"xs-11"}>
-                        <SView center col={"xs-12"}>
+                        {/* <SView center col={"xs-12"}>
                             <SText fontSize={14} bold >{`( Bs. ${SMath.formatMoney(montoi.monto)} / Bs. ${SMath.formatMoney(data.monto_maximo)} )`}</SText>
                             <SText fontSize={12} color={STheme.color.lightGray}>{"Monto recaudado"} </SText>
 
-                        </SView>
+                        </SView> */}
                         <SHr />
-                        <SView center col={"xs-12"}>
+                        {/* <SView center col={"xs-12"}>
                             <SText fontSize={14} bold>{`Bs. ${SMath.formatMoney(data.monto_maximo - montoi.monto)}`}</SText>
                             <SText fontSize={12} color={STheme.color.lightGray}>{"Monto disponible"} </SText>
 
-                        </SView>
+                        </SView> */}
                         <SHr />
-                        <SView center col={"xs-6"}>
+                        <SView center col={"xs-12"}>
                             <SText fontSize={14} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
                             <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
                         </SView>
-                        <SView center col={"xs-6"}>
+                        {/* <SView center col={"xs-6"}>
                             <SView row center>
                                 <SIcon name={"Egreso"} width={14} />
                                 <SView width={8} />
                                 <SText fontSize={14} bold>{`( ${data["cantidad_acciones"] - montoi.cantidad} / ${data["cantidad_acciones"]} )`}</SText>
                             </SView>
                             <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
-                        </SView>
+                        </SView> */}
                     </SView>
                     <SHr />
                     <SHr />

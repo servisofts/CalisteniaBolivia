@@ -60,4 +60,13 @@ export default class Actions {
         }
         return;
     }
+    static getName(tipo) {
+        switch (tipo) {
+            case "1": return "Efectivo"
+            case "2": return "Tarjeta"
+            case "3": return "Transferencia"
+            case "4": return "Cheque"
+        }
+        return "";
+    }
 }

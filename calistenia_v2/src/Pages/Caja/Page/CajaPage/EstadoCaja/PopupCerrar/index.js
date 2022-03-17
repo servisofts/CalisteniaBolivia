@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 // import AppParams from '../../../../../Params/index';
 import { connect } from 'react-redux';
-import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage, SPopup } from 'servisofts-component';
+import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage, SPopup, SNavigation } from 'servisofts-component';
 import TiposDePago from './TiposDePago';
 import Caja from '../../../..';
 import SSocket from 'servisofts-socket';
@@ -22,7 +22,7 @@ class PopupCerrar extends Component {
         return val;
     }
 
-    
+
 
     render() {
         var MovimientosCaja = Caja.CajaMovimiento.getByKeyCaja(this.props.data.key, this.props)
@@ -62,6 +62,7 @@ class PopupCerrar extends Component {
                                 }
                                 SSocket.send(obj, true);
                                 SPopupClose("cerrarCaja")
+                                SNavigation.navigate("ReciboCaja", { key: this.props.data.key });
                             }} />
                         </SView>
                         <SView col={"xs-12"} style={{

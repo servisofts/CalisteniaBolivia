@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { SHr, SNavigation, SScrollView, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SHr, SNavigation, SScrollView, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import EstadoCaja from './EstadoCaja';
 import Movimientos from './Movimientos';
 import Sucursal from './Sucursal';
@@ -83,6 +83,7 @@ var _sucursal;
                 this.setState({ activa: caja })
               }} />
             <Menu />
+          
             <Movimientos setActiva={(caja) => {
               if (!this.state.activa) {
                 this.setState({ activa: caja })

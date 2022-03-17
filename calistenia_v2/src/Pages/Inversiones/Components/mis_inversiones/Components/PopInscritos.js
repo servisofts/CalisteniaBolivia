@@ -26,8 +26,8 @@ class PopInscritos extends Component {
                     <SView flex>
                         <SText>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
                     </SView>
-                    <SView width={60}>
-                        <SText>{new SDate(obj.fecha_on).toString("hh:mm")}</SText>
+                    <SView width={100}>
+                        <SText>{new SDate(obj.fecha_on).toString("MON,dd hh:mm")}</SText>
                     </SView>
                 </SView>
             </>

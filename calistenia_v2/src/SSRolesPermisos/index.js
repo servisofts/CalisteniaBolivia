@@ -26,6 +26,7 @@ export const SSRolesPermisosGetPages = () => {
 }
 
 export const GetRoles = (props) => {
+    if(!props.state.usuarioReducer.usuarioLog) return null;
     var reducer = props.state.rolReducer;
     var data = reducer.data;
     if (!data) {
@@ -51,10 +52,19 @@ class SSRolesPermisos extends Component {
         super(props);
     }
     getPages() {
+        if(this.key_usario != this.props.state.usuarioReducer.usuarioLog.key){
+            this.setState({...this.state})
+            return null;
+        }
         return this.permisos;
     }
     isValid({ page, permiso }) {
         // console.log("ENTRO IS VALID")
+        if(!this.props.state.usuarioReducer.usuarioLog) {
+            this.props.state.usuarioRolReducer.usuario = {};
+            this.setState({...this.state})
+            return "error";
+        }
         var roles = this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (!roles) {
             return false;
@@ -111,7 +121,10 @@ class SSRolesPermisos extends Component {
         if (!this.props.state.usuarioReducer.usuarioLog) {
             return <View />
         }
-
+        this.key_usario = this.props.state.usuarioReducer.usuarioLog.key;
+        if(!this.key_usario){
+            return <View/>
+        }
         var permisos = this.props.state.usuarioPageReducer.data;
         if (!permisos) {
             if (this.props.state.usuarioPageReducer.estado == "cargando") {

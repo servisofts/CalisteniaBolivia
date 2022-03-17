@@ -119,7 +119,7 @@ class Movimientos extends Component {
                                 {this.getUsuario(movimientos[key])}
 
                             </SView>
-
+                            {/* <SText>{JSON.stringify(movimientos[key])}</SText> */}
                         </SView>
 
 

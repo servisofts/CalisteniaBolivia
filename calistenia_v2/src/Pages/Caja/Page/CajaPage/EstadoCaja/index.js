@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SButtom, SInput, SText, STheme, SView, SPopup, SPopupOpen } from 'servisofts-component';
+import { SButtom, SInput, SText, STheme, SView, SPopup, SPopupOpen, SNavigation } from 'servisofts-component';
 import PopupCerrar from './PopupCerrar';
 import PopupConfirmarCierre from './PopupConfirmarCierre';
 
@@ -128,6 +128,7 @@ class EstadoCaja extends Component {
                                 }
                             }
                             SSocket.send(obj);
+                            SNavigation.navigate("ReciboCaja", { key: this.activa.key });
                         }
                         SPopup.close("ConfirmarCierreCaja");
                     }} />

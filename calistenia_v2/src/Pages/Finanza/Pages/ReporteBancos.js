@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SLoad, SNavigation, SPage, STable, SText } from 'servisofts-component';
+import { SDate, SIcon, SLoad, SNavigation, SPage, STable2, SText } from 'servisofts-component';
 import Actions from '../Actions';
 
 
@@ -18,14 +18,14 @@ class ReporteBancos extends Component {
     getLista() {
         var movimientos = Actions.getMovimientosBancarios(this.fecha_inicio, this.fecha_fin, this.props)
         if (!movimientos) return <SLoad />
-        return <STable
+        return <STable2
             header={[
                 { key: "key", label: "fecha", width: 100, order: "desc" },
-                { key: "ingreso/efectivo", label: "Ingreso efectivo", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />), },
-                { key: "ingreso/transferencia", label: "Ingreso transferencia", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "ingreso/cheque", label: "Ingreso cheque", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "ingreso/tarjeta", label: "Ingreso tarjeta", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
-                { key: "egreso/efectivo", label: "Egreso efectivo", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
+                { key: "ingreso/efectivo", label: "Ingreso efectivo", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />), },
+                { key: "ingreso/transferencia", label: "Ingreso transferencia", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
+                { key: "ingreso/cheque", label: "Ingreso cheque", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
+                { key: "ingreso/tarjeta", label: "Ingreso tarjeta", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
+                { key: "egreso/efectivo", label: "Egreso efectivo", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
                 // { key: "egreso/transferencia", label: "Egreso transferencia", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
                 // { key: "egreso/cheque", label: "Egreso cheque", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },
                 // { key: "egreso/tarjeta", label: "Egreso tarjeta", width: 160, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Egreso"} width={12} height={12} />) },

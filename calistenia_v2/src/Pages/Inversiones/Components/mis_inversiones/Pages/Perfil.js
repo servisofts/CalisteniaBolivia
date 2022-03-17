@@ -72,7 +72,7 @@ class Perfil extends Component {
                     <SHr />
                     <SHr />
                     <SHr />
-                    <SView row col={"xs-11"}>
+                    {/* <SView row col={"xs-11"}>
                         <SView center col={"xs-12"}>
                             <SText fontSize={14} bold >{`( Bs. ${SMath.formatMoney(montoi.monto)} / Bs. ${SMath.formatMoney(data.monto_maximo)} )`}</SText>
                             <SText fontSize={12} color={STheme.color.lightGray}>{"Monto recaudado"} </SText>
@@ -97,16 +97,16 @@ class Perfil extends Component {
                             </SView>
                             <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
                         </SView>
-                    </SView>
+                    </SView> */}
                     <SHr />
-                    <SHr />
-                    <SHr />
-                    <SView row center>
+                    {/* <SHr /> */}
+                    {/* <SHr /> */}
+                    {/* <SView row center>
                         <SIcon name={"Ingreso"} width={14} />
                         <SView width={8} />
                         <SText fontSize={16} bold>{`( ${parseFloat(montoi["monto"] / data["precio_accion"]).toFixed(1)} / ${data["cantidad_acciones"]} )`}</SText>
-                    </SView>
-                    <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText>
+                    </SView> */}
+                    {/* <SText fontSize={12} color={STheme.color.lightGray}>Acciones vendidas</SText> */}
                     <SHr />
                     {/* <SText>{JSON.stringify(montoi)}</SText> */}
                 </SView>

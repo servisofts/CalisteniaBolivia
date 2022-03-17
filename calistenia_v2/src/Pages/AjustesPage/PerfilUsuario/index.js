@@ -13,6 +13,7 @@ class PerfilUsuario extends Component {
 
     render() {
         var usr = this.props.state.usuarioReducer.usuarioLog;
+        if(!usr) return null;
         return <SView col={"xs-12"} style={{
             // height: 120,
             backgroundColor: STheme.color.card,
@@ -34,7 +35,7 @@ class PerfilUsuario extends Component {
                         borderRadius: 100,
                         overflow: "hidden",
                     }}>
-                        <SImage src={SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key} />
+                        <SImage src={SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog?.key} />
                         {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, { */}
                         {/* width: "100%", */}
                         {/* height: "100%", */}

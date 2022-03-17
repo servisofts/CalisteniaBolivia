@@ -18,9 +18,10 @@ class InicioPage extends Component {
     }
     render() {
         if (!Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("carga");
+            SNavigation.replace("presentacion");
             return null;
         }
+     
         return (
             <SPage
                 title="Inicio"

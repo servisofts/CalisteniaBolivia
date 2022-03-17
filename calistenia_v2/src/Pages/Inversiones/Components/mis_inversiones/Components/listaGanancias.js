@@ -20,13 +20,16 @@ class listaGanancias extends Component {
         var filtar_sucursales = Object.values(paquetes_vendidos).filter(paquete_venta => {
             return data_fondo_inversion_sucursal.find(fis => fis.key_sucursal == paquete_venta.caja.key_sucursal);
         })
-        fecha_inicio.addDay(-1);
+        fecha_inicio.addMonth(-1);
         let ahora = new SDate();
         var total = 0;
         let COMPONENT = Array(dias + 1).fill(0).map((j, i) => {
-            fecha_inicio.addDay(1);
+            fecha_inicio.addMonth(1)
             var ventas_del_dia = filtar_sucursales.filter(paquete_venta => {
-                return new SDate(paquete_venta.fecha_on).toString("yyyy-MM-dd") == fecha_inicio.toString("yyyy-MM-dd");
+                return (
+                    new SDate(paquete_venta.fecha_on).toString("yyyy-MM") == fecha_inicio.toString("yyyy-MM")
+                    && paquete_venta.paquete.precio > 0
+                );
             })
             if (ahora.isBefore(fecha_inicio)) {
                 return null;
@@ -39,7 +42,7 @@ class listaGanancias extends Component {
                 <SHr />
                 <SView col={"xs-12"} row>
                     <SView width={100} center>
-                        <SText> {fecha_inicio.toString("yyyy, MON dd")}</SText>
+                        <SText> {fecha_inicio.toString("yyyy, MON")}</SText>
                     </SView>
                     <SView flex center>
                         <SView height={8} col={"xs-12"} card></SView>
