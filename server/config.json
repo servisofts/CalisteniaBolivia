@@ -4,7 +4,7 @@
     "socket_client": {
         "servicio": {
             "puerto": 10001,
-            "ip": "192.168.5.118",
+            "ip": "192.168.5.1",
             "cert": {
                 "OU": "servicio",
                 "pem": "servicio.pem"
@@ -18,7 +18,7 @@
     "data_base": {
         "puerto": 5432,
         "pass": "postgres",
-        "ip": "192.168.5.118",
+        "ip": "192.168.6.18",
         "bd_name": "servisofts.calistenia",
         "user": "postgres"
     },
@@ -45,6 +45,7 @@
     },
     "socket_server": {
         "puerto": 10018,
-        "ip": "192.168.0.199"
+        "ip": "192.168.0.199",
+        "ip_public": "servisofts.com"
     }
 }

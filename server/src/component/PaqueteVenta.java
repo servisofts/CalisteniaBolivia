@@ -142,7 +142,7 @@ public class PaqueteVenta
             send_movimiento.put("key_usuario", obj.getString("key_usuario"));
             send_movimiento.put("estado", "exito");
 
-            JSONObject venta_dia;
+            /*JSONObject venta_dia;
 
             for (int i = 0; i < clientes.length(); ++i) {
                 venta_dia = PaqueteVentaUsuario.getVentaDia(clientes.getJSONObject(i).getString("key"), hoy);
@@ -151,7 +151,7 @@ public class PaqueteVenta
                     obj.put("error", "existe_venta");
                     return;
                 }
-            }
+            }*/
 
             Conexion.insertArray("paquete_venta", new JSONArray().put(paquete_venta));
 
