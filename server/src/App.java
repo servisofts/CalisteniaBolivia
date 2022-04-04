@@ -1,6 +1,7 @@
 import Config.Config;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
+import component.ZKTeco;
 import conexion.Conexion;
 import util.console;
 
@@ -35,5 +36,6 @@ public class App {
         // SSInit.initFunctions();
         // ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
         //new Migrador().run();
+        ZKTeco.pingAll();
     }
 }
