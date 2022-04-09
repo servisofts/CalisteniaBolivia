@@ -6,6 +6,7 @@ import { SButtom, SDate, SForm, SNavigation, SPage, SPopup, SText, STheme, SView
 import Usuario from '..';
 import BackgroundImage from '../../../Components/BackgroundImage';
 import FotoPerfilComponent from '../../../Components/FotoPerfilComponent';
+import HuellasDeUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
 import RolDeUsuario from './RolDeUsuario';
 
@@ -139,6 +140,7 @@ class RegistroCliente extends Component {
                         </SView>
                         <SView height={36} />
                     </SView>
+                    <HuellasDeUsuario key_usuario={this.key} />
                     <RolDeUsuario data={this.usr} />
                 </SView>
             </SPage>

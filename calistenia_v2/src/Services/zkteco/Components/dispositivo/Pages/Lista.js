@@ -21,7 +21,7 @@ class Lista extends Component {
                         Parent.Actions.solicitudRegistroHuella({
                             key_usuario: this.key_usuario,
                             key_sucursal: this.key_sucursal,
-                            codigo: "l2",
+                            codigo: 1,
                         }, this.props);
                     }}>PEDIR HUELLA</SButtom>
                     <SView width={16} />
