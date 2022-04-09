@@ -9,6 +9,7 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         System.setProperty("org.eclipse.jetty.util.log.announce", "false");
+        
         if (!Config.validate()) {
             console.error("Server closed.");
             return;
@@ -36,6 +37,5 @@ public class App {
         // SSInit.initFunctions();
         // ConexionMySql.setConexion(Config.getJSON("data_base_mysql"));
         //new Migrador().run();
-        ZKTeco.pingAll();
     }
 }
