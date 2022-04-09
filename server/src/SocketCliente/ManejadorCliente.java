@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 import component.RolPermiso;
+import component.ZKTeco;
 import util.console;
 
 public class ManejadorCliente {
@@ -50,6 +51,9 @@ public class ManejadorCliente {
                 break;
             case "usuario":
                 new Usuario(action);
+                break;
+            case "zkteco":
+                new ZKTeco(action);
                 break;
             
             default:
