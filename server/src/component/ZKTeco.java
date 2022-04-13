@@ -43,8 +43,20 @@ public class ZKTeco {
         try{
             System.out.println("Sincronizando...");
             
-            JSONObject cliente_activo = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
-            String [] keys = JSONObject.getNames(cliente_activo);
+           JSONObject cliente_activo = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
+           String [] keys = JSONObject.getNames(cliente_activo);
+
+            JSONObject send = new JSONObject();
+            send.put("component", "rol");
+            send.put("type", "getAll");
+            send.put("estado", "cargando");
+
+            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+
+            System.out.println(roles_permisos);
+
+            JSONObject permisoHuellaSzkteco = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
+
             JSONObject objSend = new JSONObject();
             objSend.put("component", "punto_venta");
             objSend.put("type", obj.getString("type"));
