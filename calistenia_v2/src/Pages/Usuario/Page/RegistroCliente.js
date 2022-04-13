@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SLoad } from 'servisofts-component';
+import { SHr, SLoad } from 'servisofts-component';
 import { SButtom, SDate, SForm, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import Usuario from '..';
 import BackgroundImage from '../../../Components/BackgroundImage';
 import FotoPerfilComponent from '../../../Components/FotoPerfilComponent';
 import HuellasDeUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
+import SincronizarUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
 import RolDeUsuario from './RolDeUsuario';
 
@@ -140,6 +141,9 @@ class RegistroCliente extends Component {
                         </SView>
                         <SView height={36} />
                     </SView>
+                    <SincronizarUsuario key_usuario={this.key} />
+                    <SHr/>
+                    <SHr/>
                     <HuellasDeUsuario key_usuario={this.key} />
                     <RolDeUsuario data={this.usr} />
                 </SView>

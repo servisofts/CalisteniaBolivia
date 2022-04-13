@@ -5,6 +5,7 @@ const version = "1.0";
 import Actions from "./Actions";
 import Reducer from "./Reducer";
 import Lista from "./Pages/Lista";
+import ZKTeco from "./Pages/ZKTeco";
 
 export default {
     component,
@@ -15,5 +16,6 @@ export default {
     },
     Pages: {
         [component]: Lista,
+        ["ZKTeco"]: ZKTeco,
     }
 }
