@@ -21,8 +21,8 @@ class SincronizarUsuario extends Component {
                     estado: "cargando",
                     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
                     data: {
-                        key_usuario: this.key_usuario,
-                        key_sucursal: this.key_sucursal,
+                        key_usuario: this.props.key_usuario,
+                       // key_sucursal: this.key_sucursal,
                     }
                 })
             }}>SINCRONIZAR</SButtom>
