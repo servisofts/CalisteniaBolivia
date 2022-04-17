@@ -55,6 +55,9 @@ public class ManejadorCliente {
             case "zkteco":
                 new ZKTeco(action);
                 break;
+            case Dispositivo.COMPONENT:
+                Dispositivo.onMessage(action);
+                break;
             
             default:
                 console.log(console.ANSI_RED,"Component Not Found -> : "+action.getString("component"));
