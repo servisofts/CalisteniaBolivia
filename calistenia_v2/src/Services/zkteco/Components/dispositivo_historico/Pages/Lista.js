@@ -83,6 +83,8 @@ class Lista extends Component {
             case "221": return "Auxiliary Input Shorted";
             case "300": return "Start";
             case "301": return "Stop";
+            case "302": return "Sincronizacion exitosa";
+            case "303": return "Sincronizacion fallida";
             default: return obj;
         }
     }
