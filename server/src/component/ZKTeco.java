@@ -1,5 +1,6 @@
 package component;
 
+import org.eclipse.jetty.util.ArrayUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import SocketCliente.SocketCliete;
@@ -43,24 +44,31 @@ public class ZKTeco {
         try{
             System.out.println("Sincronizando...");
             
-           JSONObject cliente_activo = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
-           String [] keys = JSONObject.getNames(cliente_activo);
+            JSONObject cliente_activo = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
+            String [] keys = JSONObject.getNames(cliente_activo);
 
             JSONObject send = new JSONObject();
-            send.put("component", "rol");
-            send.put("type", "getAll");
+            send.put("component", "permiso");
+            send.put("type", "getAllUsuarios");
             send.put("estado", "cargando");
+            send.put("key_permiso", "4f30c543-10d8-4566-b577-4d94442f217d");
+
+            JSONArray lista = new JSONArray();
+            if(keys!=null){
+                lista = new JSONArray(keys.toString());
+            }
+            
 
             JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
 
-            System.out.println(roles_permisos);
-
-            JSONObject permisoHuellaSzkteco = ClientesActivos.getbyKeyUsuario(obj.getJSONObject("data").getString("key_usuario"));
+            if(roles_permisos.getJSONObject("data").has(obj.getJSONObject("data").getString("key_usuario"))){
+                lista.put(obj.getJSONObject("data").getString("key_usuario"));
+            }            
 
             JSONObject objSend = new JSONObject();
             objSend.put("component", "punto_venta");
             objSend.put("type", obj.getString("type"));
-            objSend.put("data", new JSONArray(keys));
+            objSend.put("data", lista);
             objSend.put("estado", "cargando");
             objSend.put("delete_all", false);
             SocketCliete.send("zkteco", objSend.toString());

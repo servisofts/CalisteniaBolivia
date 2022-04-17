@@ -1,7 +1,6 @@
 import Config.Config;
 import SSL.SSL;
 import SocketCliente.SocketCliete;
-import component.ZKTeco;
 import conexion.Conexion;
 import util.console;
 
