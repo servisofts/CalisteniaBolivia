@@ -181,6 +181,7 @@ class EstadoCaja extends Component {
                 flex: 1,
                 justifyContent: "space-evenly"
             }}>
+                
                 <SView style={{
                     width: "100%",
                 }} center>
@@ -190,6 +191,9 @@ class EstadoCaja extends Component {
                 <SView col={"xs-12"} style={{ height: 50, }}></SView>
                 {this.getBtnClose()}
                 <SView col={"xs-12"} style={{ height: 50, }}></SView>
+                {/* <SButtom type={"danger"}>MOLINETE</SButtom> */}
+                {/* <SView col={"xs-12"} style={{ height: 50, }}></SView> */}
+
             </SView>
         );
     }

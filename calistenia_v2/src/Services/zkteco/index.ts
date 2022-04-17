@@ -3,14 +3,20 @@ const ServiceName = "zkteco";
 
 import dispositivo from './Components/dispositivo';
 import usuario_huella from './Components/usuario_huella';
+import punto_venta from './Components/punto_venta';
+import dispositivo_historico from './Components/dispositivo_historico';
 const Pages: SPageListProps = {
     ...dispositivo.Pages,
-    ...usuario_huella.Pages
+    ...usuario_huella.Pages,
+    ...punto_venta.Pages,
+    ...dispositivo_historico.Pages
 }
 
 const Reducers = {
     ...dispositivo.Reducers,
-    ...usuario_huella.Reducers
+    ...usuario_huella.Reducers,
+    ...punto_venta.Reducers,
+    ...dispositivo_historico.Reducers
 }
 
 export default {

@@ -8,47 +8,55 @@ class Lista extends Component {
         super(props);
         this.state = {
         };
-        this.key_usuario = SNavigation.getParam("key_usuario");
-        this.key_sucursal = SNavigation.getParam("key_sucursal");
+        this.key_punto_venta = SNavigation.getParam("key_punto_venta");
     }
 
+    getLista() {
+        var data = Parent.Actions.getAllByKeyPuntoVenta(this.key_punto_venta, this.props);
+        if (!data) return <SLoad />;
+        return data.map((obj) => {
+            return <SView height={150} center width={100} style={{
+                borderWidth: 1,
+                borderColor: "#fff",
+                borderRadius: 5,
+            }} row>
+                <SView col={"xs-12"} center height={"50"} >
+                    <SText fontSize={16}>{obj.descripcion}</SText>
+                </SView>
+                <SView height={50} center col={"xs-6"} style={{
+                    borderWidth: 1,
+                    borderColor: "#fff",
+                    borderRadius: 5,
+                }} onPress={() => {
+                    Parent.Actions.abrir(obj, 1, this.props);
+                }}>
+                    <SText>{"<"}</SText>
+                </SView>
+                <SView height={50} center col={"xs-6"} style={{
+                    borderWidth: 1,
+                    borderColor: "#fff",
+                    borderRadius: 5,
+                }} onPress={() => {
+                    Parent.Actions.abrir(obj, 2, this.props);
+                }}>
+                    <SText>{">"}</SText>
+                </SView>
+                <SView col={"xs-12"} center height={"50"} onPress={() => {
+                    SNavigation.navigate("dispositivo_historico", { key: obj.key });
+                }} >
+                    <SText>Eventos</SText>
+                </SView>
+
+            </SView>
+        })
+    }
 
     render() {
         return (
             <SPage title={'Lista de ' + Parent.component} disableScroll>
-                <SView row>
-                    <SButtom type={"outline"} onPress={() => {
-                        Parent.Actions.solicitudRegistroHuella({
-                            key_usuario: this.key_usuario,
-                            key_sucursal: this.key_sucursal,
-                            codigo: 1,
-                        }, this.props);
-                    }}>PEDIR HUELLA</SButtom>
-                    <SView width={16} />
-                    <SButtom type={"outline"} onPress={() => {
-                        SSocket.send({
-                            servicio: "zkteco",
-                            component: "zkteco",
-                            type: "sincronizarUsuario",
-                            estado: "cargando",
-                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                            data: {
-                                key_usuario: this.key_usuario,
-                                key_sucursal: this.key_sucursal,
-                            }
-                        })
-                    }}>SINCRONIZAR USUARIO</SButtom>
-                    <SView width={16} />
-
-                    <SButtom type={"danger"} onPress={() => {
-                        SSocket.send({
-                            servicio: "zkteco",
-                            component: "zkteco",
-                            type: "sincronizarAll",
-                            estado: "cargando",
-                            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-                        })
-                    }} >SINCRONIZAR ALL</SButtom>
+                <SHr />
+                <SView col={"xs-12"} center row>
+                    {this.getLista()}
                 </SView>
             </SPage>
         );

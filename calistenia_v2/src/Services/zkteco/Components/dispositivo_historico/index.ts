@@ -1,12 +1,11 @@
 //  COMPONENT CONFIG
-const component = "dispositivo"; // COMPONENT NAME 
+const component = "dispositivo_historico"; // COMPONENT NAME 
 const version = "1.0";
 // ---------------------------------------
 import Actions from "./Actions";
 import Reducer from "./Reducer";
 
 import Lista from "./Pages/Lista";
-import Molinete from "./Pages/Molinete";
 export default {
     component,
     version,
@@ -16,6 +15,5 @@ export default {
     },
     Pages: {
         [component]: Lista,
-        "molinete": Molinete
     }
 }
