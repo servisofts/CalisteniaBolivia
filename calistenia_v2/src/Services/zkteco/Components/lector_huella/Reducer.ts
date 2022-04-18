@@ -37,9 +37,6 @@ const TypesSwitch = (state: any, action: DataProps) => {
         case "editar": return editar(state, action);
         case "getByKey": return getByKey(state, action);
         case "onEvent": return onEvent(state, action);
-        case "copiar": return copiar(state, action);
-        case "getUsuarios": return getUsuarios(state, action);
-        case "getDataTable": return getDataTable(state, action);
 
     }
 }
@@ -55,14 +52,6 @@ const registro = (state: any, action: DataProps) => {
     if (!state.data) return;
     state.data[action.data.key] = action.data;
 }
-const copiar = (state: any, action: DataProps) => {
-    if (action.estado != "exito") return;
-    if (!state.data) return;
-    action.data.map((obj: any) => {
-        state.data[obj.key] = obj;
-    })
-
-}
 const editar = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
     if (!state.data) return;
@@ -72,19 +61,11 @@ const getByKey = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
     state.data[action.data.key] = action.data;
 }
-const getUsuarios = (state: any, action: DataProps) => {
-    if (action.estado != "exito") return;
-    state.data_usuarios[action.dispositivo.key] = action.data;
-}
-const getDataTable = (state: any, action: DataProps) => {
-    if (action.estado != "exito") return;
-    state.table = action.table;
-    state.dataTable = action.data;
-}
+
 const onEvent = (state: any, action: DataProps) => {
-   // if (state.key_sucursal) {
-     //   if (action.data.key_sucursal == state.key_sucursal) {
-            state.lastEvent = action;
-       // }
-    //}
+     if (state.key_sucursal) {
+       if (action.key_sucursal == state.key_sucursal) {
+        state.lastEvent = action;
+     }
+    }
 }
