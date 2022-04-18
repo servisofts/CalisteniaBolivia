@@ -55,6 +55,9 @@ public class ManejadorCliente {
             case "zkteco":
                 new ZKTeco(action);
                 break;
+            case LectorHuella.COMPONENT:
+                LectorHuella.onMessage(action);
+                break;
             case Dispositivo.COMPONENT:
                 Dispositivo.onMessage(action);
                 break;
