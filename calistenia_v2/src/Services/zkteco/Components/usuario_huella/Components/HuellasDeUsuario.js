@@ -29,12 +29,24 @@ class HuellasDeUsuario extends Component {
 
                     SNavigation.navigate("SucursalPage", {
                         onSelect: (itm) => {
-                            dispositivo.Actions.solicitudRegistroHuella({
-                                ...huella,
-                                key_usuario: this.props.key_usuario,
-                                key_sucursal: itm.key,
-                                codigo: obj,
-                            }, this.props);
+                            this.setState({
+                                solicitud: {
+                                    ...huella,
+                                    key_usuario: this.props.key_usuario,
+                                    key_sucursal: itm.key,
+                                    codigo: obj,
+                                }
+                            })
+                            /*SPopup.open({
+                                key: "esperandoHuella",
+                                content: <EsperandoHuella data={{
+                                    ...huella,
+                                    key_usuario: this.props.key_usuario,
+                                    key_sucursal: itm.key,
+                                    codigo: obj,
+                                }} />
+                            })*/
+
                         }
                     })
                 }}>
@@ -47,6 +59,12 @@ class HuellasDeUsuario extends Component {
 
 
     render() {
+        if (this.state.solicitud) {
+
+            SNavigation.navigate("lector_huella", {soli:JSON.stringify(this.state.solicitud)});
+            this.state.solicitud = null;
+            return <SText>Hola mundo</SText>;
+        }
         return (
             <SView col={"xs-12"} center row>
                 {this.getLista()}
