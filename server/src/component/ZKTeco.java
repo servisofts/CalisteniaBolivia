@@ -1,5 +1,7 @@
 package component;
 
+import java.util.Arrays;
+
 import org.eclipse.jetty.util.ArrayUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,6 +72,7 @@ public class ZKTeco {
             objSend.put("type", obj.getString("type"));
             objSend.put("data", lista);
             objSend.put("estado", "cargando");
+            objSend.put("key_usuario", obj.getString("key_usuario"));
             objSend.put("delete_all", false);
             SocketCliete.send("zkteco", objSend.toString());
 
@@ -85,9 +88,25 @@ public class ZKTeco {
             System.out.println("Sincronizando...");
             
             JSONObject clientes_activos = ClientesActivos.getAll();
-            String [] keys = JSONObject.getNames(clientes_activos);
+            String keys1[] = JSONObject.getNames(clientes_activos);
+
+
+            JSONObject send = new JSONObject();
+            send.put("component", "permiso");
+            send.put("type", "getAllUsuarios");
+            send.put("estado", "cargando");
+            send.put("key_permiso", "4f30c543-10d8-4566-b577-4d94442f217d");
+
+            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+            String keys2[] = JSONObject.getNames(roles_permisos.getJSONObject("data"));
+            
+            String keyss1 = String.join(",", keys1);
+            String keyss2 = String.join(",", keys2);
+
+            JSONArray keyss = new JSONArray("["+keyss1+","+keyss2+"]");
+
             obj.put("component", "punto_venta");
-            obj.put("data", new JSONArray(keys));
+            obj.put("data", keyss);
             obj.put("estado", "cargando");
             obj.put("delete_all", true);
             SocketCliete.send("zkteco", obj.toString());
