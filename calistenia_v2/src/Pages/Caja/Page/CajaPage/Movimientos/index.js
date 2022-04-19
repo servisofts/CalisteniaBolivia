@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { connect } from 'react-redux';
-import { SView, SText, SDate, SOrdenador, SIcon, STheme } from 'servisofts-component';
+import { SView, SText, SDate, SOrdenador, SIcon, STheme, SButtom, SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../../../TipoPago';
 import Usuario from '../../../../Usuario';
+//import SSocket from 'servisofts-socket';	
 // import Actions from '../../../../Actions'
 class Movimientos extends Component {
     constructor(props) {
@@ -217,7 +218,6 @@ class Movimientos extends Component {
             {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }))}
 
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
-            <SView col={"xs-12"} height={62} center></SView>
 
         </SView>
 
@@ -243,7 +243,11 @@ class Movimientos extends Component {
                     </SView>
                 </SView>
                 {this.getInfo()}
-
+                <SView col={"xs-12"} height={32} ></SView>
+                <SButtom type={"danger"} onPress={() => {
+                    SNavigation.navigate("punto_venta", { key_sucursal: this.activa.key_sucursal });
+                }}>MOLINETE</SButtom>
+                <SView col={"xs-12"} height={62} center></SView>
             </SView>
         )
     }

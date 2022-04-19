@@ -8,6 +8,7 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         System.setProperty("org.eclipse.jetty.util.log.announce", "false");
+        
         if (!Config.validate()) {
             console.error("Server closed.");
             return;

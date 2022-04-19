@@ -55,6 +55,7 @@ public class servicio2 {
         SocketCliete.StartServicio("usuario");
         SocketCliete.StartServicio("roles_permisos");
         SocketCliete.StartServicio("geolocation");
+        SocketCliete.StartServicio("zkteco");
     }
 
     private void initServer(JSONObject obj) {
@@ -71,9 +72,10 @@ public class servicio2 {
             objSend.put("type", "getServicioHabilitado");
             objSend.put("key", obj.getJSONObject("data").getString("key"));
             objSend.put("estado", "cargando");
+
             SocketCliete.send("servicio", objSend.toString());
         } else {
-            System.out.println(obj.getString("error"));
+            System.out.println(obj.toString());
         }
     }
 
@@ -81,6 +83,7 @@ public class servicio2 {
         JSONObject data = new JSONObject();
         data.put("cert", Config.getJSON("ssl").getJSONObject("cert"));
         data.put("ip", Config.getJSON("socket_server").getString("ip"));
+        data.put("ip_public", Config.getJSON("socket_server").getString("ip_public"));
         // SSL.getCert(nombre)
         // String pem =
         // SSL.getPemNoHeader(SSL.getCert(Config.getJSON("ssl").getJSONObject("cert").getString("OU")));

@@ -15,6 +15,7 @@ import Finanza from '../Pages/Finanza';
 import Manual from '../Pages/Manual';
 import Billetera from '../Pages/Billetera';
 import Inversiones from '../Pages/Inversiones';
+import Services from '../Services';
 const reducers = combineReducers({
     ...Usuario.Reducers,
     ...RolesPermisosReducer,
@@ -31,6 +32,7 @@ const reducers = combineReducers({
     ...Manual.Reducers,
     ...Billetera.Reducers,
     ...Inversiones.Reducers,
+    ...Services.Reducers
 });
 
 export default (state, action) => {

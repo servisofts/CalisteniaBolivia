@@ -151,6 +151,11 @@ public class SocketCliete extends Thread {
     private void onMesagge(String msg, JSONObject config) {
         try {
             JSONObject data = new JSONObject(msg);
+if(data.has("_sincrone_key")){
+    String sinc_key = data.getString("_sincrone_key");
+    SCSincroneSend.mapa.get(sinc_key).onMesagge(data);
+}
+
             switch (config.getJSONObject("cert").getString("OU")) {
                 case "servicio":
                     ManejadorServicio.onMessage(data);
@@ -171,6 +176,10 @@ public class SocketCliete extends Thread {
         }
     }
 
+    public boolean isOpen() {
+        return Open;
+    }
+
     public void send(String data) {
         // SocketCliete.StartServicio("usuario");
         console.log(console.ANSI_RED,"----->Send -> "+config.getJSONObject("cert").getString("OU") +" ------------START-------------- \n"+ data.toString() +"\n-------------------------------------END------------");
@@ -182,6 +191,10 @@ public class SocketCliete extends Thread {
 
         Clientes.get(server).response.println(data);
         Clientes.get(server).response.flush();
+    }
+
+    public static JSONObject sendSinc(String server, JSONObject data) {
+        return new SCSincroneSend(Clientes.get(server)).send(data);
     }
 
     public static void send(String server, JSONObject data, SSSessionAbstract session) {

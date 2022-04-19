@@ -43,6 +43,16 @@ public class ClientesActivos {
         SocketCliete.send("usuario", obj, session);
     }
 
+    public static JSONObject getbyKeyUsuario(String key_usuario) {
+        try {
+            String consulta =  "select get_all_cliente_activo('"+key_usuario+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {       
+            e.printStackTrace();     
+            return null;
+        }
+    }
+
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_all_clientes_activos() as json";
@@ -52,6 +62,16 @@ public class ClientesActivos {
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getAll() {
+        try {
+            String consulta =  "select get_all_clientes_activos() as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

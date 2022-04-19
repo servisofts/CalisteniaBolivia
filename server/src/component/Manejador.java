@@ -172,6 +172,14 @@ public class Manejador {
     }
 
     private void redirect(JSONObject data, SSSessionAbstract session){
+        if(data.has("service")){
+            switch(data.getString("service")){
+                case "zkteco":
+                    data.remove("service");
+                    SocketCliete.send("zkteco", data,session);
+                    return;
+            }
+        }
         switch(data.getString("component")){
             case "rol":
                 SocketCliete.send("roles_permisos", data, session);
@@ -190,6 +198,9 @@ public class Manejador {
             break;
             case "usuarioPage":
                 SocketCliete.send("roles_permisos", data, session);
+            break;
+            case "dispositivo":
+                SocketCliete.send("zkteco", data, session);
             break;
             default: SSManejador.navigate(data, session);
         }
