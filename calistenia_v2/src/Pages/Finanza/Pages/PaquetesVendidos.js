@@ -58,6 +58,10 @@ class PaquetesVendidos extends Component {
 
                 // { key: "", label: "Sucursal", width: 150 },
             ]}
+            filter={(item) => {
+                if(item.estado != 1) return false;
+                return true;
+            }}
             limit={100}
             data={data}
         />

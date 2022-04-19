@@ -39,6 +39,7 @@ const getMovimientosBancarios = (state, action) => {
         state.data = {}
         Object.keys(action.data).map(key => {
             var obj = action.data[key];
+            obj.key = key;
             state.data[key] = obj;
         })
     }

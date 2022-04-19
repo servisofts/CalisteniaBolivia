@@ -53,11 +53,20 @@ class Grafico extends Component {
             monto_por_dia[fecha.toString("yyyy-MM-dd")] = {};
             Object.keys(paquetes).map((key, index) => {
                 var paquete = paquetes[key];
+
                 if (!monto_por_sucursal[paquete.caja.key_sucursal]) {
                     monto_por_sucursal[paquete.caja.key_sucursal] = 0;
                 }
 
                 if (new SDate(paquete.fecha_on).equalDay(fecha)) {
+                    if (new SDate(paquete.fecha_on).equalDay(new SDate("2022-03-10","yyyy-MM-dd"))) {
+                        if (paquete.sucursal == "Pirai") {
+                            console.log(paquete.caja_movimiento)
+                        }
+                    }
+                    if (paquete.estado <= 0) {
+                        return;
+                    }
                     if (!paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal]) {
                         paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {};
                         monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
@@ -68,12 +77,17 @@ class Grafico extends Component {
                     }
                     paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal][paquete.key] = paquete;
                     var temp = monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal];
+                    // monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
+                    //     monto: temp.monto + paquete.paquete.precio,
+                    //     cantidad: temp.cantidad + 1,
+                    //     total: temp.total + paquete.paquete.precio
+                    // };
                     monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
-                        monto: temp.monto + paquete.paquete.precio,
+                        monto: temp.monto + paquete.caja_movimiento.monto,
                         cantidad: temp.cantidad + 1,
-                        total: temp.total + paquete.paquete.precio
+                        total: temp.total + paquete.caja_movimiento.monto
                     };
-                    monto_por_sucursal[paquete.caja.key_sucursal] += paquete.paquete.precio;
+                    monto_por_sucursal[paquete.caja.key_sucursal] += paquete.caja_movimiento.monto;
                     if (maximo_monto < monto_por_sucursal[paquete.caja.key_sucursal]) {
                         maximo_monto = monto_por_sucursal[paquete.caja.key_sucursal];
                     }
