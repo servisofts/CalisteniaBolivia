@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { SLoad, SNavigation, SPage, SSCrollView, SScrollView2, SView } from 'servisofts-component';
+import { SHr, SLoad, SNavigation, SPage, SSCrollView, SScrollView2, SView } from 'servisofts-component';
 import Usuario from '../..';
 // import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
+import HuellasDeUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
+import SincronizarUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import PaquetesDeUsuario from './PaquetesDeUsuario';
 // import PaquetesDeUsuario from './PaquetesDeUsuario';
 // import SSCrollView from '../../Component/SScrollView';
@@ -60,6 +62,13 @@ class ClientePerfilPage extends Component {
           textTransform: "capitalize",
         }}>{"CI " + this.data["CI"]}</Text> */}
       </View>
+      <SHr />
+      <SHr />
+      <HuellasDeUsuario key_usuario={this.data?.key} />
+      <SHr />
+      <SincronizarUsuario key_usuario={this.data?.key} />
+      <SHr />
+      <SHr />
     </View >
   }
   render() {

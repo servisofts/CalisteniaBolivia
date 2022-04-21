@@ -46,6 +46,7 @@ class RegistroCliente extends Component {
                 Password: { label: "Password", type: "password", isRequired: true, defaultValue: this.usr.Password, },
             }}
             onSubmit={(values) => {
+                this.state.onLoad = true;
                 if (this.key) {
                     Usuario.Actions.editar({
                         ...this.usr,
@@ -102,14 +103,18 @@ class RegistroCliente extends Component {
         if (error) {
             SPopup.open({ key: "errorRegistro", content: this.alertError(error) });
         }
-        if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "registro") {
-            this.props.state.usuarioReducer.estado = "";
-            SNavigation.goBack();
+        if (this.state.onLoad) {
+            this.state.onLoad = false;
+            if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "registro") {
+                this.props.state.usuarioReducer.estado = "";
+                SNavigation.goBack();
+            }
+            if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "editar") {
+                this.props.state.usuarioReducer.estado = "";
+                SNavigation.goBack();
+            }
         }
-        if (this.props.state.usuarioReducer.estado == "exito" && this.props.state.usuarioReducer.type == "editar") {
-            this.props.state.usuarioReducer.estado = "";
-            SNavigation.goBack();
-        }
+
 
         if (this.key) {
             this.usr = Usuario.Actions.getByKey(this.key, this.props);
@@ -135,16 +140,20 @@ class RegistroCliente extends Component {
                             }}
                                 onPress={() => {
                                     this.form.submit();
+
                                 }}
                             >{(this.key ? "Editar" : "Crear")}</SButtom>
 
                         </SView>
                         <SView height={36} />
                     </SView>
-                    <SincronizarUsuario key_usuario={this.key} />
-                    <SHr/>
-                    <SHr/>
-                    <HuellasDeUsuario key_usuario={this.key} />
+                    <SHr />
+                    <SHr />
+                    <HuellasDeUsuario key_usuario={this.usr?.key} />
+                    <SHr />
+                    <SincronizarUsuario key_usuario={this.usr?.key} />
+                    <SHr />
+                    <SHr />
                     <RolDeUsuario data={this.usr} />
                 </SView>
             </SPage>
