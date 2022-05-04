@@ -12,8 +12,9 @@ class SincronizarUsuario extends Component {
     }
 
     render() {
+        if (!this.props.key_usuario) return null;
         return (
-            <SButtom type='danger' onPress={() => {
+            <SView onPress={() => {
                 SSocket.send({
                     servicio: "zkteco",
                     component: "zkteco",
@@ -25,7 +26,23 @@ class SincronizarUsuario extends Component {
                         // key_sucursal: this.key_sucursal,
                     }
                 })
-            }}>SINCRONIZAR</SButtom>
+            }} center style={{
+                borderWidth: 1,
+                borderRadius: 5,
+                height: 60,
+                width: 200,
+                borderColor: "#ddd",
+            }}>
+                <SText fontSize={11}>Sincronizar huellas en los molinetes</SText>
+                <SHr />
+                <SView style={{
+                    height: 20,
+                    width: 20,
+                    // transform: [{ rotate: "80deg" }]
+                }} center >
+                    <SIcon name={"Reload"} fill={"#fff"} />
+                </SView>
+            </SView>
         );
     }
 }

@@ -12,12 +12,13 @@ class RelojCaja extends Component {
             time: new Date(),
         };
         this.anim = new Animated.Value(0);
+        this.isRun = false;
+
     }
 
     componentDidMount() {
-        this.isRun = true;
+        this.isRun = false;
         this.getActiva();
-        this.contar();
     }
     getActiva() {
         if (!this.props.state.usuarioReducer.usuarioLog) {
@@ -42,8 +43,8 @@ class RelojCaja extends Component {
             duration: (1000) / 5,
             useNativeDriver: true
         }).start(() => {
-            this.setState({ time: new Date() });
             if (this.isRun) {
+                this.setState({ time: new Date() });
                 this.contar();
             }
         });
@@ -51,6 +52,7 @@ class RelojCaja extends Component {
         // this.contar();
     }
     componentWillUnmount() {
+        // Animated.stopAnimation(this.anim);
         this.isRun = false;
     }
 
@@ -129,6 +131,11 @@ class RelojCaja extends Component {
             return <View />;
         }
         if (!data.key) return <View />;
+        if (!this.isRun) {
+            this.isRun = true;
+            this.contar();
+
+        }
         this.entrenamiento = data;
         return (
             <SView style={{

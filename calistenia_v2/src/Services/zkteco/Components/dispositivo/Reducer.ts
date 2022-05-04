@@ -13,7 +13,7 @@ const initialState = () => {
     var initialState: any = {
         component: Parent.component,
         version: Parent.version,
-        data_usuarios:{},
+        data_usuarios: {},
     }
     return initialState;
 }
@@ -54,6 +54,7 @@ const registro = (state: any, action: DataProps) => {
     if (!state.data) return;
     state.data[action.data.key] = action.data;
 }
+
 const copiar = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
     if (!state.data) return;
@@ -80,3 +81,4 @@ const getDataTable = (state: any, action: DataProps) => {
     state.table = action.table;
     state.dataTable = action.data;
 }
+

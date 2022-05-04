@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Svg, { Line, Text } from 'react-native-svg';
+import Svg, { Line, Text, G } from 'react-native-svg';
 import { connect } from 'react-redux';
 import { SLoad, SText, SView, SDate, STheme } from 'servisofts-component';
 import FechasBetween from '../../../../../Components/FechasBetween';
@@ -52,30 +52,40 @@ class Grafico extends Component {
             paquetes_por_dia[fecha.toString("yyyy-MM-dd")] = {};
             monto_por_dia[fecha.toString("yyyy-MM-dd")] = {};
             Object.keys(paquetes).map((key, index) => {
-                var paquete = paquetes[key];
-                if (!monto_por_sucursal[paquete.caja.key_sucursal]) {
-                    monto_por_sucursal[paquete.caja.key_sucursal] = 0;
+                var paquete_venta = paquetes[key];
+
+                if (!monto_por_sucursal[paquete_venta.key_sucursal]) {
+                    monto_por_sucursal[paquete_venta.key_sucursal] = 0;
                 }
 
-                if (new SDate(paquete.fecha_on).equalDay(fecha)) {
-                    if (!paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal]) {
-                        paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {};
-                        monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
+                if (new SDate(paquete_venta.fecha_on).equalDay(fecha)) {
+
+                    if (paquete_venta.estado <= 0) {
+                        return;
+                    }
+                    if (!paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal]) {
+                        paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal] = {};
+                        monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal] = {
                             monto: 0,
                             cantidad: 0,
-                            total: monto_por_sucursal[paquete.caja.key_sucursal]
+                            total: monto_por_sucursal[paquete_venta.key_sucursal]
                         };
                     }
-                    paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal][paquete.key] = paquete;
-                    var temp = monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal];
-                    monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
-                        monto: temp.monto + paquete.paquete.precio,
+                    paquetes_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal][paquete_venta.key] = paquete_venta;
+                    var temp = monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal];
+                    // monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete.caja.key_sucursal] = {
+                    //     monto: temp.monto + paquete.paquete.precio,
+                    //     cantidad: temp.cantidad + 1,
+                    //     total: temp.total + paquete.paquete.precio
+                    // };
+                    monto_por_dia[fecha.toString("yyyy-MM-dd")][paquete_venta.key_sucursal] = {
+                        monto: temp.monto + paquete_venta.total,
                         cantidad: temp.cantidad + 1,
-                        total: temp.total + paquete.paquete.precio
+                        total: temp.total + paquete_venta.total
                     };
-                    monto_por_sucursal[paquete.caja.key_sucursal] += paquete.paquete.precio;
-                    if (maximo_monto < monto_por_sucursal[paquete.caja.key_sucursal]) {
-                        maximo_monto = monto_por_sucursal[paquete.caja.key_sucursal];
+                    monto_por_sucursal[paquete_venta.key_sucursal] += paquete_venta.total;
+                    if (maximo_monto < monto_por_sucursal[paquete_venta.key_sucursal]) {
+                        maximo_monto = monto_por_sucursal[paquete_venta.key_sucursal];
                     }
                 }
             });
@@ -139,15 +149,16 @@ class Grafico extends Component {
             }
         }
         if (monto == monto_antiguo) return null;
-        return <Text
-            fill="#999"
-            fontSize="9"
-            fontWeight="bold"
-            x={`${x}%`} y={`${y - 1}%`}
-            textAnchor="middle"
-        >
-            {"Bs." + monto}
-        </Text>
+        return <G >
+            <Text
+                fill="#999"
+                fontSize="9"
+                fontWeight="bold"
+                x={`${x}%`} y={`${y - 1}%`}
+            >
+                {"Bs." + monto}
+            </Text>
+        </G>
     }
     getInfoBottom() {
         var fechaInicio = new SDate(this.state.fechaInicio, "yyyy-MM-dd");

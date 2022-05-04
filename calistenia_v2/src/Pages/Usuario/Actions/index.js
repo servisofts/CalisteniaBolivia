@@ -14,6 +14,7 @@ export default class Actions {
     }
     static login(data) {
         var object = {
+            servicio:"usuario",
             component: "usuario",
             version: "2.0",
             type: "login",

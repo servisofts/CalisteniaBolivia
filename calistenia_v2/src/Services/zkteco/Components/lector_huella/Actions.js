@@ -46,8 +46,17 @@ export default class Actions {
         })
     }
 
-
-
+    static solicitudRegistroHuella = (data, props) => {
+        SSocket.send({
+            service: "zkteco",
+            component: Parent.component,
+            version: Parent.version,
+            type: "solicitud_registro_huella",
+            estado: "cargando",
+            key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            data: data
+        })
+    }
     static editar = (data, props) => {
         SSocket.send({
             service: ServiceName,

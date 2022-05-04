@@ -39,7 +39,7 @@ const App = (props) => {
                     title:"Calistenia-Bolivia",
                     navBar: BarraSuperior
                 }} />
-                <SSocket identificarse={(props) => {
+                <SSocket store={store} identificarse={(props) => {
                     var usuario = props.state.usuarioReducer.usuarioLog;
                     return {
                         data: usuario ? usuario : {},

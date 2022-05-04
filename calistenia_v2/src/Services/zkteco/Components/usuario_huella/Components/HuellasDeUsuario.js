@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
 import dispositivo from '../../dispositivo';
 class HuellasDeUsuario extends Component {
@@ -10,23 +10,21 @@ class HuellasDeUsuario extends Component {
         };
     }
 
+    onSubmit() {
+
+    }
     getLista() {
         var data = Parent.Actions.getByKeyUsuario(this.props.key_usuario, this.props);
         if (!data) return <SLoad />
-        var arr = Array.from({ length: 10 }, (x, i) => i + 1)
+        var arr = Array.from({ length: 5 }, (x, i) => i + 1)
         return arr.map((obj) => {
             var huella = data.find((x) => x.codigo == obj);
             return <>
                 <SView width={8} />
                 <SView style={{
-                    borderWidth: 1,
-                    height: 40,
-                    width: 50,
-                    borderColor: "#fff",
-                    borderRadius: 5,
-                    backgroundColor: huella ? "#fff" : "#000",
+                    height: 54,
+                    width: 54,
                 }} center onPress={() => {
-
                     SNavigation.navigate("SucursalPage", {
                         onSelect: (itm) => {
                             this.setState({
@@ -37,20 +35,15 @@ class HuellasDeUsuario extends Component {
                                     codigo: obj,
                                 }
                             })
-                            /*SPopup.open({
-                                key: "esperandoHuella",
-                                content: <EsperandoHuella data={{
-                                    ...huella,
-                                    key_usuario: this.props.key_usuario,
-                                    key_sucursal: itm.key,
-                                    codigo: obj,
-                                }} />
-                            })*/
-
                         }
                     })
                 }}>
-                    <SText color={huella ? "#000" : "#fff"}>{obj}</SText>
+                    <SView style={{
+                        height: 45,
+                        width: 45,
+                    }} center>
+                        <SIcon name={"Fp"} fill={huella ? "#fff" : "#444"} />
+                    </SView>
                 </SView>
                 <SView width={8} />
             </>
@@ -59,16 +52,21 @@ class HuellasDeUsuario extends Component {
 
 
     render() {
-        if (this.state.solicitud) {
+        if (!this.props.key_usuario) return null;
 
-            SNavigation.navigate("lector_huella", {soli:JSON.stringify(this.state.solicitud)});
+        if (this.state.solicitud) {
+            SNavigation.navigate("lector_huella", { soli: JSON.stringify(this.state.solicitud) });
             this.state.solicitud = null;
-            return <SText>Hola mundo</SText>;
+            return <SText>Exito</SText>;
         }
         return (
-            <SView col={"xs-12"} center row>
-                {this.getLista()}
+            <SView col={"xs-12"} center >
+                <SText color={STheme.color.gray}>Huellas</SText>
+                <SHr />
+                <SView col={"xs-12"} center row>
+                    {this.getLista()}
 
+                </SView>
             </SView>
         );
     }

@@ -680,6 +680,7 @@ class Manual extends Component {
                 Para iniciar operaciones deberá tener cancelado el 100% del valor del módulo.
             </SText>
             <SHr /><SHr /><SHr /><SHr /><SHr /><SHr /><SHr />
+            
         </SView>
     }
     render() {
@@ -701,13 +702,15 @@ class Manual extends Component {
                         <SHr height={32} />
                         {this.getRolEntrenador()}
                         <SHr height={32} />
-                        {this.getRolAdministrador()*/}
+                        {this.getRolAdministrador()}
                         <SHr height={32} />
                         {this.getFondoInversionAdmin()}
                         <SHr height={32} />
-                        {this.getFondoInversionInversionista()}
+                        {this.getFondoInversionInversionista()*/}
                         <SHr height={32} />
-                        {this.getFondoInversionCotizacion()}
+                        {
+                        //this.getFondoInversionCotizacion()
+                        }
                         <SHr /><SHr /><SHr /><SHr /><SHr />
                     </SView>
                 </SView>

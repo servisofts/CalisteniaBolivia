@@ -32,7 +32,7 @@ class PaquetesVendidos extends Component {
     }
     getLista() {
 
-        var data = Actions.getPaquetesVendidos({
+        var data = Actions.getPaquetesVendidosAll({
             fecha_desde: this.fecha_inicio,
             fecha_hasta: this.fecha_fin
         }, this.props)
@@ -44,17 +44,27 @@ class PaquetesVendidos extends Component {
             header={[
                 { key: "index", label: "#", width: 40 },
                 { key: "fecha_on", label: "Fecha de registro", width: 150, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
-                { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
-                { key: "sucursal", label: "Sucursal", width: 150 },
-                { key: "tipo_pago", label: "Tipo Pago", width: 150 },
-                { key: "caja_movimiento/monto", label: "Monto", sumar: true, width: 100 },
+                // { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
                 {
-                    key: "caja_movimiento/data", label: "Detalle", width: 350, render: (item) => {
-                        return this.getDetallePago(item)
+                    key: "usuarios", label: "Cliente", width: 250, render: (item) => {
+                        return item.map((key_usr) => {
+                            return `${usuarios[key_usr]?.Nombres} ${usuarios[key_usr]?.Apellidos}`.toUpperCase()
+                        })
+                    },
+                    component:(arr)=>{
+                        return <SText fontSize={11}>{arr.join(", ")}</SText>
                     }
                 },
-                { key: "paquete/descripcion", label: "Paquete", width: 150 },
-                { key: "caja/key_usuario", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
+                { key: "sucursal", label: "Sucursal", width: 150 },
+                // { key: "tipo_pago", label: "Tipo Pago", width: 150 },
+                { key: "total", label: "Monto", sumar: true, width: 100 },
+                // {
+                //     key: "caja_movimiento/data", label: "Detalle", width: 350, render: (item) => {
+                //         return this.getDetallePago(item)
+                //     }
+                // },
+                { key: "paquete", label: "Paquete", width: 150 },
+                { key: "key_cajero", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}`.toUpperCase() } },
 
                 // { key: "", label: "Sucursal", width: 150 },
             ]}

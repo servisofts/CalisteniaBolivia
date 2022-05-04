@@ -28,7 +28,7 @@ const getAll = (state, action) => {
         state.data = action.data;
         state.usuario_rol = action.rol;
         state.key_usuario = action.key_usuario;
-        console.log(action.rol);
+        // console.log(action.rol);
 
     }
 }
@@ -44,7 +44,7 @@ const rolPermiso = (state, action) => {
                 pagina["permisos"] = {};
                 state.data[pagina.url] = pagina;
             }
-            console.log(is_activo)
+            // console.log(is_activo)
 
             if (is_activo) {
                 state.data[pagina.url].permisos[permiso.type] = permiso;

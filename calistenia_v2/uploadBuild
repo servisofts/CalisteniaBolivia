@@ -1,1 +1,1 @@
- scp -r build servisofts@192.168.0.10:/home/servisofts/servicios/calistenia/entornos/calistenia/
+ scp -r build 10:/home/servisofts/servicios/calistenia/entornos/calistenia/
