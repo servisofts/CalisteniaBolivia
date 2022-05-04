@@ -51,7 +51,7 @@ export default class Iconos extends Component {
                 return null;
             }
             var urlImage = SSocket.api.rp + "page/" + obj.key;
-            return <Item obj={obj} urlImage={urlImage} animMove={this.state.anim}
+            return <Item key={key} obj={obj} urlImage={urlImage} animMove={this.state.anim}
                 startAnim={() => {
                     // this.startAnimation();
                 }}

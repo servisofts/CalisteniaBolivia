@@ -18,7 +18,7 @@ class listaGanancias extends Component {
         var fecha_fin = new SDate(data.fecha_fin);
         var dias = fecha_fin.diff(fecha_inicio, "days");
         var filtar_sucursales = Object.values(paquetes_vendidos).filter(paquete_venta => {
-            return data_fondo_inversion_sucursal.find(fis => fis.key_sucursal == paquete_venta.caja.key_sucursal);
+            return data_fondo_inversion_sucursal.find(fis => fis.key_sucursal == paquete_venta.key_sucursal);
         })
         fecha_inicio.addMonth(-1);
         let ahora = new SDate();
@@ -28,7 +28,6 @@ class listaGanancias extends Component {
             var ventas_del_dia = filtar_sucursales.filter(paquete_venta => {
                 return (
                     new SDate(paquete_venta.fecha_on).toString("yyyy-MM") == fecha_inicio.toString("yyyy-MM")
-                    && paquete_venta.paquete.precio > 0
                 );
             })
             if (ahora.isBefore(fecha_inicio)) {
@@ -54,7 +53,7 @@ class listaGanancias extends Component {
                             content: <PopInscritos ventas_del_dia={ventas_del_dia} fecha={fecha_inicio.toString("yyyy, MONTH dd")} />
                         })
                     }}>
-                        <SText> {cantidad}</SText>
+                        <SText>{cantidad}</SText>
                     </SView>
                 </SView>
 

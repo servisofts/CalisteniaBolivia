@@ -128,7 +128,7 @@ class SSRolesPermisos extends Component {
         var permisos = this.props.state.usuarioPageReducer.data;
         if (!permisos) {
             if (this.props.state.usuarioPageReducer.estado == "cargando") {
-                console.log("CARGANDO PAGINAS")
+                // console.log("CARGANDO PAGINAS")
                 return <View />
             }
             if (this.props.state.usuarioPageReducer.estado == "error") {
@@ -143,7 +143,7 @@ class SSRolesPermisos extends Component {
         var roles = this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
         if (!roles) {
             if (this.props.state.usuarioRolReducer.estado == "cargando") {
-                console.log("CARGANDO ROLES DE USUARIOS")
+                // console.log("CARGANDO ROLES DE USUARIOS")
                 return <View />
             }
             this.getMisRoles();

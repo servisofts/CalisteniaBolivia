@@ -16,8 +16,7 @@ class RelojEntrenamiento extends Component {
     }
 
     componentDidMount() {
-        this.isRun = true;
-        this.contar();
+        this.isRun = false;
     }
 
     contar = async () => {
@@ -26,8 +25,8 @@ class RelojEntrenamiento extends Component {
             duration: (1000) / 5,
             useNativeDriver: true
         }).start(() => {
-            this.setState({ time: new Date() });
             if (this.isRun) {
+                this.setState({ time: new Date() });
                 this.contar();
             }
         });
@@ -36,6 +35,7 @@ class RelojEntrenamiento extends Component {
     }
     componentWillUnmount() {
         this.isRun = false;
+        this.anim.stopAnimation();
     }
 
     getEntrenamientoUsuario() {
@@ -126,6 +126,10 @@ class RelojEntrenamiento extends Component {
         var data = this.props.data;
         if (!data) return <View />;
         if (!data.key) return <View />;
+        if (!this.isRun) {
+            this.isRun = true;
+            this.contar();
+        }
         this.entrenamiento = data;
         return (
             <SView style={{

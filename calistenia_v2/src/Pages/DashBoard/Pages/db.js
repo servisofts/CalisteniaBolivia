@@ -14,6 +14,8 @@ export default class index extends Component {
     constructor(props) {
         super(props);
          var fechaInicio = new SDate();
+         //TODO: comentar
+        //  fechaInicio.addMonth(-1)
         fechaInicio.setDay(1);
         this.state = {
             fechaInicio: fechaInicio.toString("yyyy-MM-dd"),

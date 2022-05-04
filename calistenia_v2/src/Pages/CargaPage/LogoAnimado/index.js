@@ -70,11 +70,11 @@ export default class LogoAnimado extends Component {
                 <Svg width={"100%"} height={"100%"} viewBox={"0 0 559.4 207.3"}>
                     {paths_paralela.map((d, key) => (<Path d={d} stroke="black" strokeWidth={1} fill={color_paralela} key={key} />))}
                     {/* {paths_nombre.map((d, key) => (<Path d={d} stroke={"#f00"} strokeWidth={0} fill={"#fff"} key={key} />))} */}
-                    {paths_nombre.map((d, key) => (<StrokeAnimated d={d} stroke={"#600"}
+                    {paths_nombre.map((d, key) => (<StrokeAnimated key={key} d={d} stroke={"#600"}
                         strokeWidth={2}
                         fill={(this.props.fill ? this.props.fill : "#ffffff")}
                         duration={(this.props.duration ? this.props.duration : 2500)}
-                        key={key} />))}
+                        />))}
                     {paths_swo.map((d, key) => (<Path d={d} stroke="black" strokeWidth={1} fill={color_swo} key={key} />))}
                 </Svg>
             </View>
