@@ -44,7 +44,7 @@ export default class StrokeAnimated extends Component {
                     inputRange: [0, 0.99, 1],
                     outputRange: ["#00000000", this.props.fill + "00", this.props.fill + "ff"]
                 })}
-                key={this.props.key}
+                // key={this.props.key}
             />
         );
     }

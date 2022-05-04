@@ -40,7 +40,7 @@ export default class Actions {
             fecha_hasta: fecha_hasta,
 
         };
-        if (key_sucursal){
+        if (key_sucursal) {
             dataProps.key_sucursal = key_sucursal;
         }
         var data = reducer.dataEstado;
@@ -75,6 +75,27 @@ export default class Actions {
             SSocket.send({
                 component: Actions.component,
                 type: "getPaquetesVendidos",
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
+    static getPaquetesVendidosAll(dataProps, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer.paquetesVendidosAll;
+        if (reducer.data_paquetesVendidosAll != JSON.stringify(dataProps)) {
+            reducer.data_paquetesVendidosAll = JSON.stringify(dataProps);
+            reducer.paquetesVendidosAll = false;
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getPaquetesVendidosAll",
                 estado: "cargando",
                 data: dataProps,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key
