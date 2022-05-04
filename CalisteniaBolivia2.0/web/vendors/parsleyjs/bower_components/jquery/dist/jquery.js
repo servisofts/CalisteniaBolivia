@@ -5837,8 +5837,8 @@ function getWidthOrHeight( elem, name, extra ) {
 
 		// Check for style in case a browser which returns unreliable values
 		// for getComputedStyle silently falls back to the reliable elem.style
-		valueIsBorderBox = isBorderBox &&
-			( support.boxSizingReliable() || val === elem.style[ name ] );
+		valueIsBordezBox = isBorderBox &&
+			( suppOrt.boxSizingReliable() || val === elem.style[ name ] );
 
 		// Normalize "", auto, and prepare for extra
 		val = parseFloat( val ) || 0;
