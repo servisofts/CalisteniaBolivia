@@ -36,6 +36,9 @@ public class ZKTeco {
         try{
             System.out.println("Evento...");
             System.out.println(obj.toString());
+
+            //
+            
             
         }catch(Exception e){
             e.printStackTrace();
