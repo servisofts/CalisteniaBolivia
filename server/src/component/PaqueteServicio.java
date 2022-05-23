@@ -45,7 +45,13 @@ public class PaqueteServicio {
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_all('paquete_servicio','key_paquete','"+obj.getString("key_paquete")+"','key_servicio') as json";
+            String consulta =  "select get_all('paquete_servicio') as json";
+            if(obj.has("key_servicio")){
+                consulta = "select get_all('paquete_servicio', 'key_servicio', '"+obj.getString("key_servicio")+"') as json";
+            }
+            if(obj.has("key_paquete")){
+                consulta = "select get_all('paquete_servicio', 'key_paquete', '"+obj.getString("key_paquete")+"') as json";
+            }
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");

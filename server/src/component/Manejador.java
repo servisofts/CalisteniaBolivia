@@ -159,6 +159,18 @@ public class Manejador {
                     new FondoInversionUsuario(data, session);
                     break;
                 }
+                case SucursalServicio.nombre_tabla: {
+                    new SucursalServicio(data, session);
+                    break;
+                }
+                case SucursalUsuario.nombre_tabla: {
+                    new SucursalUsuario(data, session);
+                    break;
+                }
+                case SucursalPaquete.nombre_tabla: {
+                    new SucursalPaquete(data, session);
+                    break;
+                }
                 case "billetera": {
                     new Billetera(data, session);
                     break;

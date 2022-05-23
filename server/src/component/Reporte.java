@@ -17,6 +17,9 @@ public class Reporte {
             case "getPaquetesVendidos":
                 getPaquetesVendidos(data, session);
             break;
+            case "getPaquetesVendidosAll":
+                getPaquetesVendidosAll(data, session);
+            break;
             case "getReporteAsistencia":
                 getReporteAsistencia(data, session);
             break;
@@ -51,7 +54,11 @@ public class Reporte {
     public void getMovimientosBancarios(JSONObject obj, SSSessionAbstract session) {
         try{
             JSONObject data = obj.getJSONObject("data");
-            String consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            String consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"', '"+obj.getString("key_usuario")+"') as json";
+            if(obj.getBoolean("admin")){
+                consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            }        
+            
             JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", reporte);
             obj.put("estado", "exito");
@@ -65,6 +72,19 @@ public class Reporte {
         try{
             JSONObject data = obj.getJSONObject("data");
             String consulta =  "select get_paquetes_vendidos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", reporte);
+            obj.put("estado", "exito");
+        }catch(Exception e){
+            obj.put("error", e.getLocalizedMessage());
+            obj.put("estado", "error");
+        }
+    }
+
+    public void getPaquetesVendidosAll(JSONObject obj, SSSessionAbstract session) {
+        try{
+            JSONObject data = obj.getJSONObject("data");
+            String consulta =  "select get_paquetes_vendidos_all('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
             JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", reporte);
             obj.put("estado", "exito");
