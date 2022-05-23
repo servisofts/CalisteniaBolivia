@@ -54,7 +54,11 @@ public class Reporte {
     public void getMovimientosBancarios(JSONObject obj, SSSessionAbstract session) {
         try{
             JSONObject data = obj.getJSONObject("data");
-            String consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            String consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"', '"+obj.getString("key_usuario")+"') as json";
+            if(obj.getBoolean("admin")){
+                consulta =  "select get_reporte_movimientos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            }        
+            
             JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", reporte);
             obj.put("estado", "exito");

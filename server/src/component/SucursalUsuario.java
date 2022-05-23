@@ -15,9 +15,11 @@ import Config.Config;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
-public class PaqueteServicio {
+public class SucursalUsuario {
 
-    public PaqueteServicio(JSONObject data, SSSessionAbstract session) {
+    public static final String nombre_tabla = "sucursal_usuario";
+
+    public SucursalUsuario(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
@@ -45,12 +47,12 @@ public class PaqueteServicio {
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_all('paquete_servicio') as json";
-            if(obj.has("key_servicio")){
-                consulta = "select get_all('paquete_servicio', 'key_servicio', '"+obj.getString("key_servicio")+"') as json";
+            String consulta = "select get_all('"+nombre_tabla+"') as json";
+            if(obj.has("key_sucursal")){
+                consulta = "select get_all('"+nombre_tabla+"', 'key_sucursal', '"+obj.getString("key_sucursal")+"') as json";
             }
-            if(obj.has("key_paquete")){
-                consulta = "select get_all('paquete_servicio', 'key_paquete', '"+obj.getString("key_paquete")+"') as json";
+            if(obj.has("key_usuario")){
+                consulta = "select get_all('"+nombre_tabla+"', 'key_usuario', '"+obj.getString("key_usuario")+"') as json";
             }
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
@@ -60,13 +62,12 @@ public class PaqueteServicio {
             e.printStackTrace();
         }
     }
+    
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key('paquete_servicio','"+obj.getString("key")+"') as json";
+            String consulta =  "select get_by_key('"+nombre_tabla+"','"+obj.getString("key")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "paquete_servicio_getByKey", data);
-
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -79,16 +80,15 @@ public class PaqueteServicio {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
-            JSONObject paquete_servicio = obj.getJSONObject("data");
-            paquete_servicio.put("key",UUID.randomUUID().toString());
-            paquete_servicio.put("fecha_on",fecha_on);
-            paquete_servicio.put("estado",1);
-            Conexion.insertArray("paquete_servicio", new JSONArray().put(paquete_servicio));
-            Conexion.historico(obj.getString("key_usuario"), paquete_servicio.getString("key"), "paquete_servicio_registro", paquete_servicio);
-            obj.put("data", paquete_servicio);
+            JSONObject data = obj.getJSONObject("data");
+            data.put("key",UUID.randomUUID().toString());
+            data.put("fecha_on",fecha_on);
+            data.put("estado",1);
+            Conexion.insertArray(nombre_tabla, new JSONArray().put(data));
+            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_registro", data);
+            obj.put("data", data);
             obj.put("estado", "exito");
-
-            SSServerAbstract.sendAllServer(obj.toString());
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
@@ -98,12 +98,12 @@ public class PaqueteServicio {
 
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
-            JSONObject paquete_servicio = obj.getJSONObject("data");
-            Conexion.editObject("paquete_servicio", paquete_servicio);
-            Conexion.historico(obj.getString("key_usuario"), paquete_servicio.getString("key"), "paquete_servicio_editar", paquete_servicio);
-            obj.put("data", paquete_servicio);
+            JSONObject data = obj.getJSONObject("data");
+            Conexion.editObject(nombre_tabla, data);
+            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_editar", data);
+            obj.put("data", data);
             obj.put("estado", "exito");
-            SSServerAbstract.sendAllServer(obj.toString());
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
@@ -113,11 +113,11 @@ public class PaqueteServicio {
 
     public void subirFoto(JSONObject obj, SSSessionAbstract session) {
         String url = Config.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url+"paquete_servicio/");
-        Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "paquete_servicio_subirFoto", new JSONObject());
+        File f = new File(url+nombre_tabla+"/");
+        Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), nombre_tabla+"_subirFoto", new JSONObject());
         if(!f.exists()) f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
         obj.put("estado", "exito");
-        SSServerAbstract.sendAllServer(obj.toString());
+        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
     }
 }
