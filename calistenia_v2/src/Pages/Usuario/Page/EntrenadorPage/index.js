@@ -8,6 +8,7 @@ import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPer
 import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
+import sucursal_usuario from '../../../sucursal_usuario';
 
 class EntrenadorPage extends Component {
 
@@ -73,20 +74,37 @@ class EntrenadorPage extends Component {
     const getLista = () => {
       var data = Usuario.Actions.getAll(this.props);
       var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
+      var arr_sc_us = sucursal_usuario.Actions.getAll(this.props);
       if (!data) return <SLoad />
       if (!dataRU) return <SLoad />
+      if (!arr_sc_us) return <SLoad />
       if (!this.state.buscador) {
         return <View />
       }
+      var isAll = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
+
       var objFinal = {};
       Object.keys(data).map((key) => {
         if (!dataRU[key]) {
           return;
         }
+        if (!isAll) {
+          var suc_por_usuario = sucursal_usuario.Actions.getAllByKeyUsuario(key, this.props);
+          var isActive = false;
+
+          suc_por_usuario.map((suc) => {
+            if (!isActive) {
+              isActive = sucursal_usuario.Actions.isActive(suc.key_sucursal, this.props);
+            }
+          })
+          if (!isActive) return null;
+        }
+
         objFinal[key] = data[key];
       });
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
@@ -175,7 +193,7 @@ class EntrenadorPage extends Component {
               }
             }}
           >
-            <SView col={"xs-12"} center height>
+            <SView col={"xs-12"} center>
               {getLista()}
             </SView>
           </SScrollView2>

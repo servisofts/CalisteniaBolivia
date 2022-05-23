@@ -4,6 +4,7 @@ import { SIcon, SLoad, SNavigation, SText, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
+import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
 
 class EntrenamientosActivos extends Component {
@@ -18,14 +19,18 @@ class EntrenamientosActivos extends Component {
         if (!entrenamientos) return <SLoad />
         var cant = 0;
         Object.keys(entrenamientos).map(key => {
+            if (!entrenamientos[key].key_sucursal) return null;
+            if (!sucursal_usuario.Actions.isActive(entrenamientos[key].key_sucursal, this.props)) {
+                return null;
+            }
             if (entrenamientos[key].estado == 1) cant++;
         })
         return <SView center row height>
             <SView col={"xs-12"} center >
                 <SText fontSize={10}>{`Entrenamientos activos`}</SText>
             </SView>
-            <SView col={"xs-4"} height={50} onPress={()=>{
-                 SNavigation.navigate("entrenamientos");
+            <SView col={"xs-4"} height={50} onPress={() => {
+                SNavigation.navigate("entrenamientos");
             }}>
                 <SIcon name={"Entrenamiento"} />
             </SView>

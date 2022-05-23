@@ -7,6 +7,7 @@ import Entrenamiento from '../../../Entrenamiento';
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
 import SSocket from 'servisofts-socket'
+import sucursal_usuario from '../../../sucursal_usuario';
 
 class SucursalesDetalle extends Component {
     constructor(props) {
@@ -22,12 +23,17 @@ class SucursalesDetalle extends Component {
         var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
         var cajas = Caja.Actions.getActivas(this.props);
         var entrenamientos = Entrenamiento.Actions.getAll(this.props);
+        var arr_all = sucursal_usuario.Actions.getActive(this.props);
         if (!entrenamientos) return <SLoad />
         if (!sucursales) return <SLoad />;
         if (!clientesActivos) return <SLoad />;
         if (!cajas) return <SLoad />
+        if (!arr_all) return <SLoad />
 
         return Object.keys(sucursales).map((key, index) => {
+            if (!sucursal_usuario.Actions.isActive(key, this.props)) {
+                return null;
+            }
             var sucursal = sucursales[key];
             var cantidad = 0;
             var monto = 0;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Button, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
-import Config from '../../config.json'
 
 import FloatButtom from '../../../Components/FloatButtom';
 import { SSRolesPermisosValidate } from '../..';
@@ -103,7 +102,7 @@ class RolPage extends Component {
       return Object.keys(permisos).map((key) => {
         var obj = permisos[key];
         if(obj.estado == 0) return;
-        var urlImage = Config.url + "rol/" + obj.key;
+        var urlImage = SSocket.api.rp + "rol/" + obj.key;
         return <View style={{
           width: "95%",
           maxWidth: 600,

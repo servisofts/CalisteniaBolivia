@@ -7,6 +7,7 @@ import FechasBetween from '../../../../../Components/FechasBetween';
 import MonthBetween from '../../../../../Components/MonthBetween';
 import Finanza from '../../../../Finanza';
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 import Usuario from '../../../../Usuario';
 
 class Grafico extends Component {
@@ -25,8 +26,8 @@ class Grafico extends Component {
     getTiempo() {
         var fechaInicio = new SDate(this.state.fechaInicio, "yyyy-MM-dd");
         var fechaFin = new SDate(this.state.fechaFin, "yyyy-MM-dd");
-        console.log(fechaInicio.toString("yyyy-MM-dd"));
-        console.log(fechaFin.toString("yyyy-MM-dd"));
+        // console.log(fechaInicio.toString("yyyy-MM-dd"));
+        // console.log(fechaFin.toString("yyyy-MM-dd"));
         var sucursales = Sucursal.Actions.getAll(this.props);
         var paquetes = Finanza.Actions.getPaquetesVendidos({
             fecha_desde: fechaInicio.toString("yyyy-MM-dd"),
@@ -54,6 +55,9 @@ class Grafico extends Component {
             monto_por_dia[fecha.toString("yyyy-MM-dd")] = {};
             Object.keys(paquetes).map((key, index) => {
                 var paquete_venta = paquetes[key];
+                if (!sucursal_usuario.Actions.isActive(paquete_venta.key_sucursal, this.props)) {
+                    return null;
+                }
                 if (!monto_por_sucursal[paquete_venta.key_sucursal]) {
                     monto_por_sucursal[paquete_venta.key_sucursal] = 0;
                 }
@@ -105,6 +109,9 @@ class Grafico extends Component {
                             return null;
                         }
                     }
+                }
+                if (!sucursal_usuario.Actions.isActive(key_suc, this.props)) {
+                    return null;
                 }
                 var suc_dia = suc_por_dia[key_suc];
                 if (!monto_actual_suc[key_suc]) { monto_actual_suc[key_suc] = 0 };

@@ -4,6 +4,7 @@ import { SButtom, SForm, SLoad, SNavigation, SPage, SScrollView2, SText, SView }
 import Paquete from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent';
+import Sucursal_paquete from '../../../sucursal_paquete';
 import ServicioDePaquete from '../ServicioDePaquete';
 
 class Registro extends Component {
@@ -91,9 +92,10 @@ class Registro extends Component {
             {this.getForm()}
             {/* <SView height={32} /> */}
         </SView>
-            <ServicioDePaquete keyPaquete={data.key} onChange={(resp) => {
+            {/* <ServicioDePaquete keyPaquete={data.key} onChange={(resp) => {
                 this.setState({ servicios: resp });
-            }} />
+            }} /> */}
+            <Sucursal_paquete.Components.Select key_paquete={this.key_paquete} />
             <SView col={"xs-11"} row center>
                 {this.getEliminar(data)}
                 <SButtom props={{

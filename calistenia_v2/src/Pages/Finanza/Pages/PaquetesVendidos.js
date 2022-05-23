@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SLoad, SNavigation, SPage, STable, STable2, SText } from 'servisofts-component';
+import sucursal_usuario from '../../sucursal_usuario';
 import Usuario from '../../Usuario';
 import Actions from '../Actions';
 
@@ -37,6 +38,8 @@ class PaquetesVendidos extends Component {
             fecha_hasta: this.fecha_fin
         }, this.props)
         var usuarios = Usuario.Actions.getAll(this.props);
+        var arr_f = sucursal_usuario.Actions.getActive(this.props);
+        if (!arr_f) return <SLoad />
         if (!data) return <SLoad />
         if (!usuarios) return <SLoad />
         // return <SText>{JSON.stringify(movimientos)}</SText>
@@ -46,12 +49,17 @@ class PaquetesVendidos extends Component {
                 { key: "fecha_on", label: "Fecha de registro", width: 150, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
                 // { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
                 {
+                    key: "usuarios-cantidad", label: "# Cli.", sumar: true, width: 70, center: true, render: (item) => {
+                        return item.length;
+                    },
+                },
+                {
                     key: "usuarios", label: "Cliente", width: 250, render: (item) => {
                         return item.map((key_usr) => {
                             return `${usuarios[key_usr]?.Nombres} ${usuarios[key_usr]?.Apellidos}`.toUpperCase()
                         })
                     },
-                    component:(arr)=>{
+                    component: (arr) => {
                         return <SText fontSize={11}>{arr.join(", ")}</SText>
                     }
                 },
@@ -68,6 +76,9 @@ class PaquetesVendidos extends Component {
 
                 // { key: "", label: "Sucursal", width: 150 },
             ]}
+            filter={(item) => {
+                return sucursal_usuario.Actions.isActive(item.key_sucursal, this.props)
+            }}
             limit={100}
             data={data}
         />

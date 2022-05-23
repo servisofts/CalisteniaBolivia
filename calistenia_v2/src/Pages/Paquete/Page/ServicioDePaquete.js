@@ -13,9 +13,9 @@ const ServicioDePaquete = (props) => {
     let data_p = {};
     if (props.keyPaquete) {
       let reducer_p = props.state.paqueteServicioReducer;
-      data_p = reducer_p.data[props.keyPaquete];
+      data_p = reducer_p.data;
       // console.log(data_p);
-      if (!data_p) {
+      if (!reducer_p.data) {
         if (reducer_p.estado == "cargando") return <ActivityIndicator color={"#fff"} />
         if (reducer_p.estado == "error") return <Text>ERROR</Text>
         var object = {
@@ -29,6 +29,7 @@ const ServicioDePaquete = (props) => {
         return <View />
       }
       if (!select) {
+        data_p = Object.values(data_p).find(x => x.key_paquete == props.keyPaquete);
         setSelect(data_p);
         props.onChange(select);
       }

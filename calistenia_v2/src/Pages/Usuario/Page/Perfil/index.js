@@ -142,7 +142,7 @@ class Perfil extends Component {
                 <View style={{
                     width: "100%",
                     flex: 1,
-                    justifyContent: "center",
+                    // justifyContent: "center",
                     alignItems: "center",
                     // backgroundColor: "#000"
                 }}>

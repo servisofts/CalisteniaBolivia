@@ -6,6 +6,7 @@ import MovimientosGraphic from './MovimientosGraphic';
 import SSocket from 'servisofts-socket'
 import Caja from '../../..';
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 class ListaCajas extends Component {
     constructor(props) {
         super(props);
@@ -139,6 +140,9 @@ class ListaCajas extends Component {
                     return null;
                 }
 
+            }
+            if(!sucursal_usuario.Actions.isActive(obj.key_sucursal,this.props)){
+                return null;
             }
             var usuario = this.getUsuarios(obj.key_usuario);
             usuario.key = obj.key_usuario;

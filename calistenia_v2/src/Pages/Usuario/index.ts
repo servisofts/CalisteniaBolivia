@@ -10,7 +10,7 @@ import ClientePerfilPage from './Page/ClientePerfilPage'
 import VentasPage from './Page/VentasPage'
 import VentasSelect from './Page/VentasPage'
 import EntrenadorPage from './Page/EntrenadorPage'
-
+import VendedorPage from './Page/VendedorPage'
 const Pages: SPageListProps = {
     login: Login,
     registro:RegistroCliente,
@@ -20,7 +20,8 @@ const Pages: SPageListProps = {
     VentasPage,
     VentasSelect,
     EntrenadorPage,
-    ClientePerfilPage
+    ClientePerfilPage,
+    VendedorPage
 }
 
 

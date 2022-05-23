@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SLoad, SNavigation, SPage, STable, STable2, SText } from 'servisofts-component';
+import sucursal_usuario from '../../sucursal_usuario';
 import Usuario from '../../Usuario';
 import Actions from '../Actions';
 
@@ -23,6 +24,8 @@ class index extends Component {
             fecha_hasta: this.fecha_fin
         }, this.props)
         var usuarios = Usuario.Actions.getAll(this.props);
+        var arr_f = sucursal_usuario.Actions.getActive(this.props);
+        if (!arr_f) return <SLoad />
         if (!data) return <SLoad />
         if (!usuarios) return <SLoad />
         // return <SText>{JSON.stringify(movimientos)}</SText>
@@ -36,7 +39,7 @@ class index extends Component {
                 // { key: "paquete/descripcion", label: "Paquete", width: 150 },
                 { key: "key_usuario_cajero", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item].Nombres} ${usuarios[item].Apellidos}` } },
                 { key: "descripcion", label: "descripcion", width: 400 },
-                { key: "monto", label: "Monto", width: 100, sumar: true,center:true, },
+                { key: "monto", label: "Monto", width: 100, sumar: true, center: true, },
                 {
                     key: "monto-tipo", label: "Tipo", width: 50, center: true,
                     render: (item) => {
@@ -49,6 +52,9 @@ class index extends Component {
                 },
                 // { key: "", label: "Sucursal", width: 150 },
             ]}
+            filter={(item) => {
+                return sucursal_usuario.Actions.isActive(item.key_sucursal, this.props)
+            }}
             limit={100}
             data={data}
         />

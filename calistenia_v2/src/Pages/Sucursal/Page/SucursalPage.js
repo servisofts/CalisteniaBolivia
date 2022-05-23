@@ -6,6 +6,7 @@ import BarraSuperior from '../../../Components/BarraSuperior';
 import Buscador from '../../../Components/Buscador';
 import FloatButtom from '../../../Components/FloatButtom';
 import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
+import sucursal_usuario from '../../sucursal_usuario';
 import SucursalItem from './SucursalItem';
 
 class SucursalPage extends Component {
@@ -21,10 +22,13 @@ class SucursalPage extends Component {
     }
     getLista() {
         var data = Sucursal.Actions.getAll(this.props);
+        // var actives = sucursal_usuario.Actions.getActive(this.props);
+        // if (!actives) return <SLoad />
         if (!data) return <SLoad />;
-        // return 
-
+        // var arr= Object.values(data).filter(i=>sucursal_usuario.Actions.isActive(i.key, this.props));
         return Object.keys(data).map((key) => {
+            // var select = Object.values(actives).find(o => o.key_sucursal == key);
+            if (!sucursal_usuario.Actions.isActive(key, this.props)) return null;
             return <SucursalItem key_sucursal={key} onPress={(obj) => {
                 if (this.onSelect) {
                     this.onSelect(obj);
@@ -44,7 +48,7 @@ class SucursalPage extends Component {
                     SNavigation.goBack();
                 }} />
                 <Buscador placeholder={"Buscar..."} ref={(ref) => {
-                    if (!this.state.buscador) this.setState({ buscador: ref });
+                    this._buscador = ref;
                 }} repaint={() => { this.setState({ ...this.state }) }}
                 />
                 <SScrollView2 disableHorizontal>

@@ -5,7 +5,7 @@ import SSocket from 'servisofts-socket';
 import { SImage, SOrdenador, STheme } from 'servisofts-component';
 import { SSRolesPermisosValidate } from '../../..';
 import Buscador from '../../../../Components/Buscador';
-import Config from '../../../config.json'
+
 // import SOrdenador from '../../../../Component/SOrdenador';
 // import AppParams from '../../../../Params';
 // import STheme from '../../../../STheme';
@@ -129,7 +129,7 @@ class PermisosDelRol extends Component {
                             justifyContent: "flex-start",
                             alignItems: "center",
                         }}>
-                            <SImage src={Config.url + "permiso/" + objPermiso.key} />
+                            <SImage src={SSocket.api.rp + "permiso/" + objPermiso.key} />
                             {/* {this.props.state.imageReducer.getImage((AppParams.servicios["roles_permisos"]), {
                                 position: "absolute",
                             })} */}

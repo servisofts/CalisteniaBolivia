@@ -7,6 +7,8 @@ import BarraSuperior from '../../../Components/BarraSuperior';
 import Buscador from '../../../Components/Buscador';
 import FloatButtom from '../../../Components/FloatButtom';
 import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
+import sucursal_paquete from '../../sucursal_paquete';
+import sucursal_usuario from '../../sucursal_usuario';
 import PaqueteItem from './PaqueteItem';
 
 class PaquetePage extends Component {
@@ -19,15 +21,30 @@ class PaquetePage extends Component {
     getLista() {
 
         var data = Paquete.Actions.getAll(this.props);
+        var data_sucursal_paquete = sucursal_paquete.Actions.getAll(this.props);
+        var sucursales_activas = sucursal_usuario.Actions.getActive(this.props);
         if (!data) return <SLoad />;
+        if (!data_sucursal_paquete) return <SLoad />;
+        if (!sucursales_activas) return <SLoad />;
         if (!this.state.buscador) return <SLoad />
         // return 
+        var isAll = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
         return new SOrdenador([
             { key: "Peso", order: "desc", peso: 4 },
             { key: "Descripcion", order: "asc", peso: 2 },
         ]).ordernarObject(
             this.state.buscador.buscar(data)
         ).map((key) => {
+            var isActive = false;
+            if (!isAll) {
+                var arr_ps = Object.values(data_sucursal_paquete).filter(o => o.key_paquete == key && o.estado != 0).map((p_s_a) => {
+                    if (!isActive) {
+                        isActive = sucursal_usuario.Actions.isActive(p_s_a.key_sucursal, this.props);
+                    }
+                });
+                if (!isActive) return null;
+            }
+
             return <PaqueteItem key_paquete={key} onPress={(obj) => {
                 if (this.onSelect) {
                     this.onSelect(obj);

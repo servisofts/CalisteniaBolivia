@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SIcon, SLoad, SText, SView, SNavigation } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
+import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
 
 class ClientesActivos extends Component {
@@ -14,8 +15,11 @@ class ClientesActivos extends Component {
     getContent() {
         var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
         var clientesRol = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
+        var arr = sucursal_usuario.Actions.getActive(this.props);
         if (!clientesActivos) return <SLoad />
         if (!clientesRol) return <SLoad />
+        if (!arr) return <SLoad />
+        clientesActivos = Object.values(clientesActivos).filter(i => sucursal_usuario.Actions.isActive(i.caja.key_sucursal, this.props));
         return <SView center row height>
             <SView col={"xs-12"} center >
                 <SText fontSize={10}>{`Clientes activos`}</SText>
@@ -26,7 +30,7 @@ class ClientesActivos extends Component {
                 <SIcon name={"Usuarios_cliente"} />
             </SView>
             <SView col={"xs-8"} center>
-                <SText bold>{`( ${Object.keys(clientesActivos).length} / ${Object.keys(clientesRol).length} )`}</SText>
+                <SText bold>{`( ${clientesActivos.length} / ${Object.keys(clientesRol).length} )`}</SText>
             </SView>
         </SView>
     }
