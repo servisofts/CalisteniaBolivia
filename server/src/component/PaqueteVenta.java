@@ -100,6 +100,17 @@ public class PaqueteVenta
             e.printStackTrace();
         }
     }
+
+    public static JSONObject getByKey(String key) {
+        try {
+            String consulta = "select get_by_key('paquete_venta','" + key + "') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
     public void getRecibo(JSONObject obj, SSSessionAbstract session) {
         try {
@@ -349,6 +360,15 @@ public class PaqueteVenta
             obj.put("estado", "error");
             obj.put("error", e.getLocalizedMessage());
             e.printStackTrace();
+        }
+    }
+
+    public static void editar(JSONObject paqueteVenta) {
+        try {
+            Conexion.editObject("paquete_venta", paqueteVenta);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();   
         }
     }
     

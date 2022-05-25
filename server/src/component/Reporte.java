@@ -17,6 +17,9 @@ public class Reporte {
             case "getPaquetesVendidos":
                 getPaquetesVendidos(data, session);
             break;
+            case "getProrroga":
+                getProrroga(data, session);
+            break;
             case "getPaquetesVendidosAll":
                 getPaquetesVendidosAll(data, session);
             break;
@@ -72,6 +75,19 @@ public class Reporte {
         try{
             JSONObject data = obj.getJSONObject("data");
             String consulta =  "select get_paquetes_vendidos('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
+            JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
+            obj.put("data", reporte);
+            obj.put("estado", "exito");
+        }catch(Exception e){
+            obj.put("error", e.getLocalizedMessage());
+            obj.put("estado", "error");
+        }
+    }
+
+    public void getProrroga(JSONObject obj, SSSessionAbstract session) {
+        try{
+            JSONObject data = obj.getJSONObject("data");
+            String consulta =  "select get_prorrogas('"+data.getString("fecha_desde")+"', '"+data.getString("fecha_hasta")+"') as json";
             JSONObject reporte = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", reporte);
             obj.put("estado", "exito");

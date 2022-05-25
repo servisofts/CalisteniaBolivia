@@ -62,6 +62,16 @@ public class SucursalUsuario {
             e.printStackTrace();
         }
     }
+
+    public static   JSONObject getAll(String key_usuario) {
+        try {
+            String consulta = "select get_all('"+nombre_tabla+"', 'key_usuario', '"+key_usuario+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
