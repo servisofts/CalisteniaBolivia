@@ -34,6 +34,7 @@ const TypesSwitch = (state: any, action: DataProps) => {
         case "getAll": return getAll(state, action);
         case "registro": return registro(state, action);
         case "editar": return editar(state, action);
+        case "anular": return anular(state, action);
         case "getByKey": return getByKey(state, action);
 
     }
@@ -50,6 +51,11 @@ const registro = (state: any, action: DataProps) => {
     state.data[action.data.key] = action.data;
 }
 const editar = (state: any, action: DataProps) => {
+    if (action.estado != "exito") return;
+    if (!state.data) return;
+    state.data[action.data.key] = action.data;
+}
+const anular = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
     if (!state.data) return;
     state.data[action.data.key] = action.data;

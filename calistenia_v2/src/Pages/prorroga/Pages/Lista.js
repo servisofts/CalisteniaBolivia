@@ -13,15 +13,15 @@ class Lista extends Component {
         })
     }
 
-    createStruct(){
+    createStruct() {
         var struct = [];
         Parent.struct.metas.map((item) => {
-            if(item.hidden) return null;
+            if (item.hidden) return null;
             struct.push({
                 key: item.key,
                 label: item.label,
                 type: item.type,
-                width:item.width
+                width: item.width
             })
         })
         return struct;
@@ -32,43 +32,35 @@ class Lista extends Component {
         return <STable2
             header={[
                 { key: "index", label: "#", width: 50 },
+                { key: "key_paquete_venta_usuario", label: "key_paquete_venta_usuario", width: 100 },
+                { key: "fecha_fin", label: "fecha_fin", width: 100 },
+                { key: "fecha_on", label: "fecha_on", width: 100 },
                 ...this.createStruct(),
-                {
-                    key: "key-editar", label: "Editar", width: 50, center: true,
-                    component: (item) => {
-                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/registro", { key: item }) }}>
-                            <SIcon name={"Edit"} width={35} />
-                        </SView>
-                    }
-                },
-
-
                 {
                     key: "key-eliminar", label: "Eliminar", width: 70, center: true,
                     component: (key) => {
-                        return <SView width={35} height={35} onPress={() => { SPopup.confirm({ title: "Eliminar", message: "¿Esta seguro de eliminar?", onPress: () => { Parent.Actions.eliminar(data[key], this.props) } }) }}>
+                        return <SView width={35} height={35} onPress={() => {
+                            SPopup.confirm({
+                                title: "Eliminar", message: "¿Esta seguro de eliminar?", onPress: () => {
+                                    Parent.Actions.anular(data[key], this.props)
+                                }
+                            })
+                        }}>
                             <SIcon name={'Delete'} />
                         </SView>
                     }
                 },
-                {
-                    key: "key-ver", label: "Ver", width: 50, center: true,
-                    component: (item) => {
-                        return <SView onPress={() => { SNavigation.navigate(Parent.component + "/perfil", { key: item }) }}>
-                            <SIcon name={"Salir"} width={35} />
-                        </SView>
-                    }
-                },
-        
+
+
 
 
             ]}
             filter={(data) => {
                 if (data.estado != 1) return false;
                 var isValid = true;
-                Parent.struct.fk.map((item) => {
-                    if (this[item] != data[item]) isValid = false;
-                })
+                // Parent.struct.fk.map((item) => {
+                //     if (this[item] != data[item]) isValid = false;
+                // })
                 return isValid;
             }}
             data={data}
@@ -79,10 +71,6 @@ class Lista extends Component {
         return (
             <SPage title={'Lista de ' + Parent.component} disableScroll>
                 {this.getLista()}
-                <FloatButtom onPress={() => {
-                    Parent.Actions._getReducer(this.props).estado = "";
-                    SNavigation.navigate(Parent.component + "/registro", { key_servicio: this.key_servicio });
-                }} />
             </SPage>
         );
     }

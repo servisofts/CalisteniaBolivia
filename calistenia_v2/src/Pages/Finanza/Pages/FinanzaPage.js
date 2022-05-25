@@ -83,7 +83,10 @@ class FinanzaPage extends Component {
             {this.getItemFecha({ title: "Paquetes vendidos", icon: "Paquete", url: "PaquetesVendidos", permiso: "PaquetesVendidos" })}
             {this.getItemFecha({ title: "Ingresos & egresos manuales", icon: "Traspaso", url: "IngresosEgresos", permiso: "IngresosEgresos" })}
             {this.getItemFecha({ title: "Reporte de bancos", icon: "Card", url: "ReporteBancos", permiso: "ReporteBancos" })}
+            {this.getItem({ title: "Cajas historico", icon: "Caja", url: "CajasPage", permiso: "CajasPage" })}
             {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect", permiso: "EstadoFinancieroSelect" })}
+            {this.getItemFecha({ title: "Prorroga", icon: "Ajustes", url: "ReporteProrroga", permiso: "ReporteProrroga" })}
+            
             {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>
     }

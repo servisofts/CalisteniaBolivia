@@ -105,6 +105,27 @@ export default class Actions {
         }
         return data;
     }
+    static getReporteProrroga(dataProps, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer.prorroga;
+        if (reducer.data_prorroga != JSON.stringify(dataProps)) {
+            reducer.data_prorroga = JSON.stringify(dataProps);
+            reducer.prorroga = false;
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getProrroga",
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
     static getReporteAsistencia(dataProps, props, force) {
         var reducer = props.state[Actions.reducerName];
         var data = reducer.reporteAsistencia;
