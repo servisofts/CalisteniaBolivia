@@ -73,13 +73,22 @@ public class PaqueteVentaUsuario {
         try {
             String consulta =  "select get_by_key('paquete_venta_usuario','"+obj.getString("key")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "paquete_venta_usuario_getByKey", data);
 
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getByKey(String key) {
+        try {
+            String consulta =  "select get_by_key('paquete_venta_usuario','"+key+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -135,6 +144,13 @@ public class PaqueteVentaUsuario {
         }
     }
 
+    public static void editar(JSONObject obj) {
+        try {
+            Conexion.editObject("paquete_venta_usuario", obj);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public void eliminar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject paquete_venta_usuario = obj.getJSONObject("data");

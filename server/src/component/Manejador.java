@@ -171,6 +171,10 @@ public class Manejador {
                     new SucursalPaquete(data, session);
                     break;
                 }
+                case "prorroga": {
+                    new Prorroga(data, session);
+                    break;
+                }
                 case "billetera": {
                     new Billetera(data, session);
                     break;

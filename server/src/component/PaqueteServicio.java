@@ -96,6 +96,25 @@ public class PaqueteServicio {
 
     }
 
+    public static JSONObject registro(JSONObject obj) {
+        try {   
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            
+            obj.put("key",UUID.randomUUID().toString());
+            obj.put("fecha_on",fecha_on);
+            obj.put("estado",1);
+            Conexion.insertArray("paquete_servicio", new JSONArray().put(obj));
+            Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "paquete_servicio_registro", obj);
+            return obj;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject paquete_servicio = obj.getJSONObject("data");

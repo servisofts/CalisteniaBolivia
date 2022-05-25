@@ -98,6 +98,24 @@ public class SucursalPaquete {
 
     }
 
+    public static JSONObject registro(JSONObject obj) {
+        try {   
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            
+            obj.put("key",UUID.randomUUID().toString());
+            obj.put("fecha_on",fecha_on);
+            obj.put("estado",1);
+            Conexion.insertArray(nombre_tabla, new JSONArray().put(obj));
+            return obj;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject data = obj.getJSONObject("data");

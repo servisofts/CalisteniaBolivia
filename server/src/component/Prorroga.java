@@ -4,7 +4,9 @@ import java.io.File;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 import conexion.*;
 import SocketCliente.SocketCliete;
@@ -15,11 +17,11 @@ import Config.Config;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
-public class SucursalUsuario {
+public class Prorroga {
 
-    public static final String nombre_tabla = "sucursal_usuario";
+    public static final String nombre_tabla = "prorroga_paquete_venta_usuario";
 
-    public SucursalUsuario(JSONObject data, SSSessionAbstract session) {
+    public Prorroga(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
@@ -48,9 +50,6 @@ public class SucursalUsuario {
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta = "select get_all('"+nombre_tabla+"') as json";
-            if(obj.has("key_sucursal")){
-                consulta = "select get_all('"+nombre_tabla+"', 'key_sucursal', '"+obj.getString("key_sucursal")+"') as json";
-            }
             if(obj.has("key_usuario")){
                 consulta = "select get_all('"+nombre_tabla+"', 'key_usuario', '"+obj.getString("key_usuario")+"') as json";
             }
@@ -62,22 +61,14 @@ public class SucursalUsuario {
             e.printStackTrace();
         }
     }
-
-    public static   JSONObject getAll(String key_usuario) {
-        try {
-            String consulta = "select get_all('"+nombre_tabla+"', 'key_usuario', '"+key_usuario+"') as json";
-            return Conexion.ejecutarConsultaObject(consulta);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_by_key('"+nombre_tabla+"','"+obj.getString("key")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            Conexion.historico(obj.getString("key_usuario"), nombre_tabla+"_getByKey", data);
+
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -89,19 +80,60 @@ public class SucursalUsuario {
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            DateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
             String fecha_on = formatter.format(new Date());
             JSONObject data = obj.getJSONObject("data");
-            data.put("key",UUID.randomUUID().toString());
-            data.put("fecha_on",fecha_on);
-            data.put("estado",1);
-            Conexion.insertArray(nombre_tabla, new JSONArray().put(data));
-            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), nombre_tabla+"_registro", data);
-            obj.put("data", data);
+
+            JSONObject paqueteVentaUsuario = PaqueteVentaUsuario.getByKey(data.getString("key_paquete_venta_usuario"));
+            paqueteVentaUsuario = paqueteVentaUsuario.getJSONObject(JSONObject.getNames(paqueteVentaUsuario)[0]);
+
+            JSONObject prorroga = new JSONObject();
+            prorroga.put("key", UUID.randomUUID().toString());
+            prorroga.put("key_paquete_venta_usuario", paqueteVentaUsuario.getString("key"));
+            prorroga.put("descripcion", data.getString("descripcion"));
+            prorroga.put("fecha_fin", paqueteVentaUsuario.getString("fecha_fin"));
+            prorroga.put("key_usuario", obj.getString("key_usuario"));
+            prorroga.put("dias", data.getInt("dias"));
+            prorroga.put("estado", 1);
+            prorroga.put("fecha_on", fecha_on);
+
+            Conexion.insertArray(nombre_tabla, new JSONArray().put(prorroga));
+
+
+            Calendar fecha_fin = new GregorianCalendar();
+            fecha_fin.setTime(formatter1.parse(prorroga.getString("fecha_fin")));
+            fecha_fin.add(Calendar.DAY_OF_MONTH, prorroga.getInt("dias"));
+            paqueteVentaUsuario.put("fecha_fin", formatter.format(fecha_fin.getTime()));
+
+            PaqueteVentaUsuario.editar(paqueteVentaUsuario);
+
+            paqueteVentaUsuario.put("fecha_fin", formatter1.format(fecha_fin.getTime()));
+
+            obj.put("data", paqueteVentaUsuario);
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
-        } catch (SQLException e) {
+
+            SSServerAbstract.sendAllServer(obj.toString());
+        } catch (Exception e) {
             obj.put("estado", "error");
             e.printStackTrace();
+        }
+
+    }
+
+    public static JSONObject registro(JSONObject obj) {
+        try {   
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            
+            obj.put("key",UUID.randomUUID().toString());
+            obj.put("fecha_on",fecha_on);
+            obj.put("estado",1);
+            Conexion.insertArray(nombre_tabla, new JSONArray().put(obj));
+            return obj;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
 
     }
