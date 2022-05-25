@@ -5,7 +5,7 @@ import SSocket from 'servisofts-socket';
 import { SImage, SOrdenador, STheme } from 'servisofts-component';
 import { SSRolesPermisosValidate } from '../../..';
 import Buscador from '../../../../Components/Buscador';
-import Config from '../../../config.json'
+
 // import SOrdenador from '../../../../Component/SOrdenador';
 // import AppParams from '../../../../Params';
 // import STheme from '../../../../STheme';
@@ -129,7 +129,7 @@ class PermisosDelRol extends Component {
                             justifyContent: "flex-start",
                             alignItems: "center",
                         }}>
-                            <SImage src={Config.url + "permiso/" + objPermiso.key} />
+                            <SImage src={SSocket.api.rp + "permiso/" + objPermiso.key} />
                             {/* {this.props.state.imageReducer.getImage((AppParams.servicios["roles_permisos"]), {
                                 position: "absolute",
                             })} */}
@@ -153,7 +153,7 @@ class PermisosDelRol extends Component {
                             width: "100%",
                             textAlign: "center",
                             fontSize: 10,
-                            color: STheme.color.text
+                            color: STheme.color.secondary
                         }}>{objPermiso.descripcion}</Text>
                     </TouchableOpacity>
                 </View>
@@ -204,7 +204,7 @@ class PermisosDelRol extends Component {
                             height: 45,
                             margin: 4,
                         }}>
-                            <SImage src={Config.url + "page/" + key} />
+                            <SImage src={SSocket.api.rp  + "page/" + key} />
                         </View>
                         {/* <Text style={{
               color: "#999"
@@ -215,11 +215,11 @@ class PermisosDelRol extends Component {
                         }}>
                             <Text style={{
                                 fontSize: 18,
-                                color: STheme.color.text
+                                color: STheme.color.secondary
                             }}>{obj.descripcion}</Text>
                             <Text style={{
                                 fontSize: 10,
-                                color: STheme.color.text
+                                color: STheme.color.secondary
                             }}>{"/" + obj.url}</Text>
                         </View>
                     </View>

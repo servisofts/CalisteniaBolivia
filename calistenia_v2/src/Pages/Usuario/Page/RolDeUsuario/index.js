@@ -15,7 +15,7 @@ const RolDeUsuario = (props) => {
     var data = props.state.rolReducer.data;
     if (!data) {
         if (props.state.rolReducer.estado == "cargando") {
-            return <SLoad/>
+            return <SLoad />
         }
         var object = {
             component: "rol",
@@ -31,15 +31,15 @@ const RolDeUsuario = (props) => {
 
     var key_usuario = props.data.key;
     if (!key_usuario) {
-        return <SLoad/>
+        return <SLoad />
     }
     var usuarioRol = props.state.usuarioRolReducer.usuario[key_usuario];
     if (!usuarioRol) {
         if (props.state.usuarioRolReducer.estado == "cargando") {
-            return <SLoad/>
+            return <SLoad />
         }
         if (props.state.usuarioRolReducer.estado == "error") {
-            return <SLoad/>
+            return <SLoad />
         }
         var object = {
             component: "usuarioRol",
@@ -68,6 +68,9 @@ const RolDeUsuario = (props) => {
                     isActivo = false;
                 }
             }
+            if (props.preventEdit && !isActivo) {
+                return null;
+            }
             return <TouchableOpacity style={{
                 width: "40%",
                 maxWidth: 170,
@@ -81,6 +84,7 @@ const RolDeUsuario = (props) => {
 
             }}
                 onPress={() => {
+                    if (props.preventEdit) return null;
                     if (SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
                         if (!isActivo) {
                             var object = {
@@ -169,7 +173,7 @@ const RolDeUsuario = (props) => {
             color: "#999",
             width: "100%",
             textAlign: "center"
-        }}>Tipos de usuario</Text>
+        }}>{props.title ? props.title : "Tipos de usuario"}</Text>
         {getRoles()}
     </SView>
 }

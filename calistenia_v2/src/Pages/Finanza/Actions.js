@@ -8,7 +8,7 @@ const config = {
 export default class Actions {
     static component = "reporte"
     static reducerName = "reporteReducer";
-    static getMovimientosBancarios(fecha_desde, fecha_hasta, props, force) {
+    static getMovimientosBancarios(fecha_desde, fecha_hasta, isAdmin, props, force) {
         var reducer = props.state[Actions.reducerName];
         var dataProps = {
             fecha_desde: fecha_desde,
@@ -27,6 +27,7 @@ export default class Actions {
                 type: "getMovimientosBancarios",
                 estado: "cargando",
                 data: dataProps,
+                admin: isAdmin,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key
             })
             return;

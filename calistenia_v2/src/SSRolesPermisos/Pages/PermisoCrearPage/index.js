@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as SImageImput from '../../../Components/SImageImput';
 import { SButtom, SImage, SInput, SNavigation, SPage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Config from '../../config.json'
+
 var _ref = {};
 class PermisoCrearPage extends Component {
   // static navigationOptions = ({ navigation }) => {
@@ -78,7 +78,7 @@ class PermisoCrearPage extends Component {
       this.props.state.permisoReducer.estado = "";
       this.props.navigation.goBack();
     }
-    var urlImage = Config.url + "permiso/" + this.data.key;
+    var urlImage = SSocket.api.rp + "permiso/" + this.data.key;
     const getButtomAnular = () => {
       // var pagina = this.props.state.usuarioPageReducer.data["PermisoPagePage"];
       // if (!pagina) {

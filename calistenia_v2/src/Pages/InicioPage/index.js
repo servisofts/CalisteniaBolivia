@@ -30,7 +30,7 @@ class InicioPage extends Component {
                 <SView
                     height
                     col={"xs-12"}
-                    center
+                    // center
                     activeOpacity={1}
                 >
                     <SView col={"xs-12"} row >

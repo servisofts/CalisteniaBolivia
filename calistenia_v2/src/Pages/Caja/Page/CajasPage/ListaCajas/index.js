@@ -6,6 +6,7 @@ import MovimientosGraphic from './MovimientosGraphic';
 import FechasBetween from '../../../../../Components/FechasBetween';
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 class ListaCajas extends Component {
     constructor(props) {
         super(props);
@@ -139,11 +140,14 @@ class ListaCajas extends Component {
             if (!key) return <View />
             if (!obj) return <View />
             if (!obj.key_usuario) return <View />
-            if(this.state.sucursal){
-                if(obj.key_sucursal != this.state.sucursal.key){
+            if (this.state.sucursal) {
+                if (obj.key_sucursal != this.state.sucursal.key) {
                     return null;
                 }
 
+            }
+            if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
+                return null;
             }
             var usuario = this.getUsuarios(obj.key_usuario);
             usuario.key = obj.key_usuario;
@@ -222,7 +226,7 @@ class ListaCajas extends Component {
                     this.state.fecha.fecha_fin = fecha_fin
                     this.setState({ ...this.state })
                 }} />
-                <Sucursal.Component.SucursalSelect sucursal={this.state.sucursal} setSucursal={(suc)=>{
+                <Sucursal.Component.SucursalSelect sucursal={this.state.sucursal} setSucursal={(suc) => {
                     this.setState({ sucursal: suc });
                 }} />
                 <SScrollView2 disableHorizontal style={{

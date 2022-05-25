@@ -8,6 +8,7 @@ import SSocket from 'servisofts-socket';
 import Asistencia from '../../../Asistencia';
 import RelojEntrenamiento from '../Lista/RelojEntrenamiento';
 import FechaSingle from '../../../../Components/FechaSingle';
+import sucursal_usuario from '../../../sucursal_usuario';
 
 class Lista extends Component {
     constructor(props) {
@@ -88,7 +89,7 @@ class Lista extends Component {
             </SView>
         }
         return <SView col={"xs-12"} height={60} center>
-            <SView width={100} height={50} backgroundColor={!obj.fecha_fin? "#060" : "#600"} style={{
+            <SView width={100} height={50} backgroundColor={!obj.fecha_fin ? "#060" : "#600"} style={{
                 borderRadius: 8,
             }} center>
                 <SText fontSize={16} bold>{new SDate(obj.fecha_inicio).toString("hh:mm")}</SText>
@@ -97,19 +98,27 @@ class Lista extends Component {
         </SView>
     }
     getLista() {
-        var data = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
+        var data_t = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
         var usuarios = Usuario.Actions.getAll(this.props);
         var sucursales = Sucursal.Actions.getAll(this.props);
-        if (!data) return <SLoad />
-        return new SOrdenador([
-            { key: "fecha_on", order: "desc", peso: 1 }
-        ]).ordernarObject(data).map((key, i) => {
-            var obj = data[key];
-            // if (i > 20) return null;
+        var arr_f = sucursal_usuario.Actions.getActive(this.props);
+        if (!arr_f) return <SLoad />
+        if (!data_t) return <SLoad />
+        var data = {};
+        Object.values(data_t).map((obj) => {
             if (!obj.key) return <SView />;
             if (this.state.sucursal) {
                 if (obj.key_sucursal != this.state.sucursal.key) return null;
             }
+            if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
+                return null;
+            }
+            data[obj.key] = obj;
+        })
+        return new SOrdenador([
+            { key: "fecha_on", order: "desc", peso: 1 }
+        ]).ordernarObject(data).map((key, i) => {
+            var obj = data[key];
             return <>
                 <SHr height={16} />
                 <SView col={"xs-11 md-8 xl-6"} key={key} card style={{
@@ -138,7 +147,7 @@ class Lista extends Component {
     }
     getTotal() {
         var data = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
-        if(!data) return <SLoad />
+        if (!data) return <SLoad />
         var total = 0;
         var total_personas = 0;
         Object.keys(data).map((key, i) => {
@@ -148,7 +157,10 @@ class Lista extends Component {
             if (this.state.sucursal) {
                 if (obj.key_sucursal != this.state.sucursal.key) return null;
             }
-            total_personas+=obj.cantidad;
+            if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
+                return null;
+            }
+            total_personas += obj.cantidad;
             total++;
         });
         return <SView col={"xs-12"} center>

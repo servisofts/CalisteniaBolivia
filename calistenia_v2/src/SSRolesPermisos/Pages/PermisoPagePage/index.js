@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Button, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import FloatButtom from '../../../Components/FloatButtom';
-import Config from '../../config.json'
+
 
 import Buscador from '../../../Components/Buscador';
 import { SButtom, SPage, SOrdenador, SSCrollView, STheme, SIcon, SImage, SView } from 'servisofts-component';
@@ -71,7 +71,7 @@ class PermisoPagePage extends Component {
         if (objPermiso.estado == 0) {
           return <View />
         }
-        var urlImage = Config.url + "permiso/" + objPermiso.key;
+        var urlImage = SSocket.api.rp + "permiso/" + objPermiso.key;
         return <TouchableOpacity style={{
           width: 80,
           height: 120,
@@ -239,7 +239,7 @@ class PermisoPagePage extends Component {
               height: 45,
               margin: 4,
             }}>
-              <SImage src={Config.url + "page/" + key} />
+              <SImage src={SSocket.api.rp + "page/" + key} />
               {/* {this.props.state.imageReducer.getImage(AppParams.servicios["roles_permisos"] + "page/" + key, {})} */}
             </View>
             {/* <Text style={{

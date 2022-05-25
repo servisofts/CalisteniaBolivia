@@ -7,6 +7,7 @@ import { SSRolesPermisosValidate } from '../../../../../SSRolesPermisos';
 import SSocket from 'servisofts-socket';
 import Sucursal from '../../../../Sucursal';
 import Usuario from '../../..';
+import sucursal_usuario from '../../../../sucursal_usuario';
 class PaquetesDeUsuario extends Component {
     constructor(props) {
         super(props);
@@ -125,8 +126,12 @@ class PaquetesDeUsuario extends Component {
             data
         ).map((key) => {
             var obj = data[key];
+            if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
+                return null;
+            }
             var paquete = this.getPaquete(obj.key_paquete);
             var urlImagePaquete = SSocket.api.root + "paquete_" + obj.key_paquete + `?date=${new Date().getTime()}`;
+
             if (!paquete) {
                 return <SLoad />
             }
@@ -139,8 +144,10 @@ class PaquetesDeUsuario extends Component {
                 alignItems: "center",
                 justifyContent: "center",
             }} onPress={() => {
+                console.log(obj);
                 SNavigation.navigate("EsperandoVenta", {
                     key: key,
+                    key_paquete_venta_usuario: obj.key_paquete_venta_usuario,
                 });
             }}>
                 <View style={{

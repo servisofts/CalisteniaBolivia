@@ -7,6 +7,9 @@ export default (state, action) => {
     if (!state) return initialState
     if (action.component == "sucursalTipoPagoCuentaBanco") {
         switch (action.type) {
+            case "getAll":
+                getAll(state, action);
+                break;
             case "getByKeySucursal":
                 getByKeySucursal(state, action);
                 break;
@@ -24,6 +27,12 @@ export default (state, action) => {
     return state;
 }
 
+const getAll = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.all = action.data;
+    }
+}
 const getByKeySucursal = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {

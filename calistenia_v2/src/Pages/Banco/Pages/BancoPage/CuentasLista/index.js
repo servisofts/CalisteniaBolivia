@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SView, SText, STheme, SHr } from 'servisofts-component';
+import { SView, SText, STheme, SHr, SLoad } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
+import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 let component = "cuentaBanco";
 
 class CuentasLista extends Component {
@@ -35,6 +37,7 @@ class CuentasLista extends Component {
     getAll = () => {
         var reducer = this.props.state.cuentaBancoReducer;
         var keyBanco = this.props.data.key;
+        var data_sucursal_cuenta = Sucursal.SucursalTipoPagoCuentaBanco.getAll(this.props);
         if (!reducer.data[keyBanco]) {
             if (reducer.estado == "cargando") {
                 return <Text>Cargando</Text>;
@@ -48,14 +51,26 @@ class CuentasLista extends Component {
             })
             return <Text></Text>;
         }
-
         var data = reducer.data[keyBanco];
         if (!data) {
             return <Text></Text>;
         }
+        if (!data_sucursal_cuenta) return <SLoad />
         return Object.keys(data).map((key) => {
             var obj = data[key];
             if (obj.estado == 0) return <View />
+            var arr_active = Object.values(data_sucursal_cuenta).filter(i => i.key_cuenta_banco == obj.key);
+            var isActive = false;
+            // if (arr_active.length > 0) {
+            arr_active.map((itm) => {
+                if (!isActive) {
+                    isActive = sucursal_usuario.Actions.isActive(itm.key_sucursal, this.props);
+                }
+            })
+            if (!isActive) {
+                return null;
+            }
+            // }
             return (
                 <SView col={"xs-12"} key={obj.key} center style={{
                     paddingTop: 4,

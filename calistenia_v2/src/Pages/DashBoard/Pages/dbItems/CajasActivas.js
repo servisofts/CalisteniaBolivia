@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SIcon, SLoad, SNavigation, SText, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
+import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
 
 class CajasActivas extends Component {
@@ -14,9 +15,16 @@ class CajasActivas extends Component {
 
     getContent() {
         var cajas = Caja.Actions.getActivas(this.props);
+        var arr = sucursal_usuario.Actions.getActive(this.props);
         if (!cajas) return <SLoad />
+        if (!arr) return <SLoad />
+
         var cant = 0;
         Object.keys(cajas).map(key => {
+            if (!cajas[key].key_sucursal) return null;
+            if (!sucursal_usuario.Actions.isActive(cajas[key].key_sucursal, this.props)) {
+                return null;
+            }
             if (cajas[key].estado == 1) cant++;
         })
         return <SView center row height>
@@ -28,7 +36,7 @@ class CajasActivas extends Component {
                     <SText bold fontSize={18} center>{`${cant}`}</SText>
                 </SView>
             </SView>
-            <SView col={"xs-4"} height={50} onPress={()=>{
+            <SView col={"xs-4"} height={50} onPress={() => {
                 SNavigation.navigate("CajasAbiertas")
             }}>
                 <SIcon name={"Caja"} />

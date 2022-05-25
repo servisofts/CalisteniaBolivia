@@ -49,9 +49,9 @@ class Recibo extends Component {
                         textTransform: "uppercase"
                     }}>{this.getNombreUsuario(obj.key_usuario)}</SText>
                     <SView row>
-                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_inicio).toString("MONTH, dd")}</SText>
+                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_inicio,"yyyy-MM-dd").toString("MONTH, dd")}</SText>
                         <SText fontSize={12} color={STheme.color.lightBlack} > - </SText>
-                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_fin).toString("MONTH, dd")}</SText>
+                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_fin,"yyyy-MM-dd").toString("MONTH, dd")}</SText>
                     </SView>
 
                 </SView>

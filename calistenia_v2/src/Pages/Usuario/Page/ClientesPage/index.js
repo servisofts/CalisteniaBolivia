@@ -12,6 +12,7 @@ import Paquete_Item from './Paquete_Item';
 import { SText } from 'servisofts-component';
 import Sucursal from '../../../Sucursal';
 import SucursalSelect from './SucursalSelect';
+import sucursal_usuario from '../../../sucursal_usuario';
 
 class ClientesPage extends Component {
 
@@ -105,6 +106,7 @@ class ClientesPage extends Component {
             return null
           }
         }
+        if (!sucursal_usuario.Actions.isActive(ClientesActivos[key]["caja"].key_sucursal, this.props)) return null;
         objFinal[key] = {
           ...data[key],
           vijencia: ClientesActivos[key],

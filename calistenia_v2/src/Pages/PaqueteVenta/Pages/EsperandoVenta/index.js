@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SLoad, SPage, SView, SText, SHr, SNavigation, SThread, SButtom, SScrollView2 } from 'servisofts-component';
+import { SLoad, SPage, SView, SText, SHr, SNavigation, SThread, SButtom, SScrollView2, SPopup, SIcon, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Recibo from '../../Component/Recibo';
 
@@ -12,10 +12,9 @@ class EsperandoVenta extends Component {
         super(props);
         this.state = {
         };
+        this.key = SNavigation.getParam("key");
+        this.key_paquete_venta_usuario = SNavigation.getParam("key_paquete_venta_usuario");
     }
-
-
-
     imprimir() {
         const input = document.getElementById('recibo');
         Html2Canvas(input)
@@ -46,6 +45,17 @@ class EsperandoVenta extends Component {
             });
         }
     }
+    getButtom({ title, onPress, icon }) {
+        return <SButtom type={"default"} style={{
+            height: 70,
+            backgroundColor: STheme.color.card,
+            borderRadius: 8,
+        }} onPress={onPress}>
+            <SIcon name={icon} width={40} height={40} />
+            <SHr height={4} />
+            <SText secondary bold >{title}</SText>
+        </SButtom>
+    }
     getRecibo() {
         if (this.state.error) {
             if (this.state.error == "existe_venta") {
@@ -64,34 +74,40 @@ class EsperandoVenta extends Component {
             }
             return <SText>{this.state.error}</SText>
         }
-        if (!this.state.data) return this.isLoad();
-        var reducer = this.props.state.paqueteVentaReducer;
-        var key = SNavigation.getParam("key");
-        // var recibo = reducer.recibo[key];
-        // if (!recibo) {
-        //     if (reducer.estado == "cargando") return this.isLoad();
-        //     recibo = reducer.lastRegister;
-        //     SSocket.send({
-        //         component: "paqueteVenta",
-        //         type: "getRecibo",
-        //         estado: "cargando",
-        //         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-        //         key: key
-        //     });
-        //     return this.isLoad();
-        // }
+        if (SNavigation.getParam("loading")) {
+            if (!this.state.data) return this.isLoad();
+        }
 
-        return <SView center col={"xs-12"} center flex>
+
+        var reducer = this.props.state.paqueteVentaReducer;
+        var key = this.key;
+
+        return <SView center col={"xs-12"} flex>
             <SHr />
-            <SButtom type={"danger"} onPress={() => { this.imprimir() }}>{"IMPRIMIR"}</SButtom>
             <SHr />
-            <SView center>
-                <SButtom props={{
-                    type: "danger"
-                }} onPress={() => {
-                    SNavigation.replace("inicio");
-                }}>Ir a inicio</SButtom>
+            <SView row col={"xs-12"} center>
+                <SView width={16} />
+                {this.getButtom({ title: "IMPRIMIR", icon: "Ajustes", onPress: () => { this.imprimir() } })}
+                <SView width={16} />
+
+                {this.key_paquete_venta_usuario ? this.getButtom({
+                    title: "PRORROGA", icon: "Profanity", onPress: () => {
+                        SNavigation.navigate("prorroga/registro", { key_paquete_venta_usuario: this.key_paquete_venta_usuario })
+                    }
+                }) : null}
+                <SView width={16} />
+                {this.getButtom({
+                    title: "SALIR", icon: "Salir", onPress: () => {
+                        SPopup.confirm({
+                            title: "¿Está seguro que desea ir al inicio?",
+                            onPress: () => {
+                                SNavigation.replace("inicio");
+                            }
+                        })
+                    }
+                })}
             </SView>
+            <SHr />
             <SHr />
             <div id="recibo" style={{
                 width: "100%"
@@ -125,8 +141,9 @@ class EsperandoVenta extends Component {
     render() {
         this.hilo();
         this.validate();
+        var isLoad = SNavigation.getParam("loading", false);
         return (
-            <SPage hidden disableScroll>
+            <SPage hidden={isLoad ? true : false} disableScroll >
                 <SView col={"xs-12"} flex>
                     <SScrollView2 disableHorizontal>
                         <SView col={"xs-12"}>

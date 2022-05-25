@@ -9,6 +9,7 @@ import Paquete_Item from './Paquete_Item';
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../../Sucursal';
 import Usuario from '../../../../../Usuario';
+import sucursal_usuario from '../../../../../sucursal_usuario';
 class SeleccionarUsuario extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
@@ -89,7 +90,7 @@ class SeleccionarUsuario extends Component {
     var data = Sucursal.Actions.getAll(this.props);
     if (!data) return <View />
     var obj = data[key_sucursal]
-    if(!obj) return <View />
+    if (!obj) return <View />
     return <SView>
       <SText>Sucursal: {obj.descripcion}</SText>
     </SView>
@@ -140,6 +141,10 @@ class SeleccionarUsuario extends Component {
       }
       var objFinal = {};
       Object.keys(reducer.data).map((key) => {
+        var key_sucursal = reducer.data[key]?.caja?.key_sucursal;
+        if(!sucursal_usuario.Actions.isActive(key_sucursal,this.props)){
+          return null;
+        }
         objFinal[key] = {
           ...data[key],
           vijencia: reducer.data[key],

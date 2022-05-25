@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SImage, SInput, SNavigation, SPage,STheme } from 'servisofts-component';
+import { SButtom, SImage, SInput, SNavigation, SPage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 // import NaviDrawer from '../../../Component/NaviDrawer';
 import { choseFile } from '../../../Components/SImageImput';
-import Config from '../../config.json'
+
 
 var _ref = {};
 class PermisoPageRegistroPage extends Component {
@@ -43,20 +43,20 @@ class PermisoPageRegistroPage extends Component {
         label: "Descripcion o nombre",
         // autoCapitalize: "none",
         defaultValue: this.data.descripcion,
-        customStyle:"calistenia",
+        customStyle: "calistenia",
       }),
       url: new SInput({
         placeholder: "Direccion o url",
         label: "Direccion o url",
         defaultValue: this.data.url,
         // autoCapitalize: "none",
-        customStyle:"calistenia",
+        customStyle: "calistenia",
       }),
       style: new SInput({
         placeholder: "estilo",
         label: "estilo",
         defaultValue: this.data.style,
-        customStyle:"calistenia",
+        customStyle: "calistenia",
         // autoCapitalize: "none",
         // style: styleImput
       }),
@@ -66,7 +66,7 @@ class PermisoPageRegistroPage extends Component {
         label: "Es pagina?",
         defaultValue: this.data.is_page,
         // autoCapitalize: "none",
-        customStyle:"calistenia",
+        customStyle: "calistenia",
       }),
     }
   }
@@ -91,7 +91,7 @@ class PermisoPageRegistroPage extends Component {
       this.props.state.pageReducer.estado = "";
       this.props.navigation.goBack();
     }
-    var urlImage = Config.url + "page/" + this.data.key;
+    var urlImage = SSocket.api.rp + "page/" + this.data.key;
     return (
       <SPage title={(!this.key ? "Crear Pagina" : "Editar Pagina")} >
         <View style={{
@@ -117,7 +117,7 @@ class PermisoPageRegistroPage extends Component {
                 height: 180,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor:STheme.color.card,
+                backgroundColor: STheme.color.card,
                 borderRadius: 8,
                 marginBottom: 16,
                 overflow: 'hidden',
@@ -150,7 +150,7 @@ class PermisoPageRegistroPage extends Component {
                   // this.setState({...this.state});
                 });
               }}>
-                <SImage src={urlImage}/>
+                <SImage src={urlImage} />
               </TouchableOpacity>
               {Object.keys(this.imputs).map((key) => {
                 return this.imputs[key].getComponent();

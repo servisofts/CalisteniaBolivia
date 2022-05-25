@@ -21,6 +21,7 @@ import DashBoard from './DashBoard';
 import Manual from './Manual';
 import Billetera from './Billetera';
 import Test from './Test';
+import prorroga from './prorroga';
 import Inversiones from './Inversiones';
 import Services from '../Services';
 const Pages: SPageListProps = {
@@ -44,6 +45,7 @@ const Pages: SPageListProps = {
     ...DashBoard.Pages,
     ...Manual.Pages,
     ...Billetera.Pages,
+    ...prorroga.Pages,
     ...Inversiones.Pages,
     ...Services.Pages
 }

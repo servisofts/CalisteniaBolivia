@@ -6,6 +6,7 @@ import { SLoad, SText, SView, SDate, SPopup, SNavigation, STheme } from 'serviso
 import FechasBetween from '../../../../../Components/FechasBetween';
 import Finanza from '../../../../Finanza';
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 import Usuario from '../../../../Usuario';
 
 class Grafico extends Component {
@@ -43,7 +44,7 @@ class Grafico extends Component {
         var asistencia_por_dia = {};
         var maximo = 0;
         fechaInicio.addDay(-1);
-        console.log(asistencias);
+        // console.log(asistencias);
         tiempo.map((i) => {
             var fecha = fechaInicio.addDay(1);
             asistencia_por_dia[fecha.toString("yyyy-MM-dd")] = {};
@@ -71,6 +72,10 @@ class Grafico extends Component {
             var pos_a = a * (i - 1);
             return Object.keys(sucursales).map((key_suc) => {
                 var sucursal = sucursales[key_suc];
+                var obj = sucursales[key];
+                if (!sucursal_usuario.Actions.isActive(key_suc, this.props)) {
+                    return null;
+                }
                 if (this.props.select) {
                     if (Object.keys(this.props.select).length > 0) {
                         if (!this.props.select[key_suc]) {

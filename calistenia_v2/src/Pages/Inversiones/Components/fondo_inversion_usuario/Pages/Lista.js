@@ -57,14 +57,16 @@ class Lista extends Component {
                         </SView>
                     }
                 },
-                // {
-                //     key: "key-ver", label: "Ver", width: 50, center: true,
-                //     component: (item) => {
-                //         return <SView onPress={() => { SNavigation.navigate(Parent.component + "/perfil", { key: item }) }}>
-                //             <SIcon name={"Salir"} width={35} />
-                //         </SView>
-                //     }
-                // },
+                {
+                    key: "key_usuario_inversionista-ganancias", label: "Ganancias", width: 80, center: true,
+                    component: (item) => {
+                        return <SView onPress={() => {
+                            SNavigation.navigate("mis_inversiones/perfil", { key: this["key_fondo_inversion"], key_usuario: item });
+                        }}>
+                            <SIcon name={"Money"} width={35} />
+                        </SView>
+                    }
+                },
                 {
                     key: "key-aprobar", label: "Aprobar", width: 70, center: true,
                     component: (item) => {
