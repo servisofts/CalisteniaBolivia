@@ -32,6 +32,9 @@ public class Prorroga {
             case "registro":
                 registro(data, session);
             break;
+            case "anular":
+                anular(data, session);
+            break;
             case "editar":
                 editar(data, session);
             break;
@@ -62,6 +65,14 @@ public class Prorroga {
         }
     }
     
+    public static JSONObject getByKey(String key) {
+        try {
+            String consulta =  "select get_by_key('"+nombre_tabla+"','"+key+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
@@ -136,6 +147,42 @@ public class Prorroga {
             return null;
         }
 
+    }
+
+    public void anular(JSONObject obj, SSSessionAbstract session) {
+        try {
+            JSONObject prorroga = obj.getJSONObject("data");
+
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            DateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+
+            JSONObject paqueteVentaUsuario = PaqueteVentaUsuario.getByKey(prorroga.getString("key_paquete_venta_usuario"));
+            paqueteVentaUsuario = paqueteVentaUsuario.getJSONObject(JSONObject.getNames(paqueteVentaUsuario)[0]);
+
+
+            prorroga = Prorroga.getByKey(prorroga.getString("key"));
+            prorroga = prorroga.getJSONObject(JSONObject.getNames(prorroga)[0]);
+            if(prorroga.getInt("estado")>0){
+                Calendar fecha_fin = new GregorianCalendar();
+                fecha_fin.setTime(formatter1.parse(paqueteVentaUsuario.getString("fecha_fin")));
+                fecha_fin.add(Calendar.DAY_OF_MONTH, prorroga.getInt("dias")*-1);
+                paqueteVentaUsuario.put("fecha_fin", formatter.format(fecha_fin.getTime()));
+
+                PaqueteVentaUsuario.editar(paqueteVentaUsuario);
+
+                prorroga.put("estado", 0);
+
+                Conexion.editObject(nombre_tabla, prorroga);   
+            }
+            
+            obj.put("data", prorroga);
+            obj.put("estado", "exito");
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+        } catch (Exception e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
 
     public void editar(JSONObject obj, SSSessionAbstract session) {
