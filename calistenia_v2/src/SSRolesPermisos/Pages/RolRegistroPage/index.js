@@ -18,10 +18,10 @@ class RolRegistroPage extends Component {
     };
     var styleImput = {
       width: "100%",
-      padding: 8,
+      // padding: 8,
       height: 50,
-      margin: 8,
-      borderWidth: 2,
+      // margin: 8,
+      borderWidth: 1,
       borderColor: "#999",
       borderRadius: 8,
       color: "#fff",

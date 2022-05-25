@@ -6,6 +6,13 @@ const initialState = {
 
 export default (state, action) => {
     if (!state) return initialState
+    if (action.component == "prorroga") {
+        switch (action.type) {
+            case "registro":
+                prorroga_registro(state, action);
+                break;
+        }
+    }
     if (action.component == "paqueteVenta") {
         switch (action.type) {
             case "registro":
@@ -54,6 +61,28 @@ const registro = (state, action) => {
             }
         })
         state.lastRegister = action.data;
+    }
+}
+const prorroga_registro = (state, action) => {
+    if (action.estado === "exito") {
+        var data = action.data;
+        if (state.usuario[data.key_usuario]) {
+            if (state.usuario[data.key_usuario][data.key_paquete_venta]) {
+                var obj = state.usuario[data.key_usuario][data.key_paquete_venta];
+                obj["fecha_fin"] = data.fecha_fin;
+            }
+        }
+        if (state.data) {
+            if (state.data[data.key_usuario]) {
+                if (state.data[data.key_usuario][data.key_paquete_venta]) {
+                    var obj = state.data[data.key_usuario][data.key_paquete_venta];
+                    obj["fecha_fin"] = data.fecha_fin;
+                }
+            }
+        }
+        if(state.recibo[data.key_paquete_venta]){
+            delete state.recibo[data.key_paquete_venta];
+        }
     }
 }
 const eliminar = (state, action) => {

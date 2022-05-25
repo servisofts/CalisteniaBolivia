@@ -36,7 +36,7 @@ class Registro extends Component {
             }}
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
-                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio).toFixed(2) || null, col: "xs-5.5" },
+                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio||0).toFixed(2) || null, col: "xs-5.5" },
                 dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
                 participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
             }}
@@ -48,10 +48,10 @@ class Registro extends Component {
                         ...data
                     }, serviciosSelec, this.props);
                 } else {
-                    if (serviciosSelec.length <= 0) {
-                        alert("Debe activar almenos 1 servicio");
-                        return;
-                    }
+                    // if (serviciosSelec.length <= 0) {
+                    //     alert("Debe activar almenos 1 servicio");
+                    //     return;
+                    // }
                     Paquete.Actions.registro(data, serviciosSelec, this.props);
                 }
             }}

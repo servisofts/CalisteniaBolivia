@@ -4,7 +4,7 @@ import { View, Text, Button, TouchableOpacity, ScrollView, ActivityIndicator } f
 
 import FloatButtom from '../../../Components/FloatButtom';
 import { SSRolesPermisosValidate } from '../..';
-import { SButtom, SImage, SPage, SSCrollView, STheme, SView } from 'servisofts-component';
+import { SButtom, SImage, SLoad, SPage, SSCrollView, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 
 
@@ -87,7 +87,7 @@ class RolPage extends Component {
       var permisos = reducer.data;
       if (!permisos) {
         if (reducer.estado == "cargando") {
-          return <ActivityIndicator color={STheme.color.secondary} />
+          return <SLoad />
         }
         var object = {
           component: "rol",
@@ -96,12 +96,12 @@ class RolPage extends Component {
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
         }
         SSocket.send(object)
-        return <ActivityIndicator color={STheme.color.secondary} />
+        return <SLoad />
       }
 
       return Object.keys(permisos).map((key) => {
         var obj = permisos[key];
-        if(obj.estado == 0) return;
+        if (obj.estado == 0) return;
         var urlImage = SSocket.api.rp + "rol/" + obj.key;
         return <View style={{
           width: "95%",

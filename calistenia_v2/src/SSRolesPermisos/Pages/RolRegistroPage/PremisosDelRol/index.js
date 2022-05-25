@@ -153,7 +153,7 @@ class PermisosDelRol extends Component {
                             width: "100%",
                             textAlign: "center",
                             fontSize: 10,
-                            color: STheme.color.text
+                            color: STheme.color.secondary
                         }}>{objPermiso.descripcion}</Text>
                     </TouchableOpacity>
                 </View>
@@ -204,7 +204,7 @@ class PermisosDelRol extends Component {
                             height: 45,
                             margin: 4,
                         }}>
-                            <SImage src={Config.url + "page/" + key} />
+                            <SImage src={SSocket.api.rp  + "page/" + key} />
                         </View>
                         {/* <Text style={{
               color: "#999"
@@ -215,11 +215,11 @@ class PermisosDelRol extends Component {
                         }}>
                             <Text style={{
                                 fontSize: 18,
-                                color: STheme.color.text
+                                color: STheme.color.secondary
                             }}>{obj.descripcion}</Text>
                             <Text style={{
                                 fontSize: 10,
-                                color: STheme.color.text
+                                color: STheme.color.secondary
                             }}>{"/" + obj.url}</Text>
                         </View>
                     </View>
