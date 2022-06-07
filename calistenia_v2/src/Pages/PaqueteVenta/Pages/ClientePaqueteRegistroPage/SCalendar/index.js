@@ -135,6 +135,7 @@ export default class SCalendar extends Component<CalendarProps> {
         }}> </SView>
     }
     getSemana(date: SDate) {
+        date.addDay(-1);
         return Object.keys(SDate.getDaysOfWeek()).map((key) => {
             var day = SDate.getDayOfWeek(key);
             date.addDay(1);

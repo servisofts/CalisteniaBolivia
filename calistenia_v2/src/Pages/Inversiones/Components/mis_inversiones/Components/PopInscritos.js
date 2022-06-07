@@ -10,23 +10,26 @@ class PopInscritos extends Component {
         };
     }
 
+    getUsuarios(data_usuarios, obj) {
+        return obj.usuarios.map((key) => {
+            var usuario = data_usuarios[key];
+            return <SText>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
+        });
+    }
     getInscritos() {
         let data = this.props.ventas_del_dia;
-        // var data_usuarios = Usuario.Actions.getAll(this.props);
-        // if (!data_usuarios) return <SLoad />
+        var data_usuarios = Usuario.Actions.getAll(this.props);
+        if (!data_usuarios) return <SLoad />
         data.sort((a, b) => {
             return new SDate(a.fecha_on).isAfter(new SDate(b.fecha_on)) ? 1 : -1;
         })
         return data.map((obj) => {
-            // var usuario = data_usuarios[obj.key_usuario];
             return <>
                 <SHr />
                 <SHr />
                 <SView col={"xs-12"} row>
                     <SView flex>
-                        {/* <SText>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText> */}
-                        <SText>{`${obj.key}`}</SText>
-                        {/* <SText>{`${JSON.stringify(obj)}`}</SText> */}
+                        {this.getUsuarios(data_usuarios, obj)}
                     </SView>
                     <SView width={100}>
                         <SText>{new SDate(obj.fecha_on).toString("MON,dd hh:mm")}</SText>

@@ -4,6 +4,7 @@ import { SHr, SImage, SLoad, SText, SView } from 'servisofts-component';
 
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 import Grafico from './Grafico';
 
 class GraficoIngresos extends Component {
@@ -18,6 +19,9 @@ class GraficoIngresos extends Component {
         if (!sucursales) return <SLoad />
         return Object.keys(sucursales).map((key) => {
             var obj = sucursales[key];
+            if (!sucursal_usuario.Actions.isActive(key, this.props)) {
+                return null;
+            }
             return <SView col={"xs-12"} height={50} style={{ padding: 2, }} onPress={() => {
                 if (this.state.select[key]) {
                     delete this.state.select[key];
@@ -52,7 +56,9 @@ class GraficoIngresos extends Component {
                     <SText fontSize={16}>{`Monto por paquetes vendidos`}</SText>
                 </SView>
                 <SView
-                    col={"xs-2 xl-1"} row>
+                    col={"xs-2 xl-1"} row style={{
+                        minHeight: 300,
+                    }}>
                     {this.getSucursales()}
                 </SView>
                 <SView

@@ -45,7 +45,7 @@ public class SucursalTipoPagoCuentaBanco {
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_all('sucursal_tipo_pago_cuenta_banco','sucursal_tipo_pago_cuenta_banco') as json";
+            String consulta =  "select get_all('sucursal_tipo_pago_cuenta_banco') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");

@@ -24,6 +24,9 @@ export default (state, action) => {
             case "getReporteAsistencia":
                 getReporteAsistencia(state, action);
                 break;
+            case "getProrroga":
+                getProrroga(state, action);
+                break;
             default:
                 defaultType(state, action);
                 break;
@@ -51,6 +54,12 @@ const getReporteGeneral = (state, action) => {
     state.estado = action.estado
     if (action.estado === "exito") {
         state.dataEstado = action.data;
+    }
+}
+const getProrroga = (state, action) => {
+    state.estado = action.estado
+    if (action.estado === "exito") {
+        state.prorroga = action.data;
     }
 }
 const getPaquetesVendidos = (state, action) => {

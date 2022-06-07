@@ -10,16 +10,17 @@ class Perfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            total_ventas:0
+            total_ventas: 0
         };
         this.key_fondo_inversion = SNavigation.getParam("key");
+        this.key_usuario = SNavigation.getParam("key_usuario");
     }
 
     getDetalle() {
         var data_fondo_inversion = fondo_inversion.Actions.getByKey(this.key_fondo_inversion, this.props);
         var data_inversion_usuario = fondo_inversion_usuario.Actions.filtrar({
             key_fondo_inversion: this.key_fondo_inversion,
-            key_usuario_inversionista: this.props.state.usuarioReducer.usuarioLog.key
+            key_usuario_inversionista: this.key_usuario ?? this.props.state.usuarioReducer.usuarioLog.key
         }, this.props);
         if (!data_fondo_inversion) return null;
         if (!data_inversion_usuario) return null;
@@ -115,15 +116,16 @@ class Perfil extends Component {
     }
     render() {
         return (
-            <SPage title={'Perfil'} center>
-                {this.getSceneData()}
-                {this.getDetalle()}
-                <SHr />
-                <SHr />
-                <ListaGanancias key_fondo_inversion={this.key_fondo_inversion} onChangeTotal={(total) => {
-                    this.setState({ total_ventas: total });
-                }} />
-
+            <SPage title={'Perfil'}>
+                <SView col={"xs-12"} center>
+                    {this.getSceneData()}
+                    {this.getDetalle()}
+                    <SHr />
+                    <SHr />
+                    <ListaGanancias key_fondo_inversion={this.key_fondo_inversion} onChangeTotal={(total) => {
+                        this.setState({ total_ventas: total });
+                    }} />
+                </SView>
             </SPage>
         );
     }

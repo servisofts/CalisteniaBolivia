@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView 
 import { connect } from 'react-redux';
 import * as SImageImput from '../../../Components/SImageImput';
 
-import Config from '../../config.json'
+
 
 import PremisosDelRol from './PremisosDelRol';
 import { SButtom, SImage, SInput, SNavigation, SPage, SSCrollView, STheme, SView } from 'servisofts-component';
@@ -18,10 +18,10 @@ class RolRegistroPage extends Component {
     };
     var styleImput = {
       width: "100%",
-      padding: 8,
+      // padding: 8,
       height: 50,
-      margin: 8,
-      borderWidth: 2,
+      // margin: 8,
+      borderWidth: 1,
       borderColor: "#999",
       borderRadius: 8,
       color: "#fff",
@@ -68,7 +68,7 @@ class RolRegistroPage extends Component {
       this.props.state.rolReducer.estado = "";
       SNavigation.goBack();
     }
-    var urlImage = Config.url + "rol/" + this.data.key;
+    var urlImage = SSocket.api.rp + "rol/" + this.data.key;
     // var urlImage = AppParams.urlImages + "rol/" + this.data.key;
     return (
       <SPage title={(!this.data.key ? "Crear rol" : "Editar rol")}>

@@ -8,7 +8,7 @@ const config = {
 export default class Actions {
     static component = "reporte"
     static reducerName = "reporteReducer";
-    static getMovimientosBancarios(fecha_desde, fecha_hasta, props, force) {
+    static getMovimientosBancarios(fecha_desde, fecha_hasta, isAdmin, props, force) {
         var reducer = props.state[Actions.reducerName];
         var dataProps = {
             fecha_desde: fecha_desde,
@@ -27,6 +27,7 @@ export default class Actions {
                 type: "getMovimientosBancarios",
                 estado: "cargando",
                 data: dataProps,
+                admin: isAdmin,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key
             })
             return;
@@ -96,6 +97,27 @@ export default class Actions {
             SSocket.send({
                 component: Actions.component,
                 type: "getPaquetesVendidosAll",
+                estado: "cargando",
+                data: dataProps,
+                key_usuario: props.state.usuarioReducer.usuarioLog.key
+            })
+            return;
+        }
+        return data;
+    }
+    static getReporteProrroga(dataProps, props, force) {
+        var reducer = props.state[Actions.reducerName];
+        var data = reducer.prorroga;
+        if (reducer.data_prorroga != JSON.stringify(dataProps)) {
+            reducer.data_prorroga = JSON.stringify(dataProps);
+            reducer.prorroga = false;
+            force = true;
+        }
+        if (!data || force) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: Actions.component,
+                type: "getProrroga",
                 estado: "cargando",
                 data: dataProps,
                 key_usuario: props.state.usuarioReducer.usuarioLog.key

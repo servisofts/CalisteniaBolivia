@@ -22,6 +22,7 @@ class listaGanancias extends Component {
         })
         fecha_inicio.addMonth(-1);
         let ahora = new SDate();
+        ahora.addMonth(1);
         var total = 0;
         let COMPONENT = Array(dias + 1).fill(0).map((j, i) => {
             fecha_inicio.addMonth(1)
@@ -33,7 +34,12 @@ class listaGanancias extends Component {
             if (ahora.isBefore(fecha_inicio)) {
                 return null;
             }
-            let cantidad = ventas_del_dia.length
+            var cantidad = 0;
+            ventas_del_dia.map((obj) => {
+                cantidad += obj.usuarios.length;
+            })
+
+            // let cantidad = ventas_del_dia.length
             total += cantidad;
 
             return <SView>
@@ -50,7 +56,7 @@ class listaGanancias extends Component {
                         SPopup.open({
                             key: "Inscritos",
                             title: "Inscritos",
-                            content: <PopInscritos ventas_del_dia={ventas_del_dia} fecha={fecha_inicio.toString("yyyy, MONTH dd")} />
+                            content: <PopInscritos ventas_del_dia={ventas_del_dia} fecha={ new SDate(data.fecha_inicio).toString("yyyy, MONTH dd")} />
                         })
                     }}>
                         <SText>{cantidad}</SText>

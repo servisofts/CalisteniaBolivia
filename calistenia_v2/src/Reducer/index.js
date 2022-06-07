@@ -15,6 +15,10 @@ import Finanza from '../Pages/Finanza';
 import Manual from '../Pages/Manual';
 import Billetera from '../Pages/Billetera';
 import Inversiones from '../Pages/Inversiones';
+import sucursal_servicio from '../Pages/sucursal_servicio';
+import sucursal_usuario from '../Pages/sucursal_usuario';
+import sucursal_paquete from '../Pages/sucursal_paquete';
+import prorroga from '../Pages/prorroga';
 import Services from '../Services';
 const reducers = combineReducers({
     ...Usuario.Reducers,
@@ -32,6 +36,10 @@ const reducers = combineReducers({
     ...Manual.Reducers,
     ...Billetera.Reducers,
     ...Inversiones.Reducers,
+    ...sucursal_servicio.Reducers,
+    ...sucursal_usuario.Reducers,
+    ...prorroga.Reducers,
+    ...sucursal_paquete.Reducers,
     ...Services.Reducers
 });
 

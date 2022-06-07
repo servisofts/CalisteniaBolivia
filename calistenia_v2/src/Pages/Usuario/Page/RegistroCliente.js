@@ -10,7 +10,9 @@ import HuellasDeUsuario from '../../../Services/zkteco/Components/usuario_huella
 import SincronizarUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
 import RolDeUsuario from './RolDeUsuario';
-
+import sucursal_usuario from '../../sucursal_usuario';
+import Sucursal_usuario from '../../sucursal_usuario';
+import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 class RegistroCliente extends Component {
     constructor(props) {
         super(props);
@@ -97,6 +99,22 @@ class RegistroCliente extends Component {
 
         </>
     }
+    getSucursalesA() {
+        if(!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_usuario_sucursal"})){
+            return null;
+        }
+        if(!this.usr?.key) return null;
+        return (
+            <SView col={"xs-12 sm-10 md-8 lg-6"} center>
+                <SText color={"#999"} fontSize={16}>Sucursales</SText>
+                <SHr />
+                <SText color={"#999"} fontSize={12}>El usuario solo podra ver y manejar las sucursales activas.</SText>
+                <SHr />
+                <SHr />
+                <Sucursal_usuario.Components.Select key_usuario={this.usr?.key} />
+            </SView>
+        )
+    }
     render() {
 
         var error = Usuario.Actions.getError("registro", this.props);
@@ -155,6 +173,10 @@ class RegistroCliente extends Component {
                     <SHr />
                     <SHr />
                     <RolDeUsuario data={this.usr} />
+                    <SHr />
+                    <SHr />
+                    {this.getSucursalesA()}
+                    <SHr height={35} />
                 </SView>
             </SPage>
         );

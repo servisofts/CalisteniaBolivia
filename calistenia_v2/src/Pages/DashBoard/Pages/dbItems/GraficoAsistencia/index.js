@@ -4,6 +4,7 @@ import { SHr, SImage, SLoad, SText, SView } from 'servisofts-component';
 
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 import Grafico from './Grafico';
 
 class GraficoAsistencia extends Component {
@@ -15,9 +16,14 @@ class GraficoAsistencia extends Component {
     }
     getSucursales() {
         var sucursales = Sucursal.Actions.getAll(this.props);
+        var arr_all = sucursal_usuario.Actions.getActive(this.props);
         if (!sucursales) return <SLoad />
+        if (!arr_all) return <SLoad />
         return Object.keys(sucursales).map((key) => {
             var obj = sucursales[key];
+            if (!sucursal_usuario.Actions.isActive(key, this.props)) {
+                return null;
+            }
             return <SView col={"xs-12"} height={50} style={{ padding: 2, }} onPress={() => {
                 if (this.state.select[key]) {
                     delete this.state.select[key];
@@ -52,7 +58,9 @@ class GraficoAsistencia extends Component {
                     <SText fontSize={16}>{`Cantidad de asistencias en entrenamientos`}</SText>
                 </SView>
                 <SView
-                    col={"xs-2 xl-1"} row>
+                    col={"xs-2 xl-1"} row style={{
+                        minHeight: 300,
+                    }}>
                     {this.getSucursales()}
                 </SView>
                 <SView

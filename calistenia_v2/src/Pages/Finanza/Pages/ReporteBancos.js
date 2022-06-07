@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SLoad, SNavigation, SPage, STable2, SText } from 'servisofts-component';
+import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 import Actions from '../Actions';
 
 
@@ -16,11 +17,14 @@ class ReporteBancos extends Component {
     }
 
     getLista() {
-        var movimientos = Actions.getMovimientosBancarios(this.fecha_inicio, this.fecha_fin, this.props)
+        if(!this.props.state.usuarioRolReducer.usuario) return <SLoad/>
+        if(!this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key]) return <SLoad/>
+        var isAdmin = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
+        var movimientos = Actions.getMovimientosBancarios(this.fecha_inicio, this.fecha_fin, isAdmin, this.props)
         if (!movimientos) return <SLoad />
         return <STable2
             header={[
-                { key: "key", label: "fecha", width: 100, order: "desc"},
+                { key: "key", label: "fecha", width: 100, order: "desc" },
                 { key: "ingreso/efectivo", label: "Ingreso efectivo", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />), },
                 { key: "ingreso/transferencia", label: "Ingreso transferencia", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },
                 { key: "ingreso/cheque", label: "Ingreso cheque", sumar: true, width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Ingreso"} width={12} height={12} />) },

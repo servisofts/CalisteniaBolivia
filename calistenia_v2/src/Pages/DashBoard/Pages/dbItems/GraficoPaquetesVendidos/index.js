@@ -4,6 +4,7 @@ import { SHr, SImage, SLoad, SText, SView } from 'servisofts-component';
 
 import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../Sucursal';
+import sucursal_usuario from '../../../../sucursal_usuario';
 import Grafico from './Grafico';
 
 class GraficoPaquetesVendidos extends Component {
@@ -18,6 +19,9 @@ class GraficoPaquetesVendidos extends Component {
         if (!sucursales) return <SLoad />
         return Object.keys(sucursales).map((key) => {
             var obj = sucursales[key];
+            if (!sucursal_usuario.Actions.isActive(key, this.props)) {
+                return null;
+            }
             return <SView col={"xs-12"} height={50} style={{ padding: 2, }} onPress={() => {
                 if (this.state.select[key]) {
                     delete this.state.select[key];
@@ -52,22 +56,24 @@ class GraficoPaquetesVendidos extends Component {
                     <SText fontSize={16}>{`Cantidad de paquetes vendidos`}</SText>
                 </SView>
                 <SView
-                    col={"xs-2 xl-1"} row>
+                    col={"xs-2 xl-1"} row style={{
+                        minHeight: 300,
+                    }}>
                     {this.getSucursales()}
                 </SView>
                 <SView
                     col={"xs-10 xl-11"}
                     flex>
-                    <Grafico 
+                    <Grafico
                         fechaInicio={this.props.fechaInicio} fechaFin={this.props.fechaFin}
-                    select={this.state.select} setSucursal={(key) => {
-                        if (this.state.select[key]) {
-                            delete this.state.select[key];
-                        } else {
-                            this.state.select[key] = true;
-                        }
-                        this.setState({ select: { ...this.state.select } });
-                    }} />
+                        select={this.state.select} setSucursal={(key) => {
+                            if (this.state.select[key]) {
+                                delete this.state.select[key];
+                            } else {
+                                this.state.select[key] = true;
+                            }
+                            this.setState({ select: { ...this.state.select } });
+                        }} />
                 </SView>
             </SView>
         );

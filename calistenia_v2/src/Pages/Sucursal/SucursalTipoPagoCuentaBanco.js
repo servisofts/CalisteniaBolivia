@@ -3,6 +3,21 @@ import SSocket from "servisofts-socket";
 export default class index {
     static component = "sucursalTipoPagoCuentaBanco"
     static reducerName = "sucursalTipoPagoCuentaBancoReducer";
+    static getAll(props) {
+        var reducer = props.state["sucursalTipoPagoCuentaBancoReducer"];
+        var data = reducer.all;
+        if (!data) {
+            if (reducer.estado == "cargando") return;
+            SSocket.send({
+                component: "sucursalTipoPagoCuentaBanco",
+                type: "getAll",
+                estado: "cargando",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+            })
+            return;
+        }
+        return data;
+    }
     static getByKeySucursal(key_sucursal, props) {
         var reducer = props.state["sucursalTipoPagoCuentaBancoReducer"];
         var data = reducer.data[key_sucursal];

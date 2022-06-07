@@ -92,7 +92,21 @@ public class Paquete {
             }
             Conexion.insertArray("paquete_servicio", paquete_servicios);
 
-            Conexion.historico(obj.getString("key_usuario"), paquete.getString("key"), "paquete_registro", paquete);
+            JSONObject sucursales = SucursalUsuario.getAll(obj.getString("key_usuario"));
+
+            JSONObject sucursalUsuario;
+            JSONObject sucursalPaquete;
+            if(!sucursales.isEmpty()){
+                for (int i = 0; i < JSONObject.getNames(sucursales).length; i++) {
+                    sucursalUsuario = sucursales.getJSONObject(JSONObject.getNames(sucursales)[i]);
+                    sucursalPaquete = new JSONObject();
+                    sucursalPaquete.put("key_sucursal", sucursalUsuario.getString("key_sucursal"));
+                    sucursalPaquete.put("key_paquete", paquete.getString("key"));
+                    SucursalPaquete.registro(sucursalPaquete);
+                }
+            }
+
+                Conexion.historico(obj.getString("key_usuario"), paquete.getString("key"), "paquete_registro", paquete);
             obj.put("data", paquete);
             obj.put("estado", "exito");
 

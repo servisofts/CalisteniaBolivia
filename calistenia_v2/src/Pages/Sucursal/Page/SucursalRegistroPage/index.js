@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SForm, SLoad, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import { SButtom, SForm, SHr, SLoad, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
 import Sucursal from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent';
+// import Sucursal_servicio from '../../../sucursal_servicio';
 import Parametros from './Parametros';
 
 class SucursalRegistro extends Component {
@@ -87,6 +88,16 @@ class SucursalRegistro extends Component {
                         {this.getPerfil()}
                     </SView>
                     <Parametros data={this.data} />
+                    <SHr />
+                    <SHr />
+                    {/* <SView col={"xs-12"} center>
+                        <SView col={"xs-12 sm-10 md-8 lg-6"} center>
+                            <Sucursal_servicio.Components.Select key_sucursal={this.key_sucursal} />
+                        </SView>
+                    </SView> */}
+                    <SHr />
+                    <SHr />
+                    <SHr />
                 </SScrollView2>
 
             </SPage>

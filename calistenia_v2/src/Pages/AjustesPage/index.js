@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, Platform } from 'react-native'
-import { SIcon, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component'
+import { SHr, SIcon, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component'
+import MisRoles from './MisRoles'
+import MisSucursales from './MisSucursales'
 import PerfilUsuario from './PerfilUsuario'
 // import xlsx from 'xlsx-color'
 // var RNFS = require('react-native-fs');
@@ -16,7 +18,7 @@ export default class AjustesPage extends Component {
     }
 
 
-    getOptions({ title, icon , url}, isLine) {
+    getOptions({ title, icon, url }, isLine) {
         return <SView col={"xs-12"} style={{
             height: 50,
             backgroundColor: STheme.color.card,
@@ -49,10 +51,9 @@ export default class AjustesPage extends Component {
             <SPage
                 title={"Ajustes"}
             >
-                <SView col={"xs-12"} center flex>
+                <SView col={"xs-12"} center>
                     <SView col={"xs-11 sm-9 md-7 lg-5 xl-4"} style={{
                         borderRadius: 6,
-                        height: "100%",
                         alignItems: "center"
                     }}>
 
@@ -70,11 +71,15 @@ export default class AjustesPage extends Component {
                             borderRadius: 8,
                             overflow: "hidden",
                         }}>
-                            {/* {this.getOptions({ title: "Manual de uso", icon: "Alert" ,url:"manual"})} */}
+                            {/* {this.getOptions({ title: "Manual de uso", icon: "Alert", url: "manual" })} */}
                             {/* {this.getOptions({ title: "Ajustes", icon: "Ajustes" })} */}
                             {/* {this.getOptions({ title: "Caja", icon: "Caja" }, true)} */}
                         </SView>
                     </SView>
+                    <SHr />
+                    <MisRoles />
+                    <SHr />
+                    <MisSucursales />
                 </SView>
             </SPage>
         )

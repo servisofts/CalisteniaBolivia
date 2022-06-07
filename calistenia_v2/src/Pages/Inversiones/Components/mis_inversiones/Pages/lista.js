@@ -99,9 +99,11 @@ class lista extends Component {
 
     render() {
         return (
-            <SPage title={'Mis Inversiones'} center>
-                {this.getDisponibles()}
-                <SView height={50} />
+            <SPage title={'Mis Inversiones'}>
+                <SView col={"xs-12"} center>
+                    {this.getDisponibles()}
+                    <SView height={50} />
+                </SView>
             </SPage>
         );
     }
