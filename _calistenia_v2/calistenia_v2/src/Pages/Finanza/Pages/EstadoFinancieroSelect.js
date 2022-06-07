@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable, SText, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, STable, SText, SView } from 'servisofts-component';
 import Sucursal from '../../Sucursal';
 import Actions from '../Actions';
 
@@ -37,10 +37,6 @@ class EstadoFinancieroSelect extends Component {
                         type: "danger",
                         variant: "default"
                     }} onPress={() => {
-                        if (!this.state.sucursal) {
-                            SPopup.alert("Debe seleccionar una sucursal");
-                            return;
-                        }
                         SNavigation.navigate("EstadoFinanciero", {
                             key_sucursal: this.state.sucursal ? this.state.sucursal.key : "",
                             fecha_inicio: this.fecha_inicio,
