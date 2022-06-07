@@ -21,7 +21,7 @@ const SThemeProps: SThemeThemes = {
 
 const SocketProps: SSocketProps = {
     name: 'calistenia',
-
+    debug:true,
     // -- Producción --
     //host: 'calisteniabolivia.com',
     //ssl: true,

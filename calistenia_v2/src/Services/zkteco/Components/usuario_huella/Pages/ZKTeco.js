@@ -25,7 +25,7 @@ export default class ZKTeco extends Component {
                         component: "zkteco",
                         type: "sincronizarAll",
                         estado: "cargando",
-                        //key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                        key_usuario: "ricky-test",
                         data: {
                             key_usuario: this.key_usuario,
                             key_sucursal: this.key_sucursal,
