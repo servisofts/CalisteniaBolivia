@@ -24,6 +24,9 @@ public class CuentaBancoMovimiento extends SSComponent {
             case "traspaso":
                 traspaso(obj, session);
             break;
+            case "editar":
+                editar(obj, session);
+            break;
             case "getAllByKeyCuentaBanco":
                 getAllByKeyCuentaBanco(obj, session);
             break;
@@ -51,12 +54,27 @@ public class CuentaBancoMovimiento extends SSComponent {
         try {
             String consulta =  "select get_movimientos_bancarios() as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "cuenta_banco_movimiento_getAll", data);
 
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
             obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public static void editar(JSONObject obj, SSSessionAbstract session) {
+        try {
+            JSONObject data = obj.getJSONObject("data");
+            Conexion.editObject("cuenta_banco_movimiento", data);
+            Conexion.historico(obj.getString("key_usuario"),data.getString("key"), "modulo_editar", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+
+            SSServerAbstract.sendAllServer(obj.toString());
+        } catch (Exception e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -128,4 +146,6 @@ public class CuentaBancoMovimiento extends SSComponent {
             return null;
         }
     }
+
+
 }

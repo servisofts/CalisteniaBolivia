@@ -5,6 +5,9 @@ import java.util.Arrays;
 import org.eclipse.jetty.util.ArrayUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import Server.SSSAbstract.SSServerAbstract;
+import SocketCliente.Dispositivo;
 import SocketCliente.SocketCliete;
 
 /**
@@ -37,9 +40,21 @@ public class ZKTeco {
             System.out.println("Evento...");
             System.out.println(obj.toString());
 
-            //
             
-            
+            if(obj.getJSONObject("data").has("key_usuario")){
+                obj.put("key_usuario", obj.getJSONObject("data").getString("key_usuario"));
+                obj.put("key_sucursal", obj.getString("key_sucursal"));
+                JSONObject asistencia = Asistencia.registro(obj);
+                obj.put("component", "asistencia");
+                obj.put("type", "registro");
+                obj.put("data", asistencia);
+                obj.put("estado", "exito");
+
+                SSServerAbstract.sendAllServer(obj.toString());
+            }
+
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -113,7 +128,8 @@ public class ZKTeco {
             obj.put("estado", "cargando");
             obj.put("delete_all", true);
             SocketCliete.send("zkteco", obj.toString());
-
+            
+            obj.put("noSend", true);
         }catch(Exception e){
             e.printStackTrace();
         }
