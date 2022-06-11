@@ -75,14 +75,16 @@ public class ZKTeco {
 
             JSONArray lista = new JSONArray();
             if(keys!=null){
-                lista = new JSONArray(keys.toString());
+                lista.put(keys);
             }
             
 
             JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
 
             if(roles_permisos.getJSONObject("data").has(obj.getJSONObject("data").getString("key_usuario"))){
-                lista.put(obj.getJSONObject("data").getString("key_usuario"));
+                if(lista.toString().indexOf(obj.getJSONObject("data").getString("key_usuario")) == -1 ){
+                    lista.put(obj.getJSONObject("data").getString("key_usuario"));
+                }
             }            
 
             JSONObject objSend = new JSONObject();
