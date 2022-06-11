@@ -52,6 +52,37 @@ class CuentaMovimientosPage extends Component {
             }} />
         </>
     }
+    getAnular(obj) {
+        return <SView style={{
+            width: 40,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center"
+        }} onPress={() => {
+            console.log(obj);
+            SPopup.confirm({
+                title: "¿Está seguro de anular el movimiento?",
+                message: `${obj.descripcion}`,
+                onPress: () => {
+                    var data = {
+                        ...obj,
+                        estado: 0,
+                    }
+                    delete data["data"];
+                    SSocket.send({
+                        component: component,
+                        type: "editar",
+                        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                        key_cuenta_banco: this.key,
+                        data: data,
+                        estado: "cargando"
+                    });
+                }
+            });
+        }} >
+            <SIcon name={"Delete"} width={30} />
+        </SView>
+    }
     getAll = (force) => {
         if (!this.state.fecha_inicio || !this.state.fecha_fin) {
             return <SLoad />
@@ -90,6 +121,7 @@ class CuentaMovimientosPage extends Component {
             { key: "fecha_on", order: "desc", peso: 1 }
         ]).ordernarObject(data).map((key) => {
             var obj = data[key];
+            if (obj.estado == 0) return;
             var monto = obj.monto;
             if (obj.monto == 0) {
                 return <View />
@@ -151,9 +183,10 @@ class CuentaMovimientosPage extends Component {
                             height: 50,
                             justifyContent: "center",
                             alignItems: "center"
-                        }}>
+                        }} >
                             <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {monto}</Text>
                         </View>
+                        {this.getAnular(obj)}
                     </SView>
                     <SHr />
                     <SHr />
