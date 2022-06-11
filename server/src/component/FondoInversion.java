@@ -90,8 +90,6 @@ public class FondoInversion {
         try {
             String consulta =  "select get_by_key('"+nombre_tabla+"','"+obj.getString("key")+"') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), nombre_tabla+"_getByKey", data);
-
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {

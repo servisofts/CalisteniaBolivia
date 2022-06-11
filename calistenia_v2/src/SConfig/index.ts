@@ -21,13 +21,13 @@ const SThemeProps: SThemeThemes = {
 
 const SocketProps: SSocketProps = {
     name: 'calistenia',
-
+    debug:true,
     // -- Producción --
-    // host: 'calisteniabolivia.com',
-    // ssl: true,
+    //host: 'calisteniabolivia.com',
+    //ssl: true,
     // -- Producción --
-     host: '192.168.0.199',
-     ssl: false,
+    host: '192.168.0.199',
+    ssl: false,
     // --CONFIGURACIONES--
     port: {
         native: 10018,
