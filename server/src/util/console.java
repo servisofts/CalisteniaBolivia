@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Date;
+
 public class console {
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -23,15 +25,15 @@ public class console {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static void log(String txt){
-        System.out.println(txt);
+        System.out.println("["+new Date()+"]"+txt);
     }   
     public static void log( String color,String txt){
-        System.out.println(color+txt+ANSI_RESET);
+        System.out.println("["+new Date()+"]"+color+txt+ANSI_RESET);
     }
     public static void logln( String color,String txt){
-        System.out.print(color+txt+ANSI_RESET);
+        System.out.print("["+new Date()+"]"+color+txt+ANSI_RESET);
     }
     public static void error(String txt){
-        System.out.println(ANSI_RED_BACKGROUND+ANSI_WHITE+txt+ANSI_RESET);
+        System.out.println("["+new Date()+"]"+ANSI_RED_BACKGROUND+ANSI_WHITE+txt+ANSI_RESET);
     }
 }
