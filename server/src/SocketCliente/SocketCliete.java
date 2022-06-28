@@ -123,10 +123,12 @@ public class SocketCliete extends Thread {
     // Cliente Socket
     private boolean Open = false;
     private PrintWriter response;
+    private SSLSocket socket;
     private BufferedReader request;
     public JSONObject config;
 
     public SocketCliete(JSONObject config, SSLSocket socket) throws IOException {
+        this.socket = socket;
         response = new PrintWriter(socket.getOutputStream(), true);
         request = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.config = config;
@@ -134,6 +136,7 @@ public class SocketCliete extends Thread {
         // System.out.println("SocketCliete is Running...");
         Clientes.put(config.getJSONObject("cert").getString("OU"), this);
         ConexinesFallidas.remove(config.getJSONObject("cert").getString("OU"));
+
         this.start();
         this.Open = true;
     }
@@ -163,7 +166,16 @@ public class SocketCliete extends Thread {
     }
 
     private void onError(Exception ex) {
-        console.log(console.ANSI_RED,"Error:" + ex.getLocalizedMessage());
+        try{
+            SocketCliete cliente = Clientes.get(config.getJSONObject("cert").getString("OU"));
+            cliente.socket.close();
+
+            Clientes.remove(config.getJSONObject("cert").getString("OU"));
+
+            console.log(console.ANSI_RED,"Error:" + ex.getLocalizedMessage());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void onMesagge(String msg, JSONObject config) {
@@ -210,7 +222,7 @@ public class SocketCliete extends Thread {
     public static void send(String server, String data) {
         if(Clientes.get(server)==null){
             pendientes.put(new Date().getTime()+"-"+server, data);
-            enableReconect(true);
+            StartServicio(server);
             return;
         }
         
@@ -223,13 +235,15 @@ public class SocketCliete extends Thread {
     }
 
     public static void send(String server, JSONObject data, SSSessionAbstract session) {
-        if(session!=null)
-            data.put("router", session.getIdSession());
-            
+        System.out.println("send");
         if(Clientes.get(server)==null){
             pendientes.put(new Date().getTime()+"-"+server, data.toString());
-            enableReconect(true);
+            StartServicio(server);
             return;
+        }
+        if(session!=null){
+            System.out.println("ession != null");
+            data.put("router", session.getIdSession());
         }
 
         Clientes.get(server).response.println(data);

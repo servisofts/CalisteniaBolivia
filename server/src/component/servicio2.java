@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Date;
 
 import Config.Config;
 import SSL.SSL;
@@ -28,6 +29,9 @@ public class servicio2 {
                     break;
                 case "initServer":
                     initServer(obj);
+                    break;
+                case "initClient":
+                    initClient(obj);
                     break;
                 case "getServicioHabilitado":
                     getServicioHabilitado(obj);
@@ -56,6 +60,11 @@ public class servicio2 {
         SocketCliete.StartServicio("roles_permisos");
         SocketCliete.StartServicio("geolocation");
         SocketCliete.StartServicio("zkteco");
+    }
+
+    private void initClient(JSONObject obj) {
+        
+        System.out.println(new Date().toString() +" "+ obj.toString());
     }
 
     private void initServer(JSONObject obj) {
