@@ -34,9 +34,12 @@ class Perfil extends Component {
                         <SView card height col={"xs-12"} center style={{
                             overflow: "hidden",
                         }}>
+                            <SText key={key} capitalize center fontSize={12}>{`${asistencia[key]?.descripcion}`}</SText>
+                            <SHr/>
                             <SView width={40} height={40}>
                                 <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
                             </SView>
+                            <SHr/>
                             <SText key={key} capitalize center fontSize={12}>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
                         </SView>
 
@@ -74,6 +77,7 @@ class Perfil extends Component {
         </SView>
     }
     getUsuario = (key) => {
+        if (!key) return <SText fontSize={18} capitalize>{`Molinete`}</SText>
         var usuario = Usuario.Actions.getByKey(key, this.props);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center >
@@ -89,19 +93,20 @@ class Perfil extends Component {
         </SView>
     }
     getEstado = (obj) => {
-        if (obj.estado == 1) {
+        if (new SDate(obj.fecha_fin).isBefore(new SDate())) {
             return <SView col={"xs-12"} height={60} center>
-                <RelojEntrenamiento data={obj} />
+                <SView width={100} height={50} backgroundColor={"#600"} style={{
+                    borderRadius: 8,
+                }} center>
+                    <SText fontSize={16} bold>{new SDate(obj.fecha_fin).toString("hh:mm")}</SText>
+                </SView>
+                <SText color={"#999"} fontSize={12}>{"Hora de finalizacion."}</SText>
             </SView>
         }
         return <SView col={"xs-12"} height={60} center>
-            <SView width={100} height={50} backgroundColor={obj.estado == 1 ? "#060" : "#600"} style={{
-                borderRadius: 8,
-            }} center>
-                <SText fontSize={16} bold>{new SDate(obj.fecha_fin).toString("hh:mm")}</SText>
-            </SView>
-            <SText color={"#999"} fontSize={12}>{"Hora de finalizacion."}</SText>
+            <RelojEntrenamiento data={obj} />
         </SView>
+
     }
     render() {
         return (

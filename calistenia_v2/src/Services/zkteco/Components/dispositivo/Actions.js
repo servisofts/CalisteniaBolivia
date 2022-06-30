@@ -100,4 +100,14 @@ export default class Actions {
         return null
     }
 
+    static sincronizarAll = (props) => {
+        SSocket.send({
+            service: "zkteco",
+            component: "zkteco",
+            type: "sincronizarAll",
+            estado: "cargando",
+            key_usuario: "",
+        })
+    }
+
 }

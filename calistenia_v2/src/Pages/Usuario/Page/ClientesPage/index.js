@@ -21,10 +21,13 @@ class ClientesPage extends Component {
 
     this.state = {
       key_sucursal: SNavigation.getParam("key_sucursal", ""),
+      soloBecados: SNavigation.getParam("becados", false),
+      soloNoBecados: SNavigation.getParam("nobecados", false),
       pagination: {
         curPage: 1,
       }
     };
+
 
   }
   componentDidMount() {
@@ -105,6 +108,12 @@ class ClientesPage extends Component {
           if (this.state.key_sucursal != ClientesActivos[key]["caja"].key_sucursal) {
             return null
           }
+        }
+        if (ClientesActivos[key]["paquete"].precio == 0 && this.state.soloNoBecados) {
+          return;
+        }
+        if (ClientesActivos[key]["paquete"].precio > 0 && this.state.soloBecados) {
+          return;
         }
         if (!sucursal_usuario.Actions.isActive(ClientesActivos[key]["caja"].key_sucursal, this.props)) return null;
         objFinal[key] = {
