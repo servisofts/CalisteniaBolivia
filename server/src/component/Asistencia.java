@@ -164,6 +164,7 @@ public class Asistencia
             final String fecha_inicio = formatter.format(cal.getTime());
             cal.add(10, 1);
             final String fecha_fin = formatter.format(cal.getTime());
+            
             final JSONObject paqueteVentaUsuario = PaqueteVenta.getPaqueteVentaUsuarioActivo(asistencia.getString("key_usuario"));
             JSONObject entrenamiento = Entrenamiento.getEntrenamiento(fecha_on.substring(0, 13), asistencia.getString("key_sucursal"));
             if (entrenamiento.isEmpty()) {
@@ -179,9 +180,11 @@ public class Asistencia
                 Conexion.insertArray("entrenamiento", new JSONArray().put((Object)entrenamiento));
             }
             asistencia.put("key", (Object)UUID.randomUUID().toString());
+            asistencia.put("descripcion", (Object)"automatico");
             asistencia.put("key_entrenamiento", (Object)entrenamiento.getString("key"));
             asistencia.put("fecha_on", (Object)fecha_on);
             asistencia.put("estado", 1);
+            asistencia.put("key_usuario", asistencia.getString("key_usuario"));
             asistencia.put("key_paquete_venta_usuario", (Object)paqueteVentaUsuario.getString("key"));
             Conexion.insertArray("asistencia", new JSONArray().put((Object)asistencia));
             

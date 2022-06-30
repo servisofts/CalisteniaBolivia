@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.net.ssl.SSLContext;
@@ -25,6 +26,9 @@ public class SocketCliete extends Thread {
     public static HashMap<String, SocketCliete> Clientes = new HashMap<>();
     private static HashMap<String, JSONObject> ConexinesFallidas = new HashMap<>();
 
+    public static HashMap<String, String> pendientes = new HashMap<>();
+
+
     public static JSONObject servicios_habilitados = new JSONObject();
     // Metodos Staticos globalizados
 
@@ -34,25 +38,30 @@ public class SocketCliete extends Thread {
             return;
         }
 
-        JSONObject servicio = servicios_habilitados.getJSONObject(nombre);
-        if (!servicio.has("pem")) {
-            console.log(console.ANSI_RED,"No existe el pem.");
-            JSONObject objSend = new JSONObject();
-            objSend.put("component", "servicio");
-            objSend.put("type", "getPem");
-            objSend.put("estado", "cargando");
-            objSend.put("key_servicio", servicio.getString("key"));
-            Clientes.get("servicio").send(objSend.toString());
-            console.log(console.ANSI_RED,"Pidiendo SHA a servicios.");
-            // return;
-        }
-        JSONObject config = new JSONObject();
-        config.put("ip", servicio.getString("ip"));
-        config.put("puerto", servicio.getInt("puerto"));
-        JSONObject cert = new JSONObject();
-        cert.put("OU", servicio.getString("nombre"));
-        config.put("cert", cert);
-        Start(config);
+        new Thread(){
+            @Override
+            public void run(){
+                JSONObject servicio = servicios_habilitados.getJSONObject(nombre);
+                if (!servicio.has("pem")) {
+                    console.log(console.ANSI_RED,"No existe el pem.");
+                    JSONObject objSend = new JSONObject();
+                    objSend.put("component", "servicio");
+                    objSend.put("type", "getPem");
+                    objSend.put("estado", "cargando");
+                    objSend.put("key_servicio", servicio.getString("key"));
+                    Clientes.get("servicio").send(objSend.toString());
+                    console.log(console.ANSI_RED,"Pidiendo SHA a servicios.");
+                    // return;
+                }
+                JSONObject config = new JSONObject();
+                config.put("ip", servicio.getString("ip"));
+                config.put("puerto", servicio.getInt("puerto"));
+                JSONObject cert = new JSONObject();
+                cert.put("OU", servicio.getString("nombre"));
+                config.put("cert", cert);
+                Start(config);
+            }
+        }.start();
     }
 
     public static void Start(JSONObject config) {
@@ -99,6 +108,7 @@ public class SocketCliete extends Thread {
                             }
                             
                             // Sleep metodh
+
                             Thread.sleep(Config.getJSON().getJSONObject("socket_client").getInt("reconectTime"));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -113,10 +123,12 @@ public class SocketCliete extends Thread {
     // Cliente Socket
     private boolean Open = false;
     private PrintWriter response;
+    private SSLSocket socket;
     private BufferedReader request;
     public JSONObject config;
 
     public SocketCliete(JSONObject config, SSLSocket socket) throws IOException {
+        this.socket = socket;
         response = new PrintWriter(socket.getOutputStream(), true);
         request = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.config = config;
@@ -124,6 +136,7 @@ public class SocketCliete extends Thread {
         // System.out.println("SocketCliete is Running...");
         Clientes.put(config.getJSONObject("cert").getString("OU"), this);
         ConexinesFallidas.remove(config.getJSONObject("cert").getString("OU"));
+
         this.start();
         this.Open = true;
     }
@@ -131,6 +144,14 @@ public class SocketCliete extends Thread {
     @Override
     public void run() {
         try {
+
+            String server;
+            for ( String key : pendientes.keySet() ) {
+                server = key.split("-")[1];
+                send(server, pendientes.get(key));
+                pendientes.remove(key);
+            }
+
             String eventos;
             while (Open) {
                 eventos = request.readLine();
@@ -145,16 +166,26 @@ public class SocketCliete extends Thread {
     }
 
     private void onError(Exception ex) {
-        console.log(console.ANSI_RED,"Error:" + ex.getLocalizedMessage());
+        try{
+            SocketCliete cliente = Clientes.get(config.getJSONObject("cert").getString("OU"));
+            cliente.socket.close();
+
+            Clientes.remove(config.getJSONObject("cert").getString("OU"));
+
+            console.log(console.ANSI_RED,"Error:" + ex.getLocalizedMessage());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void onMesagge(String msg, JSONObject config) {
         try {
             JSONObject data = new JSONObject(msg);
-if(data.has("_sincrone_key")){
-    String sinc_key = data.getString("_sincrone_key");
-    SCSincroneSend.mapa.get(sinc_key).onMesagge(data);
-}
+
+            if(data.has("_sincrone_key")){
+                String sinc_key = data.getString("_sincrone_key");
+                SCSincroneSend.mapa.get(sinc_key).onMesagge(data);
+            }
 
             switch (config.getJSONObject("cert").getString("OU")) {
                 case "servicio":
@@ -187,8 +218,14 @@ if(data.has("_sincrone_key")){
         response.flush();
     }
 
+    
     public static void send(String server, String data) {
-
+        if(Clientes.get(server)==null){
+            pendientes.put(new Date().getTime()+"-"+server, data);
+            StartServicio(server);
+            return;
+        }
+        
         Clientes.get(server).response.println(data);
         Clientes.get(server).response.flush();
     }
@@ -198,9 +235,17 @@ if(data.has("_sincrone_key")){
     }
 
     public static void send(String server, JSONObject data, SSSessionAbstract session) {
-        if(session!=null)
+        System.out.println("send");
+        if(Clientes.get(server)==null){
+            pendientes.put(new Date().getTime()+"-"+server, data.toString());
+            StartServicio(server);
+            return;
+        }
+        if(session!=null){
+            System.out.println("ession != null");
             data.put("router", session.getIdSession());
-            
+        }
+
         Clientes.get(server).response.println(data);
         Clientes.get(server).response.flush();
 

@@ -3,7 +3,6 @@ package SocketCliente;
 import org.json.JSONObject;
 
 import Server.SSSAbstract.SSServerAbstract;
-import conexion.Conexion;
 
 public class LectorHuella {
     public static final String COMPONENT = "lector_huella";

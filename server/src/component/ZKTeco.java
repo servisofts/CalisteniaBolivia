@@ -1,13 +1,8 @@
 package component;
 
-import java.util.Arrays;
-
-import org.eclipse.jetty.util.ArrayUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import Server.SSSAbstract.SSServerAbstract;
-import SocketCliente.Dispositivo;
 import SocketCliente.SocketCliete;
 
 /**
@@ -75,7 +70,7 @@ public class ZKTeco {
 
             JSONArray lista = new JSONArray();
             if(keys!=null){
-                lista.put(keys);
+                lista.put(keys[0]);
             }
             
 
