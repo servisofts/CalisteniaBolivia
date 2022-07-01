@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.net.ssl.SSLContext;
@@ -15,21 +12,21 @@ import javax.net.ssl.SSLSocketFactory;
 
 import component.ManejadorServicio;
 import util.console;
-import Config.Config;
 import SSL.SSL;
 import Server.SSSAbstract.SSSessionAbstract;
 
 import org.json.JSONObject;
 
+import Config.Config;
+
 public class SocketCliete extends Thread {
 
     public static HashMap<String, SocketCliete> Clientes = new HashMap<>();
-    private static HashMap<String, JSONObject> ConexinesFallidas = new HashMap<>();
-
-    public static HashMap<String, String> pendientes = new HashMap<>();
-
-
     public static JSONObject servicios_habilitados = new JSONObject();
+
+
+
+
     // Metodos Staticos globalizados
 
     public static void StartServicio(String nombre) {
@@ -72,52 +69,30 @@ public class SocketCliete extends Thread {
         try {
             SSLContext ss = SSL.getSSLContext();
             SSLSocketFactory ssf = ss.getSocketFactory();
-            SSLSocket s;
-            s = (SSLSocket) ssf.createSocket(config.getString("ip"), config.getInt("puerto"));
+            SSLSocket s = (SSLSocket) ssf.createSocket(config.getString("ip"), config.getInt("puerto"));
             s.startHandshake();
             // INICIA LA CONEXION AL SOCKET new SocketCliete(config);
-            new SocketCliete(config, s);
+            
+            if(Clientes.get(config.getJSONObject("cert").getString("OU")) !=null){
+                Clientes.get(config.getJSONObject("cert").getString("OU")).socket.close();
+                Clientes.get(config.getJSONObject("cert").getString("OU")).Open = false;
+                Clientes.remove(config.getJSONObject("cert").getString("OU"));
+            } 
+            new SocketCliete(config, s); 
 
         } catch (Exception e) {
-            ConexinesFallidas.put(config.getJSONObject("cert").getString("OU"), config);
             console.log(console.ANSI_RED,e.getMessage());
             console.log(console.ANSI_RED,
                     "Error al conectar con el servidor 'servisofts." + config.getJSONObject("cert").getString("OU")
                             + "' Direccion: " + config.getString("ip") + ":" + config.getInt("puerto") + " **");
-        }
-
-    }
-
-    private static Thread TReconnect;
-
-    public static void enableReconect(boolean enable) {
-        if (!enable) {
-            if (TReconnect != null) {
-                TReconnect = null;
+            try {
+                sleep(Config.getJSON("socket_client").getInt("reconectTime"));
+                Start(config);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } else {
-            TReconnect = new Thread() {
-                @Override
-                public void run() {
-                    while (TReconnect != null) {
-                        try {
-                            Collection<JSONObject> values = ConexinesFallidas.values();
-                            ArrayList<JSONObject> listOfValues = new ArrayList<JSONObject>(values);
-                            for (int i = 0; i < listOfValues.size(); i++) {
-                                Start(ConexinesFallidas.get(listOfValues.get(i).getJSONObject("cert").getString("OU")));
-                            }
-                            
-                            // Sleep metodh
-
-                            Thread.sleep(Config.getJSON().getJSONObject("socket_client").getInt("reconectTime"));
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-            TReconnect.start();
         }
+
     }
 
     // Cliente Socket
@@ -125,9 +100,12 @@ public class SocketCliete extends Thread {
     private PrintWriter response;
     private SSLSocket socket;
     private BufferedReader request;
+    private SCPing ping;
     public JSONObject config;
 
+
     public SocketCliete(JSONObject config, SSLSocket socket) throws IOException {
+
         this.socket = socket;
         response = new PrintWriter(socket.getOutputStream(), true);
         request = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -135,22 +113,16 @@ public class SocketCliete extends Thread {
         console.log(console.ANSI_YELLOW,"** Connectando con el server " + config.getJSONObject("cert").getString("OU") + " **");
         // System.out.println("SocketCliete is Running...");
         Clientes.put(config.getJSONObject("cert").getString("OU"), this);
-        ConexinesFallidas.remove(config.getJSONObject("cert").getString("OU"));
-
+        this.ping = new SCPing(this);
         this.start();
         this.Open = true;
     }
+
 
     @Override
     public void run() {
         try {
 
-            String server;
-            for ( String key : pendientes.keySet() ) {
-                server = key.split("-")[1];
-                send(server, pendientes.get(key));
-                pendientes.remove(key);
-            }
 
             String eventos;
             while (Open) {
@@ -160,9 +132,20 @@ public class SocketCliete extends Thread {
             }
         } catch (Exception ex) {
             onError(ex);
-            ConexinesFallidas.put(config.getJSONObject("cert").getString("OU"), config);
             this.Open = false;
         }
+    }
+
+    public void reconect(){
+        try{
+            this.socket.close();
+            this.Open = false;
+            Clientes.remove(config.getJSONObject("cert").getString("OU"));
+            Start(this.config);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
 
     private void onError(Exception ex) {
@@ -181,6 +164,8 @@ public class SocketCliete extends Thread {
     private void onMesagge(String msg, JSONObject config) {
         try {
             JSONObject data = new JSONObject(msg);
+
+            if(this.ping.onMesagge(data)) return;
 
             if(data.has("_sincrone_key")){
                 String sinc_key = data.getString("_sincrone_key");
@@ -201,7 +186,7 @@ public class SocketCliete extends Thread {
             } else {
                 this.Open = false;
                 console.log(console.ANSI_RED,"Session cliente close");
-                SocketCliete.ConexinesFallidas.put(config.getJSONObject("cert").getString("OU"), config);
+                Start(config);
             }
 
         }
@@ -213,19 +198,13 @@ public class SocketCliete extends Thread {
 
     public void send(String data) {
         // SocketCliete.StartServicio("usuario");
-        console.log(console.ANSI_RED,"----->Send -> "+config.getJSONObject("cert").getString("OU") +" ------------START-------------- \n"+ data.toString() +"\n-------------------------------------END------------");
+        //console.log(console.ANSI_BLUE,"Send -> "+config.getJSONObject("cert").getString("OU") +" ------------START-------------- \n"+ data.toString() +"\n-------------------------------------END------------");
         response.println(data);
         response.flush();
     }
 
     
     public static void send(String server, String data) {
-        if(Clientes.get(server)==null){
-            pendientes.put(new Date().getTime()+"-"+server, data);
-            StartServicio(server);
-            return;
-        }
-        
         Clientes.get(server).response.println(data);
         Clientes.get(server).response.flush();
     }
@@ -237,12 +216,10 @@ public class SocketCliete extends Thread {
     public static void send(String server, JSONObject data, SSSessionAbstract session) {
         System.out.println("send");
         if(Clientes.get(server)==null){
-            pendientes.put(new Date().getTime()+"-"+server, data.toString());
             StartServicio(server);
             return;
         }
         if(session!=null){
-            System.out.println("ession != null");
             data.put("router", session.getIdSession());
         }
 
