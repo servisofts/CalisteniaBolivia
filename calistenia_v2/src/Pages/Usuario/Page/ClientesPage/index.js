@@ -165,7 +165,7 @@ class ClientesPage extends Component {
                 marginRight: 8,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "#ff999933",
+                backgroundColor: STheme.color.card,
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
@@ -178,7 +178,7 @@ class ClientesPage extends Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  color: "#fff",
+                  color: STheme.color.text,
                   textTransform: "capitalize",
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
@@ -186,7 +186,7 @@ class ClientesPage extends Component {
                 {this.getUsuario(vijencia["caja"].key_usuario)}
 
 
-                <Text style={{ fontSize: 10, color: "#fff", }}>{vijencia.paquete.nombre}</Text>
+                <Text style={{ fontSize: 10, color: STheme.color.text, }}>{vijencia.paquete.nombre}</Text>
               </View>
               <SView center>
                 <View style={{
@@ -195,13 +195,13 @@ class ClientesPage extends Component {
                   marginRight: 8,
                   justifyContent: "center",
                   alignItems: "center",
-                  backgroundColor: "#ff999933",
+                  backgroundColor: STheme.color.card,
                   borderRadius: 100,
                   overflow: "hidden"
                 }}>
                   <SImage src={SSocket.api.root + "paquete_" + vijencia.paquete.key} />
                 </View>
-                <Text style={{ fontSize: 10, color: "#fff", textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
+                <Text style={{ fontSize: 10, color: STheme.color.text, textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
               </SView>
             </View>
 

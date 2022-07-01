@@ -70,7 +70,7 @@ class Movimientos extends Component {
         if (!usr) return <View />
         return <SText style={{
             textTransform: "capitalize",
-            color: "#999"
+            color: STheme.color.darkGray
         }}>{usr.Nombres} {usr.Apellidos}</SText>
     }
     getIconTipoPago(type, data) {
@@ -89,9 +89,9 @@ class Movimientos extends Component {
     }
     getLista() {
         var movimientos = this.getMovimientos(this.activa.key);
-        if (!movimientos) return <ActivityIndicator color={"#fff"} />;
+        if (!movimientos) return <ActivityIndicator color={STheme.color.text} />;
         var tipoMovimientos = this.getCajaTipoMovimientos();
-        if (!tipoMovimientos) return <ActivityIndicator color={"#fff"} />;
+        if (!tipoMovimientos) return <ActivityIndicator color={STheme.color.text} />;
 
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
@@ -108,8 +108,8 @@ class Movimientos extends Component {
                             props={{ direction: "row" }}
                         >
                             <SView col={"xs-12"} >
-                                <Text style={{ color: "#fff", fontSize: 14 }}>{movimientos[key].descripcion}</Text>
-                                <Text style={{ color: "#999", fontSize: 10 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+                                <Text style={{ color: STheme.color.text, fontSize: 14 }}>{movimientos[key].descripcion}</Text>
+                                <Text style={{ color: STheme.color.darkGray, fontSize: 10 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                                 {this.getUsuario(movimientos[key])}
                             </SView>
 
@@ -146,8 +146,8 @@ class Movimientos extends Component {
                             alignItems: "center",
                             flexDirection: "row"
                         }}>
-                            <Text style={{ color: "#fff", fontSize: 10, height: 20, }}>Bs.</Text>
-                            <Text style={{ color: "#fff", fontSize: 16, }}>{monto}</Text>
+                            <Text style={{ color: STheme.color.text, fontSize: 10, height: 20, }}>Bs.</Text>
+                            <Text style={{ color: STheme.color.text, fontSize: 16, }}>{monto}</Text>
                         </View>
                     </View>
                 </View >
@@ -194,24 +194,24 @@ class Movimientos extends Component {
         return <SView center col={"xs-12 md-10 xl-8"} row>
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
-                <SText style={{ color: "#999" }}>Informacion</SText>
+                <SText style={{ color: STheme.color.darkGray }}>Informacion</SText>
             </SView>
             {this.getDetalle("Ingreso de caja", this.getIcon(1))}
             {this.getDetalle("Egreso de caja", this.getIcon(-1))}
 
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
-                <SText style={{ color: "#999" }}>Tipos de pagos</SText>
+                <SText style={{ color: STheme.color.darkGray }}>Tipos de pagos</SText>
             </SView>
             {Object.keys(tiposPagos).map((key, index) => {
                 return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }))
             })}
             <SView col={"xs-12"} height={32} center>
-                <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
+                <SText style={{ color: STheme.color.darkGray, fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
             </SView>
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
-                <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
+                <SText style={{ color: STheme.color.darkGray }}>Tipos de movimientos</SText>
             </SView>
             {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }))}
             {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }))}

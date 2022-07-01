@@ -58,7 +58,7 @@ class TipoPagoItem extends Component<Props> {
                             <Text style={{
                                 fontSize: 16,
                                 fontWeight: "bold",
-                                color: "#fff",
+                                color: STheme.color.card,
                                 textTransform: "capitalize"
                             }}>{obj["descripcion"] + " "}</Text>
                         </View>

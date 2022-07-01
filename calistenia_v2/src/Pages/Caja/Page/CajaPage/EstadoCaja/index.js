@@ -28,7 +28,7 @@ class EstadoCaja extends Component {
 
     getBtn() {
         if (!this.props.sucursal) {
-            return <SText style={{ color: "#644", fontSize: 10 }}>Seleccione su sucursal para continuar</SText>
+            return <SText style={{ color: STheme.color.darkGray, fontSize: 10 }}>Seleccione su sucursal para continuar</SText>
         }
         return <SButtom props={{ type: "danger", variant: "confirm" }}
             onPress={() => {
@@ -163,12 +163,12 @@ class EstadoCaja extends Component {
         return <SView style={{
             width: 150,
             height: 50,
-            backgroundColor: "#ffffff22",
+            backgroundColor: STheme.color.card,
             borderRadius: 8,
         }} center>
             <SView row >
-                <SText style={{ fontSize: 10, color: "#Fff" }}> Bs. </SText>
-                <SText style={{ fontSize: 18, color: "#Fff" }}>{this.getMonto()}</SText>
+                <SText style={{ fontSize: 10, }}> Bs. </SText>
+                <SText style={{ fontSize: 18, }}>{this.getMonto()}</SText>
             </SView>
         </SView>
     }
@@ -181,11 +181,11 @@ class EstadoCaja extends Component {
                 flex: 1,
                 justifyContent: "space-evenly"
             }}>
-                
+
                 <SView style={{
                     width: "100%",
                 }} center>
-                    <SText style={{ color: "#999", fontSize: 10, }}>{"Monto actual en caja."}</SText>
+                    <SText style={{ color: STheme.color.darkGray, fontSize: 10, }}>{"Monto actual en caja."}</SText>
                 </SView>
                 {this.getMontoEnCaja()}
                 <SView col={"xs-12"} style={{ height: 50, }}></SView>
@@ -207,7 +207,7 @@ class EstadoCaja extends Component {
         return <SView style={{
             width: "100%",
         }} center>
-            <SText style={{ color: "#999", fontSize: 10, }}>{"El monto en caja, representa el monto salvado en el último cierre de caja de esta sucursal."}</SText>
+            <SText style={{ color: STheme.color.lightGray, fontSize: 10, }}>{"El monto en caja, representa el monto salvado en el último cierre de caja de esta sucursal."}</SText>
         </SView>
     }
     render() {

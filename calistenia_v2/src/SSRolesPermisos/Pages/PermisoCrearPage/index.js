@@ -64,7 +64,7 @@ class PermisoCrearPage extends Component {
 
     if (this.props.state.permisoReducer.estado == "error") {
       this.props.state.permisoReducer.estado = "";
-      alert("error");
+      //("error");
     }
     if (this.props.state.permisoReducer.estado == "exito" && this.props.state.permisoReducer.type == "anular") {
       this.props.state.permisoReducer.estado = "";
@@ -96,7 +96,7 @@ class PermisoCrearPage extends Component {
             backgroundColor: "#99000077"
           }}
           styleText={{
-            color: "#fff"
+            color: STheme.color.text
           }}
           onPress={() => {
             var object = {

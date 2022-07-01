@@ -109,7 +109,7 @@ class ListaCajas extends Component {
             marginRight: 8,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#ff999933",
+            backgroundColor: STheme.color.card,
             borderRadius: 100,
             overflow: "hidden"
         }}>
@@ -134,7 +134,7 @@ class ListaCajas extends Component {
     }
     getItems() {
         var lista = this.getLista();
-        if (!lista) return <ActivityIndicator color={"#fff"} />;
+        if (!lista) return <ActivityIndicator color={STheme.color.text} />;
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(lista).map((key) => {
             var obj = lista[key];
             if (!key) return <View />
@@ -180,7 +180,7 @@ class ListaCajas extends Component {
                     style={{
                         backgroundColor: this.anim.interpolate({
                             inputRange: [0, 1],
-                            outputRange: ["#ffffff09", "#ffffff00"],
+                            outputRange: [STheme.color.text+"09", STheme.color.text+"00"],
                         }),
                     }}
                     row onPress={() => {

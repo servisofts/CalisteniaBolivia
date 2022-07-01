@@ -41,7 +41,7 @@ class Sucursal extends Component {
                     variant: "center",
                     animated: true,
                 }}>
-                    <SText style={{ color: "#fff", fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
+                    <SText style={{ fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
                 </SView>
             }
         } else {
@@ -81,7 +81,7 @@ class Sucursal extends Component {
                     alignItems: "center",
                     // padding: 1,
                     // borderRadius: 200,
-                    backgroundColor: "#ff999933",
+                    backgroundColor: STheme.color.card,
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
@@ -91,7 +91,7 @@ class Sucursal extends Component {
             <SView style={{ flex: 1, height: "100%" }} props={{
                 variant: "center"
             }}>
-                <SText style={{ color: "#fff", fontSize: 14, }}>{this.state.value.descripcion}</SText>
+                <SText style={{ fontSize: 14, }}>{this.state.value.descripcion}</SText>
                 <SText style={{ color: STheme().colorOpaque, fontSize: 12, }}>{this.state.value.direccion}</SText>
             </SView>
             <SView style={{ width: 50, height: 50, }} props={{

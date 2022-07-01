@@ -81,7 +81,7 @@ class PermisoPageRegistroPage extends Component {
 
     if (this.props.state.pageReducer.estado == "error") {
       this.props.state.pageReducer.estado = "";
-      alert("error");
+      //alert("error");
     }
     if (this.props.state.pageReducer.estado == "exito" && this.props.state.pageReducer.type == "registro") {
       this.props.state.pageReducer.estado = "";

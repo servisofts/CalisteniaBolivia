@@ -3,31 +3,36 @@ import { SThemeThemes } from 'servisofts-component'
 const SThemeProps: SThemeThemes = {
     default: {
         barStyle: "light-content",
-        barColor: "#000000",
-        primary: "#000000",
-        secondary: "#ffffff",
-        background: "#000000",
-        card: "#44000088"
+        barColor: "#eeeeee",
+        primary: "#ffffff",
+        secondary: "#000000",
+        background: "#ffffff",
+        card: "#eeeeeeaa",
+        text: "#000000"
     },
     dark: {
         barStyle: "light-content",
-        barColor: "#000000",
-        primary: "#000000",
-        secondary: "#ffffff",
-        background: "#000000",
-        card: "#44000088"
+        barColor: "#00ff00",
+        primary: "#00ff00",
+        secondary: "#0000ff",
+        background: "#99ff99",
+        card: "#00009922",
+        text: "#0000ff",
+        darkGray: "#000066",
+        gray: "#000099",
+        lightGray: "#0000ee",
     }
 }
 
 const SocketProps: SSocketProps = {
     name: 'calistenia',
-    debug:true,
+    debug: true,
     // -- Producción --
-    host: 'calisteniabolivia.com',
-    ssl: true,
+    // host: 'calisteniabolivia.com',
+    // ssl: true,
     // -- Producción --
-    // host: '192.168.0.199',
-    // ssl: false,
+    host: '192.168.0.199',
+    ssl: false,
     // --CONFIGURACIONES--
     port: {
         native: 10018,

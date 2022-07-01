@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
 import SSocket from 'servisofts-socket';
 class Lista extends Component {
@@ -17,7 +17,7 @@ class Lista extends Component {
         return data.map((obj) => {
             return <SView height={150} center width={100} style={{
                 borderWidth: 1,
-                borderColor: "#fff",
+                borderColor: STheme.color.card,
                 borderRadius: 5,
             }} row>
                 <SView col={"xs-12"} center height={"50"} >
@@ -25,7 +25,7 @@ class Lista extends Component {
                 </SView>
                 <SView height={50} center col={"xs-6"} style={{
                     borderWidth: 1,
-                    borderColor: "#fff",
+                    borderColor: STheme.color.card,
                     borderRadius: 5,
                 }} onPress={() => {
                     Parent.Actions.abrir(obj, 1, this.props);
@@ -34,7 +34,7 @@ class Lista extends Component {
                 </SView>
                 <SView height={50} center col={"xs-6"} style={{
                     borderWidth: 1,
-                    borderColor: "#fff",
+                    borderColor: STheme.color.card,
                     borderRadius: 5,
                 }} onPress={() => {
                     Parent.Actions.abrir(obj, 2, this.props);
@@ -47,11 +47,11 @@ class Lista extends Component {
                     <SText>Eventos</SText>
                 </SView>
 
-                <SHr height={1} color="#fff"/>
-                <SView col={"xs-12"} center height={"50"} 
-                onPress={() => {
-                    Parent.Actions.sincronizarAll(this.props);
-                }} >
+                <SHr height={1} color={STheme.color.card} />
+                <SView col={"xs-12"} center height={"50"}
+                    onPress={() => {
+                        Parent.Actions.sincronizarAll(this.props);
+                    }} >
                     <SText>Sincronizar</SText>
                 </SView>
 

@@ -56,7 +56,7 @@ class SucursalItem extends Component<Props> {
                             alignItems: "center",
                             // padding: 1,
                             // borderRadius: 200,
-                            backgroundColor: "#ff999933",
+                            backgroundColor: STheme.color.card,
                             borderRadius: 100,
                             overflow: "hidden"
                         }}>
@@ -69,7 +69,7 @@ class SucursalItem extends Component<Props> {
                             <Text style={{
                                 fontSize: 16,
                                 fontWeight: "bold",
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textTransform: "capitalize"
                             }}>{obj["descripcion"] + " "}</Text>
                         </View>

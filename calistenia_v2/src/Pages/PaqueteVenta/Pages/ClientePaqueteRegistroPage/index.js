@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Paquete from '../../../Paquete/Component/Paquete';
 import Usuario from './Usuario';
-import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SPopup, SNavigation, SPage } from 'servisofts-component';
+import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SPopup, SNavigation, SPage, STheme } from 'servisofts-component';
 import TiposDePago from './TiposDePago';
 import SCalendar from './SCalendar';
 // import RolDeUsuario from './RolDeUsuario';
@@ -173,12 +173,12 @@ class ClientePaqueteRegistroPage extends Component {
                 width: "100%",
                 maxWidth: 800,
                 alignItems: "center",
-                // backgroundColor:"#fff",
+
                 // justifyContent: 'center',
               }}>
                 <Text style={{
                   fontSize: 22,
-                  color: "#fff",
+                  color: STheme.color.text,
                   width: "95%",
                   textAlign: "center",
                   marginBottom: 8,
@@ -193,7 +193,7 @@ class ClientePaqueteRegistroPage extends Component {
               <Text style={{
                 width: "95%",
                 fontSize: 12,
-                color: "#fff",
+                color: STheme.color.text,
                 marginTop: 8,
                 marginBottom: 4,
               }}>Clientes</Text>

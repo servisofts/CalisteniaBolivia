@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
 class Lista extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Lista extends Component {
         return data.map((obj) => {
             return <SView height={150} center width={100} style={{
                 borderWidth: 1,
-                borderColor: "#fff",
+                borderColor: STheme.color.card,
                 borderRadius: 5,
             }} row>
                

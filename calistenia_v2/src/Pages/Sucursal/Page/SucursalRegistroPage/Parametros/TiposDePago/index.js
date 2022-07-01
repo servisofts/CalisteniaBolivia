@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 // import TipoPago from '../../../../../TipoPago';
 // import Actions from '../../../../Actions';
-import { SInput, SPopup, SPopupClose, SPopupOpen, SText, SView } from 'servisofts-component';
+import { SInput, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
 import Sucursal from '../../../..';
 import Banco from '../../../../../Banco';
 import BancoSelect from '../../../../../Banco/Pages/BancoSelect';
@@ -52,7 +52,7 @@ class TiposDePago extends Component<TiposDePagoType> {
         return <SView style={{
             width: "100%",
             height: 50,
-            backgroundColor: "#66000088",
+            backgroundColor: STheme.color.card,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 4,
@@ -64,9 +64,9 @@ class TiposDePago extends Component<TiposDePagoType> {
         var data = this.getAll();
         var sucursalTipoPagoCuentaBanco = Sucursal.SucursalTipoPagoCuentaBanco.getByKeySucursal(this.props.key_sucursal, this.props);
         var cuentaBanco = Banco.Actions.getAllCuentaBancos(this.props);
-        if (!data) return <ActivityIndicator color={"#fff"} />
-        if (!sucursalTipoPagoCuentaBanco) return <ActivityIndicator color={"#fff"} />
-        if (!cuentaBanco) return <ActivityIndicator color={"#fff"} />
+        if (!data) return <ActivityIndicator color={STheme.color.text} />
+        if (!sucursalTipoPagoCuentaBanco) return <ActivityIndicator color={STheme.color.text} />
+        if (!cuentaBanco) return <ActivityIndicator color={STheme.color.text} />
 
         return Object.keys(data).map((key) => {
             var obj = data[key];
@@ -100,7 +100,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         </SView>
                         <SView col={"xs-12"} center>
                             <SText style={{
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textAlign: "center",
                                 textTransform: "capitalize"
                             }} center>{obj.descripcion}</SText>

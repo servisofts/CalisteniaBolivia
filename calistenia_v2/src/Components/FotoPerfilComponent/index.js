@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage } from 'servisofts-component';
+import { SImage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import * as SImageImput from '../SImageImput';
 type tprop = {
@@ -28,7 +28,7 @@ class FotoPerfilComponent extends Component<tprop> {
         return (<TouchableOpacity style={{
             width: "100%",
             height: "100%",
-            backgroundColor: "#ff999933",
+            backgroundColor: STheme.color.card,
             borderRadius: 8,
             overflow: "hidden",
             ...this.props.style

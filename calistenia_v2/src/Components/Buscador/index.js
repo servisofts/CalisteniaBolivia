@@ -91,7 +91,6 @@ export default class Buscador extends Component<Tprops> {
             <SView col={"xs-12"} height={50} center>
                 <View style={{
                     width: "90%",
-                    // backgroundColor: "#fff",
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "row",
@@ -108,7 +107,7 @@ export default class Buscador extends Component<Tprops> {
                     }}>
                         <SInput placeholder={this.props.placeholder ? this.props.placeholder : "Buscar..."} style={{
                             width: "100%",
-                            color: "#fff",
+                            color: STheme.color.text,
                             padding: 4,
                             paddingLeft: 8,
                             paddingRigth: 8,
@@ -132,7 +131,7 @@ export default class Buscador extends Component<Tprops> {
                     // width: "90%",
                 }}>
                     <SText style={{
-                        color: "#999", fontSize: 10,
+                        color: STheme.color.lightGray, fontSize: 10,
 
                     }}>Resultados ({this.state.cantidad})</SText>
                 </SView>

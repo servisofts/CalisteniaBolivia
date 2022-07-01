@@ -24,7 +24,7 @@ class RolRegistroPage extends Component {
       borderWidth: 1,
       borderColor: "#999",
       borderRadius: 8,
-      color: "#fff",
+      color: STheme.color.text,
     }
     var key = SNavigation.getParam("key", false);
     this.TextButom = "CREAR";

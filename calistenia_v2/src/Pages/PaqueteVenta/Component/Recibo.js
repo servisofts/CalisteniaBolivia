@@ -95,7 +95,7 @@ class Recibo extends Component {
                 <SHr />
             </SView>
         }
-        return <SView col={"xs-11 sm-10 md-8 lg-7 xl-5"} backgroundColor={"#fff"} center style={{
+        return <SView col={"xs-11 sm-10 md-8 lg-7 xl-5"} backgroundColor={STheme.color.text} center style={{
             borderRadius: 4,
         }}>
             <SHr />

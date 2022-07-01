@@ -79,7 +79,7 @@ class EsperandoHuella extends Component {
                 borderRadius: 8, overflow: 'hidden',
                 backgroundColor: this.animColor.interpolate({
                     inputRange: [-1, 0, 1],
-                    outputRange: [STheme.color.danger, STheme.color.card, '#fff']
+                    outputRange: [STheme.color.danger, STheme.color.card, STheme.color.text]
                 }),
             }} center>
                 <SView col={"xs-12"} center height>

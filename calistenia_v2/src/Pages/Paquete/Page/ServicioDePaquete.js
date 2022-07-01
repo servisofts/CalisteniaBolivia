@@ -16,7 +16,7 @@ const ServicioDePaquete = (props) => {
       data_p = reducer_p.data;
       // console.log(data_p);
       if (!reducer_p.data) {
-        if (reducer_p.estado == "cargando") return <ActivityIndicator color={"#fff"} />
+        if (reducer_p.estado == "cargando") return <ActivityIndicator color={STheme.color.text} />
         if (reducer_p.estado == "error") return <Text>ERROR</Text>
         var object = {
           component: "paqueteServicio",
@@ -53,7 +53,7 @@ const ServicioDePaquete = (props) => {
         margin: 8,
         borderRadius: 10,
         borderWidth: 1,
-        // borderColor: "#ffffff44",
+        
         backgroundColor: STheme.color.card,
         // padding:4,
 
@@ -99,7 +99,7 @@ const ServicioDePaquete = (props) => {
         }}>
           <View style={{
             padding: 8,
-            // backgroundColor: "#ffffff11",
+            
             height: 120,
             borderRadius: 8,
             overflow: "hidden"
@@ -129,7 +129,7 @@ const ServicioDePaquete = (props) => {
         }}>
           <Text style={{
             fontSize: 20,
-            color: "#ffffff",
+            color: STheme.color.text,
             fontWeight: "bold"
           }}>Activar</Text>
         </View>)}

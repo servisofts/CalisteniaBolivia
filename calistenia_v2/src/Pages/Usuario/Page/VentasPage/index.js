@@ -134,7 +134,7 @@ class VentasPage extends Component {
                 alignItems: "center",
                 // padding: 1,
                 // borderRadius: 200,
-                backgroundColor: "#ff999933",
+                backgroundColor: STheme.color.card,
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
@@ -147,8 +147,7 @@ class VentasPage extends Component {
               }}>
                 <Text style={{
                   fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
+                  color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>

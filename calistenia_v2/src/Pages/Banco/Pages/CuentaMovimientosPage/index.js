@@ -162,11 +162,11 @@ class CuentaMovimientosPage extends Component {
                             props={{ direction: "row" }}
                         >
                             <SView col={"xs-12"} height>
-                                <Text style={{ color: "#999", fontSize: 12 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+                                <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                                 <SView flex center>
-                                    <Text style={{ color: "#fff", fontSize: 16 }}>{obj.descripcion}</Text>
+                                    <Text style={{ color: STheme.color.text, fontSize: 16 }}>{obj.descripcion}</Text>
                                 </SView>
-                                <Text style={{ color: "#999", fontSize: 12 }}>{`${usuario["Nombres"]} ${usuario["Apellidos"]}`}</Text>
+                                <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{`${usuario["Nombres"]} ${usuario["Apellidos"]}`}</Text>
                             </SView>
 
                         </SView>
@@ -184,7 +184,7 @@ class CuentaMovimientosPage extends Component {
                             justifyContent: "center",
                             alignItems: "center"
                         }} >
-                            <Text style={{ color: "#fff", fontSize: 16, }}>Bs. {monto}</Text>
+                            <Text style={{ color: STheme.color.text, fontSize: 16, }}>Bs. {monto}</Text>
                         </View>
                         {this.getAnular(obj)}
                     </SView>
@@ -251,7 +251,7 @@ class CuentaMovimientosPage extends Component {
                             </SView>
                             <SHr height={50} />
                             <SView col={"xs-12"} height={50} style={{
-                                // backgroundColor: "#fff",
+                                
                             }}>
                                 <FechasBetween fecha_inicio={new SDate().setDay(1).toString("yyyy-MM-dd")} onChange={(fi, ff) => {
                                     this.setState({

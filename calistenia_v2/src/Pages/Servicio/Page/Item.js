@@ -57,7 +57,7 @@ class Item extends Component<Props> {
                             alignItems: "center",
                             // padding: 1,
                             // borderRadius: 200,
-                            backgroundColor: "#ff999933",
+                            backgroundColor: STheme.color.card,
                             borderRadius: 4,
                             overflow: "hidden"
                         }}>
@@ -70,7 +70,7 @@ class Item extends Component<Props> {
                             <Text style={{
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textTransform: "capitalize",
                                 textDecorationLine: (obj.estado != 1 ? "line-through" : "none")
                             }}>{obj["descripcion"] + " "}</Text>

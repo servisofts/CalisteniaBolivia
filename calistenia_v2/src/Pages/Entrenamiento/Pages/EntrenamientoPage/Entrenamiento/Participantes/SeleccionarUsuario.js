@@ -110,7 +110,7 @@ class SeleccionarUsuario extends Component {
       var data = this.props.state.usuarioReducer.data[cabecera];
       if (!data) {
         if (this.props.state.usuarioReducer.estado == "cargando") {
-          return <ActivityIndicator color={"#fff"} />
+          return <ActivityIndicator color={STheme.color.text} />
         }
         var object = {
           component: "usuario",
@@ -121,28 +121,28 @@ class SeleccionarUsuario extends Component {
           key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
         }
         SSocket.send(object);
-        return <ActivityIndicator color={"#fff"} />
+        return <ActivityIndicator color={STheme.color.text} />
       }
       var reducer = this.props.state.clientesActivosReducer;
       if (!reducer.data) {
         if (reducer.estado == "cargando") {
-          return <ActivityIndicator color={"#fff"} />
+          return <ActivityIndicator color={STheme.color.text} />
         }
         SSocket.send({
           component: "clientesActivos",
           type: "getAll",
           estado: "cargando"
         }, true);
-        return <ActivityIndicator color={"#fff"} />
+        return <ActivityIndicator color={STheme.color.text} />
       }
 
       if (!this.state.buscador) {
-        return <ActivityIndicator color={"#fff"} />
+        return <ActivityIndicator color={STheme.color.text} />
       }
       var objFinal = {};
       Object.keys(reducer.data).map((key) => {
         var key_sucursal = reducer.data[key]?.caja?.key_sucursal;
-        if(!sucursal_usuario.Actions.isActive(key_sucursal,this.props)){
+        if (!sucursal_usuario.Actions.isActive(key_sucursal, this.props)) {
           return null;
         }
         objFinal[key] = {
@@ -208,7 +208,7 @@ class SeleccionarUsuario extends Component {
                 alignItems: "center",
                 // padding: 1,
                 // borderRadius: 200,
-                backgroundColor: "#ff999933",
+                backgroundColor: STheme.color.card,
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
@@ -221,19 +221,13 @@ class SeleccionarUsuario extends Component {
                 <Text style={{
                   fontSize: 16,
                   fontWeight: "bold",
-                  color: "#fff",
+                  color: STheme.color.text,
                   textTransform: "capitalize",
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
                 {this.getSucursal(vijencia["caja"].key_sucursal)}
                 {this.getUsuario(vijencia["caja"].key_usuario)}
-                {/* <SView row>
-                  <Text style={{ fontSize: 10, color: "#fff", }}>{new SDate(vijencia.fecha_on).toString("dd/MM/yyyy")}</Text>
-                  <Text style={{ fontSize: 10, color: "#fff", }}>{" - "}</Text>
-                  <Text style={{ fontSize: 10, color: "#fff", }}>{new SDate(vijencia.fecha_fin).toString("dd/MM/yyyy")}</Text>
-                </SView> */}
-
-                <Text style={{ fontSize: 10, color: "#fff", }}>{vijencia.paquete.nombre}</Text>
+                <Text style={{ fontSize: 10, color: STheme.color.text, }}>{vijencia.paquete.nombre}</Text>
               </View>
               <SView center>
                 <View style={{
@@ -242,13 +236,13 @@ class SeleccionarUsuario extends Component {
                   marginRight: 8,
                   justifyContent: "center",
                   alignItems: "center",
-                  backgroundColor: "#ff999933",
+                  backgroundColor: STheme.color.card,
                   borderRadius: 100,
                   overflow: "hidden"
                 }}>
                   <SImage src={SSocket.api.root + "paquete_" + vijencia.paquete.key} />
                 </View>
-                <Text style={{ fontSize: 10, color: "#fff", textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
+                <Text style={{ fontSize: 10, color: STheme.color.text, textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
               </SView>
             </View>
 

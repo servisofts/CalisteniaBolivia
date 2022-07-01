@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SHr, SIcon, SImage, SList, SLoad, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import { SHr, SIcon, SImage, SList, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import LogoAnimado from '../CargaPage/LogoAnimado';
 import Sucursal from '../Sucursal';
 import Usuario from '../Usuario';
@@ -35,7 +35,7 @@ class Presentacion extends Component {
                                 }}
                             />
                         </SView>
-                        <SText color={"#fff"} font={"Roboto"} fontSize={18}>{obj.descripcion}</SText>
+                        <SText color={STheme.color.text} font={"Roboto"} fontSize={18}>{obj.descripcion}</SText>
 
                     </SView>
                 </SView>

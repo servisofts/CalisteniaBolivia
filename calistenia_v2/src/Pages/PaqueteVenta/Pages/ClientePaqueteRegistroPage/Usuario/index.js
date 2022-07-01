@@ -30,7 +30,7 @@ class Usuario extends Component {
             }}>
                 <Text style={{
                     fontSize: 12,
-                    color: "#fff",
+                    color: STheme.color.text,
                 }}>{"Inserta un usuario"}</Text>
             </TouchableOpacity>
         }
@@ -72,7 +72,7 @@ class Usuario extends Component {
                             alignItems: "center",
                             // padding: 1,
                             // borderRadius: 200,
-                            backgroundColor: "#ff999933",
+                            backgroundColor: STheme.color.card,
                             borderRadius: 100,
                             overflow: "hidden"
                         }}>
@@ -85,7 +85,7 @@ class Usuario extends Component {
                             <Text style={{
                                 fontSize: 16,
                                 fontWeight: "bold",
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textTransform: "capitalize",
                                 textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                             }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>

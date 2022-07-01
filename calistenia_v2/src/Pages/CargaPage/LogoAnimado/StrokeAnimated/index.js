@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Animated } from 'react-native';
 import { Path } from 'react-native-svg';
+import { STheme } from 'servisofts-component';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -15,8 +16,8 @@ export default class StrokeAnimated extends Component {
     }
     static defaultProps = {
         d: "",
-        fill: "#fff",
-        stroke: "#fff",
+        fill: STheme.color.text,
+        stroke: STheme.color.text,
         strokeWidth: 0,
         duration: 2500
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { STheme } from 'servisofts-component';
 import SC_Mes from './SC_Mes';
 
 type SCalendarPropsType = {
@@ -16,7 +17,7 @@ export default class SCalendar extends Component<SCalendarPropsType> {
         
       },
       text: {
-        color: "#fff"
+        color: STheme.color.text
       }
     })
   }

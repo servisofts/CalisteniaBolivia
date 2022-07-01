@@ -57,11 +57,11 @@ class PaqueteItem extends Component<Props> {
                             alignItems: "center",
                             // padding: 1,
                             // borderRadius: 200,
-                            backgroundColor: "#ff999933",
+                            backgroundColor: STheme.color.card,
                             borderRadius: 4,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "paquete_" + this.props.key_paquete+"?date="+new Date().getTime()} />
+                            <SImage src={SSocket.api.root + "paquete_" + this.props.key_paquete + "?date=" + new Date().getTime()} />
                         </View>
                         <View style={{
                             flex: 1,
@@ -70,7 +70,7 @@ class PaqueteItem extends Component<Props> {
                             <Text style={{
                                 fontSize: 14,
                                 fontWeight: "bold",
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textTransform: "capitalize",
                                 textDecorationLine: (obj.estado != 1 ? "line-through" : "none")
                             }}>{obj["descripcion"] + " "}</Text>
@@ -80,7 +80,7 @@ class PaqueteItem extends Component<Props> {
                             <SText fontSize={8}><SText fontSize={12}>{obj.dias}</SText> dias</SText>
                         </SView>
                         <SView col={"xs-3"} center>
-                            <SText bold center>Bs. {(obj.precio?obj.precio:0).toLocaleString('en-IN')}</SText>
+                            <SText bold center>Bs. {(obj.precio ? obj.precio : 0).toLocaleString('en-IN')}</SText>
                         </SView>
                     </View>
                 </View>

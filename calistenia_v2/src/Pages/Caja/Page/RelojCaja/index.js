@@ -144,7 +144,7 @@ class RelojCaja extends Component {
                 right: 0,
                 width: 100,
                 height: 45,
-                backgroundColor: "#fff",
+                backgroundColor: STheme.color.text,
             }} onPress={() => {
                 SNavigation.navigate("CajaPage");
             }

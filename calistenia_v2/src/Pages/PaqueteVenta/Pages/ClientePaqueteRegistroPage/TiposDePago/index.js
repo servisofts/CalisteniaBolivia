@@ -232,7 +232,7 @@ class TiposDePago extends Component<TiposDePagoType> {
     }
     getLista() {
         var data = this.getAll();
-        if (!data) return <ActivityIndicator color={"#fff"} />
+        if (!data) return <ActivityIndicator color={STheme.color.text} />
         if (!this.state.value) {
             this.state.value = {};
         }
@@ -262,7 +262,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         </SView>
                     </SView >
                     <SText center style={{
-                        color: "#fff",
+                        color: STheme.color.text,
                         textAlign: "center"
                     }}>{obj.descripcion}</SText>
 

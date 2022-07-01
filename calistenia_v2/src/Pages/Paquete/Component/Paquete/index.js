@@ -16,7 +16,7 @@ class Paquete extends Component {
         let reducer = this.props.state.paqueteReducer;
         let data = reducer.data;
         if (!data) {
-            if (reducer.estado == "cargando") return <ActivityIndicator color={"#fff"} />
+            if (reducer.estado == "cargando") return <ActivityIndicator color={STheme.color.text} />
             if (reducer.estado == "error") return <Text>ERROR</Text>
             var object = {
                 component: "paquete",
@@ -55,7 +55,7 @@ class Paquete extends Component {
                     overflow: "hidden",
                     width: 40,
                     height: 40,
-                    backgroundColor: "#ff999933"
+                    backgroundColor: STheme.color.card
                 }}>
                     <SImage src={urlImage} />
 
@@ -68,7 +68,6 @@ class Paquete extends Component {
                     paddingStart: 8,
                 }}>
                     <Text style={{
-                        color: "#ffffff",
                         fontSize: 14,
                     }}>{obj.descripcion}</Text>
                 </View>
@@ -83,9 +82,8 @@ class Paquete extends Component {
                         // alignItems: "center"
                     }}>
                         <Text style={{
-                            color: "#ffffff",
                             fontSize: 8,
-                        }}>{"#per: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.participantes}</Text>
+                        }}>{"#per: "} <Text style={{ fontSize: 12, }}>{obj.participantes}</Text>
                         </Text>
                     </View>
                     <View style={{
@@ -93,9 +91,8 @@ class Paquete extends Component {
                         // alignItems: "center"
                     }}>
                         <Text style={{
-                            color: "#ffffff",
                             fontSize: 8,
-                        }}>{"dias: "} <Text style={{ color: "#ffffff", fontSize: 12, }}>{obj.dias}</Text>
+                        }}>{"dias: "} <Text style={{ fontSize: 12, }}>{obj.dias}</Text>
                         </Text>
                     </View>
                 </View>
@@ -107,7 +104,6 @@ class Paquete extends Component {
                     paddingStart: 8,
                 }}>
                     <Text style={{
-                        color: "#ffffff",
                         fontSize: 14,
                     }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
                 </View>

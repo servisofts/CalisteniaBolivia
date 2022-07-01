@@ -41,7 +41,7 @@ class HuellasDeUsuario extends Component {
                         height: 45,
                         width: 45,
                     }} center>
-                        <SIcon name={"Fp"} fill={huella ? "#fff" : "#444"} />
+                        <SIcon name={"Fp"} fill={huella ? STheme.color.text : STheme.color.text+"22"} />
 
                     </SView>
                     <SHr/>

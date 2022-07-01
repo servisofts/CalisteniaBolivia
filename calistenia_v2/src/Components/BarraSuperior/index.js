@@ -48,12 +48,12 @@ class BarraSuperior extends Component {
                 borderTopLeftRadius: 8,
                 overflow: "hidden",
                 // alignItems:"center"
-                // backgroundColor: "#fff"
+
             }}>
                 <TouchableOpacity style={{
                     width: "100%",
                     height: "100%",
-                    // backgroundColor: "#ffffff22",
+                    
                 }} onPress={() => {
                     SNavigation.navigate("perfil")
                     // this.props.navigation.navigate("UsuarioPerfilPage")
@@ -93,8 +93,8 @@ class BarraSuperior extends Component {
             text = this.props.title;
         }
         return (<Text style={{
-            color: "#fff",
             // fontSize: 12,
+            color:STheme.color.text,
             fontWeight: "bold",
             // fontFamily:"myFont"
         }}>{text}</Text>)
@@ -117,7 +117,7 @@ class BarraSuperior extends Component {
             }} style={{
                 maxWidth: 35,
             }} center height>
-                <SIcon width={25} height={25} name={"Arrow"} fill={STheme.color.secondary} />
+                <SIcon width={25} height={25} name={"Arrow"} fill={STheme.color.text} />
             </SView>
         </SView>
     }
@@ -127,7 +127,7 @@ class BarraSuperior extends Component {
                 width: "100%",
                 height: 45,
                 flexDirection: "row",
-                // backgroundColor: "#fff",
+                
                 transform: [
                     {
                         translateY: this.state.anim.interpolate({
@@ -148,10 +148,9 @@ class BarraSuperior extends Component {
                 <View style={{
                     flex: 1,
                     flexDirection: "row",
-                    backgroundColor: "#000",
+                    backgroundColor: STheme.color.barColor,
                     borderBottomEndRadius: 30,
                     // borderWidth: 1,
-                    borderColor: "#000",
                     // overflow: "hidden",
                 }}>
                     <SView height width={50} center>
@@ -174,10 +173,9 @@ class BarraSuperior extends Component {
                 <View style={{
                     width: 100,
                     padding: 4,
-                    // backgroundColor: "#fff"
                 }}>
                     <LogoAnimado fill={"#222222"} duration={1000} />
-                    {/* <SIcon name={""} width={10} height={10} /> */}
+
 
                 </View>
                 <RelojEntrenamiento navigation={this.props.navigation} />

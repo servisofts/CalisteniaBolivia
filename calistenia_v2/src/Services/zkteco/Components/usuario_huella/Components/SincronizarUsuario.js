@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
 import SSocket from "servisofts-socket"
 import dispositivo from '../../dispositivo';
@@ -40,7 +40,7 @@ class SincronizarUsuario extends Component {
                     width: 20,
                     // transform: [{ rotate: "80deg" }]
                 }} center >
-                    <SIcon name={"Reload"} fill={"#fff"} />
+                    <SIcon name={"Reload"} fill={STheme.color.text} />
                 </SView>
             </SView>
         );

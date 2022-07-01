@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 // import AppParams from '../../../../../Params/index';
 import { connect } from 'react-redux';
-import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage, SPopup, SNavigation } from 'servisofts-component';
+import { SView, SText, SPopupOpen, SForm, SPopupClose, SScrollView2, SPage, SPopup, SNavigation, STheme } from 'servisofts-component';
 import TiposDePago from './TiposDePago';
 import Caja from '../../../..';
 import SSocket from 'servisofts-socket';
@@ -26,7 +26,7 @@ class PopupCerrar extends Component {
 
     render() {
         var MovimientosCaja = Caja.CajaMovimiento.getByKeyCaja(this.props.data.key, this.props)
-        if (!MovimientosCaja) return <ActivityIndicator color={"#fff"} />
+        if (!MovimientosCaja) return <ActivityIndicator color={STheme.color.primary} />
         if (this.state.hidden) return <View />
         return (
             <SView col={"xs-12 md-8 xl-6"}
@@ -35,7 +35,7 @@ class PopupCerrar extends Component {
                     maxHeight: "90%",
                     height: 1000,
                     borderRadius: 8,
-                    backgroundColor: "#000",
+                    backgroundColor: STheme.color.background,
                 }}>
                 {SPage.backgroundComponent}
                 <SScrollView2 disableHorizontal style={{

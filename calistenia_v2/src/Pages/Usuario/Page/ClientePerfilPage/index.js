@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { SHr, SLoad, SNavigation, SPage, SSCrollView, SScrollView2, SView } from 'servisofts-component';
+import { SHr, SLoad, SNavigation, SPage, SSCrollView, SScrollView2, STheme, SView } from 'servisofts-component';
 import Usuario from '../..';
 // import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -46,18 +46,18 @@ class ClientePerfilPage extends Component {
         alignItems: "center"
       }}>
         <Text style={{
-          color: "#fff",
+          color: STheme.color.text,
           fontSize: 18,
           textTransform: "capitalize",
           fontWeight: "bold"
         }}>{this.data["Nombres"] + " " + this.data["Apellidos"]}</Text>
         <Text style={{
-          color: "#fff",
+          color: STheme.color.text,
           fontSize: 16,
           textTransform: "capitalize",
         }}>{"CI " + this.data["CI"]}</Text>
         {/* <Text style={{
-          color: "#fff",
+          color: STheme.color.text,
           fontSize: 16,
           textTransform: "capitalize",
         }}>{"CI " + this.data["CI"]}</Text> */}

@@ -132,7 +132,7 @@ class SSRolesPermisos extends Component {
                 return <View />
             }
             if (this.props.state.usuarioPageReducer.estado == "error") {
-                alert("error");
+                //alert("error");
                 return <View />
             }
             this.getPermisos();

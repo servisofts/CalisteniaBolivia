@@ -87,7 +87,7 @@ export default class MovimientosGraphic extends Component {
                 return <Line x1={x} y1={y} x2={x + media} y2={y2} stroke={color} strokeWidth="2" />
             })
         } else {
-            return <Line x1="0" y1={height / 2} x2={width} y2={height / 2} stroke="#fff" strokeWidth="1" />
+            return <Line x1="0" y1={height / 2} x2={width} y2={height / 2} stroke={STheme.color.text} strokeWidth="1" />
         }
     }
     getSvg() {

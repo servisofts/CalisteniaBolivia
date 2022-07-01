@@ -144,7 +144,7 @@ class PermisosDelRol extends Component {
                             }}>
                                 <Text style={{
                                     fontSize: 12,
-                                    color: "#fff",
+                                    color: STheme.color.text,
                                     fontWeight: "bold",
                                 }}>Activar</Text>
                             </View>)}
@@ -196,7 +196,7 @@ class PermisosDelRol extends Component {
                         alignItems: "center",
                         height: 80,
                         marginBottom: 8,
-                        borderBottomColor: "#660000",
+                        borderBottomColor: STheme.color.card,
                         borderBottomWidth: 1,
                     }}>
                         <View style={{
@@ -246,7 +246,6 @@ class PermisosDelRol extends Component {
             marginTop: 32,
             width: "96%",
             borderRadius: 8,
-            // backgroundColor: "#fff",
             padding: 4,
             minHeight: 400,
             marginBottom: 32,

@@ -128,7 +128,7 @@ class Grafico extends Component {
             }
         }
         return <Text
-            fill="#fff"
+            fill={STheme.color.text}
             fontSize="10"
             fontWeight="bold"
             x={`${x - 1}%`} y={`${y}%`}
@@ -157,7 +157,7 @@ class Grafico extends Component {
                     stroke={STheme.color.card} strokeWidth="1"
                 />
                 <Text
-                    fill="#fff"
+                    fill={STheme.color.text}
                     fontSize="10"
                     x={`${(a * i) + space}% `}
                     y="100%"

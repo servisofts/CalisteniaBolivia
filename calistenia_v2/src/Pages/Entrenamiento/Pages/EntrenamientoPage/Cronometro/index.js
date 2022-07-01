@@ -51,11 +51,11 @@ export default class Cronometro extends Component {
             flexDirection: "row"
         }}>
             <Text style={{
-                color: "#fff",
+                color: STheme.color.text,
                 fontSize: 37,
             }}>{minutos}:{seconds}</Text>
             <Text style={{
-                color: "#fff",
+                color: STheme.color.text,
                 fontSize: 20,
                 marginTop: 8,
             }}>.{ms}</Text>
@@ -78,7 +78,7 @@ export default class Cronometro extends Component {
                     }
                 }}>
                     <Text style={{
-                        color: "#fff"
+                        color: STheme.color.text
                     }}>Iniciar</Text>
                 </TouchableOpacity>
             </View>

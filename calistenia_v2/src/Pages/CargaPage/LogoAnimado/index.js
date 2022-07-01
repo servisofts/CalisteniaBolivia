@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { STheme } from 'servisofts-component';
 import StrokeAnimated from './StrokeAnimated';
 
 const layer = {
@@ -69,12 +70,11 @@ export default class LogoAnimado extends Component {
             }}>
                 <Svg width={"100%"} height={"100%"} viewBox={"0 0 559.4 207.3"}>
                     {paths_paralela.map((d, key) => (<Path d={d} stroke="black" strokeWidth={1} fill={color_paralela} key={key} />))}
-                    {/* {paths_nombre.map((d, key) => (<Path d={d} stroke={"#f00"} strokeWidth={0} fill={"#fff"} key={key} />))} */}
                     {paths_nombre.map((d, key) => (<StrokeAnimated key={key} d={d} stroke={"#600"}
                         strokeWidth={2}
-                        fill={(this.props.fill ? this.props.fill : "#ffffff")}
+                        fill={(this.props.fill ? this.props.fill : STheme.color.text)}
                         duration={(this.props.duration ? this.props.duration : 2500)}
-                        />))}
+                    />))}
                     {paths_swo.map((d, key) => (<Path d={d} stroke="black" strokeWidth={1} fill={color_swo} key={key} />))}
                 </Svg>
             </View>

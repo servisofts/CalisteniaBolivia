@@ -38,13 +38,13 @@ class SucursalSelect extends Component<_Props> {
                     height: "100%",
                     backgroundColor: this.animatedSelec.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [STheme.color.card, "#66000000"],
+                        outputRange: [STheme.color.card, "#00000000"],
                     }),
 
                 }} props={{
                     animated: true,
                 }} center>
-                    <SText style={{ color: "#fff", fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
+                    <SText style={{ fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
                 </SView>
             }
         } else {
@@ -82,7 +82,7 @@ class SucursalSelect extends Component<_Props> {
                     alignItems: "center",
                     // padding: 1,
                     // borderRadius: 200,
-                    backgroundColor: "#ff999933",
+                    backgroundColor: STheme.color.card,
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
@@ -90,7 +90,7 @@ class SucursalSelect extends Component<_Props> {
                 </View>
             </SView>
             <SView style={{ flex: 1, height: "100%" }} center>
-                <SText style={{ color: "#fff", fontSize: 14, }}>{this.state.value.descripcion}</SText>
+                <SText style={{ fontSize: 14, }}>{this.state.value.descripcion}</SText>
                 <SText style={{ color: STheme.color.darkGray, fontSize: 12, }}>{this.state.value.direccion}</SText>
             </SView>
             <SView style={{ width: 50, height: 50, }} ></SView>

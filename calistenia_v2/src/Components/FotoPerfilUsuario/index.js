@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage } from 'servisofts-component';
+import { SImage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import * as SImageImput from '../SImageImput';
 class FotoPerfilUsuario extends Component {
@@ -16,7 +16,7 @@ class FotoPerfilUsuario extends Component {
         return (<TouchableOpacity style={{
             width: "90%",
             height: "90%",
-            backgroundColor: "#ff999933",
+            backgroundColor: STheme.color.card,
             borderRadius: 8,
             overflow: "hidden",
         }} onPress={() => {

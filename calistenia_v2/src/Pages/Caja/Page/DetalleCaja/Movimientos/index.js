@@ -97,9 +97,9 @@ class Movimientos extends Component {
     }
     getLista() {
         var movimientos = this.getMovimientos(this.activa.key);
-        if (!movimientos) return <ActivityIndicator color={"#fff"} />;
+        if (!movimientos) return <ActivityIndicator color={STheme.color.text} />;
         var tipoMovimientos = this.getCajaTipoMovimientos();
-        if (!tipoMovimientos) return <ActivityIndicator color={"#fff"} />;
+        if (!tipoMovimientos) return <ActivityIndicator color={STheme.color.text} />;
 
         return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
             var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
@@ -115,7 +115,7 @@ class Movimientos extends Component {
                         >
                             <SView col={"xs-12"} >
                                 <Text style={{ color: "#999", fontSize: 9 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
-                                <Text style={{ color: "#fff", fontSize: 14 }}>{movimientos[key].descripcion}</Text>
+                                <Text style={{ color: STheme.color.text, fontSize: 14 }}>{movimientos[key].descripcion}</Text>
                                 {this.getUsuario(movimientos[key])}
 
                             </SView>
@@ -161,8 +161,8 @@ class Movimientos extends Component {
                                     alignItems: "center",
                                     flexDirection: "row"
                                 }}>
-                                    <Text style={{ color: "#fff", fontSize: 10, height: 20, }}>Bs.</Text>
-                                    <Text style={{ color: "#fff", fontSize: 14, }}>{movimientos[key].monto}</Text>
+                                    <Text style={{ color: STheme.color.text, fontSize: 10, height: 20, }}>Bs.</Text>
+                                    <Text style={{ color: STheme.color.text, fontSize: 14, }}>{movimientos[key].monto}</Text>
                                 </View>
                             </SView>
                         </SView>

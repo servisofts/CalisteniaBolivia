@@ -31,7 +31,7 @@ const App = (props) => {
                // debug
                 socket={SSocket}
                 assets={Assets}
-                background={<BackgroundImage />}
+                // background={<BackgroundImage />}
                 theme={{ initialTheme: "dark", themes: SConfig.SThemeProps }}>
                 <SNavigation props={{
                     prefixes: ["https://component.servisofts.com", "component.servisofts://"],

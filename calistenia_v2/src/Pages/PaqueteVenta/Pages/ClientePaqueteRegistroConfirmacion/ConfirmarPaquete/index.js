@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SView, SText, SPopupClose, SPopupOpen, SButtom, SScrollView2, SInput, SImage, SIcon, SLoad, SNavigation, SUuid } from 'servisofts-component';
+import { SView, SText, SPopupClose, SPopupOpen, SButtom, SScrollView2, SInput, SImage, SIcon, SLoad, SNavigation, SUuid, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Paquete from '../../../../Paquete';
 import ConfirmacionUsuario from './ConfirmacionUsuario';
@@ -46,7 +46,7 @@ class ConfirmarPaquete extends Component {
         // SNavigation.goBack();
     }
     getTextDetail({ label, value }) {
-        return <Text style={{ color: "#fff", marginBottom: 8, }}>{label}: {value}</Text>
+        return <Text style={{ color: STheme.color.text, marginBottom: 8, }}>{label}: {value}</Text>
     }
     getIsConfirm(val) {
         if (!val) {
@@ -58,10 +58,10 @@ class ConfirmarPaquete extends Component {
                     position: "absolute",
                     width: "100%",
                     height: "100%",
-                    backgroundColor: "#000000aa",
+                    backgroundColor: STheme.color.background,
                     padding: 16
                 }}>
-                <SIcon name={"Cerrar"} fill={"#fff"} />
+                <SIcon name={"Cerrar"} fill={STheme.color.text} />
                 {/* <Svg name={"Cerrar"} /> */}
             </SView>
         }
@@ -242,7 +242,7 @@ class ConfirmarPaquete extends Component {
                                     alignItems: "center",
                                     // justifyContent: "center"
                                 }}>
-                                    <Text style={{ color: "#fff", fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
+                                    <Text style={{ color: STheme.color.text, fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
                                     <View style={{
                                         justifyContent: "center",
                                         alignItems: "center",
@@ -250,7 +250,7 @@ class ConfirmarPaquete extends Component {
                                         overflow: "hidden",
                                         width: 60,
                                         height: 60,
-                                        backgroundColor: "#ff999933"
+                                        backgroundColor: STheme.color.card
                                     }}>
                                         <SImage src={SSocket.api.root + "paquete_" + paquete.key} />
 

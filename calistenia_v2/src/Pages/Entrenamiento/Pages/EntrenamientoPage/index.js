@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Sucursal from './Sucursal';
-import { SLoad, SPage, SText, SView, SStorage, SScrollView2, SNavigation } from 'servisofts-component';
+import { SLoad, SPage, SText, SView, SStorage, SScrollView2, SNavigation, STheme } from 'servisofts-component';
 import IniciarEntrenamiento from './IniciarEntrenamiento';
 import Entrenamiento from './Entrenamiento';
 import SSocket from 'servisofts-socket'
@@ -48,13 +48,13 @@ class EntrenamientoPage extends Component {
             this.props.navigation.navigate("EntrenamientoRegistroPage");
         }}>
             <Text style={{
-                color: "#fff"
+                color: STheme.color.text
             }}>Nuevo entrenamiento</Text>
         </TouchableOpacity>
     }
     getEntrenamiento(entrenamiento) {
         return <>
-            <Entrenamiento sucursal={this.state.sucursal}  />
+            <Entrenamiento sucursal={this.state.sucursal} />
         </>
     }
     getIniciar() {

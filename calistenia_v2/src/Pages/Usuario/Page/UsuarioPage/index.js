@@ -21,7 +21,7 @@ class UsuarioPage extends Component {
 
   }
   componentDidMount() {
-    if(this.props.state.usuarioReducer.usuarioLog){
+    if (this.props.state.usuarioReducer.usuarioLog) {
       var object = {
         component: "usuario",
         version: "2.0",
@@ -31,9 +31,9 @@ class UsuarioPage extends Component {
         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
       }
       SSocket.send(object);
-  
+
     }
-    
+
   }
   pagination = (listaKeys) => {
     if (!listaKeys) {
@@ -121,15 +121,16 @@ class UsuarioPage extends Component {
                 width: 40,
                 height: 40,
                 marginRight: 8,
+                marginLeft: 4,
                 justifyContent: "center",
                 alignItems: "center",
                 // padding: 1,
                 // borderRadius: 200,
-                backgroundColor: "#ff999933",
+                backgroundColor: STheme.color.card,
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key+`?date=${new Date().getTime()}`} />
+                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{
@@ -138,8 +139,7 @@ class UsuarioPage extends Component {
               }}>
                 <Text style={{
                   fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
+                  color:STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
@@ -177,7 +177,7 @@ class UsuarioPage extends Component {
           >
             <SView col={"xs-12"} center>
               {getLista()}
-              
+
             </SView>
           </SScrollView2>
           <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {

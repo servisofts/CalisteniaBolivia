@@ -51,21 +51,13 @@ export default class Reloj extends Component {
             alignItems: "center",
             flexDirection: "row"
         }}>
-            <Text style={{ color: "#fff", fontSize: 37, }}>{hh}</Text>
+            <Text style={{ color: STheme.color.text, fontSize: 37, }}>{hh}</Text>
             <SView height={37} style={{ justifyContent: "center", }}>
-                <Text style={{ color: "#fff", fontSize: 24 }}>{" : "}</Text>
+                <Text style={{ color: STheme.color.text, fontSize: 24 }}>{" : "}</Text>
             </SView>
-            <Text style={{ color: "#fff", fontSize: 37, }}>{minutos}</Text>
-            {/* <SView height={37} style={{ justifyContent: "flex-end", }}>
-                <Text style={{ color: "#fff", fontSize: 14 }}>{"m "}</Text>
-            </SView> */}
-            {/* <SView height={37} style={{ justifyContent: "flex-end", }}>
-                <Text style={{ color: "#fff", fontSize: 27 }}>{seconds}</Text>
-            </SView>
-            <SView height={37} style={{ justifyContent: "flex-end", }}>
-                <Text style={{ color: "#fff", fontSize: 14 }}>{"s "}</Text>
-            </SView> */}
-            <Text style={{ color: "#666", fontSize: 10, position: "absolute", top: 4, }}>{"Hora actual"}</Text>
+            <Text style={{ color: STheme.color.text, fontSize: 37, }}>{minutos}</Text>
+
+            <Text style={{ color: STheme.color.darkGray, fontSize: 10, position: "absolute", top: 4, }}>{"Hora actual"}</Text>
         </View>
     }
     render() {

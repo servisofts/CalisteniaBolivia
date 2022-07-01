@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { SOrdenador, SDate, SView, SScrollView2, SText, SImage, SNavigation,STheme } from 'servisofts-component';
+import { SOrdenador, SDate, SView, SScrollView2, SText, SImage, SNavigation, STheme } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
 import SSocket from 'servisofts-socket'
 import Caja from '../../..';
@@ -104,7 +104,7 @@ class ListaCajas extends Component {
             marginRight: 8,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#ff999933",
+            backgroundColor: STheme.color.card,
             borderRadius: 100,
             overflow: "hidden"
         }}>
@@ -129,7 +129,7 @@ class ListaCajas extends Component {
     }
     getItems() {
         var lista = this.getLista();
-        if (!lista) return <ActivityIndicator color={"#fff"} />;
+        if (!lista) return <ActivityIndicator color={STheme.color.text} />;
         return Object.keys(lista).map((key) => {
             var obj = lista[key];
             if (!key) return <View />
@@ -141,7 +141,7 @@ class ListaCajas extends Component {
                 }
 
             }
-            if(!sucursal_usuario.Actions.isActive(obj.key_sucursal,this.props)){
+            if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
                 return null;
             }
             var usuario = this.getUsuarios(obj.key_usuario);
@@ -168,7 +168,7 @@ class ListaCajas extends Component {
                     style={{
                         backgroundColor: this.anim.interpolate({
                             inputRange: [0, 1],
-                            outputRange: ["#ffffff09", "#ffffff00"],
+                            outputRange: [STheme.color.text+"09", STheme.color.text+"00"],
                         }),
                     }}
                     row onPress={() => {
@@ -181,9 +181,9 @@ class ListaCajas extends Component {
                         <SText style={{
                             textTransform: "lowercase",
                             fontSize: 10,
-                            color: "#999"
+                            color: STheme.color.darkGray
                         }}>{usuario.Nombres} {usuario.Apellidos}</SText>
-                        <SText style={{ fontSize: 10, color: "#999" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+                        <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
                     </SView>
                     <SView center style={{
                         height: 35,

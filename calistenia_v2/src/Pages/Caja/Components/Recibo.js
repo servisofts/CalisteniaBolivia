@@ -157,7 +157,7 @@ class Recibo extends Component {
         var sucursal = Sucursal.Actions.getByKey(caja.key_sucursal, this.props);
         if (!sucursal) return <SLoad />
         var key = this.props.key_caja;
-        return <SView col={"xs-12"} backgroundColor={"#fff"} center style={{
+        return <SView col={"xs-12"} backgroundColor={STheme.color.background} center style={{
             borderRadius: 4,
         }}>
             <SHr />

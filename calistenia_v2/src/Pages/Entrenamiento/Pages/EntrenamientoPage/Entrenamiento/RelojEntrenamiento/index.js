@@ -121,7 +121,7 @@ class RelojEntrenamiento extends Component {
         var data = this.getEntrenamientoUsuario();
         if (!data) return <View />;
         if (!data.key) return <View />;
-        if(!this.isRun){
+        if (!this.isRun) {
             this.isRun = true;
             this.contar();
         }
@@ -133,7 +133,7 @@ class RelojEntrenamiento extends Component {
                 right: 0,
                 width: 100,
                 height: 45,
-                backgroundColor: "#fff",
+                backgroundColor: STheme.color.text,
             }} onPress={() => {
                 SNavigation.navigate("EntrenamientoPage")
             }

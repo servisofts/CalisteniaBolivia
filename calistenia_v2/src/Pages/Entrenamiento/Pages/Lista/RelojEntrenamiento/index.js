@@ -135,7 +135,6 @@ class RelojEntrenamiento extends Component {
             <SView style={{
                 width: 150,
                 height: 45,
-                // backgroundColor: "#fff",
             }} card onPress={() => {
                 SNavigation.navigate("EntrenamientoPage")
             }

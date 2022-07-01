@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SPopup } from 'servisofts-component';
+import { SPopup, STheme } from 'servisofts-component';
 import Usuario from '../../..';
 class CerrarSession extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ class CerrarSession extends Component {
             }}>
                 <Text style={{
                     fontSize: 10,
-                    color: "#fff",
+                    color: STheme.color.text,
                     fontWeight: "bold",
                     textAlign: "center"
                 }}> Cerrar sesión  </Text>

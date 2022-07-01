@@ -33,12 +33,12 @@ class Sucursal extends Component {
                     height: "100%",
                     backgroundColor: this.animatedSelec.interpolate({
                         inputRange: [0, 1],
-                        outputRange: [STheme.color.card, "#66000000"],
+                        outputRange: [STheme.color.card, "#00000000"],
                     }),
 
                 }} center animated>
-                    <SText style={{ color: "#fff", fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
-                </SView>
+                    <SText style={{ fontSize: 14, }}>{"Seleccione una sucursal"}</SText>
+                </SView >
             }
         } else {
             var data = this.props.state.sucursalReducer.data;
@@ -76,7 +76,7 @@ class Sucursal extends Component {
                     alignItems: "center",
                     // padding: 1,
                     // borderRadius: 200,
-                    backgroundColor: "#ff999933",
+                    backgroundColor: STheme.color.card,
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
@@ -84,8 +84,8 @@ class Sucursal extends Component {
                 </View>
             </SView>
             <SView style={{ flex: 1, height: "100%" }} center>
-                <SText style={{ color: "#fff", fontSize: 14, }}>{this.state.value.descripcion}</SText>
-                <SText style={{ fontSize: 12, color:"#666" }}>{this.state.value.direccion}</SText>
+                <SText style={{ fontSize: 14, }}>{this.state.value.descripcion}</SText>
+                <SText style={{ fontSize: 12, color: STheme.color.darkGray }}>{this.state.value.direccion}</SText>
             </SView>
             <SView style={{ width: 50, height: 50, }} center></SView>
         </>
@@ -119,7 +119,7 @@ class Sucursal extends Component {
                     position: "absolute",
                     right: 4,
                     top: 0,
-                    color: "#666",
+                    color: STheme.color.darkGray,
                     fontSize: 10,
                 }}>Sucursal</SText>
 

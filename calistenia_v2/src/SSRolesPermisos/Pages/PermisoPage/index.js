@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
-import { SButtom, SPage } from 'servisofts-component';
+import { SButtom, SPage, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 
 
@@ -83,7 +83,7 @@ class PermisoPage extends Component {
                 backgroundColor: "#99000077"
               }}
               styleText={{
-                color: "#fff"
+                color: STheme.color.text
               }}
               onPress={() => {
                 var object = {

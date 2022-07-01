@@ -107,7 +107,7 @@ class PaquetesDeUsuario extends Component {
         var reducer = this.props.state.paqueteVentaReducer;
         var data = reducer.usuario[this.props.key_usuario];
         if (!data) {
-            if (reducer.estado == "cargando") return <ActivityIndicator color={"#fff"} />
+            if (reducer.estado == "cargando") return <ActivityIndicator color={STheme.color.text} />
             if (reducer.estado == "error") return <Text>ERROR</Text>
             var object = {
                 component: "paqueteVenta",
@@ -164,7 +164,7 @@ class PaquetesDeUsuario extends Component {
                         overflow: "hidden",
                         width: 40,
                         height: 40,
-                        backgroundColor: "#ff999933"
+                        backgroundColor: STheme.color.card
                     }}>
                         <SImage src={urlImagePaquete} />
                         {/* {this.props.state.imageReducer.getImage(urlImagePaquete, {
@@ -180,7 +180,6 @@ class PaquetesDeUsuario extends Component {
                         height: "100%",
                     }}>
                         <Text style={{
-                            color: "#ffffff",
                             fontSize: 14,
                         }}>{paquete.descripcion}</Text>
                         {this.getSucursal(obj.key_sucursal)}
@@ -193,7 +192,7 @@ class PaquetesDeUsuario extends Component {
                         // alignItems: "center"
                     }}>
                         <Text style={{
-                            color: "#ffffff",
+                            color: STheme.color.text,
                             fontSize: 14,
                         }}>Bs. {obj.monto}</Text>
                     </View>
@@ -205,11 +204,11 @@ class PaquetesDeUsuario extends Component {
                         paddingStart: 8,
                     }}>
                         <Text style={{
-                            color: "#ffffff",
+                            
                             fontSize: 10,
                         }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
                         <Text style={{
-                            color: "#ffffff",
+                            
                             fontSize: 10,
                         }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
                     </View> */}
@@ -265,7 +264,7 @@ class PaquetesDeUsuario extends Component {
             });
         }}>
             <Text style={{
-                color: "#fff",
+                color: STheme.color.text,
                 textDecorationLine: "underline",
             }}>Nuevo paquete</Text>
         </TouchableOpacity>

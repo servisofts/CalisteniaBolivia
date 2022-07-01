@@ -78,7 +78,7 @@ const RolDeUsuario = (props) => {
                 margin: 8,
                 borderRadius: 10,
                 borderWidth: 1,
-                borderColor: "#ffffff44",
+                borderColor: STheme.color.card,
                 backgroundColor: STheme.color.card,
                 // padding:4,
 
@@ -116,7 +116,7 @@ const RolDeUsuario = (props) => {
                 }}>
                     <View style={{
                         padding: 8,
-                        backgroundColor: "#ffffff11",
+                        backgroundColor: STheme.color.card,
                         height: 120,
                         borderRadius: 8,
                         overflow: "hidden"
@@ -148,8 +148,8 @@ const RolDeUsuario = (props) => {
                 }}>
                     <Text style={{
                         fontSize: 20,
-                        color: "#ffffff",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        color: STheme.color.text
                     }}>Activar</Text>
                 </View>)}
             </TouchableOpacity>
@@ -170,7 +170,7 @@ const RolDeUsuario = (props) => {
         <Text style={{
             padding: 8,
             fontSize: 12,
-            color: "#999",
+            color: STheme.color.darkGray,
             width: "100%",
             textAlign: "center"
         }}>{props.title ? props.title : "Tipos de usuario"}</Text>

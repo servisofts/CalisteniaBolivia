@@ -201,7 +201,7 @@ class PermisoPagePage extends Component {
 
     const getLista = () => {
       if (!this.state.buscador) {
-        return <ActivityIndicator color={"#fff"} />
+        return <ActivityIndicator color={STheme.color.text} />
       }
 
       return new SOrdenador([
@@ -231,7 +231,7 @@ class PermisoPagePage extends Component {
             alignItems: "center",
             height: 80,
             marginBottom: 8,
-            borderBottomColor: "#660000",
+            borderBottomColor: STheme.color.card,
             borderBottomWidth: 1,
           }}>
             <View style={{

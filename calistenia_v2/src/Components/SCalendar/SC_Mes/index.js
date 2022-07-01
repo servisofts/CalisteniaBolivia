@@ -90,7 +90,7 @@ export default class SC_Mes extends Component {
                 borderRadius: 100,
                 width: 30,
                 height: 30,
-                backgroundColor: "#ff000066",
+                backgroundColor: STheme.color.card,
                 transform: [
                     { translateX: this.anim.x },
                     { translateY: this.anim.y }
@@ -112,7 +112,7 @@ export default class SC_Mes extends Component {
                 borderRadius: 100,
                 width: 30,
                 height: 30,
-                backgroundColor: "#ff000066",
+                backgroundColor: STheme.color.card,
             }}>
 
         </SView>
@@ -171,7 +171,7 @@ export default class SC_Mes extends Component {
                                 <Text style={[
                                     {
                                         fontSize: 14,
-                                        color: (isCurMonth ? "#fff" : "#666")
+                                        color: (isCurMonth ? STheme.color.text : STheme.color.darkGray)
                                     },
                                 ]}>{date.toString("dd")}</Text>
                             </SView>
@@ -204,13 +204,12 @@ export default class SC_Mes extends Component {
     }
     render() {
         if (!this.props.layout) {
-            return <ActivityIndicator color={"#fff"} />
+            return <ActivityIndicator color={STheme.color.text} />
         }
         return (
             <View style={[{
                 width: "100%",
                 alignItems: "center",
-                // backgroundColor: "#fff"
             }]}>
                 {this.getControll()}
                 {this.getHeader()}

@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
 import Banco from '../../../../../../Banco';
-import { SButtom, SInput, SPopup, SPopupClose, SPopupOpen, SText, SView } from 'servisofts-component';
+import { SButtom, SInput, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
 import Sucursal from '../../../../../../Sucursal';
 import TipoPago from '../../../../../../TipoPago';
 type TiposDePagoType = {
@@ -123,13 +123,13 @@ class TiposDePago extends Component<TiposDePagoType> {
             }} row>
                 <SView col={"xs-4"} center>
                     <SText style={{ fontSize: 16 }}>Bs. {this.getMonto(obj)}</SText>
-                    <SText style={{ fontSize: 10, color: "#999" }}>{`Monto en caja`}</SText>
+                    <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Monto en caja`}</SText>
                 </SView>
                 <SView col={"xs-4"} center>
                 </SView>
                 <SView col={"xs-4"} center>
                     <SText style={{ fontSize: 16 }}>Bs. {this.state.total_depocito[obj.key]}</SText>
-                    <SText style={{ fontSize: 10, color: "#999" }}>{`Monto a depocitar`}</SText>
+                    <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Monto a depocitar`}</SText>
                 </SView>
             </SView>
         } else {
@@ -149,15 +149,15 @@ class TiposDePago extends Component<TiposDePagoType> {
             }} row>
                 <SView col={"xs-4"} center>
                     <SText style={{ fontSize: 16 }}>Bs. {monto}</SText>
-                    <SText style={{ fontSize: 10, color: "#999" }}>{`Monto en caja`}</SText>
+                    <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Monto en caja`}</SText>
                 </SView>
                 <SView col={"xs-4"} center>
                     <SText style={{ fontSize: 16 }}>Bs. {montoASalvar}</SText>
-                    <SText style={{ fontSize: 10, color: "#999" }}>{`Monto a salvar`}</SText>
+                    <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Monto a salvar`}</SText>
                 </SView>
                 <SView col={"xs-4"} center>
                     <SText style={{ fontSize: 16 }}>Bs. {this.state.total_depocito[obj.key]}</SText>
-                    <SText style={{ fontSize: 10, color: "#999" }}>{`Monto a depocitar`}</SText>
+                    <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Monto a depocitar`}</SText>
                 </SView>
             </SView>
         }
@@ -167,9 +167,9 @@ class TiposDePago extends Component<TiposDePagoType> {
         var data = this.getAll();
         var sucursalTipoPagoCuentaBanco = Sucursal.SucursalTipoPagoCuentaBanco.getByKeySucursal(this.props.key_sucursal, this.props);
         var cuentaBanco = Banco.Actions.getAllCuentaBancos(this.props);
-        if (!data) return <ActivityIndicator color={"#fff"} />
-        if (!sucursalTipoPagoCuentaBanco) return <ActivityIndicator color={"#fff"} />
-        if (!cuentaBanco) return <ActivityIndicator color={"#fff"} />
+        if (!data) return <ActivityIndicator color={STheme.color.text} />
+        if (!sucursalTipoPagoCuentaBanco) return <ActivityIndicator color={STheme.color.text} />
+        if (!cuentaBanco) return <ActivityIndicator color={STheme.color.text} />
 
         return Object.keys(data).map((key) => {
             var obj = data[key];
@@ -208,7 +208,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                                 {Icono}
                             </SView>
                             <SText style={{
-                                color: "#fff",
+                                color: STheme.color.text,
                                 textAlign: "center",
                                 textTransform: "capitalize"
                             }}>{obj.descripcion}</SText>
@@ -231,7 +231,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                         </SView>
 
                     </SView>
-                    <SView col={"xs-12"} style={{ height: 16, borderTopWidth: 1, borderColor: "#66666644" }} />
+                    <SView col={"xs-12"} style={{ height: 16, borderTopWidth: 1, borderColor: STheme.color.card }} />
                 </SView>
             }
         })
@@ -266,7 +266,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                                 }} row>
                                     <SView col={"xs-4"} center>
                                         <SText style={{ fontSize: 16 }}>Bs. {this.getMontoTotalEnCaja()}</SText>
-                                        <SText style={{ fontSize: 10, color: "#999" }}>{`Total en caja`}</SText>
+                                        <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Total en caja`}</SText>
                                     </SView>
                                     <SView col={"xs-4"} center>
                                         <SInput {...{
@@ -276,7 +276,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                                             style={{
                                                 height: 30,
                                                 borderWidth: 1,
-                                                borderColor: "#666",
+                                                borderColor: STheme.color.card,
                                                 borderRadius: 4,
                                             }}
                                             onChangeText={(e) => {
@@ -289,18 +289,18 @@ class TiposDePago extends Component<TiposDePagoType> {
                                             value={this.state.montoASalvar + ""} />
                                         {/* <SText style={{ fontSize: 16 }}>Bs. {}</SText> */}
                                         <SView height={20}>
-                                            <SText style={{ fontSize: 10, color: "#999" }}>{`Total a salvar`}</SText>
+                                            <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Total a salvar`}</SText>
                                         </SView>
                                     </SView>
                                     <SView col={"xs-4"} center>
                                         <SText style={{ fontSize: 16 }}>Bs. {this.getMontoTotalEnDepocito()}</SText>
-                                        <SText style={{ fontSize: 10, color: "#999" }}>{`Total a depocitar`}</SText>
+                                        <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{`Total a depocitar`}</SText>
                                     </SView>
                                 </SView>
                             </SView>
                         </SView>
                     </SView>
-                    <SView col={"xs-12"} style={{ height: 16, borderTopWidth: 1, borderColor: "#66666644" }} />
+                    <SView col={"xs-12"} style={{ height: 16, borderTopWidth: 1, borderColor: STheme.color.card }} />
 
                     <SView col={"xs-12"} center style={{
                         height: 80,
@@ -311,11 +311,11 @@ class TiposDePago extends Component<TiposDePagoType> {
                     <SView col={"xs-12"} center height={16} />
                     <SView col={"xs-12"} center>
                         <SView col={"xs-11.5"} center>
-                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total en caja: Es el monto que debería tener en su caja contando el valor de los cheques.`}</SText>
+                            <SText style={{ fontSize: 10, color: STheme.color.darkGray, textAlign: "center" }}>{`Total en caja: Es el monto que debería tener en su caja contando el valor de los cheques.`}</SText>
                             <SView col={"xs-12"} center height={8} />
-                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total a salvar: Es el monto que se dejara en caja para realizar la siguiente apertura.`}</SText>
+                            <SText style={{ fontSize: 10, color: STheme.color.darkGray, textAlign: "center" }}>{`Total a salvar: Es el monto que se dejara en caja para realizar la siguiente apertura.`}</SText>
                             <SView col={"xs-12"} center height={8} />
-                            <SText style={{ fontSize: 10, color: "#999", textAlign: "center" }}>{`Total a depositar: Es el monto que se debería depositar a la cuenta de banco una vez se cierra la caja.`}</SText>
+                            <SText style={{ fontSize: 10, color: STheme.color.darkGray, textAlign: "center" }}>{`Total a depositar: Es el monto que se debería depositar a la cuenta de banco una vez se cierra la caja.`}</SText>
                         </SView>
                     </SView>
                 </SView >

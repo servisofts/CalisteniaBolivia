@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SIcon, SPage, SText, SView } from 'servisofts-component';
+import { SButtom, SHr, SIcon, SPage, SText, STheme, SView } from 'servisofts-component';
 import Caja from '../../../..';
 
 class PopupConfirmarCierre extends Component {
@@ -21,7 +21,7 @@ class PopupConfirmarCierre extends Component {
                     maxHeight: "90%",
                     height: 600,
                     borderRadius: 8,
-                    backgroundColor: "#000",
+                    backgroundColor: STheme.color.background,
                 }}>
                 {SPage.backgroundComponent}
                 <SView col={"xs-12"} height center style={{
@@ -54,8 +54,8 @@ class PopupConfirmarCierre extends Component {
                                     width: 20,
                                     height: 20,
                                 }} />
-                                <SText color={"#999"} fontSize={10}>Mantener efectivo en caja.</SText>
-                                <SText color={"#999"} fontSize={10}>(Normalmente al medio día)</SText>
+                                <SText color={STheme.color.darkGray} fontSize={10}>Mantener efectivo en caja.</SText>
+                                <SText color={STheme.color.darkGray} fontSize={10}>(Normalmente al medio día)</SText>
                             </SView>
                             <SHr />
                             <SView col={"xs-12"} row center >
@@ -63,8 +63,8 @@ class PopupConfirmarCierre extends Component {
                                     width: 20,
                                     height: 20,
                                 }} />
-                                <SText color={"#999"} fontSize={10}>Realizar el depocito en la cuenta!</SText>
-                                <SText color={"#999"} fontSize={10}>(Normalmente al finalizar el día)</SText>
+                                <SText color={STheme.color.darkGray} fontSize={10}>Realizar el depocito en la cuenta!</SText>
+                                <SText color={STheme.color.darkGray} fontSize={10}>(Normalmente al finalizar el día)</SText>
                             </SView>
                         </SView>
                     </SView>

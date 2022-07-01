@@ -56,7 +56,7 @@ class Perfil extends Component {
                     <TouchableOpacity style={{
                         width: "90%",
                         height: "90%",
-                        backgroundColor: "#66000022",
+                        backgroundColor: STheme.color.card,
                         borderRadius: 4,
                         overflow: "hidden",
                     }} onPress={() => {
@@ -100,7 +100,7 @@ class Perfil extends Component {
                             flex: 5,
                             fontSize: 20,
                             fontWeight: "bold",
-                            color: "#fff"
+                            color: STheme.color.text,
                         }}>{usuario["Nombres"] + " " + usuario["Apellidos"]} </Text>
                     </View>
                     <View style={{
