@@ -47,6 +47,14 @@ class Lista extends Component {
                     <SText>Eventos</SText>
                 </SView>
 
+                <SHr height={1} color="#fff"/>
+                <SView col={"xs-12"} center height={"50"} 
+                onPress={() => {
+                    Parent.Actions.sincronizarAll(this.props);
+                }} >
+                    <SText>Sincronizar</SText>
+                </SView>
+
             </SView>
         })
     }

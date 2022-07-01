@@ -37,11 +37,16 @@ class SucursalesDetalle extends Component {
             var sucursal = sucursales[key];
             var cantidad = 0;
             var monto = 0;
+            var becados = 0;
             Object.keys(clientesActivos).map((key_cli) => {
                 var cliente = clientesActivos[key_cli];
                 if (cliente["caja"].key_sucursal == key) {
                     // monto += cliente["paquete"].precio;
-                    cantidad++;
+                    if (cliente["paquete"].precio == 0) {
+                        becados++;
+                    } else {
+                        cantidad++;
+                    }
                 }
             })
             var cantidad_caja = 0;
@@ -78,9 +83,9 @@ class SucursalesDetalle extends Component {
                         padding: 4,
                     }}>
                         <SView col={"xs-12"} height={80} card row center>
-                            <SView col={"xs-4"} height center>
+                            <SView col={"xs-3"} height center>
                                 <SView width={40} height={40} center onPress={() => {
-                                    SNavigation.navigate("ClientesPage", { key_sucursal: key });
+                                    SNavigation.navigate("ClientesPage", { key_sucursal: key, nobecados: true, });
                                 }}>
                                     <SIcon name="Usuarios_cliente" />
                                     <SView center style={{
@@ -94,9 +99,29 @@ class SucursalesDetalle extends Component {
                                     </SView>
                                 </SView>
                                 <SText center fontSize={10}>{'Clientes'}</SText>
-                                {/* <SText center fontSize={10}>{`Bs. ${monto.toLocaleString('de-DE')}`}</SText> */}
+                                <SText center fontSize={10}>{" "}</SText>
+
                             </SView>
-                            <SView col={"xs-4"} height center >
+                            <SView col={"xs-3"} height center>
+                                <SView width={40} height={40} center onPress={() => {
+                                    SNavigation.navigate("ClientesPage", { key_sucursal: key, becados: true });
+                                }}>
+                                    <SIcon name="Usuarios_proveedor" />
+                                    <SView center style={{
+                                        position: "absolute",
+                                        width: 30,
+                                        height: 30,
+                                        backgroundColor: STheme.color.background + "99",
+                                        borderRadius: 8
+                                    }}>
+                                        <SText center fontSize={18} bold>{becados}</SText>
+
+                                    </SView>
+                                </SView>
+                                <SText center fontSize={10}>{'Becados'}</SText>
+                                <SText center fontSize={10}>{" "}</SText>
+                            </SView>
+                            <SView col={"xs-3"} height center >
                                 <SView width={40} height={40} center onPress={() => {
                                     SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                                 }}>
@@ -114,7 +139,7 @@ class SucursalesDetalle extends Component {
                                 <SText center fontSize={10}>{'Cajas'}</SText>
                                 <SText center fontSize={10}>{" "}</SText>
                             </SView>
-                            <SView col={"xs-4"} center>
+                            <SView col={"xs-3"} height center>
                                 <SView width={40} height={40} center onPress={() => {
                                     SNavigation.navigate("entrenamientos", { key_sucursal: key });
                                 }}>
@@ -133,6 +158,7 @@ class SucursalesDetalle extends Component {
                                 <SText center fontSize={10}>{'Entrenando'}</SText>
                                 <SText center fontSize={10}>{" "}</SText>
                             </SView>
+
 
                         </SView>
                     </SView>

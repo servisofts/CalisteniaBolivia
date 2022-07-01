@@ -37,7 +37,7 @@ export default class Actions {
                 component: "sucursal",
                 type: "getAll",
                 estado: "cargando",
-                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                key_usuario: props.state.usuarioReducer?.usuarioLog?.key,
             })
             return;
         }

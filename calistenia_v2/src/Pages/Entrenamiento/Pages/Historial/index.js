@@ -42,6 +42,10 @@ class Lista extends Component {
         </SView>
     }
     getUsuario = (key) => {
+        if (!key) {
+            return  <SText fontSize={18} capitalize>{`Molinete`}</SText>
+        }
+
         var usuario = Usuario.Actions.getByKey(key, this.props);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center>

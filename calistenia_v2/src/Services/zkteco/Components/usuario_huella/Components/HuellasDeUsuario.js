@@ -16,13 +16,12 @@ class HuellasDeUsuario extends Component {
     getLista() {
         var data = Parent.Actions.getByKeyUsuario(this.props.key_usuario, this.props);
         if (!data) return <SLoad />
-        var arr = Array.from({ length: 5 }, (x, i) => i + 1)
+        var arr = Array.from({ length: 2 }, (x, i) => i + 1)
         return arr.map((obj) => {
             var huella = data.find((x) => x.codigo == obj);
             return <>
                 <SView width={8} />
                 <SView style={{
-                    height: 54,
                     width: 54,
                 }} center onPress={() => {
                     SNavigation.navigate("SucursalPage", {
@@ -43,7 +42,11 @@ class HuellasDeUsuario extends Component {
                         width: 45,
                     }} center>
                         <SIcon name={"Fp"} fill={huella ? "#fff" : "#444"} />
+
                     </SView>
+                    <SHr/>
+                    <SText center fontSize={10} color={""}>Pulgar {obj == 1 ? "Izquierdo" : "Derecho"}</SText>
+                    <SHr/>
                 </SView>
                 <SView width={8} />
             </>
