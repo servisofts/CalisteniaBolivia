@@ -16,7 +16,7 @@ public class App {
 
         SSL.getKeyStore();
 
-        // Registrar mi certificado default si no existe
+        // Registrar mi certificado default si no existe    
         if (!SSL.defaultCert()) { 
             console.error("Server closed.");
             return;
@@ -29,7 +29,6 @@ public class App {
         }
 
         console.log(console.ANSI_GREEN ,SSL.getPem(SSL.getCert(Config.getJSON().getString("nombre"))));
-        SocketCliete.enableReconect(true);
         SocketCliete.Start(Config.getJSON("socket_client").getJSONObject("servicio"));
         Conexion.setConexion(Config.getJSON("data_base"));
 
