@@ -49,9 +49,9 @@ class Recibo extends Component {
                         textTransform: "uppercase"
                     }}>{this.getNombreUsuario(obj.key_usuario)}</SText>
                     <SView row>
-                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_inicio,"yyyy-MM-dd").toString("MONTH, dd")}</SText>
+                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_inicio, "yyyy-MM-dd").toString("MONTH, dd")}</SText>
                         <SText fontSize={12} color={STheme.color.lightBlack} > - </SText>
-                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_fin,"yyyy-MM-dd").toString("MONTH, dd")}</SText>
+                        <SText fontSize={12} color={STheme.color.lightBlack} font={"Roboto"}>{new SDate(obj.fecha_fin, "yyyy-MM-dd").toString("MONTH, dd")}</SText>
                     </SView>
 
                 </SView>
@@ -95,7 +95,7 @@ class Recibo extends Component {
                 <SHr />
             </SView>
         }
-        return <SView col={"xs-11 sm-10 md-8 lg-7 xl-5"} backgroundColor={STheme.color.text} center style={{
+        return <SView col={"xs-11 sm-10 md-8 lg-7 xl-5"} backgroundColor={"#ffffff"} center style={{
             borderRadius: 4,
         }}>
             <SHr />

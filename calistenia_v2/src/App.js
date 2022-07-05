@@ -28,7 +28,7 @@ const App = (props) => {
     return (
         <Provider store={store}>
             <SComponentContainer
-               // debug
+                // debug
                 socket={SSocket}
                 assets={Assets}
                 // background={<BackgroundImage />}
@@ -36,7 +36,7 @@ const App = (props) => {
                 <SNavigation props={{
                     prefixes: ["https://component.servisofts.com", "component.servisofts://"],
                     pages: Pages,
-                    title:"Calistenia-Bolivia",
+                    title: "Calistenia-Bolivia",
                     navBar: BarraSuperior
                 }} />
                 <SSocket store={store} identificarse={(props) => {

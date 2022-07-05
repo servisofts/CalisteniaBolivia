@@ -69,6 +69,7 @@ class Paquete extends Component {
                 }}>
                     <Text style={{
                         fontSize: 14,
+                        color:STheme.color.text
                     }}>{obj.descripcion}</Text>
                 </View>
                 <View style={{
@@ -83,6 +84,7 @@ class Paquete extends Component {
                     }}>
                         <Text style={{
                             fontSize: 8,
+                            color:STheme.color.text
                         }}>{"#per: "} <Text style={{ fontSize: 12, }}>{obj.participantes}</Text>
                         </Text>
                     </View>
@@ -92,6 +94,7 @@ class Paquete extends Component {
                     }}>
                         <Text style={{
                             fontSize: 8,
+                            color:STheme.color.text
                         }}>{"dias: "} <Text style={{ fontSize: 12, }}>{obj.dias}</Text>
                         </Text>
                     </View>
@@ -105,6 +108,7 @@ class Paquete extends Component {
                 }}>
                     <Text style={{
                         fontSize: 14,
+                        color:STheme.color.text
                     }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
                 </View>
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Animated, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SDate, SNavigation, SView } from 'servisofts-component'
+import { SDate, SNavigation, STheme, SView } from 'servisofts-component'
 import AnimatedLines from './AnimatedLines';
 const delay = ms => new Promise(res => setTimeout(res, ms));
 class RelojCaja extends Component {
@@ -97,25 +97,25 @@ class RelojCaja extends Component {
 
                 {/* <SView></SView> */}
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 17, }}>{hh}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 17, }}>{hh}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 12 }}>{"h "}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"h "}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 17, }}>{mm}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 17, }}>{mm}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 12 }}>{"m "}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"m "}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 17 }}>{ss}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 17 }}>{ss}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: "#000", fontSize: 12 }}>{"s "}</Text>
+                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"s "}</Text>
                 </SView>
 
-                <Text style={{ color: "#666", fontSize: 9, position: "absolute", bottom: 2, }}>{"Caja abierta"}</Text>
+                <Text style={{ color: STheme.color.lightGray, fontSize: 9, position: "absolute", bottom: 2, }}>{"Caja abierta"}</Text>
                 {/* <Text style={{ color: "#666", fontSize: 10, position: "absolute", bottom: 4, }}>{new SDate(this.props.inicio).toString("yyyy-MM-dd hh:mm:ss")}</Text> */}
             </View>
         </AnimatedLines>
@@ -144,7 +144,7 @@ class RelojCaja extends Component {
                 right: 0,
                 width: 100,
                 height: 45,
-                backgroundColor: STheme.color.text,
+                backgroundColor: STheme.color.background,
             }} onPress={() => {
                 SNavigation.navigate("CajaPage");
             }

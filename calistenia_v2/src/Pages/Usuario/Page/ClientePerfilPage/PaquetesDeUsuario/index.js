@@ -233,7 +233,7 @@ class PaquetesDeUsuario extends Component {
                 SPopupOpen({
                     key: "errorPaquete",
                     content: (
-                        <SView col={"xs-11 md-8"} backgroundColor={"#000000"} center style={{ height: 200, borderRadius: 8, }}>
+                        <SView col={"xs-11 md-8"} backgroundColor={STheme.color.background} center style={{ height: 200, borderRadius: 8, }}>
                             {SPage.backgroundComponent}
                             <SView style={{
                                 width: "100%",

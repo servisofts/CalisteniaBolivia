@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import FotoPerfilUsuario from '../../../../Component/FotoPerfilUsuario';
 // import AppParams from '../../../../Params';
-import { SView, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2, SPage, SHr } from 'servisofts-component';
+import { SView, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2, SPage, SHr, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import FotoPerfilUsuario from '../../../../../../Components/FotoPerfilUsuario';
 
@@ -131,7 +131,7 @@ class ConfirmacionUsuario extends Component {
           height: 550,
           maxHeight: "100%",
           overflow: "hidden",
-          backgroundColor: "#000",
+          backgroundColor: STheme.color.background,
         }}>
         {/* <SBackground /> */}
         {SPage.backgroundComponent}

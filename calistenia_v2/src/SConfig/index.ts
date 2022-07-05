@@ -3,24 +3,27 @@ import { SThemeThemes } from 'servisofts-component'
 const SThemeProps: SThemeThemes = {
     default: {
         barStyle: "light-content",
-        barColor: "#eeeeee",
+        barColor: "#ffffff",
         primary: "#ffffff",
         secondary: "#000000",
-        background: "#ffffff",
-        card: "#eeeeeeaa",
-        text: "#000000"
+        background: "#f8f8f8",
+        card: "#00000011",
+        text: "#000000",
+        // darkGray: "#000066",
+        // gray: "#000099",
+        // lightGray: "#0000ee",
     },
     dark: {
         barStyle: "light-content",
-        barColor: "#00ff00",
-        primary: "#00ff00",
-        secondary: "#0000ff",
-        background: "#99ff99",
-        card: "#00009922",
-        text: "#0000ff",
-        darkGray: "#000066",
-        gray: "#000099",
-        lightGray: "#0000ee",
+        barColor: "#000000",
+        primary: "#000000",
+        secondary: "#ffffff",
+        background: "#060606",
+        card: "#ffffff11",
+        text: "#ffffff",
+        // darkGray: "#000066",
+        // gray: "#000099",
+        // lightGray: "#0000ee",
     }
 }
 

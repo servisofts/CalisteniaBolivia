@@ -95,7 +95,7 @@ class ConfirmarPaquete extends Component {
                     alignItems: "center",
                     borderRadius: 100,
                     overflow: "hidden",
-                    backgroundColor: "#660000",
+                    backgroundColor: STheme.color.card,
                 }}>
                     <SImage src={SSocket.api.root + "usuario_" + obj.key} />
                     {this.getIsConfirm(isConfirmado)}

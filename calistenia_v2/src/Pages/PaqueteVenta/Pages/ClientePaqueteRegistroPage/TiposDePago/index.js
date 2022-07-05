@@ -171,7 +171,7 @@ class TiposDePago extends Component<TiposDePagoType> {
                 maxHeight: "90%",
                 borderRadius: 8,
                 overflow: "hidden",
-                backgroundColor: "#000"
+                backgroundColor: STheme.color.background
             }} center withoutFeedback>
                 {SPage.backgroundComponent}
                 <SScrollView2 disableHorizontal>
