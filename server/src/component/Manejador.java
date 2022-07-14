@@ -179,6 +179,18 @@ public class Manejador {
                     new Billetera(data, session);
                     break;
                 }
+                case Publicacion.COMPONENT:
+                    Publicacion.onMessage(data, session);
+                break;
+                case PublicacionDetalle.COMPONENT:
+                    PublicacionDetalle.onMessage(data, session);
+                break;
+                case Comentario.COMPONENT:
+                    Comentario.onMessage(data, session);
+                break;
+                case Etiqueta.COMPONENT:
+                    Etiqueta.onMessage(data, session);
+                break;
                 default:
                     redirect(data, session);
             }

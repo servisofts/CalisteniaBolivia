@@ -13,6 +13,7 @@ import { SText } from 'servisofts-component';
 import Sucursal from '../../../Sucursal';
 import SucursalSelect from './SucursalSelect';
 import sucursal_usuario from '../../../sucursal_usuario';
+import xlsx from 'xlsx-color';
 
 class ClientesPage extends Component {
 
@@ -90,6 +91,10 @@ class ClientesPage extends Component {
     return <SView>
       <SText>Admin: {data.Nombres}</SText>
     </SView>
+  }
+  exportarExcel() {
+    console.log("exportando");
+
   }
   render() {
 
@@ -270,7 +275,7 @@ class ClientesPage extends Component {
             }}
           >
             <SView col={"xs-12"} center>
-
+              <SButtom onPress={this.exportarExcel}>Exportar</SButtom>
               <SucursalSelect key_sucursal={this.state.key_sucursal}
                 sucursal={this.state.sucursal} setSucursal={(suc) => {
                   // SStorage.setItem("sucursal", suc.key)
