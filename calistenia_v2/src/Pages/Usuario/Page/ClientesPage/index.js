@@ -5,7 +5,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
 import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
+import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import Paquete_Item from './Paquete_Item';
@@ -102,6 +102,8 @@ class ClientesPage extends Component {
         return <View />
       }
 
+      this.usuarios = data;
+
       var objFinal = {};
       Object.keys(ClientesActivos).map((key) => {
         if (this.state.key_sucursal) {
@@ -125,6 +127,7 @@ class ClientesPage extends Component {
       });
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+      this.finalData = objFinal;
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
@@ -216,6 +219,40 @@ class ClientesPage extends Component {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
+        <SView col={"xs-12"} center>
+          <ExportExcel
+            header={[
+              // { key: "key", label: "key", width: 100 },
+              { key: "cliente_ci", label: "CI", width: 100 },
+              { key: "cliente_nombre", label: "Cliente", width: 250 },
+              { key: "cliente_telefono", label: "Telefono", width: 250 },
+              { key: "paquete", label: "paquete", width: 200 },
+              { key: "paquete_precio", label: "precio", width: 100 },
+              { key: "fecha_inicio", label: "fecha_inicio", width: 100 },
+              { key: "fecha_fin", label: "fecha_fin", width: 100 },
+            ]}
+            getDataProcesada={() => {
+              var daFinal = {};
+
+              Object.values(this.finalData).map((obj) => {
+                var usr = this.usuarios[obj.key];
+                var toInsert = {
+                  key: obj.key,
+                  paquete: obj?.vijencia?.paquete?.descripcion,
+                  paquete_precio: obj?.vijencia?.paquete?.precio,
+                  fecha_inicio: obj?.vijencia?.fecha_inicio,
+                  fecha_fin: obj?.vijencia?.fecha_fin,
+                  cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
+                  cliente_telefono: usr?.Telefono,
+                  cliente_ci: usr?.CI,
+                }
+                daFinal[obj.key] = toInsert
+              })
+              return daFinal
+            }}
+          />
+        </SView>
+
         <View style={{
           flex: 1,
           width: "100%",

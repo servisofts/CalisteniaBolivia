@@ -97,22 +97,22 @@ class RelojCaja extends Component {
 
                 {/* <SView></SView> */}
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 17, }}>{hh}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 17, }}>{hh}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"h "}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 12 }}>{"h "}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 17, }}>{mm}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 17, }}>{mm}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"m "}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 12 }}>{"m "}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 17 }}>{ss}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 17 }}>{ss}</Text>
                 </SView>
                 <SView height={17} style={{ justifyContent: "flex-end", }}>
-                    <Text style={{ color: STheme.color.text, fontSize: 12 }}>{"s "}</Text>
+                    <Text style={{ color: STheme.color.primary, fontSize: 12 }}>{"s "}</Text>
                 </SView>
 
                 <Text style={{ color: STheme.color.lightGray, fontSize: 9, position: "absolute", bottom: 2, }}>{"Caja abierta"}</Text>
@@ -144,7 +144,7 @@ class RelojCaja extends Component {
                 right: 0,
                 width: 100,
                 height: 45,
-                backgroundColor: STheme.color.background,
+                backgroundColor: STheme.color.text,
             }} onPress={() => {
                 SNavigation.navigate("CajaPage");
             }

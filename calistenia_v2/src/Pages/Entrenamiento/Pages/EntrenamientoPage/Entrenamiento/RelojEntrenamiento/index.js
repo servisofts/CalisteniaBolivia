@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { Component } from 'react';
 import { View, Text, Animated, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SNavigation, SView } from 'servisofts-component'
+import { SDate, SNavigation, STheme, SView } from 'servisofts-component'
 import AnimatedLines from './AnimatedLines';
 import SSocket from 'servisofts-socket'
 const delay = ms => new Promise(res => setTimeout(res, ms));

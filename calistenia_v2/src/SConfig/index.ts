@@ -6,7 +6,7 @@ const SThemeProps: SThemeThemes = {
         barColor: "#ffffff",
         primary: "#ffffff",
         secondary: "#000000",
-        background: "#f8f8f8",
+        background: "#FAFAFA",
         card: "#00000011",
         text: "#000000",
         // darkGray: "#000066",
