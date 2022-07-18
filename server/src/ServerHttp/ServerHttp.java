@@ -22,6 +22,7 @@ import conexion.Conexion;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class ServerHttp {
         }
         DiskFileItemFactory d = new DiskFileItemFactory();
 
+        
+
         try {
             ServletFileUpload up = new ServletFileUpload(d);
             List<FileItem> result = up.parseRequest(new RequestContext() {
@@ -93,9 +96,13 @@ public class ServerHttp {
                 }
 
             });
+            
+
+            t.getRequestHeaders().add("charset", "UTF-8");
 
             t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             t.getResponseHeaders().add("Content-type", "text/plain");
+            t.getResponseHeaders().add("charset", "UTF-8");
             t.sendResponseHeaders(200, 0);
                 
             if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
@@ -120,7 +127,7 @@ public class ServerHttp {
                         docs.put(nombre);
                         break;
                     case "data":
-                        data = fi.getString();
+                        data = new String(fi.get(), StandardCharsets.UTF_8);
                         break;
                 }
             }
@@ -148,6 +155,7 @@ public class ServerHttp {
                             break;
                         }
                     }
+                    obj.remove("dirs");
                 }
             }
             t.close();

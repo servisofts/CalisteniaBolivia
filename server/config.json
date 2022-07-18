@@ -13,7 +13,7 @@
         "reconectTime": 5000
     },
     "files":{
-        "url":"/u01/servisoftsFiles/calistenia/"
+        "url":"/home/ruddy/servisoftsFiles/calistenia/"
     },
     "data_base": {
         "puerto": 5432,
