@@ -209,8 +209,6 @@ public class Caja {
             sinc.put("type", "sincronizarAll");
             sinc.put("key_usuario", obj.getString("key_usuario"));
 
-            ZKTeco.sincronizarAll(sinc);
-
             Conexion.historico(obj.getString("key_usuario"), caja.getString("key"), "caja_registro", caja);
             obj.put("data", caja);
             obj.put("estado", "exito");

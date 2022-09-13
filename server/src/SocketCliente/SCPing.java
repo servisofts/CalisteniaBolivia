@@ -26,8 +26,6 @@ public class SCPing extends Thread{
         obj.put("key", key);
             
         sendPing(obj);
-
-        super.run();
     }
 
     public void sendPing(JSONObject obj){
@@ -39,9 +37,11 @@ public class SCPing extends Thread{
                 //detener
                 return;
             }
+
             this.socketCliente.send(obj.toString());
 
             sleep(5000);
+
             if(!isPing){
                 
                 System.err.println(new Date()+" Reconectando socket cliente");

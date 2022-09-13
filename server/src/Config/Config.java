@@ -128,7 +128,7 @@ public class Config {
                 while (valor != -1) {
                     configJson = configJson + String.valueOf(((char) valor));
                     valor = file.read();
-                    console.logln(console.ANSI_GREEN ,".");
+                    //console.logln(console.ANSI_GREEN ,".");
                 }
                 file.close();
                 config = new JSONObject(configJson);

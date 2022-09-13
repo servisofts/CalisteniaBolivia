@@ -191,6 +191,9 @@ public class Manejador {
                 case Etiqueta.COMPONENT:
                     Etiqueta.onMessage(data, session);
                 break;
+                case SucursalSincronizacion.COMPONENT:
+                    SucursalSincronizacion.onMessage(data, session);
+                break;
                 default:
                     redirect(data, session);
             }
@@ -205,6 +208,7 @@ public class Manejador {
                 case "zkteco":
                     data.remove("service");
                     SocketCliete.send("zkteco", data,session);
+                    data.put("noSend", true);
                     return;
             }
         }
