@@ -11,8 +11,6 @@ public class ManejadorCliente {
 
     public static void onMessage(JSONObject action) {
 
-        
-
         if(action.has("servicio_server")){
             if(action.getString("servicio_server").equals("RolPermiso")){
                 new RolPermiso(new JSONObject(action.toString())).start();

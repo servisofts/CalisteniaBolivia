@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 
 import javax.net.ssl.SSLContext;
@@ -69,8 +70,10 @@ public class SocketCliete extends Thread {
         try {
             SSLContext ss = SSL.getSSLContext();
             SSLSocketFactory ssf = ss.getSocketFactory();
-            SSLSocket s = (SSLSocket) ssf.createSocket(config.getString("ip"), config.getInt("puerto"));
+            SSLSocket s = (SSLSocket) ssf.createSocket();
+            s.connect(new InetSocketAddress(config.getString("ip"), config.getInt("puerto")), 5000);
             s.startHandshake();
+
             // INICIA LA CONEXION AL SOCKET new SocketCliete(config);
             
             if(Clientes.get(config.getJSONObject("cert").getString("OU")) !=null){
@@ -105,6 +108,7 @@ public class SocketCliete extends Thread {
 
 
     public SocketCliete(JSONObject config, SSLSocket socket) throws IOException {
+
 
         this.socket = socket;
         response = new PrintWriter(socket.getOutputStream(), true);
@@ -163,22 +167,33 @@ public class SocketCliete extends Thread {
 
     private void onMesagge(String msg, JSONObject config) {
         try {
-            JSONObject data = new JSONObject(msg);
+            final SocketCliete Instance = this;
+            new Thread(){
+                @Override
+                public void run() {
 
-            if(this.ping.onMesagge(data)) return;
+                    if(msg == null) return;
 
-            if(data.has("_sincrone_key")){
-                String sinc_key = data.getString("_sincrone_key");
-                SCSincroneSend.mapa.get(sinc_key).onMesagge(data);
-            }
-
-            switch (config.getJSONObject("cert").getString("OU")) {
-                case "servicio":
-                    ManejadorServicio.onMessage(data);
-                    break;
-                default:
-                    ManejadorCliente.onMessage(data);
-            }
+                    JSONObject data = new JSONObject(msg);
+                    
+                    if(Instance.ping.onMesagge(data)) return;
+        
+                    if(data.has("_sincrone_key")){
+                        String sinc_key = data.getString("_sincrone_key");
+                        SCSincroneSend.mapa.get(sinc_key).onMesagge(data);
+                        return;
+                    }
+        
+                    switch (config.getJSONObject("cert").getString("OU")) {
+                        case "servicio":
+                            ManejadorServicio.onMessage(data);
+                            break;
+                        default:
+                            ManejadorCliente.onMessage(data);
+                    }
+                }
+            }.start();
+            
 
         } catch (Exception e) {
             if (e.getMessage() != null) {
@@ -211,6 +226,10 @@ public class SocketCliete extends Thread {
 
     public static JSONObject sendSinc(String server, JSONObject data) {
         return new SCSincroneSend(Clientes.get(server)).send(data);
+    }
+
+    public static JSONObject sendSinc(String server, JSONObject data, int timeOut) {
+        return new SCSincroneSend(Clientes.get(server), timeOut).send(data);
     }
 
     public static void send(String server, JSONObject data, SSSessionAbstract session) {

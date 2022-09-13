@@ -23,7 +23,14 @@ public class SCSincroneSend {
         this.key = UUID.randomUUID().toString();
     }
 
+    public SCSincroneSend(SocketCliete cli, int timeOut) {
+        this.timeOut = timeOut;
+        this.cli = cli;
+        this.key = UUID.randomUUID().toString();
+    }
+
     public JSONObject send(JSONObject obj) {
+        
         this.obj = obj;
         if (cli == null) {
             obj.put("estado", "error");

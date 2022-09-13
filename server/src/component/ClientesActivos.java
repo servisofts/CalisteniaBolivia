@@ -53,6 +53,16 @@ public class ClientesActivos {
         }
     }
 
+    public static JSONObject getbyKeySucursal(String key_sucursal) {
+        try {
+            String consulta =  "select get_all_clientes_activos('"+key_sucursal+"') as json";
+            return Conexion.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {       
+            e.printStackTrace();     
+            return null;
+        }
+    }
+
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta =  "select get_all_clientes_activos() as json";
