@@ -26,15 +26,16 @@ class ReporteAsistencia extends Component {
             header={[
                 { key: "index", label: "#", width: 40 },
                 // { key: "key", label: "Key", width: 150 },
+                { key: "entrenamiento/descripcion", label: "tipo", width: 150, },
                 { key: "entrenamiento/fecha_inicio", label: "Fecha inicio", width: 150, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
-                { key: "entrenamiento/fecha_fin", label: "Fecha Fin", width: 150, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
+                { key: "entrenamiento/fecha_fin", label: "Fecha Fin", width: 150, render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
                 { key: "sucursal", label: "Sucursal", width: 150 },
                 // { key: "descripcion", label: "descripcion", width: 100 },
                 { key: "key_entrenador", label: "Entrenador", width: 250, render: (item) => { if (!item) { return "Molinete" } return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
                 { key: "paquete/descripcion", label: "Paquete", width: 150 },
                 { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
             ]}
-            limit={100}
+            limit={30}
             data={data}
         />
     }

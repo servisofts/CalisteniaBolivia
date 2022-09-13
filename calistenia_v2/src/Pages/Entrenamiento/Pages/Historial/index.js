@@ -25,7 +25,7 @@ class Lista extends Component {
     }
     getSucursal = (key) => {
         var sucursal = Sucursal.Actions.getByKey(key, this.props);
-        if (!sucursal) return <SLoad />
+        if (!sucursal) return <SText>{"SIN SUCURSAL"}</SText>
         return <SView col={"xs-12"} row>
             <SView width={40} height={40} style={{
                 borderRadius: "50%",

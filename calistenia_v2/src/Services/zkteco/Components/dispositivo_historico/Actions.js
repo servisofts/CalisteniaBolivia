@@ -5,8 +5,12 @@ export default class Actions {
     static _getReducer = (props) => {
         return props.state[Parent.component + "Reducer"];
     }
-    static getAll = (key_dispositivo,props) => {
+    static getAll = (key_dispositivo, props) => {
         var reducer = Actions._getReducer(props);
+        if (reducer.key_dispositivo != key_dispositivo) {
+            reducer.key_dispositivo = key_dispositivo;
+            reducer.data = "";
+        }
         var data = reducer.data;
         if (!data) {
             if (reducer.estado == "cargando") return null;
@@ -47,7 +51,7 @@ export default class Actions {
         })
     }
 
-    
+
     static editar = (data, props) => {
         SSocket.send({
             component: Parent.component,

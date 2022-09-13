@@ -7,6 +7,8 @@ import Reducer from "./Reducer";
 
 import Lista from "./Pages/Lista";
 import Molinete from "./Pages/Molinete";
+import DispositivoUsuarios from "./Pages/DispositivoUsuarios";
+import Sincronizador from "./Pages/Sincronizador";
 export default {
     component,
     version,
@@ -16,6 +18,8 @@ export default {
     },
     Pages: {
         [component]: Lista,
-        "molinete": Molinete
+        [component + "/usuarios"]: DispositivoUsuarios,
+        [component + "/sync"]: Sincronizador,
+        "molinete": Molinete,
     }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SButtom, SInput, SText, STheme, SView, SPopup, SPopupOpen, SNavigation } from 'servisofts-component';
+import { SButtom, SInput, SText, STheme, SView, SPopup, SPopupOpen, SNavigation, SMath } from 'servisofts-component';
 import PopupCerrar from './PopupCerrar';
 import PopupConfirmarCierre from './PopupConfirmarCierre';
 
@@ -75,7 +75,7 @@ class EstadoCaja extends Component {
         this.montoCaja = data.monto;
         // if (this.montoCaja % 1 != 0) this.montoCaja = this.montoCaja.toFixed(2);
         // return <SText>{JSON.stringify(data,"\s","\t")}</SText>
-        return <SInput {...{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", }} value={data.monto + ""} editable={false} />
+        return <SInput {...{ col: "xs-12", customStyle: "calistenia", type: "money", label: "Monto en caja", variant: "small", }} value={SMath.formatMoney(data.monto) + ""} editable={false} />
     }
     apertura() {
         if (this.activa) {
