@@ -219,6 +219,13 @@ public class Asistencia
                     asistencia.put("key_usuario", asistencia.getString("key_usuario"));
                     asistencia.put("key_paquete_venta_usuario", paqueteVentaUsuario.getString("key"));
                     Conexion.insertArray("asistencia", new JSONArray().put(asistencia));
+
+                    JSONObject obj = new JSONObject();
+                    obj.put("component", "asistencia");
+                    obj.put("type", "registro");
+                    obj.put("data", asistencia);
+                    obj.put("estado", "exito");
+                    SSServerAbstract.sendAllServer(obj.toString());
                 }
             }
             
