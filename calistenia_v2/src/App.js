@@ -13,7 +13,7 @@ import reduxThunk from 'redux-thunk';
 //------------------------
 import SConfig from './SConfig';
 import SSocket, { setProps } from 'servisofts-socket'
-import BackgroundImage from './Components/BackgroundImage';
+// import BackgroundImage from './Components/BackgroundImage';
 import SSRolesPermisos from './SSRolesPermisos';
 import BarraSuperior from './Components/BarraSuperior';
 setProps(SConfig.SocketProps);

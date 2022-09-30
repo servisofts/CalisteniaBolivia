@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 import { connect } from 'react-redux';
-import { SView, SText, SDate, SOrdenador, SIcon, STheme, SNavigation } from 'servisofts-component';
+import { SView, SText, SDate, SOrdenador, SIcon, STheme, SNavigation, SMath } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
 import Usuario from '../../../../Usuario';
 class Movimientos extends Component {
@@ -162,7 +162,7 @@ class Movimientos extends Component {
                                     flexDirection: "row"
                                 }}>
                                     <Text style={{ color: STheme.color.text, fontSize: 10, height: 20, }}>Bs.</Text>
-                                    <Text style={{ color: STheme.color.text, fontSize: 14, }}>{movimientos[key].monto}</Text>
+                                    <Text style={{ color: STheme.color.text, fontSize: 14, }}>{SMath.formatMoney(movimientos[key].monto)}</Text>
                                 </View>
                             </SView>
                         </SView>

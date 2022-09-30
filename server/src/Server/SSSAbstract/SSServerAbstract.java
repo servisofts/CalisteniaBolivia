@@ -59,10 +59,11 @@ public abstract class SSServerAbstract implements SSServerInterface {
                         }
                     }
 
-                    SSServerAbstract.verSessiones();
+                    // SSServerAbstract.verSessiones();
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             console.log(console.ANSI_RED, "--> ERROR: "+e.getMessage());
         }
 
@@ -150,6 +151,7 @@ public abstract class SSServerAbstract implements SSServerInterface {
                         SSServerAbstract server = SERVIDORES.get(me.getKey());
                         server.sendAll(mensaje);
                     }catch(Exception e){
+                        e.printStackTrace();
                         console.log(console.ANSI_RED, "--> ERROR: "+e.getMessage());
                     }
                 }
@@ -198,11 +200,10 @@ public abstract class SSServerAbstract implements SSServerInterface {
 
     public void setSession(SSSessionAbstract session) {
         this.sessiones.put(session.getIdSession(), session);
-        SSServerAbstract.verSessiones();
+        // SSServerAbstract.verSessiones();
     }
 
     public void sendAll(String mensaje) {
-        System.out.println("----------REPORTE DE SESSIONES--------");
         for (Map.Entry me2 : sessiones.entrySet()) {
             SSSessionAbstract session = sessiones.get(me2.getKey());
             session.send(mensaje);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import SSocket from 'servisofts-socket';
-import { SView, SText, STheme, SHr, SLoad } from 'servisofts-component';
+import { SView, SText, STheme, SHr, SLoad, SMath } from 'servisofts-component';
 import MovimientosGraphic from './MovimientosGraphic';
 import Sucursal from '../../../../Sucursal';
 import sucursal_usuario from '../../../../sucursal_usuario';
@@ -116,7 +116,7 @@ class CuentasLista extends Component {
                                     padding: 4,
                                 }}>
                                     <SText style={{
-                                    }} >{`Bs. ${this.getAllMontoCuenta(obj.key)}`}</SText>
+                                    }} >{`Bs. ${SMath.formatMoney(this.getAllMontoCuenta(obj.key))}`}</SText>
                                 </SView>
 
                             </SView>

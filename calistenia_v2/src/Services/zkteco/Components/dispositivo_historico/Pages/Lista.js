@@ -11,22 +11,47 @@ class Lista extends Component {
         };
         this.key_dispositivo = SNavigation.getParam("key");
     }
-
+    formatstr(nm) {
+        var n = parseInt(nm);
+        if (n < 10) {
+            n = "0" + n;
+        }
+        return n + "";
+    }
     getLista() {
         var data = Parent.Actions.getAll(this.key_dispositivo, this.props);
         var usuarios = usuario.Actions.getAll(this.props);
         if (!data) return <SLoad />;
         if (!usuarios) return <SLoad />;
         return <STable2
+            rowHeight={35}
+            limit={100}
             header={[
                 { key: "index", label: "#", width: 30 },
                 //{ key: "key_dispositivo", label: "key_dispositivo", width: 100, },
-                { key: "fecha_on", label: "fecha", order: "desc", width: 150, render: (itm) => new SDate(itm).toString("yyyy-MM-dd hh:mm:ss") },
-                { key: "data/key_usuario", label: "key_usuario", width: 100, render: (itm) => usuarios[itm] ? usuarios[itm].Nombres + " " + usuarios[itm].Apellidos : "" },
-                {  key: "data-event", label: "EventType", width: 1000, render: this.getEventType},
-                //{  key: "data/EventType", label: "Code", center:true,width: 50, render: this.getEventType},
-
+                { key: "fecha_on", label: "Fecha", order: "desc", width: 150, render: (itm) => new SDate(itm).toString("yyyy-MM-dd hh:mm:ss") },
+                { key: "data/key_usuario", label: "Usuario", width: 300, render: (itm) => usuarios[itm] ? usuarios[itm].Nombres + " " + usuarios[itm].Apellidos : "" },
+                { key: "data-event", label: "EventType", width: 200, render: this.getEventType, center: true },
+                {
+                    key: "data/Time_second", label: "Hora en molinete", center: true, width: 150, render: (itm) => {
+                        var anho = itm / 32140800 + 2000;
+                        var mes = itm / 2678400 % 12 + 1
+                        var dia = itm / 86400 % 31 + 1
+                        var hora = itm / 3600 % 24
+                        var minuto = itm / 60 % 60
+                        var segundo = itm % 60
+                        // return new SDate(new Date(itm * 1000)).toString();
+                        return `${this.formatstr(anho)}-${this.formatstr(mes)}-${this.formatstr(dia)} ${this.formatstr(hora)}:${this.formatstr(minuto)}:${this.formatstr(segundo)}`
+                    }
+                },
             ]}
+            filter={(obj) => {
+                // if(!obj.key_usuario) return false;
+                if (obj.data.EventType == "300" || obj.data.EventType == "301") {
+                    return false;
+                }
+                return true;
+            }}
             data={data}
         />
     }
@@ -85,7 +110,7 @@ class Lista extends Component {
             case "301": return "Stop";
             case "302": return "Sincronizacion exitosa";
             case "303": return "Sincronizacion fallida";
-            default: return obj;
+            default: return "NOT FOUND";
         }
     }
     render() {

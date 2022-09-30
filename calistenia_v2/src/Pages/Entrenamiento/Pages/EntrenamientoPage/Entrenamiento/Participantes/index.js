@@ -49,6 +49,21 @@ class Participantes extends Component {
             </SView>
         </SView>
     }
+    sincronizar() {
+        var key_sucursal = this.props?.sucursal?.key;
+        return <SView col={"xs-12"} center height={60}>
+            <SView col={"xs-11 md-8 xl-6"} height={50} card center onPress={() => {
+                SSocket.sendPromise({
+                    component: "zkteco",
+                    type: "sincronizarLog",
+                    estado: "cargando",
+                    key_sucursal: key_sucursal,
+                }, 10000)
+            }}>
+                <SText fontSize={16}>Sync Molinetes</SText>
+            </SView>
+        </SView>
+    }
     getUsuario(data) {
         var usuarios = Usuario.Actions.getByKey(data.key_usuario, this.props);
         if (!usuarios) {
@@ -102,6 +117,8 @@ class Participantes extends Component {
                 <SView height={4} />
                 <SView col={"xs-12"} row>
                     {this.getAdd()}
+                    <SHr />
+                    {this.sincronizar()}
                     <SHr />
                     {this.getListaUsuarios()}
                 </SView>

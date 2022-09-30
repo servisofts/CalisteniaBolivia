@@ -81,7 +81,7 @@ export default class Actions {
                 type: "getAll",
                 estado: "cargando",
                 cabecera: "registro_administrador",
-                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                key_usuario: props.state.usuarioReducer.usuarioLog?.key ?? " ",
             }
             SSocket.send(object);
             return;

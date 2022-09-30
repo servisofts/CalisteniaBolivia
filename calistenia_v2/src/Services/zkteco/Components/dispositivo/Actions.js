@@ -21,6 +21,22 @@ export default class Actions {
         }
         return data;
     }
+    static getAllDispositivos = (props) => {
+        var reducer = Actions._getReducer(props);
+        var data = reducer.data;
+        if (!data) {
+            if (reducer.estado == "cargando") return null;
+            SSocket.send({
+                component: Parent.component,
+                version: Parent.version,
+                type: "getAll",
+                estado: "cargando",
+                key_usuario: "",
+            })
+            return null;
+        }
+        return data;
+    }
 
     static getAllByKeyPuntoVenta = (key_punto_venta, props) => {
         var data = Actions.getAll(props);
@@ -108,6 +124,46 @@ export default class Actions {
             estado: "cargando",
             key_usuario: "",
         })
+    }
+    // static sincronizarAll = (tout = 60000) => {
+    //     return SSocket.sendPromise({
+    //         service: "zkteco",
+    //         component: "zkteco",
+    //         type: "sincronizarAll",
+    //         estado: "cargando",
+    //         key_usuario: "",
+    //     }, tout)
+    // }
+    static sincronizarMolinete = (key_dispositivo, key_sucursal, tout = 60000) => {
+        return SSocket.sendPromise({
+            service: "zkteco",
+            component: "zkteco",
+            type: "sincronizarMolinete",
+            estado: "cargando",
+            key_sucursal: key_sucursal,
+            key_dispositivo: key_dispositivo,
+            key_usuario: "",
+        }, tout)
+    }
+    static testConnection = (key_dispositivo, tout = 5000) => {
+        return SSocket.sendPromise({
+            service: "zkteco",
+            component: "dispositivo",
+            type: "testConnection",
+            estado: "cargando",
+            key_dispositivo: key_dispositivo,
+            key_usuario: "",
+        }, tout)
+    }
+    static getUsuariosActivos = (key_dispositivo, tout = 5000) => {
+        return SSocket.sendPromise({
+            service: "zkteco",
+            component: "dispositivo",
+            type: "getUsuariosActivos",
+            estado: "cargando",
+            key_dispositivo: key_dispositivo,
+            key_usuario: "",
+        }, tout)
     }
 
 }

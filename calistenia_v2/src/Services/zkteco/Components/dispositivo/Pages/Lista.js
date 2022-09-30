@@ -1,70 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SList, SLoad, SNavigation, SPage, SPopup, STable2, SText, STheme, SView } from 'servisofts-component';
 import Parent from ".."
 import SSocket from 'servisofts-socket';
+import BtnSincronizar from '../Components/BtnSincronizar';
+import DeviceItem from '../Components/DeviceItem';
+import Sucursal from '../../../../../Pages/Sucursal';
+import punto_venta from '../../punto_venta';
 class Lista extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
-        this.key_punto_venta = SNavigation.getParam("key_punto_venta");
+        // this.key_punto_venta = SNavigation.getParam("key_punto_venta");
     }
 
     getLista() {
-        var data = Parent.Actions.getAllByKeyPuntoVenta(this.key_punto_venta, this.props);
+        Sucursal.Actions.getAll(this.props);
+        punto_venta.Actions.getAll(this.props);
+        var data = Parent.Actions.getAll(this.props);
         if (!data) return <SLoad />;
-        return data.map((obj) => {
-            return <SView height={150} center width={100} style={{
-                borderWidth: 1,
-                borderColor: STheme.color.card,
-                borderRadius: 5,
-            }} row>
-                <SView col={"xs-12"} center height={"50"} >
-                    <SText fontSize={16}>{obj.descripcion}</SText>
-                </SView>
-                <SView height={50} center col={"xs-6"} style={{
-                    borderWidth: 1,
-                    borderColor: STheme.color.card,
-                    borderRadius: 5,
-                }} onPress={() => {
-                    Parent.Actions.abrir(obj, 1, this.props);
-                }}>
-                    <SText>{"<"}</SText>
-                </SView>
-                <SView height={50} center col={"xs-6"} style={{
-                    borderWidth: 1,
-                    borderColor: STheme.color.card,
-                    borderRadius: 5,
-                }} onPress={() => {
-                    Parent.Actions.abrir(obj, 2, this.props);
-                }}>
-                    <SText>{">"}</SText>
-                </SView>
-                <SView col={"xs-12"} center height={"50"} onPress={() => {
-                    SNavigation.navigate("dispositivo_historico", { key: obj.key });
-                }} >
-                    <SText>Eventos</SText>
-                </SView>
-
-                <SHr height={1} color={STheme.color.card} />
-                <SView col={"xs-12"} center height={"50"}
-                    onPress={() => {
-                        Parent.Actions.sincronizarAll(this.props);
-                    }} >
-                    <SText>Sincronizar</SText>
-                </SView>
-
-            </SView>
-        })
+        return <SList
+            horizontal
+            space={0}
+            data={data}
+            render={obj => <SView col={"xs-12 sm-6 md-4 lg-3"} style={{
+                padding: 8
+            }}>
+                <DeviceItem obj={obj} />
+            </SView>}
+        />
     }
 
     render() {
         return (
-            <SPage title={'Lista de ' + Parent.component} disableScroll>
-                <SHr />
-                <SView col={"xs-12"} center row>
+            <SPage title={'Lista de ' + Parent.component} >
+                <SView col={"xs-12"} center>
+                    {/* <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} center> */}
                     {this.getLista()}
+                    {/* </SView> */}
                 </SView>
             </SPage>
         );
