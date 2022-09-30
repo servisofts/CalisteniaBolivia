@@ -10,8 +10,16 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		250C5C9894F947D8838DDB37 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E07AA7D860148018920F16C /* Roboto-Light.ttf */; };
+		4B2CA6E7CE184228AB72B7FA /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8416CF33DC94469EBC8A2B24 /* Roboto-Regular.ttf */; };
+		70AD36C17E4345C7865BCCF9 /* hello_baby.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67A0F04D36FF4FFFBDC6F4A4 /* hello_baby.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		85DC4C6561CEDC15BD4C27E8 /* libPods-calistenia_v2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F0D055081F029C2FCAD5D1 /* libPods-calistenia_v2.a */; };
+		A08F9EEA39E94F438AD34262 /* Athelas.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6C6CA55A6C3420D865CE388 /* Athelas.ttf */; };
+		A7602FFB837746B9B14A6985 /* LondonTwo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C113C27444FF9AB31479B /* LondonTwo.ttf */; };
+		BBC3B9C2C2074FE3AC987ED2 /* LondonBetween.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B173C3F15DF14242B0AA50E7 /* LondonBetween.ttf */; };
+		BCCBF5248D1243F4BEE10BCF /* LondonMM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D072ED711C471487A960E9 /* LondonMM.ttf */; };
+		C7EE969E3535419D92119247 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1412192F9B9420AAACD0260 /* Roboto-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +32,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = calistenia_v2/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = calistenia_v2/main.m; sourceTree = "<group>"; };
 		19694007EB853EC42C17FF8D /* libPods-calistenia_v2-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-calistenia_v2-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		44D072ED711C471487A960E9 /* LondonMM.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LondonMM.ttf; path = "../node_modules/servisofts-component/font/LondonMM.ttf"; sourceTree = "<group>"; };
 		46F0D055081F029C2FCAD5D1 /* libPods-calistenia_v2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-calistenia_v2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E07AA7D860148018920F16C /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../node_modules/servisofts-component/font/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		50AE628FD6660FE7B65A258E /* Pods-calistenia_v2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-calistenia_v2.release.xcconfig"; path = "Target Support Files/Pods-calistenia_v2/Pods-calistenia_v2.release.xcconfig"; sourceTree = "<group>"; };
+		67A0F04D36FF4FFFBDC6F4A4 /* hello_baby.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = hello_baby.ttf; path = "../node_modules/servisofts-component/font/hello_baby.ttf"; sourceTree = "<group>"; };
+		6D8C113C27444FF9AB31479B /* LondonTwo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LondonTwo.ttf; path = "../node_modules/servisofts-component/font/LondonTwo.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = calistenia_v2/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8416CF33DC94469EBC8A2B24 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../node_modules/servisofts-component/font/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		8F052C82BD49621EFFE245A7 /* Pods-calistenia_v2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-calistenia_v2.debug.xcconfig"; path = "Target Support Files/Pods-calistenia_v2/Pods-calistenia_v2.debug.xcconfig"; sourceTree = "<group>"; };
+		A6C6CA55A6C3420D865CE388 /* Athelas.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Athelas.ttf; path = "../node_modules/servisofts-component/font/Athelas.ttf"; sourceTree = "<group>"; };
+		B1412192F9B9420AAACD0260 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../node_modules/servisofts-component/font/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		B173C3F15DF14242B0AA50E7 /* LondonBetween.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LondonBetween.ttf; path = "../node_modules/servisofts-component/font/LondonBetween.ttf"; sourceTree = "<group>"; };
 		CDC312C6D0AC626A2A76B402 /* libPods-calistenia_v2-calistenia_v2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-calistenia_v2-calistenia_v2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -96,6 +112,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				730343C1BBA0FC7345F9E57B /* Pods */,
+				B31F17A061E946FBB27A612A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -108,6 +125,21 @@
 				13B07F961A680F5B00A75B9A /* calistenia_v2.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B31F17A061E946FBB27A612A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A6C6CA55A6C3420D865CE388 /* Athelas.ttf */,
+				67A0F04D36FF4FFFBDC6F4A4 /* hello_baby.ttf */,
+				B173C3F15DF14242B0AA50E7 /* LondonBetween.ttf */,
+				44D072ED711C471487A960E9 /* LondonMM.ttf */,
+				6D8C113C27444FF9AB31479B /* LondonTwo.ttf */,
+				B1412192F9B9420AAACD0260 /* Roboto-Bold.ttf */,
+				4E07AA7D860148018920F16C /* Roboto-Light.ttf */,
+				8416CF33DC94469EBC8A2B24 /* Roboto-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +175,7 @@
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = MUBDVWB883;
+						DevelopmentTeam = 36S3T8GU7Y;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
@@ -174,6 +206,14 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A08F9EEA39E94F438AD34262 /* Athelas.ttf in Resources */,
+				70AD36C17E4345C7865BCCF9 /* hello_baby.ttf in Resources */,
+				BBC3B9C2C2074FE3AC987ED2 /* LondonBetween.ttf in Resources */,
+				BCCBF5248D1243F4BEE10BCF /* LondonMM.ttf in Resources */,
+				A7602FFB837746B9B14A6985 /* LondonTwo.ttf in Resources */,
+				C7EE969E3535419D92119247 /* Roboto-Bold.ttf in Resources */,
+				250C5C9894F947D8838DDB37 /* Roboto-Light.ttf in Resources */,
+				4B2CA6E7CE184228AB72B7FA /* Roboto-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		3160DBA8BC0B0E40638DC01F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -276,8 +316,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MUBDVWB883;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 36S3T8GU7Y;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = calistenia_v2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -304,8 +344,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MUBDVWB883;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 36S3T8GU7Y;
 				INFOPLIST_FILE = calistenia_v2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

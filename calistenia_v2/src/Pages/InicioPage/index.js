@@ -16,12 +16,16 @@ class InicioPage extends Component {
         this.state = {
         };
     }
+
     render() {
         if (!Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("presentacion");
+            if (SNavigation.lastRoute?.route?.name == "client") {
+                return null;
+            }
+            SNavigation.reset("client");
             return null;
         }
-     
+
         return (
             <SPage
                 title="Inicio"

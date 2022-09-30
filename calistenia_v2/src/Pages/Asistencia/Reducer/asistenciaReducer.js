@@ -30,9 +30,11 @@ export default (state, action) => {
 
 const registro = (state, action) => {
     if (action.estado === "exito") {
+        console.log(action.data.descripcion ?? "Manual", action.data.key_sucursal, action.data)
         if (state.data[action.data.key_entrenamiento]) {
             state.data[action.data.key_entrenamiento][action.data.key] = action.data;
         }
+
         if (state.data[action.data.key_sucursal]) {
             var key_entrenamiento = action.data.key_entrenamiento;
             var remove = false;

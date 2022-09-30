@@ -135,6 +135,7 @@ class CuentaMovimientosPage extends Component {
             }
             monto_total += parseFloat(monto);
             var usuario = usuarios[obj.key_usuario];
+            console.log(obj);
             return (
                 <>
                     <SView col={"xs-12"} key={obj.key} style={{

@@ -43,9 +43,11 @@ public class SessionSocketWeb extends SSSessionAbstract {
     @Override
     public void send(String mensaje) {
         try {
+         
             MensajeSocket mensajeSocket = new MensajeSocket(mensaje, this);
             Future<Void> fut;
-            fut = this.miSession.getRemote().sendStringByFuture(mensaje+ "---SSkey---" + mensajeSocket.getKey() + "---SSofts---");
+            fut = this.miSession.getRemote()
+                    .sendStringByFuture(mensaje + "---SSkey---" + mensajeSocket.getKey() + "---SSofts---");
             fut.get(2, TimeUnit.SECONDS); // wait for send to complete.
         } catch (Exception e) {
             e.printStackTrace();

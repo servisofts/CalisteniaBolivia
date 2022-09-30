@@ -123,14 +123,16 @@ class Home extends Component {
 
     getLista() {
         var publicaciones = Models.publicacion.Actions.getAll(this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        // var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = {}
         if (!publicaciones) return <SLoad />
-        if (!usuarios) return <SLoad />
+        // if (!usuarios) return <SLoad />
 
         return <SList
             center
             space={32}
             data={Object.values(publicaciones)}
+            order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(obj => <Card data={obj} usuario={usuarios[obj.key_usuario]} />)}
         />
 
@@ -142,7 +144,7 @@ class Home extends Component {
                 <SPage title={'Home'} hidden>
                     {this.getLista()}
                 </SPage>
-                <BottomBar page={"home"}/>
+                <BottomBar page={"home"} />
             </>
         );
     }

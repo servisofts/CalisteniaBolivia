@@ -25,19 +25,19 @@ public class SucursalSincronizacion {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
-            break;
+                break;
             case "getByKey":
                 getByKey(data, session);
                 break;
             case "registro":
                 registro(data, session);
-            break;
+                break;
             case "editar":
                 editar(data, session);
-            break;
+                break;
             case "subirFoto":
                 subirFoto(data, session);
-            break;
+                break;
             default:
                 defaultType(data, session);
         }
@@ -49,12 +49,14 @@ public class SucursalSincronizacion {
 
     public static void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta = "select get_all('"+COMPONENT+"') as json";
-            if(obj.has("key_sucursal")){
-                consulta = "select get_all('"+COMPONENT+"', 'key_sucursal', '"+obj.getString("key_sucursal")+"') as json";
+            String consulta = "select get_all('" + COMPONENT + "') as json";
+            if (obj.has("key_sucursal")) {
+                consulta = "select get_all('" + COMPONENT + "', 'key_sucursal', '" + obj.getString("key_sucursal")
+                        + "') as json";
             }
-            if(obj.has("key_paquete")){
-                consulta = "select get_all('"+COMPONENT+"', 'key_paquete', '"+obj.getString("key_paquete")+"') as json";
+            if (obj.has("key_paquete")) {
+                consulta = "select get_all('" + COMPONENT + "', 'key_paquete', '" + obj.getString("key_paquete")
+                        + "') as json";
             }
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
             obj.put("data", data);
@@ -64,13 +66,12 @@ public class SucursalSincronizacion {
             e.printStackTrace();
         }
     }
-    
 
     public static void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta =  "select get_by_key('"+COMPONENT+"','"+obj.getString("key")+"') as json";
+            String consulta = "select get_by_key('" + COMPONENT + "','" + obj.getString("key") + "') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), COMPONENT+"_getByKey", data);
+            Conexion.historico(obj.getString("key_usuario"), COMPONENT + "_getByKey", data);
 
             obj.put("data", data);
             obj.put("estado", "exito");
@@ -78,6 +79,21 @@ public class SucursalSincronizacion {
             obj.put("estado", "error");
             e.printStackTrace();
         }
+    }
+
+    public static void registrar_exito(int cantidad, String key_sucursal, String fecha_on) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put("key", UUID.randomUUID().toString());
+            data.put("fecha_on", fecha_on);
+            data.put("cantidad", cantidad);
+            data.put("key_sucursal", key_sucursal);
+            data.put("estado", 1);
+            Conexion.insertArray(COMPONENT, new JSONArray().put(data));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void registro(JSONObject obj, SSSessionAbstract session) {
@@ -85,11 +101,11 @@ public class SucursalSincronizacion {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
             JSONObject data = obj.getJSONObject("data");
-            data.put("key",UUID.randomUUID().toString());
-            data.put("fecha_on",fecha_on);
-            data.put("estado",1);
+            data.put("key", UUID.randomUUID().toString());
+            data.put("fecha_on", fecha_on);
+            data.put("estado", 1);
             Conexion.insertArray(COMPONENT, new JSONArray().put(data));
-            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), COMPONENT+"_registro", data);
+            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), COMPONENT + "_registro", data);
             obj.put("data", data);
             obj.put("estado", "exito");
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
@@ -101,16 +117,16 @@ public class SucursalSincronizacion {
     }
 
     public static JSONObject registro(JSONObject obj) {
-        try {   
+        try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             String fecha_on = formatter.format(new Date());
-            
-            obj.put("key",UUID.randomUUID().toString());
-            obj.put("fecha_on",fecha_on);
-            obj.put("estado",1);
+
+            obj.put("key", UUID.randomUUID().toString());
+            obj.put("fecha_on", fecha_on);
+            obj.put("estado", 1);
             Conexion.insertArray(COMPONENT, new JSONArray().put(obj));
             return obj;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -122,7 +138,7 @@ public class SucursalSincronizacion {
         try {
             JSONObject data = obj.getJSONObject("data");
             Conexion.editObject(COMPONENT, data);
-            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), COMPONENT+"_editar", data);
+            Conexion.historico(obj.getString("key_usuario"), data.getString("key"), COMPONENT + "_editar", data);
             obj.put("data", data);
             obj.put("estado", "exito");
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
@@ -135,28 +151,31 @@ public class SucursalSincronizacion {
 
     public static void subirFoto(JSONObject obj, SSSessionAbstract session) {
         String url = Config.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url+COMPONENT+"/");
-        Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), COMPONENT+"_subirFoto", new JSONObject());
-        if(!f.exists()) f.mkdirs();
-        obj.put("dirs", new JSONArray().put(f.getPath()+"/"+obj.getString("key")));
+        File f = new File(url + COMPONENT + "/");
+        Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), COMPONENT + "_subirFoto",
+                new JSONObject());
+        if (!f.exists())
+            f.mkdirs();
+        obj.put("dirs", new JSONArray().put(f.getPath() + "/" + obj.getString("key")));
         obj.put("estado", "exito");
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
     }
 
     public static String getUltimaFechaAsistencia(String key_sucursal) {
-        try{
-            String consulta =  "select get_ultima_asistencia('"+key_sucursal+"') as json";
+        try {
+            String consulta = "select get_ultima_asistencia('" + key_sucursal + "') as json";
             JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             SimpleDateFormat formato1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
             String fecha = "";
-            if(data != null && !data.isNull("fecha_on")){
+            if (data != null && !data.isNull("fecha_on")) {
                 fecha = data.getString("fecha_on");
                 Date dfecha = formato.parse(fecha);
                 fecha = formato1.format(dfecha);
             }
             return fecha;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

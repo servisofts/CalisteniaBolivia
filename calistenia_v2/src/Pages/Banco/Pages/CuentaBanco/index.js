@@ -38,14 +38,16 @@ class CuentaBanco extends Component {
             if (obj.estado == 0) return <View />
             var arr_active = Object.values(data_sucursal_cuenta).filter(i => i.key_cuenta_banco == obj.key);
             var isActive = false;
-            // if (arr_active.length > 0) {
             arr_active.map((itm) => {
                 if (!isActive) {
                     isActive = sucursal_usuario.Actions.isActive(itm.key_sucursal, this.props);
                 }
             })
-            if (!isActive) {
-                return null;
+            console.log(arr_active)
+            if (arr_active.length > 0) {
+                if (!isActive) {
+                    // return null;
+                }
             }
             return (
                 <SView key={obj.key} col={"xs-12"} style={{
