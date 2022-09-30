@@ -95,7 +95,9 @@ public class Dispositivo {
 
                 if(asistencias_pendientes.getString("estado").equals("exito")){
                     asistencias_pendientes = asistencias_pendientes.getJSONObject("data");
+                    System.out.println("Cargando asistencias...");
                     for (int i = 0; i < JSONObject.getNames(asistencias_pendientes).length; i++) {
+                        System.out.println((i+1)+"/"+JSONObject.getNames(asistencias_pendientes).length);
                         asistencia = asistencias_pendientes.getJSONObject(JSONObject.getNames(asistencias_pendientes)[i]);
                         asistencia.put("key_usuario", asistencia.getJSONObject("data").getString("key_usuario"));
                         asistencia.put("key_sucursal", obj.getString("key_sucursal"));

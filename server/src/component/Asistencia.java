@@ -3,6 +3,7 @@ package component;
 import java.io.File;
 import Config.Config;
 import java.util.Calendar;
+import java.util.Date;
 import java.text.DateFormat;
 import Server.SSSAbstract.SSServerAbstract;
 import org.json.JSONArray;
@@ -225,7 +226,11 @@ public class Asistencia
                     obj.put("type", "registro");
                     obj.put("data", asistencia);
                     obj.put("estado", "exito");
-                    SSServerAbstract.sendAllServer(obj.toString());
+
+                    if(formatter.parse(fecha_on).after(new Date(new Date().getTime() - (1000 * 60 * 60 )))){
+                        SSServerAbstract.sendAllServer(obj.toString());                        
+                    }
+
                 }
             }
             

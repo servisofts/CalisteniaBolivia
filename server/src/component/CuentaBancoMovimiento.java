@@ -86,6 +86,10 @@ public class CuentaBancoMovimiento extends SSComponent {
             
             JSONObject data = obj.getJSONObject("data");
 
+            if(data.has("fecha_on")){
+                fecha_on = data.getString("fecha_on");
+            }
+            
             data.getString("key_cuenta_banco_to");
 
             JSONObject cuentaBancoMovimiento = new JSONObject();
