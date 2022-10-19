@@ -8,7 +8,7 @@ import Usuario from '../../Pages/Usuario';
 import BottomBar from '../Components/BottomBar';
 const Card = (props) => {
     var obj = props.data;
-    var usuario_txt = props?.usuario?.Nombres + " " + props?.usuario?.Apellidos;
+    var usuario_txt = (props?.usuario?.Nombres ?? "..") + " " + (props?.usuario?.Apellidos ?? "..");
 
     var diff_t = new SDate(obj.fecha_on).diffTime(new SDate())
     var diff = diff_t / 1000;
@@ -112,10 +112,10 @@ class Home extends Component {
             })
 
         } else {
-            OPTIONS.push({
-                icon: "Alert",
-                onPress: () => { SNavigation.navigate("login") }
-            })
+            // OPTIONS.push({
+            //     icon: "Alert",
+            //     onPress: () => { SNavigation.navigate("login") }
+            // })
         }
 
         return <TopBar options={OPTIONS} />
@@ -123,10 +123,10 @@ class Home extends Component {
 
     getLista() {
         var publicaciones = Models.publicacion.Actions.getAll(this.props);
-        // var usuarios = Usuario.Actions.getAll(this.props);
-        var usuarios = {}
+        var usuarios = Usuario.Actions.getAll(this.props);
+        // var usuarios = {}
         if (!publicaciones) return <SLoad />
-        // if (!usuarios) return <SLoad />
+        if (!usuarios) usuarios = {}
 
         return <SList
             center

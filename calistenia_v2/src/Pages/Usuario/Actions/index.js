@@ -37,7 +37,7 @@ export default class Actions {
         props.dispatch({
             type: "USUARIO_LOGOUT"
         })
-        SNavigation.navigate("presentacion");
+        SNavigation.navigate("inicio");
     }
 
     static registro_cliente(data, props) {

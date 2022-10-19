@@ -33,9 +33,8 @@ class Perfil extends Component {
     }
     getPerfil() {
         var usuario = this.props.state.usuarioReducer.usuarioLog
-        if(!usuario){
-            SNavigation.replace("presentacion")
-            return <View/>
+        if (!usuario) {
+            return null;
         }
         return (
             <View style={{
@@ -133,7 +132,11 @@ class Perfil extends Component {
         )
     }
     render() {
-
+        var usuario = this.props.state.usuarioReducer.usuarioLog
+        if (!usuario) {
+            SNavigation.replace("inicio");
+            return null;
+        }
         return (
             <SPage hidden>
                 <BarraSuperior duration={500} title={"Perfil de usuario"} goBack={() => {

@@ -13,8 +13,6 @@ class CargaPage extends Component {
     }
 
     componentDidMount() {
-    }
-    render() {
         new SThread(2500, "cargaHilo", true).start(() => {
             if (!Usuario.Actions.getUsuarioLogueado(this.props)) {
                 SNavigation.replace("presentacion");
@@ -23,6 +21,9 @@ class CargaPage extends Component {
 
             }
         });
+    }
+    render() {
+
         return (
             <SPage
                 hidden

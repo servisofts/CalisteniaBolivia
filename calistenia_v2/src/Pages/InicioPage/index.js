@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { SHr, SIcon, SImage, SLoad, SNavigation, SPage, SPopup, SScrollView2, SStorage, SText, SView } from 'servisofts-component'
-import SSocket from 'servisofts-socket';
-import BarraSuperior from '../../Components/BarraSuperior';
-import BotonesPaginas from '../../Components/BotonesPaginas';
-import { SSRolesPermisosGetPages, SSRolesPermisosValidate } from '../../SSRolesPermisos';
 import Usuario from '../Usuario';
 import Iconos from './Iconos';
 // import Usuario from '../Usuario';
@@ -23,6 +18,7 @@ class InicioPage extends Component {
                 return null;
             }
             SNavigation.reset("client");
+            console.log("Remplazo cliente /pages/InicioPage 26")
             return null;
         }
 

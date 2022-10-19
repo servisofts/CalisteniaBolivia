@@ -56,10 +56,12 @@ class Login extends Component {
         if (this.props.state.usuarioReducer.type == "login" && this.props.state.usuarioReducer.estado == "exito") {
             this.props.state.usuarioReducer.type = "";
             this.props.state.usuarioReducer.estado = "";
-            if (Usuario.Actions.getUsuarioLogueado(this.props)) {
-                SNavigation.replace("inicio");
-                return null;
-            }
+
+        }
+        if (Usuario.Actions.getUsuarioLogueado(this.props)) {
+            SNavigation.replace("inicio");
+            console.log("Remplazo inicio /pages/usuario/page/login 61")
+            return null;
         }
         return (
             <SPage>
