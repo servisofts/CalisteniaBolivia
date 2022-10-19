@@ -2,6 +2,8 @@ package component;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import SocketCliente.Dispositivo;
 import SocketCliente.SocketCliete;
 
 /**
@@ -24,6 +26,9 @@ public class ZKTeco {
                     break;
                 case "sincronizarUsuario":
                     sincronizarUsuario(obj);
+                    break;
+                case "sincronizarLog":
+                    sincronizarLog(obj);
                     break;
                 case "asistencia":
                     asistencia(obj);
@@ -78,6 +83,10 @@ public class ZKTeco {
         }
     }
 
+    public static void sincronizarLog(JSONObject obj){
+        obj.put("estado", "exito");
+        Dispositivo.sincronizarLog(obj);
+    }
     public static boolean sincronizarUsuario(JSONObject obj){
         try{
             System.out.println("Sincronizando...");
