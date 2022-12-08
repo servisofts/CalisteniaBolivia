@@ -4,3 +4,4 @@ server/servisofts.jks
 server/config.json
 server/server.jar
 server/servisofts.jks
+*.jks
