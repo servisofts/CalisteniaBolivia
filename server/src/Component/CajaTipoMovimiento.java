@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -12,6 +12,8 @@ import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 
 public class CajaTipoMovimiento {
+
+    public static final String COMPONENT = "caja_tipo_movimiento";
 
     public CajaTipoMovimiento(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {

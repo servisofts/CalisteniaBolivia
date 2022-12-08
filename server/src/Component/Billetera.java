@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.io.File;
 import Config.Config;
@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 public class Billetera
 {
+    public static final String COMPONENT = "billetera";
+
     public Billetera(final JSONObject data, final SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "anular": {

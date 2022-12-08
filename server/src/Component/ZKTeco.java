@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

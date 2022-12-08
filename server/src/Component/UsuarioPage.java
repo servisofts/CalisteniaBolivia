@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.sql.SQLException;
 import java.util.UUID;

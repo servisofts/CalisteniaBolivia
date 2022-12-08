@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -15,7 +15,7 @@ import Server.SSSAbstract.SSSessionAbstract;
 import conexion.Conexion;
 
 public class CuentaBancoMovimiento extends SSComponent {
-    
+    public static final String COMPONENT = "cuenta_banco_movimiento";
     public CuentaBancoMovimiento(JSONObject obj, SSSessionAbstract session){
         switch(obj.getString("type")){
             case "getAll":
