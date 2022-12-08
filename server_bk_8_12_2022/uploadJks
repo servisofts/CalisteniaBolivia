@@ -1,0 +1,5 @@
+#!/bin/bash
+
+scp ./servisofts.jks servisofts@192.168.0.10:/home/servisofts/servicios/calistenia/entornos/calistenia/servicios/calistenia/servisofts.jks
+# ssh 10 'cd ~/servicios/CasaGrande/ && ./servisofts.sh down'
+# ssh 10 'cd ~/servicios/CasaGrande/ && ./servisofts.sh up -d'
