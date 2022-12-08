@@ -1,4 +1,4 @@
-package Component;
+package component;
 
 import java.io.File;
 import Config.Config;
@@ -18,8 +18,6 @@ import org.json.JSONObject;
 
 public class Asistencia
 {
-    public static final String COMPONENT = "asistencia";
-
     public Asistencia(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getByKeyEntrenamiento": {
