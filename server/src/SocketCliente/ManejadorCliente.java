@@ -1,10 +1,11 @@
 package SocketCliente;
 
 import org.json.JSONObject;
+
+import Component.RolPermiso;
+import Component.ZKTeco;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
-import component.RolPermiso;
-import component.ZKTeco;
 import util.console;
 
 public class ManejadorCliente {

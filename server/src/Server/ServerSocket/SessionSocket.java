@@ -16,9 +16,9 @@ import javax.net.ssl.HandshakeCompletedListener;
 
 import org.json.JSONObject;
 
+import Component.Manejador;
+import Component.MensajeSocket;
 import Server.SSSAbstract.SSSessionAbstract;
-import component.Manejador;
-import component.MensajeSocket;
 import util.console;
 
 public class SessionSocket extends SSSessionAbstract {

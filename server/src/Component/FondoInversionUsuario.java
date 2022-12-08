@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.io.File;
 import java.sql.SQLException;

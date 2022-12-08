@@ -2,7 +2,7 @@ package Server.SSSInterface;
 
 import org.json.JSONObject;
 
-import component.MensajeSocket;
+import Component.MensajeSocket;
 
 public interface SSSessionInterface {
     

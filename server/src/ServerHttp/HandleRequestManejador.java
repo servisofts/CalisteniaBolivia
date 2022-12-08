@@ -14,7 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 import org.json.JSONObject;
 
-import component.Manejador;
+import Component.Manejador;
 
 public class HandleRequestManejador {
     public static void handle(HttpExchange t) throws IOException {

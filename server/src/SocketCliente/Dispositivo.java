@@ -6,9 +6,9 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import Component.Asistencia;
+import Component.SucursalSincronizacion;
 import Server.SSSAbstract.SSServerAbstract;
-import component.Asistencia;
-import component.SucursalSincronizacion;
 import conexion.Conexion;
 import util.console;
 

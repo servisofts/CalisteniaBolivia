@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 
 import SocketCliente.SocketCliete;

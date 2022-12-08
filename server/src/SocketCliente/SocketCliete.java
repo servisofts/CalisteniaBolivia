@@ -11,13 +11,13 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-import component.ManejadorServicio;
 import util.console;
 import SSL.SSL;
 import Server.SSSAbstract.SSSessionAbstract;
 
 import org.json.JSONObject;
 
+import Component.ManejadorServicio;
 import Config.Config;
 
 public class SocketCliete extends Thread {

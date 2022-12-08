@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import java.sql.SQLException;
 
@@ -9,7 +9,7 @@ import Server.SSSAbstract.SSSessionAbstract;
 import conexion.Conexion;
 
 public class CuentaBanco extends SSComponent {
-    
+    public static final String COMPONENT = "cuenta_banco";
     public CuentaBanco(JSONObject obj, SSSessionAbstract session){
         switch(obj.getString("type")){
             case "getAllByKeyBanco":

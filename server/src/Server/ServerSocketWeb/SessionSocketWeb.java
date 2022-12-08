@@ -5,9 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 
+import Component.MensajeSocket;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
-import component.MensajeSocket;
 
 public class SessionSocketWeb extends SSSessionAbstract {
 

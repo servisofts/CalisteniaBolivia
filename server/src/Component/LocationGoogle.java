@@ -1,4 +1,4 @@
-package component;
+package Component;
 
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 public class LocationGoogle {
 
+    public static final String COMPONENT = "entrenamiento";
+    
     // DATA TABLE = usuario
 
     // key CV

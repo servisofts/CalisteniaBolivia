@@ -15,8 +15,8 @@ import util.FilesManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import component.Documento;
-import component.Manejador;
+import Component.Documento;
+import Component.Manejador;
 import conexion.Conexion;
 
 import java.io.IOException;

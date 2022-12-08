@@ -2,9 +2,9 @@ package Server.SSSAbstract;
 
 import org.json.JSONObject;
 
+import Component.Manejador;
 import Config.Config;
 import Server.SSSInterface.SSSessionInterface;
-import component.Manejador;
 
 public abstract class SSSessionAbstract implements SSSessionInterface {
 

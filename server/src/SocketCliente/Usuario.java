@@ -2,9 +2,10 @@ package SocketCliente;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import Component.Manejador;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
-import component.Manejador;
 
 public class Usuario {
 
