@@ -92,10 +92,7 @@ class ClientesPage extends Component {
       <SText>Admin: {data.Nombres}</SText>
     </SView>
   }
-  exportarExcel() {
-    console.log("exportando");
 
-  }
   render() {
 
     const getLista = () => {
@@ -218,6 +215,7 @@ class ClientesPage extends Component {
         </TouchableOpacity>
       })
     }
+
     return (
       <SPage disableScroll title={"Clientes"}>
         <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
@@ -238,9 +236,9 @@ class ClientesPage extends Component {
             ]}
             getDataProcesada={() => {
               var daFinal = {};
-
-              Object.values(this.finalData).map((obj) => {
+              Object.values(this.finalData).map((obj, i) => {
                 var usr = this.usuarios[obj.key];
+                if (!usr.estado || usr.estado <= 0) return;
                 var toInsert = {
                   key: obj.key,
                   paquete: obj?.vijencia?.paquete?.descripcion,
@@ -251,7 +249,7 @@ class ClientesPage extends Component {
                   cliente_telefono: usr?.Telefono,
                   cliente_ci: usr?.CI,
                 }
-                daFinal[obj.key] = toInsert
+                daFinal[i] = toInsert
               })
               return daFinal
             }}
@@ -275,7 +273,6 @@ class ClientesPage extends Component {
             }}
           >
             <SView col={"xs-12"} center>
-              <SButtom onPress={this.exportarExcel}>Exportar</SButtom>
               <SucursalSelect key_sucursal={this.state.key_sucursal}
                 sucursal={this.state.sucursal} setSucursal={(suc) => {
                   // SStorage.setItem("sucursal", suc.key)
