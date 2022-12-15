@@ -1,7 +1,10 @@
-package Component;
+package Component.Cajas;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,17 +14,20 @@ import Server.SSSAbstract.SSSessionAbstract;
 import Servisofts.SConfig;
 import Servisofts.SPGConect;
 
-public class Servicio {
-    public static final String COMPONENT = "servicio";
-    public static final String TABLE = "servicio";
+public class TipoPago {
+    public static final String COMPONENT = "tipoPago";
+    public static final String TABLE = "tipo_pago";
 
-    public Servicio(JSONObject data, SSSessionAbstract session) {
+    public TipoPago(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getAll":
                 getAll(data, session);
                 break;
             case "getByKey":
                 getByKey(data, session);
+                break;
+            case "getActiva":
+                getActiva(data, session);
                 break;
             case "registro":
                 registro(data, session);
@@ -37,9 +43,21 @@ public class Servicio {
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta = "select get_all('servicio') as json";
+            String consulta = "select get_all('tipo_pago') as json";
             JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
-            SPGConect.historico(obj.getString("key_usuario"), "servicio_getAll", data);
+            obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (SQLException e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public void getActiva(JSONObject obj, SSSessionAbstract session) {
+        try {
+            String consulta = "select tipo_pago_get_activa('" + obj.getString("key_usuario") + "') as json";
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
+
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -50,9 +68,8 @@ public class Servicio {
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta = "select get_by_key('servicio','" + obj.getString("key") + "') as json";
+            String consulta = "select get_by_key('tipo_pago','" + obj.getString("key") + "') as json";
             JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
-            SPGConect.historico(obj.getString("key_usuario"), "servicio_getByKey", data);
 
             obj.put("data", data);
             obj.put("estado", "exito");
@@ -64,16 +81,16 @@ public class Servicio {
 
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
-            JSONObject servicio = obj.getJSONObject("data");
-            servicio.put("key", UUID.randomUUID().toString());
-            servicio.put("fecha_on", "now()");
-            servicio.put("estado", "1");
-            SPGConect.insertArray("servicio", new JSONArray().put(servicio));
-            SPGConect.historico(obj.getString("key_usuario"), servicio.getString("key"), "servicio_registro", servicio);
-            obj.put("data", servicio);
-            obj.put("estado", "exito");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            JSONObject tipo_pago = obj.getJSONObject("data");
+            tipo_pago.put("key", UUID.randomUUID().toString());
+            tipo_pago.put("fecha_on", fecha_on);
+            tipo_pago.put("estado", 1);
+            SPGConect.insertArray("tipo_pago", new JSONArray().put(tipo_pago));
 
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
+            obj.put("data", tipo_pago);
+            obj.put("estado", "exito");
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
@@ -84,12 +101,10 @@ public class Servicio {
 
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
-            JSONObject servicio = obj.getJSONObject("data");
-            SPGConect.editObject("servicio", servicio);
-            SPGConect.historico(obj.getString("key_usuario"), servicio.getString("key"), "servicio_editar", servicio);
-            obj.put("data", servicio);
+            JSONObject tipo_pago = obj.getJSONObject("data");
+            SPGConect.editObject("tipo_pago", tipo_pago);
+            obj.put("data", tipo_pago);
             obj.put("estado", "exito");
-            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
             SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
         } catch (SQLException e) {
             obj.put("estado", "error");
@@ -100,13 +115,11 @@ public class Servicio {
 
     public void subirFoto(JSONObject obj, SSSessionAbstract session) {
         String url = SConfig.getJSON().getJSONObject("files").getString("url");
-        File f = new File(url + "servicio/");
-        SPGConect.historico(obj.getString("key_usuario"), obj.getString("key"), "servicio_subirFoto", new JSONObject());
+        File f = new File(url + "tipo_pago/");
         if (!f.exists())
             f.mkdirs();
         obj.put("dirs", new JSONArray().put(f.getPath() + "/" + obj.getString("key")));
         obj.put("estado", "exito");
-        SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
     }
 }

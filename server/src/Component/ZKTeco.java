@@ -3,14 +3,17 @@ package Component;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import SocketCliente.Dispositivo;
-import SocketCliente.SocketCliete;
+import Component.Clientes.ClientesActivos;
+import ComponentClient.Dispositivo;
+import SocketCliente.SocketCliente;
 
 /**
  * ZKTeco
  */
 public class ZKTeco {
 
+    public static final String COMPONENT = "zkteco";
+    
     public ZKTeco(JSONObject obj) {
         
         if (!obj.isNull("type")) {
@@ -106,7 +109,7 @@ public class ZKTeco {
             }
             
 
-            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+            JSONObject roles_permisos = SocketCliente.sendSinc("roles_permisos", send);
 
             if(roles_permisos.getJSONObject("data").has(obj.getJSONObject("data").getString("key_usuario"))){
                 if(lista.toString().indexOf(obj.getJSONObject("data").getString("key_usuario")) == -1 ){
@@ -121,7 +124,7 @@ public class ZKTeco {
             objSend.put("estado", "cargando");
             objSend.put("key_usuario", obj.getString("key_usuario"));
             objSend.put("delete_all", false);
-            SocketCliete.send("zkteco", objSend.toString());
+            SocketCliente.send("zkteco", objSend.toString());
 
         }catch(Exception e){
             obj.put("estado", "error");
@@ -144,7 +147,7 @@ public class ZKTeco {
             send.put("estado", "cargando");
             send.put("key_permiso", "4f30c543-10d8-4566-b577-4d94442f217d");
 
-            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+            JSONObject roles_permisos = SocketCliente.sendSinc("roles_permisos", send);
             String keys2[] = JSONObject.getNames(roles_permisos.getJSONObject("data"));
             
             String keyss1 = String.join(",", keys1);
@@ -156,7 +159,7 @@ public class ZKTeco {
             obj.put("data", keyss);
             obj.put("estado", "cargando");
             obj.put("delete_all", true);
-            SocketCliete.send("zkteco", obj.toString());
+            SocketCliente.send("zkteco", obj.toString());
             
             obj.put("noSend", true);
         }catch(Exception e){
@@ -187,7 +190,7 @@ public class ZKTeco {
             send.put("estado", "cargando");
             send.put("key_permiso", "4f30c543-10d8-4566-b577-4d94442f217d");
 
-            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+            JSONObject roles_permisos = SocketCliente.sendSinc("roles_permisos", send);
             String keys2[] = JSONObject.getNames(roles_permisos.getJSONObject("data"));
             
             String keyss2 = "";
@@ -203,7 +206,7 @@ public class ZKTeco {
             obj.put("estado", "cargando");
             obj.put("delete_all", true);
 
-            JSONObject respuesta = SocketCliete.sendSinc("zkteco", obj, 3000000);
+            JSONObject respuesta = SocketCliente.sendSinc("zkteco", obj, 3000000);
 
             obj.put("estado", respuesta.getString("estado"));
             if(respuesta.getString("estado").equals("error")){
@@ -229,18 +232,18 @@ public class ZKTeco {
             send.put("estado", "cargando");
             send.put("key_permiso", "4f30c543-10d8-4566-b577-4d94442f217d");
 
-            JSONObject roles_permisos = SocketCliete.sendSinc("roles_permisos", send);
+            JSONObject roles_permisos = SocketCliente.sendSinc("roles_permisos", send);
             String keys2[] = JSONObject.getNames(roles_permisos.getJSONObject("data"));
 
             send.put("component", "dispositivo");
             send.put("type", "getAll");
             send.put("estado", "cargando");
-            JSONObject dispositivos = SocketCliete.sendSinc("zkteco", send).getJSONObject("data");
+            JSONObject dispositivos = SocketCliente.sendSinc("zkteco", send).getJSONObject("data");
 
             send.put("component", "punto_venta");
             send.put("type", "getAll");
             send.put("estado", "cargando");
-            JSONObject puntosVenta = SocketCliete.sendSinc("zkteco", send).getJSONObject("data");
+            JSONObject puntosVenta = SocketCliente.sendSinc("zkteco", send).getJSONObject("data");
 
 
             JSONArray keyss;
@@ -255,7 +258,7 @@ public class ZKTeco {
                 send.put("type", "testConnection");
                 send.put("key_dispositivo", key);
                 send.put("estado", "cargando");
-                if(!SocketCliete.sendSinc("zkteco", send, 5000).getString("estado").equals("exito")){
+                if(!SocketCliente.sendSinc("zkteco", send, 5000).getString("estado").equals("exito")){
                     continue;
                 }
 
@@ -287,7 +290,7 @@ public class ZKTeco {
                 obj.put("estado", "cargando");
                 obj.put("delete_all", true);
 
-                respuesta = SocketCliete.sendSinc("zkteco", obj, 3000000);
+                respuesta = SocketCliente.sendSinc("zkteco", obj, 3000000);
 
                 obj.put("estado", respuesta.getString("estado"));
                 if(respuesta.getString("estado").equals("error")){
@@ -322,7 +325,7 @@ public class ZKTeco {
         JSONObject obj = new JSONObject();
         obj.put("component", "dispositivo");
         obj.put("type", "getAll");
-        SocketCliete.send("zkteco", obj.toString());
+        SocketCliente.send("zkteco", obj.toString());
 
         return false;
     }

@@ -1,0 +1,30 @@
+{
+  "Servicios": {
+    "roles_permisos": {
+      "host": "192.168.6.16:10016",
+      "status": "exito"
+    },
+    "zkteco": {
+      "host": "192.168.6.32:10032",
+      "status": "exito"
+    },
+    "proyecto": {
+      "host": "192.168.6.14:10014",
+      "status": "exito"
+    },
+    "usuario": {
+      "host": "192.168.6.2:10002",
+      "status": "exito"
+    },
+    "geolocation": {
+      "host": "192.168.6.5:10005",
+      "status": "exito"
+    }
+  },
+  "PostgreSQL": {
+    "host": "jdbc:postgresql://192.168.6.18:5432/servisofts.calistenia",
+    "status": "exito"
+  },
+  "- SLog": "RealTime Log from server Servisofts",
+  "- Fecha": "2022-12-14T01:16:47.000387"
+}
