@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
+import Component.ZKTeco;
 import Component.Entrenamientos.Asistencia;
 import Component.Sucursales.SucursalSincronizacion;
 import Server.SSSAbstract.SSServerAbstract;
@@ -20,14 +21,14 @@ public class Dispositivo {
 
         System.out.println("dispositivo OnMessage: " + obj.toString());
         switch (obj.getString("type")) {
-            case "getAll":
-                getAll(obj);
-                break;
             case "registro":
                 registro(obj);
                 break;
             case "sincronizarLog":
                 sincronizarLog(obj);
+                break;
+            case "testConnection":
+                testConnection(obj);
                 break;
             case "sincronizarMolinete":
                 SSServerAbstract.sendAllServer(obj.toString());
@@ -136,6 +137,17 @@ public class Dispositivo {
             e.printStackTrace();
         }
         obj.put("noSend", true);
+    }
+
+
+    public static void testConnection(JSONObject obj) {
+        try {
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+            SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
+        } catch (Exception e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
     }
 
 }

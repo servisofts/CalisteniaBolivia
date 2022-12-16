@@ -1,6 +1,9 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Component.ZKTeco;
+import ComponentClient.Dispositivo;
+import ComponentClient.LectorHuella;
 import Server.SSSAbstract.SSServerAbstract;
 import Servisofts.SConsole;
 import SocketCliente.SocketCliente;
@@ -28,6 +31,15 @@ public class ManejadorCliente {
         switch (data.getString("component")) {
             case "usuario":
                 usuario(data, config);
+                break;
+            case Dispositivo.COMPONENT:
+                Dispositivo.onMessage(data);
+                break;
+            case LectorHuella.COMPONENT:
+                LectorHuella.onMessage(data);
+                break;
+            case "zkteco":
+                new ZKTeco(data);
                 break;
         }
     }

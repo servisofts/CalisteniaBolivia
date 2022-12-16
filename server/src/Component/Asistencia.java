@@ -1,7 +1,6 @@
-package component;
+package Component;
 
 import java.io.File;
-import Config.Config;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
@@ -11,10 +10,14 @@ import java.util.UUID;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.sql.SQLException;
-import conexion.Conexion;
-import SocketCliente.SocketCliete;
 import Server.SSSAbstract.SSSessionAbstract;
+import Servisofts.SConfig;
+import Servisofts.SPGConect;
+
 import org.json.JSONObject;
+
+import Component.Entrenamientos.Entrenamiento;
+import Component.Ventas.PaqueteVenta;
 
 public class Asistencia
 {
@@ -51,17 +54,13 @@ public class Asistencia
             default:
                 break;
         }
-        this.defaultType(data, session);
     }
     
-    public void defaultType(JSONObject obj, SSSessionAbstract session) {
-        SocketCliete.send("usuario", obj, session);
-    }
 
     public static String getUltimaFechaAsistencia(){
         try{
             String consulta = "select get_ultima_asistencia() as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
             return data.getString("fecha_on");
         }catch(Exception e){
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class Asistencia
     public static JSONObject getAsistencia(String key_entrenamiento, String key_usuario){
         try{
             String consulta = "select get_asistencia('"+key_entrenamiento+"','"+key_usuario+"') as json";
-            return Conexion.ejecutarConsultaObject(consulta);
+            return SPGConect.ejecutarConsultaObject(consulta);
         }catch(Exception e){
             e.printStackTrace();
             return null;
@@ -82,7 +81,7 @@ public class Asistencia
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta = "select get_all('asistencia') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");
         }
@@ -95,7 +94,7 @@ public class Asistencia
     public void getByKeySucursal(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta = "select get_by_key_sucursal('" + obj.getString("key_sucursal") + "') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");
         }
@@ -108,7 +107,7 @@ public class Asistencia
     public void getByKeyEntrenamiento(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta = "select get_by_key_entrenamiento('" + obj.getString("key_entrenamiento") + "') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
             obj.put("data", data);
             obj.put("estado", "exito");
         }
@@ -121,8 +120,8 @@ public class Asistencia
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
             String consulta = "select get_by_key('asistencia','" + obj.getString("key") + "') as json";
-            JSONObject data = Conexion.ejecutarConsultaObject(consulta);
-            Conexion.historico(obj.getString("key_usuario"), "asistencia_getByKey", data);
+            JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
+            SPGConect.historico(obj.getString("key_usuario"), "asistencia_getByKey", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         }
@@ -156,15 +155,15 @@ public class Asistencia
                 entrenamiento.put("fecha_inicio", fecha_inicio);
                 entrenamiento.put("fecha_fin", fecha_fin);
                 entrenamiento.put("estado", 1);
-                Conexion.insertArray("entrenamiento", new JSONArray().put(entrenamiento));
+                SPGConect.insertArray("entrenamiento", new JSONArray().put(entrenamiento));
             }
             asistencia.put("key", UUID.randomUUID().toString());
             asistencia.put("key_entrenamiento", entrenamiento.getString("key"));
             asistencia.put("fecha_on", fecha_on);
             asistencia.put("estado", 1);
             asistencia.put("key_paquete_venta_usuario", paqueteVentaUsuario.getString("key"));
-            Conexion.insertArray("asistencia", new JSONArray().put(asistencia));
-            Conexion.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_registro", asistencia);
+            SPGConect.insertArray("asistencia", new JSONArray().put(asistencia));
+            SPGConect.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_registro", asistencia);
             obj.put("data", asistencia);
             obj.put("estado", "exito");
             SSServerAbstract.sendAllServer(obj.toString());
@@ -207,7 +206,7 @@ public class Asistencia
                     entrenamiento.put("fecha_inicio", fecha_inicio);
                     entrenamiento.put("fecha_fin", fecha_fin);
                     entrenamiento.put("estado", 1);
-                    Conexion.insertArray("entrenamiento", new JSONArray().put(entrenamiento));
+                    SPGConect.insertArray("entrenamiento", new JSONArray().put(entrenamiento));
                 }
 
                 JSONObject asistio = Asistencia.getAsistencia(entrenamiento.getString("key"), asistencia.getString("key_usuario"));
@@ -219,7 +218,7 @@ public class Asistencia
                     asistencia.put("estado", 1);
                     asistencia.put("key_usuario", asistencia.getString("key_usuario"));
                     asistencia.put("key_paquete_venta_usuario", paqueteVentaUsuario.getString("key"));
-                    Conexion.insertArray("asistencia", new JSONArray().put(asistencia));
+                    SPGConect.insertArray("asistencia", new JSONArray().put(asistencia));
 
                     JSONObject obj = new JSONObject();
                     obj.put("component", "asistencia");
@@ -246,8 +245,8 @@ public class Asistencia
     public void editar(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject asistencia = obj.getJSONObject("data");
-            Conexion.editObject("asistencia", asistencia);
-            Conexion.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_editar", asistencia);
+            SPGConect.editObject("asistencia", asistencia);
+            SPGConect.historico(obj.getString("key_usuario"), asistencia.getString("key"), "asistencia_editar", asistencia);
             obj.put("data", asistencia);
             obj.put("estado", "exito");
             SSServerAbstract.sendAllServer(obj.toString());
@@ -260,9 +259,9 @@ public class Asistencia
     }
     
     public void subirFoto(JSONObject obj, SSSessionAbstract session) {
-        String url = Config.getJSON().getJSONObject("files").getString("url");
+        String url = SConfig.getJSON().getJSONObject("files").getString("url");
         File f = new File(String.valueOf(url) + "asistencia/");
-        Conexion.historico(obj.getString("key_usuario"), obj.getString("key"), "asistencia_subirFoto", new JSONObject());
+        SPGConect.historico(obj.getString("key_usuario"), obj.getString("key"), "asistencia_subirFoto", new JSONObject());
         if (!f.exists()) {
             f.mkdirs();
         }
