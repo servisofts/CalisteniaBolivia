@@ -39,7 +39,7 @@ class Lista extends Component {
                         borderRadius: 8,
                         overflow: "hidden",
                     }}>
-                        <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} />
+                        <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
                     </SView>
                     <SText color={"#999"} fontSize={10}>{`${usr.Nombres ? usr.Nombres : ""}`}</SText>
                 </SView>

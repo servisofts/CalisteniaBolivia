@@ -18,6 +18,7 @@ const RolDeUsuario = (props) => {
             return <SLoad />
         }
         var object = {
+            service: "roles_permisos",
             component: "rol",
             type: "getAll",
             key_usuario: props.state.usuarioReducer.usuarioLog.key,
@@ -42,6 +43,7 @@ const RolDeUsuario = (props) => {
             return <SLoad />
         }
         var object = {
+            service: "roles_permisos",
             component: "usuarioRol",
             type: "getAll",
             estado: "cargando",
@@ -88,6 +90,7 @@ const RolDeUsuario = (props) => {
                     if (SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
                         if (!isActivo) {
                             var object = {
+                                service: "roles_permisos",
                                 component: "usuarioRol",
                                 type: "registro",
                                 key_usuario: props.state.usuarioReducer.usuarioLog.key,
@@ -100,6 +103,7 @@ const RolDeUsuario = (props) => {
                             SSocket.send(object);
                         } else {
                             var object = {
+                                service: "roles_permisos",
                                 component: "usuarioRol",
                                 type: "editar",
                                 key_usuario: props.state.usuarioReducer.usuarioLog.key,

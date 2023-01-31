@@ -22,15 +22,16 @@ class VentasPage extends Component {
 
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   version: "2.0",
+    //   type: "getAll",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    // }
+    // SSocket.send(object);
 
   }
   pagination = (listaKeys) => {
@@ -138,7 +139,7 @@ class VentasPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime() / 500}`} />
+                <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime() / 500}`} />
 
               </View>
               <View style={{

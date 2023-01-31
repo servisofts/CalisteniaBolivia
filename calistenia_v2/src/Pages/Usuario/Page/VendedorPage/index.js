@@ -22,15 +22,16 @@ class VendedorPage extends Component {
     this.key_rol = "ececdfbf-c82c-4cf9-8f1b-989bbdee5087";
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   version: "2.0",
+    //   type: "getAll",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    // }
+    // SSocket.send(object);
 
   }
   pagination = (listaKeys) => {
@@ -107,7 +108,7 @@ class VendedorPage extends Component {
 
       return this.pagination(
         new SOrdenador([
-          { key: "Peso", order: "desc", peso: 4 },
+          // { key: "Peso", order: "desc", peso: 4 },
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
         ]).ordernarObject(
@@ -149,7 +150,7 @@ class VendedorPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime()}`} />
+                <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{

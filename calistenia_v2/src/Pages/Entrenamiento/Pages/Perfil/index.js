@@ -37,7 +37,7 @@ class Perfil extends Component {
                             <SText key={key} capitalize center fontSize={12}>{`${asistencia[key]?.descripcion}`}</SText>
                             <SHr/>
                             <SView width={40} height={40}>
-                                <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
+                                <SImage src={SSocket.api.root + "usuario/" + usuario.key} />
                             </SView>
                             <SHr/>
                             <SText key={key} capitalize center fontSize={12}>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
@@ -66,7 +66,7 @@ class Perfil extends Component {
                 borderRadius: "50%",
                 overflow: "hidden",
             }} >
-                <SImage src={SSocket.api.root + "sucursal_" + key} />
+                <SImage src={SSocket.api.root + "sucursal/" + key} />
             </SView>
             <SView flex style={{
                 justifyContent: "center",
@@ -86,7 +86,7 @@ class Perfil extends Component {
             <SView width={70} height={70} backgroundColor={"#66000022"} style={{
                 borderRadius: "50%",
             }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
             </SView>
             <SHr height={8} />
             <SText fontSize={18} capitalize>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>

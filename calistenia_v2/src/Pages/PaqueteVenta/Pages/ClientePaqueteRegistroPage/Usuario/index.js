@@ -76,7 +76,7 @@ class Usuario extends Component {
                             borderRadius: 100,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "usuario_" + obj.key} />
+                            <SImage src={SSocket.api.root + "usuario/" + obj.key} />
                         </View>
                         <View style={{
                             flex: 1,

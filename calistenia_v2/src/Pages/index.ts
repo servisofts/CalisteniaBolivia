@@ -25,11 +25,13 @@ import prorroga from './prorroga';
 import Inversiones from './Inversiones';
 import Services from '../Services';
 import Client from '../Client';
+import clientes_activos from './clientes_activos';
 const Pages: SPageListProps = {
     "inicio": InicioPage,
     "carga": CargaPage,
     "presentacion": Presentacion,
     "test": Test,
+    "clientes_activos": clientes_activos,
     AjustesPage,
     ...Usuario.Pages,
     ...Sucursal.Pages,
@@ -49,6 +51,7 @@ const Pages: SPageListProps = {
     ...prorroga.Pages,
     ...Inversiones.Pages,
     ...Services.Pages,
-    ...Client.Pages
+    ...Client.Pages,
+
 }
 export default Pages;

@@ -61,7 +61,7 @@ class Item extends Component<Props> {
                             borderRadius: 4,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "servicio_" + this.props.key_servicio} />
+                            <SImage src={SSocket.api.root + "servicio/" + this.props.key_servicio} />
                         </View>
                         <View style={{
                             flex: 1,

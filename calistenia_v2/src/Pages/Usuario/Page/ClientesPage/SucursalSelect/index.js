@@ -82,7 +82,7 @@ class SucursalSelect extends Component {
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
-                    <SImage src={SSocket.api.root + "sucursal_" + this.state.value.key + `?date=${new Date().getTime()}`} />
+                    <SImage src={SSocket.api.root + "sucursal/" + this.state.value.key + `?date=${new Date().getTime()}`} />
                 </View>
             </SView>
             <SView style={{ flex: 1, height: "100%" }} center>

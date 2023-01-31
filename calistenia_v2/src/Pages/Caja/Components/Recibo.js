@@ -186,7 +186,7 @@ class Recibo extends Component {
                 <SView col={"xs-12"} row>
                     <SView col={"xs-6"} row>
                         <SView width={50} height={50} center>
-                            <SImage src={SSocket.api.root + "sucursal_" + caja.key_sucursal} style={{
+                            <SImage src={SSocket.api.root + "sucursal/" + caja.key_sucursal} style={{
                                 borderRadius: 8,
                                 overflow: 'hidden',
                                 width: "90%",

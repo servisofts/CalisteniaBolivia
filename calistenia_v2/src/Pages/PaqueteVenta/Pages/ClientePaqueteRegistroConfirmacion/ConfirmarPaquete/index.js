@@ -97,7 +97,7 @@ class ConfirmarPaquete extends Component {
                     overflow: "hidden",
                     backgroundColor: STheme.color.card,
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + obj.key} />
+                    <SImage src={SSocket.api.root + "usuario/" + obj.key} />
                     {this.getIsConfirm(isConfirmado)}
                 </View>
                 <SText props={{
@@ -252,7 +252,7 @@ class ConfirmarPaquete extends Component {
                                         height: 60,
                                         backgroundColor: STheme.color.card
                                     }}>
-                                        <SImage src={SSocket.api.root + "paquete_" + paquete.key} />
+                                        <SImage src={SSocket.api.root + "paquete/" + paquete.key} />
 
                                     </View>
                                     <SView props={{

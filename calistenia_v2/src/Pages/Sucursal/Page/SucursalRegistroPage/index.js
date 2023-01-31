@@ -55,7 +55,7 @@ class SucursalRegistro extends Component {
                 width: 150,
                 height: 150,
             }}><FotoPerfilComponent data={data} component={"sucursal"} />
-            </SView>}
+            </SView>} 
             {this.getForm()}
             <SView col={"xs-11"} row center>
                 {/* {this.getEliminar()} */}

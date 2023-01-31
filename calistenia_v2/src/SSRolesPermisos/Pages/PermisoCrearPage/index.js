@@ -100,6 +100,7 @@ class PermisoCrearPage extends Component {
           }}
           onPress={() => {
             var object = {
+              service:"roles_permisos",
               component: "permiso",
               type: "editar",
               estado: "cargando",
@@ -137,6 +138,7 @@ class PermisoCrearPage extends Component {
             })
             if (isValid) {
               var object = {
+                service:"roles_permisos",
                 component: "permiso",
                 estado: "cargando",
               };
@@ -211,6 +213,7 @@ class PermisoCrearPage extends Component {
               // }
               SImageImput.choseFile({
                 servicio: "rp",
+                service:"roles_permisos",
                 component: "permiso",
                 type: "subirFoto",
                 estado: "cargando",

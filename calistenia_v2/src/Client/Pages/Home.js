@@ -48,7 +48,7 @@ const Card = (props) => {
                     // background: STheme.color.lightGray,
                     overflow: 'hidden',
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} style={{
+                    <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} style={{
                         resizeMode: "cover"
                     }} />
                 </SView>
@@ -63,7 +63,7 @@ const Card = (props) => {
             <SHr />
         </SView>
         <SView col={"xs-12"} height={400} background={"#666"}>
-            <SImage src={SSocket.api.root + "publicacion_" + obj.key} style={{
+            <SImage src={SSocket.api.root + "publicacion/" + obj.key} style={{
                 resizeMode: "cover"
             }} />
         </SView>

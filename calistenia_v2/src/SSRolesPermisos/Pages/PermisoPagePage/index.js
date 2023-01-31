@@ -28,6 +28,7 @@ class PermisoPagePage extends Component {
         return <Text>Cargando</Text>
       }
       var object = {
+        service:"roles_permisos",
         component: "page",
         type: "getAll",
         estado: "cargando",
@@ -48,6 +49,7 @@ class PermisoPagePage extends Component {
             return <Text>Cargando</Text>
           }
           var object = {
+            service:"roles_permisos",
             component: "permiso",
             type: "getAll",
             estado: "cargando",
@@ -185,6 +187,7 @@ class PermisoPagePage extends Component {
         }}
         onPress={() => {
           var object = {
+            service:"roles_permisos",
             component: "page",
             type: "editar",
             estado: "cargando",

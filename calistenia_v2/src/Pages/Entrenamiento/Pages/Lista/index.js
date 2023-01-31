@@ -25,7 +25,7 @@ class Lista extends Component {
                 borderRadius: "50%",
                 overflow: "hidden",
             }} >
-                <SImage src={SSocket.api.root + "sucursal_" + key} />
+                <SImage src={SSocket.api.root + "sucursal/" + key} />
             </SView>
             <SView flex style={{
                 justifyContent: "center",
@@ -42,7 +42,7 @@ class Lista extends Component {
             {/* <SText fontSize={10} color={"#999"} >{`Entrenador`}</SText> */}
 
             <SView width={70} height={70}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
             </SView>
             <SHr height={8} />
             <SText fontSize={18} capitalize>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
@@ -66,7 +66,7 @@ class Lista extends Component {
                             overflow: "hidden",
                         }}>
                             <SView width={40} height={40}>
-                                <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
+                                <SImage src={SSocket.api.root + "usuario/" + usuario.key} />
                             </SView>
                             <SText key={key} capitalize center fontSize={10}>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
                         </SView>

@@ -6,6 +6,7 @@ export default class Events {
         if (!data) {
             if (props.state.usuarioRolReducer.estado == "cargando") return;
             SSocket.send({
+                service: "roles_permisos",
                 component: "usuarioRol",
                 type: "getAll",
                 estado: "cargando",

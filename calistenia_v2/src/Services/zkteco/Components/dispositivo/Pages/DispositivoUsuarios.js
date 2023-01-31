@@ -46,9 +46,9 @@ class DispositivoUsuarios extends Component {
                         return usuario?.Nombres + " " + usuario?.Apellidos
                     }
                 },
-                // {
-                //     key: "key_usuario-1", label: "Usuario", width: 250
-                // },
+                {
+                    key: "key_usuario-1", label: "Usuario", width: 250
+                },
                 {
                     key: "fecha_on", label: "Fecha on", order: "desc", width: 150, render: (itm) => {
                         return !itm ? "" : new SDate(itm).toString()

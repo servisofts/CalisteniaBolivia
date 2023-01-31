@@ -54,7 +54,7 @@ class CajasActivas extends Component {
                     borderRadius: 100,
                     overflow: "hidden",
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + key_usuario} />
+                    <SImage src={SSocket.api.root + "usuario/" + key_usuario} />
                 </View>
 
                 <SText style={{

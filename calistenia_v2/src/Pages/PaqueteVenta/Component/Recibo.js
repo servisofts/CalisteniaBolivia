@@ -123,7 +123,7 @@ class Recibo extends Component {
                 <SView col={"xs-12"} row>
                     <SView col={"xs-6"} row>
                         <SView width={50} height={50} center>
-                            <SImage src={SSocket.api.root + "sucursal_" + recibo.sucursal.key} style={{
+                            <SImage src={SSocket.api.root + "sucursal/" + recibo.sucursal.key} style={{
                                 borderRadius: 8,
                                 overflow: 'hidden',
                                 width: "90%",
@@ -153,7 +153,7 @@ class Recibo extends Component {
                     <SView width={50} height={50} style={{
                         padding: 4,
                     }}>
-                        <SImage src={SSocket.api.root + "paquete_" + recibo.paquete.key} />
+                        <SImage src={SSocket.api.root + "paquete/" + recibo.paquete.key} />
                     </SView>
                     <SView center flex >
                         <SText fontSize={14} color={STheme.color.lightBlack} font={"Roboto-Bold"} col={"xs-12"}>{recibo.paquete.descripcion}</SText>

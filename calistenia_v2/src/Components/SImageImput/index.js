@@ -14,7 +14,7 @@ export const choseFile = (props, callback) => {
     x.addEventListener('change', () => {
         var body = new FormData(form);
         var data = JSON.stringify(props);
-        body.append('data', data);
+        // body.append('data', data);
         var myInit = {
             method: 'POST',
             body: body,
@@ -23,11 +23,13 @@ export const choseFile = (props, callback) => {
         var servicios = SSocket.api;
         // console.log(props);
         var url = servicios[props.servicio];
+
         if (!url) {
             // alert(url);
             return false;
         }
-        var myRequest = new Request(url + "multipart", myInit);
+        console.log(url)
+        var myRequest = new Request(url + "upload/" + props.component + "/" + props.key, myInit);
         fetch(myRequest)
             .then(function (response) {
                 if (callback) {

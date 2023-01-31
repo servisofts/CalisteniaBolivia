@@ -24,7 +24,7 @@ class Manual extends Component {
 
             <SView col={"xs-6"} height={100} center>
                 <SView width={60} height={60}>
-                    <SImage src={`${SSocket.api.root}${"usuario_" + this.props.state.usuarioReducer.usuarioLog.key + `?date=${new Date().getTime()}`}`} style={{
+                    <SImage src={`${SSocket.api.root}${"usuario/" + this.props.state.usuarioReducer.usuarioLog.key + `?date=${new Date().getTime()}`}`} style={{
                         width: "100%",
                         height: "100%",
                     }} />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SImage, SLoad, SNavigation, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SIcon, SImage, SLoad, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
@@ -38,10 +38,15 @@ class SucursalesDetalle extends Component {
             var cantidad = 0;
             var monto = 0;
             var becados = 0;
+            var now = new SDate();
             Object.keys(clientesActivos).map((key_cli) => {
                 var cliente = clientesActivos[key_cli];
                 if (cliente["caja"].key_sucursal == key) {
                     // monto += cliente["paquete"].precio;
+
+                    if (!(new SDate(cliente.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(cliente.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
+                        return;
+                    }
                     if (cliente["paquete"].precio == 0) {
                         becados++;
                     } else {
@@ -73,7 +78,7 @@ class SucursalesDetalle extends Component {
                 }}>
                     <SView center col={"xs-12"} height={65} center>
                         <SView width={45} height={45}>
-                            <SImage src={SSocket.api.root + "sucursal_" + key} />
+                            <SImage src={SSocket.api.root + "sucursal/" + key} />
                         </SView>
                         <SView flex>
                             <SText center fontSize={12} bold>{sucursal.descripcion}</SText>

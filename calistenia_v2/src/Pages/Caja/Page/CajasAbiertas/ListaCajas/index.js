@@ -55,6 +55,7 @@ class ListaCajas extends Component {
         }
         if (this.props.state.usuarioReducer.estado == "cargando") return {};
         var object = {
+            service: "usuario",
             component: "usuario",
             version: "2.0",
             type: "getAll",
@@ -108,7 +109,7 @@ class ListaCajas extends Component {
             borderRadius: 100,
             overflow: "hidden"
         }}>
-            <SImage src={SSocket.api.root + "sucursal_" + sucursal.key} />
+            <SImage src={SSocket.api.root + "sucursal/" + sucursal.key} />
         </View>
     }
 
@@ -168,7 +169,7 @@ class ListaCajas extends Component {
                     style={{
                         backgroundColor: this.anim.interpolate({
                             inputRange: [0, 1],
-                            outputRange: [STheme.color.text+"09", STheme.color.text+"00"],
+                            outputRange: [STheme.color.text + "09", STheme.color.text + "00"],
                         }),
                     }}
                     row onPress={() => {

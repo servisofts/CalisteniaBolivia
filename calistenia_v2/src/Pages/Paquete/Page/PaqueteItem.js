@@ -61,7 +61,7 @@ class PaqueteItem extends Component<Props> {
                             borderRadius: 4,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "paquete_" + this.props.key_paquete + "?date=" + new Date().getTime()} />
+                            <SImage src={SSocket.api.root + "paquete/" + this.props.key_paquete + "?date=" + new Date().getTime()} />
                         </View>
                         <View style={{
                             flex: 1,

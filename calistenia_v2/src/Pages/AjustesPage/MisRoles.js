@@ -17,6 +17,7 @@ class MisRoles extends Component {
                 return null;
             }
             var object = {
+                service: "roles_permisos",
                 component: "rol",
                 type: "getAll",
                 estado: "cargando",

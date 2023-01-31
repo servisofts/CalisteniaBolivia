@@ -61,6 +61,7 @@ class Perfil extends Component {
                     }} onPress={() => {
                         SImageImput.choseFile({
                             servicio: "root",
+                            service: "usuario",
                             component: "usuario",
                             type: "subirFoto",
                             estado: "cargando",
@@ -70,11 +71,11 @@ class Perfil extends Component {
                             this.props.dispatch({
                                 component: "image",
                                 type: "cambio",
-                                url: SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key,
+                                url: SSocket.api.root + "usuario/" + this.props.state.usuarioReducer.usuarioLog.key,
                             })
                         });
                     }}>
-                        <SImage src={`${SSocket.api.root}${"usuario_" + this.props.state.usuarioReducer.usuarioLog.key + `?date=${new Date().getTime()}`}`} style={{
+                        <SImage src={`${SSocket.api.root}${"usuario/" + this.props.state.usuarioReducer.usuarioLog.key + `?date=${new Date().getTime()}`}`} style={{
                             width: "100%",
                             height: "100%",
                         }} />

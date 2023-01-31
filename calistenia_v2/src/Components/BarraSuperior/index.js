@@ -58,7 +58,7 @@ class BarraSuperior extends Component {
                     SNavigation.navigate("perfil")
                     // this.props.navigation.navigate("UsuarioPerfilPage")
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key} style={{
+                    <SImage src={SSocket.api.root + "usuario/" + this.props.state.usuarioReducer.usuarioLog.key} style={{
                         width: "100%",
                         height: "100%",
                     }} />

@@ -38,7 +38,7 @@ class index extends Component<Props> {
                     borderRadius: 100,
                     overflow: "hidden",
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + usr.key} />
+                    <SImage src={SSocket.api.root + "usuario/" + usr.key} />
                 </SView>
             </SView>
             <SView flex style={{

@@ -5,7 +5,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
 import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel } from 'servisofts-component';
+import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel, SDate } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import Paquete_Item from './Paquete_Item';
@@ -32,15 +32,16 @@ class ClientesPage extends Component {
 
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   version: "2.0",
+    //   type: "getAll",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    // }
+    // SSocket.send(object);
 
   }
   pagination = (listaKeys) => {
@@ -119,12 +120,20 @@ class ClientesPage extends Component {
         if (ClientesActivos[key]["paquete"].precio > 0 && this.state.soloBecados) {
           return;
         }
+
+        var ca = ClientesActivos[key];
+        var now = new SDate();
+        if (!(new SDate(ca.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(ca.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
+          return;
+        }
+
         if (!sucursal_usuario.Actions.isActive(ClientesActivos[key]["caja"].key_sucursal, this.props)) return null;
         objFinal[key] = {
-          ...data[key],
+          ...data[ClientesActivos[key]?.key_usuario],
           vijencia: ClientesActivos[key],
           fecha_inicio: ClientesActivos[key].fecha_on,
           fecha_fin: ClientesActivos[key].fecha_fin,
+          key: key,
         };
       });
 
@@ -133,12 +142,13 @@ class ClientesPage extends Component {
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
-          { key: "fecha_fin", order: "asc", peso: 3 },
+          // { key: "fecha_fin", order: "asc", peso: 3 },
         ]).ordernarObject(
           this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
-        var obj = data[key];
+        var obj = data[ClientesActivos[key]?.key_usuario];
+        if (!obj) return null;
         var vijencia = objFinal[key]["vijencia"];
 
         return <TouchableOpacity style={{
@@ -151,7 +161,7 @@ class ClientesPage extends Component {
           backgroundColor: STheme.color.card,
         }} onPress={() => {
           SNavigation.navigate("ClientePerfilPage", {
-            key: key
+            key: obj.key
           })
         }}>
           <View style={{
@@ -174,7 +184,7 @@ class ClientesPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
               </View>
               <View style={{
                 flex: 1,
@@ -204,7 +214,7 @@ class ClientesPage extends Component {
                   borderRadius: 100,
                   overflow: "hidden"
                 }}>
-                  <SImage src={SSocket.api.root + "paquete_" + vijencia.paquete.key} />
+                  <SImage src={SSocket.api.root + "paquete/" + vijencia.paquete.key} />
                 </View>
                 <Text style={{ fontSize: 10, color: STheme.color.text, textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
               </SView>
@@ -238,7 +248,7 @@ class ClientesPage extends Component {
               var daFinal = {};
               Object.values(this.finalData).map((obj, i) => {
                 var usr = this.usuarios[obj.key];
-                if (!usr.estado || usr.estado <= 0) return;
+                if (!usr?.estado || usr?.estado <= 0) return;
                 var toInsert = {
                   key: obj.key,
                   paquete: obj?.vijencia?.paquete?.descripcion,

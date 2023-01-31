@@ -14,7 +14,8 @@ export default class Actions {
     }
     static login(data) {
         var object = {
-            servicio:"usuario",
+            service: "usuario",
+            servicio: "usuario",
             component: "usuario",
             version: "2.0",
             type: "login",
@@ -27,7 +28,7 @@ export default class Actions {
 
     static logout(props) {
         SStorage.removeItem("usr_log");
-    
+
         props.state.usuarioPageReducer.data = false;
         props.state.usuarioRolReducer.data = {}
         props.state.usuarioRolReducer.rol = {}
@@ -37,14 +38,66 @@ export default class Actions {
         props.dispatch({
             type: "USUARIO_LOGOUT"
         })
-        SNavigation.navigate("inicio");
+        SNavigation.reset("/");
     }
 
+    static async registro_async(data, key_rol, props) {
+        return new Promise((resolve, reject) => {
+            SSocket.sendPromise({
+                service: "usuario",
+                component: "usuario",
+                type: "registro",
+                version: "2.0",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key_usuario: props?.state?.usuarioReducer?.usuarioLog?.key,
+                key_rol: key_rol,
+                data: data,
+            }).then((resp) => {
+                if (resp.estado == "exito") {
+                    props.dispatch(resp)
+                    resolve(resp)
+                    return;
+                }
+                reject(resp)
+            }).catch((e) => {
+                reject(e)
+            })
+
+        })
+
+    }
+    static async editar_async(data, props) {
+        return new Promise((resolve, reject) => {
+            SSocket.sendPromise({
+                service: "usuario",
+                component: "usuario",
+                type: "editar",
+                version: "2.0",
+                estado: "cargando",
+                cabecera: "registro_administrador",
+                key_usuario: props.state.usuarioReducer.usuarioLog.key,
+                data: data,
+            }).then((resp) => {
+                if (resp.estado == "exito") {
+                    props.dispatch(resp)
+                    resolve(resp)
+                    return;
+                }
+                reject(resp)
+            }).catch((e) => {
+                reject(e)
+            })
+
+        })
+
+    }
     static registro_cliente(data, props) {
         Actions.registro(data, "d16d800e-5b8d-48ae-8fcb-99392abdf61f", props);
     }
     static registro(data, key_rol, props) {
         var object = {
+            service: "usuario",
             component: "usuario",
             type: "registro",
             version: "2.0",
@@ -58,6 +111,7 @@ export default class Actions {
     }
     static editar(data, props) {
         var object = {
+            service: "usuario",
             component: "usuario",
             type: "editar",
             version: "2.0",
@@ -76,6 +130,7 @@ export default class Actions {
                 return;
             }
             var object = {
+                service: "usuario",
                 component: "usuario",
                 version: "2.0",
                 type: "getAll",
@@ -96,6 +151,7 @@ export default class Actions {
                 return;
             }
             var object = {
+                service: "usuario",
                 component: "usuario",
                 version: "2.0",
                 type: "getAll",

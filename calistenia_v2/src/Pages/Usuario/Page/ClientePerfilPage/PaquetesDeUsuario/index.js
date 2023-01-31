@@ -120,7 +120,7 @@ class PaquetesDeUsuario extends Component {
         }
 
         return new SOrdenador([
-            { key: "Peso", order: "desc", peso: 4 },
+            // { key: "Peso", order: "desc", peso: 4 },
             { key: "fecha_inicio", order: "desc", peso: 1 },
         ]).ordernarObject(
             data

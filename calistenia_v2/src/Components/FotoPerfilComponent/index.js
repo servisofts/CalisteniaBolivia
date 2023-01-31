@@ -44,14 +44,14 @@ class FotoPerfilComponent extends Component<tprop> {
                 this.props.dispatch({
                     component: "image",
                     type: "cambio",
-                    url: SSocket.api.root + this.props.component + "_" + data.key,
+                    url: SSocket.api.root + this.props.component + "/" + data.key,
                 })
                 this.state.update = new Date().getTime()
                 this.setState({ ...this.state });
             });
         }}>
             {/* {"foto"} */}
-            <SImage src={SSocket.api.root + this.props.component + "_" + data.key+"?date="+this.state.update} />
+            <SImage src={SSocket.api.root + this.props.component + "/" + data.key+"?date="+this.state.update} />
 
         </TouchableOpacity>
         )

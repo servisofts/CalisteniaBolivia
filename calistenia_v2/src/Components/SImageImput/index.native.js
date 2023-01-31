@@ -63,12 +63,12 @@ const UploadFile = (props, callback) => {
         return false;
     }
     var body = new FormData();
-    body.append('data', JSON.stringify(props.obj));
+    // body.append('data', JSON.stringify(props.obj));
     body.append('file', photo);
     let xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open('POST', url + "multipart");
+    xhr.open('POST', url + "upload/" + props.component + "/" + props.key);
     xhr.setRequestHeader("Content-Type", "multipart/form-data");
     xhr.setRequestHeader("Accept", "*/*");
     xhr.onreadystatechange = function () { // Call a function when the state changes.

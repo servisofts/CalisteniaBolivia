@@ -73,7 +73,7 @@ class Participantes extends Component {
         return (
             <SView col={"xs-12"} center>
                 <SView col={"xs-7"} colSquare >
-                    <SImage src={SSocket.api.root + "usuario_" + data.key_usuario} />
+                    <SImage src={SSocket.api.root + "usuario/" + data.key_usuario} />
                 </SView>
                 <SText center fontSize={10}>{`${usuarios.Nombres} ${usuarios.Apellidos}`}</SText>
                 <SView style={{

@@ -32,7 +32,7 @@ class Item extends Component {
                     <SView col={"xs-12"}
                         height={110}
                     >
-                        <SImage src={SSocket.api.root + "sucursal_" + this.props.obj.key} />
+                        <SImage src={SSocket.api.root + "sucursal/" + this.props.obj.key} />
                     </SView>
                     <SView col={"xs-12"} flex center>
                         <SText fontSize={16} bold>{this.props.obj.descripcion}</SText>

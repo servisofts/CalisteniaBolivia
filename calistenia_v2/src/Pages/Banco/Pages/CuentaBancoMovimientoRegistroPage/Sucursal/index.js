@@ -85,7 +85,7 @@ class Sucursal extends Component {
                     borderRadius: 100,
                     overflow: "hidden"
                 }}>
-                    <SImage src={SSocket.api.root + "sucursal_" + this.state.value.key} />
+                    <SImage src={SSocket.api.root + "sucursal/" + this.state.value.key} />
                 </View>
             </SView>
             <SView style={{ flex: 1, height: "100%" }} props={{

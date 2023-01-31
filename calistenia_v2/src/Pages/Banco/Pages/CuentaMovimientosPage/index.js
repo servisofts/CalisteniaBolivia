@@ -59,7 +59,6 @@ class CuentaMovimientosPage extends Component {
             justifyContent: "center",
             alignItems: "center"
         }} onPress={() => {
-            console.log(obj);
             SPopup.confirm({
                 title: "¿Está seguro de anular el movimiento?",
                 message: `${obj.descripcion}`,
@@ -135,7 +134,6 @@ class CuentaMovimientosPage extends Component {
             }
             monto_total += parseFloat(monto);
             var usuario = usuarios[obj.key_usuario];
-            console.log(obj);
             return (
                 <>
                     <SView col={"xs-12"} key={obj.key} style={{
@@ -152,7 +150,7 @@ class CuentaMovimientosPage extends Component {
                                 borderRadius: 8,
                                 overflow: "hidden",
                             }}>
-                                <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} />
+                                <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
                             </SView>
                         </SView>
                         <SView style={{

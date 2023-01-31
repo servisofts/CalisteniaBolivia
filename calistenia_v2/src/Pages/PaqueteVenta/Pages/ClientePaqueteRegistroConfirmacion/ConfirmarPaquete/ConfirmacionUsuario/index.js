@@ -85,6 +85,7 @@ class ConfirmacionUsuario extends Component {
     }
 
     var object = {
+      service: "usuario",
       component: "usuario",
       type: "editar",
       version: "2.0",
