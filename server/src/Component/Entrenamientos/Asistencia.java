@@ -1,4 +1,4 @@
-package Component;
+package Component.Entrenamientos;
 
 import java.io.File;
 import java.util.Calendar;
@@ -16,11 +16,15 @@ import Servisofts.SPGConect;
 
 import org.json.JSONObject;
 
-import Component.Entrenamientos.Entrenamiento;
 import Component.Ventas.PaqueteVenta;
 
 public class Asistencia
+
+
+
 {
+    public static final String COMPONENT = "asistencia";
+
     public Asistencia(JSONObject data, SSSessionAbstract session) {
         switch (data.getString("type")) {
             case "getByKeyEntrenamiento": {
