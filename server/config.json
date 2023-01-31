@@ -4,7 +4,7 @@
     "socket_client": {
         "servicio": {
             "puerto": 10001,
-            "ip": "192.168.6.1",
+            "ip": "192.168.5.1",
             "cert": {
                 "OU": "servicio",
                 "pem": "servicio.pem"
@@ -18,16 +18,9 @@
     "data_base": {
         "puerto": 5432,
         "pass": "postgres",
-        "ip": "192.168.6.18",
+        "ip": "192.168.5.18",
         "bd_name": "servisofts.calistenia",
         "user": "postgres"
-    },
-    "data_base_mysql": {
-        "puerto": 3306,
-        "pass": "Calistenia123..",
-        "ip": "192.168.0.199",
-        "bd_name": "calisten_calistenia",
-        "user": "calistenia"
     },
     "nombre": "calistenia",
     "ssl": {

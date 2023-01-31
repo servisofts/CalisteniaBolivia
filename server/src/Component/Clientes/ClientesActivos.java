@@ -58,6 +58,15 @@ public class ClientesActivos {
             return null;
         }
     }
+    public static JSONObject getbyKeySucursalKeys(String key_sucursal) {
+        try {
+            String consulta = "select get_all_clientes_activos_zkteco('" + key_sucursal + "') as json";
+            return SPGConect.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void getAll(JSONObject obj, SSSessionAbstract session) {
         try {

@@ -171,10 +171,10 @@ public class ZKTeco {
     public static boolean sincronizarMolinete(JSONObject obj){
         try{
             System.out.println("Sincronizando...");
-            JSONObject clientes_activos = ClientesActivos.getbyKeySucursal(obj.getString("key_sucursal"));
+            JSONObject clientes_activos = ClientesActivos.getbyKeySucursalKeys(obj.getString("key_sucursal"));
             
-            String keys1[] = JSONObject.getNames(clientes_activos);
 
+            String keys1[] = JSONObject.getNames(clientes_activos);
             String merge = "";
 
             String keyss1 = "";
@@ -265,7 +265,7 @@ public class ZKTeco {
                 dispositivo = dispositivos.getJSONObject(key);
                 puntoVenta = puntosVenta.getJSONObject(dispositivo.getString("key_punto_venta"));
 
-                clientes_activos = ClientesActivos.getbyKeySucursal(puntoVenta.getString("key_sucursal"));
+                clientes_activos = ClientesActivos.getbyKeySucursalKeys(puntoVenta.getString("key_sucursal"));
                 keys1 = JSONObject.getNames(clientes_activos);
                 merge = "";
 
