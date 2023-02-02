@@ -34,11 +34,14 @@ class Registro extends Component {
                 customStyle: "calistenia",
                 col: "xs-12"
             }}
+                            // Alvaro: tarea 1
+
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
                 precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio||0).toFixed(2) || null, col: "xs-5.5" },
                 dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
                 participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
+                observacion: { label: 'Motivo', type: 'text', isRequired: true, defaultValue: this.data.observacion, col: "xs-12" },
             }}
             onSubmit={(data) => {
                 var serviciosSelec = Object.keys(this.state.servicios);

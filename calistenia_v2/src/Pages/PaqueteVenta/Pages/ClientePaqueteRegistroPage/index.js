@@ -238,6 +238,8 @@ class ClientePaqueteRegistroPage extends Component {
                 Continuar
               </SButtom>
             </View>
+
+            
           </SScrollView2>
         </View>
 

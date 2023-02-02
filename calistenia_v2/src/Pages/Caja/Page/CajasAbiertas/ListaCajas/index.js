@@ -181,15 +181,21 @@ class ListaCajas extends Component {
                         <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
                         <SText style={{
                             textTransform: "lowercase",
-                            fontSize: 10,
-                            color: STheme.color.darkGray
+                            // fontSize: 10,
+                            fontSize: 20,
+                            // aqui cambio la fuente
+                            // color: STheme.color.darkGray
+                            color: "blue"
                         }}>{usuario.Nombres} {usuario.Apellidos}</SText>
-                        <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+                        <SText style={{ fontSize: 20, color: "red" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+
+                        {/* <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText> */}
                     </SView>
                     <SView center style={{
                         height: 35,
                     }}>
-                        <SText style={{ fontSize: 14 }}>Bs. {total}</SText>
+                        {/* <SText style={{ fontSize: 14 }}>Bs. {total}</SText> */}
+                        <SText style={{ fontSize: 24, color:"red" }}>Bs. {total}</SText>
                     </SView>
                 </SView>
 
