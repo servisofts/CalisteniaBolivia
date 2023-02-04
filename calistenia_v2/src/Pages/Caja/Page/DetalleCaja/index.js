@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import { SButtom, SHr, SMath, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import Caja from '../..';
 import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
@@ -34,7 +34,7 @@ class DetalleCaja extends Component {
                             <SHr />
                             <Cabecera caja={caja} />
                         </SView>
-                        <SHr/>
+                        <SHr />
                         <SButtom type={"danger"} onPress={() => {
                             SNavigation.navigate("ReciboCaja", { key: caja.key })
                         }}>{"IMPRIMIR"}</SButtom>

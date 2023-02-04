@@ -11,6 +11,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import Usuario from '../../../Usuario';
+import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 let component = "cuentaBancoMovimiento";
 let ReducerName = "cuentaBancoMovimientoReducer";
 
@@ -52,7 +53,19 @@ class CuentaMovimientosPage extends Component {
             }} />
         </>
     }
+    
+
+
+
     getAnular(obj) {
+        if (!SSRolesPermisosValidate({ page: "BancoPage", permiso: "eliminar_movimiento" })) {
+            if (!this.caja) {
+                return <View />
+            }
+            if (this.caja.key != obj.key_caja) {
+                return <View />
+            }
+        }
         return <SView style={{
             width: 40,
             height: 50,
@@ -82,6 +95,8 @@ class CuentaMovimientosPage extends Component {
             <SIcon name={"Delete"} width={30} />
         </SView>
     }
+
+   
     getAll = (force) => {
         if (!this.state.fecha_inicio || !this.state.fecha_fin) {
             return <SLoad />
@@ -213,6 +228,7 @@ class CuentaMovimientosPage extends Component {
         </SView>
     }
     render() {
+        
         if (this.key) {
             this.data = Banco.Actions.getAllCuentaBancos(this.props);
         } else {

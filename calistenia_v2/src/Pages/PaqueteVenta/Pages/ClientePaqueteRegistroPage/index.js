@@ -110,7 +110,10 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago
+      dataPagos: this.state.tipoPago,
+
+        observacion : this.inputObservacion.getValue()
+
     })
   }
   calcularFaltante() {
@@ -141,29 +144,21 @@ class ClientePaqueteRegistroPage extends Component {
   }
 
   render_motivo() {
+    var paquete = this.state.paquete;
+    if (!paquete) return null;
 
+    console.log("si ",paquete)
 
-    if (!this.state.paquete) return null;
+    if (paquete.requiere_motivo) return (
+      <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} />
 
-    // if(!this.state.paquete.requiere_motivo) return null;
-    let datos = this.state.paquete;
-    datos.map((key, index) => {
-     const obj = datos[key];
-      console.log("aqui ", obj);
-    })
-
-    // console.log("chaval ",datos)
-
-    return (
-
-      <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
-
-
+      // <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
     );
   }
 
 
   render() {
+            // var codigo = this.inputBilletera.getValue();
 
 
     return (
