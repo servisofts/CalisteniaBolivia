@@ -187,7 +187,7 @@ class ListaCajas extends Component {
                             // color: STheme.color.darkGray
                             color: "blue"
                         }}>{usuario.Nombres} {usuario.Apellidos}</SText>
-                        <SText style={{ fontSize: 20, color: "red" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+                        <SText style={{ fontSize: 14, color: "red" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
 
                         {/* <SText style={{ fontSize: 10, color: STheme.color.darkGray }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText> */}
                     </SView>
@@ -195,7 +195,7 @@ class ListaCajas extends Component {
                         height: 35,
                     }}>
                         {/* <SText style={{ fontSize: 14 }}>Bs. {total}</SText> */}
-                        <SText style={{ fontSize: 24, color:"red" }}>Bs. {total}</SText>
+                        <SText style={{ fontSize: 18, color:"red" }}>Bs. {total}</SText>
                     </SView>
                 </SView>
 

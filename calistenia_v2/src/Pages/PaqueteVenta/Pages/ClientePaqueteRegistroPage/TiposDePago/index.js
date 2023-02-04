@@ -87,8 +87,8 @@ class TiposDePago extends Component<TiposDePagoType> {
             <SView col={"xs-12"} height={50} center card onPress={() => {
                 SPopup.open({
                     content: <SeleccionarUsuario onChange={(val) => {
-                        // this.camposInputs["monto"].setValue(val.monto.toFixed(2));
-                        this.camposInputs["motivo"].setValue(val.monto.toFixed(2));
+                        this.camposInputs["monto"].setValue(val.monto.toFixed(2));
+                        // this.camposInputs["motivo"].setValue(val.monto.toFixed(2));
                         // aqui todo
                         this.camposInputs["Banco"].setValue("Billetera");
                         this.camposInputs["Código"].setValue(val.codigo);

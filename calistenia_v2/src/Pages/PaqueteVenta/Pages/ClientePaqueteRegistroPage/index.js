@@ -139,6 +139,30 @@ class ClientePaqueteRegistroPage extends Component {
     }
     return 0;
   }
+
+  render_motivo() {
+
+
+    if (!this.state.paquete) return null;
+
+    // if(!this.state.paquete.requiere_motivo) return null;
+    let datos = this.state.paquete;
+    datos.map((key, index) => {
+     const obj = datos[key];
+      console.log("aqui ", obj);
+    })
+
+    // console.log("chaval ",datos)
+
+    return (
+
+      <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
+
+
+    );
+  }
+
+
   render() {
 
 
@@ -190,13 +214,22 @@ class ClientePaqueteRegistroPage extends Component {
                   }
                 }} />
               </View>
+
+
+              {this.render_motivo()}
+
               <Text style={{
                 width: "95%",
                 fontSize: 12,
                 color: STheme.color.text,
                 marginTop: 8,
                 marginBottom: 4,
-              }}>Clientes</Text>
+              }}>Cliente</Text>
+
+
+
+
+
               {this.getClientes()}
               <SButtom props={{
                 type: "danger",
@@ -239,7 +272,7 @@ class ClientePaqueteRegistroPage extends Component {
               </SButtom>
             </View>
 
-            
+
           </SScrollView2>
         </View>
 
