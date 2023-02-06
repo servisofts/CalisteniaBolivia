@@ -30,6 +30,7 @@ export default class ClientePaqueteRegistroConfirmacion extends Component {
                         usuariosData:  SNavigation.getParam('usuariosData'),
                         tasks:  SNavigation.getParam('tasks'),
                         dataPagos:  SNavigation.getParam('dataPagos'),
+                        observacion:  SNavigation.getParam('observacion'),
                     }} />
             </SPage>
         );

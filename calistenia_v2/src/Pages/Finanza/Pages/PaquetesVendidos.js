@@ -63,6 +63,7 @@ class PaquetesVendidos extends Component {
                         return <SText fontSize={11}>{arr.join(", ")}</SText>
                     }
                 },
+                // alvaro
                 { key: "sucursal", label: "Sucursal", width: 150 },
                 // { key: "tipo_pago", label: "Tipo Pago", width: 150 },
                 { key: "total", label: "Monto", sumar: true, width: 100 },
@@ -73,6 +74,7 @@ class PaquetesVendidos extends Component {
                 // },
                 { key: "paquete", label: "Paquete", width: 150 },
                 { key: "key_cajero", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}`.toUpperCase() } },
+                { key: "observacion", label: "Motivo", width: 150 },
 
                 // { key: "", label: "Sucursal", width: 150 },
             ]}

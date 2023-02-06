@@ -53,7 +53,7 @@ class GraficoPaquetesVendidos extends Component {
         return (
             <SView col={"xs-12"} row  >
                 <SView col={"xs-12"} center >
-                    <SText fontSize={16}>{`Cantidad de paquetes vendidos`}</SText>
+                    <SText fontSize={16}>{`Cantidad de paquetes vendidos111`}</SText>
                 </SView>
                 <SView
                     col={"xs-2 xl-1"} row style={{

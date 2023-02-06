@@ -106,6 +106,14 @@ class ConfirmarPaquete extends Component {
                     textAlign: "center"
                 }}>{obj["Nombres"]} {obj["Apellidos"]}</SText>
 
+
+<SText props={{
+                    type: "primary"
+                }} fontSize={12} style={{
+                    textAlign: "center"
+                }}>Motivo: {this.props.data.observacion} </SText>
+
+{/* this.props.data.dataPagos */}
             </SView>
         })
     }
@@ -165,6 +173,7 @@ class ConfirmarPaquete extends Component {
                 // key_tipo_pago,
                 monto: this.paquete.precio,
                 nombre_paquete: this.paquete.descripcion,
+                observacion: this.props.data.observacion,
                 // data: dataFinal
             })
         }} > Pagar</SButtom >

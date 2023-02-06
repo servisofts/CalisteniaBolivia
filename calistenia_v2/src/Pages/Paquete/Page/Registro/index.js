@@ -34,11 +34,14 @@ class Registro extends Component {
                 customStyle: "calistenia",
                 col: "xs-12"
             }}
+            // Alvaro: se agregao Estado motivo
+
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
-                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio||0).toFixed(2) || null, col: "xs-5.5" },
+                precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio || 0).toFixed(2) || null, col: "xs-5.5" },
                 dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
                 participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
+                requiere_motivo: { label: 'Estado motivo', type: 'checkBox', isRequired: false, defaultValue: this.data.requiere_motivo,  },
             }}
             onSubmit={(data) => {
                 var serviciosSelec = Object.keys(this.state.servicios);
@@ -47,6 +50,8 @@ class Registro extends Component {
                         ...this.data,
                         ...data
                     }, serviciosSelec, this.props);
+
+                    console.log("hola ", data);
                 } else {
                     // if (serviciosSelec.length <= 0) {
                     //     alert("Debe activar almenos 1 servicio");

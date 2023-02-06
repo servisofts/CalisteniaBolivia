@@ -110,7 +110,10 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago
+      dataPagos: this.state.tipoPago,
+
+        observacion : this.inputObservacion.getValue()
+
     })
   }
   calcularFaltante() {
@@ -139,7 +142,23 @@ class ClientePaqueteRegistroPage extends Component {
     }
     return 0;
   }
+
+  render_motivo() {
+    var paquete = this.state.paquete;
+    if (!paquete) return null;
+
+    console.log("si ",paquete)
+
+    if (paquete.requiere_motivo) return (
+      <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} />
+
+      // <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
+    );
+  }
+
+
   render() {
+            // var codigo = this.inputBilletera.getValue();
 
 
     return (
@@ -190,13 +209,22 @@ class ClientePaqueteRegistroPage extends Component {
                   }
                 }} />
               </View>
+
+
+              {this.render_motivo()}
+
               <Text style={{
                 width: "95%",
                 fontSize: 12,
                 color: STheme.color.text,
                 marginTop: 8,
                 marginBottom: 4,
-              }}>Clientes</Text>
+              }}>Cliente</Text>
+
+
+
+
+
               {this.getClientes()}
               <SButtom props={{
                 type: "danger",
@@ -238,6 +266,8 @@ class ClientePaqueteRegistroPage extends Component {
                 Continuar
               </SButtom>
             </View>
+
+
           </SScrollView2>
         </View>
 
