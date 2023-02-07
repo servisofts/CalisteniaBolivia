@@ -212,7 +212,7 @@ class Movimientos extends Component {
       <SText style={{
         fontSize: 10,
         textAlign: "center"
-      }}> 100 bs</SText>
+      }}> 101 bs</SText>
     </SView>
   }
   getTipoPago() {
