@@ -16,12 +16,13 @@ class EstadoFinanciero extends Component {
         this.key_sucursal = SNavigation.getParam("key_sucursal", "");
         // this.props.state.reporteReducer.data = null;
     }
-
+// alvaro
     getLista() {
         var movimientos = Actions.getEstadoFinanciero(this.fecha_inicio, this.fecha_fin, this.key_sucursal, this.props)
         if (!movimientos) return <SLoad />
         return <STable2
             header={[
+                // alvaro
                 { key: "fecha_venta", label: "fecha", width: 100, order: "desc", type: "" },
                 // { key: "monto_paquetes", label: "monto_paquetes", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Paquete"} width={12} height={12} />), },
                 { key: "efectivo", label: "efectivo", width: 140, sumar:true, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Money"} width={12} height={12} />), },

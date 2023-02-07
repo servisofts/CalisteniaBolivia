@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
+import { Component } from 'react';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
+import { SButtom, SDate, SInput, SNavigation, SPage, SPopup, SScrollView2, STheme, SView } from 'servisofts-component';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Paquete from '../../../Paquete/Component/Paquete';
-import Usuario from './Usuario';
-import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SPopup, SNavigation, SPage, STheme } from 'servisofts-component';
-import TiposDePago from './TiposDePago';
 import SCalendar from './SCalendar';
+import TiposDePago from './TiposDePago';
+import Usuario from './Usuario';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
 class ClientePaqueteRegistroPage extends Component {
@@ -112,7 +112,7 @@ class ClientePaqueteRegistroPage extends Component {
       tasks: this.state.tasks,
       dataPagos: this.state.tipoPago,
 
-        observacion : this.inputObservacion.getValue()
+      observacion: this.inputObservacion.getValue()
 
     })
   }
@@ -147,10 +147,11 @@ class ClientePaqueteRegistroPage extends Component {
     var paquete = this.state.paquete;
     if (!paquete) return null;
 
-    console.log("si ",paquete)
+    // console.log("si ", paquete)
 
+    // tarea3
     if (paquete.requiere_motivo) return (
-      <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} />
+      <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} isRequired={true} placeholder={"Escribir motivo del paquete"} />
 
       // <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
     );
@@ -158,7 +159,7 @@ class ClientePaqueteRegistroPage extends Component {
 
 
   render() {
-            // var codigo = this.inputBilletera.getValue();
+    // var codigo = this.inputBilletera.getValue();
 
 
     return (
@@ -189,7 +190,7 @@ class ClientePaqueteRegistroPage extends Component {
               paddingBottom: 100,
             }}>
               <View style={{
-                width: "100%",
+                width: "90%",
                 maxWidth: 800,
                 alignItems: "center",
 
@@ -208,19 +209,23 @@ class ClientePaqueteRegistroPage extends Component {
                     this.setState({ ...this.state });
                   }
                 }} />
+
+
+                {this.render_motivo()}
+
+
+
+
+                <Text style={{
+                  width: "100%",
+                  fontSize: 12,
+                  color: STheme.color.text,
+                  marginTop: 8,
+                  marginBottom: 4,
+
+                }}>Cliente</Text>
+
               </View>
-
-
-              {this.render_motivo()}
-
-              <Text style={{
-                width: "95%",
-                fontSize: 12,
-                color: STheme.color.text,
-                marginTop: 8,
-                marginBottom: 4,
-              }}>Cliente</Text>
-
 
 
 
@@ -247,6 +252,12 @@ class ClientePaqueteRegistroPage extends Component {
                     SPopup.alert("Seleccione un metodo de pago.")
                     return;
                   }
+
+                  if (!this.inputObservacion.verify()) {
+                    SPopup.alert("Ingresar motivo del paquete")
+                    return null;
+                  }
+
                   if (monto < this.state.paquete.precio) {
                     SPopup.confirm({
                       title: `Bs. ${monto} no es suficiente para el paquete, esta seguro de continuar? `, onPress: () => {
