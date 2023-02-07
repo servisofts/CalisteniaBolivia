@@ -9,12 +9,12 @@ class Movimientos extends Component {
         super(props);
         this.state = {
             sucursal: false,
-            montoEfectivo:0,
-            montoTarjeta:0,
-            montoTranferencia:0,
-            montoCheque:0,
-            montoIngreso:0,
-            montoEgreso:0,
+            montoEfectivo: 0,
+            montoTarjeta: 0,
+            montoTranferencia: 0,
+            montoCheque: 0,
+            montoIngreso: 0,
+            montoEgreso: 0,
         };
     }
     componentDidMount() {
@@ -89,11 +89,16 @@ class Movimientos extends Component {
         // console.log("chau ",data.data.)
 
         switch (data.data.key_tipo_pago) {
-            case "1": return this.montoEfectivo+=data.data.monto, <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
-            case "2": return this.montoTarjeta+=data.data.monto,<SIcon name={"Card"} style={{ width: 34, height: 34, }} />;
-            case "3": return this.montoTranferencia +=data.data.monto,<SIcon name={"Tranfer"} style={{ width: 34, height: 34, }} />;
-            case "4": return this.montoCheque +=data.data.monto,<SIcon name={"Cheque"} style={{ width: 34, height: 34, }} />;
-            default: return this.montoEfectivo+=data.data.monto,<SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
+            case "1": return <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
+            case "2": return <SIcon name={"Card"} style={{ width: 34, height: 34, }} />;
+            case "3": return <SIcon name={"Tranfer"} style={{ width: 34, height: 34, }} />;
+            case "4": return <SIcon name={"Cheque"} style={{ width: 34, height: 34, }} />;
+            default: return <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
+            // case "1": return this.montoEfectivo+=data.data.monto, <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
+            // case "2": return this.montoTarjeta+=data.data.monto,<SIcon name={"Card"} style={{ width: 34, height: 34, }} />;
+            // case "3": return this.montoTranferencia +=data.data.monto,<SIcon name={"Tranfer"} style={{ width: 34, height: 34, }} />;
+            // case "4": return this.montoCheque +=data.data.monto,<SIcon name={"Cheque"} style={{ width: 34, height: 34, }} />;
+            // default: return this.montoEfectivo+=data.data.monto,<SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
         }
     }
     getIconTipo(type, monto) {
@@ -198,7 +203,7 @@ class Movimientos extends Component {
                 fontSize: 10,
                 textAlign: "center"
             }}>{mensaje}</SText>
-            
+
             <SText style={{
                 fontSize: 10,
                 textAlign: "center"
@@ -224,22 +229,22 @@ class Movimientos extends Component {
     getInfo() {
         var tiposPagos = this.getTipoPago();
         if (!tiposPagos) return <View />
- 
+
         return <SView center col={"xs-12 md-10 xl-8"} row >
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 {/* <SText style={{ color: "#999" }}>Informacion</SText> */}
                 <SText style={{ color: "#999" }}>Informacion</SText>
             </SView>
-            {this.getDetalle("Ingreso de caja", this.getIcon(1),99)}
-            {this.getDetalle("Egreso de caja", this.getIcon(-1),98)}
+            {this.getDetalle("Ingreso de caja", this.getIcon(1), 99)}
+            {this.getDetalle("Egreso de caja", this.getIcon(-1), 98)}
 
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de pagos</SText>
             </SView>
             {Object.keys(tiposPagos).map((key, index) => {
-                return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }),17)
+                return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), 17)
             })}
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -248,9 +253,9 @@ class Movimientos extends Component {
             <SView col={"xs-12"} height={32} center>
                 <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
             </SView>
-            {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }),11)}
-            {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }),12)}
-            {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }),13)}
+            {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), 11111)}
+            {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), 12)}
+            {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), 13)}
 
             <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
             <SView col={"xs-12"} height={62} center></SView>
@@ -258,7 +263,7 @@ class Movimientos extends Component {
         </SView>
 
     }
-// monto quemado
+    // monto quemado
     render() {
         this.activa = this.props.caja;
         if (!this.activa) return <View />;

@@ -42,7 +42,7 @@
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
-    "servisofts-component": "2.9.3",
+    "servisofts-component": "2.9.4",
     "servisofts-socket": "2.5.7",
     "three": "^0.132.2",
     "typescript": "^4.4.3",
