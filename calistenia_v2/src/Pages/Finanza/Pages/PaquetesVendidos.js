@@ -43,12 +43,12 @@ class PaquetesVendidos extends Component {
     if (!usuarios) return <SLoad />
     // return <SText>{JSON.stringify(movimientos)}</SText>
 
-    // tarea4
+    // tarea1
     return <STable2
       header={[
         { key: "index", label: "#", width: 40 },
         { key: "sucursal", label: "Sucursal", width: 100 },
-        { key: "fecha_on", label: "Fecha de registro", width: 120, order: "desc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
+        { key: "fecha_on", label: "Fecha de registro", width: 120, order: "asc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
         {
           key: "usuarios", label: "Cliente", width: 250, render: (item) => { return item.map((key_usr) => { return `${usuarios[key_usr]?.Nombres} ${usuarios[key_usr]?.Apellidos}`.toUpperCase() }) },
           component: (arr) => { return <SText fontSize={11}>{arr.join(", ")}</SText> }
