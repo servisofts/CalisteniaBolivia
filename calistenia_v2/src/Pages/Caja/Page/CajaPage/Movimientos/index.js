@@ -189,8 +189,10 @@ class Movimientos extends Component {
       egreso: 0,
     }
 
-    var total_tipo_pago = {
-    }
+    var total_tipo_pago = {}
+
+    var total_tipo_movimiento = {}
+
     if (this.moviminetos) {
       console.log(this.moviminetos)
       Object.values(this.moviminetos).map((o) => {
@@ -199,8 +201,12 @@ class Movimientos extends Component {
         } else {
           total.egreso += o.monto;
         }
+
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
-        total_tipo_pago[o.key_tipo_pago] += o.monto
+        total_tipo_pago[o.key_tipo_pago] += o.monto;
+
+        if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
+        total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
     return <SView center col={"xs-12 md-10 xl-8"} row>
@@ -227,9 +233,9 @@ class Movimientos extends Component {
       </SView>
 
       {/* esto es para el cajero */}
-      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), 0)}
-      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), 0)}
-      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), 88)}
+      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), total_tipo_movimiento[1] ?? 0)}
+      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), total_tipo_movimiento[3] ?? 0)}
+      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), total_tipo_movimiento[4] ?? 0)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
 
