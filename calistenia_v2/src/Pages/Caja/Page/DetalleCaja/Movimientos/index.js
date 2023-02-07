@@ -114,6 +114,7 @@ class Movimientos extends Component {
     if (!movimientos) return <ActivityIndicator color={STheme.color.text} />;
     var tipoMovimientos = this.getCajaTipoMovimientos();
     if (!tipoMovimientos) return <ActivityIndicator color={STheme.color.text} />;
+    this.moviminetos = movimientos;
 
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
@@ -187,7 +188,7 @@ class Movimientos extends Component {
     })
   }
   // tarea6
-  getDetalle(mensaje, icon, montoTotal) {
+  getDetalle(mensaje, icon, monto) {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
@@ -203,16 +204,10 @@ class Movimientos extends Component {
         fontSize: 10,
         textAlign: "center"
       }}>{mensaje}</SText>
-      {/*
       <SText style={{
         fontSize: 10,
         textAlign: "center"
-      }}>{SMath.formatMoney(montoTotal)}</SText> */}
-
-      <SText style={{
-        fontSize: 10,
-        textAlign: "center"
-      }}> 101 bs</SText>
+      }}> {monto}bs</SText>
     </SView>
   }
   getTipoPago() {
@@ -235,21 +230,58 @@ class Movimientos extends Component {
     var tiposPagos = this.getTipoPago();
     if (!tiposPagos) return <View />
 
+    var total = {
+      ingreso: 0,
+      egreso: 0,
+    }
+
+    var total_tipo_pago = {}
+
+    var total_tipo_movimiento = {}
+
+    if (this.moviminetos) {
+      console.log(this.moviminetos)
+      Object.values(this.moviminetos).map((o) => {
+        if (o.monto >= 0) {
+          total.ingreso += o.monto;
+        } else {
+          total.egreso += o.monto;
+        }
+
+        if (!total_tipo_pago[o.key_tipo_pago]) {
+          total_tipo_pago[o.key_tipo_pago] = 0;
+        }
+
+        if (o.monto >= 0) {
+          total_tipo_pago[o.key_tipo_pago] += o.monto;
+        }
+        // else {
+        //   total_tipo_pago[o.key_tipo_pago] -= o.monto;
+        // }
+
+        if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) {
+          total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0;
+        }
+        total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
+      })
+    }
+
+
     return <SView center col={"xs-12 md-10 xl-8"} row >
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         {/* <SText style={{ color: "#999" }}>Informacion</SText> */}
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
-      {this.getDetalle("Ingreso de caja", this.getIcon(1), 99)}
-      {this.getDetalle("Egreso de caja", this.getIcon(-1), 98)}
+      {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
+      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.ingreso)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de pagos</SText>
       </SView>
       {Object.keys(tiposPagos).map((key, index) => {
-        return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), 17)
+        return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
       })}
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -258,9 +290,9 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
       </SView>
-      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), 11111)}
-      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), 12)}
-      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), 13)}
+      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), total_tipo_movimiento[1] ?? 0)}
+      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), total_tipo_movimiento[3] ?? 0)}
+      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), total_tipo_movimiento[4] ?? 0)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={62} center></SView>
