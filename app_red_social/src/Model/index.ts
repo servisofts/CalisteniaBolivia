@@ -4,6 +4,7 @@ import Roles_permisos from "servisofts-rn-roles_permisos";
 import Geolocation from "servisofts-rn-geolocation"
 import Chat from 'servisofts-rn-chat'
 import tapeke from "./tapeke";
+import calistenia from "./calistenia";
 
 
 const Model = {
@@ -12,6 +13,7 @@ const Model = {
     ...Geolocation.Model,
     ...Chat.Model,
     ...tapeke,
+    ...calistenia,
 }
 
 Usuario.init({

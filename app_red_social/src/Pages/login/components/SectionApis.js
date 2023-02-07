@@ -40,15 +40,15 @@ export default class SectionApis extends Component {
 
     separador() {
         return <SView col={"xs-12"} height={40} row center  >
-            <SView col={"xs-3"} height center>
+            {/* <SView col={"xs-3"} height center>
                 <SHr color={STheme.color.lightGray} height={1.5} ></SHr>
-            </SView>
+            </SView> */}
             <SView col={"xs-6"} height center>
-                <SText fontSize={14} color={STheme.color.darkGray} font={"LondonMM"}> o Iniciar sesión con  </SText>
+                <SText fontSize={20} color={STheme.color.white} font={"LondonMM"}> Inicia sesión con  </SText>
             </SView>
-            <SView col={"xs-3"} height center>
+            {/* <SView col={"xs-3"} height center>
                 <SHr color={STheme.color.lightGray} height={1.5} ></SHr>
-            </SView>
+            </SView> */}
         </SView>
 
     }
@@ -56,7 +56,7 @@ export default class SectionApis extends Component {
     btnApi(icon) {
         return <SView flex center height={60} >
             <SView height={50} colSquare center style={{
-                backgroundColor: 'white', borderRadius: 8, borderColor: STheme.color.lightGray, borderWidth: 2, padding: 8
+                backgroundColor: 'white', borderRadius: 35, borderColor: STheme.color.lightGray, borderWidth: 2, padding: 8
             }}>
                 <SIcon name={icon} />
             </SView>

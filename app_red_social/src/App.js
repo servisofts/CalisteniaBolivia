@@ -29,7 +29,7 @@ const App = (props) => {
             <SNavigation
                 props={{
                     navBar: TopBar,
-                    title: 'Tapeke', pages: Pages
+                    title: 'Calistenia Bolivia', pages: Pages
                 }}
             />
             <SSocket

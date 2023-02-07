@@ -6,6 +6,7 @@ import SectionApis from './components/SectionApis';
 import SectionFooter from './components/SectionFooter';
 import SectionForm from './components/SectionForm';
 import SectionHeader from './components/SectionHeader';
+import SectionRegister from './components/SectionRegister';
 
 class login extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class login extends Component {
     render() {
 
         return (
-            <SPage footer={<AccentBar />}>
+            <SPage>
                 <SView col={"xs-12"} center>
                     <SView col={"xs-12"} backgroundColor={STheme.color.primary}>
                         <Container>
@@ -30,11 +31,13 @@ class login extends Component {
                         <SHr height={16} />
                         <SectionForm ref={ref => this._sectionForm = ref} />
                         <SHr height={25} />
-                        <SectionApis/>
-                        <SHr height={35} />
                         <SectionFooter onPress={() => {
                             this._sectionForm.submit();
                         }} />
+                        <SHr height={55} />
+                        <SectionApis/>
+                        <SHr height={35} />
+                        <SectionRegister/>
                         <SHr height={50} />
                     </Container>
                 </SView>

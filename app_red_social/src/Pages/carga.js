@@ -38,8 +38,8 @@ class index extends Component {
                     <SView col={"xs-6 sm-5 md-4 lg-3 xl-2 xxl-1.5"}>
                         <SIcon name={"logowhite"} fill={STheme.color.secondary} />
                     </SView>
-                    <SHr height={100} />
-                    {this.renderFooter()}
+                    {/* <SHr height={100} /> */}
+                    {/* {this.renderFooter()} */}
                 </SView>
             </SPage>
         );

@@ -91,6 +91,9 @@ import Tuerca, { ReactComponent as TuercaW } from './svg/tuerca.svg';
 import MeGusta, { ReactComponent as MeGustaW } from './svg/meGusta.svg';
 import BarraQr, { ReactComponent as BarraQrW } from './svg/barraqr.svg';
 
+import Calistenia from "./svg/calistenia";
+
+
 
 const Assets: SAssets = {
     svg: {
@@ -177,6 +180,8 @@ const Assets: SAssets = {
 
         ...Tapeke,
         ...Pedido,
+
+        ...Calistenia
 
     }
 }
