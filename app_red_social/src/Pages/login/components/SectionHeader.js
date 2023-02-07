@@ -16,16 +16,17 @@ export default class SectionHeader extends Component {
                     <SIcon name={"logowhite"} fill={STheme.color.secondary} />
                 </SView>
                 <SHr height={20} />
-                <SView col={"xs-12"} height={50} row>
-                    <SView col={"xs-6"} height card>
-                        <PButtom2 outline={false} onPress={() => {
-                        }}>Inicio Sesión</PButtom2>
-                    </SView>
-                    <SView col={"xs-6"} height card>
+                <SView col={"xs-12"} height={50} row center> 
+                    
+                        <SText fontSize={20} color={STheme.color.white} >Iniciar Sesión</SText>
+                        
+                    
+                    {/* <SView col={"xs-6"} height card>
                         <PButtom2 outline={true} onPress={() => {
                             SNavigation.navigate("/registro")
                         }}>Registro</PButtom2>
-                    </SView>
+                    </SView> */}
+                    
                 </SView>
             </SView>
         );

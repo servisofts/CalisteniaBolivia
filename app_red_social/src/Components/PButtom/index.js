@@ -22,7 +22,8 @@ export default class PButtom extends Component<PButtom_props> {
     }
 
     render() {
-        var bgColor = this.props.primary ? STheme.color.primary : this.props.secondary ? STheme.color.info : STheme.color.primary;
+        //var bgColor = this.props.primary ? STheme.color.primary : this.props.secondary ? STheme.color.info : STheme.color.primary;
+        var bgColor =STheme.color.secondary ;
         var colorText = STheme.color.white;
         if (this.props.withe) {
             bgColor = "#fff"
