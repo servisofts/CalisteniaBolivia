@@ -187,7 +187,6 @@ class Movimientos extends Component {
       )
     })
   }
-  // tarea6
   getDetalle(mensaje, icon, monto) {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
@@ -239,6 +238,8 @@ class Movimientos extends Component {
 
     var total_tipo_movimiento = {}
 
+    // tarea6 Historico cajas
+
     if (this.moviminetos) {
       console.log(this.moviminetos)
       Object.values(this.moviminetos).map((o) => {
@@ -248,16 +249,15 @@ class Movimientos extends Component {
           total.egreso += o.monto;
         }
 
-        if (!total_tipo_pago[o.key_tipo_pago]) {
-          total_tipo_pago[o.key_tipo_pago] = 0;
-        }
+        // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0;
 
-        if (o.monto >= 0) {
-          total_tipo_pago[o.key_tipo_pago] += o.monto;
-        }
-        // else {
-        //   total_tipo_pago[o.key_tipo_pago] -= o.monto;
+        if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
+        total_tipo_pago[o.key_tipo_pago] += o.monto;
+
+        // if (o.monto >= 0) {
+        //   total_tipo_pago[o.key_tipo_pago] += o.monto;
         // }
+
 
         if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) {
           total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0;
@@ -274,7 +274,7 @@ class Movimientos extends Component {
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
       {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
-      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.ingreso)}
+      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egreso)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>

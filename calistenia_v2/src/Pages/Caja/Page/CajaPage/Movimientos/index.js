@@ -11,8 +11,7 @@ class Movimientos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sucursal: false,
-
+      sucursal: false
     };
   }
   componentDidMount() {
@@ -188,6 +187,7 @@ class Movimientos extends Component {
     var total_tipo_pago = {}
 
     var total_tipo_movimiento = {}
+    // tarea6 caja y cjas
 
     if (this.moviminetos) {
       console.log(this.moviminetos)
@@ -201,10 +201,9 @@ class Movimientos extends Component {
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 
-        if (o.monto >= 0) {
-          total_tipo_pago[o.key_tipo_pago] += o.monto;
-        }
-
+        // if (o.monto >= 0) {
+        //   total_tipo_pago[o.key_tipo_pago] += o.monto;
+        // }
 
         if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
         total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
