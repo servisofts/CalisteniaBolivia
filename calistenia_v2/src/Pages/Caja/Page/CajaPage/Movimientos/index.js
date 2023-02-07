@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { ActivityIndicator, Text, View } from 'react-native'
+import { Component } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SView, SText, SDate, SOrdenador, SIcon, STheme, SButtom, SNavigation, SMath } from 'servisofts-component';
+import { SButtom, SDate, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import TipoPago from '../../../../TipoPago';
 import Usuario from '../../../../Usuario';
@@ -154,15 +154,13 @@ class Movimientos extends Component {
       )
     })
   }
+  // tarea6
   getDetalle(mensaje, icon, monto) {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
       <SView style={{
-        width: 35,
-        height: 35,
-        justifyContent: "center",
-        alignItems: "center",
+        width: 35, height: 35, justifyContent: "center", alignItems: "center",
       }}>
         {icon}
       </SView>
