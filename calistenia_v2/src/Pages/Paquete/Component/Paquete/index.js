@@ -51,43 +51,19 @@ class Paquete extends Component {
         // }
       }}>
         <View style={{
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 4,
-          overflow: "hidden",
-          width: 40,
-          height: 40,
-          backgroundColor: STheme.color.card
+          justifyContent: "center", alignItems: "center", borderRadius: 4, overflow: "hidden", width: 40, height: 40, backgroundColor: STheme.color.card
         }}>
-          {/* <SImage src={urlImage} /> */}
           <SImage src={SSocket.api.root + "paquete/" + obj.key} />
+        </View>
 
+        <View style={{ flex: 4, height: 20, justifyContent: "center", paddingStart: 8 }}>
+          <Text style={{ fontSize: 14, color: STheme.color.text }}>{obj.descripcion}</Text>
         </View>
-        <View style={{
-          flex: 4,
-          height: 20,
-          justifyContent: "center",
-          // alignItems: "center"
-          paddingStart: 8,
-        }}>
-          <Text style={{
-            fontSize: 14,
-            color: STheme.color.text
-          }}>{obj.descripcion}</Text>
-        </View>
+
         {/* tarea3 */}
         <View><SText col={"xs-12"} fontSize={14} font={"Roboto"} >#per: {obj.participantes} dias: {obj.dias}</SText></View>
-        <View style={{
-          flex: 2,
-          height: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          paddingStart: 8,
-        }}>
-          <Text style={{
-            fontSize: 14,
-            color: STheme.color.text
-          }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
+        <View style={{ flex: 2, height: 20, justifyContent: "center", alignItems: "center", paddingStart: 8 }}>
+          <Text style={{ fontSize: 14, color: STheme.color.text }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
         </View>
 
       </TouchableOpacity>

@@ -54,10 +54,17 @@ class ClientePaqueteRegistroPage extends Component {
           dias: this.state.paquete.dias
         }
       }
-      DATA.push(<SView col="xs-12 sm-9 md-6 xl-4" center style={{
-        // justifyContent:"flex-start",
-        padding: 12,
-      }}>
+      DATA.push(<SView col="xs-12 sm-9 md-6 xl-4" center style={{ padding: 12 }}>
+
+        {/* tarea3 */}
+        <Text style={{
+          width: "100%",
+          fontSize: 14,
+          color: STheme.color.text,
+          marginBottom: 8,
+          paddingLeft: 8,
+        }}>Cliente</Text>
+
         <Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
           // console.log(usr);
           if (!this.state.usuariosData[i]) {
@@ -110,10 +117,8 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago,
-
-      observacion: this.inputObservacion.getValue()
-
+      dataPagos: this.state.tipoPago,// tarea3
+      observacion: this.inputObservacion?.getValue()
     })
   }
   calcularFaltante() {
@@ -145,23 +150,14 @@ class ClientePaqueteRegistroPage extends Component {
 
   render_motivo() {
     var paquete = this.state.paquete;
-    if (!paquete) return null;
-
-    // console.log("si ", paquete)
-
-    // tarea3
+    if (!paquete) return null; // tarea3
     if (paquete.requiere_motivo) return (
       <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} isRequired={true} placeholder={"Escribir motivo del paquete"} />
-
-      // <SInput ref={ref => this.observacion = ref} col={"xs-11"} type={"textArea"} customStyle={"calistenia"} />
     );
   }
 
 
   render() {
-    // var codigo = this.inputBilletera.getValue();
-
-
     return (
       <View style={{
         flex: 1,
@@ -175,8 +171,7 @@ class ClientePaqueteRegistroPage extends Component {
           SNavigation.goBack();
         }} {...this.props} />
         <View style={{
-          width: "100%",
-          flex: 1,
+          width: "100%", flex: 1,
         }}>
           <SScrollView2
             disableHorizontal
@@ -193,8 +188,6 @@ class ClientePaqueteRegistroPage extends Component {
                 width: "90%",
                 maxWidth: 800,
                 alignItems: "center",
-
-                // justifyContent: 'center',
               }}>
                 <Text style={{
                   fontSize: 22,
@@ -238,6 +231,10 @@ class ClientePaqueteRegistroPage extends Component {
                   SPopup.alert("No se encontro el paquete.")
                   return
                 }
+
+                // if (this.state.paquete.) {
+
+
                 if (this.state.paquete.precio > 0) {
                   if (!this.state.tipoPago) {
                     SPopup.alert("No se encontro el tipo de pago.")
@@ -253,10 +250,24 @@ class ClientePaqueteRegistroPage extends Component {
                     return;
                   }
 
-                  if (!this.inputObservacion.verify()) {
-                    SPopup.alert("Ingresar motivo del paquete")
-                    return null;
+                  // console.log("chaval ", this.state.paquete)
+
+
+                  if (this.state.paquete.requiere_motivo) {
+                    if (!this.inputObservacion.verify()) {
+                      SPopup.alert("Ingresar motivo del paquete")
+                      return;
+                    }
                   }
+
+                  // if (this.state.paquete.requiere_motivo) {
+                  //   if (!this.inputObservacion.verify()) {
+                  //     SPopup.alert("Ingresar motivo del paquete")
+                  //     return null;
+                  //   }
+                  // }
+
+
 
                   if (monto < this.state.paquete.precio) {
                     SPopup.confirm({
@@ -271,6 +282,8 @@ class ClientePaqueteRegistroPage extends Component {
                   //   return;
                   // }
                 }
+
+
                 this.continue();
 
               }}>

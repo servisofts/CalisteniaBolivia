@@ -244,7 +244,6 @@ class Movimientos extends Component {
   }
 
   render() {
-    console.log("\n A", this.montoA, "\n", "B ", this.montoB, "\n", "C ", this.montoC,)
     this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
     if (!this.activa) return <View />;
     if (this.props.setActiva) this.props.setActiva(this.activa);
