@@ -48,3 +48,21 @@ mostra la primera mayuscrula y luego minuscula
 ✅ ✅ ✅ tarea10.- exportar en excel la lista de clientes.
         buscar por motivo
         mostra la primera mayuscrula y luego minuscula
+
+
+tarea 11.-fecha de pagos trimestrales, mis_inversiones/perfil
+
+
+
+en clientes la proroga
+
+hay casos que el cliente
+se adelanta un dia, por ejemplo el clinete pago para iniciar el 18 de febrero, pero se vino un dia antes.. entonces deberia correr su dias
+
+atrazar 3 meses su inscribcion, para 2 meses depues, por ejemplo cuando el clienete se incribio en febrero y resulta que tiene una operacion se puede cambiar la fecha para que inicie ne junio?
+
+pausar su dias, en medio del camino, hay clinete que tiene accidente o le paso algo, como podria pausar 3 dias y luego habilitar/despausar para seguir
+
+
+para kent
+fecha de pagos trimestrales, mis_inversiones/perfil

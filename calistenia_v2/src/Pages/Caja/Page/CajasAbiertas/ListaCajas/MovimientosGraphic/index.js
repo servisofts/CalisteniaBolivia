@@ -118,7 +118,7 @@ export default class MovimientosGraphic extends Component {
           // borderColor: STheme.color.card,
           borderRadius: 8
         }}>
-          <SText center style={{ fontSize: 12, color: "", width: "100%" }}>Bs. {this.getMontoMaximo()}</SText>
+          <SText center style={{ fontSize: 12, color: "white", width: "100%" }}>Bs. {this.getMontoMaximo()}</SText>
 
         </SView>
 
