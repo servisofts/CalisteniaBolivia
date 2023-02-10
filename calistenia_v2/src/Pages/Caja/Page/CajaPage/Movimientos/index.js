@@ -198,6 +198,11 @@ class Movimientos extends Component {
           total.egreso += o.monto;
         }
 
+        if (o.monto >= 0) {
+          total_tipo_pago[o.key_tipo_pago] += o.monto;
+        }
+
+
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 

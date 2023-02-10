@@ -243,15 +243,15 @@ class Movimientos extends Component {
     if (this.moviminetos) {
       console.log(this.moviminetos)
       Object.values(this.moviminetos).map((o) => {
+
         if (o.monto >= 0) {
           total.ingreso += o.monto;
         } else {
           total.egreso += o.monto;
         }
 
-        console.log("ahi ", o)
+        // console.log("ahi ", o)
 
-        // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0;
         if (o.monto >= 0) {
           total_tipo_pago[o.key_tipo_pago] += o.monto;
         }
@@ -259,11 +259,10 @@ class Movimientos extends Component {
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 
-
-
         if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) {
           total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0;
         }
+
         total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
