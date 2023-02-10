@@ -43,8 +43,8 @@ tabla cliente, que exporte por excel.
 mostra la primera mayuscrula y luego minuscula
 
 
-tarea8.- cambiar el tamaño y y verificar el monto, efeectivo, traspaso en caja historicos
-💡💡💡tarea cambiar color o background en el monto ingreso,egreso      finanzas/paquetes_vendidos
-💡💡💡 exportar en excel la lista de clientes.
+✅ ✅ ✅ tarea8.- cambiar el tamaño y y verificar el monto, efeectivo, traspaso en caja historicos
+✅ ✅ ✅ tarea9.- cambiar color o background en el monto ingreso,egreso      finanzas/paquetes_vendidos
+✅ ✅ ✅ tarea10.- exportar en excel la lista de clientes.
         buscar por motivo
         mostra la primera mayuscrula y luego minuscula

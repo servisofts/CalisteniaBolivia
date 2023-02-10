@@ -110,9 +110,21 @@ export default class MovimientosGraphic extends Component {
         <SView col={"xs-12"} row style={{ flex: 1 }} onLayout={(evt) => { if (!this.state.layout) { this.setState({ layout: evt.nativeEvent.layout }) } }}>
           {this.getSvg()}
         </SView>
-        <SText style={{ fontSize: 12, position: "absolute", top: 5, color: FColor.up, width: 50 }}>Bs. {this.getMontoMaximo()}</SText>
-        <SText style={{ fontSize: 12, position: "absolute", bottom: 5, color: FColor.down, width: 50 }}>Bs. {this.getMontoMinimo()}</SText>
-      </View>
+
+        <SView row style={{
+          backgroundColor: FColor.up, height: 24, maxWidth: 100,
+          borderWidth: 1,
+          position: "absolute",
+          // borderColor: STheme.color.card,
+          borderRadius: 8
+        }}>
+          <SText center style={{ fontSize: 12, color: "", width: "100%" }}>Bs. {this.getMontoMaximo()}</SText>
+
+        </SView>
+
+        {/* <SText style={{ fontSize: 22, position: "absolute", top: 5, color: FColor.up, width: 100 }}>Bs. {this.getMontoMaximo()}</SText> */}
+        {/* <SText style={{ fontSize: 12, position: "absolute", bottom: 5, color: FColor.down, width: 50 }}>Bs. {this.getMontoMinimo()}</SText> */}
+      </View >
     );
   }
 }
