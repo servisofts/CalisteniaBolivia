@@ -22,3 +22,29 @@ area8.- crear el modulo snack 💡💡💡 ❌ ❌ ❌.
 * levantar calistenia
 * cerrar caja e eliminar lo que hice prueba
 * alvaro hacer wiki
+
+
+
+
+<!-- text-transform: capitalize
+text-transform: uppercase;
+text-transform: lowercase; -->
+
+
+finanzas/paquetes_vendidos
+tarea cambiar color o background en el monto ingreso,egreso
+
+caja activa
+cambiar el tamaño y y verificar el monto en caja
+
+en el buscaor agregar el buscar motivo
+tabla cliente, que exporte por excel.
+
+mostra la primera mayuscrula y luego minuscula
+
+
+💡💡💡tarea cambiar color o background en el monto ingreso,egreso      finanzas/paquetes_vendidos
+💡💡💡cambiar el tamaño y y verificar el monto, efeectivo, traspaso en caja historicos
+💡💡💡 exportar en excel la lista de clientes.
+        buscar por motivo
+        mostra la primera mayuscrula y luego minuscula

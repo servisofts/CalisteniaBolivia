@@ -200,11 +200,11 @@ class Movimientos extends Component {
         {icon}
       </SView>
       <SText style={{
-        fontSize: 10,
+        fontSize: 12,
         textAlign: "center"
       }}>{mensaje}</SText>
       <SText style={{
-        fontSize: 10,
+        fontSize: 14,
         textAlign: "center"
       }}> {monto}bs</SText>
     </SView>
@@ -249,14 +249,16 @@ class Movimientos extends Component {
           total.egreso += o.monto;
         }
 
+        console.log("ahi ", o)
+
         // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0;
+        if (o.monto >= 0) {
+          total_tipo_pago[o.key_tipo_pago] += o.monto;
+        }
 
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 
-        // if (o.monto >= 0) {
-        //   total_tipo_pago[o.key_tipo_pago] += o.monto;
-        // }
 
 
         if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) {
@@ -317,6 +319,7 @@ class Movimientos extends Component {
           }}>
           </SView>
         </SView>
+
         {this.getInfo()}
       </SView>
     )
