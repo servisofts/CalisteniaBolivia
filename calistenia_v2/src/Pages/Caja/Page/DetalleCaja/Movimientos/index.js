@@ -201,7 +201,8 @@ class Movimientos extends Component {
       </SView>
       <SText style={{
         fontSize: 12,
-        textAlign: "center"
+        textAlign: "center",
+        textTransform: "capitalize"
       }}>{mensaje}</SText>
       <SText style={{
         fontSize: 14,
