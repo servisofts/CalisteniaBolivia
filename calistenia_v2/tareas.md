@@ -66,3 +66,7 @@ pausar su dias, en medio del camino, hay clinete que tiene accidente o le paso a
 
 para kent
 fecha de pagos trimestrales, mis_inversiones/perfil
+
+
+            <SText style={{ fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
+            <SText style={{ textTransform: "capitalize", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>

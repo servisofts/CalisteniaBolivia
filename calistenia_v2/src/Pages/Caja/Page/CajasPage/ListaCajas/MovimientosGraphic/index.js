@@ -103,6 +103,8 @@ export default class MovimientosGraphic extends Component {
     </Svg>
   }
   // tarea5
+  //  tarea8
+
   render() {
     if (!this.props.data) return <View />
     return (
@@ -113,8 +115,20 @@ export default class MovimientosGraphic extends Component {
           }} >
           {this.getSvg()}
         </SView>
-        <SText style={{ fontSize: 12, position: "absolute", top: 5, color: FColor.up, width: 50 }}>Bs. {this.getMontoMaximo()}</SText>
-        <SText style={{ fontSize: 12, position: "absolute", bottom: 5, color: FColor.down, width: 50 }}>Bs. {this.getMontoMinimo()}</SText>
+
+        {/* tarea8 */}
+
+        <SView row center style={{ height: 24, width: 70, position: "absolute", top: 6, borderRadius: 2, backgroundColor: "green" }}>
+          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMaximo()}</SText>
+        </SView>
+
+        <SView row center style={{ height: 24, width: 70, position: "absolute", bottom: 6, borderRadius: 2, backgroundColor: "red" }}>
+          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMinimo()}</SText>
+        </SView>
+
+
+        {/* <SText style={{ fontSize: 12, position: "absolute", top: 5, color: FColor.up, width: 50 }}>Bs. {this.getMontoMaximo()}</SText> */}
+        {/* <SText style={{ fontSize: 12, position: "absolute", bottom: 5, color: FColor.down, width: 50 }}>Bs. {this.getMontoMinimo()}</SText> */}
 
       </View>
     );

@@ -176,8 +176,9 @@ class ListaCajas extends Component {
           <SView flex>
             {/* tarea5 */}
             <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
-            <SText style={{ textTransform: "lowercase", fontSize: 16, color: "#999" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
-            <SText style={{ fontSize: 12, color: "#999" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+
+            <SText style={{ textTransform: "capitalize", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
+            <SText style={{ fontSize: 12, color: "white" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
           </SView>
           <SView center style={{ height: 35 }}> <SText style={{ fontSize: 16 }}>Bs. {total}</SText> </SView>
         </SView>
