@@ -116,7 +116,6 @@ public class PaqueteVenta {
         try {
             String consulta = "select get_recibo('" + obj.getString("key") + "') as json";
             JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
-            SPGConect.historico(obj.getString("key_usuario"), "paquete_venta_getByKey", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {

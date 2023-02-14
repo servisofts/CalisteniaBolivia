@@ -106,7 +106,7 @@ class index extends Component {
     //     </SView>
     // }
     render_with_data() {
-        var sucursales = Model.filtros.Action.getAll();
+        var sucursales = Model.sucursal.Action.getAll();
         //var usuarios = Model.filtros.Action.getAll();
         if (!sucursales) return <SLoad />
         // if (!usuarios) usuarios = {}
@@ -121,7 +121,7 @@ class index extends Component {
             data={Object.values(sucursales)}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
-                return <Sucursal.Card image={2} nombre = {"CENTRO"}></Sucursal.Card>
+                return <Sucursal.Card image={2} datas={data} ></Sucursal.Card>
                 // <SView col={"xs-12"} row>
                 //     <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} onPress={this.props.onPress}>
                 //         <SView col={"xs-12"} center height >
@@ -158,12 +158,7 @@ class index extends Component {
     }
 
     render() {
-        var miDireccion = Model.filtros.Action.getByKey("direccion")?.select
-        if (!miDireccion) {
-            console.log("Entro en mi direccion", miDireccion)
-            SNavigation.replace("/direccion");
-            return null;
-        }
+       
         return (
             <SPage
                 navBar={this.navBar()}

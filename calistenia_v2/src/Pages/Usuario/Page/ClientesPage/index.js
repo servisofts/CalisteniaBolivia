@@ -94,13 +94,13 @@ class ClientesPage extends Component {
 
     const getLista = () => {
       var data = Model.usuario.Action.getAll();
+      // var data = Usuario.Actions.getAll(this.props);
       var ClientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
       if (!data) return <SLoad />
       if (!ClientesActivos) return <SLoad />
       if (!this.state.buscador) {
         return <View />
       }
-
       this.usuarios = data;
 
       var objFinal = {};
@@ -144,10 +144,12 @@ class ClientesPage extends Component {
           this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
+        // alvaro
         var obj = data[ClientesActivos[key]?.key_usuario];
         if (!obj) return null;
         var vijencia = objFinal[key]["vijencia"];
 
+        // console.log("chaval ", vijencia?.paquete?.observacion)
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -193,7 +195,7 @@ class ClientesPage extends Component {
                   color: STheme.color.text,
                   textTransform: "capitalize",
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " " + vijencia?.paquete?.observacion ?? "eee"} </Text>
                 {this.getSucursal(vijencia["caja"].key_sucursal)}
                 {this.getUsuario(vijencia["caja"].key_usuario)}
 
@@ -235,11 +237,12 @@ class ClientesPage extends Component {
 
           <ExportExcel
             header={[
-              // { key: "key", label: "key", width: 100 },
+              { key: "key", label: "key", width: 100 },
               { key: "cliente_ci", label: "CI", width: 100 },
               { key: "cliente_nombre", label: "Cliente", width: 250 },
               { key: "cliente_telefono", label: "Telefono", width: 250 },
               { key: "paquete", label: "paquete", width: 200 },
+              { key: "observacion", label: "observacion", width: 100 },
               { key: "paquete_precio", label: "precio", width: 100 },
               { key: "fecha_inicio", label: "fecha_inicio", width: 100 },
               { key: "fecha_fin", label: "fecha_fin", width: 100 },
@@ -247,19 +250,24 @@ class ClientesPage extends Component {
             getDataProcesada={() => {
               var daFinal = {};
               Object.values(this.finalData).map((obj, i) => {
-                var usr = this.usuarios[obj.key];
-                console.log("papafritas ", finalData);
-                if (!usr?.estado || usr?.estado <= 0) return;
+                // var usr = this.usuarios[obj.key];
+                // if (!obj?.estado || obj?.estado <= 0) return;
+                console.log("ropa ", obj);
                 var toInsert = {
                   key: obj.key,
+                  cliente_ci: obj?.CI,
+                  cliente_nombre: obj?.Nombres + " " + obj?.Apellidos,
+                  cliente_telefono: obj?.Telefono,
+
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
-                  // fecha_inicio: obj?.vijencia?.fecha_inicio,
-                  // fecha_fin: obj?.vijencia?.fecha_fin,
-                  // cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
-                  // cliente_telefono: usr?.Telefono,
-                  // cliente_ci: usr?.CI,
+
+                  fecha_inicio: obj?.vijencia?.fecha_inicio,
+                  fecha_fin: obj?.vijencia?.fecha_fin,
+                  observacion: obj?.vijencia?.paquete?.observacion,
+
                 }
+                // console.log("papafritas ", toInsert);
                 daFinal[i] = toInsert
               })
               return daFinal
