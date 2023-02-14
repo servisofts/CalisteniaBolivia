@@ -16,7 +16,7 @@ export default class index extends Component<TopBarPropsType> {
                 <SIcon name={"KMenu"} width={32} />
             </SView>
             <SView flex center height>
-                <SText color={STheme.color.secondary} fontSize={18}>{this.props.title}</SText>
+                <SText color={STheme.color.text} fontSize={18}>{this.props.title}</SText>
             </SView>
             <SView width={50} height center onPress={() => {
                 SNavigation.navigate('/ajustes');

@@ -22,7 +22,7 @@ export default class index extends Component<TopBarPropsType> {
             <SView width={50} height center onPress={() => {
                     SNavigation.navigate('/ajustes');
                 }} >
-                <SIcon name={"Tuerca"} width={24} height={24} fill={STheme.color.secondary} />
+                <SIcon name={"Tuerca"} width={24} height={24} fill={STheme.color.text} />
             </SView>
         </SView>)
     }

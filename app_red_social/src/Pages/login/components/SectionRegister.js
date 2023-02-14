@@ -17,7 +17,7 @@ export default class SectionRegister extends Component {
                 
                 <SHr height={20} />
                 <SText fontSize={15} color={STheme.color.lightBlack}  font={"LondonMM"} onPress={() => { SNavigation.navigate('/login/recuperar'); }}>¿No tienes cuenta? </SText>
-                <SText fontSize={15} color={STheme.color.white}  font={"LondonMM"} onPress={() => {
+                <SText fontSize={15} color={STheme.color.text}  font={"LondonMM"} onPress={() => {
                             SNavigation.navigate("/registro")
                         }}
                         style={{textDecorationLine: 'underline'}}

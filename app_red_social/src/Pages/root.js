@@ -121,7 +121,7 @@ class index extends Component {
             data={Object.values(sucursales)}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
-                return <Sucursal.Card image={2} datas={data} ></Sucursal.Card>
+                return <Sucursal.Card image={1} datas={data} ></Sucursal.Card>
                 // <SView col={"xs-12"} row>
                 //     <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} onPress={this.props.onPress}>
                 //         <SView col={"xs-12"} center height >

@@ -11,12 +11,11 @@ const Model = {
     ...Roles_permisos.Model,
     ...Geolocation.Model,
     ...Chat.Model,
-   
     ...calistenia,
 }
 
 Usuario.init({
-    cabecera: "usuario_app",
+    cabecera: "registro_administrador",
     Columns: {
         "key": { type: "text", pk: true },
         "Nombres": { type: "text", notNull: true, editable: true },

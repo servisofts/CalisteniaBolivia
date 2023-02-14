@@ -36,7 +36,7 @@ class index extends Component {
                     this.setState({ layout: evt.nativeEvent.layout })
                 }}>
                     <SView col={"xs-6 sm-5 md-4 lg-3 xl-2 xxl-1.5"}>
-                        <SIcon name={"logowhite"} fill={STheme.color.secondary} />
+                        <SIcon name={"logowhite"} fill={STheme.color.text} />
                     </SView>
                     {/* <SHr height={100} /> */}
                     {/* {this.renderFooter()} */}
