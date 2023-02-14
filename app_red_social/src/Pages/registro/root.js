@@ -33,7 +33,7 @@ class root extends Component {
                         col={"xs-12"}
                         inputProps={{
                             col: "xs-12",
-                            separation: 16
+                            separation: 12
                         }}
                         style={{
                             alignItems: "center",
