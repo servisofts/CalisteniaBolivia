@@ -254,11 +254,11 @@ class ClientesPage extends Component {
                   key: obj.key,
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
-                  fecha_inicio: obj?.vijencia?.fecha_inicio,
-                  fecha_fin: obj?.vijencia?.fecha_fin,
-                  cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
-                  cliente_telefono: usr?.Telefono,
-                  cliente_ci: usr?.CI,
+                  // fecha_inicio: obj?.vijencia?.fecha_inicio,
+                  // fecha_fin: obj?.vijencia?.fecha_fin,
+                  // cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
+                  // cliente_telefono: usr?.Telefono,
+                  // cliente_ci: usr?.CI,
                 }
                 daFinal[i] = toInsert
               })

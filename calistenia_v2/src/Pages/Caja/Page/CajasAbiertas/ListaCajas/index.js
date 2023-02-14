@@ -163,7 +163,7 @@ class ListaCajas extends Component {
           <SView flex>
             {/* tarea5 ✅ ✅ ✅ */}
             <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
-            <SText style={{ textTransform: "lowercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
+            <SText style={{ textTransform: "uppercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
             <SText style={{ fontSize: 12, color: "white" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
           </SView>
           <SView center style={{
