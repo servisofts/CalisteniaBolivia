@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SImage, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FloatButtom from '../../../../Components/FloatButtom/index';
@@ -56,7 +56,14 @@ class BancoPage extends Component {
                   borderRadius: 8,
                   overflow: "hidden"
                 }}>
+
+                  {/* <FotoPerfilComponent data={this.data} component={component} style={{
+                    width: 150,
+                    height: 150,
+                  }} /> */}
+
                   <SImage src={SSocket.api.root + component + "_" + obj.key} />
+                  {/* <SImage src={Model.sucursal._get_image_download_path(SSocket.api, obj.key)} /> */}
 
                 </SView>
 

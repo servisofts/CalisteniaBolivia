@@ -117,9 +117,14 @@ class ListaCajas extends Component {
       )
     })
   }
+
   getItems() {
     var lista = this.getLista();
     if (!lista) return <ActivityIndicator color={STheme.color.text} />;
+    // tarea5 ✅ ✅ ✅ NO hay lista esta en blanco
+    // if (!lista) return <SText>NO hay lista esta en blanco, seleecione otra fecha</SText>;
+
+
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(lista).map((key) => {
       var obj = lista[key];
       if (!key) return <View />
@@ -175,7 +180,7 @@ class ListaCajas extends Component {
 
 
           <SView flex>
-            {/* tarea5 ✅ ✅ ✅ */}
+            {/* tarea5 ✅ ✅ ✅ red */}
             <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
             <SText style={{ textTransform: "uppercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
             <SText style={{ fontSize: 12, color: "white" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
@@ -201,6 +206,9 @@ class ListaCajas extends Component {
     })
   }
   render() {
+
+
+
     return (
       <SView col={"xs-12"} style={{
         flex: 1,

@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import Buscador from '../../../../Components/Buscador';
-import FloatButtom from '../../../../Components/FloatButtom';
-import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel, SDate } from 'servisofts-component';
+import { ExportExcel, SButtom, SDate, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
-import Paquete_Item from './Paquete_Item';
-import { SText } from 'servisofts-component';
-import Sucursal from '../../../Sucursal';
-import SucursalSelect from './SucursalSelect';
-import sucursal_usuario from '../../../sucursal_usuario';
-import xlsx from 'xlsx-color';
+import Buscador from '../../../../Components/Buscador';
 import Model from '../../../../Model';
+import Sucursal from '../../../Sucursal';
+import sucursal_usuario from '../../../sucursal_usuario';
+import Paquete_Item from './Paquete_Item';
+import SucursalSelect from './SucursalSelect';
 
 class ClientesPage extends Component {
 
@@ -139,7 +134,7 @@ class ClientesPage extends Component {
       });
 
       // var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
-      
+
       this.finalData = objFinal;
       return this.pagination(
         new SOrdenador([
@@ -235,6 +230,9 @@ class ClientesPage extends Component {
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
         <SView col={"xs-12"} center>
+
+          {/* alvariño */}
+
           <ExportExcel
             header={[
               // { key: "key", label: "key", width: 100 },
@@ -250,16 +248,17 @@ class ClientesPage extends Component {
               var daFinal = {};
               Object.values(this.finalData).map((obj, i) => {
                 var usr = this.usuarios[obj.key];
+                console.log("papafritas ", finalData);
                 if (!usr?.estado || usr?.estado <= 0) return;
                 var toInsert = {
                   key: obj.key,
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
-                  fecha_inicio: obj?.vijencia?.fecha_inicio,
-                  fecha_fin: obj?.vijencia?.fecha_fin,
-                  cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
-                  cliente_telefono: usr?.Telefono,
-                  cliente_ci: usr?.CI,
+                  // fecha_inicio: obj?.vijencia?.fecha_inicio,
+                  // fecha_fin: obj?.vijencia?.fecha_fin,
+                  // cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
+                  // cliente_telefono: usr?.Telefono,
+                  // cliente_ci: usr?.CI,
                 }
                 daFinal[i] = toInsert
               })
