@@ -12,12 +12,12 @@
         "reconectTime": 5000
     },
     "files":{
-        "url":"/u01/servisoftsFiles/calistenia/"
+        "url":"D:/u01/servisoftsFiles/calistenia/"
     },
     "data_base": {
         "puerto": 5432,
         "pass": "postgres",
-        "ip": "192.168.5.18",
+        "ip": "192.168.6.18",
         "bd_name": "servisofts.calistenia",
         "user": "postgres"
     },
