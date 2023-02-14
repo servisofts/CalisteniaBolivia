@@ -171,6 +171,7 @@ class index extends Component {
                 onRefresh={this.clearData}
             >
                 <Container>
+                    <SHr height={15} />
                     {this.render_with_data()}
                 </Container>
             </SPage>
