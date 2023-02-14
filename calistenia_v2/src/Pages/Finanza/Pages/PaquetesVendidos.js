@@ -48,7 +48,7 @@ class PaquetesVendidos extends Component {
       header={[
         { key: "index", label: "#", width: 40 },
         { key: "sucursal", label: "Sucursal", width: 100 },
-        { key: "fecha_on", label: "Fecha de registro", width: 120, order: "asc", render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
+        { key: "fecha_on", label: "Fecha de registro", width: 120, order: "asc", center: true, render: (item) => { return new SDate(item).toString("yyyy-MM-dd hh:mm") } },
         {
           key: "usuarios", label: "Cliente", width: 250, render: (item) => { return item.map((key_usr) => { return `${usuarios[key_usr]?.Nombres} ${usuarios[key_usr]?.Apellidos}`.toUpperCase() }) },
           component: (arr) => { return <SText fontSize={11}>{arr.join(", ")}</SText> }
@@ -60,9 +60,9 @@ class PaquetesVendidos extends Component {
         //         return this.getDetallePago(item)
         //     }
         // },
-        { key: "paquete", label: "Paquete", width: 100 },
+        { key: "paquete", label: "Paquete", width: 100, center: true, },
         { key: "observacion", label: "Motivo", width: 180 },
-        { key: "total", label: "Monto", sumar: true, width: 70 },
+        { key: "total", label: "Monto", sumar: true, center: true, width: 70 },
         { key: "key_cajero", label: "Cajero", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}`.toUpperCase() } },
       ]}
       filter={(item) => { return sucursal_usuario.Actions.isActive(item.key_sucursal, this.props) }}

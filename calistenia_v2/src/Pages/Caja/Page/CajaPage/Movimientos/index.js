@@ -144,15 +144,16 @@ class Movimientos extends Component {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
+      <SText style={{
+        fontSize: 10,
+        textAlign: "center"
+      }}>{mensaje}</SText>
+
       <SView style={{
         width: 35, height: 35, justifyContent: "center", alignItems: "center",
       }}>
         {icon}
       </SView>
-      <SText style={{
-        fontSize: 10,
-        textAlign: "center"
-      }}>{mensaje}</SText>
       <SText style={{
         fontSize: 10,
         textAlign: "center"
@@ -221,6 +222,7 @@ class Movimientos extends Component {
       </SView>
       {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
       {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egreso)}
+      {/* {this.getDetalle("Egreso traspaso a bancos", this.getIcon(-1), total.egreso)} */}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>

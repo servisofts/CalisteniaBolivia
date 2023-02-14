@@ -110,6 +110,7 @@ export default class MovimientosGraphic extends Component {
         <SView col={"xs-12"} row style={{ flex: 1 }} onLayout={(evt) => { if (!this.state.layout) { this.setState({ layout: evt.nativeEvent.layout }) } }}>
           {this.getSvg()}
         </SView>
+
         {/* tarea8 */}
 
         <SView row center style={{ height: 24, width: 70, position: "absolute", top: 6, borderRadius: 2, backgroundColor: "green" }}>

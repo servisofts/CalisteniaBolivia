@@ -191,6 +191,14 @@ class Movimientos extends Component {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
+
+
+      <SText style={{
+        fontSize: 12,
+        textAlign: "center",
+        textTransform: "capitalize"
+      }}>{mensaje}</SText>
+
       <SView style={{
         width: 35,
         height: 35,
@@ -199,11 +207,6 @@ class Movimientos extends Component {
       }}>
         {icon}
       </SView>
-      <SText style={{
-        fontSize: 12,
-        textAlign: "center",
-        textTransform: "capitalize"
-      }}>{mensaje}</SText>
       <SText style={{
         fontSize: 14,
         textAlign: "center"
