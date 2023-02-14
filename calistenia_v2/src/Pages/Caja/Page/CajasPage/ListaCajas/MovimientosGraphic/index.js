@@ -102,7 +102,7 @@ export default class MovimientosGraphic extends Component {
       {this.getLines()}
     </Svg>
   }
-  // tarea5
+  // tarea5 ✅ ✅ ✅
   //  tarea8
 
   render() {

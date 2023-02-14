@@ -10,7 +10,6 @@ class index extends DPA.profile {
             Parent: Parent,
             params: ["key_gestion"],
             excludes: ["key", "key_usuario", "key_servicio", "key_sucursal"],
-            
         });
     }
     $allowEdit() {
@@ -27,6 +26,8 @@ class index extends DPA.profile {
         if (!data) return null;
         return data[this.pk]
     }
+
+    
     $render(){
         return <AsientoContable pk={this.pk} />
     }

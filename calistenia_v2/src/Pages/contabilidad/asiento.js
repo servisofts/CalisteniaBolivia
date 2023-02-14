@@ -18,7 +18,7 @@ class index extends Component {
 
         return (
             <SPage title={"Asiento contable"} disableScroll center> 
-                <SView col={"xs-11.5 sm-10 md-8"} flex>
+                <SView col={"xs-11.5 sm-10 md-8"} height>
                     <AsientoContable key_gestion={Model.gestion.Action.getSelect()?.key} key_asiento_contable={this.pk} />
                 </SView>
             </SPage>

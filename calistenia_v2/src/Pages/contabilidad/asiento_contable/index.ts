@@ -3,7 +3,7 @@ import Model from "../../../Model";
 import list from "./list";
 import table from "./table";
 import _new from "./new";
-import profile from "./profile";
+import profile from "../asiento";
 import edit from "./edit";
 import _delete from "./delete";
 const model = Model.asiento_contable;

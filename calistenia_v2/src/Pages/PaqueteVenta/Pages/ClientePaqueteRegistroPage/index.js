@@ -9,6 +9,14 @@ import TiposDePago from './TiposDePago';
 import Usuario from './Usuario';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
+
+// const changeTipoPago = {
+//   "efectivo": "Efectivo",
+//   "tarjeta": "Tarjeta",
+//   "transferencia": "Transferencia",
+//   "cheque": "Cheque",
+// }
+
 class ClientePaqueteRegistroPage extends Component {
   constructor(props) {
     super(props);
@@ -119,7 +127,7 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago, // tarea3
+      dataPagos: this.state.tipoPago, // tarea3 ✅ ✅ ✅
       observacion: this.inputObservacion?.getValue()
 
     })
@@ -153,7 +161,7 @@ class ClientePaqueteRegistroPage extends Component {
 
   render_motivo() {
     var paquete = this.state.paquete;
-    if (!paquete) return null; // tarea3
+    if (!paquete) return null; // tarea3 ✅ ✅ ✅
     if (paquete.requiere_motivo) return (
       <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} isRequired={true} placeholder={"Escribir motivo del paquete"} />
     );
@@ -183,8 +191,6 @@ class ClientePaqueteRegistroPage extends Component {
                 width: "90%",
                 maxWidth: 800,
                 alignItems: "center",
-
-                // justifyContent: 'center',
               }}>
                 <Text style={{
                   fontSize: 22,
@@ -239,6 +245,15 @@ class ClientePaqueteRegistroPage extends Component {
                     })
                     return;
                   }
+
+                  if (this.state.paquete.requiere_motivo) {
+                    if (!this.inputObservacion.verify()) {
+                      SPopup.alert("Ingresar motivo del paquete")
+                      return;
+                    }
+                  }
+
+
                   // if (this.state.tipoPago[]) {
                   //   SPopup.alert("No se encontro el tipo de pago.")
                   //   return;

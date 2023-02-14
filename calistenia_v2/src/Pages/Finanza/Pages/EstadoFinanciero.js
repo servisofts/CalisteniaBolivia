@@ -20,7 +20,7 @@ class EstadoFinanciero extends Component {
     if (!movimientos) return <SLoad />
     return <STable2
       header={[
-        // tarea1
+        // tarea1 ✅ ✅ ✅
         { key: "fecha_venta", label: "Fecha", width: 120, order: "asc", type: "", center: true, },
         // { key: "monto_paquetes", label: "monto_paquetes", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Paquete"} width={12} height={12} />), },
         { key: "efectivo", label: "Efectivo", width: 120, center: true, sumar: true, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Money"} width={12} height={12} />), },

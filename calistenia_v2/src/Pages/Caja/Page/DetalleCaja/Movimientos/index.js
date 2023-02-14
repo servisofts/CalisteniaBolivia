@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { SDate, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
+
+const changeTipoPago = {
+  "efectivo": "Efectivo",
+  "tarjeta": "Tarjeta",
+  "transferencia": "Transferencia",
+  "cheque": "Cheque",
+}
 class Movimientos extends Component {
   constructor(props) {
     super(props);
@@ -177,15 +184,16 @@ class Movimientos extends Component {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
+      <SText style={{
+        fontSize: 10,
+        textAlign: "center"
+      }}>{mensaje}</SText>
+
       <SView style={{
         width: 35, height: 35, justifyContent: "center", alignItems: "center",
       }}>
         {icon}
       </SView>
-      <SText style={{
-        fontSize: 10,
-        textAlign: "center"
-      }}>{mensaje}</SText>
       <SText style={{
         fontSize: 10,
         textAlign: "center"
@@ -222,20 +230,15 @@ class Movimientos extends Component {
     // tarea6 caja y cjas
 
     if (this.moviminetos) {
-      console.log(this.moviminetos)
       Object.values(this.moviminetos).map((o) => {
-        if (o.monto >= 0) {
-          total.ingreso += o.monto;
-        } else {
-          total.egreso += o.monto;
-        }
+        if (o.monto >= 0) { total.ingreso += o.monto; }
+        else { total.egreso += o.monto; }
+        // tarea6  ✅ ✅ ✅
+
+        if (o.monto >= 0) { total_tipo_pago[o.key_tipo_pago] += o.monto; }
 
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
-
-        // if (o.monto >= 0) {
-        //   total_tipo_pago[o.key_tipo_pago] += o.monto;
-        // }
 
         if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
         total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
@@ -243,23 +246,24 @@ class Movimientos extends Component {
     }
 
 
+    // tarea6  ✅ ✅ ✅
 
 
     return <SView center col={"xs-12 md-10 xl-8"} row >
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
-        {/* <SText style={{ color: "#999" }}>Informacion</SText> */}
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
       {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
       {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egreso)}
+      {this.getDetalle("Egreso por trapaso banco", this.getIcon(-1), total.egreso)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de pagos</SText>
       </SView>
       {Object.keys(tiposPagos).map((key, index) => {
-        return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
+        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
       })}
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -296,6 +300,7 @@ class Movimientos extends Component {
           </SView>
         </SView>
         {this.getInfo()}
+
       </SView>
     )
   }

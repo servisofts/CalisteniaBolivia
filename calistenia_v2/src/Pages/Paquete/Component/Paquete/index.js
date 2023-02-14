@@ -60,10 +60,7 @@ class Paquete extends Component {
           <Text style={{ fontSize: 14, color: STheme.color.text }}>{obj.descripcion}</Text>
         </View>
 
-
-
-
-        {/* tarea3 */}
+        {/* tarea3 ✅ ✅ ✅ */}
         <View><SText col={"xs-12"} fontSize={14} font={"Roboto"} >#per: {obj.participantes} dias: {obj.dias}</SText></View>
         <View style={{ flex: 2, height: 20, justifyContent: "center", alignItems: "center", paddingStart: 8 }}>
           <Text style={{ fontSize: 14, color: STheme.color.text }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>

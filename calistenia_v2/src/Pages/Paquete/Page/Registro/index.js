@@ -33,7 +33,7 @@ class Registro extends Component {
         customStyle: "calistenia",
         col: "xs-12"
       }}
-      // tarea2
+      // tarea2 ✅ ✅ ✅
 
       inputs={{
         descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
