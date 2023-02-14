@@ -31,6 +31,7 @@ class index extends DPA.list {
     $onSelect(data) {
         SNavigation.navigate(Parent.path + "/profile", { pk: data.key, key_gestion: this.$params.key_gestion })
     }
+    
     $getData() {
         var data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion });
         return data;
