@@ -14,9 +14,9 @@ export default class SectionFooter extends Component {
         return (
             <SView col={"xs-12"} center>
 
-                <PButtom fontSize={20} onPress={this.props.onPress}>Login</PButtom>
+                <PButtom  fontSize={20} onPress={this.props.onPress}>Login</PButtom>
                 <SHr height={20} />
-                <SText fontSize={14} color={STheme.color.lightBlack} style={{ textDecorationLine: 'underline' }} font={"LondonMM"} onPress={() => { SNavigation.navigate('/login/recuperar'); }}>¿Olvidaste tu correo o contraseña?</SText>
+                <SText fontSize={14} color={STheme.color.lightBlack}  font={"LondonMM"} onPress={() => { SNavigation.navigate('/login/recuperar'); }}>¿Olvidaste tu contraseña?</SText>
             </SView>
         );
     }

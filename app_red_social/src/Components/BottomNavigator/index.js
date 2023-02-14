@@ -1,58 +1,35 @@
 import React, { Component } from 'react';
 
-import { SView, SText, STheme, SGradient, SIcon, SNavigation } from 'servisofts-component'
+import { SView, SText, STheme, SGradient, SIcon, SNavigation,SHr } from 'servisofts-component'
 import Model from '../../Model';
 
 export default class index extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		};
-	}
+	
+    constructor(props) {
+        super(props);
+    }
 
-	getItem({ key, title, icon, url, params }) {
-		var color = "#ffffff";
-		var isSelect = (url == this.props.url)
-		return <SView flex center height onPress={() => {
-			SNavigation.navigate(url, params);
-		}} >
-			<SView style={{
-				borderRadius: 16,
-				backgroundColor: (isSelect ? "#ffffff44" : ""),
-				width: 55,
-				height: 45,
-			}} center>
-				<SView height={23} colSquare center >
-					<SIcon name={icon} fill={color} />
-				</SView>
-				<SView height={2} />
-				<SText fontSize={8} center color={color}  >{title}</SText>
-			</SView>
-		</SView>
-	}
-	render() {
-		return (
-			// <SView flex col={"xs-12"}>
-			// 		<SView col={"xs-12"} flex>
-			// 		</SView>
-			<SView col={"xs-12"} height={50} border={'transparent'} style={{ backgroundColor: STheme.color.accent }}>
-				<SView col={'xs-12'} row height >
-					{this.getItem({ key: "root", title: 'Descrubir', icon: 'MenuLocation', url: '/root' })}
-					{this.getItem({ key: "explorar", title: 'Explorar', icon: 'MenuExplorar', url: '/explorar' })}
-					{
-						!Model.usuario.Action.getKey() ?
-							(this.getItem({ key: "login", title: 'Login', icon: 'Exit', url: '/login' }))
-							: (this.getItem({ key: "favorito", title: 'Favoritos', icon: 'MenuFavoritos', url: '/favoritos' }))
-					}
-					{
-						!Model.usuario.Action.getKey() ?
-							null
-							: (this.getItem({ key: "pedido", title: 'Pedidos', icon: 'MenuPedido', url: '/compras' }))
-					}
-					{/* {this.getItem({ key: "pedido", title: 'Pedidos', icon: 'MenuPedido', url: '/compras' })} */}
-				</SView>
-			</SView >
-			// </SView>
-		);
-	}
+    getOption = (obj) => {
+        return <SView col={"xs-3"} onPress={() => {
+            SNavigation.navigate(obj.href)
+        }} row center height >
+            <SView width={8} height />
+            <SView width={24} height={24}>
+                {obj.icon}
+            </SView>
+            <SView width={8} height />
+        </SView>
+    }
+    render() {
+        return <SView col={"xs-12"} height={60} backgroundColor={STheme.color.primary} center>
+            <SHr height={1} color={STheme.color.card} />
+            <SView col={"xs-11"} row flex center >
+                {this.getOption({ key: "home", icon: <SIcon name={"Home"} fill={STheme.color.primary} stroke={STheme.color.white} />, href: "client" })}
+                {this.getOption({ key: "search", icon: <SIcon name={"Search2"} fill={STheme.color.primary} stroke={STheme.color.white} />, href: "client/search" })}
+                {this.getOption({ key: "bag", icon: <SIcon name={"Bag"} fill={STheme.color.secondary} stroke={STheme.color.white}  />, href: "" })}
+                {this.getOption({ key: "profile", icon: <SIcon name={"Profile"} fill={STheme.color.primary} stroke={STheme.color.white} />, href: "/login" })}
+            </SView>
+
+        </SView>
+    }
 }

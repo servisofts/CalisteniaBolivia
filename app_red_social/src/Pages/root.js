@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SButtom, SHr, SIcon, SImage, SList, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
-import { BottomNavigator, NavBar, Pedido, Restaurante, TopBar } from '../Components';
+import { BottomNavigator, Container, NavBar, Pedido, Restaurante, TopBar } from '../Components';
 import Model from '../Model';
 import SSocket from 'servisofts-socket'
 class index extends Component {
@@ -19,6 +19,7 @@ class index extends Component {
         Model.pack.Action.CLEAR();
         Model.restaurante.Action.CLEAR();
         Model.favorito.Action.CLEAR();
+        Model.publicacion.Action.CLEAR();
     }
     loadData() {
         this.restaurantes = Model.restaurante.Action.getAllFilters();
@@ -104,26 +105,34 @@ class index extends Component {
         </SView>
     }
     render_with_data() {
+        var sucursales = Model.sucursales.Action.getAll();
+        // var usuarios = Usuario.Actions.getAll(this.props);
+        if (!sucursales) return <SLoad />
+        // if (!usuarios) usuarios = {}
 
-        return <SView col={"xs-12"}>
-            {this.render_pedidos_en_curso()}
-            <SHr height={20} />
-            <SText style={{ paddingLeft: 4, fontSize: 18 }} bold>{"Recomendados Para Ti"}</SText>
-            <SHr />
-            {this.render_list_recomendados()}
-            <SHr height={20} />
-            <SText style={{ paddingLeft: 4, fontSize: 18 }} bold>{"Cerca"}</SText>
-            <SHr />
-            {this.render_list_cerca()}
-            <SHr height={20} />
-            <SText style={{ paddingLeft: 4, fontSize: 18 }} bold>{"Novedades"}</SText>
-            <SHr />
-            {this.render_novedades()}
-        </SView>
+        return <SList
+            center
+            space={32}
+            data={Object.values(sucursales)}
+            order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
+            render={(data) => {
+                return <SView card width={318} height={150} style={{
+                    overflow: "hidden"
+                }}>
+                    <SText>AA</SText>
+                    {/* <SImage src={SSocket.api.root + "novedades/" + data.key} style={{
+                        resizeMode: "cover"
+                    }} /> */}
+                    {/* <SImage src={SSocket.api.root + "novedades/" + data.key} style={{
+                        resizeMode: "cover"
+                    }} /> */}
+                </SView>
+            }}
+        />
 
     }
     navBar() {
-        return <TopBar type={"ubicacion"} />
+        return <TopBar type={"home"} />
     }
 
     render() {
@@ -139,9 +148,14 @@ class index extends Component {
                 footer={this.footer()}
                 onRefresh={this.clearData}
             >
-                <SView col={"xs-12"}>
-                    {this.render_with_data()}
-                </SView>
+                <Container>
+                    {/* {this.render_with_data()} */}
+                    <SView col={"xs-12"} row height={105} style={{borderRadius:20}}>
+                        <SImage src={require('../Assets/img/s1.jpg')} style={{ height: 106,borderRadius:20,overflow:"hidden" }} />
+                    </SView>
+
+
+                </Container>
             </SPage>
         );
     }

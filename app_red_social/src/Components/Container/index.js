@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SView } from 'servisofts-component';
+import { STheme, SView } from 'servisofts-component';
 
 export default class index extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ export default class index extends Component {
 
     render() {
         return (
-            <SView col={"xs-12"} center {...this.props}>
+            <SView col={"xs-12"} center {...this.props} style={{backgroundColor:STheme.color.primary, color:STheme.color.white}}>
                 <SView col={"xs-11 sm-10 md-8 lg-6 xl-4 xxl-3"} center>
                     {this.props.children}
                 </SView>

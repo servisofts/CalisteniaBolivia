@@ -12,8 +12,8 @@ class index extends Component {
     }
 
     render() {
-        
-        return <Chat key_chat={this.pk} key_usuario={Model.usuario.Action.getKey()} />
+        //sale error
+        // return <Chat key_chat={this.pk} key_usuario={Model.usuario.Action.getKey()} />
     }
 }
 const initStates = (state) => {

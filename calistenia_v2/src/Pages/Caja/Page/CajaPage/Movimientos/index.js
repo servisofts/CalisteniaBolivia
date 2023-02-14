@@ -197,7 +197,6 @@ class Movimientos extends Component {
     var tiposPagos = this.getTipoPago();
     if (!tiposPagos) return <View />
 
-
     var total = {
       ingreso: 0,
       egreso: 0,
