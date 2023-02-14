@@ -14,9 +14,9 @@ class index extends Component {
         new SThread(1500, "carga_hilo", false).start(() => {
             SNavigation.replace("/root")
         })
-        Model.restaurante.Action.getAll();
-        Model.horario.Action.getAll();
-        Model.pack.Action.getAll();
+        // Model.restaurante.Action.getAll();
+        // Model.horario.Action.getAll();
+        // Model.pack.Action.getAll();
     }
 
     renderFooter() {

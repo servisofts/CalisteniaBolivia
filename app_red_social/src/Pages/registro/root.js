@@ -23,7 +23,7 @@ class root extends Component {
         };
         return (
             <SPage  >
-                <Header />
+                <Header/>
                 <Container>
                     <SView col={"xs-12"} center>
                         <SText fontSize={26} color={STheme.color.white}>Regístrate</SText>
@@ -45,7 +45,7 @@ class root extends Component {
                             FechaNacimiento: { placeholder: "Fecha de Nacimiento", isRequired: true, type: "date", isRequired: true },
                             //telefono: { placeholder: "Celular", isRequired: true, type: "telefono", isRequired:true},
                             telefono: { placeholder: "Celular", isRequired: true, isRequired: true },
-                            Carnet: { placeholder: "Carnet de Identidad", isRequired: true, isRequired: true },
+                            ci: { placeholder: "Carnet de Identidad", isRequired: true, isRequired: true },
                             Password: { placeholder: "Password", isRequired: true, type: "password" },
                             RepPassword: { placeholder: "Repetir password", type: "password", isRequired: true },
                         }}

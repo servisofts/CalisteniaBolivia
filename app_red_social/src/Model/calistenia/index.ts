@@ -1,6 +1,6 @@
-import sucursales from "./sucursales";
+import sucursal from "./sucursal";
 
 export default {
-    sucursales,
+    sucursal,
    
 }
