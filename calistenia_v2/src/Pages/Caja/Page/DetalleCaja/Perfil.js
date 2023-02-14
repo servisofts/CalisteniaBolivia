@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // import Svg from '../../Svg';
 import { SImage, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../../Model';
 import Usuario from '../../../Usuario';
 type Props = {
     key_usuario: string,
@@ -16,7 +17,7 @@ class index extends Component<Props> {
     }
 
     render() {
-        var usr = Usuario.Actions.getByKey(this.props.key_usuario, this.props);
+        var usr = Model.usuario.Action.getByKey(this.props.key_usuario);
         if (!usr) return <ActivityIndicator />
         return <SView col={"xs-12"} style={{
             // height: 120,

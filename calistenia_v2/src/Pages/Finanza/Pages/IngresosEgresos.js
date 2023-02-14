@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SLoad, SNavigation, SPage, STable, STable2, SText } from 'servisofts-component';
+import Model from '../../../Model';
 import sucursal_usuario from '../../sucursal_usuario';
 import Usuario from '../../Usuario';
 import Actions from '../Actions';
@@ -23,7 +24,7 @@ class index extends Component {
             fecha_desde: this.fecha_inicio,
             fecha_hasta: this.fecha_fin
         }, this.props)
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         var arr_f = sucursal_usuario.Actions.getActive(this.props);
         if (!arr_f) return <SLoad />
         if (!data) return <SLoad />

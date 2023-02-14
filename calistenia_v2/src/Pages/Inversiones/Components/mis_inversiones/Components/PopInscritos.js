@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SDate, SHr, SLoad, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import Model from '../../../../../Model';
 import Usuario from '../../../../Usuario';
 
 class PopInscritos extends Component {
@@ -18,7 +19,7 @@ class PopInscritos extends Component {
     }
     getInscritos() {
         let data = this.props.ventas_del_dia;
-        var data_usuarios = Usuario.Actions.getAll(this.props);
+        var data_usuarios = Model.usuario.Action.getAll();
         if (!data_usuarios) return <SLoad />
         data.sort((a, b) => {
             return new SDate(a.fecha_on).isAfter(new SDate(b.fecha_on)) ? 1 : -1;

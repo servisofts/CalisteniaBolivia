@@ -7,6 +7,7 @@ import SSocket from 'servisofts-socket'
 import Entrenamiento from '../..';
 import RelojEntrenamiento from '../Lista/RelojEntrenamiento';
 import Sucursal from '../../../Sucursal';
+import Model from '../../../../Model';
 class Perfil extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,7 @@ class Perfil extends Component {
         return <SView col={"xs-12"} center>
             <SView col={"xs-12"} center row>
                 {Object.keys(asistencia).map((key) => {
-                    var usuario = Usuario.Actions.getByKey(asistencia[key].key_usuario, this.props);
+                    var usuario = Model.usuario.Action.getByKey(asistencia[key].key_usuario);
                     if (!usuario) return <SLoad />
                     return <SView width={120} height={120} colSquare style={{
                         padding: 4,
@@ -78,7 +79,8 @@ class Perfil extends Component {
     }
     getUsuario = (key) => {
         if (!key) return <SText fontSize={18} capitalize>{`Molinete`}</SText>
-        var usuario = Usuario.Actions.getByKey(key, this.props);
+        
+        var usuario = Model.usuario.Action.getByKey(key);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center >
             {/* <SText fontSize={10} color={"#999"} >{`Entrenador`}</SText> */}

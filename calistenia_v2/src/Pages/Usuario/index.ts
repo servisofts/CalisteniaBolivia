@@ -31,7 +31,6 @@ import usuarioReducer from './Reducer/usuarioReducer'
 import clientesActivosReducer from './Reducer/clientesActivosReducer'
 const Reducers = {
     usuarioReducer,
-    clientesActivosReducer
 }
 
 

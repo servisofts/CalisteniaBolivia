@@ -6,6 +6,7 @@ import Models from '../Models';
 import SSocket from 'servisofts-socket'
 import Usuario from '../../Pages/Usuario';
 import BottomBar from '../Components/BottomBar';
+import Model from '../../Model';
 const Card = (props) => {
     var obj = props.data;
     var usuario_txt = (props?.usuario?.Nombres ?? "..") + " " + (props?.usuario?.Apellidos ?? "..");
@@ -123,7 +124,8 @@ class Home extends Component {
 
     getLista() {
         var publicaciones = Models.publicacion.Actions.getAll(this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
+
         // var usuarios = {}
         if (!publicaciones) return <SLoad />
         if (!usuarios) usuarios = {}

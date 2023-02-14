@@ -10,6 +10,7 @@ import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../../Sucursal';
 import Usuario from '../../../../../Usuario';
 import sucursal_usuario from '../../../../../sucursal_usuario';
+import Model from '../../../../../../Model';
 class SeleccionarUsuario extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
@@ -96,7 +97,7 @@ class SeleccionarUsuario extends Component {
     </SView>
   }
   getUsuario(key_usuario) {
-    var data = Usuario.Actions.getAll(this.props);
+    var data = Model.usuario.Action.getAll();
     if (!data) return <View />
     var obj = data[key_usuario]
     return <SView>
@@ -107,21 +108,8 @@ class SeleccionarUsuario extends Component {
 
     const getLista = () => {
       var cabecera = "registro_administrador";
-      var data = this.props.state.usuarioReducer.data[cabecera];
+      var data = Model.usuario.Action.getAll();
       if (!data) {
-        if (this.props.state.usuarioReducer.estado == "cargando") {
-          return <ActivityIndicator color={STheme.color.text} />
-        }
-        var object = {
-          service: "usuario",
-          component: "usuario",
-          version: "2.0",
-          type: "getAll",
-          estado: "cargando",
-          cabecera: cabecera,
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-        }
-        SSocket.send(object);
         return <ActivityIndicator color={STheme.color.text} />
       }
       var reducer = this.props.state.clientesActivosReducer;

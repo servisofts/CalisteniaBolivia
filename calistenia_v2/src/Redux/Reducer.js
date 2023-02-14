@@ -1,7 +1,4 @@
-import { combineReducers } from 'redux';
-
-import Usuario from '../Pages/Usuario';
-import RolesPermisosReducer from '../SSRolesPermisos/Reducer'
+import clientesActivosReducer from '../Pages/Usuario/Reducer/clientesActivosReducer';
 import Sucursal from '../Pages/Sucursal';
 import TipoPago from '../Pages/TipoPago';
 import Paquete from '../Pages/Paquete';
@@ -21,9 +18,10 @@ import sucursal_paquete from '../Pages/sucursal_paquete';
 import prorroga from '../Pages/prorroga';
 import Services from '../Services';
 import Client from '../Client';
-const reducers = combineReducers({
-    ...Usuario.Reducers,
-    ...RolesPermisosReducer,
+
+
+export default {
+    clientesActivosReducer,
     ...Sucursal.Reducers,
     ...TipoPago.Reducers,
     ...Paquete.Reducers,
@@ -43,15 +41,4 @@ const reducers = combineReducers({
     ...sucursal_paquete.Reducers,
     ...Services.Reducers,
     ...Client.Reducers
-});
-
-export default (state, action) => {
-    switch (action.type) {
-        case 'USUARIO_LOGOUT':
-            state = undefined;
-            break;
-        default:
-            break;
-    }
-    return reducers(state, action);
 }

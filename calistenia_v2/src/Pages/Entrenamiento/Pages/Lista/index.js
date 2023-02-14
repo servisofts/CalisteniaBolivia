@@ -7,6 +7,7 @@ import Usuario from '../../../Usuario';
 import RelojEntrenamiento from './RelojEntrenamiento';
 import SSocket from 'servisofts-socket';
 import Asistencia from '../../../Asistencia';
+import Model from '../../../../Model';
 
 class Lista extends Component {
     constructor(props) {
@@ -36,7 +37,8 @@ class Lista extends Component {
         </SView>
     }
     getUsuario = (key) => {
-        var usuario = Usuario.Actions.getByKey(key, this.props);
+    
+        var usuario = Model.usuario.Action.getByKey(key);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center>
             {/* <SText fontSize={10} color={"#999"} >{`Entrenador`}</SText> */}
@@ -57,7 +59,8 @@ class Lista extends Component {
         return <SView col={"xs-12"} center>
             <SView col={"xs-12"} center row>
                 {Object.keys(asistencia).map((key) => {
-                    var usuario = Usuario.Actions.getByKey(asistencia[key].key_usuario, this.props);
+                    
+                    var usuario = Model.usuario.Action.getByKey(asistencia[key].key_usuario);
                     if (!usuario) return <SLoad />
                     return <SView col={"xs-2 md-1.5"} colSquare style={{
                         padding: 4,
@@ -78,8 +81,8 @@ class Lista extends Component {
     }
     getLista() {
         var data = Entrenamiento.Actions.getAll(this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
-        var sucursales = Sucursal.Actions.getAll(this.props);
+        
+        
         if (!data) return <SLoad />
         if (Object.keys(data).length == 0) {
             return (<SView col={"xs-12"} center>

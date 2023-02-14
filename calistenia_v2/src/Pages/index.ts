@@ -1,9 +1,9 @@
-import { SPageListProps } from 'servisofts-component'
+import { SPage, SPageListProps } from 'servisofts-component'
 
+// PAGES OLD //
 import InicioPage from "./InicioPage";
 import CargaPage from './CargaPage/index';
 import Presentacion from './Presentacion';
-
 import Usuario from './Usuario';
 import SSRolesPermisosPages from '../SSRolesPermisos/Pages';
 import AjustesPage from './AjustesPage';
@@ -26,16 +26,32 @@ import Inversiones from './Inversiones';
 import Services from '../Services';
 import Client from '../Client';
 import clientes_activos from './clientes_activos';
-const Pages: SPageListProps = {
-    "inicio": InicioPage,
+// PAGES NEW//
+import root from './root';
+import empresa from "./empresa";
+import contabilidad from './contabilidad';
+import rol from './rol';
+
+const newPages = SPage.combinePages("/", {
+    "": root,
+    "test": Test,
+    ...empresa,
+    ...contabilidad,
+    ...rol
+});
+
+
+export default {
+    ...newPages,
+    // "inicio": InicioPage,
+    "inicio": root,
     "carga": CargaPage,
     "presentacion": Presentacion,
-    "test": Test,
     "clientes_activos": clientes_activos,
     AjustesPage,
     ...Usuario.Pages,
     ...Sucursal.Pages,
-    ...SSRolesPermisosPages,
+    // ...SSRolesPermisosPages,
     ...TipoPago.Pages,
     ...Paquete.Pages,
     ...Servicio.Pages,
@@ -53,5 +69,4 @@ const Pages: SPageListProps = {
     ...Services.Pages,
     ...Client.Pages,
 
-}
-export default Pages;
+};
