@@ -7,7 +7,7 @@ tarea6.- mostrar el total en (efectivo,transferencia,cheques) y en el reporte al
 tarea7.- Vani desea restringir la opción de eliminar en la sección de Bancos/Fassil/Movientos de cuenta  para Contadora/Atención al Cliente 💯 ✅ ✅ ✅
 #
 tarea8.- Finanzas/paquetes_vendidos \
-  * tarea cambiar color o background en el monto ingreso,egreso ✅ ✅ ✅ \
+  * tarea cambiar color o background en el monto ingreso,egreso  💯 ✅ ✅ ✅\
 tarea9.- finanzas/cajas_abiertas \
   * mostra la primera mayuscrula y luego minuscula
   * cambiar el tamaño y verificar el monto en caja
