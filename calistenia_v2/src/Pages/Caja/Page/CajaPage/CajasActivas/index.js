@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { SImage, SText, STheme, SView } from 'servisofts-component';
 import Usuario from '../../../../Usuario';
 import SSocket from 'servisofts-socket';
+import Model from '../../../../../Model';
 
 class CajasActivas extends Component {
     constructor(props) {
@@ -37,7 +38,8 @@ class CajasActivas extends Component {
         return data;
     }
     getUsuario(key_usuario) {
-        var usuario = Usuario.Actions.getByKey(key_usuario, this.props);
+        
+        var usuario = Model.usuario.Action.getByKey(key_usuario);
         if (!usuario) {
             return <View />
         }

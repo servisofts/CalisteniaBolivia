@@ -14,6 +14,7 @@ import Sucursal from '../../../Sucursal';
 import SucursalSelect from './SucursalSelect';
 import sucursal_usuario from '../../../sucursal_usuario';
 import xlsx from 'xlsx-color';
+import Model from '../../../../Model';
 
 class ClientesPage extends Component {
 
@@ -87,7 +88,7 @@ class ClientesPage extends Component {
     </SView>
   }
   getUsuario(key_usuario) {
-    var data = Usuario.Actions.getByKey(key_usuario, this.props);
+    var data = Model.usuario.Action.getByKey(key_usuario);
     if (!data) return <View />
     return <SView>
       <SText>Admin: {data.Nombres}</SText>
@@ -97,7 +98,7 @@ class ClientesPage extends Component {
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
+      var data = Model.usuario.Action.getAll();
       var ClientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
       if (!data) return <SLoad />
       if (!ClientesActivos) return <SLoad />
@@ -137,7 +138,8 @@ class ClientesPage extends Component {
         };
       });
 
-      var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+      // var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+      
       this.finalData = objFinal;
       return this.pagination(
         new SOrdenador([

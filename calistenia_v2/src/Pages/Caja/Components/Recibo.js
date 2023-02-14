@@ -6,6 +6,7 @@ import TipoPago from '../../TipoPago';
 import Usuario from '../../Usuario';
 import Caja from ".."
 import Sucursal from '../../Sucursal';
+import Model from '../../../Model';
 class Recibo extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +15,8 @@ class Recibo extends Component {
     }
 
     getNombreUsuario(key_usuario) {
-        var usuario = Usuario.Actions.getByKey(key_usuario, this.props);
+
+        var usuario = Model.usuario.Action.getByKey(key_usuario);
         if (!usuario) return null;
         return usuario.Nombres + " " + usuario.Apellidos;
     }

@@ -1,4 +1,4 @@
-import { SNavigation, SStorage } from "servisofts-component";
+import { SDate, SNavigation, SStorage } from "servisofts-component";
 import SSocket from "servisofts-socket";
 
 export default class Actions {
@@ -129,12 +129,14 @@ export default class Actions {
             if (props.state.usuarioReducer.estado == "cargando") {
                 return;
             }
+
             var object = {
                 service: "usuario",
                 component: "usuario",
                 version: "2.0",
                 type: "getAll",
                 estado: "cargando",
+                fecha_edit: new SDate("2022-08-01","yyyy-MM-dd").toString(),
                 cabecera: "registro_administrador",
                 key_usuario: props.state.usuarioReducer.usuarioLog?.key ?? " ",
             }

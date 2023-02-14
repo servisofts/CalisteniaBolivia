@@ -9,6 +9,7 @@ import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNaviga
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import sucursal_usuario from '../../../sucursal_usuario';
+import Model from '../../../../Model';
 
 class EntrenadorPage extends Component {
 
@@ -73,8 +74,9 @@ class EntrenadorPage extends Component {
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
-      var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
+      var data = Model.usuario.Action.getAll();
+      // var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
+      var dataRU = Model.usuarioRol.Action.getAllByKeyRol(this.key_rol);
       var arr_sc_us = sucursal_usuario.Actions.getAll(this.props);
       if (!data) return <SLoad />
       if (!dataRU) return <SLoad />
@@ -85,8 +87,10 @@ class EntrenadorPage extends Component {
       var isAll = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
 
       var objFinal = {};
-      Object.keys(data).map((key) => {
-        if (!dataRU[key]) {
+
+      Object.keys(dataRU).map((key) => {
+        var rol_user = dataRU[key];
+        if (!data[rol_user.key_usuario]) {
           return;
         }
         if (!isAll) {
@@ -101,7 +105,7 @@ class EntrenadorPage extends Component {
           if (!isActive) return null;
         }
 
-        objFinal[key] = data[key];
+        objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });

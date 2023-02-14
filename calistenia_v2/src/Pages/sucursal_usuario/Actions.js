@@ -1,4 +1,5 @@
 import SSocket from 'servisofts-socket';
+import Model from '../../Model';
 import { SSRolesPermisosValidate } from '../../SSRolesPermisos';
 import Parent from './index';
 
@@ -42,7 +43,9 @@ export default class Actions {
         var data = Actions.getActive(props);
         if (!data) return null;
         var arr = Object.values(data);
-        var isRecuperar = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
+
+        // var isRecuperar = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
+        var isRecuperar = Model.usuarioPage.Action.getPermiso({ url: "SucursalPage", permiso: "admin_all" })
         if (isRecuperar) {
             return true;
         }

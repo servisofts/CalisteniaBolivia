@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SIcon, SLoad, SText, SView, SNavigation, SHr, SDate } from 'servisofts-component';
+import Model from '../../../../Model';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
@@ -14,7 +15,9 @@ class ClientesActivos extends Component {
 
     getContent() {
         var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
-        var clientesRol = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
+        
+        var clientesRol = Model.usuarioRol.Action.getAllByKeyRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f")
+        // var clientesRol = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
         var arr = sucursal_usuario.Actions.getActive(this.props);
         if (!clientesActivos) return <SLoad />
         if (!clientesRol) return <SLoad />

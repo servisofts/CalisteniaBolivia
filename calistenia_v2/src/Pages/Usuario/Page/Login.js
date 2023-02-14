@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { SButtom, SForm, SNavigation, SPage, SPopup, SView } from 'servisofts-component';
-import Usuario from '..';
+import Model from '../../../Model';
 import LogoAnimado from '../../CargaPage/LogoAnimado';
 
 class Login extends Component {
@@ -41,7 +41,8 @@ class Login extends Component {
             }}
             onSubmit={(data) => {
                 if (data) {
-                    Usuario.Actions.login(data);
+                    Model.usuario.Action.login(data)
+                    // Usuario.Actions.login(data);
                 }
             }}
         />
@@ -49,18 +50,18 @@ class Login extends Component {
 
 
     render() {
-        var error = Usuario.Actions.getError("login", this.props);
-        if (error) {
-            SPopup.alert("Usuario no encontrado, Verifique sus datos.");
-        }
-        if (this.props.state.usuarioReducer.type == "login" && this.props.state.usuarioReducer.estado == "exito") {
-            this.props.state.usuarioReducer.type = "";
-            this.props.state.usuarioReducer.estado = "";
+        // var error = Usuario.Actions.getError("login", this.props);
+        // if (error) {
+        //     SPopup.alert("Usuario no encontrado, Verifique sus datos.");
+        // }
+        // if (this.props.state.usuarioReducer.type == "login" && this.props.state.usuarioReducer.estado == "exito") {
+        //     this.props.state.usuarioReducer.type = "";
+        //     this.props.state.usuarioReducer.estado = "";
 
-        }
-        if (Usuario.Actions.getUsuarioLogueado(this.props)) {
-            SNavigation.replace("inicio");
-            console.log("Remplazo inicio /pages/usuario/page/login 61")
+        // }
+        if (Model.usuario.Action.getKey()) {
+            SNavigation.reset("/");
+            // console.log("Remplazo inicio /pages/usuario/page/login 61")
             return null;
         }
         return (

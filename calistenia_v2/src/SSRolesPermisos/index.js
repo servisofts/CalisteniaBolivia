@@ -3,14 +3,14 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { SThread } from "servisofts-component";
 import SSocket from "servisofts-socket";
+import Model from "../Model";
 // import AppParams from "../Params";
 // import Reducer from "./Reducer";
 import Events from "./Events";
 let INSTANCE = false;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
-    if (!INSTANCE) return null;
-    var isValid = INSTANCE.isValid({ page, permiso });
+    var isValid = Model.usuarioPage.Action.getPermiso({ url: page, permiso: permiso })
     if (isAlert && !isValid) {
         alert("No tiene permisos. Contactese con el administrador.")
     }

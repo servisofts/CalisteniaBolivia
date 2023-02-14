@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SButtom, SDate, SHr, SIcon, SImage, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../Model';
 import TipoPago from '../../TipoPago';
 import Usuario from '../../Usuario';
 class Recibo extends Component {
@@ -12,7 +13,8 @@ class Recibo extends Component {
     }
 
     getNombreUsuario(key_usuario) {
-        var usuario = Usuario.Actions.getByKey(key_usuario, this.props);
+        
+        var usuario = Model.usuario.Action.getByKey(key_usuario);
         if (!usuario) return null;
         return usuario.Nombres + " " + usuario.Apellidos;
     }

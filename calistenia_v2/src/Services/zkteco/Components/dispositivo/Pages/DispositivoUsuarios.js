@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
 import Parent from ".."
+import Model from '../../../../../Model';
 import Usuario from '../../../../../Pages/Usuario';
 class DispositivoUsuarios extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class DispositivoUsuarios extends Component {
 
     getTable() {
         var data = this.getData();
-        var usrs = Usuario.Actions.getAll(this.props);
+        var usrs = Model.usuario.Action.getAll();
         if (!data) return <SLoad />
         if (!usrs) return <SLoad />
         return <STable2

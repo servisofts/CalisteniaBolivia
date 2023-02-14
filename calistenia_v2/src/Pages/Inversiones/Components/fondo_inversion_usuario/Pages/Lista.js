@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SDate, SIcon, SLoad, SMath, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
 import Parent from ".."
 import FloatButtom from '../../../../../Components/FloatButtom';
+import Model from '../../../../../Model';
 import Usuario from '../../../../Usuario';
 class Lista extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class Lista extends Component {
     }
     getLista() {
         var data = Parent.Actions.getAll(this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!data) return <SLoad />
         if (!usuarios) return <SLoad />
         return <STable2

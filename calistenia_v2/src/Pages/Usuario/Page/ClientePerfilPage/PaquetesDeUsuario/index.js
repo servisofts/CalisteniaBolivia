@@ -8,6 +8,7 @@ import SSocket from 'servisofts-socket';
 import Sucursal from '../../../../Sucursal';
 import Usuario from '../../..';
 import sucursal_usuario from '../../../../sucursal_usuario';
+import Model from '../../../../../Model';
 class PaquetesDeUsuario extends Component {
     constructor(props) {
         super(props);
@@ -56,7 +57,7 @@ class PaquetesDeUsuario extends Component {
         </SView>
     }
     getUsuario(key_usuario) {
-        var data = Usuario.Actions.getAll(this.props);
+        var data = Model.usuario.Action.getAll();
         if (!data) return <View />
         var obj = data[key_usuario]
         if (!obj) return <View />

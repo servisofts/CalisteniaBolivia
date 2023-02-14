@@ -27,18 +27,21 @@ class Registro extends Component {
       }}
       style={{
         justifyContent: "space-between",
+        // justifyContent: ""
       }}
       inputProps={{
         customStyle: "calistenia",
         col: "xs-12"
       }}
-      // Alvaro: se agregao Estado motivo
-      // tarea2 la liberia tiene que actualizar
+      // tarea2
+
       inputs={{
         descripcion: { label: 'Descripcion', type: 'text', isRequired: true, defaultValue: this.data.descripcion },
         precio: { label: 'Precio', type: 'money', isRequired: true, defaultValue: parseFloat(this.data.precio || 0).toFixed(2) || null, col: "xs-5.5" },
         dias: { label: 'Cantidad de dias', type: 'number', isRequired: true, defaultValue: this.data.dias, col: "xs-5.5" },
         participantes: { label: 'Participantes', type: 'number', isRequired: true, defaultValue: this.data.participantes, col: "xs-12" },
+        // requiere_motivo: { label: 'Estado motivo', type: 'checkBox', isRequired: false, defaultValue: this.data.requiere_motivo, },
+
         requiere_motivo: { label: <SText bold width={150} >Estado Motivo</SText>, type: 'checkBox', isRequired: false, defaultValue: this.data.requiere_motivo },
       }}
       onSubmit={(data) => {
@@ -88,8 +91,8 @@ class Registro extends Component {
     this.data = data;
     return (<><SView center col={"xs-10 md-8 lg-6 xl-4"}>
       {!this.key_paquete ? <SView /> : <SView style={{
-        width: 150,
-        height: 150,
+        width: 110,
+        height: 110,
       }}><FotoPerfilComponent data={data} component={"paquete"} />
       </SView>}
       {this.getForm()}

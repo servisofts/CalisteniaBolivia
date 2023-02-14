@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SButtom, SDate, SForm, SHr, SLoad, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
+import Model from '../../../Model';
 import HuellasDeUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
 import SincronizarUsuario from '../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import { SSRolesPermisosValidate } from '../../../SSRolesPermisos';
 import Sucursal_usuario from '../../sucursal_usuario';
-import Actions from '../Actions';
 import RolDeUsuario from './RolDeUsuario';
 class RegistroCliente extends Component {
     constructor(props) {
@@ -29,7 +29,8 @@ class RegistroCliente extends Component {
             // "Password": "123"
         }
         if (this.key) {
-            usr = Actions.getByKey(this.key, this.props);
+            // usr = Actions.getByKey(this.key, this.props);
+            usr = Model.usuario.Action.getByKey(this.key);
             if (!usr) return <SLoad />
         }
         return <SForm
@@ -55,10 +56,13 @@ class RegistroCliente extends Component {
             onSubmit={(values) => {
                 this.setState({ loading: true })
                 if (this.key) {
-                    Actions.editar_async({
-                        ...usr,
-                        ...values
-                    }, this.props).then((resp) => {
+                    Model.usuario.Action.editar({
+                        data: {
+                            ...usr,
+                            ...values
+                        },
+
+                    }).then((resp) => {
                         this.setState({ loading: false })
                         SNavigation.goBack();
                     }).catch((e) => {
@@ -66,9 +70,13 @@ class RegistroCliente extends Component {
                         SPopup.alert("Error en al editar el dato " + e.error_dato)
                     })
                 } else {
-                    Actions.registro_async(values, this.key_rol, this.props).then((resp) => {
+                    Model.usuario.Action.registro({
+                        data: values,
+                        key_rol: this.key_rol
+                    }).then((resp) => {
                         this.setState({ loading: false })
                         SNavigation.goBack();
+                        // SNavigation.navigate("/registro")
                     }).catch((e) => {
                         this.setState({ loading: false })
                         SPopup.alert("Error en el registro, " + e.error_dato)
@@ -86,7 +94,8 @@ class RegistroCliente extends Component {
     }
     render_btn_eliminar() {
         if (!this.key) return null;
-        var usr = Actions.getByKey(this.key, this.props);
+
+        var usr = Model.usuario.Action.getByKey(this.key);
         return <SButtom props={{ type: "danger" }} loading={this.state.loading} onPress={() => {
             this.setState({ loading: true })
             Actions.editar_async({
@@ -105,7 +114,7 @@ class RegistroCliente extends Component {
     render_componentes_bottom() {
         var space = 24;
         if (!this.key) return null;
-        var usr = Actions.getByKey(this.key, this.props);
+        var usr = Model.usuario.Action.getByKey(this.key);
         return <SView col={"xs-12"} center>
             <SHr height={space} />
             <SHr height={1} color={STheme.color.card} />

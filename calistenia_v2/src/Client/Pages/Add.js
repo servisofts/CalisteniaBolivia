@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SForm, SHr, SIcon, SImage, SInput, SList, SNavigation, SPage, SText, STheme, SView, Submit } from 'servisofts-component';
 import TopBar from '../Components/TopBar';
 import SSocket from 'servisofts-socket'
+import Model from '../../Model';
 class Add extends Component {
     constructor(props) {
         super(props);
@@ -32,17 +33,17 @@ class Add extends Component {
                 component: "publicacion",
                 type: "subirFoto",
                 estado: "cargando",
-                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+                key_usuario: Model.usuario.Action.getKey(),
                 publicacion: {
                     descripcion: descripcion,
                     observacion: "",
                     key_sucursal: "ff7f8192-ff66-4e97-8a8e-23daefe57743"
                 }
             };
-            var url = SSocket.api.root+"multipart/";
+            var url = SSocket.api.root + "multipart/";
             var files = this._image.getValue();
             Submit.http(data, url, files, (cb) => {
-                if(cb.estado == "exito"){
+                if (cb.estado == "exito") {
                     SNavigation.goBack();
                 }
             })

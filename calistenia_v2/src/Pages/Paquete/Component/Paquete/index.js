@@ -30,9 +30,7 @@ class Paquete extends Component {
     var obj = data[key];
     if (this.props.onLoad) this.props.onLoad(obj);
     if (!obj) return <View />
-    // <SImage src={SSocket.api.root + "paquete/" + paquete.key} />
-
-    // var urlImage = SSocket.api.root + "paquete/" + obj.key;
+    var urlImage = SSocket.api.root + "paquete_" + obj.key;
     return (
       <TouchableOpacity style={{
         width: "100%",
@@ -50,21 +48,27 @@ class Paquete extends Component {
         if (this.props.onPress) this.props.onPress(key);
         // }
       }}>
+
         <View style={{
           justifyContent: "center", alignItems: "center", borderRadius: 4, overflow: "hidden", width: 40, height: 40, backgroundColor: STheme.color.card
         }}>
           <SImage src={SSocket.api.root + "paquete/" + obj.key} />
         </View>
 
+
         <View style={{ flex: 4, height: 20, justifyContent: "center", paddingStart: 8 }}>
           <Text style={{ fontSize: 14, color: STheme.color.text }}>{obj.descripcion}</Text>
         </View>
+
+
+
 
         {/* tarea3 */}
         <View><SText col={"xs-12"} fontSize={14} font={"Roboto"} >#per: {obj.participantes} dias: {obj.dias}</SText></View>
         <View style={{ flex: 2, height: 20, justifyContent: "center", alignItems: "center", paddingStart: 8 }}>
           <Text style={{ fontSize: 14, color: STheme.color.text }}>Bs. {(obj.precio).toLocaleString('en-IN')}</Text>
         </View>
+
 
       </TouchableOpacity>
     );

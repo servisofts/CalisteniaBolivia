@@ -6,6 +6,7 @@ import Usuario from '../..';
 // import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
+import Model from '../../../../Model';
 import HuellasDeUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
 import SincronizarUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import PaquetesDeUsuario from './PaquetesDeUsuario';
@@ -28,7 +29,7 @@ class ClientePerfilPage extends Component {
   }
 
   getPerfil() {
-    this.data = Usuario.Actions.getByKey(this.key, this.props);
+    this.data = Model.usuario.Action.getByKey(this.key);
     if (!this.data) return <SLoad />
     return <View style={{
       width: "100%",

@@ -54,8 +54,10 @@ class ClientePaqueteRegistroPage extends Component {
           dias: this.state.paquete.dias
         }
       }
-      DATA.push(<SView col="xs-12 sm-9 md-6 xl-4" center style={{ padding: 12 }}>
-
+      DATA.push(<SView col="xs-12 sm-9 md-6 xl-4" center style={{
+        // justifyContent:"flex-start",
+        padding: 12,
+      }}>
         {/* tarea3 */}
         <Text style={{
           width: "100%",
@@ -64,7 +66,6 @@ class ClientePaqueteRegistroPage extends Component {
           marginBottom: 8,
           paddingLeft: 8,
         }}>Cliente</Text>
-
         <Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
           // console.log(usr);
           if (!this.state.usuariosData[i]) {
@@ -88,6 +89,7 @@ class ClientePaqueteRegistroPage extends Component {
               }
             })
           }} />
+
         <SView col={"xs-10"}>
           <TiposDePago
             paquete={this.state.paquete}
@@ -117,8 +119,9 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago,// tarea3
+      dataPagos: this.state.tipoPago, // tarea3
       observacion: this.inputObservacion?.getValue()
+
     })
   }
   calcularFaltante() {
@@ -160,25 +163,17 @@ class ClientePaqueteRegistroPage extends Component {
   render() {
     return (
       <View style={{
-        flex: 1,
-        width: "100%",
-        height: "100%",
+        flex: 1, width: "100%", height: "100%",
         backgroundColor: STheme.color.background
       }}>
         {SPage.backgroundComponent}
-
         <BarraSuperior duration={500} title={"Agregar paquete a usuario"} goBack={() => {
           SNavigation.goBack();
         }} {...this.props} />
-        <View style={{
-          width: "100%", flex: 1,
-        }}>
+        <View style={{ width: "100%", flex: 1 }}>
           <SScrollView2
             disableHorizontal
-            style={{
-              width: "100%",
-              height: "100%"
-            }} >
+            style={{ width: "100%", height: "100%" }} >
             <View style={{
               width: "100%",
               alignItems: 'center',
@@ -188,6 +183,8 @@ class ClientePaqueteRegistroPage extends Component {
                 width: "90%",
                 maxWidth: 800,
                 alignItems: "center",
+
+                // justifyContent: 'center',
               }}>
                 <Text style={{
                   fontSize: 22,
@@ -207,17 +204,6 @@ class ClientePaqueteRegistroPage extends Component {
                 {this.render_motivo()}
 
 
-
-
-                <Text style={{
-                  width: "100%",
-                  fontSize: 12,
-                  color: STheme.color.text,
-                  marginTop: 8,
-                  marginBottom: 4,
-
-                }}>Cliente</Text>
-
               </View>
 
 
@@ -231,10 +217,6 @@ class ClientePaqueteRegistroPage extends Component {
                   SPopup.alert("No se encontro el paquete.")
                   return
                 }
-
-                // if (this.state.paquete.) {
-
-
                 if (this.state.paquete.precio > 0) {
                   if (!this.state.tipoPago) {
                     SPopup.alert("No se encontro el tipo de pago.")
@@ -249,26 +231,6 @@ class ClientePaqueteRegistroPage extends Component {
                     SPopup.alert("Seleccione un metodo de pago.")
                     return;
                   }
-
-                  // console.log("chaval ", this.state.paquete)
-
-
-                  if (this.state.paquete.requiere_motivo) {
-                    if (!this.inputObservacion.verify()) {
-                      SPopup.alert("Ingresar motivo del paquete")
-                      return;
-                    }
-                  }
-
-                  // if (this.state.paquete.requiere_motivo) {
-                  //   if (!this.inputObservacion.verify()) {
-                  //     SPopup.alert("Ingresar motivo del paquete")
-                  //     return null;
-                  //   }
-                  // }
-
-
-
                   if (monto < this.state.paquete.precio) {
                     SPopup.confirm({
                       title: `Bs. ${monto} no es suficiente para el paquete, esta seguro de continuar? `, onPress: () => {
@@ -282,8 +244,6 @@ class ClientePaqueteRegistroPage extends Component {
                   //   return;
                   // }
                 }
-
-
                 this.continue();
 
               }}>

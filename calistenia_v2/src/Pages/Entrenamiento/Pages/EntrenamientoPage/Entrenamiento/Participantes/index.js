@@ -7,6 +7,7 @@ import SeleccionarUsuario from './SeleccionarUsuario';
 import SSocket from 'servisofts-socket'
 import Asistencia from '../../../../../Asistencia';
 import Usuario from '../../../../../Usuario';
+import Model from '../../../../../../Model';
 class Participantes extends Component {
     constructor(props) {
         super(props);
@@ -65,7 +66,8 @@ class Participantes extends Component {
         </SView>
     }
     getUsuario(data) {
-        var usuarios = Usuario.Actions.getByKey(data.key_usuario, this.props);
+
+        var usuarios = Model.usuario.Action.getByKey(data.key_usuario);
         if (!usuarios) {
             return <SLoad />
         }

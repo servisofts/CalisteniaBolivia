@@ -12,7 +12,7 @@ class Test extends Component {
     render() {
         return (
             <SPage title={'Test'}>
-                
+                    
                 <SInput type={"date_my"} customStyle={"calistenia"} col={"xs-6"}/>
                 
             </SPage>

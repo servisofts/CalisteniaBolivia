@@ -3,8 +3,8 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { SButtom, SDate, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../../../Model';
 import TipoPago from '../../../../TipoPago';
-import Usuario from '../../../../Usuario';
 //import SSocket from 'servisofts-socket';
 // import Actions from '../../../../Actions'
 class Movimientos extends Component {
@@ -17,7 +17,13 @@ class Movimientos extends Component {
   componentDidMount() {
     this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
     if (!this.activa) return;
-    SSocket.send({ component: "cajaMovimiento", type: "getByKeyCaja", key_usuario: this.props.state.usuarioReducer.usuarioLog.key, key_caja: this.activa.key, estado: "cargando" }, true);
+    SSocket.send({
+      component: "cajaMovimiento",
+      type: "getByKeyCaja",
+      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+      key_caja: this.activa.key,
+      estado: "cargando"
+    }, true);
   }
   getCajaTipoMovimientos() {
     var reducer = this.props.state.cajaTipoMovimientoReducer;
@@ -25,7 +31,12 @@ class Movimientos extends Component {
     if (!data) {
       if (reducer.estado == "cargando") return false;
       if (reducer.estado == "error") return false;
-      SSocket.send({ component: "cajaTipoMovimiento", type: "getAll", key_usuario: this.props.state.usuarioReducer.usuarioLog.key, estado: "cargando" }, true);
+      SSocket.send({
+        component: "cajaTipoMovimiento",
+        type: "getAll",
+        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+        estado: "cargando"
+      }, true);
       return false;
     }
     return data;
@@ -36,7 +47,13 @@ class Movimientos extends Component {
     if (!data) {
       if (reducer.estado == "cargando") return false;
       if (reducer.estado == "error") return false;
-      SSocket.send({ component: "cajaMovimiento", type: "getByKeyCaja", key_usuario: this.props.state.usuarioReducer.usuarioLog.key, key_caja: key_caja, estado: "cargando" }, true);
+      SSocket.send({
+        component: "cajaMovimiento",
+        type: "getByKeyCaja",
+        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+        key_caja: key_caja,
+        estado: "cargando"
+      }, true);
       return false;
     }
     return data;
@@ -47,7 +64,7 @@ class Movimientos extends Component {
   getUsuario(data) {
     if (!data.data) return <View />
     if (!data.data.key_usuario) return <View />
-    var usuarios = Usuario.Actions.getAll(this.props)
+    var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <View />
     var usr = usuarios[data.data.key_usuario];
     if (!usr) return <View />
@@ -63,10 +80,8 @@ class Movimientos extends Component {
     return <SView style={{ width: 34, height: 34, }}>{TipoPago.Actions.getIcon(data.data.key_tipo_pago)}</SView>;
   }
   getIconTipo(type, monto) {
-
     switch (type.key) {
-      case "1":
-        return <SIcon name="Add" style={{ width: 34, height: 34, }} />; //movimiento apertura
+      case "1": return <SIcon name="Add" style={{ width: 34, height: 34, }} />; //apertura
       case "3": return <SIcon name="Paquete" style={{ width: 34, height: 34, }} />; //venta_servicio
       case "4": return <SIcon name={"Caja"} style={{ width: 34, height: 34, }} />; //movimiento de caja
       default: return <SIcon name="Add" style={{ width: 34, height: 34, }} />;
@@ -78,6 +93,7 @@ class Movimientos extends Component {
     var tipoMovimientos = this.getCajaTipoMovimientos();
     if (!tipoMovimientos) return <ActivityIndicator color={STheme.color.text} />;
     this.moviminetos = movimientos;
+
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
       var monto = movimientos[key].monto;
@@ -139,13 +155,15 @@ class Movimientos extends Component {
       )
     })
   }
-  // tarea6
   getDetalle(mensaje, icon, monto) {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
       <SView style={{
-        width: 35, height: 35, justifyContent: "center", alignItems: "center",
+        width: 35,
+        height: 35,
+        justifyContent: "center",
+        alignItems: "center",
       }}>
         {icon}
       </SView>
@@ -198,11 +216,6 @@ class Movimientos extends Component {
           total.egreso += o.monto;
         }
 
-        if (o.monto >= 0) {
-          total_tipo_pago[o.key_tipo_pago] += o.monto;
-        }
-
-
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 
@@ -214,6 +227,9 @@ class Movimientos extends Component {
         total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
+
+
+
     return <SView center col={"xs-12 md-10 xl-8"} row>
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
@@ -236,8 +252,6 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: STheme.color.darkGray }}>Tipos de movimientos</SText>
       </SView>
-
-      {/* esto es para el cajero */}
       {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), total_tipo_movimiento[1] ?? 0)}
       {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), total_tipo_movimiento[3] ?? 0)}
       {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), total_tipo_movimiento[4] ?? 0)}
