@@ -42,13 +42,12 @@ class recuperar_codigo extends Component {
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={40} />
-                        <SText fontSize={24} color="#DE5738" font="LondonTwo" center>¡Mensaje Enviado!</SText>
+                        <SText fontSize={24} color={STheme.color.text}  center>¡Mensaje Enviado!</SText>
                         <SView height={10} />
-                        <SText fontSize={16} color="#000" center>Revise su bandeja de entrada e introduzca el código recibido. </SText>
+                        <SText fontSize={16}  color={STheme.color.text} center>Revise su bandeja de entrada e introduzca el código recibido. </SText>
                         <SView height={40} />
                         <SView backgroundColor={STheme.color.primary} width={150} height={150} style={{
                             borderRadius: 35,
-
                         }} center >
                             <SView height={5} ></SView>
                             <SIcon name={"Message"} width={110} height={110} />
@@ -60,7 +59,7 @@ class recuperar_codigo extends Component {
                             <PButtom primary
                                 onPress={() => {
                                     this.form.submit();
-                                }}>VALIDAR</PButtom>
+                                }}>Validar</PButtom>
                         </SView>
                         <SView height={36} />
                     </SView>

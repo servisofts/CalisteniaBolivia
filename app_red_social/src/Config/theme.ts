@@ -16,6 +16,7 @@ const theme: SThemeThemes = {
         lightBlack: "#5A5A5A",
         mapStyle: MapStyle,
         font: "OpenSans-SemiBold",
+        darkGray:"#DADADA"
 
     },
     dark: {
@@ -32,7 +33,8 @@ const theme: SThemeThemes = {
         mapStyle: MapStyle,
         font: "OpenSans-SemiBold",
         lightGray:"#5A5A5A",
-        lightBlack: "#D9D9D9"
+        lightBlack: "#D9D9D9",
+        darkGray:"#2D2D2D"
     }
 }
 export default theme;
