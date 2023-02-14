@@ -5,3 +5,4 @@ server/config.json
 server/server.jar
 server/servisofts.jks
 *.jks
+calistenia_v2/package-lock.json
