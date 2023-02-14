@@ -3,29 +3,27 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Usuario from '../../../../Usuario';
+import Model from '../../../../../Model';
+
+const changeTipoPago = {
+  "efectivo": "Efectivo",
+  "tarjeta": "Tarjeta",
+  "transferencia": "Transferencia",
+  "cheque": "Cheque",
+}
 class Movimientos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sucursal: false,
-      montoEfectivo: 0,
-      montoTarjeta: 0,
-      montoTranferencia: 0,
-      montoCheque: 0,
-      montoIngreso: 0,
-      montoEgreso: 0,
+      sucursal: false
     };
   }
   componentDidMount() {
     this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
     if (!this.activa) return;
     SSocket.send({
-      component: "cajaMovimiento",
-      type: "getByKeyCaja",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-      key_caja: this.activa.key,
-      estado: "cargando"
+      //todo
+      component: "cajaMovimiento", type: "getByKeyCaja", key_usuario: this.props.state.usuarioReducer.usuarioLog.key, key_caja: this.activa.key, estado: "cargando"
     }, true);
   }
   getCajaTipoMovimientos() {
@@ -67,7 +65,7 @@ class Movimientos extends Component {
   getUsuario(data) {
     if (!data.data) return <View />
     if (!data.data.key_usuario) return <View />
-    var usuarios = Usuario.Actions.getAll(this.props);
+    var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <View />
     var usr = usuarios[data.data.key_usuario];
     if (!usr) return <View />
@@ -94,11 +92,6 @@ class Movimientos extends Component {
       case "3": return <SIcon name={"Tranfer"} style={{ width: 34, height: 34, }} />;
       case "4": return <SIcon name={"Cheque"} style={{ width: 34, height: 34, }} />;
       default: return <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
-      // case "1": return this.montoEfectivo+=data.data.monto, <SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
-      // case "2": return this.montoTarjeta+=data.data.monto,<SIcon name={"Card"} style={{ width: 34, height: 34, }} />;
-      // case "3": return this.montoTranferencia +=data.data.monto,<SIcon name={"Tranfer"} style={{ width: 34, height: 34, }} />;
-      // case "4": return this.montoCheque +=data.data.monto,<SIcon name={"Cheque"} style={{ width: 34, height: 34, }} />;
-      // default: return this.montoEfectivo+=data.data.monto,<SIcon name={"Money"} style={{ width: 34, height: 34, }} />;
     }
   }
   getIconTipo(type, monto) {
@@ -132,7 +125,6 @@ class Movimientos extends Component {
                 <Text style={{ color: "#999", fontSize: 9 }}>{new SDate(movimientos[key].fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
                 <Text style={{ color: STheme.color.text, fontSize: 14 }}>{movimientos[key].descripcion}</Text>
                 {this.getUsuario(movimientos[key])}
-
               </SView>
               {/* <SText>{JSON.stringify(movimientos[key])}</SText> */}
             </SView>
@@ -187,26 +179,25 @@ class Movimientos extends Component {
       )
     })
   }
+  // tarea6
   getDetalle(mensaje, icon, monto) {
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>
+      <SText style={{
+        fontSize: 10,
+        textAlign: "center"
+      }}>{mensaje}</SText>
+
       <SView style={{
-        width: 35,
-        height: 35,
-        justifyContent: "center",
-        alignItems: "center",
+        width: 35, height: 35, justifyContent: "center", alignItems: "center",
       }}>
         {icon}
       </SView>
       <SText style={{
         fontSize: 10,
         textAlign: "center"
-      }}>{mensaje}</SText>
-      <SText style={{
-        fontSize: 10,
-        textAlign: "center"
-      }}> {monto}bs</SText>
+      }}> {monto} bs</SText>
     </SView>
   }
   getTipoPago() {
@@ -228,7 +219,6 @@ class Movimientos extends Component {
   getInfo() {
     var tiposPagos = this.getTipoPago();
     if (!tiposPagos) return <View />
-
     var total = {
       ingreso: 0,
       egreso: 0,
@@ -237,51 +227,43 @@ class Movimientos extends Component {
     var total_tipo_pago = {}
 
     var total_tipo_movimiento = {}
-
-    // tarea6 Historico cajas
+    // tarea6 caja y cjas
 
     if (this.moviminetos) {
-      console.log(this.moviminetos)
       Object.values(this.moviminetos).map((o) => {
-        if (o.monto >= 0) {
-          total.ingreso += o.monto;
-        } else {
-          total.egreso += o.monto;
-        }
+        if (o.monto >= 0) { total.ingreso += o.monto; }
+        else { total.egreso += o.monto; }
+        // tarea6  ✅ ✅ ✅
 
-        // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0;
+        if (o.monto >= 0) { total_tipo_pago[o.key_tipo_pago] += o.monto; }
 
         if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
         total_tipo_pago[o.key_tipo_pago] += o.monto;
 
-        // if (o.monto >= 0) {
-        //   total_tipo_pago[o.key_tipo_pago] += o.monto;
-        // }
-
-
-        if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) {
-          total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0;
-        }
+        if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
         total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
 
 
+    // tarea6  ✅ ✅ ✅
+
+
     return <SView center col={"xs-12 md-10 xl-8"} row >
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
-        {/* <SText style={{ color: "#999" }}>Informacion</SText> */}
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
       {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
       {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egreso)}
+      {this.getDetalle("Egreso por trapaso banco", this.getIcon(-1), total.egreso)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de pagos</SText>
       </SView>
       {Object.keys(tiposPagos).map((key, index) => {
-        return this.getDetalle(tiposPagos[key].descripcion, this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
+        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
       })}
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -318,6 +300,7 @@ class Movimientos extends Component {
           </SView>
         </SView>
         {this.getInfo()}
+
       </SView>
     )
   }

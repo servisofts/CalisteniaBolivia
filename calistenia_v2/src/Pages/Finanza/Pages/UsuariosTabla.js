@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SLoad, SPage, STable2, SText } from 'servisofts-component';
+import Model from '../../../Model';
 import Usuario from '../../Usuario';
 
 class UsuariosTabla extends Component {
@@ -11,7 +12,7 @@ class UsuariosTabla extends Component {
     }
 
     getLista() {
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!usuarios) return <SLoad />
         return <STable2
             header={[

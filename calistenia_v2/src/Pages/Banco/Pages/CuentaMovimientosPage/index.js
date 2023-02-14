@@ -12,6 +12,7 @@ import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import Usuario from '../../../Usuario';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
+import Model from '../../../../Model';
 let component = "cuentaBancoMovimiento";
 let ReducerName = "cuentaBancoMovimientoReducer";
 
@@ -129,7 +130,7 @@ class CuentaMovimientosPage extends Component {
 
         var data = reducer.data[this.key];
         var monto_total = 0;
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!usuarios) return <SLoad />
         var CONTAINER = new SOrdenador([
             { key: "fecha_on", order: "desc", peso: 1 }

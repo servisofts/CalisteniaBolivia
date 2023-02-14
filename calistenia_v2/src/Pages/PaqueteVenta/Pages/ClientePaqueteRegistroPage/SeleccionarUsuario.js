@@ -9,6 +9,7 @@ import SSocket from 'servisofts-socket'
 import Sucursal from '../../../Sucursal';
 import Usuario from '../../../Usuario';
 import Billetera from '../../../Billetera';
+import Model from '../../../../Model';
 class SeleccionarUsuario extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
@@ -57,7 +58,7 @@ class SeleccionarUsuario extends Component {
     </SView>
   }
   getUsuario(key_usuario) {
-    var data = Usuario.Actions.getAll(this.props);
+    var data = Model.usuario.Action.getAll();
     if (!data) return <View />
     var obj = data[key_usuario]
     return <SView>
@@ -79,16 +80,16 @@ class SeleccionarUsuario extends Component {
         </SView>
         return <SView col={"xs-12"} center>
           <SText>{`( ${this.state.codigo} )`}</SText>
-          <SHr/>
+          <SHr />
           <SText fontSize={18}>{` Monto: Bs. ${codigoData.monto}`}</SText>
           {/* <SText>{`${JSON.stringify(codigoData)}`}</SText> */}
-          <SHr/>
+          <SHr />
           <SText>{` Fecha: ${new SDate(codigoData.fecha).toString("yyyy-MM-dd hh:mm")}`}</SText>
           <SHr />
           <SHr />
           <SHr />
           <SButtom type="outline" onPress={() => {
-           this.props.onChange(codigoData);
+            this.props.onChange(codigoData);
           }}>COBRAR</SButtom>
         </SView>
       }

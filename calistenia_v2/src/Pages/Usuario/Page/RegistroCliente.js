@@ -135,7 +135,8 @@ class RegistroCliente extends Component {
 
 
         if (this.key) {
-            this.usr = Usuario.Actions.getByKey(this.key, this.props);
+            
+            this.usr = Model.usuario.Action.getByKey(this.key);
             if (!this.usr) return <SLoad />
         } else {
             this.usr = {}

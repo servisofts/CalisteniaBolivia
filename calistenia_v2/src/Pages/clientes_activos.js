@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SInput, SList, SLoad, SPage, SText, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
+import Model from '../Model';
 import Usuario from './Usuario';
 class clientes_activos extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class clientes_activos extends Component {
     }
 
     render_data() {
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!this.state.data) return <SLoad />
         if (!usuarios) return <SLoad />
 

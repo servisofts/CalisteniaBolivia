@@ -13,6 +13,8 @@ import Contador from "./Contador"
 import BtnNavegar from "./BtnNavegar"
 import BotonRecargar from "./BotonRecargar"
 import Cupon from "./Cupon"
+
+import Sucursal from "./Sucursal"
 export {
     TopBar,
     NavBar,
@@ -28,5 +30,6 @@ export {
     Contador,
     BtnNavegar,
     BotonRecargar,
-    Cupon
+    Cupon,
+    Sucursal
 }

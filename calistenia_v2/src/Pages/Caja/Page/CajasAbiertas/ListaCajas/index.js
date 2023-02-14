@@ -3,6 +3,7 @@ import { ActivityIndicator, Animated, View } from 'react-native';
 import { connect } from 'react-redux';
 import { SDate, SImage, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../../../Model';
 import Sucursal from '../../../../Sucursal';
 import sucursal_usuario from '../../../../sucursal_usuario';
 import MovimientosGraphic from './MovimientosGraphic';
@@ -46,24 +47,7 @@ class ListaCajas extends Component {
     return data[key_sucursal];
   }
   getUsuarios(key_usuario) {
-    if (this.props.state.usuarioReducer.data["registro_administrador"]) {
-      var data = this.props.state.usuarioReducer.data["registro_administrador"]
-      if (data[key_usuario]) {
-        return data[key_usuario];
-      }
-    }
-    if (this.props.state.usuarioReducer.estado == "cargando") return {};
-    var object = {
-      service: "usuario",
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
-    return {};
+    return Model.usuario.Action.getByKey(key_usuario) ?? {}
   }
   getMovimientos(key_caja) {
     var reducer = this.props.state["cajaMovimientoReducer"];
@@ -155,26 +139,46 @@ class ListaCajas extends Component {
       }
       var sucursal = this.getSucursal(obj.key_sucursal);
       if (total % 1 > 0) total = total.toFixed(2);
-      return <SView key={key} col={"xs-11"} style={{ borderRadius: 4, height: 140, backgroundColor: STheme.color.card, marginTop: 8, padding: 4, }}>
+      return <SView key={key}
+        col={"xs-11"}
+        style={{
+          borderRadius: 4,
+          height: 140,
+          backgroundColor: STheme.color.card,
+          marginTop: 8,
+          padding: 4,
+        }}>
         <SView animated col={"xs-12"}
           style={{
-            backgroundColor: this.anim.interpolate({ inputRange: [0, 1], outputRange: [STheme.color.text + "09", STheme.color.text + "00"] }),
+            backgroundColor: this.anim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [STheme.color.text + "09", STheme.color.text + "00"],
+            }),
           }}
-          row onPress={() => { SNavigation.navigate("DetalleCaja", { key: obj.key }); }}>
+          row onPress={() => {
+
+            SNavigation.navigate("DetalleCaja", { key: obj.key });
+          }}>
           {this.getFoto(sucursal)}
           <SView flex>
-            {/* tarea5 */}
+            {/* tarea5 ✅ ✅ ✅ */}
             <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
-            <SText style={{ textTransform: "lowercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
+            <SText style={{ textTransform: "uppercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
             <SText style={{ fontSize: 12, color: "white" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
           </SView>
-          <SView center style={{ height: 35, }}>
-            <SText style={{ fontSize: 18, color: "white" }}>Bs. {total}</SText>
+          <SView center style={{
+            height: 35,
+          }}>
+            <SText style={{ fontSize: 16, color: "white" }}>Bs. {total}</SText>
           </SView>
         </SView>
-        <SView col={"xs-12"} style={{ flex: 1 }}>
+
+        <SView col={"xs-12"} style={{
+          flex: 1,
+        }}>
           <MovimientosGraphic data={movimientos} />
         </SView>
+
       </SView >
     })
   }
@@ -183,10 +187,23 @@ class ListaCajas extends Component {
       <SView col={"xs-12"} style={{
         flex: 1,
       }} center>
-        <Sucursal.Component.SucursalSelect key_sucursal={this.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => { this.setState({ sucursal: suc }); }} />
-        <SScrollView2 disableHorizontal style={{ width: "100%" }}>
-          <SView col="xs-12" center > {this.getItems()} </SView>
-          <SView col={"xs-12"} style={{ height: 200 }}> </SView>
+        <Sucursal.Component.SucursalSelect key_sucursal={this.key_sucursal} sucursal={this.state.sucursal} setSucursal={(suc) => {
+          this.setState({ sucursal: suc });
+        }} />
+        <SScrollView2 disableHorizontal style={{
+          width: "100%",
+        }}>
+          <SView
+            col="xs-12"
+            center
+          >
+            {this.getItems()}
+          </SView>
+          <SView col={"xs-12"} style={{
+            height: 200,
+          }}>
+
+          </SView>
         </SScrollView2 >
       </SView >
     );

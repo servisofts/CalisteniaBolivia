@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { SDate, SImage, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import FechasBetween from '../../../../../Components/FechasBetween';
+import Model from '../../../../../Model';
 import Sucursal from '../../../../Sucursal';
 import sucursal_usuario from '../../../../sucursal_usuario';
 import MovimientosGraphic from './MovimientosGraphic';
@@ -50,24 +51,7 @@ class ListaCajas extends Component {
     return data[key_sucursal];
   }
   getUsuarios(key_usuario) {
-    if (this.props.state.usuarioReducer.data["registro_administrador"]) {
-      var data = this.props.state.usuarioReducer.data["registro_administrador"]
-      if (data[key_usuario]) {
-        return data[key_usuario];
-      }
-    }
-    if (this.props.state.usuarioReducer.estado == "cargando") return {};
-    var object = {
-      service: "usuario",
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object, true);
-    return {};
+    return Model.usuario.Action.getByKey(key_usuario) || {}
   }
   getMovimientos(key_caja) {
     var reducer = this.props.state["cajaMovimientoReducer"];
@@ -133,9 +117,14 @@ class ListaCajas extends Component {
       )
     })
   }
+
   getItems() {
     var lista = this.getLista();
     if (!lista) return <ActivityIndicator color={STheme.color.text} />;
+    // tarea5 ✅ ✅ ✅ NO hay lista esta en blanco
+    // if (!lista) return <SText>NO hay lista esta en blanco, seleecione otra fecha</SText>;
+
+
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(lista).map((key) => {
       var obj = lista[key];
       if (!key) return <View />
@@ -168,21 +157,48 @@ class ListaCajas extends Component {
 
       var sucursal = this.getSucursal(obj.key_sucursal);
 
-      return <SView key={key} col={"xs-11"} style={{ borderRadius: 4, height: 140, backgroundColor: STheme.color.card, marginTop: 8, padding: 4 }}>
+      return <SView key={key}
+        col={"xs-11"}
+        style={{
+          borderRadius: 4,
+          height: 140,
+          backgroundColor: STheme.color.card,
+          marginTop: 8,
+          padding: 4,
+        }}>
         <SView animated col={"xs-12"}
-          style={{ backgroundColor: this.anim.interpolate({ inputRange: [0, 1], outputRange: [STheme.color.text + "09", STheme.color.text + "00"] }), }}
-          row onPress={() => { SNavigation.navigate("DetalleCaja", { key: obj.key }); }}>
+          style={{
+            backgroundColor: this.anim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [STheme.color.text + "09", STheme.color.text + "00"],
+            }),
+          }}
+          row onPress={() => {
+            SNavigation.navigate("DetalleCaja", { key: obj.key });
+          }}>
           {this.getFoto(sucursal)}
+
+
           <SView flex>
-            {/* tarea5 */}
+            {/* tarea5 ✅ ✅ ✅ red */}
             <SText style={{ fontSize: 14 }}>{sucursal.descripcion}</SText>
-            <SText style={{ textTransform: "lowercase", fontSize: 16, color: "#999" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
-            <SText style={{ fontSize: 12, color: "#999" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
+            <SText style={{ textTransform: "uppercase", fontSize: 16, color: "white" }}>{usuario.Nombres} {usuario.Apellidos}</SText>
+            <SText style={{ fontSize: 12, color: "white" }}>{new SDate(obj.fecha_on).toString("yyyy-MM-dd hh:mm")}</SText>
           </SView>
-          <SView center style={{ height: 35 }}> <SText style={{ fontSize: 16 }}>Bs. {total}</SText> </SView>
+          <SView center style={{
+            height: 35,
+          }}>
+            <SText style={{ fontSize: 14 }}>Bs. {total}</SText>
+          </SView>
         </SView>
 
-        <SView col={"xs-12"} style={{ flex: 1, borderRadius: 4, padding: 4 }} >
+        <SView col={"xs-12"} style={{
+          flex: 1,
+          // backgroundColor: "#000000dd",
+          borderRadius: 4,
+          padding: 4,
+          // margin: 4,
+        }} >
           <MovimientosGraphic data={movimientos} />
         </SView>
 
@@ -190,17 +206,32 @@ class ListaCajas extends Component {
     })
   }
   render() {
+
+
+
     return (
-      <SView col={"xs-12"} style={{ flex: 1, }} center>
+      <SView col={"xs-12"} style={{
+        flex: 1,
+      }} center>
         <FechasBetween onChange={(fecha_inicio, fecha_fin) => {
           this.state.fecha.fecha_inicio = fecha_inicio
           this.state.fecha.fecha_fin = fecha_fin
           this.setState({ ...this.state })
         }} />
-        <Sucursal.Component.SucursalSelect sucursal={this.state.sucursal} setSucursal={(suc) => { this.setState({ sucursal: suc }); }} />
-        <SScrollView2 disableHorizontal style={{ width: "100%" }}>
-          <SView col={"xs-12"} center>{this.getItems()} </SView>
-          <SView col={"xs-12"} style={{ height: 200 }}> </SView>
+        <Sucursal.Component.SucursalSelect sucursal={this.state.sucursal} setSucursal={(suc) => {
+          this.setState({ sucursal: suc });
+        }} />
+        <SScrollView2 disableHorizontal style={{
+          width: "100%",
+        }}>
+          <SView col={"xs-12"} center>
+            {this.getItems()}
+          </SView>
+          <SView col={"xs-12"} style={{
+            height: 200,
+          }}>
+
+          </SView>
         </SScrollView2>
       </SView>
     );

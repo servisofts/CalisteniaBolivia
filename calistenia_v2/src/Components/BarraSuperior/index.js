@@ -3,6 +3,7 @@ import { View, Text, Animated, Dimensions, TouchableOpacity, Platform } from 're
 import { connect } from 'react-redux';
 import { SIcon, SImage, SNavigation, SView, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../Model';
 import RelojCaja from '../../Pages/Caja/Page/RelojCaja';
 import LogoAnimado from '../../Pages/CargaPage/LogoAnimado';
 import RelojEntrenamiento from '../../Pages/Entrenamiento/Pages/EntrenamientoPage/Entrenamiento/RelojEntrenamiento';
@@ -32,10 +33,7 @@ class BarraSuperior extends Component {
     }
 
     getUser() {
-        if (!this.props.state.usuarioReducer.usuarioLog) {
-            return <View />
-        }
-        if (!this.props.state.usuarioReducer.usuarioLog.key) {
+        if (!Model.usuario.Action.getKey()) {
             return <View />
         }
         return (<>
@@ -53,7 +51,7 @@ class BarraSuperior extends Component {
                 <TouchableOpacity style={{
                     width: "100%",
                     height: "100%",
-                    
+
                 }} onPress={() => {
                     SNavigation.navigate("perfil")
                     // this.props.navigation.navigate("UsuarioPerfilPage")
@@ -94,7 +92,7 @@ class BarraSuperior extends Component {
         }
         return (<Text style={{
             // fontSize: 12,
-            color:STheme.color.text,
+            color: STheme.color.text,
             fontWeight: "bold",
             // fontFamily:"myFont"
         }}>{text}</Text>)
@@ -122,12 +120,15 @@ class BarraSuperior extends Component {
         </SView>
     }
     render() {
+        if (Model.usuario.Action.getKey()) {
+            Model.usuarioPage.Action.getPermiso({ url: "/", permiso: "ver" })
+        }
         return (
             <Animated.View style={{
                 width: "100%",
                 height: 45,
                 flexDirection: "row",
-                
+
                 transform: [
                     {
                         translateY: this.state.anim.interpolate({

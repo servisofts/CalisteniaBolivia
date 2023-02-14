@@ -100,9 +100,18 @@ class ConfirmarPaquete extends Component {
           <SImage src={SSocket.api.root + "usuario/" + obj.key} />
           {this.getIsConfirm(isConfirmado)}
         </View>
-        <SText props={{ type: "primary" }} fontSize={12} style={{ textAlign: "center" }}>{obj["Nombres"]} {obj["Apellidos"]}</SText>
+        <SText props={{
+          type: "primary"
+        }} fontSize={12} style={{
+          textAlign: "center"
+        }}>{obj["Nombres"]} {obj["Apellidos"]}</SText>
 
-        <SText props={{ type: "primary" }} fontSize={12} style={{ textAlign: "center" }}>Motivo: {this.props.data.observacion} </SText>
+
+        <SText props={{
+          type: "primary"
+        }} fontSize={12} style={{
+          textAlign: "center"
+        }}>Motivo: {this.props.data.observacion} </SText>
 
         {/* this.props.data.dataPagos */}
       </SView>
@@ -219,17 +228,37 @@ class ConfirmarPaquete extends Component {
           <SView props={{ col: "xs-12", variant: "center" }} style={{
             flex: 1,
           }}>
-            <SView props={{ col: "xs-11.5 md-8 xl-6", withoutFeedback: true, }} style={{ borderRadius: 8, maxHeight: "100%", flex: 1, }}>
-              <View style={{ width: "100%", flex: 1, borderRadius: 10, overflow: "hidden", alignItems: "center", paddingBottom: 8 }}>
-                <View style={{ width: "100%", padding: 8, alignItems: "center", }}>
+            <SView props={{
+              col: "xs-11.5 md-8 xl-6",
+              withoutFeedback: true,
+            }} style={{
+              borderRadius: 8,
+              maxHeight: "100%",
+              flex: 1,
+            }}>
+              <View style={{
+                width: "100%",
+                flex: 1,
+                borderRadius: 10,
+                overflow: "hidden",
+                alignItems: "center",
+                paddingBottom: 8,
+
+              }}>
+                <View style={{
+                  width: "100%",
+                  padding: 8,
+                  alignItems: "center",
+                  // justifyContent: "center"
+                }}>
                   <Text style={{ color: STheme.color.text, fontSize: 18, marginBottom: 16 }}>{"Verifica los datos del recibo!"}</Text>
                   <View style={{
                     justifyContent: "center",
                     alignItems: "center",
                     borderRadius: 4,
                     overflow: "hidden",
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                     backgroundColor: STheme.color.card
                   }}>
                     <SImage src={SSocket.api.root + "paquete/" + paquete.key} />

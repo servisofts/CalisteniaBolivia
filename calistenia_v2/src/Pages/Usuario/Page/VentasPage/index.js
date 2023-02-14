@@ -8,6 +8,7 @@ import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPer
 import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
+import Model from '../../../../Model';
 
 class VentasPage extends Component {
 
@@ -73,19 +74,24 @@ class VentasPage extends Component {
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
-      var dataRU = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
+      var data = Model.usuario.Action.getAll();
+      // var dataRU = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
+      var dataRU = Model.usuarioRol.Action.getAllByKeyRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f");
       if (!data) return <SLoad />
       if (!dataRU) return <SLoad />
       if (!this.state.buscador) {
         return <View />
       }
       var objFinal = {};
-      Object.keys(data).map((key) => {
-        if (!dataRU[key]) {
+      Object.keys(dataRU).map((key) => {
+        var rol_user = dataRU[key];
+        if (!rol_user.key_usuario) return;
+        if (!rol_user.estado) return;
+        if (!data[rol_user.key_usuario]) {
           return;
         }
-        objFinal[key] = data[key];
+        if (!data[rol_user.key_usuario].estado) return;
+        objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
       return this.pagination(
