@@ -44,7 +44,7 @@ export default class SectionApis extends Component {
                 <SHr color={STheme.color.lightGray} height={1.5} ></SHr>
             </SView> */}
             <SView col={"xs-6"} height center>
-                <SText fontSize={20} color={STheme.color.white} font={"LondonMM"}> Inicia sesión con  </SText>
+                <SText fontSize={20} color={STheme.color.lightBlack} font={"LondonMM"}> Inicia sesión con  </SText>
             </SView>
             {/* <SView col={"xs-3"} height center>
                 <SHr color={STheme.color.lightGray} height={1.5} ></SHr>

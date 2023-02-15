@@ -20,7 +20,7 @@ class login extends Component {
         return (
             <SPage>
                 <SView col={"xs-12"} center>
-                    <SView col={"xs-12"} backgroundColor={STheme.color.primary}>
+                    <SView col={"xs-12"}>
                         <Container>
                             {/* <SHr height={8} /> */}
                             <SectionHeader />
@@ -30,7 +30,7 @@ class login extends Component {
                     <Container>
                         <SHr height={16} />
                         <SectionForm ref={ref => this._sectionForm = ref} />
-                        <SHr height={25} />
+                        <SHr height={25} /> 
                         <SectionFooter onPress={() => {
                             this._sectionForm.submit();
                         }} />

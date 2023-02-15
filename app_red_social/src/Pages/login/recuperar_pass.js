@@ -71,7 +71,7 @@ class recuperar_pass extends Component {
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={40} />
-                        <SText fontSize={24} color="#DE5738" font="LondonTwo" center>¡Restablece tu contraseña!</SText>
+                        <SText fontSize={24} color={STheme.color.text}  center>¡Restablece tu contraseña!</SText>
                         <SView height={30} />
 
                         {this.getForm()}
@@ -80,7 +80,7 @@ class recuperar_pass extends Component {
                             <PButtom primary
                                 onPress={() => {
                                     this.form.submit();
-                                }} >RESTABLECER CONTRASEÑA</PButtom>
+                                }} >Restablecer Contraseña</PButtom>
                         </SView>
                         <SView height={36} />
                     </SView>

@@ -4,31 +4,37 @@ import MapStyle from './mapStyle'
 const theme: SThemeThemes = {
     default: {
         barStyle: "light-content",
+        barColor: "#ffffff",
+        text: "#000000",
+        primary: "#ffffff",
+        secondary: "#D70000",
+        info: "#DE5738",
+        background: "#ffffff",
+        card: "#44444499",
+        accent: "#99CC00",
+        lightGray:"#D9D9D9",
+        lightBlack: "#5A5A5A",
+        mapStyle: MapStyle,
+        font: "OpenSans-SemiBold",
+        darkGray:"#DADADA"
+
+    },
+    dark: {
+
+        barStyle: "light-content",
         barColor: "#000000",
-        text: "#A4A3A3",
+        text: "#ffffff",
         primary: "#000000",
         secondary: "#D70000",
         info: "#DE5738",
         background: "#000000",
         card: "#eeeeee99",
-        accent:"#99CC00",
+        accent: "#99CC00",
         mapStyle: MapStyle,
-        font:"OpenSans-SemiBold",
-        lightBlack:"#DADADA"
-
-    },
-    dark: {
-        barStyle: "light-content",
-        barColor: "#FF6600",
-        text: "#ffffff",
-        primary: "#FF6600",
-        secondary: "#000000",
-        info: "#DE5738",
-        background: "#000000",
-        card: "#44444499",
-        accent:"#99CC00",
-        mapStyle: MapStyle,
-        font:"OpenSans-SemiBold"
+        font: "OpenSans-SemiBold",
+        lightGray:"#5A5A5A",
+        lightBlack: "#D9D9D9",
+        darkGray:"#2D2D2D"
     }
 }
 export default theme;
