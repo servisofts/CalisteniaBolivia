@@ -107,12 +107,7 @@ class index extends Component {
     // }
     render_with_data() {
         var sucursales = Model.sucursal.Action.getAll();
-        //var usuarios = Model.filtros.Action.getAll();
         if (!sucursales) return <SLoad />
-        // if (!usuarios) usuarios = {}
-
-        console.log(JSON.stringify(sucursales) + " aquiiii")
-        var j = 1;
 
         return <SList
             buscador={"true"}
@@ -122,33 +117,6 @@ class index extends Component {
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
                 return <Sucursal.Card image={1} datas={data} ></Sucursal.Card>
-                // <SView col={"xs-12"} row>
-                //     <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} onPress={this.props.onPress}>
-                //         <SView col={"xs-12"} center height >
-                //             <SView col={"xs-12"} height={130} style={{
-                //                 borderRadius: 8,
-                //                 backgroundColor: STheme.color.card,
-                //                 overflow: 'hidden',
-                //             }}>
-                //                 <SImage enablePreview src={require('../Assets/img/s' + j + ".jpg")} width={"100%"} height={"100%"}
-                //                     style={{
-                //                         resizeMode: 'cover',
-                //                     }}
-                //                 />
-                //             </SView>
-                //         </SView>
-                //     </SView>
-                //     <SView col={"xs-12"} flex style={{ alignItems: "flex-end", bottom: -85, right: 10 }} >
-                //         <SView>
-                //             <SText fontSize={15} color={STheme.color.white}>CENTRO</SText>
-                //         </SView>
-                //         <SHr />
-                //         <SIcon name={"Vineta1"} height={12} width={6} stroke={STheme.color.white}></SIcon>
-                //     </SView>
-                //     <SView col={"xs-12"} row >
-                //         <SText style={{ alignItems: "flex-end", top: -20, right: 25 }} flex fontSize={10} color={STheme.color.white}>Av. La barranca 3er anillo frente al surtidor Genex</SText>
-                //     </SView>
-                // </SView>
             }}
         />
 

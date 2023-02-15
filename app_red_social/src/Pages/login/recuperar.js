@@ -61,13 +61,14 @@ class recuperar extends Component {
                         <SView col={"xs-11"} row center>
                             <PButtom primary onPress={() => {
                                 this.form.submit();
-                            }}>ENVIAR CÓDIGO</PButtom>
+                            }}>Enviar código</PButtom>
                         </SView>
                         <SHr />
                         <SHr />
                         <SHr />
                         <SView col={"xs-11"} row center onPress={() => {
-                            // SNavigation.navigate(Usuario.component + "/codigoRecuperarContrasena");
+                            SNavigation.navigate("/login/recuperar_codigo");
+                            // SNavigation.navigate("/login/recuperar_pass");
                         }}>
                             <SText fontSize={14} style={{
                                 textDecorationLine: "underline",

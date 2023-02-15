@@ -219,29 +219,54 @@ class Movimientos extends Component {
   getInfo() {
     var tiposPagos = this.getTipoPago();
     if (!tiposPagos) return <View />
-    var total = {
-      ingreso: 0,
-      egreso: 0,
-    }
-
+    var total = { ingreso: 0, egresoCaja: 0, egresoTraspasoBanco: 0 }
     var total_tipo_pago = {}
-
     var total_tipo_movimiento = {}
-    // tarea6 caja y cjas
 
+    // tarea6  ✅ ✅ ✅
     if (this.moviminetos) {
       Object.values(this.moviminetos).map((o) => {
-        if (o.monto >= 0) { total.ingreso += o.monto; }
-        else { total.egreso += o.monto; }
-        // tarea6  ✅ ✅ ✅
+        if (o.estado == 0) return null;
+        if (o.descripcion == "Cancelacion de servicio") return null;
+        // alvarosiles
+        // console.log("ostia ", o)
+        if (o.monto >= 0) {
+          total.ingreso += o.monto;
 
-        if (o.monto >= 0) { total_tipo_pago[o.key_tipo_pago] += o.monto; }
+          // if (o.key_tipo_pago == "1" || o.descripcion == "apertura" || o.descripcion == "ingreso") {
+          //   // sumar en efectivo
+          // }
+          // if (o.key_tipo_pago == "2" || o.descripcion == " tarjeta") {
+          //   // sumar en tarjeta
+          // }
+          // if (o.key_tipo_pago == "3" || o.descripcion == "Transferencia") {
+          //   // sumar en Transferencia
+          // }
+          // if (o.descripcion == "cheque") {
+          //   // sumar en cheque
+          // }
 
-        if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
-        total_tipo_pago[o.key_tipo_pago] += o.monto;
+          if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
+          total_tipo_pago[o.key_tipo_pago] += o.monto;
 
-        if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
-        total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
+          if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
+          total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
+        }
+        else {
+          if (o.key_tipo_pago == "2" || o.descripcion == "Traspaso a bancos" || o.descripcion == "Transferencia por apertura" || o.descripcion == "Transferencia por cierre") {
+            total.egresoTraspasoBanco += o.monto;
+          } else {
+            total.egresoCaja += o.monto;
+          }
+        }
+
+        // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
+        // total_tipo_pago[o.key_tipo_pago] += o.monto;
+
+        // if (o.monto >= 0) { total_tipo_pago[o.key_tipo_pago] += o.monto; }
+
+        // if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
+        // total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
 
@@ -255,8 +280,8 @@ class Movimientos extends Component {
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
       {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
-      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egreso)}
-      {this.getDetalle("Egreso por trapaso banco", this.getIcon(-1), total.egreso)}
+      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egresoCaja)}
+      {this.getDetalle("Egreso de traspaso a bancos", this.getIcon(-1), total.egresoTraspasoBanco)}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
