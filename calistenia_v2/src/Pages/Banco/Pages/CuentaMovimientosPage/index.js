@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SImage, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -128,6 +128,8 @@ class CuentaMovimientosPage extends Component {
       return <SLoad />
     }
 
+    var objFinal = {};
+
     var data = reducer.data[this.key];
     var monto_total = 0;
     var usuarios = Model.usuario.Action.getAll();
@@ -135,7 +137,9 @@ class CuentaMovimientosPage extends Component {
     var CONTAINER = new SOrdenador([
       { key: "fecha_on", order: "desc", peso: 1 }
     ]).ordernarObject(data).map((key) => {
+
       var obj = data[key];
+
       if (obj.estado == 0) return;
       var monto = obj.monto;
       if (obj.monto == 0) {
@@ -150,6 +154,22 @@ class CuentaMovimientosPage extends Component {
       }
       monto_total += parseFloat(monto);
       var usuario = usuarios[obj.key_usuario];
+
+
+      objFinal[key] = {
+
+        usuario_nombre: usuario.Nombres + " " + usuario.Apellidos,
+        fecha_chaval: new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm"),
+        ...obj
+      };
+
+
+      // objFinal[key] = { usuario_nombre: usuario.Nombres + " " + usuario.Apellidos, obj };
+
+      // objFinal = obj;
+      // console.log("ajajaj ", obj);
+      this.finalData = objFinal;
+
       return (
         <>
           <SView col={"xs-12"} key={obj.key} style={{
@@ -201,6 +221,7 @@ class CuentaMovimientosPage extends Component {
           <SHr />
         </>
       );
+
     })
 
     if (monto_total != this.state.monto_total) {
@@ -269,7 +290,43 @@ class CuentaMovimientosPage extends Component {
                 }} />
                 {/* Banca Lista Detalle (Movimientos de cuenta) */}
 
-                <SText>Excel</SText>
+                <SView col={"xs-12"} center>
+
+                  {/* tarea10 ✅ ✅ ✅ */}
+                  <ExportExcel
+                    header={[
+
+                      { key: "usuario_nombre", label: "Usuario", width: 120 },
+                      { key: "fecha_chaval", label: "Fecha", width: 120, center: true },
+                      // { key: "fecha_on", label: "Fecha", width: 100, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
+                      { key: "descripcion", label: "Descripción Motivo", width: 350 },
+                      { key: "tipo_movimiento", label: "Transacción", width: 100 },
+                      { key: "monto", label: "Monto", width: 80 },
+                    ]}
+                    getDataProcesada={() => {
+                      var daFinal = {};
+                      console.log("chaval ", this.finalData);
+
+                      Object.values(this.finalData).map((obj, i) => {
+                        // var usr = this.usuarios[obj.key];
+                        // if (!obj?.estado || obj?.estado <= 0) return;
+                        var toInsert = {
+                          // key: obj.key,
+
+                          fecha_on: obj?.fecha_on,
+                          fecha_chaval: obj?.fecha_chaval,
+                          usuario_nombre: obj?.usuario_nombre,
+                          descripcion: obj?.descripcion,
+                          tipo_movimiento: obj?.tipo_movimiento,
+                          monto: obj?.monto,
+                        }
+                        daFinal[i] = toInsert
+                      })
+                      return daFinal
+                    }}
+                  />
+                </SView>
+
 
               </SView>
               <SView col={"xs-12"} style={{ height: 36, }} center row>
