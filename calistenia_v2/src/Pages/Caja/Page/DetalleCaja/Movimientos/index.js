@@ -109,8 +109,17 @@ class Movimientos extends Component {
     if (!tipoMovimientos) return <ActivityIndicator color={STheme.color.text} />;
     this.moviminetos = movimientos;
 
+
+
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
+
+      // if (movimientos[key].estado == "3") return null;
+      // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Venta de servicio") return null;
+
+      // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Traspaso a bancos") return null;
+
+
       return (
         <View key={index} style={{ width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
           <View style={{ backgroundColor: STheme.color.card, width: "100%", minHeight: 50, borderRadius: 4, flexDirection: "row", }}>
@@ -181,6 +190,7 @@ class Movimientos extends Component {
   }
   // tarea6
   getDetalle(mensaje, icon, monto) {
+
     return <SView col={"xs-4 md-3 xl-2"} center style={{
       height: 70,
     }}>

@@ -151,6 +151,8 @@ class EstadoCaja extends Component {
     var keys = Object.keys(data);
     for (var i = 0; i < keys.length; i++) {
       var obj = data[keys[i]];
+      if (obj.estado == 3) continue;
+      // if (obj.key_tipo_pago == 4) continue;
       total += obj.monto;
     }
     if (total % 1 != 0) total = total.toFixed(2);

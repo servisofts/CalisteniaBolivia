@@ -35,13 +35,22 @@ en clientes la proroga
 # tarea 16.- revisar todas tablas y ordenar por fecha
 # las camaras si o si
 
+<!-- *** ultimo anular efectivo tiene que desaparecer -->
+
+# pagina Entrenamiento, al seleccionar sucursal, mostrar los cliente que pasaron por molinete.
+por turno
+que salga un cuadrito, la hora que entro y que salga la fecha de vencimiento de su paquete
 por turno en la sucursal
 que salga la fecha de vencimineto
 
 
-consultar a rudy para poner un
+# consultar a rudy para poner y mostrar en el monitor cuando pase  por molinete
 
-mostrar
+# aprender a levantar el sevidor de correo calistenia.
+
+
+se saca esa pagina
+desde en gnix config
 
 <!-- #
 
