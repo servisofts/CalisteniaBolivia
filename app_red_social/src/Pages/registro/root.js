@@ -23,7 +23,7 @@ class root extends Component {
         };
         return (
             <SPage  >
-                <Header/>
+                <Header />
                 <Container>
                     <SView col={"xs-12"} center>
                         <SText fontSize={26} color={STheme.color.white}>Regístrate</SText>
@@ -44,31 +44,43 @@ class root extends Component {
                             Correo: { placeholder: "Correo", type: "email", isRequired: true, defaultValue: defaultData.Correo },
                             FechaNacimiento: { placeholder: "Fecha de Nacimiento", isRequired: true, type: "date", isRequired: true },
                             //telefono: { placeholder: "Celular", isRequired: true, type: "telefono", isRequired:true},
-                            telefono: { placeholder: "Celular", isRequired: true, isRequired: true },
-                            ci: { placeholder: "Carnet de Identidad", isRequired: true, isRequired: true },
+                            Telefono: { placeholder: "Celular", isRequired: true, isRequired: true },
+                            CI: { placeholder: "Carnet de Identidad", isRequired: true, isRequired: true },
                             Password: { placeholder: "Password", isRequired: true, type: "password" },
                             RepPassword: { placeholder: "Repetir password", type: "password", isRequired: true },
                         }}
                         onSubmit={(values) => {
 
-                            Model.usuario.Action.validateRegistro({
-                                ...values,
-                                Telefono: "+591 xxxxxxx"
+                            // Model.usuario.Action.registro(values);
+                            // SNavigation.replace('/');
+
+                            Model.usuario.Action.registro({
+                                ...values
                             }).then(resp => {
-                                if (!this.params.type) {
-                                    SNavigation.navigate("/registro/password", {
-                                        ...this.params,
-                                        ...values,
-                                    })
-                                } else {
-                                    SNavigation.navigate("/registro/telefono", {
-                                        ...this.params,
-                                        ...values,
-                                    })
-                                }
+                                SNavigation.replace('/');
+
                             }).catch(e => {
                                 SPopup.alert("Ya existe un usuario con este correo.")
                             })
+
+                            // Model.usuario.Action.validateRegistro({
+                            //     ...values,
+                            //     Telefono: "+591 xxxxxxx"
+                            // }).then(resp => {
+                            //     if (!this.params.type) {
+                            //         SNavigation.navigate("/registro/password", {
+                            //             ...this.params,
+                            //             ...values,
+                            //         })
+                            //     } else {
+                            //         SNavigation.navigate("/registro/telefono", {
+                            //             ...this.params,
+                            //             ...values,
+                            //         })
+                            //     }
+                            // }).catch(e => {
+                            //     SPopup.alert("Ya existe un usuario con este correo.")
+                            // })
 
                         }}
                     />
@@ -101,8 +113,8 @@ class root extends Component {
                     <SHr height={20} />
                     <BtnSend onPress={() => this.form.submit()}>{"Registrar"}</BtnSend>
                     <SHr height={30} />
-                        <SectionApis/>
-                        <SHr height={35} />
+                    <SectionApis />
+                    <SHr height={35} />
                 </Container>
             </SPage>
         );

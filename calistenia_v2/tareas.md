@@ -32,7 +32,16 @@ en clientes la proroga
 # tarea 14.- crear el modulo snack 💡💡💡 ❌ ❌ ❌.
 # tarea 15.- en dashboard: no esta contando bien
 
+# tarea 16.- revisar todas tablas y ordenar por fecha
+# las camaras si o si
 
+por turno en la sucursal
+que salga la fecha de vencimineto
+
+
+consultar a rudy para poner un
+
+mostrar
 
 <!-- #
 
