@@ -14,6 +14,8 @@ class CuentasLista extends Component {
     };
   }
 
+
+
   getMovimientos(key_cuenta_banco) {
     var reducer = this.props.state["cuentaBancoMovimientoReducer"];
     if (!reducer.data[key_cuenta_banco]) {
@@ -106,18 +108,24 @@ class CuentasLista extends Component {
                 }} >{obj.descripcion}</SText>
 
               </SView>
+
+              {/* <View style={{ width: 110, height: 50, justifyContent: "center", alignItems: "center" }} > */}
+
+
               <SView style={{
-                height: "100%",
-                justifyContent: "center",
+                width: 200,
+                // height: "100%",
+                justifyContent: "flex-end",
                 paddingStart: 4,
                 paddingEnd: 4,
                 // alignItems: "center",
-              }}>
-                <SView card style={{
-                  padding: 4,
-                }}>
-                  <SText style={{
-                  }} >{`Bs. ${SMath.formatMoney(this.getAllMontoCuenta(obj.key))}`}</SText>
+              }} row  >
+
+                {/* <SView center {this.getAllMontoCuenta(obj.key)  0 ? card ?? "blue"} card style={{ padding: 4, }}> */}
+
+                <SView card center style={{ padding: 4, }}>
+                  {/* Banca Lista (BancoPage) formatear monto moneda */}
+                  <SText>{`Bs. ${SMath.formatMoney(this.getAllMontoCuenta(obj.key))}`}</SText>
                 </SView>
 
               </SView>
