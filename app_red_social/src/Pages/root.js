@@ -116,7 +116,7 @@ class index extends Component {
             data={Object.values(sucursales)}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
-                return <Sucursal.Card image={1} datas={data} ></Sucursal.Card>
+                return <Sucursal.Card image={1} datas={data}  />
             }}
         />
 

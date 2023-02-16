@@ -26,8 +26,13 @@ const inputs = () => {
                 backgroundColor: STheme.color.lightGray,
                 placeholderTextColor: STheme.color.text,
                 borderRadius: 10,
+                // borderColor: STheme.color.text,
+                // borderWidth: 1,
+
             },
             "error": {
+                borderRadius: 12,
+                borderWidth: 2,
                 borderColor: STheme.color.danger,
             },
             "placeholder": {
