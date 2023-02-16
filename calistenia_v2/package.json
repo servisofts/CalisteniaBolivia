@@ -51,7 +51,8 @@
     "servisofts-socket": "2.5.7",
     "three": "^0.132.2",
     "typescript": "^4.4.3",
-    "xlsx-color": "^0.14.30"
+    "xlsx": "^0.18.5",
+    "xlsx-color": "0.14.30"
   },
   "devDependencies": {
     "react-scripts": "^4.0.1"

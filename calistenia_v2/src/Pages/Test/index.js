@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import xlsx from 'xlsx-color';
 import { SInput, SPage, SText } from 'servisofts-component';
 
 class Test extends Component {
@@ -12,9 +13,17 @@ class Test extends Component {
     render() {
         return (
             <SPage title={'Test'}>
+
+                <SInput type={"file"} customStyle={"calistenia"} col={"xs-6"} onChangeText={ async(files) => {
+                    // files, Es un array de files que contiene 
+                    // [{   file:{ },    uri:"..."   }]
+                    console.log(files[0]);
+                    const XLSX = require('xlsx-color');
+                    const workbook = XLSX.readFile(files[0].file);
                     
-                <SInput type={"date_my"} customStyle={"calistenia"} col={"xs-6"}/>
-                
+                    console.log(workbook);
+                }} />
+
             </SPage>
         );
     }
