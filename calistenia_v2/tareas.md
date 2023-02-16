@@ -38,11 +38,11 @@ en clientes la proroga
     * pausar su dias, en medio del camino, hay clinete que tiene accidente o le paso algo, como podria pausar 3 dias y luego habilitar/despausar para seguir
 
 # tarea Banca
-  * boton eliminar banco vacio
-  * Incluir-mostrar foto de cada banca
-  * Para mayor claridad en los montos los enteros utilizar enteros y la coma en la parte decimal
-  * Exportar la información en formato Excel para una mayor facilidad de uso.
-  * Actualizar el diseño para que resalte y utilizar colores más atractivos.
+  * boton eliminar banco vacio  ✅ ✅ ✅ 💡💡
+  * Incluir-mostrar foto de cada banca  ✅ ✅ ✅
+  * Para mayor claridad en los montos los enteros utilizar enteros y la coma en la parte decimal  ✅ ✅ ✅ 💡💡
+  * Exportar la información en formato Excel para una mayor facilidad de uso.  ✅ ✅ ✅
+  * Actualizar el diseño para que resalte y utilizar colores más atractivos.  ✅ ✅ ✅
 
 # tarea 15.- en dashboard: no esta contando bien
 

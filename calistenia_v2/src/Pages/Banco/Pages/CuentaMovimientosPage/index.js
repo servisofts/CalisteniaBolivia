@@ -290,10 +290,12 @@ class CuentaMovimientosPage extends Component {
                 }} />
                 {/* Banca Lista Detalle (Movimientos de cuenta) */}
 
+                <SHr height={10} />
                 <SView col={"xs-12"} center>
 
                   {/* tarea10 ✅ ✅ ✅ */}
                   <ExportExcel
+                    // style={{ width: 300, height: 300 }}
                     header={[
 
                       { key: "usuario_nombre", label: "Usuario", width: 120 },
