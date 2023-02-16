@@ -18,7 +18,32 @@ class detalle extends Component {
     }
     contenido() {
         return <SView col={"xs-12"} row>
-
+            <SView col={"xs-6"} center>
+                <SView height={127} width={127} center style={{ borderRadius: 15, overflow: "hidden" }}>
+                    <SImage src={require('../../Assets/img/entrenador1.jpg')} width={"100%"} height={"100%"}
+                        style={{
+                            resizeMode: 'cover',
+                        }}
+                    />
+                </SView>
+                <SText fontSize={17} center>Fabiana Santistevan</SText>
+                <SHr height={5} />
+                <SText fontSize={9}>2:00 pm  -  3:00 pm</SText>
+                <SText fontSize={9}>4:00 pm  -  5:00 pm</SText>
+            </SView>
+            <SView col={"xs-6"} center>
+                <SView height={127} width={127} center style={{ borderRadius: 15, overflow: "hidden" }}>
+                    <SImage src={require('../../Assets/img/entrenador1.jpg')} width={"100%"} height={"100%"}
+                        style={{
+                            resizeMode: 'cover',
+                        }}
+                    />
+                </SView>
+                <SText fontSize={17} center>Fabiana Santistevan</SText>
+                <SHr height={5} />
+                <SText fontSize={9}>2:00 pm  -  3:00 pm</SText>
+                <SText fontSize={9}>4:00 pm  -  5:00 pm</SText>
+            </SView>
         </SView>
     }
 
@@ -41,11 +66,11 @@ class detalle extends Component {
                         <SHr height={20} />
                         <SText fontSize={17} color={STheme.color.text}>ENTRENADORES</SText>
                     </SView>
-                    <SHr height={20} />
+                    <SHr height={40} />
 
                     <SHr height={20} />
                     {this.render_with_data()}
-                    <SHr height={20} />
+                    <SHr height={30} />
 
                 </Container>
             </SPage>
