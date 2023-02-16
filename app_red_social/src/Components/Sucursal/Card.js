@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView,SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraCargando from '../BarraCargando';
 export type SucursalCardPropsType = {
@@ -33,7 +33,7 @@ class index extends Component<SucursalCardPropsType> {
     render() {
         var { key, descripcion, state, nombre } = this.props.datas;
         return (
-            <SView col={"xs-12"} row>
+            <SView col={"xs-12"} row  onPress={() => { SNavigation.navigate('/sucural/detalle') }}>
                 <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} >
                     <SView col={"xs-12"} center height >
                         <SView col={"xs-12"} height={130} style={{
@@ -42,7 +42,7 @@ class index extends Component<SucursalCardPropsType> {
                             overflow: 'hidden',
                         }}>
 
-                            <SImage enablePreview src={require('../../Assets/img/s'+this.props.image+'.jpg')} width={"100%"} height={"100%"}
+                            <SImage  src={require('../../Assets/img/s'+this.props.image+'.jpg')} width={"100%"} height={"100%"}
                                         style={{
                                             resizeMode: 'cover',
                                         }}

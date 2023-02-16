@@ -2,13 +2,17 @@ import { SPage, SPageListProps } from 'servisofts-component';
 
 import root from './root';
 import carga from "./carga"
+import login from "./login";
+import registro from './registro';
+import paquete from './paquete';
+import sucursal from './sucursal';
+
+
 import restaurante from './restaurante';
 import explorar from './explorar';
 import favoritos from './favoritos';
 import mapa from './mapa';
 import billetera from './billetera';
-import login from "./login";
-import registro from './registro';
 import direccion from './direccion';
 import pedido from './pedido';
 import contacto from './contacto';
@@ -28,6 +32,11 @@ export default SPage.combinePages("/", {
   "root": root,
   "carga": carga,
   ...login,
+  ...registro,
+  ...paquete,
+  ...sucursal,
+
+
   "test": test,
   "contacto": contacto,
   "novedades": novedades,
@@ -40,7 +49,6 @@ export default SPage.combinePages("/", {
   filtros,
   ...restaurante,
   ...billetera,
-  ...registro,
   ...direccion,
   ...pedido,
   ...perfil,
