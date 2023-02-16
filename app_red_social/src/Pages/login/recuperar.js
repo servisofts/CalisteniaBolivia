@@ -54,20 +54,21 @@ class recuperar extends Component {
                 <SView center>
                     <SView col={"xs-11 md-6 xl-4"} center>
                         <SView height={40} />
-                        <SText fontSize={16} color="#000" center>Le enviaremos un mensaje para configurar o restablecer su nueva contraseña. </SText>
+                        <SText fontSize={16} center>Le enviaremos un mensaje para configurar o restablecer su nueva contraseña. </SText>
                         <SView height={40} />
                         {this.getForm()}
                         <SView height={16} />
                         <SView col={"xs-11"} row center>
                             <PButtom primary onPress={() => {
                                 this.form.submit();
-                            }}>ENVIAR CÓDIGO</PButtom>
+                            }}>Enviar código</PButtom>
                         </SView>
                         <SHr />
                         <SHr />
                         <SHr />
                         <SView col={"xs-11"} row center onPress={() => {
-                            // SNavigation.navigate(Usuario.component + "/codigoRecuperarContrasena");
+                            SNavigation.navigate("/login/recuperar_codigo");
+                            // SNavigation.navigate("/login/recuperar_pass");
                         }}>
                             <SText fontSize={14} style={{
                                 textDecorationLine: "underline",

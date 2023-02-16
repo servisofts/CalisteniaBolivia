@@ -90,6 +90,12 @@ class ClientesPage extends Component {
     </SView>
   }
 
+
+  getMotivo(motivo) {
+    if (!motivo) return "";
+    return <SText color="green">Motivo: {motivo}</SText>
+  }
+
   render() {
 
     const getLista = () => {
@@ -148,6 +154,7 @@ class ClientesPage extends Component {
         var obj = data[ClientesActivos[key]?.key_usuario];
         if (!obj) return null;
         var vijencia = objFinal[key]["vijencia"];
+        // if (!vijencia) return null;
 
         // console.log("chaval ", vijencia?.paquete?.observacion)
         return <TouchableOpacity style={{
@@ -193,9 +200,18 @@ class ClientesPage extends Component {
                   fontSize: 16,
                   fontWeight: "bold",
                   color: STheme.color.text,
-                  textTransform: "capitalize",
+                  textTransform: "uppercase",
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " " + vijencia?.paquete?.observacion ?? "eee"} </Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " "}{this.getMotivo(vijencia?.motivo ?? "")} </Text>
+
+                {/* <Text style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: STheme.color.text,
+                  textTransform: "uppercase",
+                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
+                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " " + (vijencia?.motivo ?? "")} </Text> */}
+
                 {this.getSucursal(vijencia["caja"].key_sucursal)}
                 {this.getUsuario(vijencia["caja"].key_usuario)}
 
@@ -227,47 +243,41 @@ class ClientesPage extends Component {
 
     return (
       <SPage disableScroll title={"Clientes"}>
-        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
+        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo, Telefono o Motivo."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
         <SView col={"xs-12"} center>
 
-          {/* alvariño */}
-
+          {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel
             header={[
               { key: "key", label: "key", width: 100 },
               { key: "cliente_ci", label: "CI", width: 100 },
               { key: "cliente_nombre", label: "Cliente", width: 250 },
               { key: "cliente_telefono", label: "Telefono", width: 250 },
-              { key: "paquete", label: "paquete", width: 200 },
-              { key: "observacion", label: "observacion", width: 100 },
-              { key: "paquete_precio", label: "precio", width: 100 },
-              { key: "fecha_inicio", label: "fecha_inicio", width: 100 },
-              { key: "fecha_fin", label: "fecha_fin", width: 100 },
+              { key: "paquete", label: "Paquete", width: 200 },
+              { key: "motivo", label: "Motivo", width: 100 },
+              { key: "paquete_precio", label: "Precio", width: 100 },
+              { key: "fecha_inicio", label: "Fecha inicio", width: 100 },
+              { key: "fecha_fin", label: "Fecha fin", width: 100 },
             ]}
             getDataProcesada={() => {
               var daFinal = {};
               Object.values(this.finalData).map((obj, i) => {
                 // var usr = this.usuarios[obj.key];
-                // if (!obj?.estado || obj?.estado <= 0) return;
-                console.log("ropa ", obj);
+                if (!obj?.estado || obj?.estado <= 0) return;
                 var toInsert = {
                   key: obj.key,
                   cliente_ci: obj?.CI,
                   cliente_nombre: obj?.Nombres + " " + obj?.Apellidos,
                   cliente_telefono: obj?.Telefono,
-
+                  motivo: obj?.vijencia?.motivo,
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
-
                   fecha_inicio: obj?.vijencia?.fecha_inicio,
                   fecha_fin: obj?.vijencia?.fecha_fin,
-                  observacion: obj?.vijencia?.paquete?.observacion,
-
                 }
-                // console.log("papafritas ", toInsert);
                 daFinal[i] = toInsert
               })
               return daFinal

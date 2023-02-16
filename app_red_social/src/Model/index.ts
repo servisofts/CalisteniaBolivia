@@ -3,7 +3,6 @@ import Usuario from "servisofts-rn-usuario";
 import Roles_permisos from "servisofts-rn-roles_permisos";
 import Geolocation from "servisofts-rn-geolocation"
 import Chat from 'servisofts-rn-chat'
-import tapeke from "./tapeke";
 import calistenia from "./calistenia";
 
 
@@ -12,18 +11,18 @@ const Model = {
     ...Roles_permisos.Model,
     ...Geolocation.Model,
     ...Chat.Model,
-    ...tapeke,
     ...calistenia,
 }
 
 Usuario.init({
-    cabecera: "usuario_app",
+    cabecera: "registro_administrador",
     Columns: {
         "key": { type: "text", pk: true },
         "Nombres": { type: "text", notNull: true, editable: true },
         "Apellidos": { type: "text", notNull: true, editable: true },
         "CI": { type: "text", notNull: true, editable: true },
         "Correo": { type: "text", notNull: true, editable: true },
+        "FechaNacimiento": { type: "text", notNull: true, editable: true },
         "Telefono": { type: "text", notNull: true, editable: true },
         "Password": { type: "text", notNull: true, editable: true },
     },

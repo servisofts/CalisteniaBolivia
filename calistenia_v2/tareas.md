@@ -10,15 +10,16 @@ tarea8.- Finanzas/paquetes_vendidos \
 
 #
 tarea9.- finanzas/cajas_abiertas \
-  * mostra la primera mayuscrula y luego minuscula 💯
-  * cambiar el tamaño y verificar el monto en caja 💯
-  * en el egreso que anule los traspaso, pasa que no le gusta, quiere que sea en otro icono.
-  * cambiar el tamaño y y verificar el monto, efeectivo, traspaso en caja historicos ✅ ✅ ✅
+  * mostra la primera mayuscrula y luego minuscula 💯✅ ✅ ✅
+  * cambiar el tamaño y verificar el monto en caja 💯 ✅ ✅ ✅
+  * en el egreso que anule los traspaso, pasa que no le gusta, quiere que sea en otro icono.💯 ✅ ✅ ✅
+  * cambiar el tamaño y y verificar el monto, efeectivo, traspaso en caja historicos 💯 ✅ ✅ ✅
 tarea10 clientes \
-  * buscar por motivo
-  * en el buscaor agregar el buscar motivo
-  * tabla cliente, que exporte por excel.
-  * exportar en excel la lista de clientes. ✅ ✅ ✅
+  * buscar por motivo 💯 ✅ ✅ ✅
+  * en el buscaor agregar el buscar motivo💯 ✅ ✅ ✅
+  * tabla cliente, que exporte por excel.💯 ✅ ✅ ✅
+  * exportar en excel la lista de clientes.💯 ✅ ✅ ✅
+
 tarea11 Prorroga \
 en clientes la proroga
   * prorroga
@@ -26,17 +27,21 @@ en clientes la proroga
     * atrazar 3 meses su inscribcion, para 2 meses depues, por ejemplo cuando el clienete se incribio en febrero y resulta que tiene una operacion se puede cambiar la fecha para que inicie ne junio?
     * pausar su dias, en medio del camino, hay clinete que tiene accidente o le paso algo, como podria pausar 3 dias y luego habilitar/despausar para seguir
 
-tarea 12.-fecha de pagos trimestrales, mis_inversiones/perfil
+# tarea 12.-fecha de pagos trimestrales, mis_inversiones/perfil
+# tarea 13 Bancos darle la pinta a banco.
+# tarea 14.- crear el modulo snack 💡💡💡 ❌ ❌ ❌.
+# tarea 15.- en dashboard: no esta contando bien
+
+# tarea 16.- revisar todas tablas y ordenar por fecha
+# las camaras si o si
+
+por turno en la sucursal
+que salga la fecha de vencimineto
 
 
+consultar a rudy para poner un
 
-
-tarea 13 Bancos
-  darle la pinta a banco.
-#
-
-tarea 14.- crear el modulo snack 💡💡💡 ❌ ❌ ❌.
-
+mostrar
 
 <!-- #
 
@@ -49,3 +54,8 @@ restringir la opción de eliminar en la sección de Bancos/Fassil/Movientos de c
 3. usuarios: seleccionar todas sucursales que va a ver la banca
 
 # -->
+
+
+<!-- tarea10 ✅ ✅ ✅
+como ordenar el ExportExcel de forma asc fecha inicio
+como ordenar el SLIt de forma asc fecha inicio -->

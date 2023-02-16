@@ -4,7 +4,7 @@ import Reducer from "./Reducer";
 
 export default new SModel<Action, Reducer>({
     info: {
-        component: "publicacion"
+        component: "sucursal"
     },
     Columns: {
         "descripcion": { type: "text", editable: true },
@@ -17,7 +17,7 @@ export default new SModel<Action, Reducer>({
     },
     image: {
         api: "root",
-        name: "publicacion"
+        name: "sucursal"
     },
     Action,
     Reducer,
