@@ -67,8 +67,8 @@ class recuperar extends Component {
                         <SHr />
                         <SHr />
                         <SView col={"xs-11"} row center onPress={() => {
-                            SNavigation.navigate("/login/recuperar_codigo");
-                            // SNavigation.navigate("/login/recuperar_pass");
+                            // SNavigation.navigate("/login/recuperar_codigo");
+                            SNavigation.navigate("/login/recuperar_pass");
                         }}>
                             <SText fontSize={14} style={{
                                 textDecorationLine: "underline",
