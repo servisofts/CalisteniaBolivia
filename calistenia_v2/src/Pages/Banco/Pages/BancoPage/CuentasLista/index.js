@@ -118,23 +118,20 @@ class CuentasLista extends Component {
                 justifyContent: "flex-end",
                 paddingStart: 4,
                 paddingEnd: 4,
+                // backgroundColor: "red",
                 // alignItems: "center",
               }} row  >
 
                 {/* <SView center {this.getAllMontoCuenta(obj.key)  0 ? card ?? "blue"} card style={{ padding: 4, }}> */}
 
-                <SView card center style={{ padding: 4, }}>
-                  {/* Banca Lista (BancoPage) formatear monto moneda */}
+                {/* Banca Lista (BancoPage) formatear monto moneda */}
+                <SView card center style={{ padding: 10 }}>
                   <SText>{`Bs. ${SMath.formatMoney(this.getAllMontoCuenta(obj.key))}`}</SText>
                 </SView>
 
               </SView>
             </SView>
-            {/* <SView col={"xs-12"} style={{
-                            flex: 1,
-                        }}>
-                            <MovimientosGraphic data={this.getMovimientos(obj.key)} />
-                        </SView> */}
+            {/* <SView col={"xs-12"} style={{ flex: 1 }}> <MovimientosGraphic data={this.getMovimientos(obj.key)} /></SView> */}
           </SView>
 
         </SView>

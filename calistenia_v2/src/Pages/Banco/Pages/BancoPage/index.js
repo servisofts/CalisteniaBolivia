@@ -20,6 +20,8 @@ class BancoPage extends Component {
   }
 
   getAnular(obj) {
+    // if(obj.key)
+
     // if (!SSRolesPermisosValidate({ page: "BancoPage", permiso: "eliminar_movimiento" })) {
     //   if (!this.caja) {
     //     return <View />
@@ -60,7 +62,7 @@ class BancoPage extends Component {
     // });
     // }}
     >
-      <SIcon name={"Delete"} width={30} />
+      <SIcon name={"Delete"} width={28} />
     </SView >
   }
 
@@ -82,6 +84,9 @@ class BancoPage extends Component {
     var data = reducer.data;
     return Object.keys(data).map((key) => {
       var obj = data[key];
+
+      // aqui preguntar el taño de lista de cada banco
+
       return (
         <SView col={"xs-12"}>
           <SView col={"xs-12"} key={obj.key} style={{
