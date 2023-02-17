@@ -8,17 +8,35 @@ export default class Header extends Component {
         };
     }
 
+    effect1(moving){
+ if (!this.state.layout) return null;
+        var h = this.state.layout.width / 10.46
+        return <SView col={"xs-12"} height={h} style={{
+            // position: "absolute",
+            bottom: moving,
+            zIndex: 1
+        }}>
+            <SIcon name='Effect1'  fill={STheme.color.primary}/>
+            </SView>
+    }
+
     render() {
         return (<>
-            <SView col={"xs-12"} row height={"20%"} backgroundColor={STheme.color.primary}  >
+        <SView col={"xs-12"} flex center >
+            <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} row height={150} backgroundColor={STheme.color.primary}  center
+            onLayout={(evt) => {
+                this.setState({ layout: evt.nativeEvent.layout })
+            }}
+            >
                 <SImage src={require('../../../Assets/img/portada2.jpg')} width={"100%"} height={"100%"}
                     style={{
                         resizeMode: 'cover',
                     }}
                 />
             </SView>
-            <SHr height={20}/>
-            <SView col={"xs-12"} row height={140} backgroundColor={STheme.color.primary}  >
+            {this.effect1(-12)}
+           
+            <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} row height={140} backgroundColor={STheme.color.primary} center  >
                 <SView col={"xs-6"} height={140} >
                     <SImage src={require('../../../Assets/img/p1.jpg')} width={"100%"} height={"100%"}
                         style={{
@@ -33,6 +51,9 @@ export default class Header extends Component {
                         }}
                     />
                 </SView>
+            </SView>
+            {this.effect1(12)}
+
             </SView>
         </>
         );

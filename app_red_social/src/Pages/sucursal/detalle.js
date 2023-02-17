@@ -4,6 +4,7 @@ import { SForm, SHr, SNavigation, SPage, SPopup, SText, STheme, SView, SIcon, SL
 import { AccentBar } from '../../Components';
 import Container from '../../Components/Container';
 import Model from '../../Model';
+import Mapa from './components/Mapa';
 import Card from './components/Card';
 import Header from './components/Header';
 
@@ -60,19 +61,21 @@ class detalle extends Component {
 
         return (
             <SPage  >
-                <Header />
+                <Header  />
                 <Container>
                     <SView col={"xs-12"} center>
-                        <SHr height={20} />
                         <SText fontSize={17} color={STheme.color.text}>ENTRENADORES</SText>
                     </SView>
-                    <SHr height={40} />
-
-                    <SHr height={20} />
+                    <SHr height={60} />
                     {this.render_with_data()}
+                    <SHr height={40} />
+                    <SView col={"xs-12"} center>
+                        <SText fontSize={21} color={STheme.color.text}>UBICACIÓN</SText>
+                    </SView>
                     <SHr height={30} />
-
                 </Container>
+                <Mapa height={250}/>
+                <SHr height={30} />
             </SPage>
         );
     }
