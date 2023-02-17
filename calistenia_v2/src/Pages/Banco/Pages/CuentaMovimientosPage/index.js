@@ -299,11 +299,11 @@ class CuentaMovimientosPage extends Component {
                       { key: "usuario_nombre", label: "Usuario", width: 120 },
                       { key: "fecha_chaval", label: "Fecha", width: 120, center: true },
                       // { key: "fecha_on", label: "Fecha", width: 100, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
-                      { key: "descripcion", label: "Descripción Motivo", width: 350 },
+                      { key: "descripcion", label: "Descripción Motivo", width: 550 },
                       // { key: "tipo_movimiento", label: "Transacción", width: 100 },
-                      { key: "ingreso", label: "Ingreso", width: 100 },
-                      { key: "egreso", label: "Egreso", width: 100 },
-                      { key: "traspaso", label: "Traspaso", width: 100 },
+                      { key: "ingreso", label: "Ingreso", width: 60 },
+                      { key: "egreso", label: "Egreso", width: 60 },
+                      { key: "traspaso", label: "Traspaso", width: 60 },
                       // { key: "monto", label: "Monto", width: 80 },
                     ]}
                     getDataProcesada={() => {
