@@ -79,7 +79,11 @@ class Movimientos extends Component {
     if (!usr) return <View />
     return <SText style={{
       textTransform: "capitalize",
-      color: STheme.color.darkGray
+      color: "white"
+    }} onPress={() => {
+      SNavigation.navigate("ClientePerfilPage", {
+        key: usr.key
+      })
     }}>{usr.Nombres} {usr.Apellidos}</SText>
   }
   getIconTipoPago(type, data) {
@@ -107,6 +111,12 @@ class Movimientos extends Component {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
       var monto = movimientos[key].monto;
       if (monto % 1 != 0) monto = monto.toFixed(2);
+
+      if (movimientos[key].estado == "3") return null;
+      // if (movimientos[key].estado == "3" || movimientos[key].descripcion == "Cancelacion de servicio") return null;
+
+      // Traspaso a bancos ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+
       return (
         <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
           <View style={{ backgroundColor: STheme.color.card, width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
@@ -218,25 +228,12 @@ class Movimientos extends Component {
     // tarea6  ✅ ✅ ✅
     if (this.moviminetos) {
       Object.values(this.moviminetos).map((o) => {
-        if (o.estado == 0) return null;
-        if (o.descripcion == "Cancelacion de servicio") return null;
+        // if (o.estado == "3" || o.descripcion == "Cancelacion de servicio") return null;
+        if (o.estado == "3") return null;
         // alvarosiles
-        // console.log("ostia ", o)
+        console.log("ostia", o)
         if (o.monto >= 0) {
           total.ingreso += o.monto;
-
-          // if (o.key_tipo_pago == "1" || o.descripcion == "apertura" || o.descripcion == "ingreso") {
-          //   // sumar en efectivo
-          // }
-          // if (o.key_tipo_pago == "2" || o.descripcion == " tarjeta") {
-          //   // sumar en tarjeta
-          // }
-          // if (o.key_tipo_pago == "3" || o.descripcion == "Transferencia") {
-          //   // sumar en Transferencia
-          // }
-          // if (o.descripcion == "cheque") {
-          //   // sumar en cheque
-          // }
 
           if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
           total_tipo_pago[o.key_tipo_pago] += o.monto;

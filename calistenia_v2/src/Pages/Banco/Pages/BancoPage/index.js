@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SIcon, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FloatButtom from '../../../../Components/FloatButtom/index';
@@ -18,6 +18,52 @@ class BancoPage extends Component {
     this.state = {
     };
   }
+
+  getAnular(obj) {
+    // if (!SSRolesPermisosValidate({ page: "BancoPage", permiso: "eliminar_movimiento" })) {
+    //   if (!this.caja) {
+    //     return <View />
+    //   }
+    //   if (this.caja.key != obj.key_caja) {
+    //     return <View />
+    //   }
+    // }
+    {/* Banca Lista Detalle (Movimientos de cuenta) se agrego el boton eliminar */ }
+
+    return <SView center style={{
+      width: 80,
+      // height: 50,
+      // justifyContent: "center",
+      // alignItems: "center",
+      // paddingRight: 4
+
+    }}
+    // onPress={() => {
+    // SPopup.confirm({
+    //   title: "¿Está seguro de anular el movimiento?",
+    //   message: `${obj.descripcion}`,
+    //   onPress: () => {
+    //     var data = {
+    //       ...obj,
+    //       estado: 0,
+    //     }
+    //     delete data["data"];
+    //     SSocket.send({
+    //       component: component,
+    //       type: "editar",
+    //       key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    //       key_cuenta_banco: this.key,
+    //       data: data,
+    //       estado: "cargando"
+    //     });
+    //   }
+    // });
+    // }}
+    >
+      <SIcon name={"Delete"} width={30} />
+    </SView >
+  }
+
   getAllBancos = () => {
     var reducer = this.props.state.bancoReducer;
     if (!reducer.data) {
@@ -41,51 +87,22 @@ class BancoPage extends Component {
           <SView col={"xs-12"} key={obj.key} style={{
             borderRadius: 4,
             backgroundColor: STheme.color.card,
-          }} onPress={() => {
-            this.props.navigation.navigate("BancoRegistroPage", { key: obj.key });
-          }} row>
-            <SView col={"xs-12"} row style={{
-              height: 60,
-            }}>
-              <SView style={{
-                width: 60,
-                height: 60,
-              }} center>
-                <SView style={{
-                  width: 45,
-                  height: 45,
-                  borderRadius: 8,
-                  overflow: "hidden"
-                }}>
+          }} onPress={() => { this.props.navigation.navigate("BancoRegistroPage", { key: obj.key }); }} row>
+            <SView col={"xs-12"} row center>
 
-                  <FotoPerfilComponent data={obj} component={component} style={{
-                    width: "100%",
-                    height: "100%",
-                  }} />
-
-
+              <SView style={{ width: 80, height: 60 }} center>
+                {/* Banca Lista (BancoPage) */}
+                <SView style={{ width: 45, height: 45, overflow: "hidden" }}>
+                  <FotoPerfilComponent data={obj} component={component} style={{ width: "100%", height: "100%", }} />
                 </SView>
+              </SView>
 
+              <SView style={{ flex: 1, backgroundColor: "transparent", }}>
+                <SText style={{ fontSize: 16 }} >{obj.descripcion}</SText>
               </SView>
-              <SView style={{
-                height: "100%",
-                flex: 1,
-                justifyContent: "center",
-              }}>
-                <SText style={{
-                  fontSize: 16,
-                }} >{obj.descripcion}</SText>
-              </SView>
-              <SView style={{
-                width: 60,
-                height: 60,
-              }} center>
-                {/* <SIcon name={"Ed"}/> */}
-                {/* <Svg name={"EditarOutline"} style={{
-                                    width: 25,
-                                    height: 25,
-                                }} /> */}
-              </SView>
+
+              {this.getAnular(obj)}
+
             </SView>
 
 

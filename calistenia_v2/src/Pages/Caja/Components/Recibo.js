@@ -67,6 +67,9 @@ class Recibo extends Component {
       if (obj.descripcion == "Transferencia por apertura") {
         return;
       }
+      if (obj.estado == "3") {
+        return;
+      }
       return <>
         <SHr />
         <SView row col={"xs-12"}>
@@ -107,11 +110,17 @@ class Recibo extends Component {
       if (obj.descripcion == "Transferencia por apertura") {
         return;
       }
+      if (obj.estado == "3") {
+        return;
+      }
+
       total += obj.monto;
     })
     return <SView col={"xs-12"}>
 
       <SView col={"xs-12"} row>
+
+        {/* alvaro recibo */}
         <SView flex>
           <SText color={STheme.color.lightBlack}  >Saldo</SText>
         </SView>
