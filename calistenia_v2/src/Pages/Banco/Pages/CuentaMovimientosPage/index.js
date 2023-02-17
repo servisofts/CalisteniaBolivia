@@ -295,35 +295,58 @@ class CuentaMovimientosPage extends Component {
 
                   {/* tarea10 ✅ ✅ ✅ */}
                   <ExportExcel
-                    // style={{ width: 300, height: 300 }}
                     header={[
-
                       { key: "usuario_nombre", label: "Usuario", width: 120 },
                       { key: "fecha_chaval", label: "Fecha", width: 120, center: true },
                       // { key: "fecha_on", label: "Fecha", width: 100, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
-                      { key: "descripcion", label: "Descripción Motivo", width: 350 },
-                      { key: "tipo_movimiento", label: "Transacción", width: 100 },
-                      { key: "monto", label: "Monto", width: 80 },
+                      { key: "descripcion", label: "Descripción Motivo", width: 550 },
+                      // { key: "tipo_movimiento", label: "Transacción", width: 100 },
+                      { key: "ingreso", label: "Ingreso", width: 60 },
+                      { key: "egreso", label: "Egreso", width: 60 },
+                      { key: "traspaso", label: "Traspaso", width: 60 },
+                      // { key: "monto", label: "Monto", width: 80 },
                     ]}
                     getDataProcesada={() => {
                       var daFinal = {};
-                      console.log("chaval ", this.finalData);
+                      // console.log("chaval ", this.finalData);
 
+
+                      // const ingreso = 0, egreso = 0, traspaso = 0;
+                      var total = { ingreso: 0, egreso: 0, traspaso: 10 }
                       Object.values(this.finalData).map((obj, i) => {
-                        // var usr = this.usuarios[obj.key];
-                        // if (!obj?.estado || obj?.estado <= 0) return;
+
+                        if (obj?.tipo_movimiento == "ingreso") {
+                          total.ingreso += obj?.monto;
+                        } else {
+                          total.ingreso = 0;
+                        }
+
+                        if (obj?.tipo_movimiento == "egreso") {
+                          total.egreso += obj?.monto;
+                        } else {
+                          total.egreso = 0;
+                        }
+                        if (obj?.tipo_movimiento == "traspaso") {
+                          total.traspaso += obj?.monto;
+                        } else {
+                          total.traspaso = 0;
+                        }
+
                         var toInsert = {
                           // key: obj.key,
-
                           fecha_on: obj?.fecha_on,
                           fecha_chaval: obj?.fecha_chaval,
                           usuario_nombre: obj?.usuario_nombre,
                           descripcion: obj?.descripcion,
-                          tipo_movimiento: obj?.tipo_movimiento,
-                          monto: obj?.monto,
+                          // tipo_movimiento: obj?.tipo_movimiento,
+                          ingreso: total.ingreso,
+                          egreso: total.egreso,
+                          traspaso: total.traspaso,
+                          // monto: obj?.monto,
                         }
                         daFinal[i] = toInsert
                       })
+                      // console.log("mirar ", daFinal)
                       return daFinal
                     }}
                   />
