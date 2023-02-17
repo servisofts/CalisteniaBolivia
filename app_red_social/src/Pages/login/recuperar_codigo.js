@@ -50,7 +50,7 @@ class recuperar_codigo extends Component {
                             borderRadius: 35,
                         }} center >
                             <SView height={5} ></SView>
-                            <SIcon name={"Message"} width={110} height={110} />
+                            <SIcon name={"Message"}  width={110} height={110} fill={STheme.color.text} />
                         </SView>
                         <SView height={26} />
                         {this.getForm()}

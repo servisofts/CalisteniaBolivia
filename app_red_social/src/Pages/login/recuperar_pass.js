@@ -55,11 +55,11 @@ class recuperar_pass extends Component {
         return <SView col={"xs-11 md-8 xl-6"} row center style={{ height: 250, borderRadius: 8, }} backgroundColor={STheme.color.background} >
             <SView col={"xs-11"} height={40} />
             <SView col={"xs-11"}  >
-                <SIcon name={"InputPassword"} height={100} />
+                <SIcon name={"InputPassword"} height={100} fill={STheme.color.secondary} />
             </SView>
             <SView col={"xs-11"} height={15} />
             <SView col={"xs-12"} center  >
-                <SText center color={STheme.color.darkGray} style={{ fontSize: 18, fontWeight: "bold" }}>Las contraseñas no coinciden</SText>
+                <SText center color={STheme.color.text} style={{ fontSize: 18, fontWeight: "bold" }}>Las contraseñas no coinciden</SText>
             </SView>
             <SView col={"xs-11"} height={30} />
         </SView>
