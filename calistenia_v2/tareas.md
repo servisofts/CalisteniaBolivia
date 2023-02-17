@@ -85,3 +85,9 @@ restringir la opción de eliminar en la sección de Bancos/Fassil/Movientos de c
 <!-- tarea10 ✅ ✅ ✅
 como ordenar el ExportExcel de forma asc fecha inicio
 como ordenar el SLIt de forma asc fecha inicio -->
+
+ingreso
+
+inscribciones
+
+cantidad alumno

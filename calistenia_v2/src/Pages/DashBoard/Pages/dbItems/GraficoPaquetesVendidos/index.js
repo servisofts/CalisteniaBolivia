@@ -22,6 +22,7 @@ class GraficoPaquetesVendidos extends Component {
       if (!sucursal_usuario.Actions.isActive(key, this.props)) {
         return null;
       }
+      // console.log("mira ", obj)
       return <SView col={"xs-12"} height={50} style={{ padding: 2, }} onPress={() => {
         if (this.state.select[key]) {
           delete this.state.select[key];
