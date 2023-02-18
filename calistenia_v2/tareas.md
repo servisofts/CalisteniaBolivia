@@ -91,9 +91,9 @@ como ordenar el SLIt de forma asc fecha inicio -->
   * Monstrar datos del grafico en cada lugar
   * cada numero poner en formarto punto en enteros y coma en los decimales
 
-
-  por rato lo botas
-
+<!-- del porque le bota -->
+<!-- en mancomunado por rato lo botas cuando registra informacicon-->
+<!-- hay que verlo si o si -->
 
 
       <!-- return <SList

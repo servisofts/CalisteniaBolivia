@@ -111,7 +111,7 @@ class SucursalesDetalle extends Component {
             padding: 4,
           }}>
             <SView col={"xs-12"} height={80} card row center>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
                   SNavigation.navigate("ClientesPage", { key_sucursal: key, nobecados: true, });
                 }}>
@@ -130,7 +130,7 @@ class SucursalesDetalle extends Component {
                 <SText center fontSize={10}>{" "}</SText>
 
               </SView>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
                   SNavigation.navigate("ClientesPage", { key_sucursal: key, becados: true });
                 }}>
@@ -149,11 +149,11 @@ class SucursalesDetalle extends Component {
                 <SText center fontSize={10}>{'Becados'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
-              <SView col={"xs-3"} height center >
+              <SView col={"xs-2.5"} height center >
                 <SView width={40} height={40} center onPress={() => {
                   // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                 }}>
-                  <SIcon name="Caja" />
+                  <SIcon name="Usuarios_cliente" />
                   <SView center style={{
                     position: "absolute",
                     width: 30,
@@ -169,20 +169,23 @@ class SucursalesDetalle extends Component {
                 <SText center fontSize={10}>{'Inscripciones'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
                   // SNavigation.navigate("entrenamientos", { key_sucursal: key });
                 }}>
-                  <SIcon name="Entrenamiento" />
+                  {/* cambiar el icono */}
+                  {/* <SIcon name="Entrenamiento" /> */}
+                  <SIcon name="Caja" />
                   <SView center style={{
                     position: "absolute",
-                    width: 30,
+                    width: 90,
                     height: 30,
+                    // backgroundColor: "green",
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
-                    <SText center fontSize={12} bold>Bs {SMath.formatMoney(cantidad_paquete)}</SText>
+                    <SText center fontSize={18} bold>{SMath.formatMoney(cantidad_paquete)}</SText>
 
                   </SView>
                 </SView>

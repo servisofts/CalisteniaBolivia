@@ -156,7 +156,7 @@ class EstadoCaja extends Component {
       total += obj.monto;
     }
     if (total % 1 != 0) total = total.toFixed(2);
-    return total;
+    return SMath.formatMoney(total);
   }
   getMontoEnCaja() {
     if (!this.activa) {
