@@ -151,7 +151,7 @@ class SucursalesDetalle extends Component {
               </SView>
               <SView col={"xs-3"} height center >
                 <SView width={40} height={40} center onPress={() => {
-                  SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
+                  // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                 }}>
                   <SIcon name="Caja" />
                   <SView center style={{
@@ -166,14 +166,12 @@ class SucursalesDetalle extends Component {
                     <SText center fontSize={18} bold>{monto_total_paquete}</SText>
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Inscribciones'}</SText>
-                {/* <SText center fontSize={10}>{'Cantidad total paquetes'}</SText> */}
-                {/* <SText center fontSize={10}>{'Ingreso'}</SText> */}
+                <SText center fontSize={10}>{'Inscripciones'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
               <SView col={"xs-3"} height center>
                 <SView width={40} height={40} center onPress={() => {
-                  SNavigation.navigate("entrenamientos", { key_sucursal: key });
+                  // SNavigation.navigate("entrenamientos", { key_sucursal: key });
                 }}>
                   <SIcon name="Entrenamiento" />
                   <SView center style={{
@@ -184,13 +182,11 @@ class SucursalesDetalle extends Component {
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
-                    <SText center fontSize={12} bold>Bs {SMath.formatMoney(cantidad_paquete.toFixed(2))}</SText>
+                    <SText center fontSize={12} bold>Bs {SMath.formatMoney(cantidad_paquete)}</SText>
 
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Ingreso monto total'}</SText>
-                {/* <SText center fontSize={10}>{'Monto total paquetes'}</SText> */}
-                {/* <SText center fontSize={10}>{'Inscribciones'}</SText> */}
+                <SText center fontSize={10}>{'Ingresos'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
 

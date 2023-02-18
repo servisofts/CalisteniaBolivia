@@ -86,8 +86,27 @@ restringir la opción de eliminar en la sección de Bancos/Fassil/Movientos de c
 como ordenar el ExportExcel de forma asc fecha inicio
 como ordenar el SLIt de forma asc fecha inicio -->
 
-ingreso
+# tarea 18 Dashboard (Jose Miguel)
+  * Cambiar el nombre por inscripciones e ingresos
+  * Monstrar datos del grafico en cada lugar
+  * cada numero poner en formarto punto en enteros y coma en los decimales
 
-inscribciones
 
-cantidad alumno
+  por rato lo botas
+
+
+
+      <!-- return <SList
+        data={obj}
+        limit={5}
+        render={(objs) => {
+          return (<>
+            {/* <SView col={"xs-12"} center style={{ backgroundColor: "red" }}> */}
+            <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
+            {/* <SText col={"xs-12"} >{JSON.stringify(objs)}</SText> */}
+            {/* </SView> */}
+
+          </>
+          )
+        }}
+      /> -->
