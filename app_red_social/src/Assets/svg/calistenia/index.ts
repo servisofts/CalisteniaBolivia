@@ -10,6 +10,9 @@ import Search, { ReactComponent as SearchW } from './Search.svg';
 import LogoBarra, { ReactComponent as LogoBarraW } from './logoBarra.svg';
 import Vineta1, { ReactComponent as Vineta1W } from './vineta1.svg';
 import Effect1, { ReactComponent as Effect1W } from './effect1.svg';
+import Pdia, { ReactComponent as PdiaW } from './p-dia.svg';
+import Pmodel, { ReactComponent as PmodelW } from './p-model.svg';
+import Pprecio, { ReactComponent as PprecioW } from './p-precio.svg';
 
 
 const Assets = {
@@ -24,6 +27,9 @@ const Assets = {
 	"LogoBarra": { Native: LogoBarra, Web: LogoBarraW },
 	"Vineta1": { Native: Vineta1, Web: Vineta1W },
 	"Effect1": { Native: Effect1, Web: Effect1W },
+	"Pdia": { Native: Pdia, Web: PdiaW },
+	"Pmodel": { Native: Pmodel, Web: PmodelW },
+	"Pprecio": { Native: Pprecio, Web: PprecioW },
 }
 
 export default Assets;

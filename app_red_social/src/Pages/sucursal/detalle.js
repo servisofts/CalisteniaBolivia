@@ -61,21 +61,23 @@ class detalle extends Component {
 
         return (
             <SPage  >
-                <Header  />
+                <Header />
                 <Container>
                     <SView col={"xs-12"} center>
                         <SText fontSize={17} color={STheme.color.text}>ENTRENADORES</SText>
                     </SView>
                     <SHr height={60} />
                     {this.render_with_data()}
-                    <SHr height={40} />
-                    <SView col={"xs-12"} center>
-                        <SText fontSize={21} color={STheme.color.text}>UBICACIÓN</SText>
-                    </SView>
+
                     <SHr height={30} />
                 </Container>
-                <Mapa height={250}/>
-                <SHr height={30} />
+                <SHr height={40} />
+                <SView col={"xs-12"} center>
+                    <SText fontSize={21} color={STheme.color.text}>UBICACIÓN</SText>
+                </SView>
+                <SHr height={20} />
+                <Mapa height={300} />
+                <SHr height={50} />
             </SPage>
         );
     }
