@@ -1,9 +1,10 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SImage, SLoad, SNavigation, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SIcon, SImage, SLoad, SMath, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
+import Finanza from '../../../Finanza';
 import Sucursal from '../../../Sucursal';
 import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
@@ -18,23 +19,25 @@ class SucursalesDetalle extends Component {
   }
 
   getLista() {
+    var fecha_desde = this.props.fechaInicio.toString("yyyy-MM-dd");
+    var fecha_hasta = this.props.fechaFin.toString("yyyy-MM-dd");
     var sucursales = Sucursal.Actions.getAll(this.props);
     var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
     var cajas = Caja.Actions.getActivas(this.props);
     var entrenamientos = Entrenamiento.Actions.getAll(this.props);
 
-    // var cantidad_paquetes_vendidos = Entrenamiento.Actions.getAll(this.props);
-    // var Monto_paquetes_vendidos = Entrenamiento.Actions.getAll(this.props);
-    // var Monto_paquetes_vendidos = paque.Actions.getAll(this.props);
+    var paquetes = Finanza.Actions.getPaquetesVendidos({
+      fecha_desde: fecha_desde, fecha_hasta: fecha_hasta
+    }, this.props, false);
+
 
     var arr_all = sucursal_usuario.Actions.getActive(this.props);
     if (!entrenamientos) return <SLoad />
     if (!sucursales) return <SLoad />;
     if (!clientesActivos) return <SLoad />;
     if (!cajas) return <SLoad />
-    // if (!cantidad_paquetes_vendidos) return <SLoad />
-    // if (!Monto_paquetes_vendidos) return <SLoad />
     if (!arr_all) return <SLoad />
+    if (!paquetes) { return null; }
 
     return Object.keys(sucursales).map((key, index) => {
       if (!sucursal_usuario.Actions.isActive(key, this.props)) {
@@ -78,16 +81,16 @@ class SucursalesDetalle extends Component {
         }
       })
 
-      // chaval
-      // var cantidad_paquetes_vendidos = 0;
-      // Object.keys(entrenamientos).map((key_entre) => {
-      //   var entrenamiento = entrenamientos[key_entre];
-      //   if (entrenamiento.key_sucursal == key) {
-      //     if (entrenamiento.estado == 1) {
-      //       cantidad_entrenamiento++;
-      //     }
-      //   }
-      // })
+      var cantidad_paquete = 0;
+      var monto_total_paquete = 0;
+      Object.keys(paquetes).map((key_entre) => {
+        var paquete = paquetes[key_entre];
+        if (paquete.key_sucursal == key) {
+          cantidad_paquete += paquete.total;
+          monto_total_paquete++;
+        }
+      })
+
 
 
       return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
@@ -158,11 +161,13 @@ class SucursalesDetalle extends Component {
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
+
                     {/* aqui viene la cantidad de paquetes vendidos */}
-                    <SText center fontSize={18} bold>{cantidad_caja}</SText>
+                    <SText center fontSize={18} bold>{monto_total_paquete}</SText>
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Cantidad total paquetes'}</SText>
+                <SText center fontSize={10}>{'Inscribciones'}</SText>
+                {/* <SText center fontSize={10}>{'Cantidad total paquetes'}</SText> */}
                 {/* <SText center fontSize={10}>{'Ingreso'}</SText> */}
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
@@ -179,11 +184,12 @@ class SucursalesDetalle extends Component {
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
-                    <SText center fontSize={18} bold>{cantidad_entrenamiento}</SText>
+                    <SText center fontSize={12} bold>Bs {SMath.formatMoney(cantidad_paquete.toFixed(2))}</SText>
 
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Monto total paquetes'}</SText>
+                <SText center fontSize={10}>{'Ingreso monto total'}</SText>
+                {/* <SText center fontSize={10}>{'Monto total paquetes'}</SText> */}
                 {/* <SText center fontSize={10}>{'Inscribciones'}</SText> */}
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
