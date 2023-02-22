@@ -1,9 +1,10 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SImage, SLoad, SNavigation, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SIcon, SImage, SLoad, SMath, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Caja from '../../../Caja';
 import Entrenamiento from '../../../Entrenamiento';
+import Finanza from '../../../Finanza';
 import Sucursal from '../../../Sucursal';
 import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
@@ -17,24 +18,36 @@ class SucursalesDetalle extends Component {
 
   }
 
+  setColor(monto) {
+    if (monto < 2000) return STheme.color.card;
+    if (monto >= 2000) return "red";
+    if (monto >= 45000) return "yellow";
+    if (monto >= 55000) return "green";
+  }
+
   getLista() {
+    var fecha_desde = this.props.fechaInicio.toString("yyyy-MM-dd");
+    var fecha_hasta = this.props.fechaFin.toString("yyyy-MM-dd");
     var sucursales = Sucursal.Actions.getAll(this.props);
     var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
     var cajas = Caja.Actions.getActivas(this.props);
     var entrenamientos = Entrenamiento.Actions.getAll(this.props);
 
-    // var cantidad_paquetes_vendidos = Entrenamiento.Actions.getAll(this.props);
-    // var Monto_paquetes_vendidos = Entrenamiento.Actions.getAll(this.props);
-    // var Monto_paquetes_vendidos = paque.Actions.getAll(this.props);
+    var paquetes = Finanza.Actions.getPaquetesVendidos({
+      fecha_desde: fecha_desde, fecha_hasta: fecha_hasta
+    }, this.props, false);
+
 
     var arr_all = sucursal_usuario.Actions.getActive(this.props);
     if (!entrenamientos) return <SLoad />
     if (!sucursales) return <SLoad />;
     if (!clientesActivos) return <SLoad />;
     if (!cajas) return <SLoad />
-    // if (!cantidad_paquetes_vendidos) return <SLoad />
-    // if (!Monto_paquetes_vendidos) return <SLoad />
     if (!arr_all) return <SLoad />
+    if (!paquetes) { return null; }
+
+    var totales = 0;
+
 
     return Object.keys(sucursales).map((key, index) => {
       if (!sucursal_usuario.Actions.isActive(key, this.props)) {
@@ -49,7 +62,6 @@ class SucursalesDetalle extends Component {
         var cliente = clientesActivos[key_cli];
         if (cliente["caja"].key_sucursal == key) {
           // monto += cliente["paquete"].precio;
-
           if (!(new SDate(cliente.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(cliente.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
             return;
           }
@@ -78,16 +90,17 @@ class SucursalesDetalle extends Component {
         }
       })
 
-      // chaval
-      // var cantidad_paquetes_vendidos = 0;
-      // Object.keys(entrenamientos).map((key_entre) => {
-      //   var entrenamiento = entrenamientos[key_entre];
-      //   if (entrenamiento.key_sucursal == key) {
-      //     if (entrenamiento.estado == 1) {
-      //       cantidad_entrenamiento++;
-      //     }
-      //   }
-      // })
+      var ingresos_total = 0;
+      var cantidad_inscripcto = 0;
+      Object.keys(paquetes).map((key_entre) => {
+        var paquete = paquetes[key_entre];
+        if (paquete.key_sucursal == key) {
+          ingresos_total += paquete.total;
+          cantidad_inscripcto++;
+        }
+      })
+
+      totales += cantidad_inscripcto;
 
 
       return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
@@ -95,6 +108,12 @@ class SucursalesDetalle extends Component {
       }}>
         <SView center col={"xs-12"} height card style={{
           padding: 4,
+          borderWidth: 1,
+          // borderColor: STheme.color.card,
+          // borderColor: this.setColor(ingresos_total),
+          borderRadius: 4,
+          // border
+          // backgroundColor: this.setColor(ingresos_total),
         }}>
           <SView center col={"xs-12"} height={65} center>
             <SView width={45} height={45}>
@@ -108,7 +127,7 @@ class SucursalesDetalle extends Component {
             padding: 4,
           }}>
             <SView col={"xs-12"} height={80} card row center>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
                   SNavigation.navigate("ClientesPage", { key_sucursal: key, nobecados: true, });
                 }}>
@@ -127,7 +146,7 @@ class SucursalesDetalle extends Component {
                 <SText center fontSize={10}>{" "}</SText>
 
               </SView>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
                   SNavigation.navigate("ClientesPage", { key_sucursal: key, becados: true });
                 }}>
@@ -146,11 +165,12 @@ class SucursalesDetalle extends Component {
                 <SText center fontSize={10}>{'Becados'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
-              <SView col={"xs-3"} height center >
+              <SView col={"xs-2.5"} height center >
                 <SView width={40} height={40} center onPress={() => {
-                  SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
+                  // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                 }}>
-                  <SIcon name="Caja" />
+                  <SIcon name="Entrenamiento" />
+
                   <SView center style={{
                     position: "absolute",
                     width: 30,
@@ -158,33 +178,36 @@ class SucursalesDetalle extends Component {
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
+
                     {/* aqui viene la cantidad de paquetes vendidos */}
-                    <SText center fontSize={18} bold>{cantidad_caja}</SText>
+                    <SText center fontSize={18} bold>{cantidad_inscripcto}</SText>
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Cantidad total paquetes'}</SText>
-                {/* <SText center fontSize={10}>{'Ingreso'}</SText> */}
+                <SText center fontSize={10}>{'Inscripciones'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
-              <SView col={"xs-3"} height center>
+              <SView col={"xs-2.5"} height center>
                 <SView width={40} height={40} center onPress={() => {
-                  SNavigation.navigate("entrenamientos", { key_sucursal: key });
+                  // SNavigation.navigate("entrenamientos", { key_sucursal: key });
                 }}>
-                  <SIcon name="Entrenamiento" />
+                  {/* cambiar el icono */}
+                  {/* <SIcon name="Entrenamiento" /> */}
+                  <SIcon name="Caja" />
                   <SView center style={{
                     position: "absolute",
-                    width: 30,
+                    width: 70,
                     height: 30,
+                    // backgroundColor: "green",
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
-                    <SText center fontSize={18} bold>{cantidad_entrenamiento}</SText>
+                    <SText center fontSize={12} bold>Bs</SText>
+                    <SText center fontSize={12} bold>{SMath.formatMoney(ingresos_total)}</SText>
 
                   </SView>
                 </SView>
-                <SText center fontSize={10}>{'Monto total paquetes'}</SText>
-                {/* <SText center fontSize={10}>{'Inscribciones'}</SText> */}
+                <SText center fontSize={10}>{'Ingresos'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
 
@@ -192,7 +215,7 @@ class SucursalesDetalle extends Component {
             </SView>
           </SView>
         </SView>
-      </SView>
+      </SView >
     })
   }
   getContent() {

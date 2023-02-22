@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SIcon, SImage, SLoad, SNavigation, SOrdenador, SPage, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SIcon, SImage, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
 import { SSRolesPermisosValidate } from '../../../../../SSRolesPermisos';
@@ -198,7 +198,7 @@ class PaquetesDeUsuario extends Component {
             <Text style={{
               color: STheme.color.text,
               fontSize: 14,
-            }}>Bs. {obj.monto}</Text>
+            }}>Bs. {SMath.formatMoney(obj.monto)}</Text>
           </View>
 
           {/* <View style={{

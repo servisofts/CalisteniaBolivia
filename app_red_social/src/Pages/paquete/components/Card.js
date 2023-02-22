@@ -1,13 +1,14 @@
 import { Text, View } from 'react-native'
 import React, { Component } from 'react'
 // import PButtom from '../../../Components/PButtom'
-import { SText, STheme, SView } from 'servisofts-component';
+import { SText, STheme, SView, SNavigation } from 'servisofts-component';
 
 export default class Card extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+        this.pk = SNavigation.getParam("pk");
     }
 
     render() {
@@ -22,6 +23,7 @@ export default class Card extends Component {
                     padding: 18
                 }}
                 row
+                onPress={() => { SNavigation.navigate('/paquete/membresia/detalle', { sucursal: this.pk, pk: key  }) }}
             >
                 <SView col={"xs-10"}>
                     <SText color={STheme.color.text} fontSize={15}>{descripcion}</SText>

@@ -116,7 +116,7 @@ class index extends Component {
             data={Object.values(sucursales)}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
-                return <Sucursal.Card image={1} datas={data}  />
+                return <Sucursal.Card image={1} datas={data} root={'/sucursal/detalle'} />
             }}
         />
 
@@ -126,7 +126,7 @@ class index extends Component {
     }
 
     render() {
-       
+
         return (
             <SPage
                 navBar={this.navBar()}
@@ -134,6 +134,12 @@ class index extends Component {
                 onRefresh={this.clearData}
             >
                 <Container>
+                    <SHr height={15} />
+                    <SView col={"xs-12"} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
+                        <SHr height={10} />
+                        <SIcon name='logowhite' fill={STheme.color.text} width={200} />
+                        <SHr height={10} />
+                    </SView>
                     <SHr height={15} />
                     {this.render_with_data()}
                 </Container>

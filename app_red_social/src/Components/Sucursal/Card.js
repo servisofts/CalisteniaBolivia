@@ -33,7 +33,7 @@ class index extends Component<SucursalCardPropsType> {
     render() {
         var { key, descripcion, state, nombre } = this.props.datas;
         return (
-            <SView col={"xs-12"} row  onPress={() => { SNavigation.navigate('/sucursal/detalle') }}>
+            <SView col={"xs-12"} row  onPress={() => { SNavigation.navigate(this.props.root, { pk: key }) }}>
                 <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} >
                     <SView col={"xs-12"} center height >
                         <SView col={"xs-12"} height={130} style={{
