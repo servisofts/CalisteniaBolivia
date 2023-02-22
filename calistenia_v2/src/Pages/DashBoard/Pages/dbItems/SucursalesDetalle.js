@@ -39,6 +39,9 @@ class SucursalesDetalle extends Component {
     if (!arr_all) return <SLoad />
     if (!paquetes) { return null; }
 
+    var totales = 0;
+
+
     return Object.keys(sucursales).map((key, index) => {
       if (!sucursal_usuario.Actions.isActive(key, this.props)) {
         return null;
@@ -52,7 +55,6 @@ class SucursalesDetalle extends Component {
         var cliente = clientesActivos[key_cli];
         if (cliente["caja"].key_sucursal == key) {
           // monto += cliente["paquete"].precio;
-
           if (!(new SDate(cliente.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(cliente.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
             return;
           }
@@ -91,6 +93,7 @@ class SucursalesDetalle extends Component {
         }
       })
 
+      totales += monto_total_paquete;
 
 
       return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
@@ -153,7 +156,8 @@ class SucursalesDetalle extends Component {
                 <SView width={40} height={40} center onPress={() => {
                   // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                 }}>
-                  <SIcon name="Usuarios_cliente" />
+                  <SIcon name="Entrenamiento" />
+
                   <SView center style={{
                     position: "absolute",
                     width: 30,
@@ -178,14 +182,15 @@ class SucursalesDetalle extends Component {
                   <SIcon name="Caja" />
                   <SView center style={{
                     position: "absolute",
-                    width: 90,
+                    width: 70,
                     height: 30,
                     // backgroundColor: "green",
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
-                    <SText center fontSize={18} bold>{SMath.formatMoney(cantidad_paquete)}</SText>
+                    <SText center fontSize={12} bold>Bs</SText>
+                    <SText center fontSize={12} bold>{SMath.formatMoney(cantidad_paquete)}</SText>
 
                   </SView>
                 </SView>

@@ -28,8 +28,8 @@ export default class index extends Component {
         <SView col={"xs-12"} row center>
 
           <ClientesActivos />
-          <CajasActivas />
-          <EntrenamientosActivos />
+          <EntrenamientosActivos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
+          <CajasActivas fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <SHr height={36} />
           {/* <SucursalesDetalle /> */}
           <SucursalesDetalle fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />

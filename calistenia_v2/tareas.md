@@ -44,7 +44,7 @@ en clientes la proroga
   * Exportar la información en formato Excel para una mayor facilidad de uso.  ✅ ✅ ✅
   * Actualizar el diseño para que resalte y utilizar colores más atractivos.  ✅ ✅ ✅
 
-# tarea 15.- en dashboard: no esta contando bien
+# tarea 15.- en dashboard: no esta contando bien ✅ ✅ ✅
 
 # tarea 12.-fecha de pagos trimestrales, mis_inversiones/perfil
 # tarea 13 Bancos darle la pinta a banco.
