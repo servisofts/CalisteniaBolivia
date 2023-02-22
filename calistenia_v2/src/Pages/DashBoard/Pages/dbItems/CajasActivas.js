@@ -69,6 +69,7 @@ class CajasActivas extends Component {
         SNavigation.navigate("CajasAbiertas")
       }}>
         <SIcon name={"Caja"} />
+        {/* <SIcon name={"Money"} /> */}
       </SView>
 
     </SView>

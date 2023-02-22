@@ -18,6 +18,13 @@ class SucursalesDetalle extends Component {
 
   }
 
+  setColor(monto) {
+    if (monto < 2000) return STheme.color.card;
+    if (monto >= 2000) return "red";
+    if (monto >= 45000) return "yellow";
+    if (monto >= 55000) return "green";
+  }
+
   getLista() {
     var fecha_desde = this.props.fechaInicio.toString("yyyy-MM-dd");
     var fecha_hasta = this.props.fechaFin.toString("yyyy-MM-dd");
@@ -83,17 +90,17 @@ class SucursalesDetalle extends Component {
         }
       })
 
-      var cantidad_paquete = 0;
-      var monto_total_paquete = 0;
+      var ingresos_total = 0;
+      var cantidad_inscripcto = 0;
       Object.keys(paquetes).map((key_entre) => {
         var paquete = paquetes[key_entre];
         if (paquete.key_sucursal == key) {
-          cantidad_paquete += paquete.total;
-          monto_total_paquete++;
+          ingresos_total += paquete.total;
+          cantidad_inscripcto++;
         }
       })
 
-      totales += monto_total_paquete;
+      totales += cantidad_inscripcto;
 
 
       return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
@@ -101,6 +108,12 @@ class SucursalesDetalle extends Component {
       }}>
         <SView center col={"xs-12"} height card style={{
           padding: 4,
+          borderWidth: 1,
+          // borderColor: STheme.color.card,
+          // borderColor: this.setColor(ingresos_total),
+          borderRadius: 4,
+          // border
+          // backgroundColor: this.setColor(ingresos_total),
         }}>
           <SView center col={"xs-12"} height={65} center>
             <SView width={45} height={45}>
@@ -167,7 +180,7 @@ class SucursalesDetalle extends Component {
                   }}>
 
                     {/* aqui viene la cantidad de paquetes vendidos */}
-                    <SText center fontSize={18} bold>{monto_total_paquete}</SText>
+                    <SText center fontSize={18} bold>{cantidad_inscripcto}</SText>
                   </SView>
                 </SView>
                 <SText center fontSize={10}>{'Inscripciones'}</SText>
@@ -190,7 +203,7 @@ class SucursalesDetalle extends Component {
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
                     <SText center fontSize={12} bold>Bs</SText>
-                    <SText center fontSize={12} bold>{SMath.formatMoney(cantidad_paquete)}</SText>
+                    <SText center fontSize={12} bold>{SMath.formatMoney(ingresos_total)}</SText>
 
                   </SView>
                 </SView>
@@ -202,7 +215,7 @@ class SucursalesDetalle extends Component {
             </SView>
           </SView>
         </SView>
-      </SView>
+      </SView >
     })
   }
   getContent() {

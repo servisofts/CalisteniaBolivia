@@ -67,7 +67,7 @@ que salga la fecha de vencimineto
 # imprimir una factura tamaño carta en la mitad de una hoja para economizar
 # cambiar la pagina de ngnix 404 cuando no hay internet, por un html facil/entendible para cajera/jefes
 
-
+<!-- saber cuantas personas estan activas  -->
 
 <!-- #
 

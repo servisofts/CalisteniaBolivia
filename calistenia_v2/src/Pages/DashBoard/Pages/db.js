@@ -1,12 +1,9 @@
 import { Component } from 'react';
-import { SDate, SHr, SPage, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import MonthBetween from '../../../Components/MonthBetween';
 import CajasActivas from './dbItems/CajasActivas';
 import ClientesActivos from './dbItems/ClientesActivos';
 import EntrenamientosActivos from './dbItems/EntrenamientosActivos';
-import GraficoAsistencia from './dbItems/GraficoAsistencia';
-import GraficoIngresos from './dbItems/GraficoIngresos/index';
-import GraficoPaquetesVendidos from './dbItems/GraficoPaquetesVendidos';
 import SucursalesDetalle from './dbItems/SucursalesDetalle';
 
 export default class index extends Component {
@@ -26,28 +23,40 @@ export default class index extends Component {
     return (
       <SPage title={"DashBoard"}>
         <SView col={"xs-12"} row center>
+          <SHr height={32} />
+          <MonthBetween fecha_inicio={this.state.fechaInicio} fecha_fin={this.state.fechaFin}
+            onChange={(fechaInicio, fechaFin) => { this.setState({ fechaInicio, fechaFin }) }} />
+          <SHr height={32} />
 
           <ClientesActivos />
           <EntrenamientosActivos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <CajasActivas fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
-          <SHr height={36} />
-          {/* <SucursalesDetalle /> */}
-          <SucursalesDetalle fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
-          <SHr height={36} />
-          <MonthBetween
-            fecha_inicio={this.state.fechaInicio}
-            fecha_fin={this.state.fechaFin}
-            onChange={(fechaInicio, fechaFin) => {
-              this.setState({ fechaInicio, fechaFin })
-            }} />
-          <SHr height={36} />
 
-          <GraficoPaquetesVendidos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
+          {/* <SHr height={36} /> */}
+
+          {/* <SHr height={32} /> */}
+          <SucursalesDetalle fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
+
+          {/* <SucursalesDetalle /> */}
+          {/* <SHr height={36} /> */}
+
+          {/* <GraficoPaquetesVendidos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <SHr height={36} />
           <GraficoIngresos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <SHr height={36} />
           <GraficoAsistencia fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
-          <SHr height={100} />
+          <SHr height={100} /> */}
+
+          <SButtom Card
+            onPress={() => { SNavigation.navigate("grafico") }}
+            style={{ backgroundColor: STheme.color.gray, position: "absolute", right: 50, bottom: 32, width: 50, height: 50, }}>
+            <SIcon name={"DashboardBtn"} style={{ width: 45, height: 45, }} />
+          </SButtom>
+
+          {/* <FloatButtom onPress={() => {
+            SNavigation.navigate("registro")
+          }} /> */}
+
         </SView>
       </SPage>
     );
