@@ -27,9 +27,10 @@ class index extends DPA.profile {
         return data[this.pk]
     }
 
-    
-    $render(){
-        return <AsientoContable pk={this.pk} />
+
+    $render() {
+        this.data = this.$getData();
+        return <AsientoContable key_asiento_contable={this.pk} key_gestion={Model.gestion.Action.getSelect()?.key} />
     }
 }
 export default connect(index);

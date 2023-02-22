@@ -5,7 +5,7 @@ import Model from '../../../Model';
 
 class index extends DPA.delete {
     constructor(props) {
-        super(props, { Parent: Parent, });
+        super(props, { Parent: Parent, params: ["key_gestion"], });
     }
     $allowAccess() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "delete" })
@@ -24,7 +24,9 @@ class index extends DPA.delete {
     }
 
     $getData() {
-        return Parent.model.Action.getByKey(this.pk);
+        var data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion })
+        if (!data) return null;
+        return data[this.pk]
     }
 }
 export default connect(index);
