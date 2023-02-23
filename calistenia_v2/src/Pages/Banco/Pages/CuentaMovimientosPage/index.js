@@ -227,12 +227,17 @@ class CuentaMovimientosPage extends Component {
       this.setState({ monto_total: monto_total });
     }
 
+    if (!this.finalData) {
+      return <SText style={{ color: "red", fontSize: 12 }}>No hay datos disponibles para las fechas indicadas</SText>
+    }
+
     return <SList
       // buscador
       limit={8}
       order={[{ key: "fecha_on", order: "desc", peso: 1 }]}
       data={data}
       render={(obj) => {
+
 
         // var obj = data[key];
 
