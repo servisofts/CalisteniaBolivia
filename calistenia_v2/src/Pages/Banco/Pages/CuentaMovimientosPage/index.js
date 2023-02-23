@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SIcon, SImage, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -168,57 +168,57 @@ class CuentaMovimientosPage extends Component {
       // console.log("ajajaj ", obj);
       this.finalData = objFinal;
 
-      return (
-        <>
-          <SView col={"xs-12"} key={obj.key} style={{
-            borderRadius: 4,
-            backgroundColor: STheme.color.card,
-          }} row center>
-            <SView style={{
-              width: 50,
-              height: 60,
-            }} center >
-              <SView style={{
-                width: 40,
-                height: 40,
-                borderRadius: 8,
-                overflow: "hidden",
-              }}>
-                <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
-              </SView>
-            </SView>
-            <SView style={{
-              flex: 1,
-              height: "100%",
-              padding: 4,
-            }}
-              props={{ direction: "row" }}
-            >
-              <SView col={"xs-12"} height>
-                <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
-                <SView flex center>
-                  <Text style={{ color: STheme.color.text, fontSize: 16 }}>{obj.descripcion}</Text>
-                </SView>
-                <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{`${usuario["Nombres"]} ${usuario["Apellidos"]}`}</Text>
-              </SView>
+      // return (
+      //   <>
+      //     <SView col={"xs-12"} key={obj.key} style={{
+      //       borderRadius: 4,
+      //       backgroundColor: STheme.color.card,
+      //     }} row center>
+      //       <SView style={{
+      //         width: 50,
+      //         height: 60,
+      //       }} center >
+      //         <SView style={{
+      //           width: 40,
+      //           height: 40,
+      //           borderRadius: 8,
+      //           overflow: "hidden",
+      //         }}>
+      //           <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
+      //         </SView>
+      //       </SView>
+      //       <SView style={{
+      //         flex: 1,
+      //         height: "100%",
+      //         padding: 4,
+      //       }}
+      //         props={{ direction: "row" }}
+      //       >
+      //         <SView col={"xs-12"} height>
+      //           <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}</Text>
+      //           <SView flex center>
+      //             <Text style={{ color: STheme.color.text, fontSize: 16 }}>{obj.descripcion}</Text>
+      //           </SView>
+      //           <Text style={{ color: STheme.color.lightGray, fontSize: 12 }}>{`${usuario["Nombres"]} ${usuario["Apellidos"]}`}</Text>
+      //         </SView>
 
-            </SView>
-            {this.getTraspaso(obj)}
-            <SView style={{
-              width: 38,
-            }} center>
-              <SView width={34}> <SIcon name={(obj.monto >= 0 ? "Ingreso" : "Egreso")} /></SView>
-            </SView>
-            {/* Banca Lista Detalle (Movimientos de cuenta) */}
-            <View style={{ width: 110, height: 50, justifyContent: "center", alignItems: "center" }} >
-              <Text style={{ color: STheme.color.text, fontSize: 16, }}>Bs. {SMath.formatMoney(monto)}</Text>
-            </View>
-            {this.getAnular(obj)}
-          </SView>
-          <SHr />
-          <SHr />
-        </>
-      );
+      //       </SView>
+      //       {this.getTraspaso(obj)}
+      //       <SView style={{
+      //         width: 38,
+      //       }} center>
+      //         <SView width={34}> <SIcon name={(obj.monto >= 0 ? "Ingreso" : "Egreso")} /></SView>
+      //       </SView>
+      //       {/* Banca Lista Detalle (Movimientos de cuenta) */}
+      //       <View style={{ width: 110, height: 50, justifyContent: "center", alignItems: "center" }} >
+      //         <Text style={{ color: STheme.color.text, fontSize: 16, }}>Bs. {SMath.formatMoney(monto)}</Text>
+      //       </View>
+      //       {this.getAnular(obj)}
+      //     </SView>
+      //     <SHr />
+      //     <SHr />
+      //   </>
+      // );
 
     })
 
@@ -226,7 +226,76 @@ class CuentaMovimientosPage extends Component {
       this.state.monto_total = monto_total;
       this.setState({ monto_total: monto_total });
     }
+
+    return <SList
+      // buscador
+      limit={8}
+      order={[{ key: "fecha_on", order: "desc", peso: 1 }]}
+      data={data}
+      render={(obj) => {
+
+        // var obj = data[key];
+
+        if (obj.estado == 0) return;
+        var monto = obj.monto;
+        if (obj.monto == 0) {
+          return <View />
+        }
+        if (monto) {
+          if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
+        }
+        var sdate = new SDate(obj.fecha_on)
+        if ((!sdate.equalDay(fecha_i) && !sdate.equalDay(fecha_f)) && (sdate.isBefore(fecha_i) || sdate.isAfter(fecha_f))) {
+          return <View />
+        }
+        monto_total += parseFloat(monto);
+        var usuario = usuarios[obj.key_usuario];
+
+        return <SView col={"xs-12"} style={{
+          borderRadius: 4,
+          backgroundColor: STheme.color.card,
+        }} row center>
+          <SView style={{
+            width: 50,
+            height: 60,
+          }} center >
+            <SView style={{
+              width: 40,
+              height: 40,
+              borderRadius: 8,
+              overflow: "hidden",
+            }}>
+              <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
+            </SView>
+          </SView>
+          <SView style={{ flex: 1, height: "100%", padding: 4 }} props={{ direction: "row" }} >
+            <SView col={"xs-12"} height>
+              <SText style={{ color: STheme.color.lightGray, fontSize: 12 }}>
+                {new SDate(obj.fecha_on).toString("MONTH, dd  - hh:mm")}
+              </SText>
+              <SView flex center>
+                <SText style={{ color: STheme.color.text, fontSize: 16 }}>
+                  {obj.descripcion}
+                </SText>
+              </SView>
+              <SText style={{ color: STheme.color.lightGray, fontSize: 12 }}>
+                {`${usuario.Nombres} ${usuario.Apellidos}`}
+              </SText>
+            </SView>
+          </SView>
+          {this.getTraspaso(obj)}
+          <SView style={{ width: 38 }} center>
+            <SView width={34}> <SIcon name={(obj.monto >= 0 ? "Ingreso" : "Egreso")} /></SView>
+          </SView>
+          <View style={{ width: 110, height: 50, justifyContent: "center", alignItems: "center" }} >
+            <SText style={{ color: STheme.color.text, fontSize: 16, }}>Bs. {SMath.formatMoney(monto)}</SText>
+          </View>
+          {this.getAnular(obj)}
+        </SView>
+      }}
+    />
     return CONTAINER;
+
 
   }
   getBilletera = () => {

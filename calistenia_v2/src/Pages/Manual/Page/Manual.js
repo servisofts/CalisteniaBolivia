@@ -708,7 +708,7 @@ class Manual extends Component {
             <SHr height={32} />
             {this.getFondoInversionInversionista()}
             < SHr height={32} />
-            {this.getFondoInversionCotizacion()}
+            {/* {this.getFondoInversionCotizacion()} */}
             <SHr /><SHr /><SHr /><SHr /><SHr />
           </SView>
         </SView>
