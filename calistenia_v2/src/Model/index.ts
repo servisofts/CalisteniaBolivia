@@ -34,6 +34,9 @@ Usuario.init({
     },
 });
 Roles_permisos.init({});
+Contabilidad.init({
+    separador:""
+})
 
 export default {
     ...Model,

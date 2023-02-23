@@ -6,7 +6,7 @@ export default {
   host: 'calistenia.servisofts.com',
   ssl: true,
   // -- Producción --
-  // host: '192.168.3.1',
+  // host: '192.168.2.1',
   // ssl: false,
   // --CONFIGURACIONES--
   port: {
