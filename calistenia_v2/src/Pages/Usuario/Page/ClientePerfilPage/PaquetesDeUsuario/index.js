@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SIcon, SImage, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SIcon, SImage, SInput, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SPopupClose, SPopupOpen, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import SCalendar from '../../../../../Components/SCalendar';
 import Model from '../../../../../Model';
 import { SSRolesPermisosValidate } from '../../../../../SSRolesPermisos';
 import Sucursal from '../../../../Sucursal';
@@ -102,6 +103,118 @@ class PaquetesDeUsuario extends Component {
         SSocket.send(objSen, true);
       }}>
       <SIcon name={"Delete"} style={{
+        width: 19,
+        height: 19,
+      }} />
+    </SButtom>
+  }
+
+  getCalendaio(i, usuario) {
+    if (!usuario) return <View />
+    if (!this.state.paquete) return <View />
+    return <SView col="xs-10" >
+      <SCalendar
+        task={this.state.tasks[i]}
+        onChange={(date) => {
+          this.state.tasks[i] = {
+            fecha: date,
+            dias: this.state.paquete.dias
+          }
+          this.setState({ ...this.state })
+          // this.state.tasks[i]=;
+        }} />
+      <SView style={{
+        width: "100%",
+        height: 100,
+      }}></SView>
+    </SView>
+  }
+
+  popupFecha(obj) {
+    // let usuario = Model.usuario.Action.getByKey(obj.key_usuario);
+
+
+    return <>
+      <SView width={362} height={325} center row style={{ borderRadius: 8 }} withoutFeedback backgroundColor={STheme.color.background} style={{ borderColor: "green" }}   >
+        <SHr height={20} />
+
+        <SInput ref={ref => this._fechaInicio = ref} col={"xs-11"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"} />
+        <SHr height={15} />
+        <SText color={"red"}> dsd </SText>
+        <SHr height={15} />
+
+        <SButtom type="danger" onPress={() => { SPopup.close("CodigoSeguridad"); }}>Cancelar</SButtom>
+
+        <SButtom type="success" onPress={() => {
+
+          var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
+          var fecha_inicio_modificada = this._fechaInicio.getValue();
+          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+
+          console.log("inicio ", fecha_inicio_modificada)
+          console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
+          console.log("key ", obj.key_paquete_venta_usuario)
+
+
+          // alvaro boton eliminar
+          // obj.estado = "3";
+          // obj.descripcion = "Anulación de venta de servicioasaasasasasas.";
+
+          var objSen = {
+            component: "paqueteVentaUsuario",
+            type: "editar",
+            estado: "cargando",
+            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+            data: {
+              key: obj.key_paquete_venta_usuario,
+              fecha_inicio: fecha_inicio_modificada,
+              fecha_fin: fecha_fin_modificada.toString("yyyy-MM-dd"),
+            }
+          }
+          SSocket.sendPromise(objSen, true).then(response => {
+            // Hacer algo con la respuesta exitosa
+            console.log("entro")
+            SPopup.close("CodigoSeguridad");
+          })
+            .catch(error => {
+              // Manejar el error
+              console.log("error ", error)
+              SPopup.close("CodigoSeguridad");
+            });
+
+        }}>Consolidar</SButtom>
+
+        <SHr height={20} />
+      </SView>
+    </>
+  }
+
+  getEditar(obj) {
+    // console.log("muestra ", obj)
+    if (!SSRolesPermisosValidate({ page: "PaqueteVentaPage", permiso: "editar_venta" })) {
+      if (!this.caja) {
+        return <View />
+      }
+      if (this.caja.key != obj.key_caja) {
+        return <View />
+      }
+    }
+
+    var reducer = this.props.state.paqueteVentaReducer;
+    if (reducer.estado == "error") {
+      reducer.estado = "";
+      SPopup.alert(reducer.error);
+    }
+
+    return <SButtom
+      style={{
+        width: 30,
+        height: 30,
+      }}
+      onPress={() => {
+        SPopup.open({ content: this.popupFecha(obj), key: "CodigoSeguridad" });
+      }}>
+      <SIcon name={"Edit"} style={{
         width: 19,
         height: 19,
       }} />
@@ -216,6 +329,7 @@ class PaquetesDeUsuario extends Component {
                             fontSize: 10,
                         }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
                     </View> */}
+          {this.getEditar(obj)}
           {this.getEliminar(obj)}
         </View>
         <Paquete_Item data={obj} paquete={paquete} />
