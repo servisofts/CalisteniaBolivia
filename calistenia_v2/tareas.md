@@ -18,9 +18,8 @@ tarea10 clientes \
   * en el buscaor agregar el buscar motivo💯 ✅ ✅ ✅
   * tabla cliente, que exporte por excel.💯 ✅ ✅ ✅
   * exportar en excel la lista de clientes.💯 ✅ ✅ ✅
-#
-# las camaras si o si
 
+# las camaras si o si
 * 1ra. alternativa la compra de un codificar para ver video wall todas sucursales (Aunque esto requeriría un presupuesto mayor)
 * 2ra. alternativa tener 2 computadoras para visualizar hasta 4 pestañas de video en cada computadora (solución más económica)
 * 3ra. alternativa sería agregar una dirección IP pública en cada sucursal para acceder a la visualización desde el navegador, aunque esto solo permitiría ver las imágenes en una ventana reducida en lugar de en toda la pantalla.
@@ -40,10 +39,52 @@ en clientes la proroga
 # tarea Banca
   * boton eliminar banco vacio  ✅ ✅ ✅
   * Incluir-mostrar foto de cada banca  ✅ ✅ ✅
-  * Para mayor claridad en los montos los enteros utilizar enteros y la coma en la parte decimal  ✅ ✅ ✅ 💡💡
+  * Para mayor claridad en los montos los enteros utilizar enteros y la coma en la parte decimal  ✅ ✅ ✅
   * Exportar la información en formato Excel para una mayor facilidad de uso.  ✅ ✅ ✅
   * Actualizar el diseño para que resalte y utilizar colores más atractivos.  ✅ ✅ ✅
   * Mostrar los primero 10 para que cargue rapido.  ✅ ✅ ✅
+  * Cambiar el diseño. no se cambiara porque sera reemplazado por contabilidad
+
+
+# estado fianciero
+  configurar por
+
+
+
+# Dashboard
+
+
+  1.- dividir en tod pantallas/paginaas para listas sucursal y graficos asi no se sobrecarguen y sea lento el sistema
+  2.- agregar inscripciones por sucursal y el total
+  3.- agregar ingresos por sucursal y el total
+
+ la información en varias pestañas o secciones para mostrar las listas de sucursales y gráficos de manera separada y más organizada, evitando así sobrecargar la página y mantener el rendimiento del sistema.
+
+
+
+incluir las incripciones desglosados por sucursal y el total en general
+incluir los ingresos desglosados por sucursal y el total en general
+
+
+
+  mejorar el diseño
+
+  poner punto y comas
+
+crear un componente que muestre el total
+entrenadores
+cajas activas
+
+total clientes
+total becados
+total de inscriptos
+total de ingresos
+
+total de asistencias/clientes en sucursal
+por hora
+ver quienes estan entrenando,,,, controlando la entrada
+
+
 
 # tarea 15.- en dashboard: no esta contando bien ✅ ✅ ✅
 
