@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SIcon, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SIcon, SNavigation, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent';
+import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 import CuentasLista from './CuentasLista';
 let component = "banco";
 
@@ -22,14 +23,14 @@ class BancoPage extends Component {
   getAnular(obj) {
     // if(obj.key)
 
-    // if (!SSRolesPermisosValidate({ page: "BancoPage", permiso: "eliminar_movimiento" })) {
-    //   if (!this.caja) {
-    //     return <View />
-    //   }
-    //   if (this.caja.key != obj.key_caja) {
-    //     return <View />
-    //   }
-    // }
+    if (!SSRolesPermisosValidate({ page: "BancoPage", permiso: "eliminar" })) {
+      if (!this.caja) {
+        return <View />
+      }
+      if (this.caja.key != obj.key_caja) {
+        return <View />
+      }
+    }
     {/* Banca Lista Detalle (Movimientos de cuenta) se agrego el boton eliminar */ }
 
     return <SView center style={{
@@ -40,27 +41,27 @@ class BancoPage extends Component {
       // paddingRight: 4
 
     }}
-    // onPress={() => {
-    // SPopup.confirm({
-    //   title: "¿Está seguro de anular el movimiento?",
-    //   message: `${obj.descripcion}`,
-    //   onPress: () => {
-    //     var data = {
-    //       ...obj,
-    //       estado: 0,
-    //     }
-    //     delete data["data"];
-    //     SSocket.send({
-    //       component: component,
-    //       type: "editar",
-    //       key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    //       key_cuenta_banco: this.key,
-    //       data: data,
-    //       estado: "cargando"
-    //     });
-    //   }
-    // });
-    // }}
+      onPress={() => {
+        SPopup.confirm({
+          title: "¿Está seguro de anular el banco?",
+          message: `${obj.descripcion}`,
+          onPress: () => {
+            var data = {
+              ...obj,
+              estado: 0,
+            }
+            delete data["data"];
+            SSocket.send({
+              component: component,
+              type: "editar",
+              key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+              key_cuenta_banco: this.key,
+              data: data,
+              estado: "cargando"
+            });
+          }
+        });
+      }}
     >
       <SIcon name={"Delete"} width={28} />
     </SView >

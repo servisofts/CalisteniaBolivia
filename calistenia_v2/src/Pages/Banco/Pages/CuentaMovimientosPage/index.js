@@ -65,8 +65,6 @@ class CuentaMovimientosPage extends Component {
         return <View />
       }
     }
-    {/* Banca Lista Detalle (Movimientos de cuenta) se agrego el boton eliminar */ }
-
     return <SView style={{
       width: 40,
       height: 50,
