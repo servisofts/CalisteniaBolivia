@@ -22,14 +22,14 @@ class index extends Component {
         Model.publicacion.Action.CLEAR();
     }
    
-    render_with_data() {
+    render_with_data() { 
         var sucursales = Model.sucursal.Action.getAll();
         if (!sucursales) return <SLoad />
 
         return <SList
             buscador={"true"}
             center
-            space={5}
+            space={14}
             data={Object.values(sucursales)}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
