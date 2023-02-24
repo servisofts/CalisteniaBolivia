@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { SHr, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
-import { PlanDeCuentas2, PlanDeCuentasTable } from 'servisofts-rn-contabilidad'
+import { PlanDeCuentasTable } from 'servisofts-rn-contabilidad'
 
 class index extends Component {
     constructor(props) {
