@@ -19,9 +19,11 @@ class detalle extends Component {
     }
 
     render_with_data() {
+        var usuario = Model.usuario.Action.getUsuarioLog();
+		if (!usuario) return <SLoad />
         var paquete = Model.paquete.Action.getByKey(this.params.pk);
         if (!paquete) return <SLoad />
-        console.log(JSON.stringify(paquete) + " PPPP");
+        console.log(JSON.stringify(usuario) + " aaaa");
         var { key, descripcion, dias, precio, participantes } = paquete;
 
         return <SView col={"xs-12"} center>
@@ -109,7 +111,12 @@ class detalle extends Component {
                 </SView>
             </SView>
             <SHr height={26} />
-            <BtnSend>Adquirir paquete</BtnSend>
+            <BtnSend
+                onPress={() => {
+                    SNavigation.navigate("/paquete/membresia/confirmar", {  ...this.params});
+                }}
+
+            >Adquirir paquete</BtnSend>
         </SView>
 
     }

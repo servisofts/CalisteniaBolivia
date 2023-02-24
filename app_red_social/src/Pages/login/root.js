@@ -18,7 +18,7 @@ class login extends Component {
     render() {
 
         return (
-            <SPage>
+            <SPage center>
                 <SView col={"xs-12"} center>
                     <SView col={"xs-12"}>
                         <Container>
