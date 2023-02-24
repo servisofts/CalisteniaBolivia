@@ -79,8 +79,8 @@ import TarjetaAdd, { ReactComponent as TarjetaAddW } from './tarjetaAdd.svg';
 import SinTarjeta, { ReactComponent as SinTarjetaW } from './sinTarjeta.svg';
 
 
-import ImgSave, { ReactComponent as ImgSaveW } from './imgSave.svg';
-import ImgShare, { ReactComponent as ImgShareW } from './imgShare.svg';
+// import ImgSave, { ReactComponent as ImgSaveW } from './imgSave.svg';
+// import ImgShare, { ReactComponent as ImgShareW } from './imgShare.svg';
 import BilleteraVacio, { ReactComponent as BilleteraVacioW } from './billeteraVacio.svg';
 import SinFavorito, { ReactComponent as SinFavoritoW } from './sinFavorito.svg';
 import noCompras, { ReactComponent as noComprasW } from './noCompras.svg';
@@ -175,8 +175,8 @@ const Assets = {
 	"TarjetaAdd": { Native: TarjetaAdd, Web: TarjetaAddW },
 	"SinTarjeta": { Native: SinTarjeta, Web: SinTarjetaW },
 
-	"ImgSave": { Native: ImgSave, Web: ImgSaveW },
-	"ImgShare": { Native: ImgShare, Web: ImgShareW },
+	// "ImgSave": { Native: ImgSave, Web: ImgSaveW },
+	// "ImgShare": { Native: ImgShare, Web: ImgShareW },
 	"BilleteraVacio": { Native: BilleteraVacio, Web: BilleteraVacioW },
 	"SinFavorito": { Native: SinFavorito, Web: SinFavoritoW },
 	"NoCompras": { Native: noCompras, Web: noComprasW },
