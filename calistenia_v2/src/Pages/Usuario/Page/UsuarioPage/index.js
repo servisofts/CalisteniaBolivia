@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
+import { ExportExcel, SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
-import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
-import SSocket from 'servisofts-socket';
 import Model from '../../../../Model';
+import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
+
+var objFinal = {};
 
 class UsuarioPage extends Component {
 
@@ -80,10 +82,11 @@ class UsuarioPage extends Component {
       if (!this.state.buscador) {
         return <View />
       }
-      var objFinal = {};
       Object.keys(data).map((key) => {
         objFinal[key] = data[key];
       });
+
+
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
       return this.pagination(
@@ -140,7 +143,7 @@ class UsuarioPage extends Component {
               }}>
                 <Text style={{
                   fontSize: 16,
-                  color:STheme.color.text,
+                  color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
                 }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
               </View>
@@ -176,6 +179,40 @@ class UsuarioPage extends Component {
               }
             }}
           >
+
+            <SView col={"xs-12"} center>
+
+              {/* tarea10 ✅ ✅ ✅ */}
+              <ExportExcel
+                header={[
+                  { key: "nombres", label: "Nombres", width: 100 },
+                  { key: "apellidos", label: "Apellidos", width: 100 },
+                  { key: "telefono", label: "Telefono", width: 100 },
+                ]}
+                getDataProcesada={() => {
+                  var daFinal = {};
+                  // console.log("chaval ", objFinal);
+
+
+                  // const ingreso = 0, egreso = 0, traspaso = 0;
+                  var total = { ingreso: 0, egreso: 0, traspaso: 10 }
+                  Object.values(objFinal).map((obj, i) => {
+                    console.log("mirar ", obj.Nombres)
+
+                    var toInsert = {
+                      nombres: obj?.Nombres,
+                      apellidos: obj?.Apellidos,
+                      telefono: obj?.Telefono,
+                    }
+                    daFinal[i] = toInsert
+                  })
+                  console.log("mirar ", daFinal)
+                  return daFinal
+                }}
+              />
+            </SView>
+
+
             <SView col={"xs-12"} center>
               {getLista()}
 
