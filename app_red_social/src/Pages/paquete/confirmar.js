@@ -44,7 +44,7 @@ class confirmar extends Component {
             <SHr />
             <SHr />
             <SView col={"xs-8"} center>
-                <SText color={STheme.color.text} style={{ fontSize: 17 }} center >¿Estás seguro que deseas realizar este pedido?</SText>
+                <SText color={STheme.color.text} style={{ fontSize: 17 }} center >¿Estás seguro que deseas adquirir este paquete?</SText>
             </SView>
 
             <SView flex />
@@ -52,7 +52,7 @@ class confirmar extends Component {
                 <SView row col={"xs-11"}>
                     {this.btn({ title: "No, cancelar", onPress: () => { SPopup.close("confirmar"); }, active: false })}
                     <SView col={"xs-1"} />
-                    {this.btn({ title: "Sí, Confirmar", onPress: () => { this.form.submit() }, active: true })}
+                    {this.btn({ title: "Sí, Confirmar", onPress: () => { SPopup.close("confirmar"); SNavigation.navigate("/paquete/membresia/qr");  }, active: true })}
                 </SView>
             </SView>
             <SView flex />
@@ -91,7 +91,7 @@ class confirmar extends Component {
                             });
                         },
                     },
-                    Fecha_fin: { placeholder: "Fecha de Fin", isRequired: false, value:this.state.fecha_fin, type: "fecha" },
+                    Fecha_fin: { placeholder: "Fecha de Fin", isRequired: false, value:this.state.fecha_fin, type: "fecha" , disabled:true},
 
                 }}
 
@@ -100,6 +100,9 @@ class confirmar extends Component {
                         // ...this.data,
                         ...values
                     }
+
+                    if(!values["Fecha_inicio"]) return;
+                    SPopup.open({ key: "confirmar", content: this.popupConfirmacion() });
 
                     // var fecha_fin = new SDate(values["Fecha_inicio"]).addDay(data_paquete?.dias)
                     // console.log("fecha_inicio: " + values["Fecha_inicio"] + " fecha_fin: " + fecha_fin + " dias add: " + data_paquete?.dias)
@@ -123,8 +126,9 @@ class confirmar extends Component {
                     // }).catch((e) => {
                     //     SPopup.alert("Error en los datos");
                     // })
-                    SPopup.close("confirmar");
-                    SNavigation.navigate("/paquete/membresia/qr");
+
+                    // SPopup.close("confirmar");
+                    
 
 
 
@@ -136,9 +140,9 @@ class confirmar extends Component {
             <SHr height={26} />
             <BtnSend
                 onPress={() => {
-                    // this.form.submit();
+                    this.form.submit() 
                     // SNavigation.navigate("/restaurante", { pk: obj.key });
-                    SPopup.open({ key: "confirmar", content: this.popupConfirmacion() });
+                   
                 }}
 
             >Confirmar</BtnSend>
@@ -147,9 +151,12 @@ class confirmar extends Component {
 
     render_with_data() {
         var paquete = Model.paquete.Action.getByKey(this.params.pk);
-        var usuario = Model.usuario.Action.getUsuarioLog();
+        var usuario;
+         {/* USUARIO */}
+        // var usuario = Model.usuario.Action.getUsuarioLog();
         var sucursal = Model.sucursal.Action.getByKey(this.params.sucursal);
-        if (!usuario) return <SLoad />
+         {/* USUARIO */}
+        // if (!usuario) return <SLoad />
         if (!sucursal) return <SLoad />
         if (!paquete) return <SLoad />
         console.log(JSON.stringify(sucursal) + " PPPP");
@@ -167,7 +174,8 @@ class confirmar extends Component {
                 row center
             >
                 <SView col={"xs-3"} row >
-                    <SView style={{
+                    {/* USUARIO */}
+                    {/* <SView style={{
                         width: 70,
                         height: 70,
                         justifyContent: "center",
@@ -180,10 +188,11 @@ class confirmar extends Component {
                                 resizeMode: 'cover',
                             }}
                         />
-                    </SView>
+                    </SView> */}
                 </SView>
                 <SView col={"xs-9"} >
-                    <SText color={STheme.color.text} fontSize={18} style={{ textTransform: "uppercase" }}>{usuario?.Nombres}</SText>
+                     {/* USUARIO */}
+                    {/* <SText color={STheme.color.text} fontSize={18} style={{ textTransform: "uppercase" }}>{usuario?.Nombres}</SText> */}
                     <SView row>
                         <SText color={STheme.color.text} fontSize={15} >
                             Calistenia Bolivia
@@ -217,14 +226,14 @@ class confirmar extends Component {
                 <SView col={"xs-6"} flex style={{ alignItems: "flex-end" }}>
                     <SText>{paquete.dias}</SText>
                 </SView>
-                <SView height={2} col={"xs-12"} style={{ borderColor: STheme.color.lightGray, borderBottomWidth: 1 }}></SView>
+                <SView height={2} col={"xs-12"} style={{ borderColor: STheme.color.gray, borderBottomWidth: 1 }}></SView>
                 <SView col={"xs-6"}>
                     <SText>Participantes</SText>
                 </SView>
                 <SView col={"xs-6"} flex style={{ alignItems: "flex-end" }}>
                     <SText>{paquete.participantes}</SText>
                 </SView>
-                <SView height={2} col={"xs-12"} style={{ borderColor: STheme.color.lightGray, borderBottomWidth: 1 }}></SView>
+                <SView height={2} col={"xs-12"} style={{ borderColor: STheme.color.gray, borderBottomWidth: 1 }}></SView>
                 <SView col={"xs-6"}>
                     <SText>Precio</SText>
                 </SView>
@@ -263,7 +272,7 @@ class confirmar extends Component {
         );
     }
     footer() {
-        return <BottomNavigator url={"/root"} />
+        return <BottomNavigator url={"/paquete"} />
     }
 }
 const initStates = (state) => {
