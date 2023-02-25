@@ -30,9 +30,9 @@
     }
   },
   "PostgreSQL": {
-    "host": "jdbc:postgresql://192.168.5.18:5432/servisofts.calistenia",
-    "status": "exito"
+    "host": "jdbc:postgresql://192.168.6.18:5432/servisofts.calistenia",
+    "status": "desconectado"
   },
   "- SLog": "RealTime Log from server Servisofts",
-  "- Fecha": "2023-02-08T06:29:49.000830"
+  "- Fecha": "2023-02-24T20:49:51.000215"
 }

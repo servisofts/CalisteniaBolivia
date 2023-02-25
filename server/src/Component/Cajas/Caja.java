@@ -1,6 +1,8 @@
 package Component.Cajas;
 
 import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,12 +11,16 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.zxing.Result;
+import com.mysql.cj.protocol.Resultset;
+
 import Component.Sucursales.Sucursal;
 import Component.Sucursales.SucursalTipoPagoCuentaBanco;
 import Server.SSSAbstract.SSServerAbstract;
 import Server.SSSAbstract.SSSessionAbstract;
 import Servisofts.SConfig;
 import Servisofts.SPGConect;
+import Servisofts.SUtil;
 
 public class Caja {
 
@@ -42,6 +48,9 @@ public class Caja {
             break;
             case "cierre":
                 cierre(data, session);
+            break;
+            case "reparar":
+                reparar(data, session);
             break;
             case "editar":
                 editar(data, session);
@@ -361,5 +370,122 @@ public class Caja {
         obj.put("estado", "exito");
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET_WEB, obj.toString());
         SSServerAbstract.sendServer(SSServerAbstract.TIPO_SOCKET, obj.toString());
+    }
+
+    public void reparar(JSONObject obj, SSSessionAbstract session) {
+        try {
+
+            String consulta = "select sum(caja_movimiento.monto) as diferencia\n"+
+            "from caja,\n"+
+            "caja_movimiento\n"+
+            "where caja.key = '"+obj.getString("key_caja")+"'\n"+
+            "and caja_movimiento.key_caja = caja.key\n"+
+            "and caja_movimiento.key_tipo_pago in ('2','3')";
+
+            PreparedStatement ps = SPGConect.preparedStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            double diferencia=0;
+            if(rs.next()){
+                diferencia = rs.getDouble("diferencia");
+            }
+
+            rs.close();
+            ps.close();
+            
+            if(diferencia>0){
+
+                JSONObject caja = Caja.getByKey(obj.getString("key_caja"));
+                caja = caja.getJSONObject(JSONObject.getNames(caja)[0]);
+
+                consulta = "select jsonb_object_agg(caja_movimiento.key, to_json(caja_movimiento.*))::json as json \n"+
+                            "from caja,\n"+
+                            "caja_movimiento\n"+
+                            "where caja.key = '"+caja.getString("key")+"'\n"+
+                            "and caja_movimiento.key_caja = caja.key\n"+
+                            "and caja_movimiento.key_tipo_pago in ('2','3')";
+
+
+                JSONObject movimientos = SPGConect.ejecutarConsultaObject(consulta);
+                JSONObject positivo, negativo, banco_movimiento, cuenta_banco;
+                for (int i = 0; i < JSONObject.getNames(movimientos).length; i++) {
+                    if(movimientos.getJSONObject(JSONObject.getNames(movimientos)[i]).getDouble("monto")>0){
+                        positivo = movimientos.getJSONObject(JSONObject.getNames(movimientos)[i]);
+                        negativo = this.buscarNegativo(movimientos, positivo.getJSONObject("data").getString("key_paquete_venta_usuario"));
+                        if(negativo==null){
+                            System.out.println("error encontrado");
+                            banco_movimiento = this.buscarmovimientoBanco(positivo.getString("key"));
+
+                            
+                            if(banco_movimiento.isEmpty()){
+                                
+                                cuenta_banco = SucursalTipoPagoCuentaBanco.getByKeySucursal(caja.getString("key_sucursal"));
+
+                                cuenta_banco = cuenta_banco.getJSONObject(positivo.getString("key_tipo_pago"));
+
+
+                                JSONObject cuentaBancoMovimiento = new JSONObject();
+                                cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
+                                cuentaBancoMovimiento.put("descripcion", "Ingreso por venta de servicio.");
+                                cuentaBancoMovimiento.put("key_cuenta_banco", cuenta_banco.getString("key_cuenta_banco"));
+                                cuentaBancoMovimiento.put("key_usuario", positivo.getJSONObject("data").getString("key_usuario"));
+                                cuentaBancoMovimiento.put("monto", positivo.getDouble("monto"));
+                                cuentaBancoMovimiento.put("data", new JSONObject().put("key_caja_movimiento", positivo.getString("key")));
+                                cuentaBancoMovimiento.put("fecha_on", SUtil.now());
+                                cuentaBancoMovimiento.put("estado", 1);
+                                cuentaBancoMovimiento.put("key_sucursal", caja.getString("key_sucursal"));
+                                cuentaBancoMovimiento.put("key_tipo_gasto", "1");
+                                cuentaBancoMovimiento.put("tipo_movimiento", "ingreso");
+                                cuentaBancoMovimiento.put("key_tipo_pago", positivo.getString("key_tipo_pago"));
+                                SPGConect.insertArray("cuenta_banco_movimiento", new JSONArray().put(cuentaBancoMovimiento));
+                            }
+
+                            positivo.put("key", SUtil.uuid());
+                            positivo.put("monto", positivo.getDouble("monto")*-1);
+                            SPGConect.insertArray("caja_movimiento", new JSONArray().put(positivo));
+                        }
+                    }
+                }
+
+                obj.put("data", "Caja reparada");
+                obj.put("estado", "exito");
+                return;
+            }
+
+            obj.put("data", "Caja correcta");
+            obj.put("estado", "exito");
+            return;
+            
+        } catch (Exception e) {
+            obj.put("estado", "error");
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject buscarNegativo(JSONObject movimientos, String key_paquete_vente_usuario){
+        try{
+            JSONObject negativo = null; 
+            for (int i = 0; i < JSONObject.getNames(movimientos).length; i++) {
+                if(movimientos.getJSONObject(JSONObject.getNames(movimientos)[i]).getDouble("monto")<0){
+                    if(movimientos.getJSONObject(JSONObject.getNames(movimientos)[i]).getJSONObject("data").getString("key_paquete_venta_usuario").equals(key_paquete_vente_usuario)){
+                        negativo = movimientos.getJSONObject(JSONObject.getNames(movimientos)[i]);
+                    }
+                }
+            }
+
+            return negativo;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static JSONObject buscarmovimientoBanco(String key_caja_movimiento){
+        try{
+            String consulta = "select jsonb_object_agg(cuenta_banco_movimiento.key, to_json(cuenta_banco_movimiento.*))::json as json  from cuenta_banco_movimiento "+
+            "where cuenta_banco_movimiento.data->>'key_caja_movimiento' = '"+key_caja_movimiento+"'";
+            return SPGConect.ejecutarConsultaObject(consulta);
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

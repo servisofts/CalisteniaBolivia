@@ -95,6 +95,15 @@ public class CajaMovimiento {
             e.printStackTrace();
         }
     }
+    public static JSONObject getByKeyCaja(String key_caja) {
+        try {
+            String consulta =  "select get_all('caja_movimiento', 'key_caja', '"+key_caja+"') as json";
+            return SPGConect.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static JSONObject getTotales(String key_caja) {
         try {
