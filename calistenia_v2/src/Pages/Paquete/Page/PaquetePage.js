@@ -30,7 +30,7 @@ class PaquetePage extends Component {
         // return 
         var isAll = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
         return new SOrdenador([
-            { key: "Peso", order: "desc", peso: 4 },
+            // { key: "Peso", order: "desc", peso: 4 },
             { key: "Descripcion", order: "asc", peso: 2 },
         ]).ordernarObject(
             this.state.buscador.buscar(data)

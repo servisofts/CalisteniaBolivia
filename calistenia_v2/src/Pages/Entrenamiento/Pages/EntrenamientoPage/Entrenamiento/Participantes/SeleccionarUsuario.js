@@ -10,6 +10,7 @@ import SSocket from 'servisofts-socket'
 import Sucursal from '../../../../../Sucursal';
 import Usuario from '../../../../../Usuario';
 import sucursal_usuario from '../../../../../sucursal_usuario';
+import Model from '../../../../../../Model';
 class SeleccionarUsuario extends Component {
   static navigationOptions = {
     title: "Lista de usuario.",
@@ -96,7 +97,7 @@ class SeleccionarUsuario extends Component {
     </SView>
   }
   getUsuario(key_usuario) {
-    var data = Usuario.Actions.getAll(this.props);
+    var data = Model.usuario.Action.getAll();
     if (!data) return <View />
     var obj = data[key_usuario]
     return <SView>
@@ -107,20 +108,8 @@ class SeleccionarUsuario extends Component {
 
     const getLista = () => {
       var cabecera = "registro_administrador";
-      var data = this.props.state.usuarioReducer.data[cabecera];
+      var data = Model.usuario.Action.getAll();
       if (!data) {
-        if (this.props.state.usuarioReducer.estado == "cargando") {
-          return <ActivityIndicator color={STheme.color.text} />
-        }
-        var object = {
-          component: "usuario",
-          version: "2.0",
-          type: "getAll",
-          estado: "cargando",
-          cabecera: cabecera,
-          key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-        }
-        SSocket.send(object);
         return <ActivityIndicator color={STheme.color.text} />
       }
       var reducer = this.props.state.clientesActivosReducer;
@@ -145,8 +134,14 @@ class SeleccionarUsuario extends Component {
         if (!sucursal_usuario.Actions.isActive(key_sucursal, this.props)) {
           return null;
         }
+        var ca = reducer.data[key];
+        var now = new SDate();
+        if (!(new SDate(ca.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(ca.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
+          return;
+        }
+        var data_paquete_venta = reducer.data[key]
         objFinal[key] = {
-          ...data[key],
+          ...data[data_paquete_venta.key_usuario],
           vijencia: reducer.data[key],
           fecha_inicio: reducer.data[key].fecha_on,
           fecha_fin: reducer.data[key].fecha_fin,
@@ -154,7 +149,7 @@ class SeleccionarUsuario extends Component {
       });
       var dataBuscada = this.state.buscador.buscar(objFinal)
       if (Object.keys(dataBuscada).length == 0) {
-        return <SView col={"xs-12"} height={200} center>
+        return <SView col={"xs-12"} height center>
           <SView col={"xs-12 md-7 xl-5"} row center>
             <SView col={"xs-2"} colSquare >
               <SIcon name={"Alert"} />
@@ -169,10 +164,12 @@ class SeleccionarUsuario extends Component {
           { key: "fecha_fin", order: "asc", peso: 3 },
         ]).ordernarObject(dataBuscada)
       ).map((key) => {
-        var usr = data[key];
-        var obj = data[key];
         var dataFinal = objFinal[key];
         var vijencia = dataFinal["vijencia"];
+
+        var usr = data[vijencia.key_usuario];
+        var obj = data[vijencia.key_usuario];
+        if (!obj) return null;
         // if (!usr.estado) {
         //   return <View />
         // }
@@ -212,7 +209,7 @@ class SeleccionarUsuario extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
               </View>
               <View style={{
                 flex: 1,
@@ -240,7 +237,7 @@ class SeleccionarUsuario extends Component {
                   borderRadius: 100,
                   overflow: "hidden"
                 }}>
-                  <SImage src={SSocket.api.root + "paquete_" + vijencia.paquete.key} />
+                  <SImage src={SSocket.api.root + "paquete/" + vijencia.paquete.key} />
                 </View>
                 <Text style={{ fontSize: 10, color: STheme.color.text, textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
               </SView>
@@ -292,7 +289,7 @@ class SeleccionarUsuario extends Component {
                 width: "100%",
                 flex: 1,
                 alignItems: "center",
-                justifyContent: "center",
+                // justifyContent: "center",
               }}>
                 {getLista()}
                 <SView height={50}></SView>

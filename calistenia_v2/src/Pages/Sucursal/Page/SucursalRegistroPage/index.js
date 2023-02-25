@@ -6,7 +6,7 @@ import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilComponent from '../../../../Components/FotoPerfilComponent';
 // import Sucursal_servicio from '../../../sucursal_servicio';
 import Parametros from './Parametros';
-
+import SSocket from "servisofts-socket"
 class SucursalRegistro extends Component {
     constructor(props) {
         super(props);
@@ -26,8 +26,10 @@ class SucursalRegistro extends Component {
             }}
             inputs={{
                 descripcion: { label: 'Descripcion', type: 'text', required: true, defaultValue: this.data.descripcion },
-                direccion: { label: 'Direccion', type: 'direccion', defaultValue: this.data.direccion, latLng: { latitude: this.data.latitude, longitude: this.data.longitude } },
+                // direccion: { label: 'Direccion', type: 'direccion', defaultValue: this.data.direccion, latLng: { latitude: this.data.latitude, longitude: this.data.longitude } },
+                direccion: { label: 'Direccion', type: 'text', defaultValue: this.data.direccion },
                 color: { label: 'Color', type: 'text', placeholder: "#660000", required: true, defaultValue: this.data.color },
+                foto_p: { label: "Foto de portada", type: "image", isRequired: false, defaultValue: `${SSocket.api.root}/sucursal/portada/${this.key_sucursal}?time=${new Date().getTime()}`, style: { borderRadius: 8, overflow: 'hidden', height: 150, } },
             }}
             onSubmit={(data) => {
                 if (this.key_sucursal) {
@@ -35,13 +37,15 @@ class SucursalRegistro extends Component {
                         ...this.data,
                         ...data
                     }, this.props);
+
+                    this.form.uploadFiles(SSocket.api.root + "upload/sucursal/portada/" + this.key_sucursal);
                 } else {
                     Sucursal.Actions.registro(data, this.props);
                 }
             }}
         >
 
-        </SForm>
+        </SForm >
     }
     getPerfil() {
         var data = {}

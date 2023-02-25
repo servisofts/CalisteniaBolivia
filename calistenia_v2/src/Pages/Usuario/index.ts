@@ -11,10 +11,12 @@ import VentasPage from './Page/VentasPage'
 import VentasSelect from './Page/VentasPage'
 import EntrenadorPage from './Page/EntrenadorPage'
 import VendedorPage from './Page/VendedorPage'
+import RegistroNuevo from './Page/RegistroNuevo'
 const Pages: SPageListProps = {
     login: Login,
-    registro:RegistroCliente,
-    "perfil":Perfil,
+    // registro:RegistroCliente,
+    registro: RegistroNuevo,
+    "perfil": Perfil,
     UsuarioPage,
     ClientesPage,
     VentasPage,
@@ -29,7 +31,6 @@ import usuarioReducer from './Reducer/usuarioReducer'
 import clientesActivosReducer from './Reducer/clientesActivosReducer'
 const Reducers = {
     usuarioReducer,
-    clientesActivosReducer
 }
 
 

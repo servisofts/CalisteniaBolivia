@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { SImage, SLoad, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Usr from '../../../../Usuario';
+import Model from '../../../../../Model';
 
 class Usuario extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class Usuario extends Component {
                 }}>{"Inserta un usuario"}</Text>
             </TouchableOpacity>
         }
-        var obj = Usr.Actions.getByKey(this.props.key_usuario, this.props);
+        var obj = Model.usuario.Action.getByKey(this.props.key_usuario);
         if (!obj) {
             return <SLoad />
         }
@@ -76,7 +76,7 @@ class Usuario extends Component {
                             borderRadius: 100,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "usuario_" + obj.key} />
+                            <SImage src={SSocket.api.root + "usuario/" + obj.key} />
                         </View>
                         <View style={{
                             flex: 1,

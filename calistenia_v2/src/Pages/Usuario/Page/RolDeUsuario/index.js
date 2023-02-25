@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, TextInput, Dimensions, Image, ScrollView 
 import { connect } from 'react-redux';
 import { SImage, SLoad, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../../Model';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 const RolDeUsuario = (props) => {
@@ -12,20 +13,9 @@ const RolDeUsuario = (props) => {
     if (!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "ver_rol" })) {
         return <View />
     }
-    var data = props.state.rolReducer.data;
+    var data = Model.rol.Action.getAll();
     if (!data) {
-        if (props.state.rolReducer.estado == "cargando") {
-            return <SLoad />
-        }
-        var object = {
-            component: "rol",
-            type: "getAll",
-            key_usuario: props.state.usuarioReducer.usuarioLog.key,
-            estado: "cargando"
-        }
-        SSocket.send(object);
-        // props.state.socketReducer.session[AppParams.socket.name].send(object, true);
-        return <View />
+        return <SLoad />
     }
 
 
@@ -33,24 +23,11 @@ const RolDeUsuario = (props) => {
     if (!key_usuario) {
         return <SLoad />
     }
-    var usuarioRol = props.state.usuarioRolReducer.usuario[key_usuario];
+    var usuarioRol = Model.usuarioRol.Action.getAllByKeyUsuario(key_usuario)
     if (!usuarioRol) {
-        if (props.state.usuarioRolReducer.estado == "cargando") {
-            return <SLoad />
-        }
-        if (props.state.usuarioRolReducer.estado == "error") {
-            return <SLoad />
-        }
-        var object = {
-            component: "usuarioRol",
-            type: "getAll",
-            estado: "cargando",
-            key_usuario: key_usuario
-        }
-        SSocket.send(object)
-        return <View />
+        return <SLoad />
     }
-
+    var arr_rol = Object.values(usuarioRol);
     const getRoles = () => {
         var isAddSuperUsuario = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "add_rol_super_usuario" })
         var Lista = Object.keys(data).map((key) => {
@@ -61,12 +38,9 @@ const RolDeUsuario = (props) => {
                     return <View />
                 }
             }
-            if (usuarioRol[key]) {
-                var key_nn = usuarioRol[key]
-                isActivo = props.state.usuarioRolReducer.data[key_nn];
-                if (isActivo.estado == 0) {
-                    isActivo = false;
-                }
+            isActivo = arr_rol.find((a) => a.key_rol == key)
+            if (!isActivo?.estado) {
+                isActivo = false;
             }
             if (props.preventEdit && !isActivo) {
                 return null;
@@ -88,6 +62,7 @@ const RolDeUsuario = (props) => {
                     if (SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "editar_rol", isAlert: true })) {
                         if (!isActivo) {
                             var object = {
+                                service: "roles_permisos",
                                 component: "usuarioRol",
                                 type: "registro",
                                 key_usuario: props.state.usuarioReducer.usuarioLog.key,
@@ -100,6 +75,7 @@ const RolDeUsuario = (props) => {
                             SSocket.send(object);
                         } else {
                             var object = {
+                                service: "roles_permisos",
                                 component: "usuarioRol",
                                 type: "editar",
                                 key_usuario: props.state.usuarioReducer.usuarioLog.key,

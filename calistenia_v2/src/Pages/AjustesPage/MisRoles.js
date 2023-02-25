@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SLoad, SPage, SText, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
+import Model from '../../Model';
 import RolDeUsuario from '../Usuario/Page/RolDeUsuario';
 class MisRoles extends Component {
     constructor(props) {
@@ -9,28 +10,10 @@ class MisRoles extends Component {
         this.state = {
         };
     }
-    getLista = () => {
-        var reducer = this.props.state.rolReducer;
-        var data = reducer.data;
-        if (!data) {
-            if (reducer.estado == "cargando") {
-                return null;
-            }
-            var object = {
-                component: "rol",
-                type: "getAll",
-                estado: "cargando",
-                key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-            }
-            SSocket.send(object)
-            return null;
-        }
-        return data;
-    }
     render() {
-        var key_usuario = this.props.state.usuarioReducer.usuarioLog.key;
-        var roles_usr = this.props.state.usuarioRolReducer.usuario[key_usuario];
-        var roles = this.getLista();
+        var key_usuario = Model.usuario.Action.getKey();
+        var roles_usr = Model.usuarioRol.Action.getAllByKeyUsuario(key_usuario);
+        var roles = Model.rol.Action.getAll();
         if (!roles_usr) return <SLoad />;
         if (!roles) return <SLoad />;
         return (

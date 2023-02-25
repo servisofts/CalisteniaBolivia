@@ -60,7 +60,7 @@ class SucursalItem extends Component<Props> {
                             borderRadius: 100,
                             overflow: "hidden"
                         }}>
-                            <SImage src={SSocket.api.root + "sucursal_" + this.props.key_sucursal} />
+                            <SImage src={SSocket.api.root + "sucursal/" + this.props.key_sucursal} />
                         </View>
                         <View style={{
                             flex: 1,

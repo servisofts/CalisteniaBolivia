@@ -1,4 +1,5 @@
 import SSocket from 'servisofts-socket';
+import Model from '../../../Model';
 import Parent from './index';
 
 export default class Actions {
@@ -15,7 +16,7 @@ export default class Actions {
                 version: Parent.version,
                 type: "getAll",
                 estado: "cargando",
-                key_usuario: props.state.usuarioReducer.usuarioLog?.key,
+                key_usuario:Model.usuario.Action.getKey(),
             })
             return null;
         }
@@ -35,7 +36,7 @@ export default class Actions {
             version: Parent.version,
             type: "registro",
             estado: "cargando",
-            key_usuario: props.state.usuarioReducer.usuarioLog?.key,
+            key_usuario: Model.usuario.Action.getKey(),
             data: data
         })
     }
@@ -46,7 +47,7 @@ export default class Actions {
             version: Parent.version,
             type: "editar",
             estado: "cargando",
-            key_usuario: props.state.usuarioReducer.usuarioLog?.key,
+            key_usuario: Model.usuario.Action.getKey(),
             data: data
         })
     }
@@ -57,7 +58,7 @@ export default class Actions {
             version: Parent.version,
             type: "editar",
             estado: "cargando",
-            key_usuario: props.state.usuarioReducer.usuarioLog?.key,
+            key_usuario: Model.usuario.Action.getKey(),
             data: {
                 ...data,
                 estado: 0,

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { SView, SInput, SText, SScrollView, SButtom, SPopupClose, SScrollView2, SPage, SHr, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import FotoPerfilUsuario from '../../../../../../Components/FotoPerfilUsuario';
+import Model from '../../../../../../Model';
 
 class ConfirmacionUsuario extends Component {
   constructor(props) {
@@ -84,18 +85,22 @@ class ConfirmacionUsuario extends Component {
       ...objectResult,
     }
 
-    var object = {
-      component: "usuario",
-      type: "editar",
-      version: "2.0",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-      data: dataFinal
-    }
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   type: "editar",
+    //   version: "2.0",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    //   data: dataFinal
+    // }
+    Model.usuario.Action.editar({
+      data: dataFinal,
+      key_usario: Model.usuario.Action.getKey()
+    })
     // alert(JSON.stringify(object));
-    SSocket.send(object);
-    // this.props.state.socketReducer.session[AppParams.socket.name].send(object, true);
+    // SSocket.send(object);
     this.props.onConfir(dataFinal);
     SPopupClose("ConfirmacionUsuario")
   }
@@ -121,7 +126,8 @@ class ConfirmacionUsuario extends Component {
       }}>Verificar</SButtom>
   }
   render() {
-    this.data = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key];
+    this.data = Model.usuario.Action.getByKey(this.props.data.key)
+    // this.data = this.props.state.usuarioReducer.data["registro_administrador"][this.props.data.key];
     return (
       <SView
         col={"xs-10 md-7 xl-5"}
@@ -175,7 +181,7 @@ class ConfirmacionUsuario extends Component {
             }}>
               {this.getBtn()}
             </SView>
-            <SHr height={150}/>
+            <SHr height={150} />
           </SView>
         </SScrollView2>
       </SView>

@@ -43,6 +43,7 @@ const registro = (state, action) => {
             }
             // state.data[action.data.key] = action.data;
         }
+        console.log("SE REGISTRO EL RON CON EXITO")
         state.lastRegister = action.data;
     }
 }

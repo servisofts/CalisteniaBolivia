@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { SButtom, SHr, SNavigation, SScrollView, SScrollView2, SText, STheme, SView } from 'servisofts-component';
-import EstadoCaja from './EstadoCaja';
-import Movimientos from './Movimientos';
-import Sucursal from './Sucursal';
-import Menu from './Menu/index';
+import { Component } from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { SHr, SNavigation, SPage, SScrollView2, SStorage, SView } from 'servisofts-component';
+import BarraSuperior from '../../../../Components/BarraSuperior';
 import FloatButtom from '../../../../Components/FloatButtom/index';
 import CajasActivas from './CajasActivas';
-import { SPage, SStorage } from 'servisofts-component';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import { connect } from 'react-redux';
+import EstadoCaja from './EstadoCaja';
+import Menu from './Menu/index';
+import Movimientos from './Movimientos';
+import Sucursal from './Sucursal';
+
+
 
 var _sucursal;
- class CajaPage extends Component {
+class CajaPage extends Component {
   static navigationOptions = {
     headerShown: false,
   }
@@ -39,6 +40,7 @@ var _sucursal;
       this.props.navigation.navigate("CajaMovimientoRegistroPage", { key_caja: this.state.activa.key });
     }} />
   }
+
   render() {
     _sucursal = this.state.sucursal;
     if (this.props.state.cajaReducer.usuario) {
@@ -83,7 +85,7 @@ var _sucursal;
                 this.setState({ activa: caja })
               }} />
             <Menu />
-          
+
             <Movimientos setActiva={(caja) => {
               if (!this.state.activa) {
                 this.setState({ activa: caja })

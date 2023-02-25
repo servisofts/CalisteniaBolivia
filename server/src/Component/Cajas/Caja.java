@@ -254,7 +254,7 @@ public class Caja {
         return caja_movimiento;
     }
 
-    public static JSONObject    addAnulacionServicio(String key_caja, String key_usuario, String key_tipo_pago, double monto, String fecha_on, JSONObject data) throws SQLException{
+    public static JSONObject addAnulacionServicio(String key_caja, String key_usuario, String key_tipo_pago, double monto, String fecha_on, JSONObject data) throws SQLException{
         JSONObject caja_movimiento = new JSONObject();
         caja_movimiento.put("key", UUID.randomUUID().toString());
         caja_movimiento.put("key_caja", key_caja);

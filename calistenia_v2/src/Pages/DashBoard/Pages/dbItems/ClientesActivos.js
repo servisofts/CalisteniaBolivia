@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIcon, SLoad, SText, SView, SNavigation, SHr } from 'servisofts-component';
+import { SIcon, SLoad, SText, SView, SNavigation, SHr, SDate } from 'servisofts-component';
+import Model from '../../../../Model';
 import SSRolesPermisos from '../../../../SSRolesPermisos';
 import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
@@ -14,13 +15,17 @@ class ClientesActivos extends Component {
 
     getContent() {
         var clientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
-        var clientesRol = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
+        
+        var clientesRol = Model.usuarioRol.Action.getAllByKeyRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f")
+        // var clientesRol = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
         var arr = sucursal_usuario.Actions.getActive(this.props);
         if (!clientesActivos) return <SLoad />
         if (!clientesRol) return <SLoad />
         if (!arr) return <SLoad />
-        var clientesActivosNoBecados = Object.values(clientesActivos).filter(i => sucursal_usuario.Actions.isActive(i.caja.key_sucursal, this.props) && i.paquete.precio > 0);
-        var becados =  Object.values(clientesActivos).filter(o => o.paquete.precio == 0)
+        var now = new SDate();
+        var total = Object.values(clientesActivos).filter(i => (new SDate(i.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(i.fecha_fin, "yyyy-MM-dd").isAfter(now)));
+        var clientesActivosNoBecados = Object.values(clientesActivos).filter(i => (sucursal_usuario.Actions.isActive(i.caja.key_sucursal, this.props) && parseFloat(i.paquete.precio) > 0) && (new SDate(i.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(i.fecha_fin, "yyyy-MM-dd").isAfter(now)));
+        var becados = Object.values(clientesActivos).filter(o => parseFloat(o.paquete.precio) == 0 && (new SDate(o.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(o.fecha_fin, "yyyy-MM-dd").isAfter(now)))
         return <SView center height col={"xs-12"}>
             <SView col={"xs-12"} center >
                 <SText fontSize={10}>{`Clientes registrados ( ${Object.keys(clientesRol).length} )`}</SText>
@@ -53,6 +58,7 @@ class ClientesActivos extends Component {
                     <SText bold fontSize={12}>{` ${becados.length} `}</SText>
                 </SView>
             </SView>
+            {/* <SText>{total.length}</SText> */}
         </SView >
     }
     render() {

@@ -21,7 +21,7 @@ class Lista extends Component {
         if (!this.state.buscador) return <SLoad />
         // return 
         return new SOrdenador([
-            { key: "Peso", order: "desc", peso: 4 },
+            // { key: "Peso", order: "desc", peso: 4 },
             { key: "Descripcion", order: "asc", peso: 2 },
         ]).ordernarObject(
             this.state.buscador.buscar(data)

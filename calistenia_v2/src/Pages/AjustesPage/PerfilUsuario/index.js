@@ -35,7 +35,7 @@ class PerfilUsuario extends Component {
                         borderRadius: 100,
                         overflow: "hidden",
                     }}>
-                        <SImage src={SSocket.api.root + "usuario_" + this.props.state.usuarioReducer.usuarioLog?.key} />
+                        <SImage src={SSocket.api.root + "usuario/" + this.props.state.usuarioReducer.usuarioLog?.key} />
                         {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, { */}
                         {/* width: "100%", */}
                         {/* height: "100%", */}

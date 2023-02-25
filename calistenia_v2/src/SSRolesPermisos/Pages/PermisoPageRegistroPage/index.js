@@ -132,6 +132,7 @@ class PermisoPageRegistroPage extends Component {
                 // }
                 choseFile({
                   servicio: "rp",
+                  service:"roles_permisos",
                   component: "page",
                   type: "subirFoto",
                   estado: "cargando",
@@ -184,6 +185,7 @@ class PermisoPageRegistroPage extends Component {
                     var object = {};
                     if (!this.data.key) {
                       object = {
+                        service:"roles_permisos",
                         component: "page",
                         type: "registro",
                         estado: "cargando",
@@ -194,6 +196,7 @@ class PermisoPageRegistroPage extends Component {
                       }
                     } else {
                       object = {
+                        service:"roles_permisos",
                         component: "page",
                         type: "editar",
                         estado: "cargando",

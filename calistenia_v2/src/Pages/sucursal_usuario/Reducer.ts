@@ -55,8 +55,13 @@ const getAll = (state: any, action: DataProps) => {
 const registro = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
     state.lastRegister = action.data;
-    if (!state.data) return;
-    state.data[action.data.key] = action.data;
+    if (state.data) {
+        state.data[action.data.key] = action.data;
+    }
+    if (state.active) {
+        state.active[action.data.key] = action.data;
+    }
+
 }
 
 const copiar = (state: any, action: DataProps) => {
@@ -69,8 +74,12 @@ const copiar = (state: any, action: DataProps) => {
 }
 const editar = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;
-    if (!state.data) return;
-    state.data[action.data.key] = action.data;
+    if (state.data) {
+        state.data[action.data.key] = action.data;
+    }
+    if (state.active) {
+        state.active[action.data.key] = action.data;
+    }
 }
 const getByKey = (state: any, action: DataProps) => {
     if (action.estado != "exito") return;

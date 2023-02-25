@@ -26,13 +26,17 @@
     },
     "geolocation": {
       "host": "192.168.5.5:10005",
-      "status": "exito"
+      "status": "desconectado"
     }
   },
   "PostgreSQL": {
     "host": "jdbc:postgresql://192.168.6.18:5432/servisofts.calistenia",
-    "status": "desconectado"
+    "status": "exito"
   },
   "- SLog": "RealTime Log from server Servisofts",
-  "- Fecha": "2023-02-24T20:49:51.000215"
+<<<<<<< Updated upstream
+  "- Fecha": "2023-02-16T02:21:10.000113"
+=======
+  "- Fecha": "2023-02-16T20:45:58.000591"
+>>>>>>> Stashed changes
 }

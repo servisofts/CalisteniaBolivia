@@ -9,6 +9,7 @@ import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNaviga
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import sucursal_usuario from '../../../sucursal_usuario';
+import Model from '../../../../Model';
 
 class VendedorPage extends Component {
 
@@ -22,15 +23,16 @@ class VendedorPage extends Component {
     this.key_rol = "ececdfbf-c82c-4cf9-8f1b-989bbdee5087";
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   version: "2.0",
+    //   type: "getAll",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    // }
+    // SSocket.send(object);
 
   }
   pagination = (listaKeys) => {
@@ -72,8 +74,9 @@ class VendedorPage extends Component {
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
-      var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
+      var data = Model.usuario.Action.getAll();
+      // var dataRU = SSRolesPermisos.Events.getUsuarioRol(this.key_rol, this.props)
+      var dataRU = Model.usuarioRol.Action.getAllByKeyRol(this.key_rol);
       var arr_sc_us = sucursal_usuario.Actions.getAll(this.props);
       if (!data) return <SLoad />
       if (!dataRU) return <SLoad />
@@ -84,8 +87,9 @@ class VendedorPage extends Component {
       var isAll = SSRolesPermisosValidate({ page: "SucursalPage", permiso: "admin_all" });
 
       var objFinal = {};
-      Object.keys(data).map((key) => {
-        if (!dataRU[key]) {
+      Object.keys(dataRU).map((key) => {
+        var rol_user = dataRU[key];
+        if (!data[rol_user.key_usuario]) {
           return;
         }
         if (!isAll) {
@@ -100,14 +104,14 @@ class VendedorPage extends Component {
           if (!isActive) return null;
         }
 
-        objFinal[key] = data[key];
+        objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
 
       return this.pagination(
         new SOrdenador([
-          { key: "Peso", order: "desc", peso: 4 },
+          // { key: "Peso", order: "desc", peso: 4 },
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
         ]).ordernarObject(
@@ -149,7 +153,7 @@ class VendedorPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime()}`} />
+                <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{

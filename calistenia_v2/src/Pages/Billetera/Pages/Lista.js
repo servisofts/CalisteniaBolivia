@@ -7,6 +7,7 @@ import CuentaBancoItem from '../../Banco/Pages/CuentaBancoItem';
 import Parent from "../index";
 import SSocket from 'servisofts-socket'
 import Usuario from '../../Usuario';
+import Model from '../../../Model';
 class Lista extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +20,7 @@ class Lista extends Component {
         var data = Parent.Actions.getAll({
             key_cuenta_banco: this.key_cuenta_banco,
         }, this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!usuarios) return <SLoad />
         if (!data) return <SLoad />
         return Object.keys(data).map((key, index) => {
@@ -39,7 +40,7 @@ class Lista extends Component {
                         borderRadius: 8,
                         overflow: "hidden",
                     }}>
-                        <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} />
+                        <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} />
                     </SView>
                     <SText color={"#999"} fontSize={10}>{`${usr.Nombres ? usr.Nombres : ""}`}</SText>
                 </SView>

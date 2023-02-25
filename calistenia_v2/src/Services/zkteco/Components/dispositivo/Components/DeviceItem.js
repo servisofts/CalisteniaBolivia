@@ -68,7 +68,7 @@ class DeviceItem extends Component {
                 <SView col={"xs-11"} >
                     <SView col={"xs-12"} row center>
                         <SView width={50} height={50} center >
-                            <SImage src={SSocket.api.root + "sucursal_" + pv_obj.key_sucursal} />
+                            <SImage src={SSocket.api.root + "sucursal/" + pv_obj.key_sucursal} />
                         </SView>
                         <SView width={8} />
                         <SView flex>

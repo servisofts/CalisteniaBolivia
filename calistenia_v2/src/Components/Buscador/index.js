@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { SInput, SText, SThread, SView, SIcon, STheme } from 'servisofts-component';
+import { SInput, SText, SThread, SView, SIcon, STheme, SBuscador } from 'servisofts-component';
 // import STextImput from '../STextImput';
 
 type Tprops = {
@@ -22,7 +22,25 @@ export default class Buscador extends Component<Tprops> {
         };
     }
 
+    buscar_2(data) {
+        if (typeof data != "object") {
+            return Object.keys(data);
+        }
+        var arr = Object.values(data);
+        arr = arr.filter((itm) => {
+            return SBuscador.validate(itm, this.state.value);
+        })
+        this.setState({ cantidad: arr.length })
+
+        var objFinal = {};
+        arr.map(d => {
+            objFinal[d.key] = d;
+        })
+        return objFinal;
+    }
     buscar(data) {
+
+
         if (typeof data != "object") {
             return Object.keys(data);
         }
@@ -62,6 +80,7 @@ export default class Buscador extends Component<Tprops> {
                 objFinal[key]["Peso"] = peso;
             }
         })
+        // console.log(objFinal)
         this.setState({ cantidad: Object.keys(objFinal).length })
         return objFinal;
     }

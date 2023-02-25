@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { SImage, SPage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket'
 class Item extends Component {
@@ -11,7 +10,7 @@ class Item extends Component {
 
     getNoSelect() {
         if (!this.props.onSelect) return null;
-        if(this.props.select) return null;
+        if (this.props.select) return null;
         return <SView col={"xs-12"} height backgroundColor={"#00000099"} style={{
             position: "absolute",
         }} center onPress={() => {
@@ -25,13 +24,13 @@ class Item extends Component {
             <SView width={160} height={140} style={{
                 borderRadius: 10,
                 borderWidth: 1,
-            }} center backgroundColor={STheme.color.card} onPress={()=>{
+            }} center backgroundColor={STheme.color.card} onPress={() => {
                 this.props.deSelect(this.props.obj);
             }}>
                 <SView col={"xs-12"}
                     height={110}
                 >
-                    <SImage src={SSocket.api.root+"sucursal_"+this.props.obj.key}/>
+                    <SImage src={SSocket.api.root + "sucursal/" + this.props.obj.key} />
                 </SView>
                 <SView col={"xs-12"} flex center>
                     <SText fontSize={16} bold>{this.props.obj.descripcion}</SText>
@@ -41,7 +40,5 @@ class Item extends Component {
         );
     }
 }
-const initStates = (state) => {
-    return { state }
-};
-export default connect(initStates)(Item);
+
+export default (Item);

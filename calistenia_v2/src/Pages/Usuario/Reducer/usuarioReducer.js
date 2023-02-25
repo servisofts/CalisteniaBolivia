@@ -84,6 +84,8 @@ const registro = (state, action) => {
             state.data[action.cabecera] = {};
         }
         state.data[action.cabecera][action.data.key] = action.data;
+        console.log("SE REGISTRO EL USUARIO CON EXITO")
+
     }
     
 }

@@ -25,6 +25,7 @@ class FotoPerfilUsuario extends Component {
             }
             SImageImput.choseFile({
                 servicio: "root",
+                service:"usuario",
                 component: "usuario",
                 type: "subirFoto",
                 estado: "cargando",
@@ -41,7 +42,7 @@ class FotoPerfilUsuario extends Component {
             });
         }}>
             {/* {"foto"} */}
-            <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
+            <SImage src={SSocket.api.root + "usuario/" + usuario.key} />
 
         </TouchableOpacity>
         )

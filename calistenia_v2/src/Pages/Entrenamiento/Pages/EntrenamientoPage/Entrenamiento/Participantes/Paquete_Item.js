@@ -25,6 +25,7 @@ class index extends Component {
         return <View style={{
             width: "100%",
             // backgroundColor: '#66000044',
+            overflow: 'hidden',
             borderRadius: 10,
         }}>
             <SView col={"xs-12"} row>

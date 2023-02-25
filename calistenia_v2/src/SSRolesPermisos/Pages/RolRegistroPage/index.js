@@ -104,6 +104,7 @@ class RolRegistroPage extends Component {
                 }} onPress={() => {
                   SImageImput.choseFile({
                     servicio: "rp",
+                    service: "roles_permisos",
                     component: "rol",
                     type: "subirFoto",
                     estado: "cargando",
@@ -156,6 +157,7 @@ class RolRegistroPage extends Component {
                     })
                     if (isValid) {
                       var object = {
+                        service: "roles_permisos",
                         component: "rol",
                         estado: "cargando",
                         key_usuario: this.props.state.usuarioReducer.usuarioLog.key,

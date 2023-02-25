@@ -5,6 +5,7 @@ import { SDate, SIcon, SImage, SLoad, SNavigation, SPage, STable2, SText } from 
 import Usuario from '../../Usuario';
 import Actions from '../Actions';
 import SSocket from 'servisofts-socket';
+import Model from '../../../Model';
 
 
 class ReporteAsistencia extends Component {
@@ -19,7 +20,7 @@ class ReporteAsistencia extends Component {
             fecha_desde: this.fecha_inicio,
             fecha_hasta: this.fecha_fin
         }, this.props)
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         if (!data) return <SLoad />
         if (!usuarios) return <SLoad />
         // return <SText>{JSON.stringify(movimientos)}</SText>
@@ -30,7 +31,7 @@ class ReporteAsistencia extends Component {
                 // { key: "entrenamiento/key_sucursal", label: "tipo", width: 150, },
                 { key: "key_usuario", label: "Cliente", width: 250, render: (item) => { return `${usuarios[item]?.Nombres} ${usuarios[item]?.Apellidos}` } },
                 { key: "fecha_on", label: "H. Ingreso", width: 70, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
-                { key: "entrenamiento/fecha_inicio-fecha2", label: "Fecha", center: true, width: 100, order:"desc", render: (item) => { return new SDate(item).getTime() } },
+                { key: "entrenamiento/fecha_inicio-fecha2", label: "Fecha", center: true, width: 100, order: "desc", render: (item) => { return new SDate(item).getTime() } },
                 { key: "entrenamiento/fecha_inicio-fecha", label: "Fecha", center: true, width: 100, render: (item) => { return new SDate(item).toString("yyyy-MM-dd") } },
                 { key: "entrenamiento/fecha_inicio", label: "H. Inicio", center: true, width: 70, render: (item) => { return new SDate(item).toString("hh:mm") } },
                 { key: "entrenamiento/fecha_fin", label: "H. Fin", center: true, width: 70, render: (item) => { return new SDate(item).toString("hh:mm") } },

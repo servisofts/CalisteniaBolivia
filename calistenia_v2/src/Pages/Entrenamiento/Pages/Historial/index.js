@@ -9,6 +9,7 @@ import Asistencia from '../../../Asistencia';
 import RelojEntrenamiento from '../Lista/RelojEntrenamiento';
 import FechaSingle from '../../../../Components/FechaSingle';
 import sucursal_usuario from '../../../sucursal_usuario';
+import Model from '../../../../Model';
 
 class Lista extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class Lista extends Component {
                 borderRadius: "50%",
                 overflow: "hidden",
             }} >
-                <SImage src={SSocket.api.root + "sucursal_" + key} />
+                <SImage src={SSocket.api.root + "sucursal/" + key} />
             </SView>
             <SView flex style={{
                 justifyContent: "center",
@@ -43,16 +44,17 @@ class Lista extends Component {
     }
     getUsuario = (key) => {
         if (!key) {
-            return  <SText fontSize={18} capitalize>{`Molinete`}</SText>
+            return <SText fontSize={18} capitalize>{`Molinete`}</SText>
         }
 
-        var usuario = Usuario.Actions.getByKey(key, this.props);
+    
+        var usuario = Model.usuario.Action.getByKey(key);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center>
             {/* <SText fontSize={10} color={"#999"} >{`Entrenador`}</SText> */}
 
             <SView width={70} height={70}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
             </SView>
             <SHr height={8} />
             <SText fontSize={18} capitalize>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
@@ -67,7 +69,8 @@ class Lista extends Component {
         return <SView col={"xs-12"} center>
             <SView col={"xs-12"} center row>
                 {Object.keys(asistencia).map((key) => {
-                    var usuario = Usuario.Actions.getByKey(asistencia[key].key_usuario, this.props);
+                
+                    var usuario = Model.usuario.Action.getByKey(asistencia[key].key_usuario);
                     if (!usuario) return <SLoad />
                     return <SView col={"xs-2 md-1.5"} colSquare style={{
                         padding: 4,
@@ -76,7 +79,7 @@ class Lista extends Component {
                             overflow: "hidden",
                         }}>
                             <SView width={40} height={40}>
-                                <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
+                                <SImage src={SSocket.api.root + "usuario/" + usuario.key} />
                             </SView>
                             <SText key={key} capitalize center fontSize={10}>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
                         </SView>
@@ -103,7 +106,7 @@ class Lista extends Component {
     }
     getLista() {
         var data_t = Entrenamiento.Actions.getByDate(this.state.fecha, this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
         var sucursales = Sucursal.Actions.getAll(this.props);
         var arr_f = sucursal_usuario.Actions.getActive(this.props);
         if (!arr_f) return <SLoad />

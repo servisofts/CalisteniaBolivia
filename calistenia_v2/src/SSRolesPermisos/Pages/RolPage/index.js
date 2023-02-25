@@ -67,6 +67,7 @@ class RolPage extends Component {
         }}
         onPress={() => {
           var object = {
+            service: "roles_permisos",
             component: "rol",
             type: "editar",
             estado: "cargando",
@@ -90,6 +91,7 @@ class RolPage extends Component {
           return <SLoad />
         }
         var object = {
+          service: "roles_permisos",
           component: "rol",
           type: "getAll",
           estado: "cargando",

@@ -6,6 +6,7 @@ import Models from '../Models';
 import SSocket from 'servisofts-socket'
 import Usuario from '../../Pages/Usuario';
 import BottomBar from '../Components/BottomBar';
+import Model from '../../Model';
 const Card = (props) => {
     var obj = props.data;
     var usuario_txt = (props?.usuario?.Nombres ?? "..") + " " + (props?.usuario?.Apellidos ?? "..");
@@ -48,7 +49,7 @@ const Card = (props) => {
                     // background: STheme.color.lightGray,
                     overflow: 'hidden',
                 }}>
-                    <SImage src={SSocket.api.root + "usuario_" + obj.key_usuario} style={{
+                    <SImage src={SSocket.api.root + "usuario/" + obj.key_usuario} style={{
                         resizeMode: "cover"
                     }} />
                 </SView>
@@ -63,7 +64,7 @@ const Card = (props) => {
             <SHr />
         </SView>
         <SView col={"xs-12"} height={400} background={"#666"}>
-            <SImage src={SSocket.api.root + "publicacion_" + obj.key} style={{
+            <SImage src={SSocket.api.root + "publicacion/" + obj.key} style={{
                 resizeMode: "cover"
             }} />
         </SView>
@@ -123,7 +124,8 @@ class Home extends Component {
 
     getLista() {
         var publicaciones = Models.publicacion.Actions.getAll(this.props);
-        var usuarios = Usuario.Actions.getAll(this.props);
+        var usuarios = Model.usuario.Action.getAll();
+
         // var usuarios = {}
         if (!publicaciones) return <SLoad />
         if (!usuarios) usuarios = {}

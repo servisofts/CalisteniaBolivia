@@ -3,14 +3,14 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 import { SThread } from "servisofts-component";
 import SSocket from "servisofts-socket";
+import Model from "../Model";
 // import AppParams from "../Params";
 // import Reducer from "./Reducer";
 import Events from "./Events";
 let INSTANCE = false;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 export const SSRolesPermisosValidate = ({ page, permiso, isAlert }) => {
-    if (!INSTANCE) return null;
-    var isValid = INSTANCE.isValid({ page, permiso });
+    var isValid = Model.usuarioPage.Action.getPermiso({ url: page, permiso: permiso })
     if (isAlert && !isValid) {
         alert("No tiene permisos. Contactese con el administrador.")
     }
@@ -26,7 +26,7 @@ export const SSRolesPermisosGetPages = () => {
 }
 
 export const GetRoles = (props) => {
-    if(!props.state.usuarioReducer.usuarioLog) return null;
+    if (!props.state.usuarioReducer.usuarioLog) return null;
     var reducer = props.state.rolReducer;
     var data = reducer.data;
     if (!data) {
@@ -34,6 +34,7 @@ export const GetRoles = (props) => {
             return null;
         }
         var object = {
+            service: "roles_permisos",
             component: "rol",
             type: "getAll",
             estado: "cargando",
@@ -52,17 +53,17 @@ class SSRolesPermisos extends Component {
         super(props);
     }
     getPages() {
-        if(this.key_usario != this.props.state.usuarioReducer.usuarioLog.key){
-            this.setState({...this.state})
+        if (this.key_usario != this.props.state.usuarioReducer.usuarioLog.key) {
+            this.setState({ ...this.state })
             return null;
         }
         return this.permisos;
     }
     isValid({ page, permiso }) {
         // console.log("ENTRO IS VALID")
-        if(!this.props.state.usuarioReducer.usuarioLog) {
+        if (!this.props.state.usuarioReducer.usuarioLog) {
             this.props.state.usuarioRolReducer.usuario = {};
-            this.setState({...this.state})
+            this.setState({ ...this.state })
             return "error";
         }
         var roles = this.props.state.usuarioRolReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
@@ -91,6 +92,7 @@ class SSRolesPermisos extends Component {
     }
     getPermisos = async () => {
         var object = {
+            service: "roles_permisos",
             component: "usuarioPage",
             type: "getAll",
             estado: "cargando",
@@ -104,6 +106,7 @@ class SSRolesPermisos extends Component {
     getMisRoles = async () => {
         // await delay(1000);
         var object = {
+            service: "roles_permisos",
             component: "usuarioRol",
             type: "getAll",
             estado: "cargando",
@@ -122,8 +125,8 @@ class SSRolesPermisos extends Component {
             return <View />
         }
         this.key_usario = this.props.state.usuarioReducer.usuarioLog.key;
-        if(!this.key_usario){
-            return <View/>
+        if (!this.key_usario) {
+            return <View />
         }
         var permisos = this.props.state.usuarioPageReducer.data;
         if (!permisos) {

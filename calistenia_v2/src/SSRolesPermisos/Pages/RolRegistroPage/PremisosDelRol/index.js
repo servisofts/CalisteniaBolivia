@@ -23,6 +23,7 @@ class PermisosDelRol extends Component {
                 return <Text>Cargando</Text>
             }
             var object = {
+                service:"roles_permisos",
                 component: "page",
                 type: "getAll",
                 estado: "cargando",
@@ -39,6 +40,7 @@ class PermisosDelRol extends Component {
                 return <Text>Cargando</Text>
             }
             var object = {
+                service: "roles_permisos",
                 component: "rolPermiso",
                 type: "getAll",
                 estado: "cargando",
@@ -58,6 +60,7 @@ class PermisosDelRol extends Component {
                     return <Text>Cargando</Text>
                 }
                 var object = {
+                    service:"roles_permisos",
                     component: "permiso",
                     type: "getAll",
                     estado: "cargando",
@@ -97,6 +100,7 @@ class PermisosDelRol extends Component {
                     }} onPress={() => {
                         if (!permisoActivo) {
                             var object = {
+                                service: "roles_permisos",
                                 component: "rolPermiso",
                                 type: "registro",
                                 estado: "cargando",
@@ -110,6 +114,7 @@ class PermisosDelRol extends Component {
                             SSocket.send(object)
                         } else {
                             var object = {
+                                service: "roles_permisos",
                                 component: "rolPermiso",
                                 type: "editar",
                                 estado: "cargando",

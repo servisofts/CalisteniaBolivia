@@ -29,7 +29,7 @@ class Presentacion extends Component {
                 }} >
                     <SView col={"xs-12"} center>
                         <SView col={"xs-11"} height={200} center>
-                            <SImage src={SSocket.api.root + "sucursal_" + obj.key}
+                            <SImage src={SSocket.api.root + "sucursal/" + obj.key}
                                 style={{
                                     resizeMode: "cover"
                                 }}

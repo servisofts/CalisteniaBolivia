@@ -7,7 +7,7 @@ import FloatButtom from '../../../../Components/FloatButtom';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Usuario from '../..';
+import Model from '../../../../Model';
 
 class UsuarioPage extends Component {
 
@@ -21,18 +21,19 @@ class UsuarioPage extends Component {
 
   }
   componentDidMount() {
-    if (this.props.state.usuarioReducer.usuarioLog) {
-      var object = {
-        component: "usuario",
-        version: "2.0",
-        type: "getAll",
-        estado: "cargando",
-        cabecera: "registro_administrador",
-        key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-      }
-      SSocket.send(object);
+    // if (this.props.state.usuarioReducer.usuarioLog) {
+    //   var object = {
+    //     service: "usuario",
+    //     component: "usuario",
+    //     version: "2.0",
+    //     type: "getAll",
+    //     estado: "cargando",
+    //     cabecera: "registro_administrador",
+    //     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    //   }
+    //   SSocket.send(object);
 
-    }
+    // }
 
   }
   pagination = (listaKeys) => {
@@ -74,7 +75,7 @@ class UsuarioPage extends Component {
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
+      var data = Model.usuario.Action.getAll();
       if (!data) return <SLoad />
       if (!this.state.buscador) {
         return <View />
@@ -130,7 +131,7 @@ class UsuarioPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key + `?date=${new Date().getTime()}`} />
+                <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime()}`} />
 
               </View>
               <View style={{

@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import Buscador from '../../../../Components/Buscador';
-import FloatButtom from '../../../../Components/FloatButtom';
-import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel } from 'servisofts-component';
+import { ExportExcel, SButtom, SDate, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
-import Paquete_Item from './Paquete_Item';
-import { SText } from 'servisofts-component';
+import Buscador from '../../../../Components/Buscador';
+import Model from '../../../../Model';
 import Sucursal from '../../../Sucursal';
-import SucursalSelect from './SucursalSelect';
 import sucursal_usuario from '../../../sucursal_usuario';
-import xlsx from 'xlsx-color';
+import Paquete_Item from './Paquete_Item';
+import SucursalSelect from './SucursalSelect';
 
 class ClientesPage extends Component {
 
@@ -32,15 +28,16 @@ class ClientesPage extends Component {
 
   }
   componentDidMount() {
-    var object = {
-      component: "usuario",
-      version: "2.0",
-      type: "getAll",
-      estado: "cargando",
-      cabecera: "registro_administrador",
-      key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    }
-    SSocket.send(object);
+    // var object = {
+    //   service: "usuario",
+    //   component: "usuario",
+    //   version: "2.0",
+    //   type: "getAll",
+    //   estado: "cargando",
+    //   cabecera: "registro_administrador",
+    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+    // }
+    // SSocket.send(object);
 
   }
   pagination = (listaKeys) => {
@@ -86,24 +83,30 @@ class ClientesPage extends Component {
     </SView>
   }
   getUsuario(key_usuario) {
-    var data = Usuario.Actions.getByKey(key_usuario, this.props);
+    var data = Model.usuario.Action.getByKey(key_usuario);
     if (!data) return <View />
     return <SView>
       <SText>Admin: {data.Nombres}</SText>
     </SView>
   }
 
+
+  getMotivo(motivo) {
+    if (!motivo) return "";
+    return <SText color="green">Motivo: {motivo}</SText>
+  }
+
   render() {
 
     const getLista = () => {
-      var data = Usuario.Actions.getAll(this.props);
+      var data = Model.usuario.Action.getAll();
+      // var data = Usuario.Actions.getAll(this.props);
       var ClientesActivos = Usuario.Actions.getAllClientesActivos(this.props);
       if (!data) return <SLoad />
       if (!ClientesActivos) return <SLoad />
       if (!this.state.buscador) {
         return <View />
       }
-
       this.usuarios = data;
 
       var objFinal = {};
@@ -119,28 +122,41 @@ class ClientesPage extends Component {
         if (ClientesActivos[key]["paquete"].precio > 0 && this.state.soloBecados) {
           return;
         }
+
+        var ca = ClientesActivos[key];
+        var now = new SDate();
+        if (!(new SDate(ca.fecha_inicio, "yyyy-MM-dd").isBefore(now) && new SDate(ca.fecha_fin, "yyyy-MM-dd").isAfter(now))) {
+          return;
+        }
+
         if (!sucursal_usuario.Actions.isActive(ClientesActivos[key]["caja"].key_sucursal, this.props)) return null;
         objFinal[key] = {
-          ...data[key],
+          ...data[ClientesActivos[key]?.key_usuario],
           vijencia: ClientesActivos[key],
           fecha_inicio: ClientesActivos[key].fecha_on,
           fecha_fin: ClientesActivos[key].fecha_fin,
+          key: key,
         };
       });
 
-      var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+      // var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+
       this.finalData = objFinal;
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
-          { key: "fecha_fin", order: "asc", peso: 3 },
+          // { key: "fecha_fin", order: "asc", peso: 3 },
         ]).ordernarObject(
           this.state.buscador.buscar(objFinal)
         )
       ).map((key) => {
-        var obj = data[key];
+        // alvaro
+        var obj = data[ClientesActivos[key]?.key_usuario];
+        if (!obj) return null;
         var vijencia = objFinal[key]["vijencia"];
+        // if (!vijencia) return null;
 
+        // console.log("chaval ", vijencia?.paquete?.observacion)
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
@@ -151,7 +167,7 @@ class ClientesPage extends Component {
           backgroundColor: STheme.color.card,
         }} onPress={() => {
           SNavigation.navigate("ClientePerfilPage", {
-            key: key
+            key: obj.key
           })
         }}>
           <View style={{
@@ -174,7 +190,7 @@ class ClientesPage extends Component {
                 borderRadius: 100,
                 overflow: "hidden"
               }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
               </View>
               <View style={{
                 flex: 1,
@@ -184,9 +200,18 @@ class ClientesPage extends Component {
                   fontSize: 16,
                   fontWeight: "bold",
                   color: STheme.color.text,
-                  textTransform: "capitalize",
+                  textTransform: "uppercase",
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " "}{this.getMotivo(vijencia?.motivo ?? "")} </Text>
+
+                {/* <Text style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: STheme.color.text,
+                  textTransform: "uppercase",
+                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
+                }}>{obj["Nombres"] + " " + obj["Apellidos"] + " " + (vijencia?.motivo ?? "")} </Text> */}
+
                 {this.getSucursal(vijencia["caja"].key_sucursal)}
                 {this.getUsuario(vijencia["caja"].key_usuario)}
 
@@ -204,7 +229,7 @@ class ClientesPage extends Component {
                   borderRadius: 100,
                   overflow: "hidden"
                 }}>
-                  <SImage src={SSocket.api.root + "paquete_" + vijencia.paquete.key} />
+                  <SImage src={SSocket.api.root + "paquete/" + vijencia.paquete.key} />
                 </View>
                 <Text style={{ fontSize: 10, color: STheme.color.text, textTransform: "lowercase" }}>{vijencia.paquete.descripcion}</Text>
               </SView>
@@ -218,36 +243,40 @@ class ClientesPage extends Component {
 
     return (
       <SPage disableScroll title={"Clientes"}>
-        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
+        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo, Telefono o Motivo."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
         <SView col={"xs-12"} center>
+
+          {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel
             header={[
-              // { key: "key", label: "key", width: 100 },
+              { key: "key", label: "key", width: 100 },
               { key: "cliente_ci", label: "CI", width: 100 },
               { key: "cliente_nombre", label: "Cliente", width: 250 },
               { key: "cliente_telefono", label: "Telefono", width: 250 },
-              { key: "paquete", label: "paquete", width: 200 },
-              { key: "paquete_precio", label: "precio", width: 100 },
-              { key: "fecha_inicio", label: "fecha_inicio", width: 100 },
-              { key: "fecha_fin", label: "fecha_fin", width: 100 },
+              { key: "paquete", label: "Paquete", width: 200 },
+              { key: "motivo", label: "Motivo", width: 100 },
+              { key: "paquete_precio", label: "Precio", width: 100 },
+              { key: "fecha_inicio", label: "Fecha inicio", width: 100 },
+              { key: "fecha_fin", label: "Fecha fin", width: 100 },
             ]}
             getDataProcesada={() => {
               var daFinal = {};
               Object.values(this.finalData).map((obj, i) => {
-                var usr = this.usuarios[obj.key];
-                if (!usr.estado || usr.estado <= 0) return;
+                // var usr = this.usuarios[obj.key];
+                if (!obj?.estado || obj?.estado <= 0) return;
                 var toInsert = {
                   key: obj.key,
+                  cliente_ci: obj?.CI,
+                  cliente_nombre: obj?.Nombres + " " + obj?.Apellidos,
+                  cliente_telefono: obj?.Telefono,
+                  motivo: obj?.vijencia?.motivo,
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
                   fecha_inicio: obj?.vijencia?.fecha_inicio,
                   fecha_fin: obj?.vijencia?.fecha_fin,
-                  cliente_nombre: usr?.Nombres + " " + usr?.Apellidos,
-                  cliente_telefono: usr?.Telefono,
-                  cliente_ci: usr?.CI,
                 }
                 daFinal[i] = toInsert
               })

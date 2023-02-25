@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SNavigation, SPage, SScrollView2, SText, SView } from 'servisofts-component';
+import { SButtom, SHr, SMath, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import Caja from '../..';
 import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
 import Perfil from './Perfil';
-
+import SSocket from 'servisofts-socket'
+import Model from '../../../../Model';
 class DetalleCaja extends Component {
     static navigationOptions = {
         headerShown: false,
@@ -34,10 +35,24 @@ class DetalleCaja extends Component {
                             <SHr />
                             <Cabecera caja={caja} />
                         </SView>
-                        <SHr/>
+                        <SHr />
                         <SButtom type={"danger"} onPress={() => {
                             SNavigation.navigate("ReciboCaja", { key: caja.key })
                         }}>{"IMPRIMIR"}</SButtom>
+                        <SHr />
+                        <SButtom type={"danger"} onPress={() => {
+                            SSocket.sendPromise({
+                                component: "caja",
+                                type: "reparar",
+                                key_caja: this.key_caja,
+                                key_usuario: Model.usuario.Action.getKey()
+                            }).then(resp => {
+                                console.log(resp);
+                            }).catch(e => {
+                                console.error(e);
+                            })
+                            // SNavigation.navigate("ReciboCaja", { key: caja.key })
+                        }}>{"REPARAR"}</SButtom>
                         <Movimientos caja={caja} />
                     </SView>
 

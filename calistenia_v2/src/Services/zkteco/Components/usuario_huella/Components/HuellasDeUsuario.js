@@ -64,8 +64,8 @@ class HuellasDeUsuario extends Component {
         }
         return (
             <SView col={"xs-12"} center >
-                <SText color={STheme.color.gray}>Huellas</SText>
-                <SHr />
+                {/* <SText color={STheme.color.gray}>Huellas</SText> */}
+                {/* <SHr /> */}
                 <SView col={"xs-12"} center row>
                     {this.getLista()}
 

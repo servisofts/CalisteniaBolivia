@@ -104,7 +104,7 @@ const ServicioDePaquete = (props) => {
             borderRadius: 8,
             overflow: "hidden"
           }}>
-            <SImage src={SSocket.api.root + "servicio_" + obj.key} />
+            <SImage src={SSocket.api.root + "servicio/" + obj.key} />
           </View>
           <View style={{
             flex: 1,

@@ -182,11 +182,11 @@ public class CuentaBancoMovimiento {
                 data.put("fecha_on",fecha_on);
             }
 
-            data.put("estado",1);
+            //data.put("estado",1);
 
 
             SPGConect.insertArray(obj.getString("nombre_tabla"), new JSONArray().put(data));
-            SPGConect.historico(obj.getString("key_usuario"), data.getString("key"), obj.getString("nombre_tabla")+"_registro", data);
+           // SPGConect.historico(obj.getString("key_usuario"), data.getString("key"), obj.getString("nombre_tabla")+"_registro", data);
             obj.put("data", data);
             obj.put("estado", "exito");
             obj.remove("nombre_tabla");

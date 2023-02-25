@@ -34,7 +34,7 @@ class GraficoAsistencia extends Component {
             }}>
                 <SView flex center card row style={{ overflow: 'hidden', }} >
                     <SView col={"xs-10 sm-4"} height center backgroundColor={!this.state.select[key] ? null : `${obj.color}66`}>
-                        <SImage src={SSocket.api.root + "sucursal_" + key} style={{
+                        <SImage src={SSocket.api.root + "sucursal/" + key} style={{
                             width: '80%',
                             height: '80%',
                         }} />

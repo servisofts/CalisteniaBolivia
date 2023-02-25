@@ -17,8 +17,9 @@ class Select extends Component {
         var arr_sucursal_usuario = Parent.Actions.getAllByKeyUsuario(this.props.key_usuario, this.props);
         if (!arr) return <SLoad />;
         if (!arr_sucursal_usuario) return <SLoad />;
-
-        return <SList data={arr} horizontal center render={obj => {
+        // console.log(arr_sucursal_usuario);
+        // return <SList data={arr} horizontal center render={(obj) => {
+        return Object.values(arr).map(obj => {
             if (!Parent.Actions.isActive(obj.key, this.props)) {
                 return null;
             }
@@ -28,6 +29,10 @@ class Select extends Component {
                     return null;
                 }
             }
+            // if (objFind) {
+            //     console.log(arr_sucursal_usuario);
+            //     console.log(objFind);
+            // }
             return <Item obj={obj} select={objFind} onSelect={(itm) => {
                 if (this.props.preventEdit) return null;
                 // this.state.select[itm.key] = itm;
@@ -43,12 +48,12 @@ class Select extends Component {
                     estado: 0
                 }, this.props);
             }} />
-        }} />
+        })
     }
     render() {
         if (!this.props.key_usuario) return null;
         return (
-            <SView col={"xs-12"} row>
+            <SView col={"xs-12"} row center>
                 {this.getLista()}
             </SView>
         );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SButtom, SDate, SHr, SIcon, SImage, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
+import Model from '../../../Model';
 import TipoPago from '../../TipoPago';
 import Usuario from '../../Usuario';
 class Recibo extends Component {
@@ -12,7 +13,8 @@ class Recibo extends Component {
     }
 
     getNombreUsuario(key_usuario) {
-        var usuario = Usuario.Actions.getByKey(key_usuario, this.props);
+        
+        var usuario = Model.usuario.Action.getByKey(key_usuario);
         if (!usuario) return null;
         return usuario.Nombres + " " + usuario.Apellidos;
     }
@@ -123,7 +125,7 @@ class Recibo extends Component {
                 <SView col={"xs-12"} row>
                     <SView col={"xs-6"} row>
                         <SView width={50} height={50} center>
-                            <SImage src={SSocket.api.root + "sucursal_" + recibo.sucursal.key} style={{
+                            <SImage src={SSocket.api.root + "sucursal/" + recibo.sucursal.key} style={{
                                 borderRadius: 8,
                                 overflow: 'hidden',
                                 width: "90%",
@@ -153,7 +155,7 @@ class Recibo extends Component {
                     <SView width={50} height={50} style={{
                         padding: 4,
                     }}>
-                        <SImage src={SSocket.api.root + "paquete_" + recibo.paquete.key} />
+                        <SImage src={SSocket.api.root + "paquete/" + recibo.paquete.key} />
                     </SView>
                     <SView center flex >
                         <SText fontSize={14} color={STheme.color.lightBlack} font={"Roboto-Bold"} col={"xs-12"}>{recibo.paquete.descripcion}</SText>

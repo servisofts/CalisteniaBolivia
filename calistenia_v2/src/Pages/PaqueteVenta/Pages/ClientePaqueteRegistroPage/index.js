@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
+import { Component } from 'react';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
+import { SButtom, SDate, SInput, SNavigation, SPage, SPopup, SScrollView2, STheme, SView } from 'servisofts-component';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Paquete from '../../../Paquete/Component/Paquete';
-import Usuario from './Usuario';
-import { SPopupOpen, SDate, SView, SInput, SButtom, SScrollView2, SPopup, SNavigation, SPage, STheme } from 'servisofts-component';
-import TiposDePago from './TiposDePago';
 import SCalendar from './SCalendar';
+import TiposDePago from './TiposDePago';
+import Usuario from './Usuario';
 // import RolDeUsuario from './RolDeUsuario';
 var _ref = {};
+
+// const changeTipoPago = {
+//   "efectivo": "Efectivo",
+//   "tarjeta": "Tarjeta",
+//   "transferencia": "Transferencia",
+//   "cheque": "Cheque",
+// }
+
 class ClientePaqueteRegistroPage extends Component {
   constructor(props) {
     super(props);
@@ -58,6 +66,14 @@ class ClientePaqueteRegistroPage extends Component {
         // justifyContent:"flex-start",
         padding: 12,
       }}>
+        {/* tarea3 */}
+        <Text style={{
+          width: "100%",
+          fontSize: 14,
+          color: STheme.color.text,
+          marginBottom: 8,
+          paddingLeft: 8,
+        }}>Cliente</Text>
         <Usuario key_usuario={this.state.usuarios[i]} onLoad={(usr) => {
           // console.log(usr);
           if (!this.state.usuariosData[i]) {
@@ -81,6 +97,7 @@ class ClientePaqueteRegistroPage extends Component {
               }
             })
           }} />
+
         <SView col={"xs-10"}>
           <TiposDePago
             paquete={this.state.paquete}
@@ -110,7 +127,9 @@ class ClientePaqueteRegistroPage extends Component {
       usuarios: this.state.usuarios,
       usuariosData: this.state.usuariosData,
       tasks: this.state.tasks,
-      dataPagos: this.state.tipoPago
+      dataPagos: this.state.tipoPago, // tarea3 ✅ ✅ ✅
+      observacion: this.inputObservacion?.getValue()
+
     })
   }
   calcularFaltante() {
@@ -139,42 +158,39 @@ class ClientePaqueteRegistroPage extends Component {
     }
     return 0;
   }
+
+  render_motivo() {
+    var paquete = this.state.paquete;
+    if (!paquete) return null; // tarea3 ✅ ✅ ✅
+    if (paquete.requiere_motivo) return (
+      <SInput customStyle={"calistenia"} label={"Motivo"} col={"xs-12"} ref={(ref) => { this.inputObservacion = ref }} isRequired={true} placeholder={"Escribir motivo del paquete"} />
+    );
+  }
+
+
   render() {
-
-
     return (
       <View style={{
-        flex: 1,
-        width: "100%",
-        height: "100%",
+        flex: 1, width: "100%", height: "100%",
         backgroundColor: STheme.color.background
       }}>
         {SPage.backgroundComponent}
-
         <BarraSuperior duration={500} title={"Agregar paquete a usuario"} goBack={() => {
           SNavigation.goBack();
         }} {...this.props} />
-        <View style={{
-          width: "100%",
-          flex: 1,
-        }}>
+        <View style={{ width: "100%", flex: 1 }}>
           <SScrollView2
             disableHorizontal
-            style={{
-              width: "100%",
-              height: "100%"
-            }} >
+            style={{ width: "100%", height: "100%" }} >
             <View style={{
               width: "100%",
               alignItems: 'center',
               paddingBottom: 100,
             }}>
               <View style={{
-                width: "100%",
+                width: "90%",
                 maxWidth: 800,
                 alignItems: "center",
-
-                // justifyContent: 'center',
               }}>
                 <Text style={{
                   fontSize: 22,
@@ -189,14 +205,16 @@ class ClientePaqueteRegistroPage extends Component {
                     this.setState({ ...this.state });
                   }
                 }} />
+
+
+                {this.render_motivo()}
+
+
               </View>
-              <Text style={{
-                width: "95%",
-                fontSize: 12,
-                color: STheme.color.text,
-                marginTop: 8,
-                marginBottom: 4,
-              }}>Clientes</Text>
+
+
+
+
               {this.getClientes()}
               <SButtom props={{
                 type: "danger",
@@ -227,6 +245,15 @@ class ClientePaqueteRegistroPage extends Component {
                     })
                     return;
                   }
+
+                  if (this.state.paquete.requiere_motivo) {
+                    if (!this.inputObservacion.verify()) {
+                      SPopup.alert("Ingresar motivo del paquete")
+                      return;
+                    }
+                  }
+
+
                   // if (this.state.tipoPago[]) {
                   //   SPopup.alert("No se encontro el tipo de pago.")
                   //   return;
@@ -238,6 +265,8 @@ class ClientePaqueteRegistroPage extends Component {
                 Continuar
               </SButtom>
             </View>
+
+
           </SScrollView2>
         </View>
 

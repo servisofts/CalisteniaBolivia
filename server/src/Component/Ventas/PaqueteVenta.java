@@ -116,7 +116,6 @@ public class PaqueteVenta {
         try {
             String consulta = "select get_recibo('" + obj.getString("key") + "') as json";
             JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
-            SPGConect.historico(obj.getString("key_usuario"), "paquete_venta_getByKey", data);
             obj.put("data", data);
             obj.put("estado", "exito");
         } catch (SQLException e) {
@@ -311,18 +310,25 @@ public class PaqueteVenta {
             JSONArray usuarios = new JSONArray();
             if (!paquetes_venta_usuario.isEmpty()) {
                 for (int i = 0; i < JSONObject.getNames(paquetes_venta_usuario).length; ++i) {
+
                     JSONObject paquete_venta_usuario = paquetes_venta_usuario
                             .getJSONObject(JSONObject.getNames(paquetes_venta_usuario)[i]);
                     usuarios.put(paquete_venta_usuario.getString("key_usuario"));
                     JSONObject caja_movimientos = CajaMovimiento.getMovimientosVentaServicio(
                             paquete_venta_usuario.getString("key_caja"), paquete_venta_usuario.getString("key"));
                     if (!caja_movimientos.isEmpty()) {
+
                         for (int j = 0; j < JSONObject.getNames(caja_movimientos).length; ++j) {
                             JSONObject caja_movimiento = caja_movimientos
                                     .getJSONObject(JSONObject.getNames(caja_movimientos)[j]);
+
+                            caja_movimiento.put("estado", 3);
+                            SPGConect.editObject("caja_movimiento", caja_movimiento);
+
                             String key_caja_old = caja_movimiento.getString("key");
-                            if (caja_movimiento.getString("key_tipo_pago").equals("2")
-                                    || caja_movimiento.getString("key_tipo_pago").equals("3")) {
+                            if ((caja_movimiento.getString("key_tipo_pago").equals("2")
+                                    || caja_movimiento.getString("key_tipo_pago").equals("3"))
+                                    && caja_movimiento.getDouble("monto") > 0) {
                                 JSONObject cuentaBancoMovimiento = CuentaBancoMovimiento
                                         .getByKeyCajaMovimiento(key_caja_old);
                                 if (cuentaBancoMovimiento.has("key")) {
@@ -342,14 +348,17 @@ public class PaqueteVenta {
                                     sendcuentaBancoMovimiento.put("estado", "exito");
                                     SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
                                 }
-                            } else {
-                                caja_movimiento = Caja.addAnulacionServicio(caja_activa.getString("key"),
-                                        obj.getString("key_usuario"), caja_movimiento.getString("key_tipo_pago"),
-                                        caja_movimiento.getDouble("monto"), formatter.format(new Date()),
-                                        caja_movimiento.getJSONObject("data"));
-                                send_movimiento.put("data", caja_movimiento);
-                                SSServerAbstract.sendAllServer(send_movimiento.toString());
                             }
+                            // else {
+                            // caja_movimiento = Caja.addAnulacionServicio(caja_activa.getString("key"),
+                            // obj.getString("key_usuario"), caja_movimiento.getString("key_tipo_pago"),
+                            // caja_movimiento.getDouble("monto"), formatter.format(new Date()),
+                            // caja_movimiento.getJSONObject("data"));
+                            // send_movimiento.put("data", caja_movimiento);
+                            // SSServerAbstract.sendAllServer(send_movimiento.toString());
+                            // }
+                            // TODO ruddy aqui deberia cambiar el estadocajaMovimiento
+
                         }
                     }
                     JSONObject edit = new JSONObject();

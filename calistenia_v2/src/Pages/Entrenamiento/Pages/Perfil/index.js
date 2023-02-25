@@ -7,6 +7,7 @@ import SSocket from 'servisofts-socket'
 import Entrenamiento from '../..';
 import RelojEntrenamiento from '../Lista/RelojEntrenamiento';
 import Sucursal from '../../../Sucursal';
+import Model from '../../../../Model';
 class Perfil extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,7 @@ class Perfil extends Component {
         return <SView col={"xs-12"} center>
             <SView col={"xs-12"} center row>
                 {Object.keys(asistencia).map((key) => {
-                    var usuario = Usuario.Actions.getByKey(asistencia[key].key_usuario, this.props);
+                    var usuario = Model.usuario.Action.getByKey(asistencia[key].key_usuario);
                     if (!usuario) return <SLoad />
                     return <SView width={120} height={120} colSquare style={{
                         padding: 4,
@@ -37,7 +38,7 @@ class Perfil extends Component {
                             <SText key={key} capitalize center fontSize={12}>{`${asistencia[key]?.descripcion}`}</SText>
                             <SHr/>
                             <SView width={40} height={40}>
-                                <SImage src={SSocket.api.root + "usuario_" + usuario.key} />
+                                <SImage src={SSocket.api.root + "usuario/" + usuario.key} />
                             </SView>
                             <SHr/>
                             <SText key={key} capitalize center fontSize={12}>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
@@ -66,7 +67,7 @@ class Perfil extends Component {
                 borderRadius: "50%",
                 overflow: "hidden",
             }} >
-                <SImage src={SSocket.api.root + "sucursal_" + key} />
+                <SImage src={SSocket.api.root + "sucursal/" + key} />
             </SView>
             <SView flex style={{
                 justifyContent: "center",
@@ -78,7 +79,8 @@ class Perfil extends Component {
     }
     getUsuario = (key) => {
         if (!key) return <SText fontSize={18} capitalize>{`Molinete`}</SText>
-        var usuario = Usuario.Actions.getByKey(key, this.props);
+        
+        var usuario = Model.usuario.Action.getByKey(key);
         if (!usuario) return <SLoad />
         return <SView col={"xs-12"} center >
             {/* <SText fontSize={10} color={"#999"} >{`Entrenador`}</SText> */}
@@ -86,7 +88,7 @@ class Perfil extends Component {
             <SView width={70} height={70} backgroundColor={"#66000022"} style={{
                 borderRadius: "50%",
             }}>
-                <SImage src={SSocket.api.root + "usuario_" + key} />
+                <SImage src={SSocket.api.root + "usuario/" + key} />
             </SView>
             <SHr height={8} />
             <SText fontSize={18} capitalize>{`${usuario.Nombres} ${usuario.Apellidos}`}</SText>
