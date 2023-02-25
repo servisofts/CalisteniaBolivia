@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView,SNavigation } from 'servisofts-component';
+import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView, SNavigation } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraCargando from '../BarraCargando';
 export type SucursalCardPropsType = {
@@ -31,43 +31,27 @@ class index extends Component<SucursalCardPropsType> {
     }
 
     render() {
-        var { key, descripcion, state, nombre } = this.props.datas;
-        return (
-            <SView col={"xs-12"} row  onPress={() => { SNavigation.navigate(this.props.root, { pk: key }) }}>
-                <SView col={"xs-12"} row height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 24, }} >
-                    <SView col={"xs-12"} center height >
-                        <SView col={"xs-12"} height={130} style={{
-                            borderRadius: 8,
-                            backgroundColor: STheme.color.card,
-                            overflow: 'hidden',
-                        }}>
-
-                            <SImage  src={require('../../Assets/img/s'+this.props.image+'.jpg')} width={"100%"} height={"100%"}
-                                        style={{
-                                            resizeMode: 'cover',
-                                        }}
-                                    />
-
-                            {/* <SImage enablePreview src={SSocket.api.root + "sucursal/" + key} width={"100%"} height={"100%"}
-                                style={{
-                                    resizeMode: 'cover',
-                                }}
-                            /> */}
-                        </SView>
-                    </SView>
+        var { key, descripcion, state, direccion, nombre } = this.props.datas;
+        return (<SView col={"xs-12"} activeOpacity={0.8} onPress={() => {
+            SNavigation.navigate(this.props.root, { pk: key })
+        }} height={130} backgroundColor={STheme.color.card} style={{ borderRadius: 10, overflow: 'hidden', }}>
+            <SView col={"xs-12"} height style={{
+                position: "absolute",
+            }}>
+                <SImage src={SSocket.api.root + "sucursal/portada/" + key} width={"100%"} height={"100%"} style={{ resizeMode: 'cover', }} />
+            </SView>
+            <SView flex col={"xs-12"} />
+            <SView style={{ alignItems: "flex-end", padding: 8 }} col={"xs-12"}>
+                <SView row height={30} center>
+                    <SText fontSize={20} bold color={STheme.color.white} style={{ alignItems: "flex-end" }}>{descripcion}</SText>
+                    <SView width={8} />
+                    <SIcon name={"Vineta1"} height={14} width={8} fill={"transparent"}></SIcon>
                 </SView>
-                <SView col={"xs-12"} flex style={{ alignItems: "flex-end", bottom: -85, right: 10 }} >
-                    <SView width={200}>
-                        <SText fontSize={15} color={STheme.color.white} style={{ alignItems: "flex-end", right: 15 }}>{descripcion}</SText>
-                    </SView>
-                    <SHr />
-                    <SIcon name={"Vineta1"} height={12} width={6} stroke={STheme.color.white}></SIcon>
-                </SView>
-                <SView col={"xs-12"} row >
-                    <SText style={{ alignItems: "flex-end", top: -20, right: 25 }} flex fontSize={10} color={STheme.color.white}>Av. La barranca 3er anillo frente al surtidor Genex</SText>
+                <SView col={"xs-12"}>
+                    <SText style={{ alignItems: "flex-end" }} fontSize={10} color={STheme.color.white}>{direccion}</SText>
                 </SView>
             </SView>
-
+        </SView>
         );
     }
 }

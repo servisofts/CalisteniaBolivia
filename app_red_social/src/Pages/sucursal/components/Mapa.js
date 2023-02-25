@@ -43,10 +43,9 @@ class Mapa extends Component<MapaPropsType> {
                             scrollwheel: false,
                         }}
                         preventCenter
-                    >
-                        <SMarker lat={-17.768507} lng={-63.183698}  >
+                    >{/* <SMarker latitude={-17.768507} longitude={-63.183698} lng={-17.768507} lat={-63.183698} >
                             <SIcon name="MarcadorMapa" width={20} height={30} />
-                        </SMarker>
+                        </SMarker> */}
                     </SMapView>
                     <SHr height={20} />
                     <SView
@@ -58,7 +57,7 @@ class Mapa extends Component<MapaPropsType> {
                         onPress={() => {
                             SNavigation.navigate("/root")
                         }}
-                        >
+                    >
                         <SText>Ir a Google Maps</SText>
                     </SView>
                     <SHr height={40} />

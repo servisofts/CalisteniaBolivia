@@ -14,6 +14,9 @@ import Pdia, { ReactComponent as PdiaW } from './p-dia.svg';
 import Pmodel, { ReactComponent as PmodelW } from './p-model.svg';
 import Pprecio, { ReactComponent as PprecioW } from './p-precio.svg';
 
+import ImgSave, { ReactComponent as ImgSaveW } from './imgSave.svg';
+import ImgShare, { ReactComponent as ImgShareW } from './imgShare.svg';
+
 
 const Assets = {
 	"IconChecked": { Native: IconChecked, Web: IconCheckedW },
@@ -30,6 +33,8 @@ const Assets = {
 	"Pdia": { Native: Pdia, Web: PdiaW },
 	"Pmodel": { Native: Pmodel, Web: PmodelW },
 	"Pprecio": { Native: Pprecio, Web: PprecioW },
+	"ImgSave": { Native: ImgSave, Web: ImgSaveW },
+	"ImgShare": { Native: ImgShare, Web: ImgShareW },
 }
 
 export default Assets;

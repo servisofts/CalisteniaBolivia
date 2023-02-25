@@ -29,7 +29,7 @@ export default class home extends Component<TopBarPropsType> {
     }
     render() {
         return (<SView col={"xs-12"} height={50} backgroundColor={STheme.color.barColor} center row>
-            <SView col={"xs-11"} row >
+            <SView col={"xs-11"} row height >
                 <SView width={115} height>
                     {/* {this.getBack()} */}
 
