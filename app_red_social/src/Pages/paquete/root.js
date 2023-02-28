@@ -22,15 +22,16 @@ class index extends Component {
         Model.publicacion.Action.CLEAR();
     }
    
-    render_with_data() {
+    render_with_data() { 
         var sucursales = Model.sucursal.Action.getAll();
         if (!sucursales) return <SLoad />
 
         return <SList
             buscador={"true"}
             center
-            space={5}
-            data={Object.values(sucursales)}
+            space={14}
+            // data={Object.values(sucursales)}
+            data={sucursales}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
                 return <Sucursal.Card image={1} datas={data} root={'/paquete/membresia'}  />
@@ -59,7 +60,7 @@ class index extends Component {
     }
 
     footer() {
-        return <BottomNavigator url={"/root"} />
+        return <BottomNavigator url={"/paquete"} />
     }
 }
 const initStates = (state) => {

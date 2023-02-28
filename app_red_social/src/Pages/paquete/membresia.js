@@ -72,7 +72,7 @@ class membresia extends Component {
         );
     }
     footer() {
-        return <BottomNavigator url={"/root"} />
+        return <BottomNavigator url={"/paquete"} />
     }
 }
 const initStates = (state) => {

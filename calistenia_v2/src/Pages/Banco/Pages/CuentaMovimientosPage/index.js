@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SButtom, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -22,6 +22,7 @@ class CuentaMovimientosPage extends Component {
     super(props);
     this.state = {
       monto_total: 0,
+
     };
     this.key = SNavigation.getParam("key", null);
     this.key_banco = SNavigation.getParam("key_banco", null);
@@ -316,7 +317,6 @@ class CuentaMovimientosPage extends Component {
     </SView>
   }
   render() {
-
     if (this.key) {
       this.data = Banco.Actions.getAllCuentaBancos(this.props);
     } else {
@@ -384,22 +384,25 @@ class CuentaMovimientosPage extends Component {
 
 
                       // const ingreso = 0, egreso = 0, traspaso = 0;
-                      var total = { ingreso: 0, egreso: 0, traspaso: 10 }
+                      var total = { ingreso: 0, egreso: 0, traspaso: 0 }
                       Object.values(this.finalData).map((obj, i) => {
 
+                        // Alvaro aqui aqui debo guadar los valores, para exportarlo bien
+
+                        // aqui debo guadar los valores
                         if (obj?.tipo_movimiento == "ingreso") {
-                          total.ingreso += obj?.monto;
+                          total.ingreso = obj?.monto;
                         } else {
                           total.ingreso = 0;
                         }
 
                         if (obj?.tipo_movimiento == "egreso") {
-                          total.egreso += obj?.monto;
+                          total.egreso = obj?.monto;
                         } else {
                           total.egreso = 0;
                         }
                         if (obj?.tipo_movimiento == "traspaso") {
-                          total.traspaso += obj?.monto;
+                          total.traspaso = obj?.monto;
                         } else {
                           total.traspaso = 0;
                         }
@@ -422,7 +425,25 @@ class CuentaMovimientosPage extends Component {
                       return daFinal
                     }}
                   />
+
+
                 </SView>
+                <SView col={"xs-12"} height={250} center row>
+
+                  {/* aqui todo darmotos */}
+                  <SButtom type='danger' row onPress={() => {
+                    // this.form.submit();
+                  }} >Ingreso</SButtom>
+                  <SHr height={10} />
+                  <SButtom type='danger' row onPress={() => {
+                    // this.form.submit();
+                  }} >Traspaso</SButtom>
+                  <SHr height={10} />
+                  <SButtom type='danger' onPress={() => {
+                    // this.form.submit();
+                  }} >Egreso</SButtom>
+                </SView>
+                <SHr height={10} />
 
 
               </SView>
