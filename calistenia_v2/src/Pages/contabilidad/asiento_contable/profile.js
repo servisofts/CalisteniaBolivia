@@ -22,6 +22,8 @@ class index extends DPA.profile {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "ver" })
     }
     $getData() {
+        console.log(this.$params.key_gestion)
+        return null;
         var data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion })
         if (!data) return null;
         return data[this.pk]
@@ -30,7 +32,9 @@ class index extends DPA.profile {
 
     $render() {
         this.data = this.$getData();
-        return <AsientoContable key_asiento_contable={this.pk} key_gestion={Model.gestion.Action.getSelect()?.key} />
+       
+        if(!this.data) return null;
+        return <AsientoContable key_asiento_contable={this.pk} key_gestion={this.$params.key_gestion} />
     }
 }
 export default connect(index);

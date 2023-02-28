@@ -11,15 +11,15 @@ class index extends Component {
         this.state = {
         };
         this.pk = SNavigation.getParam("pk")
+        this.key_gestion = SNavigation.getParam("key_gestion", Model.gestion.Action.getSelect()?.key)
     }
 
 
     render() {
-
         return (
-            <SPage title={"Asiento contable"} disableScroll center> 
+            <SPage title={"Asiento contable"} disableScroll center>
                 <SView col={"xs-11.5 sm-10 md-8"} height>
-                    <AsientoContable key_gestion={Model.gestion.Action.getSelect()?.key} key_asiento_contable={this.pk} />
+                    <AsientoContable key_gestion={this.key_gestion} key_asiento_contable={this.pk} />
                 </SView>
             </SPage>
         );

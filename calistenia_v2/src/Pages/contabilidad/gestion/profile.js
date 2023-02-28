@@ -1,12 +1,14 @@
-import { SNavigation, SText } from 'servisofts-component';
+import { SHr, SIcon, SNavigation, SText, SView } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
+import { MenuButtom, MenuPages } from 'servisofts-rn-roles_permisos';
 import { Parent } from "."
 import Model from '../../../Model';
-
+import item from "./item";
 class index extends DPA.profile {
     constructor(props) {
         super(props, {
             Parent: Parent,
+            item: item,
             excludes: ["key", "key_usuario", "key_servicio", "key_sucursal"],
 
         });
@@ -25,7 +27,15 @@ class index extends DPA.profile {
     }
 
     $footer() {
-        return <SText onPress={() => { SNavigation.navigate("/contabilidad/asiento_contable", { key_gestion: this.pk }) }}>Ver asientos</SText>
+        return <SView col={"xs-12"} center>
+            <SHr />
+            <MenuPages path={"/contabilidad/gestion/profile/"} >
+                <MenuButtom label={"Asientos"} icon={<SIcon name='Add' />}
+                    onPress={() => { SNavigation.navigate("/contabilidad/asiento_contable", { key_gestion: this.pk }) }}
+                />
+            </MenuPages>
+            {/* <SText>Ver asientos</SText> */}
+        </SView>
     }
 }
 export default connect(index);

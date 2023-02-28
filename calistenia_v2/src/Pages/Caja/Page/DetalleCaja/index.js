@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SMath, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SButtom, SHr, SMath, SNavigation, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import Caja from '../..';
 import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
@@ -47,6 +47,7 @@ class DetalleCaja extends Component {
                                 key_caja: this.key_caja,
                                 key_usuario: Model.usuario.Action.getKey()
                             }).then(resp => {
+                                SPopup.alert("Reparado con exito");
                                 console.log(resp);
                             }).catch(e => {
                                 console.error(e);
