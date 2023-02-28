@@ -114,9 +114,9 @@ class Movimientos extends Component {
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
 
-      // if (movimientos[key].estado == "3") return null;
+      //alvaro aqui le pusiste
+      if (movimientos[key].estado == "3") return null;
       // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Venta de servicio") return null;
-
       // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Traspaso a bancos") return null;
 
 
@@ -236,10 +236,10 @@ class Movimientos extends Component {
     // tarea6  ✅ ✅ ✅
     if (this.moviminetos) {
       Object.values(this.moviminetos).map((o) => {
-        if (o.estado == 0) return null;
+        if (o.estado == 0 || o.estado == 3) return null;
+        // console.log("ostia1 ", o.estado)
         if (o.descripcion == "Cancelacion de servicio") return null;
         // alvarosiles
-        // console.log("ostia ", o)
         if (o.monto >= 0) {
           total.ingreso += o.monto;
 
