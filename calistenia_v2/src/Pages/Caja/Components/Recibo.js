@@ -96,13 +96,27 @@ class Recibo extends Component {
       </>
     });
   }
+
+  // alvaro recibo
+
   getTotales() {
     var movimientos = this.getMovimientos(this.props.key_caja);
     if (!movimientos) return <SLoad />;
     var total = 0;
     var monto_enviado_a_bancos;
+
+
+    var monto = { apertura: 0, ingreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, cheque: 0, egreso: 0, transpasoBanca: 0 }
+    // var total_tipo_pago = {}
+    // var total_tipo_movimiento = {}
+
+    // alvarorecibo
+
     Object.keys(movimientos).map((key) => {
       let obj = movimientos[key];
+
+
+      // console.log("ostia ", obj)
       if (obj.descripcion == "Transferencia por cierre") {
         monto_enviado_a_bancos = obj;
         return;
@@ -110,27 +124,126 @@ class Recibo extends Component {
       if (obj.descripcion == "Transferencia por apertura") {
         return;
       }
-      if (obj.estado == "3") {
+      if (obj.estado == "0" || obj.estado == "3") {
         return;
       }
 
       total += obj.monto;
+
+      if (obj.descripcion == "apertura") {
+        monto.apertura += obj.monto;
+        return;
+      }
+      if (obj.descripcion == "Traspaso a bancos") {
+        monto.transpasoBanca += obj.monto;
+        return;
+      }
+      if (obj.descripcion == "Venta de servicio" && obj.key_tipo_pago == "1") {
+        monto.efectivo += obj.monto;
+        return;
+      }
+      if (obj.descripcion == "Venta de servicio" && obj.key_tipo_pago == "2") {
+        monto.tarjeta += obj.monto;
+        return;
+      }
+      if (obj.descripcion == "Venta de servicio" && obj.key_tipo_pago == "3") {
+        monto.transferencia += obj.monto;
+        return;
+      }
+      // if (obj.key_caja_tipo_movimiento == "4") {
+      //   monto.egreso += obj.monto;
+      //   return;
+      // }
+      if (obj.monto < 0) {
+        monto.egreso += obj.monto; return;
+      }
+      if (obj.monto > 0) {
+        monto.ingreso += obj.monto; return;
+      }
+      // if (obj.key_tipo_pago == "1") {
+      //   monto.egreso += obj.monto;
+      //   return;
+      // }
+
     })
-    return <SView col={"xs-12"}>
+    return <SView col={"xs-4"} row>
+      {/* alvaro recibo */}
 
-      <SView col={"xs-12"} row>
 
-        {/* alvaro recibo */}
+      <SHr />
+      {monto.apertura ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Apertura</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.apertura)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.efectivo ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Total Efectivo</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.efectivo)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.transferencia ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Total Transferencia</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.transferencia)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.tarjeta ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Total Tarjeta</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.tarjeta)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.cheque ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Total cheque</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.cheque)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.egreso ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.danger}  >Egreso</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.danger} bold>{SMath.formatMoney(monto.egreso)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.transpasoBanca ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.danger}  >Traspaso a banca</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.danger} bold>{SMath.formatMoney(monto.transpasoBanca)}</SText>
+        </SView>
+      </SView> : null}
+
+      <SHr height={3} color={STheme.color.lightGray} />
+
+      {total ? <SView col={"xs-12"} row>
         <SView flex>
           <SText color={STheme.color.lightBlack}  >Saldo</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(total)}</SText>
         </SView>
-      </SView>
-
-
-
+      </SView> : null}
 
       {monto_enviado_a_bancos ? <SView col={"xs-12"} row>
         {/* nuevo */}
@@ -143,7 +256,6 @@ class Recibo extends Component {
           }}>{SMath.formatMoney(monto_enviado_a_bancos.monto)}</SText>
         </SView>
       </SView> : null}
-
 
       {monto_enviado_a_bancos ? <SView col={"xs-12"} row>
         {/* nuevo */}
@@ -164,7 +276,6 @@ class Recibo extends Component {
           <SText color={STheme.color.lightBlack} bold fontSize={16}>{SMath.formatMoney(total + monto_enviado_a_bancos.monto)}</SText>
         </SView>
       </SView> : null}
-
 
     </SView>
   }
@@ -252,8 +363,9 @@ class Recibo extends Component {
         </SView>
         {/* <SHr height={1} color={STheme.color.lightGray} /> */}
       </SView>
-      <SHr />
-      <SHr height={50} />
+
+      <SHr height={90} />
+
 
       {/* <SText color={"#666"}>{JSON.stringify(recibo, "\n", "\t")}</SText> */}
     </SView>
@@ -263,7 +375,10 @@ class Recibo extends Component {
       <SView col={"xs-12"}>
         <SView col={"xs-12"} center>
           {this.getRecibo()}
+          <SHr />
+
         </SView>
+
       </SView>
     );
   }
