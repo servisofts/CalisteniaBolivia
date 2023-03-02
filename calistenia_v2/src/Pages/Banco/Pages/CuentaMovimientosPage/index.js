@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -383,7 +383,6 @@ class CuentaMovimientosPage extends Component {
                       { key: "ingreso", label: "Ingreso", width: 60 },
                       { key: "egreso", label: "Egreso", width: 60 },
                       { key: "traspaso", label: "Traspaso", width: 60 },
-                      // { key: "monto", label: "Monto", width: 80 },
                     ]}
                     getDataProcesada={() => {
                       var daFinal = {};
@@ -435,21 +434,18 @@ class CuentaMovimientosPage extends Component {
 
 
                 </SView>
-                <SView col={"xs-12"} height={250} center row>
+                {/* aqui todo darmotos */}
+                {/* <SView col={"xs-12"} height={250} center row>
 
-                  {/* aqui todo darmotos */}
                   <SButtom type='danger' row onPress={() => {
-                    // this.form.submit();
                   }} >Ingreso</SButtom>
                   <SHr height={10} />
                   <SButtom type='danger' row onPress={() => {
-                    // this.form.submit();
                   }} >Traspaso</SButtom>
                   <SHr height={10} />
                   <SButtom type='danger' onPress={() => {
-                    // this.form.submit();
                   }} >Egreso</SButtom>
-                </SView>
+                </SView> */}
                 <SHr height={10} />
 
 

@@ -101,7 +101,7 @@ class SucursalesDetalle extends Component {
           padding: 4,
           borderWidth: 1,
           borderRadius: 4,
-          backgroundColor: this.setColor(ingresos_total),
+          borderColor: this.setColor(ingresos_total),
         }}>
           <SView center col={"xs-12"} height={65} center>
             <SView width={45} height={45}>
