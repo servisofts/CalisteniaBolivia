@@ -32,6 +32,9 @@ export default class index extends Component {
           <EntrenamientosActivos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <CajasActivas fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
 
+          {/* aqui problema con fecha */}
+          {/* no carga la fecha en el dashboard */}
+
           {/* <SHr height={36} /> */}
 
           {/* <SHr height={32} /> */}

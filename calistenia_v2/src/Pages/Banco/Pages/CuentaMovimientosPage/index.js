@@ -103,6 +103,8 @@ class CuentaMovimientosPage extends Component {
     }
     var fecha_i = new SDate(this.state.fecha_inicio, "yyyy-MM-dd");
     var fecha_f = new SDate(this.state.fecha_fin, "yyyy-MM-dd");
+
+    // console.log("alvaro ", fecha_i)
     var reducer = this.props.state[ReducerName];
     if (reducer.data[this.key]) {
       if (reducer.fecha_i != this.state.fecha_inicio || reducer.fecha_f != this.state.fecha_fin || force) {
@@ -251,9 +253,14 @@ class CuentaMovimientosPage extends Component {
           if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
         }
         var sdate = new SDate(obj.fecha_on)
+
+        // aqui problema con fecha
         if ((!sdate.equalDay(fecha_i) && !sdate.equalDay(fecha_f)) && (sdate.isBefore(fecha_i) || sdate.isAfter(fecha_f))) {
           return <View />
         }
+
+
+
         monto_total += parseFloat(monto);
         var usuario = usuarios[obj.key_usuario];
 
