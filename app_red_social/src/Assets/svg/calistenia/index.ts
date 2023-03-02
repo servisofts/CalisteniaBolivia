@@ -16,6 +16,7 @@ import Pprecio, { ReactComponent as PprecioW } from './p-precio.svg';
 
 import ImgSave, { ReactComponent as ImgSaveW } from './imgSave.svg';
 import ImgShare, { ReactComponent as ImgShareW } from './imgShare.svg';
+import Footer, { ReactComponent as FooterW } from './footer.svg';
 
 
 const Assets = {
@@ -35,6 +36,7 @@ const Assets = {
 	"Pprecio": { Native: Pprecio, Web: PprecioW },
 	"ImgSave": { Native: ImgSave, Web: ImgSaveW },
 	"ImgShare": { Native: ImgShare, Web: ImgShareW },
+	"Footer": { Native: Footer, Web: FooterW },
 }
 
 export default Assets;

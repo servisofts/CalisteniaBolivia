@@ -48,7 +48,7 @@ export default class index extends Component {
             <SView col={"xs-12"} style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.darkGray }}></SView>
             <SView col={"xs-11"} row flex center >
                 {this.getOption({ key: "home", icon: <SIcon name={"Home"} fill={STheme.color.primary} stroke={(this.props.url == "/root") ? STheme.color.secondary : STheme.color.text} />, href: "/root" })}
-                {this.getOption({ key: "search", icon: <SIcon name={"Search2"} fill={STheme.color.primary} stroke={STheme.color.text} />, href: "/root" })}
+                {this.getOption({ key: "search", icon: <SIcon name={"Search2"} fill={STheme.color.primary} stroke={STheme.color.text} />, href: "/cuenta" })}
                 {this.getOption2({ key: "logo", icon: <SIcon name={"LogoBarra"} fill={STheme.color.darkGray} style={{ position: "absolute", top: -24 }} />, href: "/root" })}
 
                 {this.getOption({ key: "bag", icon: <SIcon name={"Bag"} fill={STheme.color.primary} stroke={(this.props.url == "/paquete") ? STheme.color.secondary : STheme.color.text} />, href: "/paquete" })}
