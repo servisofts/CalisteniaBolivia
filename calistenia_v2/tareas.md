@@ -25,11 +25,7 @@ tarea10 clientes \
 * 3ra. alternativa sería agregar una dirección IP pública en cada sucursal para acceder a la visualización desde el navegador, aunque esto solo permitiría ver las imágenes en una ventana reducida en lugar de en toda la pantalla.
 * 4to. alternativa sería agregar una dirección IP pública en cada sucursal para acceder a la visualización desde el programa VCL por RSP
 
-
-
-
-
-tarea11 Prorroga \
+# tarea11 Prorroga \
 en clientes la proroga
   * prorroga
     * hay casos que el cliente se adelanta un dia, por ejemplo el clinete pago para iniciar el 18 de febrero, pero se vino un dia antes.. entonces deberia correr su dias
@@ -43,7 +39,16 @@ en clientes la proroga
   * Exportar la información en formato Excel para una mayor facilidad de uso.  ✅ ✅ ✅
   * Actualizar el diseño para que resalte y utilizar colores más atractivos.  ✅ ✅ ✅
   * Mostrar los primero 10 para que cargue rapido.  ✅ ✅ ✅
-  * Cambiar el diseño. no se cambiara porque sera reemplazado por contabilidad
+  * Cambiar el diseño. no se cambiara porque sera reemplazado por contabilidad ✅ ✅ ✅ ya se lo dije
+  * agregar boton de tarjeta, transferencia, efectivo, egreso
+
+decirle a ricky de poner roles para
+* anular paquete cliente
+* editar paquete cliente
+#
+
+decirque que me registre en la base de datos todos los paquetes de la venta de los cusis
+
 
 
 # estado fianciero

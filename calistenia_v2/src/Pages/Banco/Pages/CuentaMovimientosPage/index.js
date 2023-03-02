@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SList, SLoad, SMath, SNavigation, SOrdenador, SPage, SPopup, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Banco from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -103,6 +103,8 @@ class CuentaMovimientosPage extends Component {
     }
     var fecha_i = new SDate(this.state.fecha_inicio, "yyyy-MM-dd");
     var fecha_f = new SDate(this.state.fecha_fin, "yyyy-MM-dd");
+
+    // console.log("alvaro ", fecha_i)
     var reducer = this.props.state[ReducerName];
     if (reducer.data[this.key]) {
       if (reducer.fecha_i != this.state.fecha_inicio || reducer.fecha_f != this.state.fecha_fin || force) {
@@ -251,9 +253,14 @@ class CuentaMovimientosPage extends Component {
           if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
         }
         var sdate = new SDate(obj.fecha_on)
+
+        // aqui problema con fecha
         if ((!sdate.equalDay(fecha_i) && !sdate.equalDay(fecha_f)) && (sdate.isBefore(fecha_i) || sdate.isAfter(fecha_f))) {
           return <View />
         }
+
+
+
         monto_total += parseFloat(monto);
         var usuario = usuarios[obj.key_usuario];
 
@@ -376,7 +383,6 @@ class CuentaMovimientosPage extends Component {
                       { key: "ingreso", label: "Ingreso", width: 60 },
                       { key: "egreso", label: "Egreso", width: 60 },
                       { key: "traspaso", label: "Traspaso", width: 60 },
-                      // { key: "monto", label: "Monto", width: 80 },
                     ]}
                     getDataProcesada={() => {
                       var daFinal = {};
@@ -428,21 +434,18 @@ class CuentaMovimientosPage extends Component {
 
 
                 </SView>
-                <SView col={"xs-12"} height={250} center row>
+                {/* aqui todo darmotos */}
+                {/* <SView col={"xs-12"} height={250} center row>
 
-                  {/* aqui todo darmotos */}
                   <SButtom type='danger' row onPress={() => {
-                    // this.form.submit();
                   }} >Ingreso</SButtom>
                   <SHr height={10} />
                   <SButtom type='danger' row onPress={() => {
-                    // this.form.submit();
                   }} >Traspaso</SButtom>
                   <SHr height={10} />
                   <SButtom type='danger' onPress={() => {
-                    // this.form.submit();
                   }} >Egreso</SButtom>
-                </SView>
+                </SView> */}
                 <SHr height={10} />
 
 

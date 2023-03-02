@@ -104,6 +104,7 @@ class Recibo extends Component {
     if (!movimientos) return <SLoad />;
     var total = 0;
     var monto_enviado_a_bancos;
+    var transferencia_por_apertura;
 
 
     var monto = { apertura: 0, ingreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, cheque: 0, egreso: 0, transpasoBanca: 0 }
@@ -122,6 +123,7 @@ class Recibo extends Component {
         return;
       }
       if (obj.descripcion == "Transferencia por apertura") {
+        transferencia_por_apertura = obj;
         return;
       }
       if (obj.estado == "0" || obj.estado == "3") {
@@ -157,6 +159,7 @@ class Recibo extends Component {
       if (obj.monto < 0) {
         monto.egreso += obj.monto; return;
       }
+
       if (obj.monto > 0) {
         monto.ingreso += obj.monto; return;
       }
@@ -179,6 +182,8 @@ class Recibo extends Component {
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.apertura)}</SText>
         </SView>
       </SView> : null}
+
+
 
       {monto.efectivo ? <SView col={"xs-12"} row>
         <SView flex>
@@ -216,14 +221,7 @@ class Recibo extends Component {
         </SView>
       </SView> : null}
 
-      {monto.egreso ? <SView col={"xs-12"} row>
-        <SView flex>
-          <SText color={STheme.color.danger}  >Egreso</SText>
-        </SView>
-        <SView row>
-          <SText color={STheme.color.danger} bold>{SMath.formatMoney(monto.egreso)}</SText>
-        </SView>
-      </SView> : null}
+
 
       {monto.transpasoBanca ? <SView col={"xs-12"} row>
         <SView flex>
@@ -234,6 +232,23 @@ class Recibo extends Component {
         </SView>
       </SView> : null}
 
+      {monto.ingreso ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.lightBlack}  >Ingresos</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.ingreso)}</SText>
+        </SView>
+      </SView> : null}
+
+      {monto.egreso ? <SView col={"xs-12"} row>
+        <SView flex>
+          <SText color={STheme.color.danger}  >Egresos</SText>
+        </SView>
+        <SView row>
+          <SText color={STheme.color.danger} bold>{SMath.formatMoney(monto.egreso)}</SText>
+        </SView>
+      </SView> : null}
       <SHr height={3} color={STheme.color.lightGray} />
 
       {total ? <SView col={"xs-12"} row>
@@ -245,8 +260,9 @@ class Recibo extends Component {
         </SView>
       </SView> : null}
 
+      <SHr height={10} />
+
       {monto_enviado_a_bancos ? <SView col={"xs-12"} row>
-        {/* nuevo */}
         <SView flex>
           <SText color={"#990000"}  >Monto enviado a bancos</SText>
         </SView>
@@ -257,25 +273,20 @@ class Recibo extends Component {
         </SView>
       </SView> : null}
 
-      {monto_enviado_a_bancos ? <SView col={"xs-12"} row>
-        {/* nuevo */}
+      {transferencia_por_apertura ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={"#990000"}  >Monto enviado a bancos</SText>
+          <SText color={"#990000"}  >transferencia_por_apertura</SText>
         </SView>
         <SView row>
           <SText color={"#990000"} bold style={{
             textDecorationLine: "underline"
-          }}>{SMath.formatMoney(monto_enviado_a_bancos.monto)}</SText>
+          }}>{SMath.formatMoney(transferencia_por_apertura.monto)}</SText>
         </SView>
+        <SHr height={100} />
+
       </SView> : null}
 
-      {monto_enviado_a_bancos ? <SView col={"xs-12"} row>
-        <SView flex>
-        </SView>
-        <SView row>
-          <SText color={STheme.color.lightBlack} bold fontSize={16}>{SMath.formatMoney(total + monto_enviado_a_bancos.monto)}</SText>
-        </SView>
-      </SView> : null}
+
 
     </SView>
   }
@@ -364,7 +375,7 @@ class Recibo extends Component {
         {/* <SHr height={1} color={STheme.color.lightGray} /> */}
       </SView>
 
-      <SHr height={90} />
+      <SHr height={120} />
 
 
       {/* <SText color={"#666"}>{JSON.stringify(recibo, "\n", "\t")}</SText> */}

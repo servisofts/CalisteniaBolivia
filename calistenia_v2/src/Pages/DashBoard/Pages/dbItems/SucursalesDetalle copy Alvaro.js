@@ -50,7 +50,6 @@ class SucursalesDetalle extends Component {
 
 
     return Object.keys(sucursales).map((key, index) => {
-
       if (!sucursal_usuario.Actions.isActive(key, this.props)) {
         return null;
       }
@@ -59,8 +58,6 @@ class SucursalesDetalle extends Component {
       var monto = 0;
       var becados = 0;
       var now = new SDate();
-
-      // aqui se veia la cantidad de clientes, becados
       Object.keys(clientesActivos).map((key_cli) => {
         var cliente = clientesActivos[key_cli];
         if (cliente["caja"].key_sucursal == key) {
@@ -75,8 +72,24 @@ class SucursalesDetalle extends Component {
           }
         }
       })
+      var cantidad_caja = 0;
+      Object.keys(cajas).map((key_caja) => {
+        var caja = cajas[key_caja];
+        if (caja.key_sucursal == key) {
+          cantidad_caja++;
+        }
+      })
 
-      // obtengo la cantidad de inscripto e ingresos
+      var cantidad_entrenamiento = 0;
+      Object.keys(entrenamientos).map((key_entre) => {
+        var entrenamiento = entrenamientos[key_entre];
+        if (entrenamiento.key_sucursal == key) {
+          if (entrenamiento.estado == 1) {
+            cantidad_entrenamiento++;
+          }
+        }
+      })
+
       var ingresos_total = 0;
       var cantidad_inscripcto = 0;
       Object.keys(paquetes).map((key_entre) => {
@@ -85,14 +98,10 @@ class SucursalesDetalle extends Component {
           ingresos_total += paquete.total;
           cantidad_inscripcto++;
         }
-        return paquete;
       })
-      // .sort((a, b) => b.total - a.total); // sort by total in descending order
-
-      // aqui problema con fecha
-      // problema de ordenar de mayor a menor
 
       totales += cantidad_inscripcto;
+
 
       return <SView col={"xs-11 md-6 xl-3"} key={index} height={180} style={{
         padding: 4,
@@ -100,8 +109,11 @@ class SucursalesDetalle extends Component {
         <SView center col={"xs-12"} height card style={{
           padding: 4,
           borderWidth: 1,
+          // borderColor: STheme.color.card,
+          // borderColor: this.setColor(ingresos_total),
           borderRadius: 4,
-          borderColor: this.setColor(ingresos_total),
+          // border
+          // backgroundColor: this.setColor(ingresos_total),
         }}>
           <SView center col={"xs-12"} height={65} center>
             <SView width={45} height={45}>
@@ -147,6 +159,7 @@ class SucursalesDetalle extends Component {
                     borderRadius: 8
                   }}>
                     <SText center fontSize={18} bold>{becados}</SText>
+
                   </SView>
                 </SView>
                 <SText center fontSize={10}>{'Becados'}</SText>
@@ -157,6 +170,7 @@ class SucursalesDetalle extends Component {
                   // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
                 }}>
                   <SIcon name="Entrenamiento" />
+
                   <SView center style={{
                     position: "absolute",
                     width: 30,
@@ -164,6 +178,7 @@ class SucursalesDetalle extends Component {
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
+
                     {/* aqui viene la cantidad de paquetes vendidos */}
                     <SText center fontSize={18} bold>{cantidad_inscripcto}</SText>
                   </SView>
@@ -182,17 +197,21 @@ class SucursalesDetalle extends Component {
                     position: "absolute",
                     width: 70,
                     height: 30,
+                    // backgroundColor: "green",
                     backgroundColor: STheme.color.background + "99",
                     borderRadius: 8
                   }}>
                     {/* aqui viene la cantidad de incribciones */}
                     <SText center fontSize={12} bold>Bs</SText>
                     <SText center fontSize={12} bold>{SMath.formatMoney(ingresos_total)}</SText>
+
                   </SView>
                 </SView>
                 <SText center fontSize={10}>{'Ingresos'}</SText>
                 <SText center fontSize={10}>{" "}</SText>
               </SView>
+
+
             </SView>
           </SView>
         </SView>
