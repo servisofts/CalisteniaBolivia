@@ -15,7 +15,7 @@ const theme: SThemeThemes = {
         lightGray:"#D9D9D9",
         lightBlack: "#5A5A5A",
         mapStyle: MapStyle,
-        font: "OpenSans-SemiBold",
+        // font: "OpenSans-SemiBold",
         darkGray:"#DADADA"
 
     },
@@ -31,7 +31,7 @@ const theme: SThemeThemes = {
         card: "#eeeeee66",
         accent: "#99CC00",
         mapStyle: MapStyle,
-        font: "OpenSans-SemiBold",
+        // font: "OpenSans-SemiBold",
         lightGray:"#5A5A5A",
         lightBlack: "#D9D9D9",
         darkGray:"#2D2D2D"
