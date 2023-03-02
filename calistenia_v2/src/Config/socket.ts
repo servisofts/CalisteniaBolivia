@@ -22,6 +22,7 @@ export default {
     compra_venta: 'https://compraventa.servisofts.com/http/',
     rp: "https://rolespermisos.servisofts.com/http/",
     contabilidad: "https://contabilidad.servisofts.com/http/",
+    // contabilidad: "http://192.168.2.1:30011/",
   }
 }
 

@@ -10,6 +10,9 @@ import asiento_contable from "./asiento_contable";
 import asiento_contable_detalle from "./asiento_contable_detalle";
 import cuentas from "./cuentas";
 import asiento from "./asiento";
+import balance_general from "./balance_general";
+import estado_resultado from "./estado_resultado";
+import sumas_saldos from "./sumas_saldos";
 export const Parent = {
     title: "Contabilidad",
     name: "contabilidad",
@@ -20,6 +23,9 @@ export default SPage.combinePages(Parent.name,
         "": root,
         "asiento": asiento,
         "cuentas": cuentas,
+        "balance_general": balance_general,
+        "estado_resultado": estado_resultado,
+        "sumas_saldos": sumas_saldos,
         ...gestion,
         ...cuenta_contable,
         ...centro_costo,

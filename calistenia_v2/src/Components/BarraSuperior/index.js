@@ -16,7 +16,7 @@ class BarraSuperior extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anim: new Animated.Value(0),
+      anim: new Animated.Value(100),
     };
 
   }
@@ -29,7 +29,7 @@ class BarraSuperior extends Component {
     }).start();
   }
   componentDidMount() {
-    this.startAnimation();
+    // this.startAnimation();
   }
 
   getUser() {
@@ -179,7 +179,7 @@ class BarraSuperior extends Component {
 
 
         </View>
-        <RelojEntrenamiento navigation={this.props.navigation} />
+        {/* <RelojEntrenamiento navigation={this.props.navigation} /> */}
         <RelojCaja navigation={this.props.navigation} />
       </Animated.View>
     );

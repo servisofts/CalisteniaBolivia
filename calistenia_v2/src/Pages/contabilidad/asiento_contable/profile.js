@@ -1,7 +1,7 @@
-import { SNavigation, SText } from 'servisofts-component';
+import { SNavigation, SText, SView } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
 import { Parent } from '.';
-import { AsientoContable } from 'servisofts-rn-contabilidad';
+import { AsientoContableStatic } from 'servisofts-rn-contabilidad';
 import Model from '../../../Model';
 
 class index extends DPA.profile {
@@ -9,15 +9,23 @@ class index extends DPA.profile {
         super(props, {
             Parent: Parent,
             params: ["key_gestion"],
+            type: "page",
             excludes: ["key", "key_usuario", "key_servicio", "key_sucursal"],
         });
     }
     $allowEdit() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "edit" })
     }
-    $allowDelete() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "delete" })
+
+    onEdit() {
+        SNavigation.navigate("/contabilidad/asiento", {
+            pk: this.pk,
+            key_gestion: this.$params.key_gestion
+        })
     }
+    // $allowDelete() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "delete" })
+    // }
     $allowAccess() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "ver" })
     }
@@ -31,10 +39,9 @@ class index extends DPA.profile {
 
 
     $render() {
-        this.data = this.$getData();
-       
-        if(!this.data) return null;
-        return <AsientoContable key_asiento_contable={this.pk} key_gestion={this.$params.key_gestion} />
+        // this.data = this.$getData();
+        // if (!this.data) return null;
+        return <AsientoContableStatic key_asiento_contable={this.pk} key_gestion={this.$params.key_gestion} />
     }
 }
 export default connect(index);

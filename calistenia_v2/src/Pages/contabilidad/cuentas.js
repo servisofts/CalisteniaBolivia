@@ -18,6 +18,7 @@ class index extends Component {
             }} center>
                 <PlanDeCuentasTable initialCode={this.codigo} onSelect={this.onSelect}
                     space={4}
+                    allowCreate allowEdit allowDelete allowExport allowImport
                     width={500}
                     itemProps={{
                         padding: 12, space: 4,

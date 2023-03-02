@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SLoad, SMath, SNavigation, SPage, STable2 } from 'servisofts-component';
+import { SDate, SIcon, SLoad, SMath, SNavigation, SPage, STable2, SText } from 'servisofts-component';
 import Actions from '../Actions';
 
 
@@ -23,7 +23,7 @@ class EstadoFinanciero extends Component {
         // tarea1 ✅ ✅ ✅
         { key: "fecha_venta", label: "Fecha", width: 120, order: "asc", type: "", center: true, },
         // { key: "monto_paquetes", label: "monto_paquetes", width: 140, render: (item) => { return item ? item : "0" }, icon: (<SIcon name={"Paquete"} width={12} height={12} />), },
-        { key: "efectivo", label: "Efectivo", width: 120, center: true, sumar: true, render: (item) => { return item ? SMath.formatMoney(item) : "0" }, icon: (<SIcon name={"Money"} width={12} height={12} />), },
+        { key: "efectivo", label: "Efectivo", width: 120, center: true, sumar: true, renderTotal: (t) => SMath.formatMoney(t, 0), render: (item) => { return item ? SMath.formatMoney(item) : "0" }, icon: (<SIcon name={"Money"} width={12} height={12} />), },
         { key: "transferencia", label: "Transferencia", width: 140, center: true, sumar: true, render: (item) => { return item ? SMath.formatMoney(item) : "0" }, icon: (<SIcon name={"Tranfer"} width={12} height={12} />), },
         { key: "cheque", label: "Cheque", width: 60, center: true, sumar: true, render: (item) => { return item ? SMath.formatMoney(item) : "0" }, icon: (<SIcon name={"Cheque"} width={12} height={12} />), },
         { key: "tarjeta", label: "Tarjeta", width: 140, center: true, sumar: true, render: (item) => { return item ? SMath.formatMoney(item) : "0" }, icon: (<SIcon name={"Card"} width={12} height={12} />), },
