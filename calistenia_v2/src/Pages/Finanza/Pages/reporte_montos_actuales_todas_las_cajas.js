@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { SDate, SIcon, SLoad, SNavigation, SPage, SPopup, STable2, SText, SView } from 'servisofts-component';
-import SSocket from 'servisofts-socket'
+import { SLoad, SPage, STable2 } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
 
 export default class index extends Component {
   constructor(props) {

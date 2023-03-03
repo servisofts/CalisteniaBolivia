@@ -79,6 +79,10 @@ class SucursalesDetalle extends Component {
       // obtengo la cantidad de inscripto e ingresos
       var ingresos_total = 0;
       var cantidad_inscripcto = 0;
+      // let ordenar = paquetes
+      // let ordenar = Object.values(paquetes);
+      // ostiasput
+
       Object.keys(paquetes).map((key_entre) => {
         var paquete = paquetes[key_entre];
         if (paquete.key_sucursal == key) {
@@ -87,6 +91,7 @@ class SucursalesDetalle extends Component {
         }
         return paquete;
       })
+      // .sort((a, b) => b.ingresos_total - a.ingresos_total);
       // .sort((a, b) => b.total - a.total); // sort by total in descending order
 
       // aqui problema con fecha
