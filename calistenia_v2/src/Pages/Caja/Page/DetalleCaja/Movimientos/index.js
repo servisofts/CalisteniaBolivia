@@ -323,41 +323,26 @@ class Movimientos extends Component {
 
             var total = 0;
 
-            var monto = { apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0, monto_enviado_a_bancos: 0, transferencia_por_apertura: 0, }
+            var monto = { apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0 }
 
 
-            // const ordenar = this.moviminetos;
+            let ordenar = Object.values(this.moviminetos);
 
-            // ordenar.sort(function (a, b) {
-            //   return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
-            // });
+            ordenar.sort(function (a, b) {
+              return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
+            });
 
-            console.log("miradas ", this.moviminetos)
-            Object.values(this.moviminetos).map((obj, i) => {
-
-              // console.log("ricky ", obj)
-
-              if (obj.descripcion == "Transferencia por cierre") {
-                monto.monto_enviado_a_bancos += obj.monto;
-              } else {
-                monto.monto_enviado_a_bancos = "";
-              }
-
-              if (obj.descripcion == "Transferencia por apertura") {
-                monto.transferencia_por_apertura += obj.monto;
-              } else {
-                monto.transferencia_por_apertura = "";
-              }
-
+            // console.log("miradas ", this.moviminetos)
+            ordenar.map((obj, i) => {
               if (obj.estado == 0 || obj.estado == 3) return null;
 
               total += obj.monto;
 
               if (obj?.descripcion == "apertura") {
                 monto.apertura = obj.monto;
-              } else {
-                monto.apertura = "0";
-
+              }
+              else {
+                monto.apertura = "";
               }
               // if (obj.descripcion == "Traspaso a bancos") {
               //   monto.transpasoBanca += obj.monto;
@@ -369,28 +354,28 @@ class Movimientos extends Component {
                 monto.efectivo = "";
               }
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "2") {
-                monto.tarjeta += obj.monto;
+                monto.tarjeta = obj.monto;
               } else {
                 monto.tarjeta = "";
               }
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "3") {
-                monto.transferencia += obj.monto;
+                monto.transferencia = obj.monto;
               } else {
                 monto.transferencia = "";
               }
 
 
-              // if (obj.monto < 0) {
-              //   monto.egreso = obj.monto;
-              // } else {
-              //   monto.egreso = "";
-              // }
+              if (obj?.key_caja_tipo_movimiento == "4" && obj.monto < 0) {
+                monto.egreso = obj.monto;
+              } else {
+                monto.egreso = "";
+              }
 
-              // if (obj.monto > 0) {
-              //   monto.ingreso = obj.monto;
-              // } else {
-              //   monto.ingreso = "";
-              // }
+              if (obj?.key_caja_tipo_movimiento == "4" && obj?.monto > 0) {
+                monto.ingreso = obj.monto;
+              } else {
+                monto.ingreso = "";
+              }
 
 
 
