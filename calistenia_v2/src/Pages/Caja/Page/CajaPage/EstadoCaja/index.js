@@ -97,15 +97,24 @@ class EstadoCaja extends Component {
     if (!this.activa) {
       return <View />
     }
-    if (this.getMonto() < 0) {
+
+    console.log("puchi ", SMath.parseFloat(this.getMonto()))
+
+    //aqui oculto boton por el numero total esta negativo
+    if (SMath.parseFloat(this.getMonto()) < 0) {
       return <View />
     }
+
     return <SButtom props={{ type: "danger", variant: "default", }}
       style={{
         width: 100,
         height: 30,
       }}
       onPress={() => {
+        // if (SMath.parseFloat(this.getMonto()) < 0) {
+        //   alert("No puede cerrar, Monto negativo")
+        //   return;
+        // }
         SPopup.open({
           key: "ConfirmarCierreCaja",
           content: < PopupConfirmarCierre data={this.activa} onSelect={(select) => {
@@ -212,6 +221,11 @@ class EstadoCaja extends Component {
       <SText style={{ color: STheme.color.lightGray, fontSize: 10, }}>{"El monto en caja, representa el monto salvado en el último cierre de caja de esta sucursal."}</SText>
     </SView>
   }
+
+  setColor(numero) {
+    if (SMath.parseFloat(this.getMonto()) < 0) return "red";
+  }
+
   render() {
     this.activa = this.props.state.cajaReducer.usuario[this.props.state.usuarioReducer.usuarioLog.key];
     if (!this.props.sucursal) {
@@ -226,12 +240,17 @@ class EstadoCaja extends Component {
       this.props.state.sucursalReducer.monto = {};
     }
 
+
+
     return (
       <SView col="xs-11 md-6 xl-4" style={{
         backgroundColor: STheme.color.card,
         borderRadius: 8,
         marginTop: 8,
         minHeight: 50,
+        borderWidth: 3,
+        borderColor: this.setColor()
+
       }} center>
         {this.apertura()}
         {this.cierre()}

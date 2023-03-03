@@ -86,7 +86,8 @@ class Movimientos extends Component {
     if (!usuarios) return;
     var usr = usuarios[data.data.key_usuario];
     if (!usr) return;
-    return usr.Nombres;
+    let aux = usr.Nombres + " " + usr.Apellidos
+    return aux;
   }
   getIconTipoPago(type, data) {
     // alert(JSON.stringify(data))
@@ -319,20 +320,24 @@ class Movimientos extends Component {
         <ExportExcel
           header={[
             // { key: "fecha", label: "fecha", width: 100 },
-            { key: "nombre", label: "Nombre", width: 100 },
+            { key: "nombre", label: "Nombre", width: 160 },
             { key: "efectivo", label: "Efectivo", width: 60 },
             { key: "transferencia", label: "Transferencia", width: 90 },
             { key: "tarjeta", label: "Tarjeta", width: 60 },
             { key: "apertura", label: "Apertura", width: 60 },
             { key: "ingreso", label: "Ingreso", width: 60 },
-            { key: "egreso", label: "Egreso", width: 60 }
+            { key: "egreso", label: "Egreso", width: 60 },
+            { key: "transferenciaPorCierre", label: "transferencia PorCierre", width: 200 },
+            { key: "transferenciaPorApertura", label: "transferencia PorApertura", width: 200 }
           ]}
           getDataProcesada={() => {
             var dataExport = {};
 
             var total = 0;
 
-            var monto = { apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0 }
+            var monto = {
+              apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0, transferenciaPorApertura: 0, transferenciaPorCierre: 0
+            }
 
 
             let ordenar = Object.values(this.moviminetos);
@@ -343,7 +348,7 @@ class Movimientos extends Component {
 
             // console.log("miradas ", this.moviminetos)
             ordenar.map((obj, i) => {
-              if (obj.estado == 0 || obj.estado == 3 || obj.descripcion == "Traspaso a bancos" || obj.descripcion == "Transferencia por cierre" || obj.descripcion == "Transferencia por apertura") return null;
+              if (obj.estado == 0 || obj.estado == 3 || obj.descripcion == "Traspaso a bancos") return null;
 
               total += obj.monto;
 
@@ -370,6 +375,18 @@ class Movimientos extends Component {
                 monto.transferencia = "";
               }
 
+              if (obj?.descripcion == "Transferencia por cierre") {
+                monto.transferenciaPorCierre = obj.monto;
+              } else {
+                monto.transferenciaPorCierre = "";
+              }
+
+              if (obj?.descripcion == "Transferencia por apertura") {
+                monto.transferenciaPorApertura = obj.monto;
+              } else {
+                monto.transferenciaPorApertura = "";
+              }
+
 
               if (obj?.key_caja_tipo_movimiento == "4" && obj.monto < 0) {
                 monto.egreso = obj.monto;
@@ -382,6 +399,15 @@ class Movimientos extends Component {
               } else {
                 monto.ingreso = "";
               }
+
+              if (obj?.descripcion == "apertura") {
+                monto.apertura = obj.monto;
+              }
+              else {
+                monto.apertura = "";
+              }
+
+
               // if (obj.descripcion == "Traspaso a bancos") {
 
               // }
@@ -398,6 +424,8 @@ class Movimientos extends Component {
                 apertura: monto?.apertura,
                 ingreso: monto?.ingreso,
                 egreso: monto?.egreso,
+                transferenciaPorCierre: monto?.transferenciaPorCierre,
+                transferenciaPorApertura: monto?.transferenciaPorApertura,
               }
 
               dataExport[i] = toInsert

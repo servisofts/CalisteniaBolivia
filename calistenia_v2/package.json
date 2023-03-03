@@ -44,7 +44,7 @@
     "redux-thunk": "^2.3.0",
     "servisofts-component": "file:../../servisofts-component/dist",
     "servisofts-model": "1.0.3",
-    "servisofts-page": "1.0.5",
+    "servisofts-page": "1.0.7",
     "servisofts-rn-contabilidad": "file:../../contabilidad/library/dist",
     "servisofts-rn-roles_permisos": "1.0.4",
     "servisofts-rn-usuario": "1.0.4",
