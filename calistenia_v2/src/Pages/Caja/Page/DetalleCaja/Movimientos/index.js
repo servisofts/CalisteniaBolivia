@@ -79,6 +79,15 @@ class Movimientos extends Component {
       })
     }}>{usr.Nombres} {usr.Apellidos} </SText>
   }
+  getUsuarioNombre(data) {
+    if (!data.data) return;
+    if (!data.data.key_usuario) return;
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return;
+    var usr = usuarios[data.data.key_usuario];
+    if (!usr) return;
+    return usr.Nombres;
+  }
   getIconTipoPago(type, data) {
     // alert(JSON.stringify(data))
     // return <SText>{JSON.stringify(data.data)}</SText>
@@ -309,7 +318,7 @@ class Movimientos extends Component {
 
         <ExportExcel
           header={[
-            { key: "fecha", label: "fecha", width: 100 },
+            // { key: "fecha", label: "fecha", width: 100 },
             { key: "nombre", label: "Nombre", width: 100 },
             { key: "efectivo", label: "Efectivo", width: 60 },
             { key: "transferencia", label: "Transferencia", width: 90 },
@@ -334,7 +343,7 @@ class Movimientos extends Component {
 
             // console.log("miradas ", this.moviminetos)
             ordenar.map((obj, i) => {
-              if (obj.estado == 0 || obj.estado == 3) return null;
+              if (obj.estado == 0 || obj.estado == 3 || obj.descripcion == "Traspaso a bancos" || obj.descripcion == "Transferencia por cierre" || obj.descripcion == "Transferencia por apertura") return null;
 
               total += obj.monto;
 
@@ -344,10 +353,7 @@ class Movimientos extends Component {
               else {
                 monto.apertura = "";
               }
-              // if (obj.descripcion == "Traspaso a bancos") {
-              //   monto.transpasoBanca += obj.monto;
-              //   return;
-              // }
+
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "1") {
                 monto.efectivo = obj.monto;
               } else {
@@ -376,12 +382,16 @@ class Movimientos extends Component {
               } else {
                 monto.ingreso = "";
               }
+              // if (obj.descripcion == "Traspaso a bancos") {
+
+              // }
 
 
+              let nombreSangro = this.getUsuarioNombre(obj);
 
               var toInsert = {
                 fecha: obj?.fecha_on,
-                nombre: obj?.data.key_paquete_venta_usuario ?? obj?.descripcion,
+                nombre: nombreSangro ?? obj.descripcion,
                 efectivo: monto?.efectivo,
                 transferencia: monto?.transferencia,
                 tarjeta: monto?.tarjeta,
