@@ -1,10 +1,9 @@
 import { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SNavigation, SPage, SPopup, SScrollView2, SView } from 'servisofts-component';
-import SSocket from 'servisofts-socket';
+import { SButtom, SHr, SNavigation, SPage, SScrollView2, SView } from 'servisofts-component';
+
 import Caja from '../..';
-import Model from '../../../../Model';
 import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
 import Perfil from './Perfil';
@@ -48,7 +47,7 @@ class DetalleCaja extends Component {
               SNavigation.navigate("ReciboCaja", { key: caja.key })
             }}>{"IMPRIMIR"}</SButtom>
             <SHr />
-            <SButtom type={"danger"} onPress={() => {
+            {/* <SButtom type={"danger"} onPress={() => {
               SSocket.sendPromise({
                 component: "caja",
                 type: "reparar",
@@ -60,8 +59,8 @@ class DetalleCaja extends Component {
               }).catch(e => {
                 console.error(e);
               })
-              // SNavigation.navigate("ReciboCaja", { key: caja.key })
-            }}>{"REPARAR"}</SButtom>
+            }}>{"REPARAR"}</SButtom> */}
+            {/* // SNavigation.navigate("ReciboCaja", { key: caja.key }) */}
 
             {/* <ExportExcel
               header={[

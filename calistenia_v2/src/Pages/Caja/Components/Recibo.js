@@ -187,7 +187,7 @@ class Recibo extends Component {
 
       {monto.efectivo ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={STheme.color.lightBlack}  >Total Efectivo</SText>
+          <SText color={STheme.color.lightBlack}  >Ventas Efectivo</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.efectivo)}</SText>
@@ -196,7 +196,7 @@ class Recibo extends Component {
 
       {monto.transferencia ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={STheme.color.lightBlack}  >Total Transferencia</SText>
+          <SText color={STheme.color.lightBlack}  >Ventas Transferencia</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.transferencia)}</SText>
@@ -205,7 +205,7 @@ class Recibo extends Component {
 
       {monto.tarjeta ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={STheme.color.lightBlack}  >Total Tarjeta</SText>
+          <SText color={STheme.color.lightBlack}  >Ventas Tarjeta</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.tarjeta)}</SText>
@@ -214,7 +214,7 @@ class Recibo extends Component {
 
       {monto.cheque ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={STheme.color.lightBlack}  >Total cheque</SText>
+          <SText color={STheme.color.lightBlack}  >ventas en cheque</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(monto.cheque)}</SText>
@@ -253,7 +253,7 @@ class Recibo extends Component {
 
       {total ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={STheme.color.lightBlack}  >Saldo</SText>
+          <SText color={STheme.color.lightBlack}  >Total</SText>
         </SView>
         <SView row>
           <SText color={STheme.color.lightBlack} bold>{SMath.formatMoney(total)}</SText>
@@ -275,7 +275,7 @@ class Recibo extends Component {
 
       {transferencia_por_apertura ? <SView col={"xs-12"} row>
         <SView flex>
-          <SText color={"#990000"}  >transferencia_por_apertura</SText>
+          <SText color={"#990000"}  >Transferencia por apertura</SText>
         </SView>
         <SView row>
           <SText color={"#990000"} bold style={{
@@ -283,7 +283,6 @@ class Recibo extends Component {
           }}>{SMath.formatMoney(transferencia_por_apertura.monto)}</SText>
         </SView>
         <SHr height={100} />
-
       </SView> : null}
 
 

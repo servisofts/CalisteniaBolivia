@@ -79,6 +79,16 @@ class Movimientos extends Component {
       })
     }}>{usr.Nombres} {usr.Apellidos} </SText>
   }
+  getUsuarioNombre(data) {
+    if (!data.data) return;
+    if (!data.data.key_usuario) return;
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return;
+    var usr = usuarios[data.data.key_usuario];
+    if (!usr) return;
+    let aux = usr.Nombres + " " + usr.Apellidos
+    return aux;
+  }
   getIconTipoPago(type, data) {
     // alert(JSON.stringify(data))
     // return <SText>{JSON.stringify(data.data)}</SText>
@@ -309,100 +319,113 @@ class Movimientos extends Component {
 
         <ExportExcel
           header={[
-            { key: "fecha", label: "fecha", width: 100 },
-            { key: "nombre", label: "Nombre", width: 100 },
+            // { key: "fecha", label: "fecha", width: 100 },
+            { key: "nombre", label: "Nombre", width: 160 },
             { key: "efectivo", label: "Efectivo", width: 60 },
             { key: "transferencia", label: "Transferencia", width: 90 },
             { key: "tarjeta", label: "Tarjeta", width: 60 },
             { key: "apertura", label: "Apertura", width: 60 },
             { key: "ingreso", label: "Ingreso", width: 60 },
-            { key: "egreso", label: "Egreso", width: 60 }
+            { key: "egreso", label: "Egreso", width: 60 },
+            { key: "transferenciaPorCierre", label: "transferencia PorCierre", width: 200 },
+            { key: "transferenciaPorApertura", label: "transferencia PorApertura", width: 200 }
           ]}
           getDataProcesada={() => {
             var dataExport = {};
 
             var total = 0;
 
-            var monto = { apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0, monto_enviado_a_bancos: 0, transferencia_por_apertura: 0, }
+            var monto = {
+              apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0, transferenciaPorApertura: 0, transferenciaPorCierre: 0
+            }
 
 
-            // const ordenar = this.moviminetos;
+            let ordenar = Object.values(this.moviminetos);
 
-            // ordenar.sort(function (a, b) {
-            //   return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
-            // });
+            ordenar.sort(function (a, b) {
+              return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
+            });
 
-            console.log("miradas ", this.moviminetos)
-            Object.values(this.moviminetos).map((obj, i) => {
-
-              // console.log("ricky ", obj)
-
-              if (obj.descripcion == "Transferencia por cierre") {
-                monto.monto_enviado_a_bancos += obj.monto;
-              } else {
-                monto.monto_enviado_a_bancos = "";
-              }
-
-              if (obj.descripcion == "Transferencia por apertura") {
-                monto.transferencia_por_apertura += obj.monto;
-              } else {
-                monto.transferencia_por_apertura = "";
-              }
-
-              if (obj.estado == 0 || obj.estado == 3) return null;
+            // console.log("miradas ", this.moviminetos)
+            ordenar.map((obj, i) => {
+              if (obj.estado == 0 || obj.estado == 3 || obj.descripcion == "Traspaso a bancos") return null;
 
               total += obj.monto;
 
               if (obj?.descripcion == "apertura") {
                 monto.apertura = obj.monto;
-              } else {
-                monto.apertura = "0";
-
               }
-              // if (obj.descripcion == "Traspaso a bancos") {
-              //   monto.transpasoBanca += obj.monto;
-              //   return;
-              // }
+              else {
+                monto.apertura = "";
+              }
+
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "1") {
                 monto.efectivo = obj.monto;
               } else {
                 monto.efectivo = "";
               }
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "2") {
-                monto.tarjeta += obj.monto;
+                monto.tarjeta = obj.monto;
               } else {
                 monto.tarjeta = "";
               }
               if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "3") {
-                monto.transferencia += obj.monto;
+                monto.transferencia = obj.monto;
               } else {
                 monto.transferencia = "";
               }
 
+              if (obj?.descripcion == "Transferencia por cierre") {
+                monto.transferenciaPorCierre = obj.monto;
+              } else {
+                monto.transferenciaPorCierre = "";
+              }
 
-              // if (obj.monto < 0) {
-              //   monto.egreso = obj.monto;
-              // } else {
-              //   monto.egreso = "";
+              if (obj?.descripcion == "Transferencia por apertura") {
+                monto.transferenciaPorApertura = obj.monto;
+              } else {
+                monto.transferenciaPorApertura = "";
+              }
+
+
+              if (obj?.key_caja_tipo_movimiento == "4" && obj.monto < 0) {
+                monto.egreso = obj.monto;
+              } else {
+                monto.egreso = "";
+              }
+
+              if (obj?.key_caja_tipo_movimiento == "4" && obj?.monto > 0) {
+                monto.ingreso = obj.monto;
+              } else {
+                monto.ingreso = "";
+              }
+
+              if (obj?.descripcion == "apertura") {
+                monto.apertura = obj.monto;
+              }
+              else {
+                monto.apertura = "";
+              }
+
+
+              // if (obj.descripcion == "Traspaso a bancos") {
+
               // }
 
-              // if (obj.monto > 0) {
-              //   monto.ingreso = obj.monto;
-              // } else {
-              //   monto.ingreso = "";
-              // }
 
-
+              let nombreSangro = this.getUsuarioNombre(obj);
 
               var toInsert = {
                 fecha: obj?.fecha_on,
-                nombre: obj?.data.key_paquete_venta_usuario ?? obj?.descripcion,
+                nombre: nombreSangro ?? obj.descripcion,
                 efectivo: monto?.efectivo,
                 transferencia: monto?.transferencia,
                 tarjeta: monto?.tarjeta,
                 apertura: monto?.apertura,
                 ingreso: monto?.ingreso,
                 egreso: monto?.egreso,
+                transferenciaPorCierre: monto?.transferenciaPorCierre,
+                transferenciaPorApertura: monto?.transferenciaPorApertura,
               }
 
               dataExport[i] = toInsert
