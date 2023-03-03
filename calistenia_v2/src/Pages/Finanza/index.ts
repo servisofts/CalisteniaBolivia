@@ -10,6 +10,8 @@ import EstadoFinanciero from './Pages/EstadoFinanciero'
 import EstadoFinancieroSelect from './Pages/EstadoFinancieroSelect'
 import UsuariosTabla from './Pages/UsuariosTabla'
 import ReporteProrroga from './Pages/ReporteProrroga'
+import modelo from "./Pages/Modelo";
+import reporte_montos_actuales_todas_las_cajas from './Pages/reporte_montos_actuales_todas_las_cajas';
 const Pages: SPageListProps = {
     FinanzaPage,
     ReporteBancos,
@@ -19,7 +21,9 @@ const Pages: SPageListProps = {
     EstadoFinanciero,
     EstadoFinancieroSelect,
     UsuariosTabla,
-    ReporteProrroga
+    ReporteProrroga,
+    reporte_montos_actuales_todas_las_cajas,
+    modelo
 
 }
 

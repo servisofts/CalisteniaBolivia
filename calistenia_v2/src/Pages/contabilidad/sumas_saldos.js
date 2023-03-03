@@ -41,12 +41,10 @@ class index extends Component {
         let arr_data = Object.values(this.state.data);
         return <PlanDeCuentasTable width={600} itemProps={{ underline: true }}
             allowExport
+            close
             excelName={`SUMAS_Y_SALDOS_CALISTENIA_${this.state.fecha_inicio}_${this.state.fecha_fin}`}
             renderTotal={(obj) => {
-                var total = 0;
-                let arr2 = arr_data.filter(o => o.codigo.startsWith(obj.codigo));
-                arr2.map((oa) => total += (oa.debe ?? 0) - (oa.haber ?? 0))
-                return total;
+                return Model.cuenta_contable.Action.calcular_debe_haber(arr_data.find(o => o.codigo === obj.codigo))
             }} />
     }
     render() {

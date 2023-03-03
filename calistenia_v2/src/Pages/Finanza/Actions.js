@@ -177,4 +177,5 @@ export default class Actions {
         const type = "getReporteIngresosEgresos";
         return this._getReporte(dataProps, props, force, name, type);
     }
+
 }

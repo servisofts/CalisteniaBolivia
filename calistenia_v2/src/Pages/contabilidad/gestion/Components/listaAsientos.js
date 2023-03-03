@@ -8,7 +8,7 @@ class ListaAsientos extends DPA.list {
     constructor(props) {
         super(props, {
             Parent: Parent,
-            type:"component",
+            type: "component",
             params: ["key_gestion"],
             item: item,
             excludes: ["key", "fecha_on", "key_usuario", "estado", "key_empresa", "key_gestion"],
@@ -73,6 +73,11 @@ class ListaAsientos extends DPA.list {
     $menu() {
         var items = super.$menu();
         items.push({
+            label: "exportar", onPress: () => {
+                console.log(this.data)
+            }
+        })
+        items.push({
             children: this.optionItem({ key: "ingreso", label: "Ingreso" })
         })
         items.push({
@@ -81,6 +86,7 @@ class ListaAsientos extends DPA.list {
         items.push({
             children: this.optionItem({ key: "traspaso", label: "Traspaso" })
         })
+
 
         return items;
     }

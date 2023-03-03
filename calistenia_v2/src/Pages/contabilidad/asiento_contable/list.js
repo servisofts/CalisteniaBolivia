@@ -9,7 +9,7 @@ class index extends DPA.list {
         super(props, {
             Parent: Parent,
             params: ["key_gestion"],
-            item:item,
+            item: item,
             excludes: ["key", "fecha_on", "key_usuario", "estado", "key_empresa", "key_gestion"],
         });
         this.state = {
@@ -33,7 +33,7 @@ class index extends DPA.list {
     $order() {
         // var orden = super.$order();
         // orden["codigo"] = { key: "codigo", order: "desc" }
-        return [{ key: "codigo", order: "desc" }];
+        return [{ key: "codigo", order: "desc", type: "number" }];
     }
 
 
@@ -83,6 +83,6 @@ class index extends DPA.list {
 
         return items;
     }
-    
+
 }
 export default connect(index);

@@ -13,8 +13,10 @@ class FinanzaPage extends Component {
         };
     }
     getItemFecha({ title, icon, url, onPress, permiso }) {
-        if (!SSRolesPermisosValidate({ page: "FinanzaPage", permiso: permiso })) {
-            return null;
+        if (permiso) {
+            if (!SSRolesPermisosValidate({ page: "FinanzaPage", permiso: permiso })) {
+                return null;
+            }
         }
         return this.getItem({
             title: title, icon: icon, onPress: () => {
@@ -26,8 +28,10 @@ class FinanzaPage extends Component {
         })
     }
     getItemFechaSucursal({ title, icon, url, onPress, permiso }) {
-        if (!SSRolesPermisosValidate({ page: "FinanzaPage", permiso: permiso })) {
-            return null;
+        if (permiso) {
+            if (!SSRolesPermisosValidate({ page: "FinanzaPage", permiso: permiso })) {
+                return null;
+            }
         }
         return this.getItem({
             title: title, icon: icon, onPress: () => {
@@ -85,7 +89,8 @@ class FinanzaPage extends Component {
             {this.getItemFecha({ title: "Reporte de bancos", icon: "Card", url: "ReporteBancos", permiso: "ReporteBancos" })}
             {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect", permiso: "EstadoFinancieroSelect" })}
             {this.getItemFecha({ title: "Prorroga", icon: "Ajustes", url: "ReporteProrroga", permiso: "ReporteProrroga" })}
-            
+            {this.getItem({ title: "Montos actuales en cajas", icon: "Ajustes", url: "reporte_montos_actuales_todas_las_cajas" })}
+
             {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>
     }

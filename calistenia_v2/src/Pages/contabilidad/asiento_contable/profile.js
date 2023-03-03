@@ -1,9 +1,10 @@
 import { SNavigation, SText, SView } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
+import { Linking } from 'react-native'
 import { Parent } from '.';
 import { AsientoContableStatic } from 'servisofts-rn-contabilidad';
 import Model from '../../../Model';
-
+import SSocket from 'servisofts-socket'
 class index extends DPA.profile {
     constructor(props) {
         super(props, {
@@ -11,6 +12,9 @@ class index extends DPA.profile {
             params: ["key_gestion"],
             type: "page",
             excludes: ["key", "key_usuario", "key_servicio", "key_sucursal"],
+            onRefresh: (resolve) => {
+                Model.asiento_contable.Action.CLEAR();
+            }
         });
     }
     $allowEdit() {
@@ -35,6 +39,22 @@ class index extends DPA.profile {
         var data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion })
         if (!data) return null;
         return data[this.pk]
+    }
+
+    $menu() {
+        let menu = super.$menu()
+        console.log(menu)
+        menu.push({ label: "PDF", onPress: this.export_pdf.bind(this) })
+        return menu
+    }
+    export_pdf() {
+        Model.asiento_contable.Action.pdf({ key: this.pk }).then((resp) => {
+            this.setState({ loading: false })
+            Linking.openURL(SSocket.api.contabilidad + "pdf/" + resp.data);
+        }).catch(e => {
+            this.setState({ loading: false })
+            console.error(e)
+        });
     }
 
 
