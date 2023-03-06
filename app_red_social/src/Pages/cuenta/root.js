@@ -45,6 +45,20 @@ class index extends Component {
         return <TopBar type={"home"} />
     }
 
+    renderFooter() {
+        if (!this.state.layout) return null;
+        var h = this.state.layout.width / 2.46
+        return <SView col={"xs-12"} height={h} style={{
+            
+            position: "absolute",
+            bottom: 0,
+            right:0,
+            zIndex:9
+        }}>
+            <SIcon name={"Footer"} />
+        </SView>
+    }
+
     render() {
 
         return (
@@ -53,30 +67,41 @@ class index extends Component {
                 // footer={this.footer()}
                 // footer={this.footer2()}
                 onRefresh={this.clearData}
+
             >
-                <Container >
-                    <SHr height={15} />
-                    <SView center >
-                        <SIcon name={"logowhite"} fill={STheme.color.text} />
-                    </SView>
-                    <SHr height={35} />
-                    <SView center col={"xs-10"} >
-                        <SText center font="Oswald-Bold" fontSize={22}
-                            style={{
-                                textTransform: "uppercase"
-                            }}>¿Has asistido a nuestras sucursales antes? Si es así, puedes recuperar tu cuenta aquí</SText>
-                    </SView>
-                    <SHr height={35} />
-                    <BtnSend2 >Recuperar cuenta</BtnSend2>
-                    <SHr height={35} />
-                    <SView center  col={"xs-10"}>
-                        <SText fontSize={12} center>
-                        Si eres nuevo en nuestras sucursales, por favor crea una nueva cuenta AQUÍ
-                        </SText>
-                    </SView>
-                    <SHr height={35} />
-                </Container>
+                <SView col={"xs-12"} flex backgroundColor={STheme.color.primary} center onLayout={(evt) => {
+                    this.setState({ layout: evt.nativeEvent.layout })
+                }}>
+                    <Container 
+                    style={{
+                        position: 'relative',
+                        zIndex:999
+                    }}>
+                        <SHr height={15} />
+                        <SView center >
+                            <SIcon name={"logowhite"} fill={STheme.color.text} />
+                        </SView>
+                        <SHr height={35} />
+                        <SView center col={"xs-10"} >
+                            <SText center font="Oswald-Bold" fontSize={22}
+                                style={{
+                                    textTransform: "uppercase"
+                                }}>¿Has asistido a nuestras sucursales antes? Si es así, puedes recuperar tu cuenta aquí</SText>
+                        </SView>
+                        <SHr height={35} />
+                        <BtnSend2 >Recuperar cuenta</BtnSend2>
+                        <SHr height={35} />
+                        <SView center col={"xs-10"}>
+                            <SText fontSize={12} center>
+                                Si eres nuevo en nuestras sucursales, por favor crea una nueva cuenta AQUÍ
+                            </SText>
+                        </SView>
+                        <SHr height={105} />
+                    </Container>
+                    {this.renderFooter()}
+                </SView>
                 {/* {this.footer2()} */}
+
 
             </SPage>
 
@@ -88,7 +113,7 @@ class index extends Component {
             <SView center style={{
                 position: 'absolute',
                 overflow: 'hidden',
-                zIndex:-999999,
+                zIndex: -999999,
                 display: 'inline-block',
                 bottom: -0,
                 right: 0,
