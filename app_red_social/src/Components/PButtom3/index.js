@@ -53,7 +53,7 @@ export default class PButtom3 extends Component<PButtom_props> {
                     this.props.onPress();
                 }
             }} >
-            {this.props.loading ? <SLoad /> : <SText fontSize={16} {...this.props} color={this.props.outline ? bgColor : colorText} >
+            {this.props.loading ? <SLoad /> : <SText fontSize={18} {...this.props} color={this.props.outline ? bgColor : colorText} >
                 {/* {this.props.children} */}
                 
                 </SText>}
