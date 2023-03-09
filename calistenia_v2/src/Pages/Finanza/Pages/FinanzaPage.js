@@ -90,6 +90,8 @@ class FinanzaPage extends Component {
             {this.getItemFechaSucursal({ title: "Estado financiero", icon: "Money", url: "EstadoFinancieroSelect", permiso: "EstadoFinancieroSelect" })}
             {this.getItemFecha({ title: "Prorroga", icon: "Ajustes", url: "ReporteProrroga", permiso: "ReporteProrroga" })}
             {this.getItem({ title: "Montos actuales en cajas", icon: "Ajustes", url: "reporte_montos_actuales_todas_las_cajas" })}
+            {this.getItemFecha({ title: "reporte_movimientos_banco", icon: "Ajustes", url: "reporte_movimientos_banco" })}
+            {this.getItemFecha({ title: "reporte_movimientos_caja", icon: "Ajustes", url: "reporte_movimientos_caja" })}
 
             {/* {this.getItemFecha({ title: "Ingresos", icon: "Ingreso", url: "Ingreso" })} */}
         </>

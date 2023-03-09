@@ -13,19 +13,25 @@ class index extends DPA.list {
     $allowNew() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "new" });
     }
-    $allowTable() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "table" });
+    onNew(){
+        // Model.
     }
+    // $allowTable() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "table" });
+    // }
     $allowAccess() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "ver" })
     }
     $filter(data) {
         return data.estado != 0
     }
+    $order() {
+        return [{ key: "fecha", order: "desc" }]
+    }
     $getData() {
         var data = Parent.model.Action.getAll();
-        console.log(data);
         return data;
     }
+    
 }
 export default connect(index);

@@ -12,6 +12,8 @@ import UsuariosTabla from './Pages/UsuariosTabla'
 import ReporteProrroga from './Pages/ReporteProrroga'
 import modelo from "./Pages/Modelo";
 import reporte_montos_actuales_todas_las_cajas from './Pages/reporte_montos_actuales_todas_las_cajas';
+import reporte_movimientos_banco from './Pages/reporte_movimientos_banco';
+import reporte_movimientos_caja from './Pages/reporte_movimientos_caja';
 const Pages: SPageListProps = {
     FinanzaPage,
     ReporteBancos,
@@ -23,6 +25,8 @@ const Pages: SPageListProps = {
     UsuariosTabla,
     ReporteProrroga,
     reporte_montos_actuales_todas_las_cajas,
+    reporte_movimientos_banco,
+    reporte_movimientos_caja,
     modelo
 
 }

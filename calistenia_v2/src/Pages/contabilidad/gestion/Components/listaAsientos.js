@@ -22,12 +22,12 @@ class ListaAsientos extends DPA.list {
             ...this.state,
         }
     }
-    $allowNew() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "new" });
-    }
-    $allowTable() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "table" });
-    }
+    // $allowNew() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "new" });
+    // }
+    // $allowTable() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "table" });
+    // }
     $allowAccess() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "ver" })
     }

@@ -61,7 +61,11 @@ export default class MonthBetween extends Component<TypeProps> {
                         }}
                         defaultValue={this.state.fecha_inicio}
                         onChangeText={(val) => {
-                            this.onChange(val + "-01", val + "-31");
+                            var date = new SDate(val + "-01", "yyyy-MM-dd");
+                            let fecha_ini = date.toString("yyyy-MM-dd");
+                            date.addMonth(1)
+                            date.addDay(-1);
+                            this.onChange(fecha_ini, date.toString("yyyy-MM-dd"));
                             // this.onChange("fecha_fin", val+"-31");
                             // this.state.fecha_inicio = val
                             // this.setState({ ...this.state })

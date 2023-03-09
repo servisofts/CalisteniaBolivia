@@ -24,6 +24,7 @@ class Grafico extends Component {
     }
 
     getTiempo() {
+        console.log(this.state)
         var fechaInicio = new SDate(this.state.fechaInicio, "yyyy-MM-dd");
         var fechaFin = new SDate(this.state.fechaFin, "yyyy-MM-dd");
         // console.log(fechaInicio.toString("yyyy-MM-dd"));
