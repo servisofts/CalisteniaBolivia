@@ -295,11 +295,11 @@ const Item = ({ sucursal }) => {
                 borderRadius: 8
               }}>
                 {/* aqui viene la cantidad de incribciones */}
-                <SText center fontSize={12} bold>Bs</SText>
+                {/* <SText center fontSize={12} bold>Bs</SText> */}
                 <SText center fontSize={12} bold>{SMath.formatMoney(sucursal.total_vendido)}</SText>
               </SView>
             </SView>
-            <SText center fontSize={10}>{'Ingresos'}</SText>
+            <SText center fontSize={10}>{'Ingresos/Bs'}</SText>
             <SText center fontSize={10}>{" "}</SText>
           </SView>
         </SView>
