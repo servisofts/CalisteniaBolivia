@@ -43,6 +43,7 @@ class PaquetesVendidos extends Component {
     if (!usuarios) return <SLoad />
     // return <SText>{JSON.stringify(movimientos)}</SText>
 
+    console.log("sus ", usuarios)
     // tarea1
 
     return <STable2

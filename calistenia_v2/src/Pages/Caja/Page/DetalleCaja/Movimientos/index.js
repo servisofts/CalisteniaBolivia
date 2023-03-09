@@ -342,6 +342,7 @@ class Movimientos extends Component {
 
             let ordenar = Object.values(this.moviminetos);
 
+            // ostiasput
             ordenar.sort(function (a, b) {
               return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
             });

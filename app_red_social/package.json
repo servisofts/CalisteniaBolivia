@@ -52,7 +52,7 @@
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
-    "servisofts-component": "^2.10.3",
+    "servisofts-component": "^2.10.4",
     "servisofts-model": "1.0.3",
     "servisofts-page": "1.0.6",
     "servisofts-rn-chat": "1.0.1",
