@@ -161,44 +161,22 @@ export default connect(initStates)(SucursalesDetalle);
 
 
 const setColor = (monto) => {
-  if (monto < 30000) {
-    console.log("< 30.000");
-    return STheme.color.card;
-  }
-  if (monto > 30000) {
-    console.log("> 30.000");
-    return "red";
+  if (monto > 60000) {
+    console.log("> 60.000");
+    return "green";
   }
   if (monto > 45000) {
     console.log("> 45.000");
     return "yellow";
   }
-
-  if (monto > 60000) {
-    console.log("> 60.000");
-    return "green";
+  if (monto > 30000) {
+    console.log("> 30.000");
+    return "red";
   }
-
-
-  // if (monto < 1000) {
-  //   console.log("< 30.000");
-  //   return STheme.color.card;
-  // }
-  // if (monto > 1000) {
-  //   console.log("> 30.000");
-  //   return "red";
-  // }
-  // if (monto > 3000) {
-  //   console.log("> 45.000");
-  //   return "yellow";
-  // }
-
-  // if (monto > 20000) {
-  //   console.log("> 60.000");
-  //   return "green";
-  // }
-
-
+  if (monto < 30000) {
+    console.log("< 30.000");
+    return STheme.color.card;
+  }
 
 }
 
@@ -208,7 +186,7 @@ const Item = ({ sucursal }) => {
   }}>
     <SView center col={"xs-12"} height card style={{
       padding: 4,
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderRadius: 4,
       borderColor: setColor(sucursal.total_vendido),
     }}>
