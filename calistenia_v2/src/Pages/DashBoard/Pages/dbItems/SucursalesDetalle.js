@@ -2,11 +2,8 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SImage, SList, SLoad, SMath, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Caja from '../../../Caja';
-import Entrenamiento from '../../../Entrenamiento';
 import Finanza from '../../../Finanza';
 import Sucursal from '../../../Sucursal';
-import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
 
 class SucursalesDetalle extends Component {
@@ -164,10 +161,45 @@ export default connect(initStates)(SucursalesDetalle);
 
 
 const setColor = (monto) => {
-  if (monto < 2000) return STheme.color.card;
-  if (monto >= 2000) return "red";
-  if (monto >= 45000) return "yellow";
-  if (monto >= 55000) return "green";
+  if (monto < 30000) {
+    console.log("< 30.000");
+    return STheme.color.card;
+  }
+  if (monto > 30000) {
+    console.log("> 30.000");
+    return "red";
+  }
+  if (monto > 45000) {
+    console.log("> 45.000");
+    return "yellow";
+  }
+
+  if (monto > 60000) {
+    console.log("> 60.000");
+    return "green";
+  }
+
+
+  // if (monto < 1000) {
+  //   console.log("< 30.000");
+  //   return STheme.color.card;
+  // }
+  // if (monto > 1000) {
+  //   console.log("> 30.000");
+  //   return "red";
+  // }
+  // if (monto > 3000) {
+  //   console.log("> 45.000");
+  //   return "yellow";
+  // }
+
+  // if (monto > 20000) {
+  //   console.log("> 60.000");
+  //   return "green";
+  // }
+
+
+
 }
 
 const Item = ({ sucursal }) => {
