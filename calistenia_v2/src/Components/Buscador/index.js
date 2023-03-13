@@ -152,7 +152,7 @@ export default class Buscador extends Component<Tprops> {
           <SText style={{
             color: STheme.color.lightGray, fontSize: 10,
 
-          }}>Resultado ({SMath.formatMoney(this.state.cantidad, 0)})</SText>
+          }}>Resultadosss ({SMath.formatMoney(this.state.cantidad, 0)})</SText>
         </SView>
       </SView>
     );

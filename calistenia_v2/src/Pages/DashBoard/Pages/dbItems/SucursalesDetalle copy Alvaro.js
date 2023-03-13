@@ -19,10 +19,10 @@ class SucursalesDetalle extends Component {
   }
 
   setColor(monto) {
-    if (monto < 2000) return STheme.color.card;
-    if (monto >= 2000) return "red";
+    if (monto < 3000) return STheme.color.card;
+    if (monto >= 3000) return "red";
     if (monto >= 45000) return "yellow";
-    if (monto >= 55000) return "green";
+    if (monto >= 60000) return "green";
   }
 
   getLista() {
