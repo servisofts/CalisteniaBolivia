@@ -17,6 +17,9 @@ import Pprecio, { ReactComponent as PprecioW } from './p-precio.svg';
 import ImgSave, { ReactComponent as ImgSaveW } from './imgSave.svg';
 import ImgShare, { ReactComponent as ImgShareW } from './imgShare.svg';
 import Footer, { ReactComponent as FooterW } from './footer.svg';
+import Inombre, { ReactComponent as InombreW } from './inombre.svg';
+import Ibackg1, { ReactComponent as Ibackg1W } from './ibackg1.svg';
+import Ibackg2, { ReactComponent as Ibackg2W } from './ibackg2.svg';
 
 
 const Assets = {
@@ -37,6 +40,9 @@ const Assets = {
 	"ImgSave": { Native: ImgSave, Web: ImgSaveW },
 	"ImgShare": { Native: ImgShare, Web: ImgShareW },
 	"Footer": { Native: Footer, Web: FooterW },
+	"Inombre": { Native: Inombre, Web: InombreW },
+	"Ibackg1": { Native: Ibackg1, Web: Ibackg1W },
+	"Ibackg2": { Native: Ibackg2, Web: Ibackg2W },
 }
 
 export default Assets;

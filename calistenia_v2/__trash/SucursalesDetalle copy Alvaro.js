@@ -2,12 +2,12 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SImage, SLoad, SMath, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Caja from '../../../Caja';
-import Entrenamiento from '../../../Entrenamiento';
-import Finanza from '../../../Finanza';
-import Sucursal from '../../../Sucursal';
-import sucursal_usuario from '../../../sucursal_usuario';
-import Usuario from '../../../Usuario';
+import Caja from '../src/Pages/Caja';
+import Entrenamiento from '../src/Pages/Entrenamiento';
+import Finanza from '../src/Pages/Finanza';
+import Sucursal from '../src/Pages/Sucursal';
+import sucursal_usuario from '../src/Pages/sucursal_usuario';
+import Usuario from '../src/Pages/Usuario';
 
 class SucursalesDetalle extends Component {
   constructor(props) {

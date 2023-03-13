@@ -1,4 +1,4 @@
-import { SHr, SIcon, SNavigation, SText, SView } from 'servisofts-component';
+import { SHr, SIcon, SNavigation, SPopup, SText, STheme, SView } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
 import { MenuButtom, MenuPages } from 'servisofts-rn-roles_permisos';
 import { Parent } from "."
@@ -14,12 +14,12 @@ class index extends DPA.profile {
 
         });
     }
-    $allowEdit() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "edit" })
-    }
-    $allowDelete() {
-        return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "delete" })
-    }
+    // $allowEdit() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "edit" })
+    // }
+    // $allowDelete() {
+    //     return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "delete" })
+    // }
     $allowAccess() {
         return Model.usuarioPage.Action.getPermiso({ url: Parent.path, permiso: "ver" })
     }
@@ -27,6 +27,36 @@ class index extends DPA.profile {
         return Parent.model.Action.getByKey(this.pk);
     }
 
+
+    $menu() {
+        let menu = super.$menu();
+        if (this.data?.estado === 2) {
+            menu.push({
+                label: <SText color={STheme.color.danger}>CERRAR</SText>, onPress: () => {
+                    SPopup.confirm({
+                        title: "¿Estás seguro de cerrar esta gestión?",
+                        message: "Antes de continuar, queremos informarte que al cerrar esta gestión, se abrirá automáticamente la gestión más reciente disponible. En caso de que esta sea la gestión más reciente, se abrirá una nueva en el siguiente mes. No te preocupes, todos tus comprobantes y registros están seguros y disponibles en la gestión correspondiente. ¿Deseas continuar?",
+                        onPress: () => {
+
+                        }
+                    })
+                }
+            })
+        } else if (this.data?.estado === 1) {
+            menu.push({
+                label: <SText color={STheme.color.success}>ABRIR</SText>, onPress: () => {
+                    SPopup.confirm({
+                        title: "¿Estás seguro de abrir esta gestión?",
+                        message: "Antes de continuar, queremos informarte que al abrir esta gestión, la que está actualmente abierta se cerrará automáticamente. Sin embargo, no te preocupes, todos los comprobantes que generes a partir de ahora se registrarán en esta gestión que estás abriendo. ¿Deseas continuar?",
+                        onPress: () => {
+
+                        }
+                    })
+                }
+            })
+        }
+        return menu;
+    }
     $footer() {
         return <SView col={"xs-12"} center>
             <SHr />
