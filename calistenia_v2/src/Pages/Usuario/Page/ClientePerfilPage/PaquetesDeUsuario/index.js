@@ -147,14 +147,20 @@ class PaquetesDeUsuario extends Component {
 
         <SButtom type="success" onPress={() => {
 
+          console.log("ostias ", obj)
+
           var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
+
           var fecha_inicio_modificada = this._fechaInicio.getValue();
-          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+          //var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(30);
+          console.log("dias capturados ", fecha_fin_modificada)
 
-          console.log("inicio ", fecha_inicio_modificada)
-          console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
-          console.log("key ", obj.key_paquete_venta_usuario)
+          //console.log("inicio ", fecha_inicio_modificada)
+          //console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
+          //console.log("key ", obj.key_paquete_venta_usuario)
 
+          //return;
 
           // alvaro boton eliminar
           // obj.estado = "3";
@@ -374,7 +380,7 @@ class PaquetesDeUsuario extends Component {
         type: "select",
         onSelect: (obj) => {
           SNavigation.goBack();
-          this.props.navigation.navigate("ClientePaqueteRegistroPage", {
+          this.props.navigation.navigate("", {
             key_usuario: this.props.key_usuario,
             key_paquete: obj.key,
           });
