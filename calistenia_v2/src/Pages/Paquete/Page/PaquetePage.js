@@ -67,7 +67,7 @@ class PaquetePage extends Component {
                 }} repaint={() => { this.setState({ ...this.state }) }}
                     eliminados
                 />
-                <SScrollView2 disableHorizontal>
+                <SScrollView2 disableHorizontal contentContainerStyle={{ width: "100%" }}>
                     <SView center>
                         {this.getLista()}
                     </SView>

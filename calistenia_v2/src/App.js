@@ -5,7 +5,7 @@ import Redux, { store } from './Redux';
 import Config from "./Config";
 import Assets from './Assets';
 import Pages from './Pages';
-// import BackgroundImage from './Components/BackgroundImage';
+import BackgroundImage from './Components/BackgroundImage';
 // import SSRolesPermisos from './SSRolesPermisos';
 import BarraSuperior from './Components/BarraSuperior';
 setProps(Config.socket);
@@ -16,7 +16,7 @@ const App = (props) => {
             debug
             socket={SSocket}
             assets={Assets}
-            // background={<BackgroundImage />}
+            background={<BackgroundImage />}
             inputs={Config.inputs}
             theme={{ initialTheme: "dark", themes: Config.theme }}>
             <SNavigation props={{

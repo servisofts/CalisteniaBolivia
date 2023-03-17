@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { SHr, SNavigation, SPage, STheme, SView, SText, SLoad } from 'servisofts-component';
+import { SHr, SNavigation, SPage, STheme, SView, SText, SLoad, SInput } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
 import { PlanDeCuentasTable } from 'servisofts-rn-contabilidad';
 import Model from '../../Model';
@@ -9,8 +9,9 @@ class index extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            ano: 2023,
             fecha_inicio: "2023-01-01",
-            fecha_fin: "2024-01-01",
+            fecha_fin: "2023-12-31"
         }
     }
 
@@ -50,7 +51,22 @@ class index extends Component {
     render() {
 
         return (<SPage title={"Sumas y saldos"} disableScroll center>
-            {this.loadData()}
+            <SView col={"xs-12"} center>
+                <SView width={100}>
+                    <SInput value={this.state.ano} onChangeText={(val) => {
+                        if (val.length == 4) {
+                            this.state.fecha_inicio = val + "-01-01";
+                            this.state.fecha_fin = val + "-12-31";
+                            this.state.data = null;
+                            this.getData();
+                        }
+                        this.setState({ ano: val })
+                    }} />
+                </SView>
+            </SView>
+            <SView col={"xs-12"} flex center>
+                {this.loadData()}
+            </SView>
         </SPage>)
     }
 }

@@ -15,7 +15,7 @@ export default class BackgroundImage extends Component<type> {
     getBackground = () => {
         var source = this.props.source;
         if (!source) {
-            source = require("./background.png");
+            source = require("./background3.jpeg");
         }
         return <View style={{
             width: "100%",
@@ -26,13 +26,13 @@ export default class BackgroundImage extends Component<type> {
             // opacity: 0.8,
             ...this.props.style,
         }}>
-            <SGradient colors={["#000000","#44000044"]}/>
-            <SImage src={source} style={{
+            {/* <SGradient colors={["#000000","#44000044"]}/> */}
+            {/* <SImage src={source} style={{
                 width: "100%",
                 height: "100%",
                 resizeMode: "stretch",
-                opacity: 0.6,
-            }} />
+                // opacity: 0.6,
+            }} /> */}
             {/* <View style={{
                 width: "100%",
                 height: "100%",

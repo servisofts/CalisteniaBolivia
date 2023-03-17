@@ -130,6 +130,8 @@ export default class Buscador extends Component<Tprops> {
               padding: 4,
               paddingLeft: 8,
               paddingRigth: 8,
+              width: "100%",
+              height: "100%"
             }}
               // autoFocus={true}
 

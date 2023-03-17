@@ -32,7 +32,10 @@ class index extends Component {
             return null;
         }
         return (
-            <SPage title={''} >
+            <SPage title={''} onRefresh={(end) => {
+                Model.usuarioPage.Action.CLEAR();
+                end()
+            }}>
                 <SHr height={32} />
                 <SView col={"xs-12"}>
                     <MenuPages path={""} permiso={"page"}

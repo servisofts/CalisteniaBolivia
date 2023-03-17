@@ -6,6 +6,7 @@ import _new from "./new";
 import profile from "./profile";
 import edit from "./edit";
 import _delete from "./delete";
+import exportar_gestion from "./exportar_gestion";
 const model = Model.gestion;
 
 export const Parent = {
@@ -20,5 +21,6 @@ export default SPage.combinePages(Parent.name, {
     "new": _new,
     "profile": profile,
     "edit": edit,
-    "delete": _delete
+    "delete": _delete,
+    exportar_gestion
 })

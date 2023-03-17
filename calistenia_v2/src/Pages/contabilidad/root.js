@@ -13,17 +13,15 @@ class index extends Component {
 
 
     render() {
-        let gestion = Model.gestion.Action.getSelect();
         return (
-            <SPage title={Parent.title}>
+            <SPage title={Parent.title} onRefresh={(end) => {
+                Model.usuarioPage.Action.CLEAR();
+                end()
+            }}>
                 <SHr height={32} />
                 <MenuPages path={Parent.path + "/"} blackList={["/contabilidad/asiento_contable"]} >
-                    {/* <MenuButtom label={"Cuentas"} url={"/contabilidad/cuentas"} /> */}
-                    <MenuButtom label={"Crear Asiento"} url={"/contabilidad/asiento"} icon={<SIcon name={"Add"} />} />
-                    {/* <MenuButtom label={"Balance general"} url={"/contabilidad/balance_general"} icon={<SIcon name={"Box"} fill={"#f66"} />} /> */}
-                    {/* <MenuButtom label={"Sumas y saldos"} url={"/contabilidad/sumas_saldos"} icon={<SIcon name={"Box"} fill={"#ff6"} />} /> */}
-                    {/* <MenuButtom label={"Estado de resultados"} url={"/contabilidad/estado_resultado"} icon={<SIcon name={"Box"} fill={"#6f6"} />} /> */}
-                    <MenuButtom label={"Asientos"} url={"/contabilidad/gestion/profile"} params={{ pk: gestion?.key }} icon={<SIcon name={"Box"} fill={"#6ff"} />} />
+                    {/* <MenuButtom label={"Crear Asiento"} url={"/contabilidad/asiento"} icon={<SIcon name={"Add"} />} /> */}
+                    {/* <MenuButtom label={"Asientos"} url={gestion?.key ? "/contabilidad/gestion/profile" : "/contabilidad/gestion"} params={{ pk: gestion?.key }} icon={<SIcon name={"Box"} fill={"#6ff"} />} /> */}
                 </MenuPages>
             </SPage>
         );

@@ -9,7 +9,8 @@ import {
     SText,
     STheme,
     SView,
-    SNavigation
+    SNavigation,
+    SMapView2
 } from "servisofts-component";
 import SMapView from "servisofts-component/Component/SMapView";
 import SSocket from "servisofts-socket";
@@ -26,8 +27,8 @@ class Mapa extends Component<MapaPropsType> {
         // var { key, nombre, proximo_horario } = this.props.data;
         return (
             <SView col={"xs-12 "} row center>
-                <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} {...this.props} row center >
-                    <SMapView
+                <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} {...this.props} center>
+                    <SMapView2
                         initialRegion={{
                             // latitude: this.props.data?.latitude,
                             // latitude: this.props.data?.latitude,
@@ -46,7 +47,7 @@ class Mapa extends Component<MapaPropsType> {
                     >{/* <SMarker latitude={-17.768507} longitude={-63.183698} lng={-17.768507} lat={-63.183698} >
                             <SIcon name="MarcadorMapa" width={20} height={30} />
                         </SMarker> */}
-                    </SMapView>
+                    </SMapView2>
                     <SHr height={20} />
                     <SView
                         center

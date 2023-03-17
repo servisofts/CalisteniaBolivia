@@ -3,11 +3,11 @@ export default {
   name: 'calistenia',
   // -- Producción --
   // host: '192.168.2.2',
-  // host: 'calistenia.servisofts.com',
-  // ssl: true,
+  host: 'calistenia.servisofts.com',
+  ssl: true,
   // -- Producción --
-  host: '192.168.2.1',
-  ssl: false,
+  // host: '192.168.2.1',
+  // ssl: false,
   // --CONFIGURACIONES--
   port: {
     native: 10018,
@@ -21,8 +21,8 @@ export default {
     inventario: 'https://inventario.servisofts.com/http/',
     compra_venta: 'https://compraventa.servisofts.com/http/',
     rp: "https://rolespermisos.servisofts.com/http/",
-    // contabilidad: "https://contabilidad.servisofts.com/http/",
-    contabilidad: "http://192.168.2.1:30011/",
+    contabilidad: "https://contabilidad.servisofts.com/http/",
+    // contabilidad: "http://192.168.2.1:30011/",
   }
 }
 

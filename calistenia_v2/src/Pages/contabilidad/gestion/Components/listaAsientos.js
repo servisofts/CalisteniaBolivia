@@ -46,8 +46,10 @@ class ListaAsientos extends DPA.list {
     }
 
     $getData() {
-        var data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion });
-        return data;
+        this.gestion = Model.gestion.Action.getByKey(this.$params.key_gestion);
+        this.data = Parent.model.Action.getAll({ key_gestion: this.$params.key_gestion });
+        if (!this.gestion || !this.data) return null;
+        return this.data;
     }
 
     optionItem({ key, label }) {
@@ -72,9 +74,11 @@ class ListaAsientos extends DPA.list {
     }
     $menu() {
         var items = super.$menu();
+
         items.push({
             label: "exportar", onPress: () => {
                 console.log(this.data)
+                SNavigation.navigate("/contabilidad/gestion/exportar_gestion", { pk: this.$params.key_gestion })
             }
         })
         items.push({
