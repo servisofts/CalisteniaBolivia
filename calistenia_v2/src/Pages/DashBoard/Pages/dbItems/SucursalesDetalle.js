@@ -150,6 +150,13 @@ class SucursalesDetalle extends Component {
         <SView col={"xs-12"} height center row>
           {this.getContent()}
         </SView>
+
+        {/* <SButtom Card
+          onPress={() => { SNavigation.navigate("grafico") }}
+          style={{ backgroundColor: STheme.color.gray, position: "absolute", right: 50, bottom: 32, width: 50, height: 50, }}>
+          <SIcon name={"DashboardBtn"} style={{ width: 45, height: 45, }} />
+        </SButtom> */}
+
       </SView>
     );
   }
