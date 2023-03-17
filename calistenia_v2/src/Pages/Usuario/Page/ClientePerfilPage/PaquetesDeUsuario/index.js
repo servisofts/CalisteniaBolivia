@@ -53,7 +53,7 @@ class PaquetesDeUsuario extends Component {
     var obj = data[key_sucursal]
     if (!obj) return <View />
     return <SView>
-      <SText color={"#666"}>Sucursal: {obj.descripcion}</SText>
+      <SText color={STheme.color.text}>Sucursal: {obj.descripcion}</SText>
     </SView>
   }
   getUsuario(key_usuario) {
@@ -302,9 +302,7 @@ class PaquetesDeUsuario extends Component {
             paddingStart: 8,
             height: "100%",
           }}>
-            <Text style={{
-              fontSize: 14,
-            }}>{paquete.descripcion}</Text>
+            <SText color={STheme.color.text + 66} style={{ fontSize: 14 }}>{paquete.descripcion}</SText>
             {this.getSucursal(obj.key_sucursal)}
             {this.getUsuario(obj.key_usuario)}
           </View>
