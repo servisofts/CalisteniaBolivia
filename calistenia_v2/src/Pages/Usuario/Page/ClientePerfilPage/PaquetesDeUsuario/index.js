@@ -53,7 +53,7 @@ class PaquetesDeUsuario extends Component {
     var obj = data[key_sucursal]
     if (!obj) return <View />
     return <SView>
-      <SText color={"#666"}>Sucursal: {obj.descripcion}</SText>
+      <SText color={STheme.color.text}>Sucursal: {obj.descripcion}</SText>
     </SView>
   }
   getUsuario(key_usuario) {
@@ -147,14 +147,20 @@ class PaquetesDeUsuario extends Component {
 
         <SButtom type="success" onPress={() => {
 
+          console.log("ostias ", obj)
+
           var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
+
           var fecha_inicio_modificada = this._fechaInicio.getValue();
-          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+          //var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(30);
+          console.log("dias capturados ", fecha_fin_modificada)
 
-          console.log("inicio ", fecha_inicio_modificada)
-          console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
-          console.log("key ", obj.key_paquete_venta_usuario)
+          //console.log("inicio ", fecha_inicio_modificada)
+          //console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
+          //console.log("key ", obj.key_paquete_venta_usuario)
 
+          //return;
 
           // alvaro boton eliminar
           // obj.estado = "3";
@@ -296,9 +302,7 @@ class PaquetesDeUsuario extends Component {
             paddingStart: 8,
             height: "100%",
           }}>
-            <Text style={{
-              fontSize: 14,
-            }}>{paquete.descripcion}</Text>
+            <SText color={STheme.color.text + 66} style={{ fontSize: 14 }}>{paquete.descripcion}</SText>
             {this.getSucursal(obj.key_sucursal)}
             {this.getUsuario(obj.key_usuario)}
           </View>
@@ -374,7 +378,7 @@ class PaquetesDeUsuario extends Component {
         type: "select",
         onSelect: (obj) => {
           SNavigation.goBack();
-          this.props.navigation.navigate("ClientePaqueteRegistroPage", {
+          this.props.navigation.navigate("", {
             key_usuario: this.props.key_usuario,
             key_paquete: obj.key,
           });

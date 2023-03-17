@@ -237,7 +237,12 @@ class CuentaMovimientosPage extends Component {
     return <SList
       // buscador
       limit={8}
+
+      // romeo santos
       order={[{ key: "fecha_on", order: "desc", peso: 1 }]}
+      // filter={obj => obj.estado != 0 && obj.tipo_movimiento == "ingreso"}
+      filter={obj => obj.estado != 0 && obj.tipo_movimiento == "ingreso" || obj.tipo_movimiento == "egreso" || obj.tipo_movimiento == "traspaso"}
+
       data={data}
       render={(obj) => {
 
@@ -311,6 +316,27 @@ class CuentaMovimientosPage extends Component {
 
 
   }
+  // getEtiquetas = (data) => {
+
+  //   $filter(data) {
+  //     return data.estado != 0 && data.tipo_movimiento == "ingreso" && data.tipo_movimiento == "egreso" && data.tipo_movimiento == "traspaso"
+  //   }
+
+  //   obj?.tipo_movimiento == "ingreso"
+  //   obj?.tipo_movimiento == "egreso"
+  //   obj?.tipo_movimiento == "traspaso"
+
+  //   // return <SView col={"xs-11.6"} height={50} center card onPress={() => {
+  //   //   SNavigation.navigate("billetera", { key_banco: this.key_banco, key_cuenta_banco: this.key });
+  //   // }}>
+  //   //   <SView row col={"xs-12"} center>
+  //   //     <SText fontSize={18} bold color={STheme.color.lightGray}>Billetera</SText>
+  //   //     <SView width={16} />
+  //   //     <SIcon name={"Billetera"} width={26} />
+
+  //   //   </SView>
+  //   // </SView>
+  // }
   getBilletera = () => {
     return <SView col={"xs-11.6"} height={50} center card onPress={() => {
       SNavigation.navigate("billetera", { key_banco: this.key_banco, key_cuenta_banco: this.key });
@@ -372,6 +398,7 @@ class CuentaMovimientosPage extends Component {
                 <SHr height={10} />
                 <SView col={"xs-12"} center>
 
+                  {/* asssssss romeo santos */}
                   {/* tarea10 ✅ ✅ ✅ */}
                   <ExportExcel
                     header={[

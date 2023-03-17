@@ -2,11 +2,8 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { SDate, SIcon, SImage, SList, SLoad, SMath, SNavigation, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Caja from '../../../Caja';
-import Entrenamiento from '../../../Entrenamiento';
 import Finanza from '../../../Finanza';
 import Sucursal from '../../../Sucursal';
-import sucursal_usuario from '../../../sucursal_usuario';
 import Usuario from '../../../Usuario';
 
 class SucursalesDetalle extends Component {
@@ -153,6 +150,13 @@ class SucursalesDetalle extends Component {
         <SView col={"xs-12"} height center row>
           {this.getContent()}
         </SView>
+
+        {/* <SButtom Card
+          onPress={() => { SNavigation.navigate("grafico") }}
+          style={{ backgroundColor: STheme.color.gray, position: "absolute", right: 50, bottom: 32, width: 50, height: 50, }}>
+          <SIcon name={"DashboardBtn"} style={{ width: 45, height: 45, }} />
+        </SButtom> */}
+
       </SView>
     );
   }
@@ -164,10 +168,23 @@ export default connect(initStates)(SucursalesDetalle);
 
 
 const setColor = (monto) => {
-  if (monto < 2000) return STheme.color.card;
-  if (monto >= 2000) return "red";
-  if (monto >= 45000) return "yellow";
-  if (monto >= 55000) return "green";
+  if (monto > 60000) {
+    console.log("> 60.000");
+    return "green";
+  }
+  if (monto > 45000) {
+    console.log("> 45.000");
+    return "yellow";
+  }
+  if (monto > 30000) {
+    console.log("> 30.000");
+    return "red";
+  }
+  if (monto < 30000) {
+    console.log("< 30.000");
+    return STheme.color.card;
+  }
+
 }
 
 const Item = ({ sucursal }) => {
@@ -176,7 +193,7 @@ const Item = ({ sucursal }) => {
   }}>
     <SView center col={"xs-12"} height card style={{
       padding: 4,
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderRadius: 4,
       borderColor: setColor(sucursal.total_vendido),
     }}>
@@ -263,11 +280,11 @@ const Item = ({ sucursal }) => {
                 borderRadius: 8
               }}>
                 {/* aqui viene la cantidad de incribciones */}
-                <SText center fontSize={12} bold>Bs</SText>
+                {/* <SText center fontSize={12} bold>Bs</SText> */}
                 <SText center fontSize={12} bold>{SMath.formatMoney(sucursal.total_vendido)}</SText>
               </SView>
             </SView>
-            <SText center fontSize={10}>{'Ingresos'}</SText>
+            <SText center fontSize={10}>{'Ingresos/Bs'}</SText>
             <SText center fontSize={10}>{" "}</SText>
           </SView>
         </SView>

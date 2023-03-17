@@ -25,4 +25,3 @@ export default {
     // contabilidad: "http://192.168.2.1:30011/",
   }
 }
-

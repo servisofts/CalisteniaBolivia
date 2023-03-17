@@ -29,6 +29,7 @@ import contabilidad from './contabilidad';
 import empresa from "./empresa";
 import rol from './rol';
 import root from './root';
+import testAlvaro from './testAlvaro';
 
 const newPages = SPage.combinePages("/", {
   "": root,
@@ -66,5 +67,6 @@ export default {
   ...Inversiones.Pages,
   ...Services.Pages,
   ...Client.Pages,
+  "alvaro": testAlvaro,
 
 };

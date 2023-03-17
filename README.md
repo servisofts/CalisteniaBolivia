@@ -11,7 +11,4 @@ El presente software es una herramienta administrativa que abarca desde la gesti
 
 
 ### Iniciando
-Alvaro Siles
-https://nodejs.org/gl/blog/release/v6.9.5/
-https://nodejs.org/gl/blog/release/v8.5.0/
-
+https://nodejs.org/en/blog/release/v14.17.3

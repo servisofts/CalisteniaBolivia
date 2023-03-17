@@ -40,6 +40,7 @@ class ClientePaqueteRegistroPage extends Component {
           this.state.tasks[i] = {
             fecha: date,
             dias: this.state.paquete.dias
+            //si cambio aqiui es 31 dias
           }
           this.setState({ ...this.state })
           // this.state.tasks[i]=;
