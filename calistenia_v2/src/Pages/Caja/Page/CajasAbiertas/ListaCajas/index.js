@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ActivityIndicator, Animated, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SImage, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SImage, SMath, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
 import Sucursal from '../../../../Sucursal';
@@ -169,7 +169,7 @@ class ListaCajas extends Component {
           <SView center style={{
             height: 35,
           }}>
-            <SText style={{ fontSize: 16, color: "white" }}>Bs. {total}</SText>
+            <SText style={{ fontSize: 16, color: "white" }}>Bs. {SMath.formatMoney(total)}</SText>
           </SView>
         </SView>
 
