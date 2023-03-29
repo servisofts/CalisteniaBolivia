@@ -1,258 +1,117 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SLoad, SMath, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
-import fondo_inversion from '../../fondo_inversion';
-import fondo_inversion_usuario from '../../fondo_inversion_usuario';
+import { SHr, SPage, SText, SView } from 'servisofts-component';
 class lista extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
-  getItem(data = { key, descripcion, observacion, fecha_inicio, fecha_fin, estado, cantidad_acciones, precio_accion, monto_maximo }, montoi) {
-
-    return <>
-      <SHr height={16} />
-      <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} card center>
-        <SHr />
-        <SText fontSize={18} col={"xs-11"} bold>{data.descripcion}</SText>
-        <SHr />
-        <SText fontSize={14} col={"xs-11"} color={STheme.color.lightGray}>{data.observacion}</SText>
-        <SHr />
-        <SHr />
-        <SHr />
-        <SHr />
-        <SView row col={"xs-11"}>
-          {/* <SView center col={"xs-12"}>
-                        <SText fontSize={14} bold >{`( Bs. ${SMath.formatMoney(montoi.monto)} / Bs. ${SMath.formatMoney(data.monto_maximo)} )`}</SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}>{"Monto recaudado"} </SText>
-
-                    </SView> */}
-          <SHr />
-          {/* <SView center col={"xs-12"}>
-                        <SText fontSize={14} bold>{`Bs. ${SMath.formatMoney(data.monto_maximo - montoi.monto)}`}</SText>
-                        <SText fontSize={12} color={STheme.color.lightGray}>{"Monto disponible"} </SText>
-
-                    </SView> */}
-          <SHr />
-          <SView center col={"xs-12"}>
-            <SText fontSize={14} bold>Bs. {SMath.formatMoney(data["precio_accion"])}</SText>
-            <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
-          </SView>
-          {/* <SView center col={"xs-6"}>
-                        <SView row center>
-                            <SIcon name={"Egreso"} width={14} />
-                            <SView width={8} />
-                            <SText fontSize={14} bold>{`( ${data["cantidad_acciones"] - montoi.cantidad} / ${data["cantidad_acciones"]} )`}</SText>
-                        </SView>
-                        <SText fontSize={12} color={STheme.color.lightGray}>Disponibles</SText>
-                    </SView> */}
-        </SView>
-        <SHr />
-        <SHr />
-        <SHr />
-        <SView row col={"xs-11"}>
-          <SView center col={"xs-6"}>
-            <SText fontSize={12} color={STheme.color.lightGray}>Inicia:</SText>
-            <SText fontSize={12} color={STheme.color.lightGray}>{new SDate(data.fecha_inicio).toString("dd de MONTH, yyyy")} </SText>
-          </SView>
-          <SView center col={"xs-6"}>
-            <SText fontSize={12} color={STheme.color.lightGray}>Termina:</SText>
-            <SText fontSize={12} color={STheme.color.lightGray}>{new SDate(data.fecha_fin).toString("dd de MONTH, yyyy")} </SText>
-          </SView>
-        </SView>
-        <SHr />
-
-        <SHr />
-        <SView style={{
-          width: 140,
-          height: 35,
-        }} card center onPress={() => {
-          SNavigation.navigate("fondo_inversion/perfil", { key: data.key });
-        }} row>
-          <SIcon name={"Carrito"} width={20} />
-          <SView width={16} />
-          <SText bold fontSize={11}>INVERTIR</SText>
-        </SView>
-        <SHr />
-      </SView>
-    </>
-  }
-
-  getDisponibles() {
-    var data = fondo_inversion.Actions.getAll(this.props);
-    if (!data) return <SLoad />
-    var lista = Object.keys(data).filter(itm => {
-      var obj = data[itm];
-
-      return obj.estado == 1 && new SDate(obj.fecha_inicio).isAfter(new SDate());
-    })
-    return lista.map(key => {
-      var montoi = fondo_inversion_usuario.Actions.getMontoInvertido(key, this.props);
-      if (!montoi) return <SLoad />
-      var obj = data[key];
-      return this.getItem(obj, montoi);
-    })
-  }
 
 
   Item() {
-    return <SView col={"xs-11 md-6 xl-3"} height={180} style={{
-      padding: 4,
-    }}>
-      <SView center col={"xs-12"} height card style={{
-        padding: 4,
-        borderWidth: 1.5,
-        borderRadius: 4,
-        // borderColor: setColor(sucursal.total_vendido),
-      }}>
-        <SView center col={"xs-12"} height={65} center>
-          <SView width={45} height={45}>
-            {/* <SImage src={SSocket.api.root + "sucursal/" + sucursal.key} /> */}
-          </SView>
-          <SView flex>
-            <SText center fontSize={12} bold>dasdasd</SText>
+    return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
+
+      <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
+
+        <SView center col={"xs-12"} height={65} center backgroundColor={"green+66"}>
+          <SText center fontSize={14} bold>Sucursal Industrial</SText>
+          <SHr height={8} />
+          <SText center fontSize={12}>Av. Mutualista 6to anillo</SText>
+        </SView>
+
+        <SView center col={"xs-12"} row backgroundColor={"cyan+66"}>
+          <SView col={"xs-12"} height={80} card row center>
+            <SView col={"xs-3"} height center>
+              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+                <SText fontSize={14} bold>9</SText>
+              </SView>
+              <SHr height={2} />
+              <SText center fontSize={10}>Monto maximo/Bs</SText>
+            </SView>
+            <SView col={"xs-3"} height center>
+              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+                <SText fontSize={14} bold>9</SText>
+              </SView>
+              <SHr height={2} />
+              <SText center fontSize={10}>Duración</SText>
+            </SView>
+            <SView col={"xs-3"} height center>
+              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+                <SText fontSize={14} bold>9</SText>
+              </SView>
+              <SHr height={2} />
+              <SText center fontSize={10}>Acciones</SText>
+            </SView>
+            <SView col={"xs-3"} height center>
+              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+                <SText fontSize={14} bold>9</SText>
+              </SView>
+              <SHr height={2} />
+              <SText center fontSize={10}>Socios</SText>
+            </SView>
           </SView>
         </SView>
-        <SView center col={"xs-12"} row style={{
-          padding: 4,
-        }}>
-          <SView col={"xs-12"} height={80} card row center>
-            <SView col={"xs-2.5"} height center>
-              <SView width={40} height={40} center onPress={() => {
-                SNavigation.navigate("ClientesPage");
-              }}>
-                <SIcon name="Usuarios_cliente" />
-                <SView center style={{
-                  position: "absolute",
-                  width: 30,
-                  height: 30,
-                  backgroundColor: STheme.color.background + "99",
-                  borderRadius: 8
-                }}>
-                  <SText center fontSize={18} bold>cara</SText>
-                </SView>
-              </SView>
-              <SText center fontSize={10}>{'Clientes'}</SText>
-              <SText center fontSize={10}>{" "}</SText>
 
-            </SView>
-            <SView col={"xs-2.5"} height center>
-              <SView width={40} height={40} center onPress={() => {
-                SNavigation.navigate("ClientesPage");
-              }}>
-                <SIcon name="Usuarios_proveedor" />
-                <SView center style={{
-                  position: "absolute",
-                  width: 30,
-                  height: 30,
-                  backgroundColor: STheme.color.background + "99",
-                  borderRadius: 8
-                }}>
-                  <SText center fontSize={18} bold>32423c4</SText>
-                </SView>
-              </SView>
-              <SText center fontSize={10}>{'Becados'}</SText>
-              <SText center fontSize={10}>{" "}</SText>
-            </SView>
-            <SView col={"xs-2.5"} height center >
-              <SView width={40} height={40} center onPress={() => {
-                // SNavigation.navigate("CajasAbiertas", { key_sucursal: key });
-              }}>
-                <SIcon name="Entrenamiento" />
-                <SView center style={{
-                  position: "absolute",
-                  width: 30,
-                  height: 30,
-                  backgroundColor: STheme.color.background + "99",
-                  borderRadius: 8
-                }}>
-                  {/* aqui viene la cantidad de paquetes vendidos */}
-                  <SText center fontSize={18} bold>asdasd</SText>
-                </SView>
-              </SView>
-              <SText center fontSize={10}>{'Inscripciones'}</SText>
-              <SText center fontSize={10}>{" "}</SText>
-            </SView>
-            <SView col={"xs-2.5"} height center>
-              <SView width={40} height={40} center onPress={() => {
-                // SNavigation.navigate("entrenamientos", { key_sucursal: key });
-              }}>
-                {/* cambiar el icono */}
-                {/* <SIcon name="Entrenamiento" /> */}
-                <SIcon name="Caja" />
-                <SView center style={{
-                  position: "absolute",
-                  width: 70,
-                  height: 30,
-                  backgroundColor: STheme.color.background + "99",
-                  borderRadius: 8
-                }}>
-                  {/* aqui viene la cantidad de incribciones */}
-                  {/* <SText center fontSize={12} bold>Bs</SText> */}
-                  <SText center fontSize={12} bold>3232</SText>
-                </SView>
-              </SView>
-              <SText center fontSize={10}>{'Ingresos/Bs'}</SText>
-              <SText center fontSize={10}>{" "}</SText>
-            </SView>
+        <SView col={"xs-12"} backgroundColor={"cyan+66"}>
+
+          <SHr height={24} />
+
+          <SText fontSize={12}>Accionista</SText>
+          <SHr height={1} color={"blue"} />
+          {/* <SText fontSize={12}>18</SText> */}
+
+          <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
+
+            <SText fontSize={10}>MARIA DE LOS ANGELES{"\n"}QUIROGA ARREDONDO</SText>
+
+            <SText fontSize={10}>Inversion Bs.48.720</SText>
+
+            <SText fontSize={10}>Acciones 7</SText>
+
+            {/* <SText fontSize={10}>Comisión Bs.1</SText> */}
+            <SText fontSize={10}>Ventas/paquetes 435</SText>
+
+            <SText fontSize={10}>Ganancia Bs. 3.500</SText>
+
+
+            {/* <STable2
+              header={[
+                { key: "index", label: "#", width: 40 },
+
+                { key: "estado", label: "estado", width: 70, render: (a) => a == 1 ? "Activo" : "Anulado" },
+
+
+              ]}
+
+              // limit={10}
+              data={tuto}
+            /> */}
+
           </SView>
         </SView>
       </SView>
     </SView >
   }
-  getContent() {
-
-    var data = new Array(5);
-    // return <>
-    //   <SList data={data} horizontal space={0} render={this.Item()} />
-    // </>
-  }
-  getContent1() {
-    return <>
-      <SHr height={16} />
-      <SView col={"xs-11 sm-10 md-8 lg-6 xl-4"} card center>
-        <SHr />
-        <SText fontSize={18} col={"xs-11"} bold>zxcvzxczxczxc</SText>
-        <SHr />
-        <SText fontSize={14} col={"xs-11"} color={STheme.color.lightGray}>zxczxczxc</SText>
-        <SHr />
-        <SHr />
-        <SHr />
-        <SHr />
-        <SView row col={"xs-11"}>
-
-          <SHr />
-          <SView center col={"xs-12"}>
-            <SText fontSize={14} bold>Bs.435</SText>
-            <SText fontSize={12} color={STheme.color.lightGray}>Precio de la accion </SText>
-          </SView>
-
-        </SView>
-        <SHr />
-        <SHr />
-        <SView style={{
-          width: 140,
-          height: 35,
-        }} card center onPress={() => {
-          SNavigation.navigate("fondo_inversion/perfil", { key: data.key });
-        }} row>
-          <SIcon name={"Carrito"} width={20} />
-          <SView width={16} />
-          <SText bold fontSize={11}>INVERTIR</SText>
-        </SView>
-        <SHr />
-      </SView>
-    </>
+  getLista() {
+    const arr = [1, 2, 3];
+    return arr.map((key) => {
+      // return
+      return this.Item()
+      // <SView col={"xs-12"} height={180} row>
+      // {this.Item()}
+      // </SView>
+    })
+    // return <SList data={arr} horizontal space={0} render={data => { this.Item() }} />
   }
 
   render() {
     return (
       <SPage title={'lista'} center>
-        <SText>chaval</SText>
-        {this.getContent()}
-        <SView height={50} />
+        <SHr height={24} color={"red"}></SHr>
+        {this.getLista()}
+        {/* <SView height={50} /> */}
+        <SHr height={50} color={"red"}></SHr>
       </SPage>
     );
   }
