@@ -1,6 +1,10 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { SHr, SPage, SText, SView } from 'servisofts-component';
+
+const array = {
+
+}
 class lista extends Component {
   constructor(props) {
     super(props);
