@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { SHr, SLoad, SMath, SPage, SText, SView } from 'servisofts-component';
+import Model from '../../../../../Model';
 import fondo_inversion from '../../fondo_inversion';
+import fondo_inversion_usuario from '../../fondo_inversion_usuario';
 
 const array = {
 
@@ -109,25 +111,52 @@ class lista extends Component {
     })
     // return <SList data={arr} horizontal space={0} render={data => { this.Item() }} />
   }
+
+  toStringInversionista(llave) {
+    var datax = fondo_inversion_usuario.Actions.getAll(this.props);
+    if (!datax) return <SLoad />
+
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return <SLoad />
+
+    console.log("fondo_inversion_usuario ", datax)
+
+
+    return Object.keys(datax).filter(predicate => predicate.key_fondo_inversion == llave && predicate.key_usuario_inversionista == usuarios.key).map(keys => {
+      const obj = datax[keys];
+
+      // if (obj.estado != 1) return;
+
+      // if (obj.key_FondoInversion != key_FondoInversion) return;
+      // console.log("ch ", obj)
+
+      return <SText>{"ja. " + obj + "\n\n\n"}</SText>
+    })
+
+  }
   toString() {
 
     var data = fondo_inversion.Actions.getAll(this.props);
     if (!data) return <SLoad />
 
+
+
     return Object.keys(data).map(keys => {
       const obj = data[keys];
 
       if (obj.estado != 1) return;
-      console.log("ch ", obj)
-      return <SText>{"Suc. " + obj.descripcion + "\n"
-        + "Direccion " + obj.observacion + "\n"
-        + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
-        + "Duracion " + obj.cantidad_meses + " Meses \n"
-        + "Acciones " + obj.cantidad_acciones + "\n"
-        + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n\n\n"}</SText>
+      // console.log("tosreing ", obj)
+
+      return <>
+        <SText>{"Suc. " + obj.descripcion + "\n"
+          + "Direccion " + obj.observacion + "\n"
+          + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
+          + "Duracion " + obj.cantidad_meses + " Meses \n"
+          + "Acciones " + obj.cantidad_acciones + "\n"
+          + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}</SText>
+        {this.toStringInversionista(obj.key) + " Bs \n\n\n"}
+      </>
     })
-
-
 
   }
 
