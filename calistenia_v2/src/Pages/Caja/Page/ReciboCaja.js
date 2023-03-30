@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SNavigation, SPage, SView } from 'servisofts-component';
+import { SButtom, SHr, SIcon, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import Recibo from '../Components/Recibo';
 
 import SPdf from '../../../Components/SPdf';
@@ -13,14 +13,26 @@ class ReciboCaja extends Component {
     this.key = SNavigation.getParam("key", false);
   }
 
+  getButtom({ title, onPress, icon }) {
+    return <SButtom type={"default"} style={{ height: 70, backgroundColor: STheme.color.card, borderRadius: 8 }} onPress={onPress}>
+      <SIcon name={icon} width={40} height={40} />
+      <SHr height={4} />
+      <SText secondary bold >{title}</SText>
+    </SButtom>
+  }
+
+
   render() {
 
     return (
       <SPage title={'ReciboCaja'} center row>
         <SView col={"xs-12"} center row>
-          <SButtom type={"success"} onPress={() => { this.pdf.imprimir() }}>{"IMPRIMIR"}</SButtom>
-          <SView col={"xs-1"}></SView>
-          <SButtom type={"danger"} onPress={() => { SNavigation.replace("/") }}>{"SALIR"}</SButtom>
+
+          {this.getButtom({ title: "IMPRIMIR", icon: "Ajustes", onPress: () => { this.pdf.imprimir() } })}
+
+          {this.getButtom({ title: "SALIR", icon: "Salir", onPress: () => { SNavigation.replace("/") } })}
+
+
         </SView>
         <SHr height={15} />
         <SPdf ref={ref => this.pdf = ref} size="Legal" >
