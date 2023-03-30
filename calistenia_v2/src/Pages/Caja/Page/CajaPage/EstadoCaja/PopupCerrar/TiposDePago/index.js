@@ -71,9 +71,7 @@ class TiposDePago extends Component<TiposDePagoType> {
       var mov = this.props.movimientos[key];
       // alvaro paso aqui
       // estado 0, 3 son los los eliminados
-      if (mov.estado == "0" || mov.estado == "3") {
-        return;
-      }
+      if (mov.estado != "1") return;
       total += mov.monto;
     })
     if (total % 1 > 0) return total.toFixed(this.state.cantDecimal);
@@ -93,10 +91,7 @@ class TiposDePago extends Component<TiposDePagoType> {
 
       // alvaro paso aqui
       // estado 0, 3 son los los eliminados
-      if (mov.estado == "0" || mov.estado == "3") {
-        return;
-      }
-
+      if (mov.estado != "1") return;
 
       if (!mov.data) {
         if ("1" == obj.key) {
