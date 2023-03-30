@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SHr, SPage, SText, SView } from 'servisofts-component';
+import { SHr, SLoad, SMath, SPage, SText, SView } from 'servisofts-component';
+import fondo_inversion from '../../fondo_inversion';
 
 const array = {
 
@@ -108,14 +109,36 @@ class lista extends Component {
     })
     // return <SList data={arr} horizontal space={0} render={data => { this.Item() }} />
   }
+  toString() {
+
+    var data = fondo_inversion.Actions.getAll(this.props);
+    if (!data) return <SLoad />
+
+    return Object.keys(data).map(keys => {
+      const obj = data[keys];
+
+      if (obj.estado != 1) return;
+      console.log("ch ", obj)
+      return <SText>{"Suc. " + obj.descripcion + "\n"
+        + "Direccion " + obj.observacion + "\n"
+        + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
+        + "Duracion " + obj.cantidad_meses + " Meses \n"
+        + "Acciones " + obj.cantidad_acciones + "\n"
+        + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n\n\n"}</SText>
+    })
+
+
+
+  }
 
   render() {
     return (
       <SPage title={'lista'} center>
-        <SHr height={24} color={"red"}></SHr>
-        {this.getLista()}
+        {/* <SHr height={24} color={"red"}></SHr> */}
+        {/* {this.getLista()} */}
+        {this.toString()}
         {/* <SView height={50} /> */}
-        <SHr height={50} color={"red"}></SHr>
+        {/* <SHr height={50} color={"red"}></SHr> */}
       </SPage>
     );
   }
