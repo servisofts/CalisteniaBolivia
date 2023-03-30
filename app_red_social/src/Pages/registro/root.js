@@ -100,7 +100,7 @@ class root extends Component {
                         <SView
                             col={'xs-11'}
                             onPress={() => {
-                                // SNavigation.navigate('terminos');
+                                SNavigation.navigate('/terminos');
                             }}>
                             <SText
                                 color={STheme.color.text}

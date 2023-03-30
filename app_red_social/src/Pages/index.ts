@@ -7,6 +7,8 @@ import registro from './registro';
 import paquete from './paquete';
 import sucursal from './sucursal';
 import cuenta from './cuenta';
+import terminos from './terminos';
+
 
 
 import restaurante from './restaurante';
@@ -37,6 +39,8 @@ export default SPage.combinePages("/", {
   ...paquete,
   ...sucursal,
   ...cuenta,
+  "terminos": terminos,
+
 
 
   "test": test,
