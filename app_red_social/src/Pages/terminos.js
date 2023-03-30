@@ -11,19 +11,11 @@ class terminos extends Component {
         };
     }
 
-    navBar() {
-        return <TopBar type={"menu"} title='Contáctanos' />
-    }
-    clearData() {
-        // Model.restaurante.Action.CLEAR();
-    }
-
     render() {
         return (
             <SPage
                 // navBar={this.navBar()}
                 // footer={this.footer()}
-                onRefresh={this.clearData}
                 title={"Términos y Condiciones"}
             >
                 <Container>
