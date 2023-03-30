@@ -112,25 +112,56 @@ class lista extends Component {
     // return <SList data={arr} horizontal space={0} render={data => { this.Item() }} />
   }
 
-  toStringInversionista(llave) {
+
+
+
+  toStringInversionista_detalle(fondo_key, usuario_key) {
+
+    var data_fondo_inversion = fondo_inversion.Actions.getByKey(fondo_key, this.props);
+
+    var data_inversion_usuario = fondo_inversion_usuario.Actions.filtrar({
+      key_fondo_inversion: fondo_key,
+      key_usuario_inversionista: usuario_key ?? this.props.state.usuarioReducer.usuarioLog.key
+    }, this.props);
+    if (!data_fondo_inversion) return null;
+    if (!data_inversion_usuario) return null;
+
+    // console.log("volar ", data_inversion_usuario)
+  }
+
+  toStringInversionista(fondo_key, precioXaccion) {
+
+    var data_fondo_inversion = fondo_inversion.Actions.getByKey(fondo_key, this.props);
+    if (!data_fondo_inversion) return <SLoad />
+
+
     var datax = fondo_inversion_usuario.Actions.getAll(this.props);
     if (!datax) return <SLoad />
 
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
 
-    console.log("fondo_inversion_usuario ", datax)
+    // console.log("fondo_inversion_usuario ", datax)
 
 
-    return Object.keys(datax).filter(predicate => predicate.key_fondo_inversion == llave && predicate.key_usuario_inversionista == usuarios.key).map(keys => {
+    return Object.keys(datax).map(keys => {
       const obj = datax[keys];
 
-      // if (obj.estado != 1) return;
+      if (obj.key_fondo_inversion != fondo_key) return;
 
-      // if (obj.key_FondoInversion != key_FondoInversion) return;
-      // console.log("ch ", obj)
 
-      return <SText>{"ja. " + obj + "\n\n\n"}</SText>
+      // return this.toStringInversionista_detalle(obj.key_fondo_inversion, obj.key_usuario_inversionista)
+      return <SText color={"red"} >{"socio "
+        + usuarios[obj.key_usuario_inversionista].Nombres + " "
+        + usuarios[obj.key_usuario_inversionista].Apellidos + " "
+        + "Inverion " + obj.inversion + " "
+        + "comision " + obj.comision + " "
+        + "# acciones " + obj.inversion / precioXaccion + " "
+        + "paquetes " + obj.comision + " "
+        + "ganancia " + (obj.inversion / precioXaccion) * 1 + " "
+        + "\n"
+      }</SText>
+
     })
 
   }
@@ -140,21 +171,30 @@ class lista extends Component {
     if (!data) return <SLoad />
 
 
+    // var dataxUsuario = fondo_inversion_usuario.Actions.getAll(this.props);
+    // if (!dataxUsuario) return <SLoad />
 
     return Object.keys(data).map(keys => {
       const obj = data[keys];
 
       if (obj.estado != 1) return;
       // console.log("tosreing ", obj)
-
+      // this.getPaquetexSucursal(obj.key, obj.descripcion, obj.fecha_inicio, obj.fecha_fin)
+      // return this.toStringInversionista(obj.key)
       return <>
         <SText>{"Suc. " + obj.descripcion + "\n"
           + "Direccion " + obj.observacion + "\n"
           + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
           + "Duracion " + obj.cantidad_meses + " Meses \n"
           + "Acciones " + obj.cantidad_acciones + "\n"
-          + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}</SText>
-        {this.toStringInversionista(obj.key) + " Bs \n\n\n"}
+          // + "jaa " + obj.cantidad_acciones.length() + "\n"
+          + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}
+        </SText>
+        <SHr height={1} color={"blue"} />
+        <SHr height={4} />
+        {this.toStringInversionista(obj.key, obj.precio_accion)}
+        <SHr height={4} />
+
       </>
     })
 
