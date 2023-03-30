@@ -22,7 +22,7 @@ class terminos extends Component {
         return (
             <SPage
                 // navBar={this.navBar()}
-                footer={this.footer()}
+                // footer={this.footer()}
                 onRefresh={this.clearData}
                 title={"Términos y Condiciones"}
             >
