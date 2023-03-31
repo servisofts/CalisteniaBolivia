@@ -98,7 +98,7 @@ public class Reporte {
             obj.put("estado", "error");
         }
     }
-
+//miralo
     public void getPaquetesVendidosAll(JSONObject obj, SSSessionAbstract session) {
         try {
             JSONObject data = obj.getJSONObject("data");

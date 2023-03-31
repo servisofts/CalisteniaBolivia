@@ -62,7 +62,7 @@ class CajasActivas extends Component {
       </SView>
       <SView col={"xs-8"} center height={40}>
         <SView center col={"xs-10"} height card>
-          <SText bold fontSize={18} center>{`Bs ${SMath.formatMoney(totales)}`}</SText>
+          <SText bold fontSize={18} center>{`${SMath.formatMoney(totales)}`}</SText>
         </SView>
       </SView>
       <SView col={"xs-4"} height={50} onPress={() => {

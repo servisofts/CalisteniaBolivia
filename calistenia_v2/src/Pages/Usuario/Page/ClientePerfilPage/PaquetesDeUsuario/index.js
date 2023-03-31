@@ -53,7 +53,7 @@ class PaquetesDeUsuario extends Component {
     var obj = data[key_sucursal]
     if (!obj) return <View />
     return <SView>
-      <SText color={STheme.color.text}>Sucursal: {obj.descripcion}</SText>
+      <SText color={"#666"}>Sucursal: {obj.descripcion}</SText>
     </SView>
   }
   getUsuario(key_usuario) {
@@ -137,30 +137,24 @@ class PaquetesDeUsuario extends Component {
         <SHr height={20} />
 
         <SInput ref={ref => this._fechaInicio = ref} col={"xs-10"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"} />
-        <SHr height={15} />
-        <SText width={250} font={24} color={STheme.color.text}>Seguro que desea cambiar la fecha del paquete?</SText>
-        <SHr height={15} />
+        {/* <SHr height={15} /> */}
+        <SText col={"xs-9"} color={STheme.color.text + 66} center>¿Está seguro de que desea cambiar la fecha del paquete?</SText>
+        {/* <SHr height={15} /> */}
 
         <SButtom type="danger" onPress={() => { SPopup.close("CodigoSeguridad"); }}>Cancelar</SButtom>
         <SView width={30} ></SView>
 
+        <SView width={30} ></SView>
         <SButtom type="success" onPress={() => {
 
-          // console.log("ostias ", obj)
-
-          // var dias = obj.fecha_inicio.diff(obj.fecha_fin);
           var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
-
           var fecha_inicio_modificada = this._fechaInicio.getValue();
           var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias);
-          // var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(30);
-          // console.log("dias capturados ", fecha_fin_modificada)
 
-          //console.log("inicio ", fecha_inicio_modificada)
-          //console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
-          //console.log("key ", obj.key_paquete_venta_usuario)
+          // console.log("inicio ", fecha_inicio_modificada)
+          // console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
+          // console.log("key ", obj.key_paquete_venta_usuario)
 
-          //return;
 
           // alvaro boton eliminar
           // obj.estado = "3";
@@ -241,13 +235,11 @@ class PaquetesDeUsuario extends Component {
       SPopup.alert(reducer.error);
     }
 
-    return <>
-      <SButtom
-        style={{ width: 30, height: 30, }}
-        onPress={() => { SPopup.open({ content: this.popupFecha(obj), key: "CodigoSeguridad" }); }}>
-        <SIcon name={"Edit"} style={{ width: 30, height: 30 }} />
-      </SButtom>
-    </>
+    return <SButtom
+      style={{ width: 30, height: 30 }}
+      onPress={() => { SPopup.open({ content: this.popupFecha(obj), key: "CodigoSeguridad" }); }}>
+      <SIcon name={"Edit"} style={{ width: 30, height: 30 }} />
+    </SButtom>
   }
   getLista() {
     var reducer = this.props.state.paqueteVentaReducer;
@@ -325,7 +317,9 @@ class PaquetesDeUsuario extends Component {
             paddingStart: 8,
             height: "100%",
           }}>
-            <SText color={STheme.color.text + 66} style={{ fontSize: 14 }}>{paquete.descripcion}</SText>
+            <Text style={{
+              fontSize: 14,
+            }}>{paquete.descripcion}</Text>
             {this.getSucursal(obj.key_sucursal)}
             {this.getUsuario(obj.key_usuario)}
           </View>
@@ -348,21 +342,19 @@ class PaquetesDeUsuario extends Component {
                         paddingStart: 8,
                     }}>
                         <Text style={{
-
                             fontSize: 10,
                         }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
                         <Text style={{
-
                             fontSize: 10,
                         }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
                     </View> */}
           {this.getEditar(obj)}
-          <SView width={5} ></SView>
+          <SView width={10} ></SView>
 
-          {this.getEliminar(obj)}
-        </View>
+      { this.getEliminar(obj) }
+        </View >
         <Paquete_Item data={obj} paquete={paquete} />
-      </TouchableOpacity>
+      </TouchableOpacity >
     })
   }
   getBtnAdd = () => {
@@ -403,7 +395,7 @@ class PaquetesDeUsuario extends Component {
         type: "select",
         onSelect: (obj) => {
           SNavigation.goBack();
-          this.props.navigation.navigate("", {
+          this.props.navigation.navigate("ClientePaqueteRegistroPage", {
             key_usuario: this.props.key_usuario,
             key_paquete: obj.key,
           });

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { View } from 'react-native';
 import { Line, Svg } from 'react-native-svg';
-import { SDate, SOrdenador, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SMath, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 
 var FColor = {
   down: "#660000",
@@ -118,11 +118,13 @@ export default class MovimientosGraphic extends Component {
         {/* tarea8 ✅ ✅ ✅*/}
 
         <SView row center style={{ height: 24, width: 70, position: "absolute", top: 6, borderRadius: 2, backgroundColor: "green" }}>
-          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMaximo()}</SText>
+          {/* <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMaximo()}</SText> */}
+          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {SMath.formatMoney(this.getMontoMaximo())}</SText>
         </SView>
 
         <SView row center style={{ height: 24, width: 70, position: "absolute", bottom: 6, borderRadius: 2, backgroundColor: "red" }}>
-          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMinimo()}</SText>
+          {/* <SText center style={{ fontSize: 12, color: "white", }}>Bs. {this.getMontoMinimo()}</SText> */}
+          <SText center style={{ fontSize: 12, color: "white", }}>Bs. {SMath.formatMoney(this.getMontoMinimo())}</SText>
         </SView>
       </View>
     );

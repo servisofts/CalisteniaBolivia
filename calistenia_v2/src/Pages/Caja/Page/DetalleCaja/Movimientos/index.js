@@ -276,16 +276,16 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
-      {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
-      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egresoCaja)}
-      {this.getDetalle("Egreso de traspaso a bancos", this.getIcon(-1), total.egresoTraspasoBanco)}
+      {this.getDetalle("Ingreso de caja", this.getIcon(1), SMath.formatMoney(total.ingreso))}
+      {this.getDetalle("Egreso de caja", this.getIcon(-1), SMath.formatMoney(total.egresoCaja))}
+      {this.getDetalle("Egreso de traspaso a bancos", this.getIcon(-1), SMath.formatMoney(total.egresoTraspasoBanco))}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de pagos</SText>
       </SView>
       {Object.keys(tiposPagos).map((key, index) => {
-        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
+        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), SMath.formatMoney(total_tipo_pago[key] ?? 0))
       })}
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -294,9 +294,9 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
       </SView>
-      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), total_tipo_movimiento[1] ?? 0)}
-      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), total_tipo_movimiento[3] ?? 0)}
-      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), total_tipo_movimiento[4] ?? 0)}
+      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), SMath.formatMoney(total_tipo_movimiento[1] ?? 0))}
+      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), SMath.formatMoney(total_tipo_movimiento[3] ?? 0))}
+      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), SMath.formatMoney(total_tipo_movimiento[4] ?? 0))}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={62} center></SView>
