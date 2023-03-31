@@ -11,6 +11,7 @@ class index extends Component {
         this.state = {
         };
         this.pk = SNavigation.getParam("pk")
+        this.clone = SNavigation.getParam("clone")
         this.key_gestion = SNavigation.getParam("key_gestion", Model.gestion.Action.getSelect()?.key)
     }
 
@@ -19,7 +20,7 @@ class index extends Component {
         return (
             <SPage title={"Asiento contable"} disableScroll center>
                 <SView col={"xs-11.5 sm-10 md-8"} height>
-                    <AsientoContable key_gestion={this.key_gestion} key_asiento_contable={this.pk} />
+                    <AsientoContable key_gestion={this.key_gestion} key_asiento_contable={this.pk} clone={this.clone} />
                 </SView>
             </SPage>
         );

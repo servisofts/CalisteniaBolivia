@@ -8,7 +8,7 @@ import SectionApis from '../login/components/SectionApis';
 import BtnSend from './components/BtnSend';
 import Header from './components/Header';
 import Card from './components/Card';
-
+import BackButtom from '../../Components/BackButtom';
 
 class membresia extends Component {
     constructor(props) {
@@ -29,12 +29,12 @@ class membresia extends Component {
             space={15}
             initSpace={15}
             data={Object.values(paquete)}
+            filter={(a) => a.estado != 0}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
                 return <Card datas={data} pkSucursal={this.params.pk} />
             }}
         />
-
     }
 
     render() {
@@ -42,29 +42,17 @@ class membresia extends Component {
             ...this.params,
         };
 
-
         return (
-            <SPage  
-            footer={this.footer()}
-            title={"Comprar"}
+            <SPage
+                footer={this.footer()}
+                title={"Comprar"}
+                hidden
             >
+                <SHr height={50} />
                 <Container>
                     {/* <SView col={"xs-12"} >
                         <SText fontSize={26} color={STheme.color.white}>Comprar</SText>
                     </SView> */}
-                    <SHr height={20} />
-                    <SView col={"xs-12"} >
-                        <SView
-                            height={30}
-                            width={100}
-                            backgroundColor={STheme.color.darkGray}
-                            style={{ borderRadius: 10 }}
-                            center
-                        >
-                            <SText fontSize={15} color={STheme.color.text}>Membresía</SText>
-                        </SView>
-                    </SView>
-                    <SHr height={20} />
                     {this.render_with_data()}
                     <SHr height={20} />
                 </Container>
@@ -72,7 +60,10 @@ class membresia extends Component {
         );
     }
     footer() {
-        return <BottomNavigator url={"/paquete"} />
+        return <>
+            <BottomNavigator url={"/paquete"} />
+            <BackButtom />
+        </>
     }
 }
 const initStates = (state) => {

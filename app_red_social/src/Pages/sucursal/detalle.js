@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SForm, SHr, SNavigation, SPage, SPopup, SText, STheme, SView, SIcon, SLoad, SList, SImage } from 'servisofts-component';
+import { SForm, SHr, SNavigation, SPage, SPopup, SText, STheme, SView, SIcon, SLoad, SList, SImage, SInput } from 'servisofts-component';
 import { AccentBar } from '../../Components';
 import Container from '../../Components/Container';
 import Model from '../../Model';
 import Mapa from './components/Mapa';
 import Card from './components/Card';
 import Header from './components/Header';
+import BackButtom from '../../Components/BackButtom';
 
 
 class detalle extends Component {
@@ -67,7 +68,7 @@ class detalle extends Component {
         };
         this.loadData();
         return (
-            <SPage  >
+            <SPage hidden footer={<BackButtom />}>
                 <Header data={this.sucursal} />
                 <Container>
                     <SView col={"xs-12"} center>
@@ -75,7 +76,6 @@ class detalle extends Component {
                     </SView>
                     <SHr height={60} />
                     {this.render_with_data()}
-
                     <SHr height={30} />
                 </Container>
                 <SHr height={40} />

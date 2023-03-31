@@ -31,23 +31,8 @@ class index extends Component {
                 return <Sucursal.Card image={1} datas={data} root={'/sucursal/detalle'} />
             }}
         />
+    }
 
-    }
-    banner() {
-        return <>
-            <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} row height={470} backgroundColor={STheme.color.primary} center
-                onLayout={(evt) => {
-                    this.setState({ layout: evt.nativeEvent.layout })
-                }}
-            >
-                <SImage src={require('../../Assets/img/banner1.png')} width={"100%"} height={"100%"}
-                    style={{
-                        resizeMode: 'cover',
-                    }}
-                />
-            </SView>
-        </>
-    }
     navBar() {
         return <TopBar type={"home"} />
     }
@@ -61,15 +46,14 @@ class index extends Component {
                 onRefresh={this.clearData}
             >
                 <Container>
-                    <SHr height={15} />
+                    {/* <SHr height={15} />
                     <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
                         <SHr height={10} />
                         <SIcon name='logowhite' fill={STheme.color.text} width={200} />
                         <SHr height={10} />
-                    </SView>
+                    </SView> */}
                     <SHr height={15} />
-                    {/* {this.render_with_data()} */}
-                    {this.banner()}
+                    {this.render_with_data()}
                 </Container>
             </SPage>
         );

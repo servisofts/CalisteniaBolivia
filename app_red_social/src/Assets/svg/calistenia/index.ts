@@ -20,6 +20,7 @@ import Footer, { ReactComponent as FooterW } from './footer.svg';
 import Inombre, { ReactComponent as InombreW } from './inombre.svg';
 import Ibackg1, { ReactComponent as Ibackg1W } from './ibackg1.svg';
 import Ibackg2, { ReactComponent as Ibackg2W } from './ibackg2.svg';
+import Iback, { ReactComponent as IbackW } from './iback.svg';
 
 
 const Assets = {
@@ -43,6 +44,7 @@ const Assets = {
 	"Inombre": { Native: Inombre, Web: InombreW },
 	"Ibackg1": { Native: Ibackg1, Web: Ibackg1W },
 	"Ibackg2": { Native: Ibackg2, Web: Ibackg2W },
+	"Iback": { Native: Iback, Web: IbackW },
 }
 
 export default Assets;

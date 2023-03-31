@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SHr, SIcon, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import { AccentBar, BottomNavigator, Container } from '../../Components';
+import BackButtom from '../../Components/BackButtom';
 import SectionApis from './components/SectionApis';
 import SectionFooter from './components/SectionFooter';
 import SectionForm from './components/SectionForm';
@@ -19,14 +20,16 @@ class login extends Component {
 
         return (
             <SPage center
+                hidden
                 footer={this.footer()}
             >
+                <SHr height={40} />
                 <SView col={"xs-12"} center>
                     <SView col={"xs-12"}>
                         <Container>
                             {/* <SHr height={8} /> */}
                             <SectionHeader />
-                            <SHr height={16} />
+                            {/* <SHr height={16} /> */}
                         </Container>
                     </SView>
                     <Container>
@@ -36,7 +39,7 @@ class login extends Component {
                         <SectionFooter onPress={() => {
                             this._sectionForm.submit();
                         }} />
-                        <SHr height={55} />
+                        <SHr height={35} />
                         <SectionApis />
                         <SHr height={35} />
                         <SectionRegister />
@@ -47,7 +50,10 @@ class login extends Component {
         );
     }
     footer() {
-        return <BottomNavigator url={"/login"} />
+        return <>
+            <BottomNavigator url={"/login"} />
+            <BackButtom />
+        </>
     }
 }
 const initStates = (state) => {

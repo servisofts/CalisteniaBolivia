@@ -44,8 +44,16 @@ class index extends DPA.profile {
     $menu() {
         let menu = super.$menu()
         console.log(menu)
+        menu.push({ label: "Clonar", onPress: this.clonar.bind(this) })
         menu.push({ label: "PDF", onPress: this.export_pdf.bind(this) })
         return menu
+    }
+    clonar() {
+        SNavigation.navigate("/contabilidad/asiento", {
+            pk: this.pk,
+            key_gestion: this.$params.key_gestion,
+            clone: true
+        })
     }
     export_pdf() {
         Model.asiento_contable.Action.pdf({ key: this.pk }).then((resp) => {
@@ -61,7 +69,11 @@ class index extends DPA.profile {
     $render() {
         // this.data = this.$getData();
         // if (!this.data) return null;
-        return <AsientoContableStatic key_asiento_contable={this.pk} key_gestion={this.$params.key_gestion} />
+        return <SView style={{
+            padding: 8,
+        }} flex>
+            <AsientoContableStatic key_asiento_contable={this.pk} key_gestion={this.$params.key_gestion} />
+        </SView>
     }
 }
 export default connect(index);

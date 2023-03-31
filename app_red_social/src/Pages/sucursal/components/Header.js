@@ -31,7 +31,7 @@ export default class Header extends Component {
                         this.setState({ layout: evt.nativeEvent.layout })
                     }}
                 >
-                    <SImage src={Model.sucursal._get_image_download_path(SSocket.api, this.props.data.key)} width={"100%"} height={"100%"}
+                    <SImage src={SSocket.api.root + "sucursal/portada/" + this.props.data.key} width={"100%"} height={"100%"}
                         style={{
                             resizeMode: 'cover',
                         }}

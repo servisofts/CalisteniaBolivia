@@ -6,6 +6,7 @@ import { BottomNavigator, Container, NavBar, Pedido, Restaurante, TopBar, Sucurs
 import Model from '../../Model';
 import SSocket from 'servisofts-socket'
 import BtnSend2 from './components/BtnSend2';
+import BackButtom from '../../Components/BackButtom';
 class index extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ class index extends Component {
             position: "absolute",
             bottom: 0,
             right: -20,
-            zIndex: 9
+            zIndex: -9
         }}>
             <SIcon name={"Footer"} />
         </SView>
@@ -46,20 +47,23 @@ class index extends Component {
                 // navBar={this.navBar()}
                 // footer={this.footer()}
                 // footer={this.footer2()}
-                onRefresh={this.clearData}
+                // onRefresh={this.clearData}
+                hidden
                 disableScroll
+                footer={<BackButtom />}
+                center
             >
                 <SView col={"xs-12"} flex backgroundColor={STheme.color.primary} center onLayout={(evt) => {
                     this.setState({ layout: evt.nativeEvent.layout })
                 }}>
                     <Container
                         style={{
-                            position: 'relative',
-                            zIndex: 999
+                            // position: 'relative',
+                            // zIndex: 999
                         }}>
                         <SHr height={15} />
-                        <SView center >
-                            <SIcon name={"logowhite"} fill={STheme.color.text} />
+                        <SView center col={"xs-12"}>
+                            <SIcon name={"logowhite"} fill={STheme.color.text} height={80} />
                         </SView>
                         <SHr height={35} />
                         <SView center col={"xs-10"} >
@@ -85,7 +89,7 @@ class index extends Component {
                                 Si eres nuevo en nuestras sucursales, por favor crea una nueva cuenta AQUÍ
                             </SText>
                         </SView>
-                        <SHr height={105} />
+                        <SHr height={35} />
                     </Container>
                     {this.renderFooter()}
                 </SView>

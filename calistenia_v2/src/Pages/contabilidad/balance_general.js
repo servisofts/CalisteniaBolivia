@@ -1,7 +1,8 @@
 import { Component } from 'react';
-import { SHr, SNavigation, SPage, STheme, SView, SText, SLoad, SInput } from 'servisofts-component';
+import { SHr, SNavigation, SPage, STheme, SView, SText, SLoad, SInput, SDate } from 'servisofts-component';
 import DPA, { connect } from 'servisofts-page';
 import { PlanDeCuentasTable } from 'servisofts-rn-contabilidad';
+import FechasBetween from '../../Components/FechasBetween';
 import Model from '../../Model';
 // import { PlanDeCuentasTable } from 'servisofts-rn-contabilidad'
 
@@ -53,17 +54,16 @@ class index extends Component {
 
         return (<SPage title={"Balance general"} disableScroll center >
             <SView col={"xs-12"} center>
-                <SView width={100}>
-                    <SInput value={this.state.ano} onChangeText={(val) => {
-                        if (val.length == 4) {
-                            this.state.fecha_inicio = val + "-01-01";
-                            this.state.fecha_fin = val + "-12-31";
-                            this.state.data = null;
-                            this.getData();
-                        }
-                        this.setState({ ano: val })
+                <FechasBetween
+                    fecha_inicio={new SDate().toString("yyyy") + "-01-01"}
+                    fecha_fin={new SDate().toString("yyyy") + "-12-31"}
+                    onChange={(fecha_inicio, fecha_fin) => {
+                        this.state.fecha_inicio = fecha_inicio;
+                        this.state.fecha_fin = fecha_fin;
+                        this.state.data = null;
+                        this.getData();
+                        this.setState({ ...this.state })
                     }} />
-                </SView>
             </SView>
             <SView col={"xs-12"} flex center>
                 {this.loadData()}

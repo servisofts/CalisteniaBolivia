@@ -24,7 +24,7 @@ class Login extends Component {
             inputs={{
                 usuario: {
                     placeholder: "Email",
-                    isRequired: true, keyboardType: "email-address", autoCapitalize: "none", autoFocus: true, onKeyPress: (evt) => {
+                    isRequired: true, keyboardType: "email-address", autoCapitalize: "none", autoFocus: false, onKeyPress: (evt) => {
                         if (evt.key === "Enter") {
                             this.form.focus("password");
                         }
