@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import Server.SSSAbstract.SSSessionAbstract;
 import Servisofts.SConfig;
 import Servisofts.SPGConect;
+import Servisofts.SUtil;
 
 import org.json.JSONObject;
 
@@ -126,6 +127,7 @@ public class PaqueteVenta {
 
     public void registro(JSONObject obj, SSSessionAbstract session) {
         try {
+            SPGConect.Transacction();
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
             DateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
             String fecha_on = formatter.format(new Date());
@@ -184,44 +186,52 @@ public class PaqueteVenta {
                 try {
                     for (int j = 0; j < JSONObject.getNames(data).length; ++j) {
                         try {
-                            data.getJSONObject(JSONObject.getNames(data)[j]);
-                            monto += data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto");
-                            data.getJSONObject(JSONObject.getNames(data)[j]).put("key_paquete_venta_usuario",
+                            String key_tp = JSONObject.getNames(data)[j];
+                            if (data.isNull(key_tp)) {
+                                continue;
+                            }
+                            if (data.get(key_tp).toString() == "false") {
+                                continue;
+                            }
+                            // data.getJSONObject(key_tp);
+                            monto += data.getJSONObject(key_tp).getDouble("monto");
+                            data.getJSONObject(key_tp).put("key_paquete_venta_usuario",
                                     paquete_venta_usuario.getString("key"));
-                            data.getJSONObject(JSONObject.getNames(data)[j]).put("key_tipo_pago",
-                                    JSONObject.getNames(data)[j]);
-                            data.getJSONObject(JSONObject.getNames(data)[j]).put("key_usuario",
+                            data.getJSONObject(key_tp).put("key_tipo_pago",
+                                    key_tp);
+                            data.getJSONObject(key_tp).put("key_usuario",
                                     clientes.getJSONObject(i).getString("key"));
                             JSONObject caja_movimiento = Caja.addVentaServicio(caja_activa.getString("key"),
-                                    obj.getString("key_usuario"), JSONObject.getNames(data)[j],
-                                    data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto"),
-                                    formatter.format(new Date()), data.getJSONObject(JSONObject.getNames(data)[j]));
+                                    obj.getString("key_usuario"), key_tp,
+                                    data.getJSONObject(key_tp).getDouble("monto"),
+                                    formatter.format(new Date()), data.getJSONObject(key_tp));
                             send_movimiento.put("data", caja_movimiento);
-                            SSServerAbstract.sendAllServer(send_movimiento.toString());
-                            if (JSONObject.getNames(data)[j].equals("2") || JSONObject.getNames(data)[j].equals("3")) {
-                                if (JSONObject.getNames(data)[j].equals("3")) {
-                                    String codigo = data.getJSONObject(JSONObject.getNames(data)[j])
-                                            .getString("C\u00f3digo");
+                            // SSServerAbstract.sendAllServer(send_movimiento.toString());
+                            if (key_tp.equals("2") || key_tp.equals("3")) {
+                                if (key_tp.equals("3")) {
+                                    // Se coloca \u00F3 = ó " Código "
+                                    String codigo = data.getJSONObject(key_tp).getString("C\u00F3digo");
                                     JSONObject billetera = Billetera.getByCodigo(codigo);
                                     billetera.put("estado", 0);
                                     SPGConect.editObject("billetera", billetera);
                                 }
                                 String keyMovimientoOld = caja_movimiento.getString("key");
-                                data.put("key_cuenta_banco", cajaTipoPagoCuentaBanco
-                                        .getJSONObject(JSONObject.getNames(data)[j]).getString("key_cuenta_banco"));
+                                // data.put("key_cuenta_banco", cajaTipoPagoCuentaBanco
+                                // .getJSONObject(key_tp).getString("key_cuenta_banco"));
                                 caja_movimiento = Caja.addTraspasoBanco(caja_activa.getString("key"),
-                                        obj.getString("key_usuario"), JSONObject.getNames(data)[j],
-                                        data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto") * -1.0,
-                                        formatter.format(new Date()), data.getJSONObject(JSONObject.getNames(data)[j]));
+                                        obj.getString("key_usuario"), key_tp,
+                                        data.getJSONObject(key_tp).getDouble("monto") * -1.0,
+                                        formatter.format(new Date()), data.getJSONObject(key_tp));
                                 send_movimiento.put("data", caja_movimiento);
                                 SSServerAbstract.sendAllServer(send_movimiento.toString());
                                 JSONObject cuentaBancoMovimiento = new JSONObject();
                                 cuentaBancoMovimiento.put("key", UUID.randomUUID().toString());
                                 cuentaBancoMovimiento.put("descripcion", "Ingreso por venta de servicio.");
-                                cuentaBancoMovimiento.put("key_cuenta_banco", data.getString("key_cuenta_banco"));
+                                cuentaBancoMovimiento.put("key_cuenta_banco",
+                                        cajaTipoPagoCuentaBanco.getJSONObject(key_tp).getString("key_cuenta_banco"));
                                 cuentaBancoMovimiento.put("key_usuario", obj.getString("key_usuario"));
                                 cuentaBancoMovimiento.put("monto",
-                                        data.getJSONObject(JSONObject.getNames(data)[j]).getDouble("monto"));
+                                        data.getJSONObject(key_tp).getDouble("monto"));
                                 cuentaBancoMovimiento.put("data",
                                         new JSONObject().put("key_caja_movimiento", keyMovimientoOld));
                                 cuentaBancoMovimiento.put("fecha_on", formatter.format(new Date()));
@@ -229,7 +239,7 @@ public class PaqueteVenta {
                                 cuentaBancoMovimiento.put("key_sucursal", caja_activa.getString("key_sucursal"));
                                 cuentaBancoMovimiento.put("key_tipo_gasto", "1");
                                 cuentaBancoMovimiento.put("tipo_movimiento", "ingreso");
-                                cuentaBancoMovimiento.put("key_tipo_pago", JSONObject.getNames(data)[j]);
+                                cuentaBancoMovimiento.put("key_tipo_pago", key_tp);
                                 SPGConect.insertArray("cuenta_banco_movimiento",
                                         new JSONArray().put(cuentaBancoMovimiento));
                                 JSONObject sendcuentaBancoMovimiento = new JSONObject();
@@ -240,9 +250,11 @@ public class PaqueteVenta {
                                 SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
                             }
                         } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
                     }
                 } catch (Exception ex2) {
+                    ex2.printStackTrace();
                 }
                 clientes.getJSONObject(i).put("monto", monto);
             }
@@ -283,10 +295,13 @@ public class PaqueteVenta {
                 } catch (Exception ex3) {
                 }
             }
+            SPGConect.commit();
         } catch (SQLException e) {
             obj.put("estado", "error");
             e.printStackTrace();
+            SPGConect.rollback();
         }
+        SPGConect.Transacction_end();
     }
 
     public void eliminar(JSONObject obj, SSSessionAbstract session) {
@@ -323,6 +338,9 @@ public class PaqueteVenta {
                                     .getJSONObject(JSONObject.getNames(caja_movimientos)[j]);
 
                             caja_movimiento.put("estado", 3);
+                            caja_movimiento.getJSONObject("data").put("key_usuario_anulacion",
+                                    obj.getString("key_usuario"));
+                            caja_movimiento.getJSONObject("data").put("fecha_anulacion", SUtil.now());
                             SPGConect.editObject("caja_movimiento", caja_movimiento);
 
                             String key_caja_old = caja_movimiento.getString("key");
@@ -348,14 +366,14 @@ public class PaqueteVenta {
                                     sendcuentaBancoMovimiento.put("estado", "exito");
                                     SSServerAbstract.sendAllServer(sendcuentaBancoMovimiento.toString());
                                 }
-                            }
+                            } 
                             // else {
-                            // caja_movimiento = Caja.addAnulacionServicio(caja_activa.getString("key"),
-                            // obj.getString("key_usuario"), caja_movimiento.getString("key_tipo_pago"),
-                            // caja_movimiento.getDouble("monto"), formatter.format(new Date()),
-                            // caja_movimiento.getJSONObject("data"));
-                            // send_movimiento.put("data", caja_movimiento);
-                            // SSServerAbstract.sendAllServer(send_movimiento.toString());
+                            //     caja_movimiento = Caja.addAnulacionServicio(caja_activa.getString("key"),
+                            //             obj.getString("key_usuario"), caja_movimiento.getString("key_tipo_pago"),
+                            //             caja_movimiento.getDouble("monto"), formatter.format(new Date()),
+                            //             caja_movimiento.getJSONObject("data"));
+                            //     send_movimiento.put("data", caja_movimiento);
+                            //     SSServerAbstract.sendAllServer(send_movimiento.toString());
                             // }
                             // TODO ruddy aqui deberia cambiar el estadocajaMovimiento
 

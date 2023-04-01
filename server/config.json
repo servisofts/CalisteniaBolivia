@@ -17,7 +17,7 @@
     "data_base": {
         "puerto": 5432,
         "pass": "postgres",
-        "ip": "192.168.6.18",
+        "ip": "192.168.5.18",
         "bd_name": "servisofts.calistenia",
         "user": "postgres"
     },
