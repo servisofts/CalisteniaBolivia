@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SMath, SNavigation, SOrdenador, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
 
@@ -79,6 +79,16 @@ class Movimientos extends Component {
       })
     }}>{usr.Nombres} {usr.Apellidos} </SText>
   }
+  getUsuarioNombre(data) {
+    if (!data.data) return;
+    if (!data.data.key_usuario) return;
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return;
+    var usr = usuarios[data.data.key_usuario];
+    if (!usr) return;
+    let aux = usr.Nombres + " " + usr.Apellidos
+    return aux;
+  }
   getIconTipoPago(type, data) {
     // alert(JSON.stringify(data))
     // return <SText>{JSON.stringify(data.data)}</SText>
@@ -114,15 +124,15 @@ class Movimientos extends Component {
     return new SOrdenador([{ key: "fecha_on", order: "desc", peso: 1 }]).ordernarObject(movimientos).map((key, index) => {
       var timpoMovimiento = tipoMovimientos[movimientos[key].key_caja_tipo_movimiento];
 
-      // if (movimientos[key].estado == "3") return null;
+      //alvaro aqui le pusiste
+      if (movimientos[key].estado == "3") return null;
       // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Venta de servicio") return null;
-
       // if (movimientos[key].estado == "3" && movimientos[key].descripcion == "Traspaso a bancos") return null;
-
 
       return (
         <View key={index} style={{ width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
           <View style={{ backgroundColor: STheme.color.card, width: "100%", minHeight: 50, borderRadius: 4, flexDirection: "row", }}>
+            {/* <SText>{key}</SText> */}
             <SView style={{
               flex: 1,
               height: "100%",
@@ -233,29 +243,14 @@ class Movimientos extends Component {
     var total_tipo_pago = {}
     var total_tipo_movimiento = {}
 
+    // console.log("asu madre ", this.dataExport)
     // tarea6  ✅ ✅ ✅
     if (this.moviminetos) {
       Object.values(this.moviminetos).map((o) => {
-        if (o.estado == 0) return null;
+        if (o.estado == 0 || o.estado == 3) return null;
         if (o.descripcion == "Cancelacion de servicio") return null;
-        // alvarosiles
-        // console.log("ostia ", o)
         if (o.monto >= 0) {
           total.ingreso += o.monto;
-
-          // if (o.key_tipo_pago == "1" || o.descripcion == "apertura" || o.descripcion == "ingreso") {
-          //   // sumar en efectivo
-          // }
-          // if (o.key_tipo_pago == "2" || o.descripcion == " tarjeta") {
-          //   // sumar en tarjeta
-          // }
-          // if (o.key_tipo_pago == "3" || o.descripcion == "Transferencia") {
-          //   // sumar en Transferencia
-          // }
-          // if (o.descripcion == "cheque") {
-          //   // sumar en cheque
-          // }
-
           if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
           total_tipo_pago[o.key_tipo_pago] += o.monto;
 
@@ -269,14 +264,6 @@ class Movimientos extends Component {
             total.egresoCaja += o.monto;
           }
         }
-
-        // if (!total_tipo_pago[o.key_tipo_pago]) total_tipo_pago[o.key_tipo_pago] = 0
-        // total_tipo_pago[o.key_tipo_pago] += o.monto;
-
-        // if (o.monto >= 0) { total_tipo_pago[o.key_tipo_pago] += o.monto; }
-
-        // if (!total_tipo_movimiento[o.key_caja_tipo_movimiento]) total_tipo_movimiento[o.key_caja_tipo_movimiento] = 0
-        // total_tipo_movimiento[o.key_caja_tipo_movimiento] += o.monto;
       })
     }
 
@@ -289,16 +276,16 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Informacion</SText>
       </SView>
-      {this.getDetalle("Ingreso de caja", this.getIcon(1), total.ingreso)}
-      {this.getDetalle("Egreso de caja", this.getIcon(-1), total.egresoCaja)}
-      {this.getDetalle("Egreso de traspaso a bancos", this.getIcon(-1), total.egresoTraspasoBanco)}
+      {this.getDetalle("Ingreso de caja", this.getIcon(1), SMath.formatMoney(total.ingreso))}
+      {this.getDetalle("Egreso de caja", this.getIcon(-1), SMath.formatMoney(total.egresoCaja))}
+      {this.getDetalle("Egreso de traspaso a bancos", this.getIcon(-1), SMath.formatMoney(total.egresoTraspasoBanco))}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de pagos</SText>
       </SView>
       {Object.keys(tiposPagos).map((key, index) => {
-        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), total_tipo_pago[key] ?? 0)
+        return this.getDetalle(changeTipoPago[tiposPagos[key].descripcion], this.getIconTipoPago(null, { data: { key_tipo_pago: key } }), SMath.formatMoney(total_tipo_pago[key] ?? 0))
       })}
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999", fontSize: 10, }}>Los pagos en tarjeta y transferecia se ingresan automaticamente al banco.</SText>
@@ -307,9 +294,9 @@ class Movimientos extends Component {
       <SView col={"xs-12"} height={32} center>
         <SText style={{ color: "#999" }}>Tipos de movimientos</SText>
       </SView>
-      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), total_tipo_movimiento[1] ?? 0)}
-      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), total_tipo_movimiento[3] ?? 0)}
-      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), total_tipo_movimiento[4] ?? 0)}
+      {this.getDetalle("Movimiento de apertura", this.getIconTipo({ key: "1" }), SMath.formatMoney(total_tipo_movimiento[1] ?? 0))}
+      {this.getDetalle("Movimiento de venta de paquete", this.getIconTipo({ key: "3" }), SMath.formatMoney(total_tipo_movimiento[3] ?? 0))}
+      {this.getDetalle("Movimiento de caja", this.getIconTipo({ key: "4" }), SMath.formatMoney(total_tipo_movimiento[4] ?? 0))}
 
       <SView col={"xs-12"} height={32} center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}></SView>
       <SView col={"xs-12"} height={62} center></SView>
@@ -322,10 +309,132 @@ class Movimientos extends Component {
     this.activa = this.props.caja;
     if (!this.activa) return <View />;
     if (this.props.setActiva) this.props.setActiva(this.activa);
+
+    console.log("aqui ", this.moviminetos)
+
     return (
       <SView col={"xs-12"} center style={{
         marginTop: 16,
       }}>
+
+        <ExportExcel
+          header={[
+            // { key: "fecha", label: "fecha", width: 100 },
+            { key: "nombre", label: "Nombre", width: 160 },
+            { key: "efectivo", label: "Efectivo", width: 60 },
+            { key: "transferencia", label: "Transferencia", width: 90 },
+            { key: "tarjeta", label: "Tarjeta", width: 60 },
+            { key: "apertura", label: "Apertura", width: 60 },
+            { key: "ingreso", label: "Ingreso", width: 60 },
+            { key: "egreso", label: "Egreso", width: 60 },
+            { key: "transferenciaPorCierre", label: "transferencia PorCierre", width: 200 },
+            { key: "transferenciaPorApertura", label: "transferencia PorApertura", width: 200 }
+          ]}
+          getDataProcesada={() => {
+            var dataExport = {};
+
+            var total = 0;
+
+            var monto = {
+              apertura: 0, ingreso: 0, egreso: 0, efectivo: 0, transferencia: 0, tarjeta: 0, transpasoBanca: 0, transferenciaPorApertura: 0, transferenciaPorCierre: 0
+            }
+
+
+            let ordenar = Object.values(this.moviminetos);
+
+            // ostiasput
+            ordenar.sort(function (a, b) {
+              return new SDate(a.fecha_on).getTime() - new SDate(b.fecha_on).getTime();
+            });
+
+            // console.log("miradas ", this.moviminetos)
+            ordenar.map((obj, i) => {
+              if (obj.estado == 0 || obj.estado == 3 || obj.descripcion == "Traspaso a bancos") return null;
+
+              total += obj.monto;
+
+              if (obj?.descripcion == "apertura") {
+                monto.apertura = obj.monto;
+              }
+              else {
+                monto.apertura = "";
+              }
+
+              if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "1") {
+                monto.efectivo = obj.monto;
+              } else {
+                monto.efectivo = "";
+              }
+              if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "2") {
+                monto.tarjeta = obj.monto;
+              } else {
+                monto.tarjeta = "";
+              }
+              if (obj?.descripcion == "Venta de servicio" && obj.key_tipo_pago == "3") {
+                monto.transferencia = obj.monto;
+              } else {
+                monto.transferencia = "";
+              }
+
+              if (obj?.descripcion == "Transferencia por cierre") {
+                monto.transferenciaPorCierre = obj.monto;
+              } else {
+                monto.transferenciaPorCierre = "";
+              }
+
+              if (obj?.descripcion == "Transferencia por apertura") {
+                monto.transferenciaPorApertura = obj.monto;
+              } else {
+                monto.transferenciaPorApertura = "";
+              }
+
+
+              if (obj?.key_caja_tipo_movimiento == "4" && obj.monto < 0) {
+                monto.egreso = obj.monto;
+              } else {
+                monto.egreso = "";
+              }
+
+              if (obj?.key_caja_tipo_movimiento == "4" && obj?.monto > 0) {
+                monto.ingreso = obj.monto;
+              } else {
+                monto.ingreso = "";
+              }
+
+              if (obj?.descripcion == "apertura") {
+                monto.apertura = obj.monto;
+              }
+              else {
+                monto.apertura = "";
+              }
+
+
+              // if (obj.descripcion == "Traspaso a bancos") {
+
+              // }
+
+
+              let nombreSangro = this.getUsuarioNombre(obj);
+
+              var toInsert = {
+                fecha: obj?.fecha_on,
+                nombre: nombreSangro ?? obj.descripcion,
+                efectivo: monto?.efectivo,
+                transferencia: monto?.transferencia,
+                tarjeta: monto?.tarjeta,
+                apertura: monto?.apertura,
+                ingreso: monto?.ingreso,
+                egreso: monto?.egreso,
+                transferenciaPorCierre: monto?.transferenciaPorCierre,
+                transferenciaPorApertura: monto?.transferenciaPorApertura,
+              }
+
+              dataExport[i] = toInsert
+            })
+            return dataExport
+          }}
+        />
+        <SHr height={10} />
         <SText props={{ type: "primary" }}>Movimientos</SText>
         <SView col="xs-12 md-8 xl-6">
           {this.getLista()}

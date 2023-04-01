@@ -95,7 +95,7 @@ class Cabecera extends Component {
             <SView col={"xs-12"} card height={60} center>
                 <SView col={"xs-12"} center>
                     <SText>{`Fecha de apertura\t\t${new SDate(this.props.caja.fecha_on).toString("yyyy-MM-dd hh:mm")}`}</SText>
-                    <SText>{!this.props.caja.fecha_off ? "" : `Fecha de cierre\t\t${new SDate(this.props.caja.fecha_on).toString("yyyy-MM-dd hh:mm")}`}</SText>
+                    <SText>{!this.props.caja.fecha_off ? "" : `Fecha de cierre\t\t${new SDate(this.props.caja.fecha_off).toString("yyyy-MM-dd hh:mm")}`}</SText>
                     {/* <SText>{this.getMonto(this.props.caja.key)}</SText> */}
                 </SView>
                 {this.getEstadoCaja()}

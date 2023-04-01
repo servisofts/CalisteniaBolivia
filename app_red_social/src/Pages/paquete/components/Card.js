@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native'
 import React, { Component } from 'react'
 // import PButtom from '../../../Components/PButtom'
-import { SText, STheme, SView, SNavigation } from 'servisofts-component';
-
+import { SText, STheme, SView, SNavigation, SImage } from 'servisofts-component';
+import SSocket from "servisofts-socket"
 export default class Card extends Component {
     constructor(props) {
         super(props);
@@ -20,16 +20,24 @@ export default class Card extends Component {
                 backgroundColor={STheme.color.darkGray}
                 style={{
                     borderRadius: 10,
-                    padding: 18
+                    padding: 8
                 }}
                 row
-                onPress={() => { SNavigation.navigate('/paquete/membresia/detalle', { sucursal: this.pk, pk: key  }) }}
+                center
+                onPress={() => { SNavigation.navigate('/paquete/membresia/detalle', { sucursal: this.pk, pk: key }) }}
             >
-                <SView col={"xs-10"}>
-                    <SText color={STheme.color.text} fontSize={15}>{descripcion}</SText>
+                <SView width={40} height={40} card style={{borderRadius:10, overflow:'hidden'}}>
+                    <SImage src={SSocket.api.root + "/paquete/" + key} />
                 </SView>
-                <SView col={"xs-2"}>
-                    <SText style={{ alignItems: "flex-end" }} fontSize={12} color={"#666666"}>Bs. {precio}</SText>
+                <SView width={8} />
+                <SView flex center>
+                    <SView row col={"xs-12"} >
+                        <SText bold color={STheme.color.text} fontSize={15}>{descripcion}</SText>
+                        <SView flex />
+                        <SText style={{ alignItems: "flex-end" }} fontSize={12} color={"#666666"}>Bs. {precio}</SText>
+
+                    </SView>
+
                 </SView>
             </SView>
         )

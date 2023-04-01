@@ -44,7 +44,7 @@ export default class home extends Component<TopBarPropsType> {
                     <SIcon name={"More"} height={18} />
                 </SView>
                 <SView width={30} height center onPress={() => {
-                    SNavigation.navigate('/ajustes');
+                    SNavigation.navigate('/cuenta');
                 }} >
                     <SIcon name={"Comment"} height={18} />
                 </SView>

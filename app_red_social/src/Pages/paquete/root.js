@@ -30,7 +30,8 @@ class index extends Component {
             buscador={"true"}
             center
             space={14}
-            data={Object.values(sucursales)}
+            // data={Object.values(sucursales)}
+            data={sucursales}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
                 return <Sucursal.Card image={1} datas={data} root={'/paquete/membresia'}  />
@@ -59,7 +60,7 @@ class index extends Component {
     }
 
     footer() {
-        return <BottomNavigator url={"/root"} />
+        return <BottomNavigator url={"/paquete"} />
     }
 }
 const initStates = (state) => {

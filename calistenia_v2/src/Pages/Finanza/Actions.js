@@ -1,4 +1,3 @@
-import { SIcon } from "servisofts-component";
 import SSocket from "servisofts-socket";
 
 const config = {
@@ -41,6 +40,7 @@ export default class Actions {
             fecha_hasta: fecha_hasta,
 
         };
+
         if (key_sucursal) {
             dataProps.key_sucursal = key_sucursal;
         }
@@ -50,6 +50,7 @@ export default class Actions {
             reducer.dataEstado = false;
             force = true;
         }
+
         if (!data || force) {
             if (reducer.estado == "cargando") return;
             SSocket.send({

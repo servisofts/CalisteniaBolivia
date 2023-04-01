@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SHr, SIcon, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
-import { AccentBar, Container } from '../../Components';
+import { AccentBar, BottomNavigator, Container } from '../../Components';
+import BackButtom from '../../Components/BackButtom';
 import SectionApis from './components/SectionApis';
 import SectionFooter from './components/SectionFooter';
 import SectionForm from './components/SectionForm';
@@ -18,31 +19,41 @@ class login extends Component {
     render() {
 
         return (
-            <SPage center>
+            <SPage center
+                hidden
+                footer={this.footer()}
+            >
+                <SHr height={40} />
                 <SView col={"xs-12"} center>
                     <SView col={"xs-12"}>
                         <Container>
                             {/* <SHr height={8} /> */}
                             <SectionHeader />
-                            <SHr height={16} />
+                            {/* <SHr height={16} /> */}
                         </Container>
                     </SView>
                     <Container>
                         <SHr height={16} />
                         <SectionForm ref={ref => this._sectionForm = ref} />
-                        <SHr height={25} /> 
+                        <SHr height={25} />
                         <SectionFooter onPress={() => {
                             this._sectionForm.submit();
                         }} />
-                        <SHr height={55} />
-                        <SectionApis/>
                         <SHr height={35} />
-                        <SectionRegister/>
+                        <SectionApis />
+                        <SHr height={35} />
+                        <SectionRegister />
                         <SHr height={50} />
                     </Container>
                 </SView>
             </SPage>
         );
+    }
+    footer() {
+        return <>
+            <BottomNavigator url={"/login"} />
+            <BackButtom />
+        </>
     }
 }
 const initStates = (state) => {

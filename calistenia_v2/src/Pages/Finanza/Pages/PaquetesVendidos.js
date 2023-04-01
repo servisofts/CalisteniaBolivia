@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SLoad, SNavigation, SPage, STable2, SText } from 'servisofts-component';
+import { SDate, SLoad, SMath, SNavigation, SPage, STable2, SText } from 'servisofts-component';
 import Model from '../../../Model';
 import sucursal_usuario from '../../sucursal_usuario';
 import Actions from '../Actions';
@@ -43,6 +43,7 @@ class PaquetesVendidos extends Component {
     if (!usuarios) return <SLoad />
     // return <SText>{JSON.stringify(movimientos)}</SText>
 
+    console.log("sus ", usuarios)
     // tarea1
 
     return <STable2
@@ -63,7 +64,7 @@ class PaquetesVendidos extends Component {
 
         {
           key: "usuarios-cantidad", label: "# Cli.", sumar: true, width: 80, center: true, render: (item) => {
-            return item.length;
+            return SMath.formatMoney(item.length);
           },
         },
         { key: "paquete", label: "Paquete", width: 150 },

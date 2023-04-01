@@ -20,6 +20,8 @@ export default {
     empresa: 'https://empresa.servisofts.com/http/',
     inventario: 'https://inventario.servisofts.com/http/',
     compra_venta: 'https://compraventa.servisofts.com/http/',
-    rp: "https://rolespermisos.servisofts.com/http/"
+    rp: "https://rolespermisos.servisofts.com/http/",
+    contabilidad: "https://contabilidad.servisofts.com/http/",
+    // contabilidad: "http://192.168.2.1:30011/",
   }
 }

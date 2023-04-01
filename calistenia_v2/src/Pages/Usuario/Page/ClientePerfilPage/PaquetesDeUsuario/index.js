@@ -108,7 +108,6 @@ class PaquetesDeUsuario extends Component {
       }} />
     </SButtom>
   }
-
   getCalendaio(i, usuario) {
     if (!usuario) return <View />
     if (!this.state.paquete) return <View />
@@ -129,60 +128,90 @@ class PaquetesDeUsuario extends Component {
       }}></SView>
     </SView>
   }
-
   popupFecha(obj) {
-    // let usuario = Model.usuario.Action.getByKey(obj.key_usuario);
+    let usuario = Model.usuario.Action.getByKey(obj.key_usuario);
 
 
     return <>
       <SView width={362} height={325} center row style={{ borderRadius: 8 }} withoutFeedback backgroundColor={STheme.color.background} style={{ borderColor: "green" }}   >
         <SHr height={20} />
 
-        <SInput ref={ref => this._fechaInicio = ref} col={"xs-11"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"} />
-        <SHr height={15} />
-        <SText color={"red"}> dsd </SText>
-        <SHr height={15} />
+        <SInput ref={ref => this._fechaInicio = ref} col={"xs-10"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"} />
+        {/* <SHr height={15} /> */}
+        <SText col={"xs-9"} color={STheme.color.text + 66} center>¿Está seguro de que desea cambiar la fecha del paquete?</SText>
+        {/* <SHr height={15} /> */}
 
         <SButtom type="danger" onPress={() => { SPopup.close("CodigoSeguridad"); }}>Cancelar</SButtom>
+        <SView width={30} ></SView>
 
+        <SView width={30} ></SView>
         <SButtom type="success" onPress={() => {
 
           var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
           var fecha_inicio_modificada = this._fechaInicio.getValue();
-          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias - 1);
+          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias);
 
-          console.log("inicio ", fecha_inicio_modificada)
-          console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
-          console.log("key ", obj.key_paquete_venta_usuario)
+          // console.log("inicio ", fecha_inicio_modificada)
+          // console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
+          // console.log("key ", obj.key_paquete_venta_usuario)
 
 
           // alvaro boton eliminar
           // obj.estado = "3";
           // obj.descripcion = "Anulación de venta de servicioasaasasasasas.";
 
-          var objSen = {
-            component: "paqueteVentaUsuario",
-            type: "editar",
-            estado: "cargando",
-            key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-            data: {
-              key: obj.key_paquete_venta_usuario,
-              fecha_inicio: fecha_inicio_modificada,
-              fecha_fin: fecha_fin_modificada.toString("yyyy-MM-dd"),
-            }
-          }
-          SSocket.sendPromise(objSen, true).then(response => {
-            // Hacer algo con la respuesta exitosa
-            console.log("entro")
-            SPopup.close("CodigoSeguridad");
-          })
-            .catch(error => {
-              // Manejar el error
-              console.log("error ", error)
-              SPopup.close("CodigoSeguridad");
-            });
+          let reducer = this.props.state.paqueteVentaReducer;
+          let data = reducer.data;
+          if (!data) {
+            if (reducer.estado == "cargando") return false;
+            if (reducer.estado == "error") return false;
 
-        }}>Consolidar</SButtom>
+            var objSen = {
+              component: "paqueteVentaUsuario",
+              type: "editar",
+              estado: "cargando",
+              key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
+              data: {
+                key: obj.key_paquete_venta_usuario,
+                fecha_inicio: fecha_inicio_modificada,
+                fecha_fin: fecha_fin_modificada.toString("yyyy-MM-dd"),
+              }
+            }
+
+            // ricky
+            SSocket.sendPromise(objSen).then((resp) => {
+
+              console.log("moustfa ", resp.estado)
+              if (resp.estado == "exito") {
+                // this.props.dispatch(resp);
+                this.getCaja();
+                this.getPaquete();
+                this.getLista();
+                SPopup.close("CodigoSeguridad");
+                //     resolve(resp)
+                //     return;
+              }
+              // }).catch((e) => {
+
+            })
+            // this.props.dispatch(this.props.state.paqueteVentaReducer);
+
+            // return false;
+          }
+
+          //   .then(response => {
+          //   // Hacer algo con la respuesta exitosa
+          //   console.log("entro ", objSen)
+          //   SPopup.close("CodigoSeguridad");
+          //   // alert("dd")
+          // })
+          //   .catch(error => {
+          //     // Manejar el error
+          //     console.log("erroraaaa ", error)
+          //     SPopup.close("CodigoSeguridad");
+          //   });
+
+        }}>Confirmar</SButtom>
 
         <SHr height={20} />
       </SView>
@@ -207,17 +236,9 @@ class PaquetesDeUsuario extends Component {
     }
 
     return <SButtom
-      style={{
-        width: 30,
-        height: 30,
-      }}
-      onPress={() => {
-        SPopup.open({ content: this.popupFecha(obj), key: "CodigoSeguridad" });
-      }}>
-      <SIcon name={"Edit"} style={{
-        width: 19,
-        height: 19,
-      }} />
+      style={{ width: 30, height: 30 }}
+      onPress={() => { SPopup.open({ content: this.popupFecha(obj), key: "CodigoSeguridad" }); }}>
+      <SIcon name={"Edit"} style={{ width: 30, height: 30 }} />
     </SButtom>
   }
   getLista() {
@@ -321,19 +342,19 @@ class PaquetesDeUsuario extends Component {
                         paddingStart: 8,
                     }}>
                         <Text style={{
-
                             fontSize: 10,
                         }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
                         <Text style={{
-
                             fontSize: 10,
                         }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
                     </View> */}
           {this.getEditar(obj)}
-          {this.getEliminar(obj)}
-        </View>
+          <SView width={10} ></SView>
+
+      { this.getEliminar(obj) }
+        </View >
         <Paquete_Item data={obj} paquete={paquete} />
-      </TouchableOpacity>
+      </TouchableOpacity >
     })
   }
   getBtnAdd = () => {

@@ -82,15 +82,16 @@ class CuentaBancoItem extends Component {
 
           </SView>
           <SView style={{
-            width: 100,
+            width: 120,
             height: 40,
           }} center >
             <SView style={{
-              width: 95,
+              width: 110,
               height: 35,
               overflow: "hidden",
             }} center card>
-              <SText>{SMath.formatMoney(this.getTotal(obj.key))}</SText>
+              <SText>Saldo de siempre {SMath.formatMoney(this.getTotal(obj.key))}</SText>
+              {/* <SText> {SMath.formatMoney(this.getTotal(obj.key))}</SText> */}
             </SView>
           </SView>
           <SView style={{

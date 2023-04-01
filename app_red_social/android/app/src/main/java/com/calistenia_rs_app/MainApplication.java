@@ -5,8 +5,6 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.reactnativegooglesignin.RNGoogleSigninPackage;

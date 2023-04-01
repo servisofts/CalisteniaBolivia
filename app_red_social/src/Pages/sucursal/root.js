@@ -1,75 +1,69 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SForm, SHr, SNavigation, SPage, SPopup, SText, STheme, SView, SIcon, SLoad, SList } from 'servisofts-component';
-import { AccentBar } from '../../Components';
-import Container from '../../Components/Container';
+
+import { SButtom, SHr, SIcon, SImage, SList, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { BottomNavigator, Container, NavBar, Pedido, Restaurante, TopBar, Sucursal } from '../../Components';
 import Model from '../../Model';
-import Card from './components/Card';
-
-
-class root extends Component {
+import SSocket from 'servisofts-socket'
+class index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            envio: 0
         };
-        this.params = SNavigation.getAllParams();
     }
 
+
+    clearData(resolv) {
+        Model.sucursal.Action.CLEAR();
+    }
     render_with_data() {
-        var paquete = Model.paquete.Action.getAll();
-        if (!paquete) return <SLoad />
+        var sucursales = Model.sucursal.Action.getAll();
+        if (!sucursales) return <SLoad />
 
         return <SList
-            buscador={"true"}
+            // buscador={"true"}
             center
-            space={15}
-            initSpace={15}
-            data={Object.values(paquete)}
+            space={14}
+            data={sucursales}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
             render={(data) => {
-                return <Card datas={data} />
+                // return <SText>Hola</SText>
+                return <Sucursal.Card image={1} datas={data} root={'/sucursal/detalle'} />
             }}
         />
+    }
 
+    navBar() {
+        return <TopBar type={"home"} />
     }
 
     render() {
-        var defaultData = {
-            ...this.params,
-        };
-
 
         return (
-            <SPage  >
+            <SPage
+                navBar={this.navBar()}
+                footer={this.footer()}
+                onRefresh={this.clearData}
+            >
                 <Container>
-                    <SView col={"xs-12"} >
-                        <SText fontSize={26} color={STheme.color.white}>Comprar</SText>
-                    </SView>
-                    <SHr height={20} />
-                    <SView col={"xs-12"} >
-                        <SView
-                            height={30}
-                            width={100}
-                            backgroundColor={STheme.color.darkGray}
-                            style={{ borderRadius: 10 }}
-                            center
-                        >
-                            <SText fontSize={15} color={STheme.color.text}>Membresía</SText>
-                        </SView>
-                    </SView>
-
-                    <SHr height={20} />
+                    {/* <SHr height={15} />
+                    <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
+                        <SHr height={10} />
+                        <SIcon name='logowhite' fill={STheme.color.text} width={200} />
+                        <SHr height={10} />
+                    </SView> */}
+                    <SHr height={15} />
                     {this.render_with_data()}
-                    <SHr height={20} />
-                    {/* <BtnSend onPress={() => this.form.submit()}>{"Registrar"}</BtnSend> */}
-                    {/* <SHr height={30} /> */}
                 </Container>
             </SPage>
         );
+    }
+
+    footer() {
+        return <BottomNavigator url={"/sucursal"} />
     }
 }
 const initStates = (state) => {
     return { state }
 };
-export default connect(initStates)(root);
+export default connect(initStates)(index);

@@ -39,7 +39,7 @@ export default class SectionApis extends Component {
 
 
     separador() {
-        return <SView col={"xs-12"} height={40} row center  >
+        return <SView col={"xs-12"} height={20} row center  >
             {/* <SView col={"xs-3"} height center>
                 <SHr color={STheme.color.lightGray} height={1.5} ></SHr>
             </SView> */}
@@ -65,7 +65,6 @@ export default class SectionApis extends Component {
     render() {
         return (
             <SView col={"xs-12"} center>
-
                 {this.separador()}
                 <SHr height={25} />
                 <SView col={"xs-12"} row>

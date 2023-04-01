@@ -23,7 +23,7 @@ const App = (props) => {
             socket={SSocket}
             assets={Assets}
             inputs={Config.inputs}
-            theme={{ themes: Config.theme, initialTheme: "default" }}
+            theme={{ themes: Config.theme, initialTheme: "dark" }}
         >
             <StatusBar />
             <SNavigation

@@ -22,10 +22,19 @@ class CuentaMovimientosPage extends Component {
     super(props);
     this.state = {
       monto_total: 0,
+
+      select: {
+        // "cotizacion": true,
+        // "aprobado": true,
+        "ingreso": true,
+        "egreso": true,
+        "traspaso": true,
+      },
+      ...this.state,
+
     };
     this.key = SNavigation.getParam("key", null);
     this.key_banco = SNavigation.getParam("key_banco", null);
-
 
 
   }
@@ -102,6 +111,8 @@ class CuentaMovimientosPage extends Component {
     }
     var fecha_i = new SDate(this.state.fecha_inicio, "yyyy-MM-dd");
     var fecha_f = new SDate(this.state.fecha_fin, "yyyy-MM-dd");
+
+    // console.log("alvaro ", fecha_i)
     var reducer = this.props.state[ReducerName];
     if (reducer.data[this.key]) {
       if (reducer.fecha_i != this.state.fecha_inicio || reducer.fecha_f != this.state.fecha_fin || force) {
@@ -234,7 +245,17 @@ class CuentaMovimientosPage extends Component {
     return <SList
       // buscador
       limit={8}
+
+      // romeo santos
       order={[{ key: "fecha_on", order: "desc", peso: 1 }]}
+
+      //   filter(data) {
+      //     return data.estado != 0 && data.tipo == "compra" && Object.keys(this.state.select).includes(data.state)
+      // }
+
+      filter={obj => obj.estado != 0 && Object.keys(this.state.select).includes(obj.tipo_movimiento)}
+      // filter={obj => obj.estado != 0 && obj.tipo_movimiento == "ingreso" || obj.tipo_movimiento == "egreso" || obj.tipo_movimiento == "traspaso"}
+
       data={data}
       render={(obj) => {
 
@@ -250,9 +271,14 @@ class CuentaMovimientosPage extends Component {
           if (monto % 1 != 0) monto = parseFloat(monto).toFixed(2);
         }
         var sdate = new SDate(obj.fecha_on)
+
+        // aqui problema con fecha
         if ((!sdate.equalDay(fecha_i) && !sdate.equalDay(fecha_f)) && (sdate.isBefore(fecha_i) || sdate.isAfter(fecha_f))) {
           return <View />
         }
+
+
+
         monto_total += parseFloat(monto);
         var usuario = usuarios[obj.key_usuario];
 
@@ -303,6 +329,27 @@ class CuentaMovimientosPage extends Component {
 
 
   }
+  // getEtiquetas = (data) => {
+
+  //   $filter(data) {
+  //     return data.estado != 0 && data.tipo_movimiento == "ingreso" && data.tipo_movimiento == "egreso" && data.tipo_movimiento == "traspaso"
+  //   }
+
+  //   obj?.tipo_movimiento == "ingreso"
+  //   obj?.tipo_movimiento == "egreso"
+  //   obj?.tipo_movimiento == "traspaso"
+
+  //   // return <SView col={"xs-11.6"} height={50} center card onPress={() => {
+  //   //   SNavigation.navigate("billetera", { key_banco: this.key_banco, key_cuenta_banco: this.key });
+  //   // }}>
+  //   //   <SView row col={"xs-12"} center>
+  //   //     <SText fontSize={18} bold color={STheme.color.lightGray}>Billetera</SText>
+  //   //     <SView width={16} />
+  //   //     <SIcon name={"Billetera"} width={26} />
+
+  //   //   </SView>
+  //   // </SView>
+  // }
   getBilletera = () => {
     return <SView col={"xs-11.6"} height={50} center card onPress={() => {
       SNavigation.navigate("billetera", { key_banco: this.key_banco, key_cuenta_banco: this.key });
@@ -315,8 +362,58 @@ class CuentaMovimientosPage extends Component {
       </SView>
     </SView>
   }
-  render() {
 
+  setColor(key) {
+    if (key == "ingreso") {
+      return "rgba(113, 175, 74, 0.53)+1";
+    }
+    if (key == "egreso") {
+      return "rgba(223, 39, 50, 0.53)+8";
+    }
+    if (key == "traspaso") {
+      return "rgba(239, 140, 56, 0.53)+88";
+    } else {
+      return "rgba(170, 170, 170, 0.53)+9";
+    }
+
+  }
+
+  optionItem({ key, label }) {
+    var select = !!this.state.select[key]
+
+
+    return <>
+      <SView row height={36} center style={{
+        paddingLeft: 8,
+        paddingRight: 8,
+        opacity: select ? 1 : 0.5,
+        borderRadius: 4,
+        backgroundColor: this.setColor(key),
+        // backgroundColor: Model.compra_venta.Action.getStateInfo(key).color + "88"
+      }} onPress={() => {
+        if (!select) {
+          this.state.select[key] = true;
+        } else {
+          delete this.state.select[key];
+        }
+        this.setState({ ...this.state })
+      }} row>
+        {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>}
+        <SText>{label}</SText>
+      </SView>
+      <SView width={8} ></SView>
+    </>
+  }
+  menu() {
+    const items = [
+      // { key: "crear", label: " + Crear" },
+      { key: "ingreso", label: "Ingresos" },
+      { key: "egreso", label: "Egresos" },
+      { key: "traspaso", label: "Traspasos" }
+    ].map(item => this.optionItem(item));
+    return items;
+  }
+  render() {
     if (this.key) {
       this.data = Banco.Actions.getAllCuentaBancos(this.props);
     } else {
@@ -363,73 +460,89 @@ class CuentaMovimientosPage extends Component {
                 {/* Banca Lista Detalle (Movimientos de cuenta) */}
 
                 <SHr height={10} />
-                <SView col={"xs-12"} center>
 
-                  {/* tarea10 ✅ ✅ ✅ */}
-                  <ExportExcel
-                    header={[
-                      { key: "usuario_nombre", label: "Usuario", width: 120 },
-                      { key: "fecha_chaval", label: "Fecha", width: 120, center: true },
-                      // { key: "fecha_on", label: "Fecha", width: 100, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
-                      { key: "descripcion", label: "Descripción Motivo", width: 550 },
-                      // { key: "tipo_movimiento", label: "Transacción", width: 100 },
-                      { key: "ingreso", label: "Ingreso", width: 60 },
-                      { key: "egreso", label: "Egreso", width: 60 },
-                      { key: "traspaso", label: "Traspaso", width: 60 },
-                      // { key: "monto", label: "Monto", width: 80 },
-                    ]}
-                    getDataProcesada={() => {
-                      var daFinal = {};
-                      // console.log("chaval ", this.finalData);
+                {/* aqui todo darmotos */}
+                {/* <SView col={"xs-12"} height={50} center row>
+                  <SHr height={10} />
+                  {this.menu()}
+                  <SHr height={10} />
 
-
-                      // const ingreso = 0, egreso = 0, traspaso = 0;
-                      var total = { ingreso: 0, egreso: 0, traspaso: 10 }
-                      Object.values(this.finalData).map((obj, i) => {
-
-                        if (obj?.tipo_movimiento == "ingreso") {
-                          total.ingreso += obj?.monto;
-                        } else {
-                          total.ingreso = 0;
-                        }
-
-                        if (obj?.tipo_movimiento == "egreso") {
-                          total.egreso += obj?.monto;
-                        } else {
-                          total.egreso = 0;
-                        }
-                        if (obj?.tipo_movimiento == "traspaso") {
-                          total.traspaso += obj?.monto;
-                        } else {
-                          total.traspaso = 0;
-                        }
-
-                        var toInsert = {
-                          // key: obj.key,
-                          fecha_on: obj?.fecha_on,
-                          fecha_chaval: obj?.fecha_chaval,
-                          usuario_nombre: obj?.usuario_nombre,
-                          descripcion: obj?.descripcion,
-                          // tipo_movimiento: obj?.tipo_movimiento,
-                          ingreso: total.ingreso,
-                          egreso: total.egreso,
-                          traspaso: total.traspaso,
-                          // monto: obj?.monto,
-                        }
-                        daFinal[i] = toInsert
-                      })
-                      // console.log("mirar ", daFinal)
-                      return daFinal
-                    }}
-                  />
-                </SView>
+                </SView> */}
 
 
               </SView>
+
+              <SView col={"xs-12"} style={{ height: 56, }} center row border={"tr"} >
+                <SHr height={10} />
+                <ExportExcel
+                  header={[
+                    { key: "usuario_nombre", label: "Usuario", width: 120 },
+                    { key: "fecha_chaval", label: "Fecha", width: 120, center: true },
+                    // { key: "fecha_on", label: "Fecha", width: 100, center: true, render: (item) => { return new SDate(item).toString("hh:mm:ss") } },
+                    { key: "descripcion", label: "Descripción Motivo", width: 550 },
+                    // { key: "tipo_movimiento", label: "Transacción", width: 100 },
+                    { key: "ingreso", label: "Ingreso", width: 60 },
+                    { key: "egreso", label: "Egreso", width: 60 },
+                    { key: "traspaso", label: "Traspaso", width: 60 },
+                  ]}
+                  getDataProcesada={() => {
+                    var daFinal = {};
+                    // console.log("chaval ", this.finalData);
+
+
+                    // const ingreso = 0, egreso = 0, traspaso = 0;
+                    var total = { ingreso: 0, egreso: 0, traspaso: 0 }
+
+
+                    Object.values(this.finalData).filter(obj => obj.estado != 0 && Object.keys(this.state.select).includes(obj.tipo_movimiento)).map((obj, i) => {
+                      // Object.values(this.finalData).map((obj, i) => {
+                      // aqui debo guadar los valores
+                      if (obj?.tipo_movimiento == "ingreso") {
+                        total.ingreso = obj?.monto;
+                      } else {
+                        total.ingreso = 0;
+                      }
+
+                      if (obj?.tipo_movimiento == "egreso") {
+                        total.egreso = obj?.monto;
+                      } else {
+                        total.egreso = 0;
+                      }
+                      if (obj?.tipo_movimiento == "traspaso") {
+                        total.traspaso = obj?.monto;
+                      } else {
+                        total.traspaso = 0;
+                      }
+
+                      var toInsert = {
+                        // key: obj.key,
+                        fecha_on: obj?.fecha_on,
+                        fecha_chaval: obj?.fecha_chaval,
+                        usuario_nombre: obj?.usuario_nombre,
+                        descripcion: obj?.descripcion,
+                        // tipo_movimiento: obj?.tipo_movimiento,
+                        ingreso: total.ingreso,
+                        egreso: total.egreso,
+                        traspaso: total.traspaso,
+                        // monto: obj?.monto,
+                      }
+                      daFinal[i] = toInsert
+                    })
+                    // console.log("mirar ", daFinal)
+                    return daFinal
+                  }}
+                />
+                <SHr height={10} />
+              </SView>
+
+              <SView col={"xs-12"} style={{ height: 56, }} center row border={"transparent"}>
+                {/* <SHr height={10} /> */}
+                {this.menu()}
+                {/* <SHr height={10} /> */}
+              </SView>
+
               <SView col={"xs-12"} style={{ height: 36, }} center row>
-                <SView flex height style={{
-                  justifyContent: "center",
-                }}>
+                <SView flex height style={{ justifyContent: "center" }}>
                   <SText>Movimientos</SText>
                 </SView>
                 <SView center height>

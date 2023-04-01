@@ -16,7 +16,7 @@ class BarraSuperior extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anim: new Animated.Value(0),
+      anim: new Animated.Value(100),
     };
 
   }
@@ -29,7 +29,7 @@ class BarraSuperior extends Component {
     }).start();
   }
   componentDidMount() {
-    this.startAnimation();
+    // this.startAnimation();
   }
 
   getUser() {
@@ -59,6 +59,7 @@ class BarraSuperior extends Component {
           <SImage src={SSocket.api.root + "usuario/" + this.props.state.usuarioReducer.usuarioLog.key} style={{
             width: "100%",
             height: "100%",
+            resizeMode:"cover"
           }} />
           {/* {this.props.state.imageReducer.getImage(AppParams.urlImages + "usuario_" + this.props.state.usuarioReducer.usuarioLog.key, {
                         width: "100%",
@@ -179,7 +180,7 @@ class BarraSuperior extends Component {
 
 
         </View>
-        <RelojEntrenamiento navigation={this.props.navigation} />
+        {/* <RelojEntrenamiento navigation={this.props.navigation} /> */}
         <RelojCaja navigation={this.props.navigation} />
       </Animated.View>
     );

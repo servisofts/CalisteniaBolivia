@@ -22,7 +22,10 @@ export default class index extends Component {
   render() {
     return (
       <SPage title={"DashBoard"}>
-        <SView col={"xs-12"} row center>
+        <SView col={"xs-12"} row center style={{
+          flex: 1,
+          width: "100%",
+        }}>
           <SHr height={32} />
           <MonthBetween fecha_inicio={this.state.fechaInicio} fecha_fin={this.state.fechaFin}
             onChange={(fechaInicio, fechaFin) => { this.setState({ fechaInicio, fechaFin }) }} />
@@ -31,6 +34,9 @@ export default class index extends Component {
           <ClientesActivos />
           <EntrenamientosActivos fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
           <CajasActivas fechaInicio={this.state.fechaInicio} fechaFin={this.state.fechaFin} />
+
+          {/* aqui problema con fecha */}
+          {/* no carga la fecha en el dashboard */}
 
           {/* <SHr height={36} /> */}
 
@@ -53,11 +59,12 @@ export default class index extends Component {
             <SIcon name={"DashboardBtn"} style={{ width: 45, height: 45, }} />
           </SButtom>
 
-          {/* <FloatButtom onPress={() => {
-            SNavigation.navigate("registro")
-          }} /> */}
+
 
         </SView>
+        {/* <FloatButtom onPress={() => {
+          SNavigation.navigate("registro")
+        }} /> */}
       </SPage>
     );
   }

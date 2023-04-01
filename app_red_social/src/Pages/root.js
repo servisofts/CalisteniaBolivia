@@ -33,6 +33,22 @@ class index extends Component {
         />
 
     }
+    banner() {
+        return <>
+            <SView col={"xs-12 sm-10 md-8 lg-8 xl-11 xxl-11"}
+                backgroundColor={STheme.color.primary}
+            >
+                <SView col={"xs-12"} height={470}>
+                    <SImage src={require('../Assets/img/banner1.png')} style={{ resizeMode: 'cover' }} />
+                </SView>
+                <SHr height={20} />
+                <SView col={"xs-12"} height={470}>
+                    <SImage src={require('../Assets/img/banner2.png')} style={{ resizeMode: 'cover' }} />
+                </SView>
+
+            </SView>
+        </>
+    }
     navBar() {
         return <TopBar type={"home"} />
     }
@@ -46,14 +62,16 @@ class index extends Component {
                 onRefresh={this.clearData}
             >
                 <Container>
-                    {/* <SHr height={15} /> */}
-                    {/* <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
+                    <SHr height={15} />
+                    <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
                         <SHr height={10} />
                         <SIcon name='logowhite' fill={STheme.color.text} width={200} />
                         <SHr height={10} />
-                    </SView> */}
-                    {/* <SHr height={15} /> */}
-                    {this.render_with_data()}
+                    </SView>
+                    <SHr height={15} />
+                    {/* {this.render_with_data()} */}
+                    {this.banner()}
+                    <SHr height={35} />
                 </Container>
             </SPage>
         );
