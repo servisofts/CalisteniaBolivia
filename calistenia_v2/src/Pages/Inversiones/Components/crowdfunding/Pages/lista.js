@@ -1,15 +1,95 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SLoad, SMath, SPage, SText, SView } from 'servisofts-component';
+import { SDate, SHr, SList, SLoad, SPage, SText, SView } from 'servisofts-component';
 import Model from '../../../../../Model';
 import Finanza from '../../../../Finanza';
 import fondo_inversion from '../../fondo_inversion';
 import fondo_inversion_sucursal from '../../fondo_inversion_sucursal';
 import fondo_inversion_usuario from '../../fondo_inversion_usuario';
 
-const array = {
+const data_test = [
+  {
+    "9adb524f-d57a-425a-9c85-35a5e451d0f1": {
+      "descripcion": "Sucursal Industrial",
+      "monto_maximo": 807361,
+      "cantidad_acciones": 116,
+      "estado": 1,
+      "key_usuario": null,
+      "fecha_inicio": "2022-09-15T00:00:01",
+      "cantidad_meses": 60,
+      "fecha_on": "2022-09-14T14:54:21.000323",
+      "fecha_fin": "2027-09-14T00:00:01",
+      "precio_accion": 6960,
+      "key": "010110c7-6580-4184-988c-f75fc2e86ac1",
+      "observacion": "Av. Industrial 6to anillo"
+    }
+  },
+  {
+    "9adb524f-d57a-425a-9c85-35a5e451d0f1": {
+      "descripcion": "Sucursal Berea",
+      "monto_maximo": 807361,
+      "cantidad_acciones": 116,
+      "estado": 1,
+      "key_usuario": null,
+      "fecha_inicio": "2022-09-15T00:00:01",
+      "cantidad_meses": 60,
+      "fecha_on": "2022-09-14T14:54:21.000323",
+      "fecha_fin": "2027-09-14T00:00:01",
+      "precio_accion": 6960,
+      "key": "010110c7-6580-4184-988c-f75fc2e86ac1",
+      "observacion": "Av. Berea 6to anillo"
+    }
+  },
+  {
+    "9adb524f-d57a-425a-9c85-35a5e451d0f1": {
+      "descripcion": "Sucursal Chonta",
+      "monto_maximo": 807361,
+      "cantidad_acciones": 116,
+      "estado": 1,
+      "key_usuario": null,
+      "fecha_inicio": "2022-09-15T00:00:01",
+      "cantidad_meses": 60,
+      "fecha_on": "2022-09-14T14:54:21.000323",
+      "fecha_fin": "2027-09-14T00:00:01",
+      "precio_accion": 6960,
+      "key": "010110c7-6580-4184-988c-f75fc2e86ac1",
+      "observacion": "Av. Chonta 6to anillo"
+    }
+  },
+  {
+    "9adb524f-d57a-425a-9c85-35a5e451d0f1": {
+      "descripcion": "Sucursal Cristo",
+      "monto_maximo": 807361,
+      "cantidad_acciones": 116,
+      "estado": 1,
+      "key_usuario": null,
+      "fecha_inicio": "2022-09-15T00:00:01",
+      "cantidad_meses": 60,
+      "fecha_on": "2022-09-14T14:54:21.000323",
+      "fecha_fin": "2027-09-14T00:00:01",
+      "precio_accion": 6960,
+      "key": "010110c7-6580-4184-988c-f75fc2e86ac1",
+      "observacion": "Av. Cristo 6to anillo"
+    }
+  },
+  {
+    "9adb524f-d57a-425a-9c85-35a5e451d0f1": {
+      "descripcion": "Sucursal Cusis",
+      "monto_maximo": 807361,
+      "cantidad_acciones": 116,
+      "estado": 1,
+      "key_usuario": null,
+      "fecha_inicio": "2022-09-15T00:00:01",
+      "cantidad_meses": 60,
+      "fecha_on": "2022-09-14T14:54:21.000323",
+      "fecha_fin": "2027-09-14T00:00:01",
+      "precio_accion": 6960,
+      "key": "010110c7-6580-4184-988c-f75fc2e86ac1",
+      "observacion": "Av. Cusis 6to anillo"
+    }
+  }
+];
 
-}
 const totus = 0;
 class lista extends Component {
   constructor(props) {
@@ -106,7 +186,7 @@ class lista extends Component {
     </SView >
   }
   getLista() {
-    const arr = [1, 2, 3];
+    // const arr = [1, 2, 3];
     return arr.map((key) => {
       // return
       return this.Item()
@@ -241,31 +321,81 @@ class lista extends Component {
   toString() {
     var data = fondo_inversion.Actions.getAll(this.props);
     if (!data) return <SLoad />
-    return Object.keys(data).map(keys => {
-      const obj = data[keys];
-      if (obj.estado != 1) return;
-      return <>
-        <SText>{"Suc. " + obj.descripcion + "\n"
-          + "Direccion " + obj.observacion + "\n"
-          + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
-          + "Duracion " + obj.cantidad_meses + " Meses \n"
-          + "Acciones " + obj.cantidad_acciones + "\n"
-          + "socios/paquetes " + this.state.total_ventas + "\n"
-          + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}
-        </SText>
-        <SHr height={1} color={"blue"} />
-        <SHr height={4} />
-        {this.toStringInversionista(obj.key, obj.precio_accion, obj.fecha_inicio, obj.fecha_fin)}
-        <SHr height={4} />
+    console.log("aqui ", data)
+    console.log("putin ", data_test)
+    // return Object.keys(data).map(keys => {
+    //   const obj = data[keys];
+    //   if (obj.estado != 1) return;
+    //   return <>
+    //     <SText>{"Suc. " + obj.descripcion + "\n"
+    //       + "Direccion " + obj.observacion + "\n"
+    //       + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
+    //       + "Duracion " + obj.cantidad_meses + " Meses \n"
+    //       + "Acciones " + obj.cantidad_acciones + "\n"
+    //       + "socios/paquetes " + this.state.total_ventas + "\n"
+    //       + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}
+    //     </SText>
+    //     <SHr height={1} color={"blue"} />
+    //     <SHr height={4} />
+    //     {this.toStringInversionista(obj.key, obj.precio_accion, obj.fecha_inicio, obj.fecha_fin)}
+    //     <SHr height={4} />
+    //   </>
+    // })
+  }
+
+
+  puto(obj) {
+
+
+
+    // return this.toStringInversionista_detalle(obj.key_fondo_inversion, obj.key_usuario_inversionista)
+    return <SText color={"red"} >{"socio "
+
+      + "Inverion " + obj.descripcion + " "
+
+      + "\n"
+    }</SText>
+
+
+  }
+
+
+  getCojudo() {
+
+    // console.log("puta ", data_test);
+    // const descripciones = data_test.map(objeto => Object.values(objeto)[0].descripcion);
+    // console.log(descripciones);
+
+    //  Object.values(data_test).map((keys) => {
+    //   let obj = keys[Object.keys(keys)[0]]; // acceder al objeto dentro del objeto
+    //   console.log(obj.descripcion);
+    // });
+
+    return Object.values(data_test).map((obj) => {
+      console.log(obj.descripcion);
+
+      return < >
+        <SList data={obj} horizontal space={0} render={obj_inv =>
+
+          this.puto(obj_inv)
+
+        } />
+        {/* <SList>
+
+        </SList> */}
+
       </>
-    })
+    });
+
+
   }
 
   render() {
     return (
       <SPage title={'lista'} center>
         {/* <SHr height={24} color={"red"}></SHr> */}
-        {this.getLista()}
+        {this.getCojudo()}
+        {/* {this.getLista()} */}
         {/* {this.toString()} */}
         {/* <SView height={50} /> */}
         {/* <SHr height={50} color={"red"}></SHr> */}
