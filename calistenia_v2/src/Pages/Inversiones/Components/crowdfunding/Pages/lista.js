@@ -101,13 +101,13 @@ class lista extends Component {
 
 
 
-  Item() {
+  Item(obj) {
     return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
 
       <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
 
         <SView center col={"xs-12"} height={65} center backgroundColor={"green+66"}>
-          <SText center fontSize={14} bold>Sucursal Industrial</SText>
+          <SText center fontSize={14} bold>{obj.descripcion}</SText>
           <SHr height={8} />
           <SText center fontSize={12}>Av. Mutualista 6to anillo</SText>
         </SView>
@@ -185,54 +185,8 @@ class lista extends Component {
       </SView>
     </SView >
   }
-  getLista() {
-    // const arr = [1, 2, 3];
-    return arr.map((key) => {
-      // return
-      return this.Item()
-      // <SView col={"xs-12"} height={180} row>
-      // {this.Item()}
-      // </SView>
-    })
-    // return <SList data={arr} horizontal space={0} render={data => { this.Item() }} />
-  }
 
-  getDias(data, paquetes_vendidos, data_fondo_inversion_sucursal) {
-    var fecha_inicio = new SDate(data.fecha_inicio);
-    var fecha_fin = new SDate(data.fecha_fin);
-    var dias = fecha_fin.diff(fecha_inicio, "days");
-    var filtar_sucursales = Object.values(paquetes_vendidos).filter(paquete_venta => {
-      return data_fondo_inversion_sucursal.find(fis => fis.key_sucursal == paquete_venta.key_sucursal);
-    })
-    fecha_inicio.addMonth(-1);
-    let ahora = new SDate();
-    ahora.addMonth(1);
-    var total = 0;
-    let COMPONENT = Array(dias + 1).fill(0).map((j, i) => {
-      fecha_inicio.addMonth(1)
-      var ventas_del_dia = filtar_sucursales.filter(paquete_venta => {
-        return (
-          new SDate(paquete_venta.fecha_on).toString("yyyy-MM") == fecha_inicio.toString("yyyy-MM")
-        );
-      })
-      if (ahora.isBefore(fecha_inicio)) {
-        return null;
-      }
-      var cantidad = 0;
-      ventas_del_dia.map((obj) => {
-        cantidad += obj.usuarios.length;
-      })
 
-      total += cantidad;
-    })
-    if (this.state.total_ventas != total) {
-      if (this.props.onChangeTotal) {
-        this.props.onChangeTotal(total);
-      }
-      this.setState({ total_ventas: total })
-    }
-    return COMPONENT;
-  }
 
 
   getFondo11(fecha_inicio, fecha_fin) {
@@ -345,48 +299,23 @@ class lista extends Component {
 
 
   puto(obj) {
-
-
-
-    // return this.toStringInversionista_detalle(obj.key_fondo_inversion, obj.key_usuario_inversionista)
-    return <SText color={"red"} >{"socio "
-
-      + "Inverion " + obj.descripcion + " "
-
-      + "\n"
-    }</SText>
-
-
+    return <SText color={"red"} >{"Data " + obj.descripcion + "\n"}</SText>
   }
 
 
-  getCojudo() {
-
-    // console.log("puta ", data_test);
+  getLista() {
+    // console.log("data_test ", data_test);
     // const descripciones = data_test.map(objeto => Object.values(objeto)[0].descripcion);
     // console.log(descripciones);
-
     //  Object.values(data_test).map((keys) => {
     //   let obj = keys[Object.keys(keys)[0]]; // acceder al objeto dentro del objeto
     //   console.log(obj.descripcion);
     // });
 
-    return Object.values(data_test).map((obj) => {
-      console.log(obj.descripcion);
-
-      return < >
-        <SList data={obj} horizontal space={0} render={obj_inv =>
-
-          this.puto(obj_inv)
-
-        } />
-        {/* <SList>
-
-        </SList> */}
-
-      </>
-    });
-
+    var data = data_test.map(objeto => Object.values(objeto)[0]);
+    return <SList data={data} horizontal space={0} render={obj_fondo =>
+      this.Item(obj_fondo)
+    } />
 
   }
 
@@ -394,12 +323,17 @@ class lista extends Component {
     return (
       <SPage title={'lista'} center>
         {/* <SHr height={24} color={"red"}></SHr> */}
-        {this.getCojudo()}
-        {/* {this.getLista()} */}
-        {/* {this.toString()} */}
-        {/* <SView height={50} /> */}
+        <SView col={"xs-12 "} center row style={{
+          paddingStart: 10,
+          paddingEnd: 10,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }}>
+          {this.getLista()}
+        </SView>
+
         {/* <SHr height={50} color={"red"}></SHr> */}
-      </SPage>
+      </SPage >
     );
   }
 }
