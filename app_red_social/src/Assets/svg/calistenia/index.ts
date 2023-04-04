@@ -21,6 +21,13 @@ import Inombre, { ReactComponent as InombreW } from './inombre.svg';
 import Ibackg1, { ReactComponent as Ibackg1W } from './ibackg1.svg';
 import Ibackg2, { ReactComponent as Ibackg2W } from './ibackg2.svg';
 import Iback, { ReactComponent as IbackW } from './iback.svg';
+import Icarnet, { ReactComponent as IcarnetW } from './icarnet.svg';
+import Ifest, { ReactComponent as IfestW } from './ifest.svg';
+import Icarnet2, { ReactComponent as Icarnet2W } from './icarnet2.svg';
+import Icell, { ReactComponent as IcellW } from './icell.svg';
+import Imail, { ReactComponent as ImailW } from './imail.svg';
+import Icoincidencia, { ReactComponent as IcoincidenciaW } from './icoincidencia.svg';
+import Inoenco, { ReactComponent as InoencoW } from './inoenco.svg';
 
 
 const Assets = {
@@ -42,9 +49,17 @@ const Assets = {
 	"ImgShare": { Native: ImgShare, Web: ImgShareW },
 	"Footer": { Native: Footer, Web: FooterW },
 	"Inombre": { Native: Inombre, Web: InombreW },
+	"Iback": { Native: Iback, Web: IbackW },
 	"Ibackg1": { Native: Ibackg1, Web: Ibackg1W },
 	"Ibackg2": { Native: Ibackg2, Web: Ibackg2W },
-	"Iback": { Native: Iback, Web: IbackW },
+	"Icarnet": { Native: Icarnet, Web: IcarnetW },
+	"Ifest": { Native: Ifest, Web: IfestW },
+	"Icarnet2": { Native: Icarnet, Web: Icarnet2W },
+	"Icell": { Native: Icell, Web: IcellW },
+	"Imail": { Native: Imail, Web: ImailW },
+	"Icoincidencia": { Native: Icoincidencia, Web: IcoincidenciaW },
+	"Inoenco": { Native: Inoenco, Web: InoencoW },
+
 }
 
 export default Assets;

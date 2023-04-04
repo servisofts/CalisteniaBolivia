@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { SButtom, SHr, SIcon, SImage, SList, SLoad, SNavigation, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
-import { BottomNavigator, Container, NavBar, Pedido, Restaurante, TopBar, Sucursal } from '../Components';
+import { BottomNavigator, Container, NavBar, Pedido, Restaurante, TopBar, Sucursal, Publicacion } from '../Components';
 import Model from '../Model';
 import SSocket from 'servisofts-socket'
 class index extends Component {
@@ -15,6 +15,7 @@ class index extends Component {
 
     clearData(resolv) {
         Model.sucursal.Action.CLEAR();
+        Model.publicacion.Action.CLEAR();
     }
     render_with_data() {
         var sucursales = Model.sucursal.Action.getAll();
@@ -53,6 +54,36 @@ class index extends Component {
         return <TopBar type={"home"} />
     }
 
+
+    renderLogo() {
+        return <>
+            <SHr height={15} />
+            <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
+                <SHr height={10} />
+                <SIcon name='logowhite' fill={STheme.color.text} width={200} />
+                <SHr height={10} />
+            </SView>
+            <SHr height={15} />
+        </>
+    }
+
+    renderPublicaciones() {
+        const propsParentItem = {
+            col: "xs-12",
+            height: 100,
+            card: true
+        }
+        let publicaciones = Model.publicacion.Action.getAll();
+        if (!publicaciones) return <SLoad />
+        return <SList
+            data={publicaciones}
+            order={[{ key: "fecha_on", order: "desc" }]}
+            space={30}
+            render={(a) => {
+                return <Publicacion.Card data={a} />
+            }}
+        />
+    }
     render() {
 
         return (
@@ -62,15 +93,10 @@ class index extends Component {
                 onRefresh={this.clearData}
             >
                 <Container>
-                    <SHr height={15} />
-                    <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
-                        <SHr height={10} />
-                        <SIcon name='logowhite' fill={STheme.color.text} width={200} />
-                        <SHr height={10} />
-                    </SView>
-                    <SHr height={15} />
+                    {this.renderLogo()}
+                    {this.renderPublicaciones()}
                     {/* {this.render_with_data()} */}
-                    {this.banner()}
+                    {/* {this.banner()} */}
                     <SHr height={35} />
                 </Container>
             </SPage>

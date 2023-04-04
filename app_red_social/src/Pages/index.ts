@@ -30,6 +30,7 @@ import ayuda from './ayuda';
 import filtros from './filtros';
 import cupones from './cupones';
 import test from './test';
+import publicacion from './publicacion';
 export default SPage.combinePages("/", {
   "": carga,
   "root": root,
@@ -39,10 +40,8 @@ export default SPage.combinePages("/", {
   ...paquete,
   ...sucursal,
   ...cuenta,
+  ...publicacion,
   "terminos": terminos,
-
-
-
   "test": test,
   "contacto": contacto,
   "novedades": novedades,
