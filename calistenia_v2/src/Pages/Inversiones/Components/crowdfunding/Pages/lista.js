@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SList, SLoad, SPage, SText, SView } from 'servisofts-component';
+import { SHr, SList, SLoad, SMath, SPage, SText, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
-import Finanza from '../../../../Finanza';
-import fondo_inversion from '../../fondo_inversion';
-import fondo_inversion_sucursal from '../../fondo_inversion_sucursal';
 import fondo_inversion_usuario from '../../fondo_inversion_usuario';
 
 const data_test = [
@@ -17,6 +15,7 @@ const data_test = [
       "key_usuario": null,
       "fecha_inicio": "2022-09-15T00:00:01",
       "cantidad_meses": 60,
+      "cantidad_paquetes": 230,
       "fecha_on": "2022-09-14T14:54:21.000323",
       "fecha_fin": "2027-09-14T00:00:01",
       "precio_accion": 6960,
@@ -33,6 +32,7 @@ const data_test = [
       "key_usuario": null,
       "fecha_inicio": "2022-09-15T00:00:01",
       "cantidad_meses": 60,
+      "cantidad_paquetes": 120,
       "fecha_on": "2022-09-14T14:54:21.000323",
       "fecha_fin": "2027-09-14T00:00:01",
       "precio_accion": 6960,
@@ -49,6 +49,7 @@ const data_test = [
       "key_usuario": null,
       "fecha_inicio": "2022-09-15T00:00:01",
       "cantidad_meses": 60,
+      "cantidad_paquetes": 200,
       "fecha_on": "2022-09-14T14:54:21.000323",
       "fecha_fin": "2027-09-14T00:00:01",
       "precio_accion": 6960,
@@ -65,6 +66,7 @@ const data_test = [
       "key_usuario": null,
       "fecha_inicio": "2022-09-15T00:00:01",
       "cantidad_meses": 60,
+      "cantidad_paquetes": 500,
       "fecha_on": "2022-09-14T14:54:21.000323",
       "fecha_fin": "2027-09-14T00:00:01",
       "precio_accion": 6960,
@@ -81,6 +83,7 @@ const data_test = [
       "key_usuario": null,
       "fecha_inicio": "2022-09-15T00:00:01",
       "cantidad_meses": 60,
+      "cantidad_paquetes": 350,
       "fecha_on": "2022-09-14T14:54:21.000323",
       "fecha_fin": "2027-09-14T00:00:01",
       "precio_accion": 6960,
@@ -94,9 +97,15 @@ const totus = 0;
 class lista extends Component {
   constructor(props) {
     super(props);
+
+
     this.state = {
       total_ventas: 0,
+      title: "Reporte Name",
+      func: "get_ventas_por_sucursal_all",
+      params: null,
     };
+
   }
 
 
@@ -107,200 +116,129 @@ class lista extends Component {
       <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
 
         <SView center col={"xs-12"} height={65} center backgroundColor={"green+66"}>
-          <SText center fontSize={14} bold>{obj.descripcion}</SText>
+          <SText center fontSize={14} bold>{obj?.descripcion}</SText>
           <SHr height={8} />
-          <SText center fontSize={12}>Av. Mutualista 6to anillo</SText>
+          <SText center fontSize={12}>{obj?.observacion}</SText>
         </SView>
 
         <SView center col={"xs-12"} row backgroundColor={"cyan+66"}>
           <SView col={"xs-12"} height={80} card row center>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>9</SText>
+                <SText fontSize={14} bold>{SMath.formatMoney(obj?.monto_maximo)}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Monto maximo/Bs</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>9</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_meses}</SText>
               </SView>
               <SHr height={2} />
-              <SText center fontSize={10}>Duración</SText>
+              <SText center fontSize={10}>Duración/meses</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>9</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Acciones</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>9</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
-              <SText center fontSize={10}>Socios</SText>
+              <SText center fontSize={10}>Inversionista</SText>
             </SView>
           </SView>
         </SView>
+        <SHr height={24} />
 
         <SView col={"xs-12"} backgroundColor={"cyan+66"}>
+          <SView col={"xs-12"} row center>
+            <SView col={"xs-6"} backgroundColor={"transparent"} row style={{ justifyContent: "flex-start", }}>
+              <SText fontSize={10}>Detalle</SText>
+            </SView>
+            <SView col={"xs-6"} backgroundColor={"transparent"} row style={{ justifyContent: "flex-end", }}>
+              <SText fontSize={10}>#20</SText>
+            </SView>
+          </SView>
 
-          <SHr height={24} />
-
-          <SText fontSize={12}>Accionista</SText>
-          <SHr height={1} color={"blue"} />
-          {/* <SText fontSize={12}>18</SText> */}
+          <SHr height={2} color={STheme.color.card} />
 
           <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
-
-            <SText fontSize={10}>MARIA DE LOS ANGELES{"\n"}QUIROGA ARREDONDO</SText>
-
-            <SText fontSize={10}>Inversion Bs.48.720</SText>
-
-            <SText fontSize={10}>Acciones 7</SText>
-
-            {/* <SText fontSize={10}>Comisión Bs.1</SText> */}
-            <SText fontSize={10}>Ventas/paquetes 435</SText>
-
-            <SText fontSize={10}>Ganancia Bs. 3.500</SText>
-
-
-            {/* <STable2
-              header={[
-                { key: "index", label: "#", width: 40 },
-
-                { key: "estado", label: "estado", width: 70, render: (a) => a == 1 ? "Activo" : "Anulado" },
-
-
-              ]}
-
-              // limit={10}
-              data={tuto}
-            /> */}
-
+            <SView col={"xs-6"} backgroundColor={"transparent"} row>
+              <SText fontSize={10}>Inversionista</SText>
+            </SView>
+            <SView col={"xs-1.5"} row style={{ justifyContent: "flex-start", }}>
+              <SText fontSize={10}>Acciones</SText>
+            </SView>
+            <SView col={"xs-1.5"} row style={{ justifyContent: "flex-start", }}>
+              <SText fontSize={10}>Paquetes</SText>
+            </SView>
+            <SView col={"xs-1"} center>
+              <SText fontSize={10}>Comision</SText>
+            </SView>
+            <SView col={"xs-2"} row style={{ justifyContent: "flex-end", }}>
+              <SText fontSize={10}>Ganancia</SText>
+            </SView>
           </SView>
         </SView>
+        <SHr height={12} />
+        {this.ItemDetalle(obj.key, obj.precio_accion, obj.cantidad_paquetes)}
       </SView>
     </SView >
   }
 
 
+  ItemDetalle(key_inversion, precio_accion, cantidad_paquetes) {
 
-
-  getFondo11(fecha_inicio, fecha_fin) {
-    // var data = fondo_inversion.Actions.getByKey(key, this.props);
-    // if (!data) return <SLoad />
-
-    // var sucursales = fondo_inversion_sucursal.Actions.getByKeyFondoInversion(key, this.props);
-    // if (!sucursales) return <SLoad />
-
-    var paquetes_vendidos = Finanza.Actions.getPaquetesVendidos({
-      fecha_desde: new SDate(fecha_inicio).toString("yyyy-MM-dd"),
-      fecha_hasta: new SDate(fecha_fin).toString("yyyy-MM-dd")
-    }, this.props);
-    if (!paquetes_vendidos) return <SLoad />
-
-    // console.log("one ", data)
-    // console.log("two ", sucursales)
-    console.log("three ", paquetes_vendidos)
-    // return <SView col={"xs-12"} >
-    //   {this.getDias(data, paquetes_vendidos, sucursales)}
-    // </SView>
-  }
-
-  getFondo(lleve) {
-
-    var data = fondo_inversion.Actions.getByKey(lleve, this.props);
-    var sucursales = fondo_inversion_sucursal.Actions.getByKeyFondoInversion(lleve, this.props);
-    if (!data) return <SLoad />
-    if (!sucursales) return <SLoad />
-
-    var paquetes_vendidos = Finanza.Actions.getPaquetesVendidos({
-      fecha_desde: new SDate(data.fecha_inicio).toString("yyyy-MM-dd"),
-      fecha_hasta: new SDate(data.fecha_fin).toString("yyyy-MM-dd")
-    }, this.props);
-    if (!paquetes_vendidos) return <SLoad />
-
-    this.getDias(data, paquetes_vendidos, sucursales)
-  }
-
-
-  // toStringInversionista_detalle(fondo_key, usuario_key) {
-
-  //   var data_fondo_inversion = fondo_inversion.Actions.getByKey(fondo_key, this.props);
-
-  //   var data_inversion_usuario = fondo_inversion_usuario.Actions.filtrar({
-  //     key_fondo_inversion: fondo_key,
-  //     key_usuario_inversionista: usuario_key ?? this.props.state.usuarioReducer.usuarioLog.key
-  //   }, this.props);
-  //   if (!data_fondo_inversion) return null;
-  //   if (!data_inversion_usuario) return null;
-  // }
-
-  toStringInversionista(fondo_key, precioXaccion, inicio, fin) {
     var datax = fondo_inversion_usuario.Actions.getAll(this.props);
     if (!datax) return <SLoad />
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
 
-    this.getFondo(fondo_key)
-
-    console.log("viava ", inicio, " ", fin)
-    console.log("chaval ", this.state.total_ventas)
 
     return Object.keys(datax).map(keys => {
       const obj = datax[keys];
 
-      if (obj.key_fondo_inversion != fondo_key) return;
+      if (obj.key_fondo_inversion != key_inversion) return;
 
 
-      // return this.toStringInversionista_detalle(obj.key_fondo_inversion, obj.key_usuario_inversionista)
-      return <SText color={"red"} >{"socio "
-        + usuarios[obj.key_usuario_inversionista].Nombres + " "
-        + usuarios[obj.key_usuario_inversionista].Apellidos + " "
-        + "Inverion " + obj.inversion + " "
-        + "comision " + obj.comision + " "
-        + "# acciones " + obj.inversion / precioXaccion + " "
-        + "paquetes " + this.state.total_ventas + " "
-        + "ganancia " + (obj.inversion / precioXaccion) * 1 + " "
-        + "\n"
-      }</SText>
+      return <SView col={"xs-12"} backgroundColor={"cyan+66"}>
 
+
+        <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
+          <SView col={"xs-6"} backgroundColor={"transparent"} row>
+            <SText fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres + " " + usuarios[obj.key_usuario_inversionista].Apellidos}</SText>
+          </SView>
+          <SView col={"xs-2"} row style={{ justifyContent: "flex-start", }}>
+            <SText fontSize={10}>{SMath.formatMoney(obj.inversion / cantidad_paquetes)}</SText>
+          </SView>
+          <SView col={"xs-1"} row style={{ justifyContent: "flex-start", }}>
+            <SText fontSize={10}>{cantidad_paquetes}</SText>
+          </SView>
+          <SView col={"xs-1"} center>
+            <SText fontSize={10}>x{obj.comision} Bs</SText>
+          </SView>
+          <SView col={"xs-2"} row style={{ justifyContent: "flex-end", }}>
+            <SText fontSize={10}>{SMath.formatMoney((obj.inversion / precio_accion) * obj.comision)}</SText>
+          </SView>
+
+        </SView>
+        <SHr height={2} color={STheme.color.card} />
+
+      </SView>
     })
-
-  }
-
-  toString() {
-    var data = fondo_inversion.Actions.getAll(this.props);
-    if (!data) return <SLoad />
-    console.log("aqui ", data)
-    console.log("putin ", data_test)
-    // return Object.keys(data).map(keys => {
-    //   const obj = data[keys];
-    //   if (obj.estado != 1) return;
-    //   return <>
-    //     <SText>{"Suc. " + obj.descripcion + "\n"
-    //       + "Direccion " + obj.observacion + "\n"
-    //       + "Fondo " + SMath.formatMoney(obj.monto_maximo) + " Bs \n"
-    //       + "Duracion " + obj.cantidad_meses + " Meses \n"
-    //       + "Acciones " + obj.cantidad_acciones + "\n"
-    //       + "socios/paquetes " + this.state.total_ventas + "\n"
-    //       + "Precio x Acciones " + SMath.formatMoney(obj.precio_accion) + " Bs \n"}
-    //     </SText>
-    //     <SHr height={1} color={"blue"} />
-    //     <SHr height={4} />
-    //     {this.toStringInversionista(obj.key, obj.precio_accion, obj.fecha_inicio, obj.fecha_fin)}
-    //     <SHr height={4} />
-    //   </>
-    // })
   }
 
 
-  puto(obj) {
-    return <SText color={"red"} >{"Data " + obj.descripcion + "\n"}</SText>
-  }
+
+
+
+
+
 
 
   getLista() {
@@ -319,10 +257,34 @@ class lista extends Component {
 
   }
 
+
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
+    this.setState({ loading: "cargando", data: null });
+    SSocket.sendPromise({
+      component: "reporte",
+      type: "execute_function",
+      func: this.state.func,
+      params: this.state.params,
+    }).then(resp => {
+      this.setState({ loading: false, data: resp.data });
+    }).catch(e => {
+      this.setState({ loading: false, error: e });
+    })
+  }
+
   render() {
+
+    // if (!this.state.data) return <SLoad />
+    // console.log("mucho ", this.state.data);
+
     return (
       <SPage title={'lista'} center>
-        {/* <SHr height={24} color={"red"}></SHr> */}
+        <SHr height={24} color={"transparent"}></SHr>
         <SView col={"xs-12 "} center row style={{
           paddingStart: 10,
           paddingEnd: 10,
@@ -332,7 +294,7 @@ class lista extends Component {
           {this.getLista()}
         </SView>
 
-        {/* <SHr height={50} color={"red"}></SHr> */}
+        <SHr height={50} color={"transparent"}></SHr>
       </SPage >
     );
   }
@@ -341,3 +303,6 @@ const initStates = (state) => {
   return { state }
 };
 export default connect(initStates)(lista);
+  // puto(obj) {
+  //   return <SText color={"red"} >{"Data " + obj.descripcion + "\n"}</SText>
+  // }
