@@ -92,35 +92,31 @@ const data_test = [
     }
   }
 ];
-const socios = 0;
 
-class lista extends Component {
+class listaTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "Reporte Name",
-      func: "get_ventas_por_sucursal_all_",
+      func: "get_ventas_por_sucursal_all",
       params: null,
-      // socios: 0,
-
     };
 
   }
 
 
-  ItemDetalle(key_inversion, precio_accion, cantidad_paquetes, datafiltrada) {
+  ItemDetalle(key_inversion, precio_accion, cantidad_paquetes) {
 
-    // var datax = fondo_inversion_usuario.Actions.getAll(this.props);
-    // if (!datax) return <SLoad />
+    var datax = fondo_inversion_usuario.Actions.getAll(this.props);
+    if (!datax) return <SLoad />
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
 
-    // console.log("la cantidad ", datax.length())
-    // socios = datafiltrada.length;
-    // this.setState({ socios: Object.keys(datax).length })
-    // let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == key_inversion)
 
-    return datafiltrada.map(obj => {
+    return Object.keys(datax).map(keys => {
+      const obj = datax[keys];
+
+      if (obj.key_fondo_inversion != key_inversion) return;
 
 
       return <SView col={"xs-12"} backgroundColor={"cyan+66"}>
@@ -150,15 +146,6 @@ class lista extends Component {
     })
   }
   Item(obj) {
-    // console.log("bolivia ", obj);
-
-    var datax = fondo_inversion_usuario.Actions.getAll(this.props);
-    if (!datax) return <SLoad />
-    // var usuarios = Model.usuario.Action.getAll();
-    // if (!usuarios) return <SLoad />
-
-    let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == obj.inversion_key);
-
     return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
 
       <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
@@ -167,10 +154,6 @@ class lista extends Component {
           <SText center fontSize={14} bold>{obj?.descripcion}</SText>
           <SHr height={8} />
           <SText center fontSize={12}>{obj?.observacion}</SText>
-          <SHr height={8} />
-          <SText center fontSize={12}>Fecha {obj?.fecha_inicio + " " + obj?.fecha_fin}</SText>
-          {/* <SText center fontSize={12}>{obj?.sucursal_nombre}</SText> */}
-          {/* <SText center fontSize={12}>{obj?.sucursal_direccion}</SText> */}
         </SView>
 
         <SView center col={"xs-12"} row backgroundColor={"cyan+66"}>
@@ -184,24 +167,24 @@ class lista extends Component {
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.meses_accion}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_meses}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Duración/meses</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.cantidad_accion}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Acciones</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.ventas_paquetes}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
-              <SText center fontSize={10}>Ventas/Paquetes</SText>
+              <SText center fontSize={10}>Inversionista</SText>
             </SView>
           </SView>
         </SView>
@@ -213,7 +196,7 @@ class lista extends Component {
               <SText fontSize={10}>Detalle</SText>
             </SView>
             <SView col={"xs-6"} backgroundColor={"transparent"} row style={{ justifyContent: "flex-end", }}>
-              <SText fontSize={10}># {SMath.formatMoney(datafiltrada.length, 0)}</SText>
+              <SText fontSize={10}>#20</SText>
             </SView>
           </SView>
 
@@ -238,13 +221,23 @@ class lista extends Component {
           </SView>
         </SView>
         <SHr height={12} />
-        {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes, datafiltrada)}
+        {this.ItemDetalle(obj.key, obj.precio_accion, obj.cantidad_paquetes)}
       </SView>
     </SView >
   }
   getLista() {
     if (!this.state.data) return <SLoad />
-    return <SList data={this.state.data} horizontal space={0} render={obj_fondo =>
+    // console.log("mucho ", this.state.data);
+
+    // console.log("data_test ", data_test);
+    // const descripciones = data_test.map(objeto => Object.values(objeto)[0].descripcion);
+    // console.log(descripciones);
+    //  Object.values(data_test).map((keys) => {
+    //   let obj = keys[Object.keys(keys)[0]]; // acceder al objeto dentro del objeto
+    //   console.log(obj.descripcion);
+    // });
+    var data = data_test.map(objeto => Object.values(objeto)[0]);
+    return <SList data={data} horizontal space={0} render={obj_fondo =>
       this.Item(obj_fondo)
     } />
 
@@ -295,4 +288,7 @@ class lista extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(lista);
+export default connect(initStates)(listaTest);
+  // puto(obj) {
+  //   return <SText color={"red"} >{"Data " + obj.descripcion + "\n"}</SText>
+  // }
