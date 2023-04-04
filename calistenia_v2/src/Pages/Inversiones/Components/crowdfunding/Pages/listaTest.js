@@ -93,12 +93,12 @@ const data_test = [
   }
 ];
 
-class lista extends Component {
+class listaTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "Reporte Name",
-      func: "get_ventas_por_sucursal_all_",
+      func: "get_ventas_por_sucursal_all",
       params: null,
     };
 
@@ -146,10 +146,6 @@ class lista extends Component {
     })
   }
   Item(obj) {
-    console.log("bolivia ", obj);
-
-    // if (obj.estado != 1) return;
-
     return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
 
       <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
@@ -158,9 +154,6 @@ class lista extends Component {
           <SText center fontSize={14} bold>{obj?.descripcion}</SText>
           <SHr height={8} />
           <SText center fontSize={12}>{obj?.observacion}</SText>
-          <SHr height={8} />
-          <SText center fontSize={12}>{obj?.sucursal_nombre}</SText>
-          {/* <SText center fontSize={12}>{obj?.sucursal_direccion}</SText> */}
         </SView>
 
         <SView center col={"xs-12"} row backgroundColor={"cyan+66"}>
@@ -174,24 +167,24 @@ class lista extends Component {
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.meses_accion}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_meses}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Duración/meses</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.cantidad_accion}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Acciones</SText>
             </SView>
             <SView col={"xs-3"} height center>
               <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
-                <SText fontSize={14} bold>{obj?.ventas_paquetes}</SText>
+                <SText fontSize={14} bold>{obj?.cantidad_acciones}</SText>
               </SView>
               <SHr height={2} />
-              <SText center fontSize={10}>Ventas/Paquetes</SText>
+              <SText center fontSize={10}>Inversionista</SText>
             </SView>
           </SView>
         </SView>
@@ -228,17 +221,23 @@ class lista extends Component {
           </SView>
         </SView>
         <SHr height={12} />
-        {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes)}
+        {this.ItemDetalle(obj.key, obj.precio_accion, obj.cantidad_paquetes)}
       </SView>
     </SView >
   }
   getLista() {
     if (!this.state.data) return <SLoad />
-    console.log("opinar ", this.state.data)
+    // console.log("mucho ", this.state.data);
 
-    return <SList data={this.state.data} horizontal space={0} render={obj_fondo =>
-
-      // console.log("opiar ", obj_fondo)
+    // console.log("data_test ", data_test);
+    // const descripciones = data_test.map(objeto => Object.values(objeto)[0].descripcion);
+    // console.log(descripciones);
+    //  Object.values(data_test).map((keys) => {
+    //   let obj = keys[Object.keys(keys)[0]]; // acceder al objeto dentro del objeto
+    //   console.log(obj.descripcion);
+    // });
+    var data = data_test.map(objeto => Object.values(objeto)[0]);
+    return <SList data={data} horizontal space={0} render={obj_fondo =>
       this.Item(obj_fondo)
     } />
 
@@ -289,4 +288,7 @@ class lista extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(lista);
+export default connect(initStates)(listaTest);
+  // puto(obj) {
+  //   return <SText color={"red"} >{"Data " + obj.descripcion + "\n"}</SText>
+  // }
