@@ -92,6 +92,7 @@ const data_test = [
     }
   }
 ];
+const socios = 0;
 
 class lista extends Component {
   constructor(props) {
@@ -100,23 +101,26 @@ class lista extends Component {
       title: "Reporte Name",
       func: "get_ventas_por_sucursal_all_",
       params: null,
+      // socios: 0,
+
     };
 
   }
 
 
-  ItemDetalle(key_inversion, precio_accion, cantidad_paquetes) {
+  ItemDetalle(key_inversion, precio_accion, cantidad_paquetes, datafiltrada) {
 
-    var datax = fondo_inversion_usuario.Actions.getAll(this.props);
-    if (!datax) return <SLoad />
+    // var datax = fondo_inversion_usuario.Actions.getAll(this.props);
+    // if (!datax) return <SLoad />
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
 
+    // console.log("la cantidad ", datax.length())
+    // socios = datafiltrada.length;
+    // this.setState({ socios: Object.keys(datax).length })
+    // let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == key_inversion)
 
-    return Object.keys(datax).map(keys => {
-      const obj = datax[keys];
-
-      if (obj.key_fondo_inversion != key_inversion) return;
+    return datafiltrada.map(obj => {
 
 
       return <SView col={"xs-12"} backgroundColor={"cyan+66"}>
@@ -146,9 +150,14 @@ class lista extends Component {
     })
   }
   Item(obj) {
-    console.log("bolivia ", obj);
+    // console.log("bolivia ", obj);
 
-    // if (obj.estado != 1) return;
+    var datax = fondo_inversion_usuario.Actions.getAll(this.props);
+    if (!datax) return <SLoad />
+    // var usuarios = Model.usuario.Action.getAll();
+    // if (!usuarios) return <SLoad />
+
+    let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == obj.inversion_key);
 
     return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
 
@@ -159,7 +168,8 @@ class lista extends Component {
           <SHr height={8} />
           <SText center fontSize={12}>{obj?.observacion}</SText>
           <SHr height={8} />
-          <SText center fontSize={12}>{obj?.sucursal_nombre}</SText>
+          <SText center fontSize={12}>Fecha {obj?.fecha_inicio + " " + obj?.fecha_fin}</SText>
+          {/* <SText center fontSize={12}>{obj?.sucursal_nombre}</SText> */}
           {/* <SText center fontSize={12}>{obj?.sucursal_direccion}</SText> */}
         </SView>
 
@@ -203,7 +213,7 @@ class lista extends Component {
               <SText fontSize={10}>Detalle</SText>
             </SView>
             <SView col={"xs-6"} backgroundColor={"transparent"} row style={{ justifyContent: "flex-end", }}>
-              <SText fontSize={10}>#20</SText>
+              <SText fontSize={10}># {SMath.formatMoney(datafiltrada.length, 0)}</SText>
             </SView>
           </SView>
 
@@ -228,17 +238,13 @@ class lista extends Component {
           </SView>
         </SView>
         <SHr height={12} />
-        {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes)}
+        {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes, datafiltrada)}
       </SView>
     </SView >
   }
   getLista() {
     if (!this.state.data) return <SLoad />
-    console.log("opinar ", this.state.data)
-
     return <SList data={this.state.data} horizontal space={0} render={obj_fondo =>
-
-      // console.log("opiar ", obj_fondo)
       this.Item(obj_fondo)
     } />
 
