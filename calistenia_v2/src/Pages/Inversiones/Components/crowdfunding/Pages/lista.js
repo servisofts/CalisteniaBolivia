@@ -120,27 +120,32 @@ class lista extends Component {
     // this.setState({ socios: Object.keys(datax).length })
     // let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == key_inversion)
 
+
     return datafiltrada.map(obj => {
+
+
+      var _accion = SMath.formatMoney((obj.inversion / precio_accion), 0);
+      var _ganancia = SMath.formatMoney((_accion * cantidad_paquetes) * obj.comision, 0)
 
 
       return <SView col={"xs-12"} backgroundColor={"cyan+66"}>
 
 
         <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
-          <SView col={"xs-6"} backgroundColor={"transparent"} row>
+          <SView col={"xs-6.5"} backgroundColor={"transparent"} row>
             <SText col={"xs-12"} fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres + " " + usuarios[obj.key_usuario_inversionista].Apellidos}</SText>
           </SView>
-          <SView col={"xs-2"} row style={{ justifyContent: "flex-start", }}>
-            <SText fontSize={10}>{SMath.formatMoney(obj.inversion / cantidad_paquetes)}</SText>
+          <SView col={"xs-1"} row center style={{ justifyContent: "flex-start", }} border={"pink"}>
+            <SText fontSize={10}>{_accion}</SText>
           </SView>
-          <SView col={"xs-1"} row style={{ justifyContent: "flex-start", }}>
-            <SText fontSize={10}>{cantidad_paquetes}</SText>
+          <SView col={"xs-1.5"} row center style={{ justifyContent: "flex-start", }} border={"green"}>
+            <SText fontSize={10}>{SMath.formatMoney(cantidad_paquetes, 0)}</SText>
           </SView>
-          <SView col={"xs-1"} center>
-            <SText fontSize={10}>x{obj.comision} Bs</SText>
+          <SView col={"xs-1"} row center border={"blue"}>
+            <SText fontSize={10}>x{SMath.formatMoney(obj.comision, 0)} Bs</SText>
           </SView>
-          <SView col={"xs-2"} row style={{ justifyContent: "flex-end", }}>
-            <SText fontSize={10}>{SMath.formatMoney((obj.inversion / precio_accion) * obj.comision)}</SText>
+          <SView col={"xs-2"} row center style={{ justifyContent: "flex-end", }} border={"red"}>
+            <SText fontSize={10}>{_ganancia} Bs</SText>
           </SView>
 
         </SView>
