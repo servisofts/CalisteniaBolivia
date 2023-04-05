@@ -94,7 +94,7 @@ const data_test = [
 ];
 const socios = 0;
 
-class lista extends Component {
+class fijo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -292,6 +292,7 @@ class lista extends Component {
 
     return (
       <SPage title={'lista'} center>
+        <SText>Fijo</SText>
         <SHr height={24} color={"transparent"}></SHr>
         <SView col={"xs-12"} center row style={{
           paddingStart: 10,
@@ -310,4 +311,4 @@ class lista extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(lista);
+export default connect(initStates)(fijo);
