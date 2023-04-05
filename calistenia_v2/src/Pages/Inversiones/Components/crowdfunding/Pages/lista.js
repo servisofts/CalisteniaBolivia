@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SHr, SList, SLoad, SMath, SPage, SText, STheme, SView } from 'servisofts-component';
+import { SHr, SList, SLoad, SMath, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
 import fondo_inversion_usuario from '../../fondo_inversion_usuario';
@@ -128,7 +128,7 @@ class lista extends Component {
 
         <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
           <SView col={"xs-6"} backgroundColor={"transparent"} row>
-            <SText fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres + " " + usuarios[obj.key_usuario_inversionista].Apellidos}</SText>
+            <SText col={"xs-12"} fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres + " " + usuarios[obj.key_usuario_inversionista].Apellidos}</SText>
           </SView>
           <SView col={"xs-2"} row style={{ justifyContent: "flex-start", }}>
             <SText fontSize={10}>{SMath.formatMoney(obj.inversion / cantidad_paquetes)}</SText>
@@ -159,7 +159,7 @@ class lista extends Component {
 
     let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == obj.inversion_key);
 
-    return <SView col={"xs-11 md-6 xl-3"} backgroundColor={"transparent"} height={350} style={{ padding: 4 }}>
+    return <SView col={"xs-12 md-6 xl-3"} border={"transparent"} height={400} style={{ padding: 4 }} center>
 
       <SView center col={"xs-12"} height card style={{ borderWidth: 1.5, borderRadius: 4 }} >
 
@@ -168,7 +168,7 @@ class lista extends Component {
           <SHr height={8} />
           <SText center fontSize={12}>{obj?.observacion}</SText>
           <SHr height={8} />
-          <SText center fontSize={12}>Fecha {obj?.fecha_inicio + " " + obj?.fecha_fin}</SText>
+          <SText center fontSize={12}>Fecha {obj?.fecha_inicio + " - " + obj?.fecha_fin}</SText>
           {/* <SText center fontSize={12}>{obj?.sucursal_nombre}</SText> */}
           {/* <SText center fontSize={12}>{obj?.sucursal_direccion}</SText> */}
         </SView>
@@ -176,28 +176,29 @@ class lista extends Component {
         <SView center col={"xs-12"} row backgroundColor={"cyan+66"}>
           <SView col={"xs-12"} height={80} card row center>
             <SView col={"xs-3"} height center>
-              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+              <SView center border={STheme.color.card} style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "transparent" }}>
                 <SText fontSize={14} bold>{SMath.formatMoney(obj?.monto_maximo)}</SText>
               </SView>
               <SHr height={2} />
-              <SText center fontSize={10}>Monto maximo/Bs</SText>
+              <SText center fontSize={10}>Monto maximo</SText>
             </SView>
             <SView col={"xs-3"} height center>
-              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+              <SView center border={STheme.color.card} style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "transparent" }}>
                 <SText fontSize={14} bold>{obj?.meses_accion}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Duración/meses</SText>
             </SView>
             <SView col={"xs-3"} height center>
-              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+              <SView center border={STheme.color.card} style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "transparent" }}>
+
                 <SText fontSize={14} bold>{obj?.cantidad_accion}</SText>
               </SView>
               <SHr height={2} />
               <SText center fontSize={10}>Acciones</SText>
             </SView>
             <SView col={"xs-3"} height center>
-              <SView center style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "red" }}>
+              <SView center border={STheme.color.card} style={{ width: 80, height: 30, borderRadius: 4, backgroundColor: "transparent" }}>
                 <SText fontSize={14} bold>{obj?.ventas_paquetes}</SText>
               </SView>
               <SHr height={2} />
@@ -207,7 +208,7 @@ class lista extends Component {
         </SView>
         <SHr height={24} />
 
-        <SView col={"xs-12"} backgroundColor={"cyan+66"}>
+        <SView col={"xs-11.8"} backgroundColor={"cyan+66"}>
           <SView col={"xs-12"} row center>
             <SView col={"xs-6"} backgroundColor={"transparent"} row style={{ justifyContent: "flex-start", }}>
               <SText fontSize={10}>Detalle</SText>
@@ -238,7 +239,15 @@ class lista extends Component {
           </SView>
         </SView>
         <SHr height={12} />
-        {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes, datafiltrada)}
+        <SView col={"xs-11.8"} height={160} backgroundColor={"transparent"}  >
+
+          <SScrollView2
+            style={{ width: "100%" }}
+            disableHorizontal
+          >
+            {this.ItemDetalle(obj.inversion_key, obj.precio_accion, obj.ventas_paquetes, datafiltrada)}
+          </SScrollView2>
+        </SView>
       </SView>
     </SView >
   }
@@ -278,7 +287,7 @@ class lista extends Component {
     return (
       <SPage title={'lista'} center>
         <SHr height={24} color={"transparent"}></SHr>
-        <SView col={"xs-12 "} center row style={{
+        <SView col={"xs-12"} center row style={{
           paddingStart: 10,
           paddingEnd: 10,
           paddingTop: 0,
