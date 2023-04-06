@@ -227,14 +227,14 @@ class lista extends Component {
           {/* <SHr height={4} /> */}
 
           <SView col={"xs-12"} backgroundColor={"cyan+66"} card row >
-            <SView col={"xs-6.5"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-start" }}>
+            <SView col={"xs-6.2"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-start" }}>
               <SText fontSize={10}>Inversionista</SText>
             </SView>
             <SView col={"xs-1"} row center style={{ justifyContent: "flex-start", }}>
               <SText fontSize={10}>Acción</SText>
             </SView>
-            <SView col={"xs-1.5"} row center style={{ justifyContent: "flex-start", }}>
-              <SText fontSize={10}>Paquetes</SText>
+            <SView col={"xs-1.8"} row center style={{ justifyContent: "flex-start", }}>
+              <SText fontSize={10}>Inscriptos</SText>
             </SView>
             <SView col={"xs-1"} row center>
               <SText fontSize={10}>Comisión</SText>
