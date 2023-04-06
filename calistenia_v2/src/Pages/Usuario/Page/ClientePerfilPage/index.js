@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Dimensions, ScrollView } from 'react-native';
+import { Component } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SHr, SLoad, SNavigation, SPage, SSCrollView, SScrollView2, STheme, SView } from 'servisofts-component';
-import Usuario from '../..';
+import { SButtom, SHr, SIcon, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 // import BackgroundImage from '../../Component/BackgroundImage';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
@@ -28,6 +27,36 @@ class ClientePerfilPage extends Component {
 
   }
 
+
+  EditarPerfil() {
+    return <SButtom style={{ width: 30, height: 30 }}
+      onPress={() => { SNavigation.navigate("registro", { key: this.key }) }}>
+      <SIcon name={"Edit"} style={{ width: 30, height: 30 }} />
+    </SButtom>
+  }
+
+  valido_CI(ci) {
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+
+  }
+
+  valido_Telefono(telefono) {
+    return <Text style={{
+      fontSize: 16, color: (
+        telefono.length < 8
+          || telefono.charAt(0) !== "7"
+          && telefono.charAt(0) !== "6"
+          && telefono.charAt(0) !== "+"
+          ? "red" : STheme.color.text),
+    }}>{" Telefono: " + telefono}</Text>
+  }
+
+  valido_Correo(correo) {
+    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
+
+
+
   getPerfil() {
     this.data = Model.usuario.Action.getByKey(this.key);
     if (!this.data) return <SLoad />
@@ -42,7 +71,7 @@ class ClientePerfilPage extends Component {
       }}>
         <FotoPerfilUsuario usuario={this.data} />
       </View>
-      <View style={{
+      <SView border={"red"} style={{
         width: "100%",
         alignItems: "center"
       }}>
@@ -52,17 +81,10 @@ class ClientePerfilPage extends Component {
           textTransform: "capitalize",
           fontWeight: "bold"
         }}>{this.data["Nombres"] + " " + this.data["Apellidos"]}</Text>
-        <Text style={{
-          color: STheme.color.text,
-          fontSize: 16,
-          textTransform: "capitalize",
-        }}>{"CI " + this.data["CI"]}</Text>
-        {/* <Text style={{
-          color: STheme.color.text,
-          fontSize: 16,
-          textTransform: "capitalize",
-        }}>{"CI " + this.data["CI"]}</Text> */}
-      </View>
+        {this.valido_CI(this.data?.CI)}
+        {this.valido_Telefono(this.data?.Telefono)}
+        {this.valido_Correo(this.data?.Correo)}
+      </SView>
       <SHr />
       <SHr />
       <HuellasDeUsuario key_usuario={this.data?.key} />

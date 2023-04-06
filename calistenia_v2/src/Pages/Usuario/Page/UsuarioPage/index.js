@@ -73,6 +73,25 @@ class UsuarioPage extends Component {
         }, this.props)
       }} >Recuperar</SButtom>
   }
+  valido_CI(ci) {
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+  }
+
+  valido_Telefono(telefono) {
+    return <Text style={{
+      fontSize: 16, color: (
+        telefono.length < 8
+          || telefono.charAt(0) !== "7"
+          && telefono.charAt(0) !== "6"
+          && telefono.charAt(0) !== "+"
+          ? "red" : STheme.color.text),
+    }}>{" Telefono: " + telefono}</Text>
+  }
+
+  valido_Correo(correo) {
+    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
+
 
   render() {
 
@@ -145,7 +164,7 @@ class UsuarioPage extends Component {
                   fontSize: 16,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
               </View>
               {this.getRecuperar(obj, isRecuperar)}
             </View>
@@ -191,14 +210,11 @@ class UsuarioPage extends Component {
                 ]}
                 getDataProcesada={() => {
                   var daFinal = {};
-                  // console.log("chaval ", objFinal);
 
 
                   // const ingreso = 0, egreso = 0, traspaso = 0;
                   var total = { ingreso: 0, egreso: 0, traspaso: 10 }
                   Object.values(objFinal).map((obj, i) => {
-                    console.log("mirar ", obj.Nombres)
-
                     var toInsert = {
                       nombres: obj?.Nombres,
                       apellidos: obj?.Apellidos,
@@ -206,7 +222,6 @@ class UsuarioPage extends Component {
                     }
                     daFinal[i] = toInsert
                   })
-                  console.log("mirar ", daFinal)
                   return daFinal
                 }}
               />
