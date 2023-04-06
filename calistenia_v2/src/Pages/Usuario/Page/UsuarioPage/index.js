@@ -200,24 +200,29 @@ class UsuarioPage extends Component {
           >
 
             <SView col={"xs-12"} center>
-
               {/* tarea10 ✅ ✅ ✅ */}
               <ExportExcel
                 header={[
-                  { key: "nombres", label: "Nombres", width: 100 },
-                  { key: "apellidos", label: "Apellidos", width: 100 },
-                  { key: "telefono", label: "Telefono", width: 100 },
+                  // { key: "key_usuario", label: "key", width: 250 },
+                  // { key: "ci", label: "documento", width: 40 },
+                  { key: "indice", label: "n", width: 40 },
+                  { key: "telefono", label: "telefono", width: 90 },
+                  { key: "nombres", label: "nombres", width: 200 },
+                  // { key: "cumpleaños", label: "cumpleaños", width: 80 },
+                  // { key: "correo", label: "correo", width: 150 },
                 ]}
                 getDataProcesada={() => {
                   var daFinal = {};
-
-
                   // const ingreso = 0, egreso = 0, traspaso = 0;
                   var total = { ingreso: 0, egreso: 0, traspaso: 10 }
                   Object.values(objFinal).map((obj, i) => {
                     var toInsert = {
-                      nombres: obj?.Nombres,
-                      apellidos: obj?.Apellidos,
+                      indice: i + 1,
+                      key_usuario: obj?.key,
+                      nombres: obj?.Nombres + " " + obj?.Apellidos,
+                      ci: obj?.CI,
+                      correo: obj?.Correo,
+                      cumpleaños: obj["Fecha nacimiento"],
                       telefono: obj?.Telefono,
                     }
                     daFinal[i] = toInsert
