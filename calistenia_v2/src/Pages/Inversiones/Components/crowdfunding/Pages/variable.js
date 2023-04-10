@@ -234,7 +234,7 @@ class variable extends Component {
               <SText fontSize={10}>Acción</SText>
             </SView>
             <SView col={"xs-1.5"} row center style={{ justifyContent: "flex-start", }}>
-              <SText fontSize={10}>Paquetes</SText>
+              <SText fontSize={10}>Inscriptos</SText>
             </SView>
             <SView col={"xs-1"} row center>
               <SText fontSize={10}>Comisión</SText>
