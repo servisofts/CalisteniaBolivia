@@ -1,18 +1,18 @@
 import { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
-import FloatButtom from '../../../../Components/FloatButtom';
 import Model from '../../../../Model';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 var objFinal = {};
 
-class UsuarioPage extends Component {
+class Llamada extends Component {
 
+  // primer paso para hacer un gradico svg dos rayas
   constructor(props) {
     super(props);
     this.state = {
@@ -92,6 +92,98 @@ class UsuarioPage extends Component {
     return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
+  valido_Cumpleaños(Cumpleaños) {
+
+
+    var fecha = Cumpleaños;
+    var fechaObj = new Date(fecha);
+    var mes = fechaObj.getMonth() + 1;
+
+    const fechaActual = new Date();
+    const mesActual = fechaActual.getMonth() + 1;
+
+    // como obtengo mi mes con Sdate
+
+    var mensaje = "";
+    if (mes === mesActual) {
+      mensaje = "🥳🍰🎂🎊📆 " + fecha;
+    } else {
+      mensaje = "";
+    }
+
+    return <Text style={{ fontSize: 16, color: (mes === mesActual ? "red" : STheme.color.text), }}>{mensaje}</Text>
+  }
+
+  setColor(key) {
+    if (key == "ingreso") {
+      return "rgba(113, 175, 74, 0.53)+1";
+    }
+    if (key == "egreso") {
+      return "rgba(223, 39, 50, 0.53)+8";
+    }
+    if (key == "traspaso") {
+      return "rgba(239, 140, 56, 0.53)+88";
+    } else {
+      return "rgba(170, 170, 170, 0.53)+9";
+    }
+
+  }
+  setMensaje(nombre, numero) {
+    if
+    let sms = "https://web.whatsapp.com/send?phone=591" + numero + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
+
+    return <>
+      <SView row height={36} center onPress={() => { SNavigation.openURL(sms); }} row>
+        <SText>{numero}</SText>
+      </SView>
+    </>
+
+  }
+
+
+
+
+  optionItem({ key, label }) {
+    // var select = !!this.state.select[key]
+
+
+    return <>
+      <SView row height={36} center style={{
+        paddingLeft: 8,
+        paddingRight: 8,
+        // opacity: select ? 1 : 0.5,
+        borderRadius: 4,
+        backgroundColor: this.setColor(key),
+        // backgroundColor: Model.compra_venta.Action.getStateInfo(key).color + "88"
+      }} onPress={() => {
+        // if (!select) {
+        //   this.state.select[key] = true;
+        // } else {
+        //   delete this.state.select[key];
+        // }
+        // this.setState({ ...this.state })
+      }} row>
+        {/* {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>} */}
+        <SText>{label}</SText>
+      </SView>
+      <SView width={8} ></SView>
+    </>
+  }
+
+  menu() {
+    const items = [
+      { key: "crear", label: " + Crear" },
+      { key: "ingreso", label: "Todos" },
+      { key: "ingreso", label: "Activos" },
+      { key: "egreso", label: "Eliminados" },
+      { key: "traspaso", label: "Becados" },
+      // { key: "egreso", label: "Eliminados" },
+
+      { key: "egreso", label: "Feb2023" },
+      { key: "egreso", label: "Marzo2023" },
+    ].map(item => this.optionItem(item));
+    return items;
+  }
 
   render() {
 
@@ -164,7 +256,13 @@ class UsuarioPage extends Component {
                   fontSize: 16,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]}
+                  {/* {this.valido_Telefono(obj?.Telefono)} */}
+
+                  {this.valido_Cumpleaños(obj["Fecha nacimiento"],)}
+                  {/* {this.setMensaje("alvaroski", "69050028")} */}
+                  {this.setMensaje("alvaroski", obj.Telefono)}
+                </Text>
               </View>
               {this.getRecuperar(obj, isRecuperar)}
             </View>
@@ -198,6 +296,13 @@ class UsuarioPage extends Component {
               }
             }}
           >
+
+            <SView col={"xs-12"} style={{ height: 56, }} center row border={"transparent"}>
+              {/* <SHr height={10} /> */}
+              {this.menu()}
+              {/* <SHr height={10} /> */}
+            </SView>
+
 
             <SView col={"xs-12"} center>
               {/* tarea10 ✅ ✅ ✅ */}
@@ -238,9 +343,9 @@ class UsuarioPage extends Component {
 
             </SView>
           </SScrollView2>
-          <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
+          {/* <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
             SNavigation.navigate("registro")
-          }} />
+          }} /> */}
         </View>
       </SPage>
     );
@@ -249,4 +354,4 @@ class UsuarioPage extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(UsuarioPage);
+export default connect(initStates)(Llamada);

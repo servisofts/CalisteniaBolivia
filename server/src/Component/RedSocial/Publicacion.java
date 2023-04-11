@@ -25,6 +25,9 @@ public class Publicacion {
             case "getByKey":
                 getByKey(obj, session);
                 break;
+            case "registro":
+                registro(obj, session);
+                break;
             case "publicar":
                 publicar(obj, session);
                 break;
@@ -52,9 +55,30 @@ public class Publicacion {
 
     public static void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {
-            String consulta = "select get_by_key('" + COMPONENT + "', '"+obj.getString("key")+"') as json";
+            String consulta = "select get_by_key('" + COMPONENT + "', '" + obj.getString("key") + "') as json";
             JSONObject data = SPGConect.ejecutarConsultaObject(consulta);
             obj.put("data", data);
+            obj.put("estado", "exito");
+        } catch (Exception e) {
+            obj.put("estado", "error");
+            obj.put("error", e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void registro(JSONObject obj, SSSessionAbstract session) {
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            String fecha_on = formatter.format(new Date());
+            JSONObject publicacion = obj.getJSONObject("data");
+
+            publicacion.put("key", UUID.randomUUID().toString());
+            publicacion.put("estado", 1);
+            publicacion.put("fecha_on", fecha_on);
+            publicacion.put("key_usuario", obj.getString("key_usuario"));
+            SPGConect.insertArray("publicacion", new JSONArray().put(publicacion));
+
+            obj.put("data", publicacion);
             obj.put("estado", "exito");
         } catch (Exception e) {
             obj.put("estado", "error");
@@ -97,23 +121,24 @@ public class Publicacion {
         }
     }
 
-    public static void subirFoto(JSONObject obj, SSSessionAbstract session)  {
-        try{
-           
+    public static void subirFoto(JSONObject obj, SSSessionAbstract session) {
+        try {
+
             publicar(obj, session);
 
-            String url = SConfig.getJSON().getJSONObject("files").getString("url")+"publicacion/";
+            String url = SConfig.getJSON().getJSONObject("files").getString("url") + "publicacion/";
             File f = new File(url);
-            if(!f.exists()) f.mkdirs();
+            if (!f.exists())
+                f.mkdirs();
             JSONArray documentos = new JSONArray();
-            url+=obj.getJSONObject("publicacion").getString("key");
+            url += obj.getJSONObject("publicacion").getString("key");
             obj.put("dirs", new JSONArray().put(url));
             obj.put("estado", "exito");
             obj.put("data", documentos);
             SSServerAbstract.sendAllServer(obj.toString());
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
 
 }

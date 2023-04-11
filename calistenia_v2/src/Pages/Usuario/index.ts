@@ -1,17 +1,16 @@
 import { SPageListProps } from 'servisofts-component'
 import Actions from './Actions'
 
-import Login from './Page/Login'
-import RegistroCliente from './Page/RegistroCliente'
-import Perfil from './Page/Perfil'
-import UsuarioPage from './Page/UsuarioPage'
-import ClientesPage from './Page/ClientesPage'
 import ClientePerfilPage from './Page/ClientePerfilPage'
-import VentasPage from './Page/VentasPage'
-import VentasSelect from './Page/VentasPage'
+import ClientesPage from './Page/ClientesPage'
 import EntrenadorPage from './Page/EntrenadorPage'
-import VendedorPage from './Page/VendedorPage'
+import Llamada from './Page/Llamada'
+import Login from './Page/Login'
+import Perfil from './Page/Perfil'
 import RegistroNuevo from './Page/RegistroNuevo'
+import UsuarioPage from './Page/UsuarioPage'
+import VendedorPage from './Page/VendedorPage'
+import { default as VentasPage, default as VentasSelect } from './Page/VentasPage'
 const Pages: SPageListProps = {
     login: Login,
     // registro:RegistroCliente,
@@ -23,12 +22,13 @@ const Pages: SPageListProps = {
     VentasSelect,
     EntrenadorPage,
     ClientePerfilPage,
-    VendedorPage
+    VendedorPage,
+    Llamada
+
 }
 
 
 import usuarioReducer from './Reducer/usuarioReducer'
-import clientesActivosReducer from './Reducer/clientesActivosReducer'
 const Reducers = {
     usuarioReducer,
 }
