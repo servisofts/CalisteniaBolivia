@@ -12,6 +12,7 @@ var objFinal = {};
 
 class Llamada extends Component {
 
+  // primer paso para hacer un gradico svg dos rayas
   constructor(props) {
     super(props);
     this.state = {
@@ -127,6 +128,20 @@ class Llamada extends Component {
     }
 
   }
+  setMensaje(nombre, numero) {
+    if
+    let sms = "https://web.whatsapp.com/send?phone=591" + numero + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
+
+    return <>
+      <SView row height={36} center onPress={() => { SNavigation.openURL(sms); }} row>
+        <SText>{numero}</SText>
+      </SView>
+    </>
+
+  }
+
+
+
 
   optionItem({ key, label }) {
     // var select = !!this.state.select[key]
@@ -245,7 +260,8 @@ class Llamada extends Component {
                   {/* {this.valido_Telefono(obj?.Telefono)} */}
 
                   {this.valido_Cumpleaños(obj["Fecha nacimiento"],)}
-
+                  {/* {this.setMensaje("alvaroski", "69050028")} */}
+                  {this.setMensaje("alvaroski", obj.Telefono)}
                 </Text>
               </View>
               {this.getRecuperar(obj, isRecuperar)}
