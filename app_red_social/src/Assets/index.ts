@@ -90,7 +90,8 @@ import adorno_carga, { ReactComponent as adorno_cargaW } from './svg/adorno_carg
 import Tuerca, { ReactComponent as TuercaW } from './svg/tuerca.svg';
 import MeGusta, { ReactComponent as MeGustaW } from './svg/meGusta.svg';
 import BarraQr, { ReactComponent as BarraQrW } from './svg/barraqr.svg';
-
+import Comment, { ReactComponent as CommentW } from './svg/Comment.svg';
+import Heart, { ReactComponent as HeartW } from './svg/Heart.svg';
 import Calistenia from "./svg/calistenia";
 
 
@@ -177,7 +178,8 @@ const Assets: SAssets = {
         "BackArrow": { Native: BackArrow, Web: BackArrowW },
         "MensajeSolicitud": { Native: MensajeSolicitud, Web: MensajeSolicitudW },
         "adornocarga": { Native: adorno_carga, Web: adorno_cargaW },
-
+        "Heart": { Native: Heart, Web: HeartW },
+        "Comment": { Native: Comment, Web: CommentW },
         ...Tapeke,
         ...Pedido,
 

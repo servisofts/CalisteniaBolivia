@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { View, Text, Button, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
+import { SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
+import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
 import FloatButtom from '../../../../Components/FloatButtom';
-import SSRolesPermisos, { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme } from 'servisofts-component';
-import SSocket from 'servisofts-socket';
-import Usuario from '../..';
 import Model from '../../../../Model';
+import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 class VentasPage extends Component {
 
@@ -70,9 +70,23 @@ class VentasPage extends Component {
         }, this.props)
       }} >Recuperar</SButtom>
   }
-
+  valido_CI(ci) {
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+  }
+  valido_Telefono(telefono) {
+    return <Text style={{
+      fontSize: 16, color: (
+        telefono.length < 8
+          || telefono.charAt(0) !== "7"
+          && telefono.charAt(0) !== "6"
+          && telefono.charAt(0) !== "+"
+          ? "red" : STheme.color.text),
+    }}>{" Telefono: " + telefono}</Text>
+  }
+  valido_Correo(correo) {
+    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
   render() {
-
     const getLista = () => {
       var data = Model.usuario.Action.getAll();
       // var dataRU = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
@@ -148,7 +162,7 @@ class VentasPage extends Component {
                 <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime() / 500}`} />
 
               </View>
-              <View style={{
+              <View row style={{
                 flex: 1,
                 justifyContent: "center"
               }}>
@@ -156,7 +170,8 @@ class VentasPage extends Component {
                   fontSize: 16,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_CI(obj?.CI)} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
+
               </View>
               {this.getRecuperar(obj, isRecuperar)}
             </View>

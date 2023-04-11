@@ -252,15 +252,17 @@ class ClientesPage extends Component {
           {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel
             header={[
-              { key: "key", label: "key", width: 100 },
-              { key: "cliente_ci", label: "CI", width: 100 },
-              { key: "cliente_nombre", label: "Cliente", width: 250 },
-              { key: "cliente_telefono", label: "Telefono", width: 250 },
-              { key: "paquete", label: "Paquete", width: 200 },
-              { key: "motivo", label: "Motivo", width: 100 },
-              { key: "paquete_precio", label: "Precio", width: 100 },
-              { key: "fecha_inicio", label: "Fecha inicio", width: 100 },
-              { key: "fecha_fin", label: "Fecha fin", width: 100 },
+              { key: "indice", label: "Indice", width: 30 },
+              { key: "paquete", label: "Paquete", width: 130 },
+              { key: "paquete_precio", label: "Precio", width: 30 },
+              { key: "motivo", label: "Motivo", width: 150 },
+              { key: "fecha_inicio", label: "Fecha inicio", width: 70 },
+              { key: "fecha_fin", label: "Fecha fin", width: 70 },
+              { key: "ci", label: "CI", width: 70 },
+              { key: "nombres", label: "Cliente", width: 200 },
+              { key: "telefono", label: "Telefono", width: 90 },
+              { key: "correo", label: "Correo", width: 200 },
+              { key: "cumpleaños", label: "Cumpleaños", width: 70 },
             ]}
             getDataProcesada={() => {
               var daFinal = {};
@@ -268,15 +270,18 @@ class ClientesPage extends Component {
                 // var usr = this.usuarios[obj.key];
                 if (!obj?.estado || obj?.estado <= 0) return;
                 var toInsert = {
-                  key: obj.key,
-                  cliente_ci: obj?.CI,
-                  cliente_nombre: obj?.Nombres + " " + obj?.Apellidos,
-                  cliente_telefono: obj?.Telefono,
-                  motivo: obj?.vijencia?.motivo,
+                  indice: i + 1,
                   paquete: obj?.vijencia?.paquete?.descripcion,
                   paquete_precio: obj?.vijencia?.paquete?.precio,
+                  motivo: obj?.vijencia?.motivo,
                   fecha_inicio: obj?.vijencia?.fecha_inicio,
                   fecha_fin: obj?.vijencia?.fecha_fin,
+                  key_usuario: obj.key,
+                  ci: obj?.CI,
+                  nombres: obj?.Nombres + " " + obj?.Apellidos,
+                  telefono: obj?.Telefono,
+                  correo: obj?.Correo,
+                  cumpleaños: obj["Fecha nacimiento"],
                 }
                 daFinal[i] = toInsert
               })

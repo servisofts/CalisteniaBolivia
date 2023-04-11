@@ -158,8 +158,9 @@ class detalle extends Component {
             <BtnSend
                 onPress={() => {
                      {/* USUARIO */}
-                    // var usuario = Model.usuario.Action.getUsuarioLog();
+                    var usuario = Model.usuario.Action.getUsuarioLog();
                     // if (!usuario) return SPopup.open({ key: "confirmar", content: this.popupMensajeLogin() });
+                     if (!usuario) return SNavigation.navigate("/cuenta", {  ...this.params});
 
                     SNavigation.navigate("/paquete/membresia/confirmar", {  ...this.params});
                 }}

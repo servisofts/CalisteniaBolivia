@@ -75,7 +75,7 @@ class index extends Component {
                         <SHr height={35} />
                         <BtnSend2
                             onPress={() => {
-                                SNavigation.navigate("/cuenta/recuperar1");
+                                SNavigation.navigate("/cuenta/recuperar");
                             }}
                         >Recuperar cuenta
                         </BtnSend2>

@@ -14,6 +14,7 @@ import BtnNavegar from "./BtnNavegar"
 import BotonRecargar from "./BotonRecargar"
 import Cupon from "./Cupon"
 
+import Publicacion from "./Publicacion"
 import Sucursal from "./Sucursal"
 export {
     TopBar,
@@ -31,5 +32,6 @@ export {
     BtnNavegar,
     BotonRecargar,
     Cupon,
-    Sucursal
+    Sucursal,
+    Publicacion
 }

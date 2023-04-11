@@ -32,9 +32,13 @@ import root from './root';
 import testAlvaro from './testAlvaro';
 import testTablaUsuarios from './testTablaUsuarios';
 
+
+import terminos from './terminos';
+
 const newPages = SPage.combinePages("/", {
   "": root,
   "test": Test,
+  "terminos": terminos,
   ...empresa,
   ...contabilidad,
   ...rol

@@ -73,6 +73,25 @@ class UsuarioPage extends Component {
         }, this.props)
       }} >Recuperar</SButtom>
   }
+  valido_CI(ci) {
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+  }
+
+  valido_Telefono(telefono) {
+    return <Text style={{
+      fontSize: 16, color: (
+        telefono.length < 8
+          || telefono.charAt(0) !== "7"
+          && telefono.charAt(0) !== "6"
+          && telefono.charAt(0) !== "+"
+          ? "red" : STheme.color.text),
+    }}>{" Telefono: " + telefono}</Text>
+  }
+
+  valido_Correo(correo) {
+    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
+
 
   render() {
 
@@ -145,7 +164,7 @@ class UsuarioPage extends Component {
                   fontSize: 16,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
               </View>
               {this.getRecuperar(obj, isRecuperar)}
             </View>
@@ -181,32 +200,33 @@ class UsuarioPage extends Component {
           >
 
             <SView col={"xs-12"} center>
-
               {/* tarea10 ✅ ✅ ✅ */}
               <ExportExcel
                 header={[
-                  { key: "nombres", label: "Nombres", width: 100 },
-                  { key: "apellidos", label: "Apellidos", width: 100 },
-                  { key: "telefono", label: "Telefono", width: 100 },
+                  // { key: "key_usuario", label: "key", width: 250 },
+                  // { key: "ci", label: "documento", width: 40 },
+                  { key: "indice", label: "n", width: 40 },
+                  { key: "telefono", label: "telefono", width: 90 },
+                  { key: "nombres", label: "nombres", width: 200 },
+                  // { key: "cumpleaños", label: "cumpleaños", width: 80 },
+                  // { key: "correo", label: "correo", width: 150 },
                 ]}
                 getDataProcesada={() => {
                   var daFinal = {};
-                  // console.log("chaval ", objFinal);
-
-
                   // const ingreso = 0, egreso = 0, traspaso = 0;
                   var total = { ingreso: 0, egreso: 0, traspaso: 10 }
                   Object.values(objFinal).map((obj, i) => {
-                    console.log("mirar ", obj.Nombres)
-
                     var toInsert = {
-                      nombres: obj?.Nombres,
-                      apellidos: obj?.Apellidos,
+                      indice: i + 1,
+                      key_usuario: obj?.key,
+                      nombres: obj?.Nombres + " " + obj?.Apellidos,
+                      ci: obj?.CI,
+                      correo: obj?.Correo,
+                      cumpleaños: obj["Fecha nacimiento"],
                       telefono: obj?.Telefono,
                     }
                     daFinal[i] = toInsert
                   })
-                  console.log("mirar ", daFinal)
                   return daFinal
                 }}
               />

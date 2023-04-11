@@ -7,8 +7,6 @@ import Model from '../../Model';
 import SSocket from 'servisofts-socket';
 import BtnSend from './components/BtnSend';
 
-
-
 class confirmar extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +23,6 @@ class confirmar extends Component {
         </SView>
     }
 
-
     popupConfirmacion() {
         var INSTACE = this;
         return <SView
@@ -35,7 +32,6 @@ class confirmar extends Component {
                 height: 210,
                 borderRadius: 30,
                 padding: 8
-
             }}
             center
             withoutFeedback
@@ -46,7 +42,6 @@ class confirmar extends Component {
             <SView col={"xs-8"} center>
                 <SText color={STheme.color.text} style={{ fontSize: 17 }} center >¿Estás seguro que deseas adquirir este paquete?</SText>
             </SView>
-
             <SView flex />
             <SView col={"xs-12"} style={{ alignItems: "center", }}>
                 <SView row col={"xs-11"}>
@@ -63,8 +58,6 @@ class confirmar extends Component {
             <SHr />
         </SView>
     }
-
-
 
     fechas(data_paquete, data_sucursal, data_usuario) {
         return <>
@@ -92,7 +85,6 @@ class confirmar extends Component {
                         },
                     },
                     Fecha_fin: { placeholder: "Fecha de Fin", isRequired: false, value:this.state.fecha_fin, type: "fecha" , disabled:true},
-
                 }}
 
                 onSubmit={(values) => {
@@ -103,7 +95,6 @@ class confirmar extends Component {
 
                     if(!values["Fecha_inicio"]) return;
                     SPopup.open({ key: "confirmar", content: this.popupConfirmacion() });
-
                     // var fecha_fin = new SDate(values["Fecha_inicio"]).addDay(data_paquete?.dias)
                     // console.log("fecha_inicio: " + values["Fecha_inicio"] + " fecha_fin: " + fecha_fin + " dias add: " + data_paquete?.dias)
 
@@ -128,13 +119,7 @@ class confirmar extends Component {
                     // })
 
                     // SPopup.close("confirmar");
-                    
-
-
-
-
                     console.log(JSON.stringify(values)+ " kkk")
-
                 }}
             />
             <SHr height={26} />
@@ -142,9 +127,7 @@ class confirmar extends Component {
                 onPress={() => {
                     this.form.submit() 
                     // SNavigation.navigate("/restaurante", { pk: obj.key });
-                   
                 }}
-
             >Confirmar</BtnSend>
         </>
     }
@@ -202,7 +185,6 @@ class confirmar extends Component {
                             {sucursal?.descripcion}
                         </SText>
                     </SView>
-
                 </SView>
             </SView>
             <SHr height={16} />
@@ -244,7 +226,6 @@ class confirmar extends Component {
             <SHr height={26} />
             {this.fechas(paquete, sucursal, usuario)}
             <SHr height={16} />
-
         </SView>
 
     }
@@ -253,8 +234,6 @@ class confirmar extends Component {
         var defaultData = {
             ...this.params,
         };
-
-
         return (
             <SPage
                 footer={this.footer()}
