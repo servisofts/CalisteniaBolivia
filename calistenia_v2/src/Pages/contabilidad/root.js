@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SHr, SIcon, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SHr, SIcon, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import { MenuButtom, MenuPages } from 'servisofts-rn-roles_permisos';
 import { Parent } from "."
 import Model from '../../Model';
@@ -14,7 +14,13 @@ class index extends Component {
 
     render() {
         let empresa = Model.empresa.Action.getSelect();
+        let gestion = Model.gestion.Action.getSelect();
         if (!empresa) return <SLoad />
+
+        let fecha = new SDate(gestion?.fecha);
+        let fecha_inicio = fecha.toString("yyyy-MM-dd");
+        fecha.addMonth(1).addDay(-1);
+        let fecha_fin = fecha.toString("yyyy-MM-dd");
         return (
             <SPage title={Parent.title} onRefresh={(end) => {
                 Model.usuarioPage.Action.CLEAR();
@@ -24,8 +30,8 @@ class index extends Component {
                 <MenuPages path={Parent.path + "/"} blackList={["/contabilidad/asiento_contable"]}
                     params={{
                         key_empresa: empresa.key,
-                        fecha_inicio: "2022-01-01",
-                        fecha_fin: "2022-12-31"
+                        fecha_inicio: fecha_inicio,
+                        fecha_fin: fecha_fin
                     }}
                     onPress={(e) => {
                         e.preventDefault();

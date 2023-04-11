@@ -51,7 +51,8 @@ class index extends Component {
                         return <SText underLine fontSize={12} color={STheme.color.link} onPress={() => {
                             SNavigation.navigate("/contabilidad/mayores", {
                                 codigo: c,
-                                ...this.params,
+                                key_empresa: this.params.key_empresa,
+                                mes: new SDate(this.params.fecha_inicio, "yyyy-MM-dd").toString("yyyy-MM")
                             })
                         }}>{c}</SText>
                     }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SButtom, SHr, SIcon, SImage, SNavigation, SPage, SText, STheme, SThread, SView } from 'servisofts-component';
+import { Container } from '../Components';
+import LogoAnimado from '../Components/LogoAnimado';
 import Model from '../Model';
 
 class index extends Component {
@@ -11,7 +13,7 @@ class index extends Component {
     }
 
     componentDidMount() {
-        new SThread(1500, "carga_hilo", false).start(() => {
+        new SThread(2000, "carga_hilo", false).start(() => {
             SNavigation.replace("/root")
         })
         // Model.restaurante.Action.getAll();
@@ -31,16 +33,20 @@ class index extends Component {
     }
     render() {
         return (
-            <SPage hidden >
-                <SView col={"xs-12"} flex backgroundColor={STheme.color.primary} center onLayout={(evt) => {
+            <SPage hidden disableScroll center>
+                {/* <SView col={"xs-12"} flex backgroundColor={STheme.color.primary} center onLayout={(evt) => {
                     this.setState({ layout: evt.nativeEvent.layout })
-                }}>
-                    <SView col={"xs-6 sm-5 md-4 lg-3 xl-2 xxl-1.5"}>
-                        <SIcon name={"logowhite"} fill={STheme.color.text} />
+                }}> */}
+
+                <Container>
+                    <SView col={"xs-12"} colSquare center>
+                        <LogoAnimado />
                     </SView>
-                    {/* <SHr height={100} /> */}
-                    {/* {this.renderFooter()} */}
-                </SView>
+                </Container>
+                {/* <SText>Cargando</SText> */}
+                {/* <SHr height={100} /> */}
+                {/* {this.renderFooter()} */}
+                {/* </SView> */}
             </SPage>
         );
     }

@@ -41,6 +41,10 @@ class index extends Component {
         })
     }
     render() {
+        if (!Model.usuario.Action.getUsuarioLog()) {
+            SNavigation.replace("/login");
+            return null;
+        }
 
         return (
             <SPage title={"Nueva publicación"}>

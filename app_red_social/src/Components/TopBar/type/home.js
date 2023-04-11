@@ -38,7 +38,7 @@ export default class home extends Component<TopBarPropsType> {
                 </SView>
                 <SView flex center height>
                 </SView>
-                <SView width={30} height center onPress={() => {
+                {/* <SView width={30} height center onPress={() => {
                     SNavigation.navigate('/ajustes');
                 }} >
                     <SIcon name={"More"} height={18} />
@@ -47,7 +47,7 @@ export default class home extends Component<TopBarPropsType> {
                     SNavigation.navigate('/cuenta');
                 }} >
                     <SIcon name={"Comment"} height={18} />
-                </SView>
+                </SView> */}
                 {/* <SView col={"xs-9"} row style={{}}>
                     <SView flex style={{ alignItems: "flex-end" }}>
                         <SView row >

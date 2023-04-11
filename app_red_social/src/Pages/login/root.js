@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SHr, SIcon, SNavigation, SPage, SPopup, SText, STheme, SView } from 'servisofts-component';
 import { AccentBar, BottomNavigator, Container } from '../../Components';
 import BackButtom from '../../Components/BackButtom';
+import Model from '../../Model';
 import SectionApis from './components/SectionApis';
 import SectionFooter from './components/SectionFooter';
 import SectionForm from './components/SectionForm';
@@ -17,6 +18,10 @@ class login extends Component {
     }
 
     render() {
+        if (Model.usuario.Action.getUsuarioLog()) {
+            SNavigation.replace("/perfil");
+            return null;
+        }
 
         return (
             <SPage center

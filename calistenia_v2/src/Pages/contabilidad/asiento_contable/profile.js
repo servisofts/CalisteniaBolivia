@@ -9,7 +9,7 @@ class index extends DPA.profile {
     constructor(props) {
         super(props, {
             Parent: Parent,
-            params: ["key_gestion"],
+            // params: ["key_gestion"],
             type: "page",
             excludes: ["key", "key_usuario", "key_servicio", "key_sucursal"],
             onRefresh: (resolve) => {

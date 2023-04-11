@@ -91,7 +91,7 @@ class index extends Component {
             <>
                 <SPage title={'Editar perfil'} onRefresh={() => {
                     Model.usuario.Action.CLEAR();
-                }} header={<AccentBar />}>
+                }} >
                     <SView center>
                         <SView col={"xs-11 md-6 xl-4"} center>
                             <SView height={16} />

@@ -47,9 +47,9 @@ export default class SectionForm extends Component {
                     }}
                     onSubmit={(data) => {
                         if (data) {
-                            data["password"] = CryptoJS.MD5(data["password"]).toString();
+                            // data["password"] = CryptoJS.MD5(data["password"]).toString();
                             // Parent.Actions.login(data, this.props);
-                            Model.usuario.Action.loginByKey(data).then((resp)=>{
+                            Model.usuario.Action.login(data).then((resp)=>{
                                 SNavigation.goBack();
                                 // SNavigation.reset("/");
                             }).catch((e)=>{

@@ -133,8 +133,8 @@ android {
         applicationId "com.calistenia_rs_app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.4.0"
+        versionCode 16
+        versionName "2.0.0"
     }
     splits {
         abi {
@@ -152,10 +152,10 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('release.keystore')
-            storePassword 'servisofts123.'
-            keyAlias 'key0'
-            keyPassword 'servisofts123.'
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
         }
     }
     buildTypes {
