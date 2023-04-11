@@ -297,7 +297,7 @@ public class Caja {
                         monto = monto<obj.getJSONObject("data").getDouble("monto_salvar")?monto:monto-obj.getJSONObject("data").getDouble("monto_salvar");
                     }
 
-                    caja_movimiento = new JSONObject();
+                    caja_movimiento = new JSONObject(); 
                     caja_movimiento.put("key", UUID.randomUUID().toString());
                     caja_movimiento.put("key_caja", caja.getString("key"));
                     caja_movimiento.put("key_tipo_pago", pago.getString("key"));
