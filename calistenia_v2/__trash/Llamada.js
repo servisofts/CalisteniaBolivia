@@ -3,13 +3,15 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { ExportExcel, SButtom, SIcon, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import Buscador from '../../../../Components/Buscador';
-import Model from '../../../../Model';
-import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
+import BarraSuperior from '../src/Components/BarraSuperior';
+import Buscador from '../src/Components/Buscador';
+import Model from '../src/Model';
+import { SSRolesPermisosValidate } from '../src/SSRolesPermisos';
 
 var objFinal = {};
 
+var _fecha_inicio = "2023-02-01"
+var _fecha_fin = "2023-04-01"
 class Llamada extends Component {
 
   // primer paso para hacer un gradico svg dos rayas
@@ -29,6 +31,8 @@ class Llamada extends Component {
         "distintos": false,
       },
       ...this.state,
+
+
     };
 
   }
@@ -103,28 +107,31 @@ class Llamada extends Component {
   }
 
   valido_Cumpleaños(Cumpleaños) {
-
-
     var fecha = Cumpleaños;
     var fechaObj = new Date(fecha);
     var mes = fechaObj.getMonth() + 1;
-
     const fechaActual = new Date();
     const mesActual = fechaActual.getMonth() + 1;
 
-    // como obtengo mi mes con Sdate
+    // var _dia = fechaObj.getDate();
+    // var _mes = fechaObj.getMonth() + 1;
+    // var _fechaString = dia + "/" + mes;
 
     var mensaje = "";
     if (mes === mesActual) {
-      mensaje = "🥳🍰🎂🎊📆 " + fecha;
+      var _dia = fechaObj.getDate();
+      var _mes = fechaObj.getMonth() + 1;
+      var _fechaString = _mes + "/" + _dia;
+      mensaje = "📆 " + _fechaString;
     } else {
       mensaje = "";
     }
-
     return <Text style={{ fontSize: 16, color: (mes === mesActual ? "red" : STheme.color.text), }}>{mensaje}</Text>
   }
 
   setColor(key) {
+
+
     if (key == "nuevo") {
       return STheme.color.card;
       // return "rgb(62,177,227)+88";
@@ -149,10 +156,10 @@ class Llamada extends Component {
     else {
       return "rgba(170, 170, 170, 0.53)+9";
     }
+
   }
   setMensaje(nombre, numero) {
     let sms = "https://web.whatsapp.com/send?phone=591" + 69050028 + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
-
     return <>
       <SView row height={36} center onPress={() => { SNavigation.openURL(sms); }} row>
         <SText>{numero}</SText>
@@ -165,9 +172,8 @@ class Llamada extends Component {
 
 
   optionItem({ key, label }) {
-    // var select = !!this.state.select[key]
-
     var select = !!this.state.select[key]
+
 
     return <>
       <SView row height={36} center style={{
@@ -176,8 +182,8 @@ class Llamada extends Component {
         opacity: select ? 1 : 0.2,
         borderRadius: 4,
         backgroundColor: this.setColor(key),
-        // backgroundColor: Model.compra_venta.Action.getStateInfo(key).color + "88"
       }} onPress={() => {
+
 
         if (key == "nuevo") SNavigation.navigate("registro");
         // if (key == "todos") SNavigation.navigate("registro");
@@ -200,7 +206,6 @@ class Llamada extends Component {
 
 
         this.setState({ ...this.state })
-
       }} row>
         {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>}
         <SText>{label}</SText>
@@ -211,13 +216,16 @@ class Llamada extends Component {
 
   menu() {
     const items = [
+      // { key: "crear", label: " + Crear" },
       { key: "nuevo", label: " + Crear" },
       { key: "todos", label: "Todos ✅" },
       { key: "activos", label: "Activos" },
       { key: "eliminados", label: "Eliminados" },
       { key: "becados", label: "Becados" },
       { key: "distintos", label: "No inscriptos" },
-    ].map(item => this.optionItem(item));
+    ].map(item =>
+      this.optionItem(item)
+    );
     return items;
   }
 
@@ -237,7 +245,9 @@ class Llamada extends Component {
 
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
       return this.pagination(
+
         new SOrdenador([
+          // { key: "Fecha nacimiento", order: "desc", peso: 1 },
           { key: "Peso", order: "desc", peso: 4 },
           { key: "Nombres", order: "asc", peso: 2 },
           { key: "Apellidos", order: "asc", peso: 1 },
@@ -297,7 +307,7 @@ class Llamada extends Component {
 
                   {this.valido_Cumpleaños(obj["Fecha nacimiento"],)}
                   {/* {this.setMensaje("alvaroski", "69050028")} */}
-                  {this.setMensaje("alvaroski", obj.Telefono)}
+                  {/* {this.setMensaje(obj["Nombres"] + " " + obj["Apellidos"], obj.Telefono)} */}
                 </Text>
               </View>
               {this.getRecuperar(obj, isRecuperar)}
@@ -307,10 +317,11 @@ class Llamada extends Component {
       })
     }
     return (
-      <SPage hidden disableScroll>
+      <SPage hidden disableScroll center>
         <BarraSuperior title={"Usuarios"} navigation={this.props.navigation} goBack={() => {
           SNavigation.goBack();
         }} />
+
         <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
@@ -334,13 +345,15 @@ class Llamada extends Component {
           >
 
             <SView col={"xs-12"} style={{ height: 56, }} center row border={"transparent"}>
-              {/* <SHr height={10} /> */}
-              {this.menu()}
-              {/* <SHr height={10} /> */}
+              <SView col={"xs-5"} style={{ height: 56, justifyContent: "flex-start" }} center row border={"transparent"}  >
+                {/* <SHr height={10} /> */}
+                {this.menu()}
+                {/* <SHr height={10} /> */}
+              </SView>
             </SView>
 
 
-            <SView col={"xs-12"} center>
+            <SView col={"xs-12"} center border={"transparent"}>
               {/* tarea10 ✅ ✅ ✅ */}
               <ExportExcel
                 header={[
@@ -374,14 +387,11 @@ class Llamada extends Component {
             </SView>
 
 
-            <SView col={"xs-12"} center>
+            <SView col={"xs-12"} center  >
               {getLista()}
 
             </SView>
           </SScrollView2>
-          {/* <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
-            SNavigation.navigate("registro")
-          }} /> */}
         </View>
       </SPage>
     );
