@@ -93,6 +93,7 @@ const data_test = [
   }
 ];
 const socios = 0;
+// let miArray = [];
 
 class fijo extends Component {
   constructor(props) {
@@ -102,24 +103,21 @@ class fijo extends Component {
       func: "get_ventas_por_sucursal_all_",
       params: null,
       // socios: 0,
+      value: 0,
+      miArray: []
 
     };
+
+
+
 
   }
 
 
   ItemDetalle(key_inversion, precio_accion, cantidad_interes, datafiltrada) {
 
-    // var datax = fondo_inversion_usuario.Actions.getAll(this.props);
-    // if (!datax) return <SLoad />
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
-
-    // console.log("la cantidad ", datax.length())
-    // socios = datafiltrada.length;
-    // this.setState({ socios: Object.keys(datax).length })
-    // let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == key_inversion)
-
 
     return datafiltrada.map(obj => {
 
@@ -129,30 +127,27 @@ class fijo extends Component {
 
       console.log("bolivia ", obj);
 
+
       return <SView col={"xs-12"} backgroundColor={"cyan+66"}>
 
 
         <SView col={"xs-12"} backgroundColor={"cyan+66"} row>
-          {/* <SView col={"xs-6.5"} backgroundColor={"transparent"} row>
+          <SView col={"xs-6"} backgroundColor={"transparent"} row>
             <SText col={"xs-12"} fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres + " " + usuarios[obj.key_usuario_inversionista].Apellidos}</SText>
-          </SView> */}
-          <SView col={"xs-4"} backgroundColor={"blue"} row>
-            <SText col={"xs-12"} fontSize={10}>{usuarios[obj.key_usuario_inversionista].Nombres}</SText>
           </SView>
 
-          <SView col={"xs-2"} backgroundColor={"green"} row center style={{ justifyContent: "flex-end", }} border={"transparent"}>
+
+          <SView col={"xs-2"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-end", }} border={"transparent"}>
             <SText fontSize={10}>{SMath.formatMoney(obj.inversion, 0)} Bs</SText>
           </SView>
-          <SView col={"xs-1"} backgroundColor={"pink"} row center style={{ justifyContent: "flex-start", }} border={"transparent"}>
+          <SView col={"xs-1"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-start", }} border={"transparent"}>
             <SText fontSize={10} col={"xs-12"} row center >{_accion}</SText>
           </SView>
 
-          <SView col={"xs-1.5"} row center style={{ justifyContent: "flex-start", }} border={"transparent"}>
+          <SView col={"xs-1"} row center style={{ justifyContent: "flex-start", }} border={"cyan"}>
             <SText fontSize={10} col={"xs-12"} row center>{SMath.formatMoney(cantidad_interes, 0)}</SText>
           </SView>
-          {/* <SView col={"xs-1"} row center border={"transparent"}> */}
-          {/* <SText fontSize={10}>x{SMath.formatMoney(obj.comision, 0)} Bs</SText> */}
-          {/* </SView> */}
+
           <SView col={"xs-2"} row center style={{ justifyContent: "flex-end", }} border={"transparent"}>
             <SText fontSize={10}>{_ganancia} Bs</SText>
           </SView>
@@ -167,13 +162,15 @@ class fijo extends Component {
 
     var datax = fondo_inversion_usuario.Actions.getAll(this.props);
     if (!datax) return <SLoad />
-    // var usuarios = Model.usuario.Action.getAll();
-    // if (!usuarios) return <SLoad />
-
-    c2c7c6a4 - e09d - 40ba - 9165 - 6aa63a0dcb0b
 
     let datafiltrada = Object.values(datax).filter(a => a.key_fondo_inversion == obj.inversion_key);
-    // console.log("bolivia ", obj);
+
+    if (obj.inversion_key != "010110c7-6580-4184-988c-f75fc2e86ac1" && obj.inversion_key != "1120d5c7-f7e4-427a-978f-2c238668a6e4") return;
+
+
+    // if (obj.inversion_key != "2d7fef59-dbb2-4c1e-aa0d-cd9b6fe9be4b" || obj.inversion_key != "18445bb3-9827-4f26-a3d1-9999054cb58b" || obj.inversion_key != "c2c7c6a4-e09d-40ba-9165-6aa63a0dcb0b") return;
+
+
 
     return <SView col={"xs-12 md-6 xl-3"} border={"transparent"} height={400} style={{ padding: 4 }} center>
 
@@ -219,11 +216,7 @@ class fijo extends Component {
                 <SInput
                   center
                   placeholder={"0.00 Bs"}
-
                   type={"number"}
-
-                  // key_inversion
-                  // placeholder={this.props.placeholder ? this.props.placeholder : "Buscar..."}
                   style={{
                     width: "100%",
                     color: STheme.color.text,
@@ -233,21 +226,15 @@ class fijo extends Component {
                     width: "100%",
                     height: "100%"
                   }}
-                  // autoFocus={true}
-
                   onChangeText={(txt) => {
-                    this.state.key_fondo_inversion = txt;
-                    // console.log("todo ", txt)
-                    // console.log("todo ", this.state.key_fondo_inversion)
                     // this.state.value = txt;
-                    // new SThread(500, "onChangeBuscador", true).start(() => {
-                    //   this.props.repaint();
-                    // })
+
+                    let miObjeto = { inversion_key: txt };
+                    this.state.miArray.push(miObjeto);
+
+
                   }}
                 />
-
-
-                {/* <SText fontSize={14} bold>{obj?.ventas_paquetes}</SText> */}
               </SView>
               <SHr height={2} />
               <SText col={"xs-12"} row center fontSize={10}>Interes</SText>
@@ -265,39 +252,31 @@ class fijo extends Component {
               <SText fontSize={10}># {SMath.formatMoney(datafiltrada.length, 0)}</SText>
             </SView>
           </SView>
-
           <SHr height={2} color={STheme.color.card} />
-          {/* <SHr height={4} /> */}
-
           <SView col={"xs-12"} backgroundColor={"cyan+66"} card row >
-            <SView col={"xs-4"} backgroundColor={"red"} row center style={{ justifyContent: "flex-start" }}>
+            <SView col={"xs-6"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-start" }}>
               <SText fontSize={10}>Inversionista</SText>
             </SView>
-            <SView col={"xs-2"} backgroundColor={"cyan"} row center style={{ justifyContent: "flex-start", }}>
-              <SText fontSize={10}>Inversion</SText>
+            <SView col={"xs-2"} backgroundColor={"transparent"} row center style={{ justifyContent: "flex-end", }}>
+              <SText fontSize={10}>Inversión</SText>
             </SView>
-            <SView col={"xs-1"} row center style={{ justifyContent: "flex-start", }}>
+            <SView col={"xs-1"} row center  >
               <SText fontSize={10}>Acción</SText>
             </SView>
-            <SView col={"xs-1.5"} row center style={{ justifyContent: "flex-start", }}>
+            <SView col={"xs-1"} row center  >
               <SText fontSize={10}>Interes</SText>
             </SView>
-            {/* <SView col={"xs-1"} row center>
-              <SText fontSize={10}>Comisión</SText>
-            </SView> */}
-            <SView col={"xs-2"} row center style={{ justifyContent: "flex-end", }}>
+
+            <SView col={"xs-2"} row center backgroundColor={"transparent"} style={{ justifyContent: "flex-end", }}>
               <SText fontSize={10}>E. Interes</SText>
             </SView>
           </SView>
         </SView>
         <SHr height={4} />
         <SView col={"xs-11.8"} height={165} backgroundColor={"transparent"}  >
-
           <SScrollView2
-            style={{ width: "100%" }}
-            disableHorizontal
-          >
-            {this.ItemDetalle(obj.inversion_key, obj.precio_accion, 4, datafiltrada)}
+            style={{ width: "100%" }} disableHorizontal >
+            {this.ItemDetalle(obj.inversion_key, obj.precio_accion, 5, datafiltrada)}
           </SScrollView2>
         </SView>
       </SView>
