@@ -3,11 +3,11 @@ export default {
   name: 'calistenia',
   // -- Producción --
   // host: '192.168.2.2',
-  // host: 'calistenia.servisofts.com',
-  // ssl: true,
+  host: 'calistenia.servisofts.com',
+  ssl: true,
   // -- Producción --
-  host: '192.168.2.1',
-  ssl: false,
+  // host: '192.168.2.1',
+  // ssl: false,
   // --CONFIGURACIONES--
   port: {
     native: 10018,
