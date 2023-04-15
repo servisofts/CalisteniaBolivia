@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { SHr, SLoad, SPage, STable2, SText, SView } from "servisofts-component";
+import { SDate, SHr, SLoad, SPage, STable2, SText, SView } from "servisofts-component";
 import SSocket from "servisofts-socket";
 
 class ClientesComparacion extends Component {
@@ -39,27 +39,36 @@ class ClientesComparacion extends Component {
     if (!this.state.data) return <SLoad />;
 
     var dias = [];
-    new Array(50).fill(0).map((a, i) => {
+
+    var fecha = new SDate("2023-03-01", "yyyy-MM-dd");
+    var fecha_limit = new SDate("2023-05-01", "yyyy-MM-dd");
+
+    while (fecha.isBefore(fecha_limit)) {
       dias.push({
-        width: 30, key: "-" + i, render: (a) => { return (i % 2) == 0 }, component: (a) => {
-          if (a) {
-            return <SView col={"xs-12"} height backgroundColor={"#f00"} />
-          } else {
-            return <SView col={"xs-12"} height backgroundColor={"#f0f"} />
-          }
+        width: 20,
+        key: "-" + fecha.toString("yyyy-MM-dd"),
+        label: fecha.toString("MM/dd"), space: 0,
+        render: (a) => {
+          return false;
+        },
+        component: (a) => {
+          if (!a) return null
+          return <SView col={"xs-12"} height backgroundColor={"#f00"} />
         }
       })
-    })
+      fecha.addDay(1)
+    }
+
     return (
       <STable2
         limit={30}
         data={this.state.data}
         cellStyle={{
           fontSize: 12,
-          height: 30,
+          height: 20,
         }}
         header={[
-          { key: "index", label: "#" },
+          { key: "index", label: "#", },
           ...dias
           // { width: 80, key: "key_usuario" },
           // { width: 100, key: "numero_cuenta" },
