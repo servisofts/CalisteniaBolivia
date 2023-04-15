@@ -10,7 +10,7 @@ import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 var objFinal = {};
 
-class Llamada extends Component {
+class ClientesCumpleaño extends Component {
 
   // primer paso para hacer un gradico svg dos rayas
   constructor(props) {
@@ -390,4 +390,4 @@ class Llamada extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(Llamada);
+export default connect(initStates)(ClientesCumpleaño);

@@ -1,41 +1,45 @@
-import { SPageListProps } from 'servisofts-component'
-import Actions from './Actions'
+import { SPageListProps } from "servisofts-component";
+import Actions from "./Actions";
 
-import ClientePerfilPage from './Page/ClientePerfilPage'
-import ClientesPage from './Page/ClientesPage'
-import EntrenadorPage from './Page/EntrenadorPage'
-import Llamada from './Page/Llamada'
-import Login from './Page/Login'
-import Perfil from './Page/Perfil'
-import RegistroNuevo from './Page/RegistroNuevo'
-import UsuarioPage from './Page/UsuarioPage'
-import VendedorPage from './Page/VendedorPage'
-import { default as VentasPage, default as VentasSelect } from './Page/VentasPage'
+import ClienteHistorial from "./Page/ClienteHistorial";
+import ClientePerfilPage from "./Page/ClientePerfilPage";
+import ClientesComparacion from "./Page/ClientesComparacion";
+import ClientesCumpleaño from "./Page/ClientesCumpleaño";
+import ClientesPage from "./Page/ClientesPage";
+import EntrenadorPage from "./Page/EntrenadorPage";
+import Login from "./Page/Login";
+import Perfil from "./Page/Perfil";
+import RegistroNuevo from "./Page/RegistroNuevo";
+import UsuarioPage from "./Page/UsuarioPage";
+import VendedorPage from "./Page/VendedorPage";
+import {
+  default as VentasPage,
+  default as VentasSelect,
+} from "./Page/VentasPage";
 const Pages: SPageListProps = {
-    login: Login,
-    // registro:RegistroCliente,
-    registro: RegistroNuevo,
-    "perfil": Perfil,
-    UsuarioPage,
-    ClientesPage,
-    VentasPage,
-    VentasSelect,
-    EntrenadorPage,
-    ClientePerfilPage,
-    VendedorPage,
-    Llamada
+  login: Login,
+  // registro:RegistroCliente,
+  registro: RegistroNuevo,
+  perfil: Perfil,
+  UsuarioPage,
+  ClientesPage,
+  VentasPage,
+  VentasSelect,
+  EntrenadorPage,
+  ClientePerfilPage,
+  VendedorPage,
+  "cliente/cumple": ClientesCumpleaño,
+  "cliente/historial": ClienteHistorial,
+  "cliente/comparacion": ClientesComparacion,
+};
 
-}
-
-
-import usuarioReducer from './Reducer/usuarioReducer'
+import usuarioReducer from "./Reducer/usuarioReducer";
 const Reducers = {
-    usuarioReducer,
-}
-
+  usuarioReducer,
+};
 
 export default {
-    Pages,
-    Actions,
-    Reducers
+  Pages,
+  Actions,
+  Reducers,
 };
