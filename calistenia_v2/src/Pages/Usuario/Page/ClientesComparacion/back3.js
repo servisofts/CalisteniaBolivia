@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { SHr, SLoad, SPage, SText } from "servisofts-component";
+import { SDate, SHr, SLoad, SPage, STable2, SText, SView } from "servisofts-component";
 import SSocket from "servisofts-socket";
 
 class ClientesComparacion extends Component {
@@ -35,39 +35,45 @@ class ClientesComparacion extends Component {
       });
   }
 
-
-
   getLista() {
     if (!this.state.data) return <SLoad />;
 
-    // var dias = [];
+    var dias = [];
 
-    // var fecha = new SDate("2023-03-01", "yyyy-MM-dd");
-    // var fecha_limit = new SDate("2023-05-01", "yyyy-MM-dd");
+    var fecha = new SDate("2023-03-01", "yyyy-MM-dd");
+    var fecha_limit = new SDate("2023-05-01", "yyyy-MM-dd");
 
-    // while (fecha.isBefore(fecha_limit)) {
-    //   dias.push({
-    //     width: 20,
-    //     key: "-" + fecha.toString("yyyy-MM-dd"),
-    //     label: fecha.toString("MM/dd"), space: 0,
-    //     render: (a) => {
-    //       return false;
-    //     },
-    //     component: (a) => {
-    //       if (!a) return null
-    //       return <SView col={"xs-12"} height backgroundColor={"#f00"} />
-    //     }
-    //   })
-    //   fecha.addDay(1)
-    // }
+    while (fecha.isBefore(fecha_limit)) {
+      dias.push({
+        width: 20,
+        key: "-" + fecha.toString("yyyy-MM-dd"),
+        label: fecha.toString("MM/dd"), space: 0,
+        render: (a) => {
+          return false;
+        },
+        component: (a) => {
+          if (!a) return null
+          return <SView col={"xs-12"} height backgroundColor={"#f00"} />
+        }
+      })
+      fecha.addDay(1)
+    }
 
     return (
-      <>
-        <svg width="40" height="40" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="20" x2="20" y2="0" stroke="red" />
-          <line x1="0" y1="0" x2="20" y2="20" stroke="red" />
-        </svg>
-      </>
+      <STable2
+        limit={30}
+        data={this.state.data}
+        cellStyle={{
+          fontSize: 12,
+          height: 20,
+        }}
+        header={[
+          { key: "index", label: "#", },
+          ...dias
+          // { width: 80, key: "key_usuario" },
+          // { width: 100, key: "numero_cuenta" },
+        ]}
+      />
     );
   }
 
