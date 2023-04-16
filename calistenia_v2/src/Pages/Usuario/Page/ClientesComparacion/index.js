@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { SHr, SLoad, SPage, SText } from "servisofts-component";
+import { SDate, SHr, SInput, SLoad, SPage, SText } from "servisofts-component";
 import SSocket from "servisofts-socket";
 
 class ClientesComparacion extends Component {
@@ -12,6 +12,36 @@ class ClientesComparacion extends Component {
       // params: "2023-03-01",
       // params: ["'" + pk + "'"],
       params: ["'2023-03-01'"],
+
+      parametros: {
+
+        // asi se tiene la fecha para clientes activos
+        // "inicio": new SDate().addMonth(-1).toString("dd-MM-yyyy"),
+        // "fin": new SDate().toString("dd-MM-yyyy"),
+
+        // asi es para tener la banca que solo muestre de este mes
+        // "inicio": new SDate().addMonth(-1).setDay(1).toString("dd-MM-yyyy"),
+        // "fin": new SDate().toString("dd-MM-yyyy"),
+
+
+        // asi es para tener la banca antes de 2 meses para comparacion
+        // "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
+        // "fin": new SDate().toString("dd-MM-yyyy"),
+
+        // asi para tener el ultimo dia del mes anterior
+        // "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
+        // "fin": new SDate().addMonth(-1).setDay(-1).toString("dd-MM-yyyy"),
+
+        // para que solo el mes y desordenado
+        // "inicio": new SDate().addMonth(-2).setDay(1).toString("MONTH-dd"),
+        // "fin": new SDate().toString("MM-yyyy"),
+
+        "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
+        "fin": new SDate().toString("dd-MM-yyyy"),
+        "cantidad": 0,
+      },
+      ...this.state,
+
     };
   }
 
@@ -35,7 +65,59 @@ class ClientesComparacion extends Component {
       });
   }
 
+  getParametros() {
 
+    return (
+      <>
+        {/* <SInput ref={ref => this.setState(parametros.inicio) = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"} */}
+        <SInput col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} placeholder={"fecha inicio"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+
+        />
+        <SInput ref={ref => this._fechaFin = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} placeholder={"fecha fin"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+        />
+        <SInput ref={ref => this._cantidadIncriptos = ref} col={"xs-3"} type={"number"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"}
+          onChangeText={(val) => {
+            // if (val.length < 2) return;
+            this.state.parametros.cantidad = val;
+            this.setState({ ...this.state })
+          }}
+        />
+
+      </>
+    );
+  }
+
+
+  getDataParametros() {
+    let fini = this.state.parametros.inicio;
+    let ffin = this.state.parametros.fin;
+    let cinscpt = this.state.parametros.cantidad ?? 0;
+    console.log("inicio " + fini + "fin " + ffin + " cant" + cinscpt)
+    return (
+      <>
+        <SText col={"xs-11"} color={"red"}>{fini}</SText>
+        <SText col={"xs-11"} color={"cyan"}>{ffin}</SText>
+        <SText col={"xs-11"} color={"blue"}>{cinscpt}</SText>
+      </>
+    );
+  }
+
+  getBtnOk() {
+    return <SText onPress={() => { this.getDataParametros() }}> boton</SText >
+  }
 
   getLista() {
     if (!this.state.data) return <SLoad />;
@@ -72,11 +154,15 @@ class ClientesComparacion extends Component {
   }
 
   render() {
+    this.getDataParametros();
     return (
       <SPage title={"lista"} center disableScroll>
         <SText>comparacion</SText>
         <SHr height={24} color={"transparent"}></SHr>
 
+        {this.getParametros()}
+        {this.getDataParametros()}
+        {this.getBtnOk()}
         {this.getLista()}
 
         <SHr height={50} color={"transparent"}></SHr>
