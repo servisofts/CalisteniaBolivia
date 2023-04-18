@@ -5,6 +5,7 @@ import { ExportExcel, SButtom, SDate, SImage, SLoad, SNavigation, SOrdenador, SP
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import Buscador from '../../../../Components/Buscador';
+import FechasBetween from '../../../../Components/FechasBetween';
 import Model from '../../../../Model';
 import Sucursal from '../../../Sucursal';
 import sucursal_usuario from '../../../sucursal_usuario';
@@ -15,6 +16,7 @@ class ClientesPage extends Component {
 
   constructor(props) {
     super(props);
+    var fecha_inicio = new SDate();
 
     this.state = {
       key_sucursal: SNavigation.getParam("key_sucursal", ""),
@@ -22,6 +24,10 @@ class ClientesPage extends Component {
       soloNoBecados: SNavigation.getParam("nobecados", false),
       pagination: {
         curPage: 1,
+      },
+      fecha: {
+        fecha_inicio: fecha_inicio.toString("yyyy-MM-dd"),
+        fecha_fin: new SDate().toString("yyyy-MM-dd"),
       }
     };
 
@@ -164,6 +170,7 @@ class ClientesPage extends Component {
           height: 100,
           margin: 4,
           borderRadius: 10,
+          // backgroundColor: "yellow",
           backgroundColor: STheme.color.card,
         }} onPress={() => {
           SNavigation.navigate("ClientePerfilPage", {
@@ -240,14 +247,26 @@ class ClientesPage extends Component {
         </TouchableOpacity>
       })
     }
-
+    // tarea1
+    // todo aqui tengo que mejorar Alvaro
+    // la idea esque exporte todos los clientes
     return (
       <SPage disableScroll title={"Clientes"}>
         <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo, Telefono o Motivo."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
-        <SView col={"xs-12"} center>
+
+
+        <FechasBetween onChange={(fecha_inicio, fecha_fin) => {
+          this.state.fecha.fecha_inicio = fecha_inicio
+          this.state.fecha.fecha_fin = fecha_fin
+          this.setState({ ...this.state })
+        }} />
+
+
+
+        <SView col={"xs-12"} center border={"cyan"}>
 
           {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel

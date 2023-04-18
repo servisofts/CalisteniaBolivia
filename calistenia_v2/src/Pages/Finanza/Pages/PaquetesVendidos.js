@@ -45,7 +45,8 @@ class PaquetesVendidos extends Component {
 
     console.log("sus ", usuarios)
     // tarea1
-
+    // todo aqui tengo que mejorar Alvaro
+    // la idea esque exporte todos los clientes
     return <STable2
       header={[
         { key: "index", label: "#", width: 40 },

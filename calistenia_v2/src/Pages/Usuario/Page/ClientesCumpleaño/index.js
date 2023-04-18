@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SButtom, SIcon, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Buscador from '../../../../Components/Buscador';
@@ -10,7 +10,7 @@ import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
 var objFinal = {};
 
-class Llamada extends Component {
+class ClientesCumpleaño extends Component {
 
   // primer paso para hacer un gradico svg dos rayas
   constructor(props) {
@@ -18,7 +18,17 @@ class Llamada extends Component {
     this.state = {
       pagination: {
         curPage: 1,
-      }
+      },
+      select: {
+        "nuevo": false,
+        "todos": true,
+        "activos": false,
+        "egreso": false,
+        "eliminados": false,
+        "becados": false,
+        "distintos": false,
+      },
+      ...this.state,
     };
 
   }
@@ -115,18 +125,30 @@ class Llamada extends Component {
   }
 
   setColor(key) {
-    if (key == "ingreso") {
-      return "rgba(113, 175, 74, 0.53)+1";
-    }
-    if (key == "egreso") {
-      return "rgba(223, 39, 50, 0.53)+8";
-    }
-    if (key == "traspaso") {
-      return "rgba(239, 140, 56, 0.53)+88";
-    } else {
-      return "rgba(170, 170, 170, 0.53)+9";
+    if (key == "nuevo") {
+      return STheme.color.card;
+      // return "rgb(62,177,227)+88";
     }
 
+    if (key == "todos") {
+      return "rgba(113, 175, 74, 0.53)+88";
+    }
+    if (key == "activos") {
+      return "rgba(223, 39, 50, 0.53)+8";
+    }
+    if (key == "eliminados") {
+      return "rgba(239, 140, 56, 0.53)";
+    }
+    if (key == "becados") {
+      return "rgba(170, 170, 170, 0.53)+9";
+    }
+    if (key == "distintos") {
+      return "rgb(171,112,233)+9";
+    }
+
+    else {
+      return "rgba(170, 170, 170, 0.53)+9";
+    }
   }
   setMensaje(nombre, numero) {
     // if
@@ -146,24 +168,42 @@ class Llamada extends Component {
   optionItem({ key, label }) {
     // var select = !!this.state.select[key]
 
+    var select = !!this.state.select[key]
 
     return <>
       <SView row height={36} center style={{
         paddingLeft: 8,
         paddingRight: 8,
-        // opacity: select ? 1 : 0.5,
+        opacity: select ? 1 : 0.2,
         borderRadius: 4,
         backgroundColor: this.setColor(key),
         // backgroundColor: Model.compra_venta.Action.getStateInfo(key).color + "88"
       }} onPress={() => {
-        // if (!select) {
-        //   this.state.select[key] = true;
-        // } else {
-        //   delete this.state.select[key];
+
+        if (key == "nuevo") SNavigation.navigate("registro");
+        // if (key == "todos") SNavigation.navigate("registro");
+        // if (key == "activos") SNavigation.navigate("registro");
+        // if (key == "eliminados") SNavigation.navigate("registro");
+        // if (key == "becados") SNavigation.navigate("registro");
+        // if (key == "distintos") SNavigation.navigate("registro");
+        // if (!this.state.select["distintos"]) {
+        //   console.log("chaval activado")
         // }
-        // this.setState({ ...this.state })
+
+
+
+
+        if (!select) {
+          this.state.select[key] = true;
+        } else {
+          delete this.state.select[key];
+        }
+
+
+        this.setState({ ...this.state })
+
       }} row>
-        {/* {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>} */}
+        {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>}
         <SText>{label}</SText>
       </SView>
       <SView width={8} ></SView>
@@ -172,15 +212,12 @@ class Llamada extends Component {
 
   menu() {
     const items = [
-      { key: "crear", label: " + Crear" },
-      { key: "ingreso", label: "Todos" },
-      { key: "ingreso", label: "Activos" },
-      { key: "egreso", label: "Eliminados" },
-      { key: "traspaso", label: "Becados" },
-      // { key: "egreso", label: "Eliminados" },
-
-      { key: "egreso", label: "Feb2023" },
-      { key: "egreso", label: "Marzo2023" },
+      { key: "nuevo", label: " + Crear" },
+      { key: "todos", label: "Todos ✅" },
+      { key: "activos", label: "Activos" },
+      { key: "eliminados", label: "Eliminados" },
+      { key: "becados", label: "Becados" },
+      { key: "distintos", label: "No inscriptos" },
     ].map(item => this.optionItem(item));
     return items;
   }
@@ -354,4 +391,4 @@ class Llamada extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(Llamada);
+export default connect(initStates)(ClientesCumpleaño);
