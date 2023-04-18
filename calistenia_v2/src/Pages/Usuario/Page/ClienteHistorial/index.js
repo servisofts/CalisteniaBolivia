@@ -22,12 +22,12 @@ class ClienteHistorial extends Component {
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
       // params: [this.state.parametros.inicio, this.state.parametros.fin],
-      params: ["'2023-01-01'", "'2023-03-01'"],
+      // params: ["'2023-01-01'", "'2023-03-01'"],
       // esrser
 
       parametros: {
-        "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
-        "fin": new SDate().toString("dd-MM-yyyy"),
+        "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
+        "fin": new SDate().toString("yyyy-MM-dd"),
         "cantidad": 1,
       },
       ...this.state,
@@ -45,7 +45,8 @@ class ClienteHistorial extends Component {
       component: "reporte",
       type: "execute_function",
       func: this.state.func,
-      params: this.state.params,
+      // params: this.state.params,
+      params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
     })
       .then((resp) => {
         this.setState({ loading: false, data: resp.data });
@@ -168,12 +169,20 @@ class ClienteHistorial extends Component {
     if (!usuarios) return <SLoad />
 
     return Object.values(_data).map(obj => {
-      if (obj.veces > this.state.parametros.cantidad) return;
+      if (obj.veces != this.state.parametros.cantidad) return;
       var usuario = usuarios[obj?.key_usuario];
 
       //  console.log("veces ", obj.veces)
       return <>
-        <SText >nombre {usuario.Nombres} {usuario.Apellidos} ci {usuario.CI} telefono {usuario?.Telefono}  veces {obj?.veces} </SText>
+        <SView col={"xs-12"} height={62} row center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }} onPress={() => {
+
+          SNavigation.navigate("ClientePerfilPage", {
+            key: usuario.key
+          })
+        }}>
+
+          <SText >nombre {usuario.Nombres} {usuario.Apellidos} ci {usuario.CI} telefono {usuario?.Telefono}  veces {obj?.veces} </SText>
+        </SView>
       </>
     })
 
