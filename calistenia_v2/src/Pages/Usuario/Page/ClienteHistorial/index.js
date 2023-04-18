@@ -21,13 +21,13 @@ class ClienteHistorial extends Component {
 
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
-      params: ["'2021-01-01'", "'2023-03-01'"],
+      params: ["'2023-01-01'", "'2023-03-01'"],
 
 
       parametros: {
         "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
         "fin": new SDate().toString("dd-MM-yyyy"),
-        "cantidad": 0,
+        "cantidad": 1,
       },
       ...this.state,
     };
@@ -150,12 +150,26 @@ class ClienteHistorial extends Component {
     if (!this.state.data) return null;
     let _data = this.state.data;
     Object.values(_data).map(obj => {
-      if (obj.veces > 1) return;
+      if (obj.veces > this.state.parametros.cantidad) return;
 
       console.log("veces ", obj.veces)
     })
 
   }
+
+
+  dibujar() {
+
+    if (!this.state.data) return null;
+    let _data = this.state.data;
+    Object.values(_data).map(obj => {
+      if (obj.veces > this.state.parametros.cantidad) return;
+
+      console.log("veces ", obj.veces)
+    })
+
+  }
+
 
   render() {
 
@@ -184,6 +198,7 @@ class ClienteHistorial extends Component {
         objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
