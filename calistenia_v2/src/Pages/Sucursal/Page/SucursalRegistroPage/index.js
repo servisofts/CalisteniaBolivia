@@ -30,6 +30,9 @@ class SucursalRegistro extends Component {
                 direccion: { label: 'Direccion', type: 'text', defaultValue: this.data.direccion },
                 color: { label: 'Color', type: 'text', placeholder: "#660000", required: true, defaultValue: this.data.color },
                 foto_p: { label: "Foto de portada", type: "image", isRequired: false, defaultValue: `${SSocket.api.root}/sucursal/portada/${this.key_sucursal}?time=${new Date().getTime()}`, style: { borderRadius: 8, overflow: 'hidden', height: 150, } },
+                latitude: { label: 'Latitude', type: 'text', defaultValue: this.data?.latitude },
+                longitude: { label: 'Longitude', type: 'text', defaultValue: this.data?.longitude },
+
             }}
             onSubmit={(data) => {
                 if (this.key_sucursal) {

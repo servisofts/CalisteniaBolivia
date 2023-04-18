@@ -83,7 +83,7 @@ class detalle extends Component {
                     <SText fontSize={21} color={STheme.color.text}>UBICACIÓN</SText>
                 </SView>
                 <SHr height={20} />
-                <Mapa height={300} />
+                <Mapa height={350} data={this.sucursal} />
                 <SHr height={50} />
             </SPage>
         );

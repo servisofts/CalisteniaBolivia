@@ -28,6 +28,9 @@ import Icell, { ReactComponent as IcellW } from './icell.svg';
 import Imail, { ReactComponent as ImailW } from './imail.svg';
 import Icoincidencia, { ReactComponent as IcoincidenciaW } from './icoincidencia.svg';
 import Inoenco, { ReactComponent as InoencoW } from './inoenco.svg';
+import MarcadorMapac, { ReactComponent as MarcadorMapacW } from './marcadorMapac.svg';
+import Iubicacion, { ReactComponent as IubicacionW } from './iubicacion.svg';
+
 
 
 const Assets = {
@@ -54,11 +57,13 @@ const Assets = {
 	"Ibackg2": { Native: Ibackg2, Web: Ibackg2W },
 	"Icarnet": { Native: Icarnet, Web: IcarnetW },
 	"Ifest": { Native: Ifest, Web: IfestW },
-	"Icarnet2": { Native: Icarnet, Web: Icarnet2W },
+	"Icarnet2": { Native: Icarnet2, Web: Icarnet2W },
 	"Icell": { Native: Icell, Web: IcellW },
 	"Imail": { Native: Imail, Web: ImailW },
 	"Icoincidencia": { Native: Icoincidencia, Web: IcoincidenciaW },
 	"Inoenco": { Native: Inoenco, Web: InoencoW },
+	"MarcadorMapac": { Native: MarcadorMapac, Web: MarcadorMapacW },
+	"Iubicacion": { Native: Iubicacion, Web: IubicacionW },
 
 }
 

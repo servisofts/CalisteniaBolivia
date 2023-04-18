@@ -12,6 +12,7 @@ class index extends Component {
         super(props);
         this.state = {
         };
+        this.params = SNavigation.getAllParams();
     }
 
     clearData() {
@@ -75,7 +76,7 @@ class index extends Component {
                         <SHr height={35} />
                         <BtnSend2
                             onPress={() => {
-                                SNavigation.navigate("/cuenta/recuperar");
+                                SNavigation.navigate("/cuenta/recuperar", {  ...this.params});
                             }}
                         >Recuperar cuenta
                         </BtnSend2>

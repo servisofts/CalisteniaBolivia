@@ -12,7 +12,7 @@ class confirmar extends Component {
         super(props);
         this.state = {
             envio: 0,
-            fecha_fin:""
+            fecha_fin: ""
         };
         this.params = SNavigation.getAllParams();
     }
@@ -47,7 +47,7 @@ class confirmar extends Component {
                 <SView row col={"xs-11"}>
                     {this.btn({ title: "No, cancelar", onPress: () => { SPopup.close("confirmar"); }, active: false })}
                     <SView col={"xs-1"} />
-                    {this.btn({ title: "Sí, Confirmar", onPress: () => { SPopup.close("confirmar"); SNavigation.navigate("/paquete/membresia/qr");  }, active: true })}
+                    {this.btn({ title: "Sí, Confirmar", onPress: () => { SPopup.close("confirmar"); SNavigation.navigate("/paquete/membresia/qr"); }, active: true })}
                 </SView>
             </SView>
             <SView flex />
@@ -84,7 +84,7 @@ class confirmar extends Component {
                             });
                         },
                     },
-                    Fecha_fin: { placeholder: "Fecha de Fin", isRequired: false, value:this.state.fecha_fin, type: "fecha" , disabled:true},
+                    Fecha_fin: { placeholder: "Fecha de Fin", isRequired: false, value: this.state.fecha_fin, type: "fecha", disabled: true },
                 }}
 
                 onSubmit={(values) => {
@@ -93,7 +93,7 @@ class confirmar extends Component {
                         ...values
                     }
 
-                    if(!values["Fecha_inicio"]) return;
+                    if (!values["Fecha_inicio"]) return;
                     SPopup.open({ key: "confirmar", content: this.popupConfirmacion() });
                     // var fecha_fin = new SDate(values["Fecha_inicio"]).addDay(data_paquete?.dias)
                     // console.log("fecha_inicio: " + values["Fecha_inicio"] + " fecha_fin: " + fecha_fin + " dias add: " + data_paquete?.dias)
@@ -119,13 +119,13 @@ class confirmar extends Component {
                     // })
 
                     // SPopup.close("confirmar");
-                    console.log(JSON.stringify(values)+ " kkk")
+                    console.log(JSON.stringify(values) + " kkk")
                 }}
             />
             <SHr height={26} />
             <BtnSend
                 onPress={() => {
-                    this.form.submit() 
+                    this.form.submit()
                     // SNavigation.navigate("/restaurante", { pk: obj.key });
                 }}
             >Confirmar</BtnSend>
@@ -135,10 +135,10 @@ class confirmar extends Component {
     render_with_data() {
         var paquete = Model.paquete.Action.getByKey(this.params.pk);
         var usuario;
-         {/* USUARIO */}
+        {/* USUARIO */ }
         // var usuario = Model.usuario.Action.getUsuarioLog();
         var sucursal = Model.sucursal.Action.getByKey(this.params.sucursal);
-         {/* USUARIO */}
+        {/* USUARIO */ }
         // if (!usuario) return <SLoad />
         if (!sucursal) return <SLoad />
         if (!paquete) return <SLoad />
@@ -156,9 +156,8 @@ class confirmar extends Component {
                 }}
                 row center
             >
-                <SView col={"xs-3"} row >
-                    {/* USUARIO */}
-                    {/* <SView style={{
+                <SView col={"xs-3"} row  >
+                    <SView style={{
                         width: 70,
                         height: 70,
                         justifyContent: "center",
@@ -166,23 +165,24 @@ class confirmar extends Component {
                         borderRadius: 15,
                         overflow: "hidden"
                     }}>
-                        <SImage enablePreview src={SSocket.api.root + "usuario/" + usuario?.key + "?date=" + new Date().getTime()} width={"100%"} height={"100%"}
-                            style={{
-                                resizeMode: 'cover',
-                            }}
-                        />
-                    </SView> */}
+                        <SImage src={SSocket.api.root + "sucursal/portada/" + sucursal.key} width={"100%"} height={"100%"} style={{ resizeMode: 'cover', }} />
+                    </SView>
                 </SView>
                 <SView col={"xs-9"} >
-                     {/* USUARIO */}
+                    {/* USUARIO */}
                     {/* <SText color={STheme.color.text} fontSize={18} style={{ textTransform: "uppercase" }}>{usuario?.Nombres}</SText> */}
-                    <SView row>
+                    <SView col={"xs-12"} row>
                         <SText color={STheme.color.text} fontSize={15} >
                             Calistenia Bolivia
                         </SText>
                         <SView width={5}></SView>
                         <SText color={STheme.color.text} fontSize={15} style={{ textTransform: "uppercase" }}>
                             {sucursal?.descripcion}
+                        </SText>
+                    </SView>
+                    <SView col={"xs-12"} >
+                        <SText color={STheme.color.text} fontSize={12} row>
+                            {sucursal?.direccion}
                         </SText>
                     </SView>
                 </SView>

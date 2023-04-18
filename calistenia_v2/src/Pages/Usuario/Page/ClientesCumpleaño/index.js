@@ -151,7 +151,8 @@ class ClientesCumpleaño extends Component {
     }
   }
   setMensaje(nombre, numero) {
-    let sms = "https://web.whatsapp.com/send?phone=591" + 69050028 + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
+    // if
+    let sms = "https://web.whatsapp.com/send?phone=591" + numero + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
 
     return <>
       <SView row height={36} center onPress={() => { SNavigation.openURL(sms); }} row>
