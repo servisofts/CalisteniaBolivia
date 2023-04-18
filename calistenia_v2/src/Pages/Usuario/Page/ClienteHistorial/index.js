@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SImage, SInput, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -17,23 +17,41 @@ class ClienteHistorial extends Component {
     this.state = {
       pagination: {
         curPage: 1,
-      }
+      },
+
+      title: "Reporte Name",
+      func: "_get_cliente_fecha_veces_inscripto",
+      params: ["'2023-01-01'", "'2023-03-01'"],
+
+
+      parametros: {
+        "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
+        "fin": new SDate().toString("dd-MM-yyyy"),
+        "cantidad": 1,
+      },
+      ...this.state,
     };
 
 
   }
   componentDidMount() {
-    // var object = {
-    //   service: "usuario",
-    //   component: "usuario",
-    //   version: "2.0",
-    //   type: "getAll",
-    //   estado: "cargando",
-    //   cabecera: "registro_administrador",
-    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    // }
-    // SSocket.send(object);
+    this.getData();
+  }
 
+  getData() {
+    this.setState({ loading: "cargando", data: null });
+    SSocket.sendPromise({
+      component: "reporte",
+      type: "execute_function",
+      func: this.state.func,
+      params: this.state.params,
+    })
+      .then((resp) => {
+        this.setState({ loading: false, data: resp.data });
+      })
+      .catch((e) => {
+        this.setState({ loading: false, error: e });
+      });
   }
   pagination = (listaKeys) => {
     if (!listaKeys) {
@@ -86,7 +104,79 @@ class ClienteHistorial extends Component {
   valido_Correo(correo) {
     return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
+
+  getParametros() {
+    return <>
+
+      <SView col={"xs-12"} height={62} row center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}>
+
+
+
+
+
+        <SInput col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} placeholder={"fecha inicio"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+
+        />
+        <SInput ref={ref => this._fechaFin = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} placeholder={"fecha fin"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+        />
+        <SInput ref={ref => this._cantidadIncriptos = ref} col={"xs-3"} type={"number"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"}
+          onChangeText={(val) => {
+            // if (val.length < 2) return;
+            this.state.parametros.cantidad = val;
+            this.setState({ ...this.state })
+          }}
+        />
+
+      </SView>
+    </>
+
+  }
+
+  getParametrosResultados() {
+
+    if (!this.state.data) return null;
+    let _data = this.state.data;
+    Object.values(_data).map(obj => {
+      if (obj.veces > this.state.parametros.cantidad) return;
+
+      console.log("veces ", obj.veces)
+    })
+
+  }
+
+
+  dibujar() {
+
+    if (!this.state.data) return null;
+    let _data = this.state.data;
+    Object.values(_data).map(obj => {
+      if (obj.veces > this.state.parametros.cantidad) return;
+
+      console.log("veces ", obj.veces)
+    })
+
+  }
+
+
   render() {
+
+
+    // if (_data?.veces > 2) return null;
+    // console.log("miralo ", this.state.data)
+
     const getLista = () => {
       var data = Model.usuario.Action.getAll();
       // var dataRU = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
@@ -108,6 +198,7 @@ class ClienteHistorial extends Component {
         objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
@@ -188,6 +279,11 @@ class ClienteHistorial extends Component {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
+
+        {this.getParametros()}
+
+        {this.getParametrosResultados()}
+
         <View style={{
           flex: 1,
           width: "100%",
