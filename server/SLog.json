@@ -5,8 +5,8 @@
       "status": "exito"
     },
     "contabilidad": {
-      "host": "192.168.2.1:10011",
-      "status": "exito"
+      "host": "192.168.5.11:10011",
+      "status": "desconectado"
     },
     "zkteco": {
       "host": "192.168.5.32:10032",
@@ -14,7 +14,7 @@
     },
     "proyecto": {
       "host": "192.168.5.14:10014",
-      "status": "desconectado"
+      "status": "exito"
     },
     "usuario": {
       "host": "192.168.5.2:10002",
@@ -26,7 +26,7 @@
     },
     "geolocation": {
       "host": "192.168.5.5:10005",
-      "status": "desconectado"
+      "status": "exito"
     }
   },
   "PostgreSQL": {
@@ -34,5 +34,5 @@
     "status": "exito"
   },
   "- SLog": "RealTime Log from server Servisofts",
-  "- Fecha": "2023-04-06T17:38:29.000005"
+  "- Fecha": "2023-04-18T01:33:56.000789"
 }
