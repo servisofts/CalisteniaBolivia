@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SImage, SInput, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SImage, SInput, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -21,6 +21,7 @@ class ClienteHistorial extends Component {
 
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
+      // params: [this.state.parametros.inicio, this.state.parametros.fin],
       params: ["'2023-01-01'", "'2023-03-01'"],
 
 
@@ -162,10 +163,18 @@ class ClienteHistorial extends Component {
 
     if (!this.state.data) return null;
     let _data = this.state.data;
-    Object.values(_data).map(obj => {
-      if (obj.veces > this.state.parametros.cantidad) return;
 
-      console.log("veces ", obj.veces)
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return <SLoad />
+
+    return Object.values(_data).map(obj => {
+      if (obj.veces > this.state.parametros.cantidad) return;
+      var usuario = usuarios[obj?.key_usuario];
+
+      //  console.log("veces ", obj.veces)
+      return <>
+        <SText >nombre {usuario.Nombres} {usuario.Apellidos} ci {usuario.CI} telefono {usuario?.Telefono}  veces {obj?.veces} </SText>
+      </>
     })
 
   }
@@ -270,6 +279,7 @@ class ClienteHistorial extends Component {
         </TouchableOpacity>
       })
     }
+
     return (
       <SPage hidden disableScroll>
         <BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => {
@@ -301,7 +311,9 @@ class ClienteHistorial extends Component {
             }}
           >
             <SView col={"xs-12"} center>
-              {getLista()}
+              {/* {getLista()} */}
+              {this.dibujar()}
+
             </SView>
           </SScrollView2>
           <FloatButtom onPress={() => {
