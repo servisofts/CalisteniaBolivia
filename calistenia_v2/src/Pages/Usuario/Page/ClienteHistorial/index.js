@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SButtom, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -142,18 +142,7 @@ class ClienteHistorial extends Component {
         </SView>
       </SView >
       <SView col={"xs-12"} height={20} />
-      <SView col={"xs-12"} center row border={"transparent"}>
-        <SView col={"xs-12"} height={40} center row border={"transparent"}>
-          <SInput flex type={"text"} customStyle={"calistenia"}
-            placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."}
-            style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "transparent" }}
-          // onChangeText={(val) => {
-          //   this.state.parametros.cantidad = val;
-          //   this.setState({ ...this.state })
-          // }}
-          />
-        </SView>
-      </SView >
+
     </>
   }
 
@@ -250,20 +239,56 @@ class ClienteHistorial extends Component {
       obj.usuario = usuarios[obj?.key_usuario]
       return obj;
     })
-    return <SList data={data} space={8}
-      limit={10}
-      buscador
-      filter={obj => {
-        if (obj.veces <= this.state.parametros.cantidad) return true;
-        return false;
-      }}
-      render={obj => {
 
-        return this.getItem2(obj, obj.usuario)
-      }
-      }
+    console.log("chau ", data)
+    return <>
+      <ExportExcel
+        header={[
+          // { key: "key_usuario", label: "key", width: 250 },
+          { key: "ci", label: "documento", width: 40 },
+          { key: "indice", label: "n", width: 40 },
+          { key: "telefono", label: "telefono", width: 90 },
+          { key: "nombres", label: "nombres", width: 200 },
+          { key: "cumpleaños", label: "cumpleaños", width: 80 },
+          { key: "correo", label: "correo", width: 150 },
+          { key: "veces", label: "Veces Inscripto", width: 150 },
+        ]}
+        getDataProcesada={() => {
+          var daFinal = {};
+          // const ingreso = 0, egreso = 0, traspaso = 0;
+          // var total = { ingreso: 0, egreso: 0, traspaso: 10 }
+          Object.values(data).map((obj, i) => {
+            var toInsert = {
+              indice: i + 1,
+              key_usuario: obj?.key_usuario,
+              nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
+              ci: obj?.usuario?.CI,
+              correo: obj?.usuario?.Correo,
+              cumpleaños: obj?.usuario["Fecha nacimiento"],
+              telefono: obj?.usuario?.Telefono,
+              veces: obj?.veces
+            }
+            daFinal[i] = toInsert
+          })
+          return daFinal
+        }}
+      />
 
-    />
+      <SList data={data} space={8}
+        limit={6}
+        buscador
+        filter={obj => {
+          if (obj.veces <= this.state.parametros.cantidad) return true;
+          return false;
+        }}
+        render={obj => {
+
+          return this.getItem2(obj, obj.usuario)
+        }
+        }
+
+      />
+    </>
 
   }
 
