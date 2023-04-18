@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SHr, SImage, SInput, SLoad, SNavigation, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
-import Container from '../../../../Components/Container';
+import FloatButtom from '../../../../Components/FloatButtom';
 import Model from '../../../../Model';
 
 class ClienteHistorial extends Component {
@@ -114,7 +114,7 @@ class ClienteHistorial extends Component {
   getParametros() {
     return <>
       <SView col={"xs-12"} center row border={"transparent"}>
-        <SView col={"xs-12"} height={40} center row border={"transparent"} >
+        <SView col={"xs-11 md-9 lg-6"} height={40} center row border={"transparent"} >
           <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
             onChangeText={(val) => {
               this.state.parametros.inicio = val;
@@ -143,7 +143,7 @@ class ClienteHistorial extends Component {
       </SView >
       <SView col={"xs-12"} height={20} />
       <SView col={"xs-12"} center row border={"transparent"}>
-        <SView col={"xs-12"} height={40} center row border={"transparent"}>
+        <SView col={"xs-11 md-9 lg-6"} height={40} center row border={"transparent"}>
           <SInput flex type={"text"} customStyle={"calistenia"}
             placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."}
             style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "transparent" }}
@@ -163,40 +163,6 @@ class ClienteHistorial extends Component {
 
 
 
-  getItem2(_data, usuario) {
-
-    // if (_data?.veces != this.state.parametros.cantidad) return;
-
-    return <SView col={"xs-12"} height={60} center>
-      <SView col={"xs-12"} center row border={"#666"} height>
-        <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
-          <View style={{
-            width: 40, height: 40,
-            marginRight: 8, justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: STheme.color.card,
-            borderRadius: 100,
-            overflow: "hidden"
-          }}>
-            <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
-          </View>
-          <View row style={{
-            flex: 1,
-            justifyContent: "center"
-          }}>
-            <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)}
-
-              {this.valido_veces(_data?.veces)}
-
-            </Text>
-          </View>
-        </View>
-      </SView>
-    </SView>
-
-    // })
-
-  }
   getItem() {
 
     if (!this.state.data) return <SLoad />
@@ -241,53 +207,27 @@ class ClienteHistorial extends Component {
   }
 
 
-  getLista() {
-    if (!this.state.data) return <SLoad />
-
-    var usuarios = Model.usuario.Action.getAll();
-    if (!usuarios) return <SLoad />
-    let data = this.state.data.map(obj => {
-      obj.usuario = usuarios[obj?.key_usuario]
-      return obj;
-    })
-    return <SList data={data} space={8}
-      limit={10}
-      buscador
-      filter={obj => {
-        if (obj.veces <= this.state.parametros.cantidad) return true;
-        return false;
-      }}
-      render={obj => {
-
-        return this.getItem2(obj, obj.usuario)
-      }
-      }
-
-    />
-
-  }
-
-
-
-
   render() {
 
 
     return (
-      <SPage hidden header={<BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
+      <SPage hidden disableScroll>
+        <BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />
+
+
+        {/* <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
+          if (!this.state.buscador) this.setState({ buscador: ref });
+        }} repaint={() => { this.setState({ ...this.state }) }}
+        /> */}
 
 
 
+        {this.getParametros()}
+        <SHr height={10} />
 
 
-        <Container>
-          {this.getParametros()}
-          <SHr height={10} />
 
-          {this.getLista()}
-          <SHr height={10} />
-        </Container>
-        {/* <View style={{
+        <View style={{
           flex: 1,
           width: "100%",
         }}>
@@ -309,7 +249,7 @@ class ClienteHistorial extends Component {
           <FloatButtom onPress={() => {
             SNavigation.navigate("registro")
           }} />
-        </View> */}
+        </View>
       </SPage>
     );
   }
