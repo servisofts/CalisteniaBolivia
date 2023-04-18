@@ -1,17 +1,14 @@
 import { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SHr, SLoad, SNavigation, SOrdenador, SPage, STheme, SView } from 'servisofts-component';
-// import BackgroundImage from '../../Component/BackgroundImage';
+import { ExportExcel, SButtom, SDate, SHr, SLoad, SNavigation, SOrdenador, SPage, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
 import Model from '../../../../Model';
 import HuellasDeUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
 import SincronizarUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import PaquetesDeUsuario from './PaquetesDeUsuario';
-// import PaquetesDeUsuario from './PaquetesDeUsuario';
-// import SSCrollView from '../../Component/SScrollView';
-import SSocket from 'servisofts-socket';
 
 import Paquete from '../../../Paquete';
 import Sucursal from '../../../Sucursal';
@@ -149,65 +146,19 @@ class ClientePerfilPage extends Component {
 
       // console.log("aqui ", obj, " pack ", paquete.descripcion, " sucursal ", sucursal.descripcion, " usuario ", usuario.Nombres);
 
-      // finalData[key] = obj;
       // objFinal[key] = { obj, usuario, paquete, sucursal }
       objFinal[key] = {
-        // ...data[ClientesActivos[key]?.key_usuario],
-        cajero: usuario,
+        data: obj,
+        usuario: usuario,
         paquete: paquete,
         sucursal: sucursal,
-        key: key,
       };
+      finalData = objFinal;
 
     })
-    this.finalData = objFinal;
 
-    // return <Text style={{ fontSize: 16, color: STheme.color.text }}>Correo </Text>
   }
 
-  // exportar() {
-  //   return <SView col={"xs-12"} center border={"transparent"}>
-  //     <ExportExcel
-  //       header={[
-  //         { key: "indice", label: "Nro", width: 250 },
-  //         // { key: "cliente", label: "cliente", width: 40 },
-  //         { key: "sucursal", label: "sucursal", width: 200 },
-  //         { key: "fecha_on", label: "fecha compra", width: 200 },
-  //         { key: "cajera", label: "Cajera", width: 200 },
-  //         { key: "paquete", label: "paquete", width: 90 },
-  //         // { key: "motivo", label: "motivo", width: 90 },
-  //         { key: "precio", label: "precio", width: 90 },
-  //         { key: "fecha_inicio", label: "paquete inicio", width: 90 },
-  //         { key: "fecha_fin", label: "paquete fin", width: 90 },
-  //       ]}
-  //       getDataProcesada={() => {
-  //         var daFinal = {};
-  //         Object.values(objFinal).map((data, i) => {
-  //           var toInsert = {
-  //             indice: i + 1,
-  //             sucursal: data.sucursal.descripcion,
-  //             fecha_on: data.obj.fecha_on,
-  //             cajera: data.usuario.Nombres,
-  //             paquete: data.paquete.descripcion,
-  //             precio: data.obj.monto,
-  //             fecha_inicio: data.obj.fecha_inicio,
-  //             fecha_fin: data.obj.fecha_fin,
-  //           }
-  //           daFinal[i] = toInsert
-  //           // console.log("razon ", data.usuario.Nombres,
-  //           //   data.obj.fecha_inicio,
-  //           //   data.obj.fecha_on,
-  //           //   data.obj.fecha_fin,
-  //           //   data.paquete.descripcion,
-  //           //   data.obj.monto,
-  //           //   data.sucursal.descripcion,
-  //           // )
-  //         })
-  //         return daFinal
-  //       }}
-  //     />
-  //   </SView>
-  // }
 
 
   render() {
@@ -220,43 +171,38 @@ class ClientePerfilPage extends Component {
         <ScrollView>
           <SView col={"xs-12"} center>
             {this.getPerfil()}
-            {/* {this.exportar()} */}
 
-            <SView col={"xs-12"} center border={"blue"}>
-
-              {/* tarea10 ✅ ✅ ✅ */}
+            <SView col={"xs-12"} center border={"transparent"}>
               <ExportExcel
                 header={[
                   { key: "indice", label: "Indice", width: 30 },
-                  { key: "paquete", label: "Paquete", width: 130 },
-                  { key: "paquete_precio", label: "Precio", width: 30 },
-                  { key: "motivo", label: "Motivo", width: 150 },
-                  { key: "fecha_inicio", label: "Fecha inicio", width: 70 },
-                  { key: "fecha_fin", label: "Fecha fin", width: 70 },
-                  { key: "ci", label: "CI", width: 70 },
-                  { key: "nombres", label: "Cliente", width: 200 },
-                  { key: "telefono", label: "Telefono", width: 90 },
-                  { key: "correo", label: "Correo", width: 200 },
-                  { key: "cumpleaños", label: "Cumpleaños", width: 70 },
+                  // { key: "cliente", label: "cliente", width: 40 },
+                  { key: "sucursal", label: "sucursal", width: 50 },
+                  { key: "fecha_on", label: "fecha compra", width: 80 },
+                  { key: "cajera", label: "Cajera", width: 100 },
+                  { key: "paquete", label: "paquete", width: 140 },
+                  { key: "motivo", label: "motivo", width: 100 },
+                  { key: "precio", label: "precio", width: 40 },
+                  { key: "fecha_inicio", label: "paquete inicio", width: 80 },
+                  { key: "fecha_fin", label: "paquete fin", width: 80 },
                 ]}
                 getDataProcesada={() => {
                   var daFinal = {};
-                  Object.values(this.finalData).map((obj, i) => {
-                    // var usr = this.usuarios[obj.key];
-                    if (!obj?.estado || obj?.estado <= 0) return;
+                  Object.values(finalData).map((obj, i) => {
+
+                    console.log("miralo ", obj)
+
+                    // if (!obj.data.estado || obj.data.estado <= 0) return;
                     var toInsert = {
                       indice: i + 1,
-                      paquete: obj?.vijencia?.paquete?.descripcion,
-                      paquete_precio: obj?.vijencia?.paquete?.precio,
-                      motivo: obj?.vijencia?.motivo,
-                      fecha_inicio: obj?.vijencia?.fecha_inicio,
-                      fecha_fin: obj?.vijencia?.fecha_fin,
-                      key_usuario: obj.key,
-                      ci: obj?.CI,
-                      nombres: obj?.Nombres + " " + obj?.Apellidos,
-                      telefono: obj?.Telefono,
-                      correo: obj?.Correo,
-                      cumpleaños: obj["Fecha nacimiento"],
+                      sucursal: obj.sucursal?.descripcion,
+                      fecha_on: new SDate(obj.data?.fecha_on).toString("yyyy-MM-dd"),
+                      cajera: obj.usuario?.Nombres,
+                      paquete: obj.paquete?.descripcion,
+                      motivo: obj.data?.observacion,
+                      precio: obj.data?.monto ?? "0",
+                      fecha_inicio: obj.data?.fecha_inicio,
+                      fecha_fin: obj.data?.fecha_fin,
                     }
                     daFinal[i] = toInsert
                   })

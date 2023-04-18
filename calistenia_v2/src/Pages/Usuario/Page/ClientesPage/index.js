@@ -266,7 +266,7 @@ class ClientesPage extends Component {
 
 
 
-        <SView col={"xs-12"} center border={"blue"}>
+        <SView col={"xs-12"} center border={"cyan"}>
 
           {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel
