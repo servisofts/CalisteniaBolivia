@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ActivityIndicator, Animated, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SDate, SImage, SMath, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { SDate, SHr, SImage, SMath, SNavigation, SOrdenador, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../../../../Model';
 import Sucursal from '../../../../Sucursal';
@@ -111,14 +111,30 @@ class ListaCajas extends Component {
       )
     })
   }
+
+
+  setVacio() {
+    return (
+      <>
+        <SHr height={28} />
+        <SText color={"red"}>no hay caja abierta</SText>
+      </>
+    );
+  }
+
+
+
   getItems() {
     var lista = this.getLista();
     if (!lista) return <ActivityIndicator color={STheme.color.text} />;
     return Object.keys(lista).map((key) => {
       var obj = lista[key];
-      if (!key) return <View />
-      if (!obj) return <View />
-      if (!obj.key_usuario) return <View />
+      if (!key) return this.setVacio();
+      if (!obj) return this.setVacio();
+      if (!obj.key_usuario) return this.setVacio();
+      // if (!key) return <View />
+      // if (!obj) return <View />
+      // if (!obj.key_usuario) return <View />
       if (this.state.sucursal) {
         if (obj.key_sucursal != this.state.sucursal.key) {
           return null;
