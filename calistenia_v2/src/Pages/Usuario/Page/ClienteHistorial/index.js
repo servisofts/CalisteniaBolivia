@@ -23,7 +23,7 @@ class ClienteHistorial extends Component {
       func: "_get_cliente_fecha_veces_inscripto",
       // params: [this.state.parametros.inicio, this.state.parametros.fin],
       params: ["'2023-01-01'", "'2023-03-01'"],
-
+      // esrser
 
       parametros: {
         "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
