@@ -60,7 +60,7 @@ export default class CardUser extends Component {
                                     <SHr height={2}/>
                                     <SView row>
                                         <SView row>
-                                            <SIcon name='Icarnet2' width={15}/>
+                                            <SIcon name='Icarnet2'  width={15}/>
                                             <SView width={5}/>
                                             <SText fontSize={12} color={STheme.color.gray}>6364521</SText>
                                         </SView>

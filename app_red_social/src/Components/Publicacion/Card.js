@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView, SNavigation } from 'servisofts-component';
+import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView, SNavigation, SPopup } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../Model';
 export type PublicacionPropsType = {
@@ -38,6 +38,11 @@ class index extends Component<PublicacionPropsType> {
             }}>
                 <SText bold>{user?.Nombres} {user?.Apellidos}</SText>
             </SView>
+            <SView width={30} colSquare center onPress={() => {
+                SPopup.alert("Ajustes")
+            }}>
+                <SIcon name={"Menu2"} fill={STheme.color.text} />
+            </SView>
         </SView>
     }
     renderImage() {
@@ -51,20 +56,21 @@ class index extends Component<PublicacionPropsType> {
         const size = 28;
         return <SView col={"xs-12"} row height={size} center>
             <SView width={size} height>
-                <SIcon name={'Heart'} fill={STheme.color.text} />
+                <SIcon name={'Heart'} height={24} fill={STheme.color.text} />
             </SView>
-            <SView width={size/2} />
+            <SView width={size / 2} />
             <SView width={size} height>
-                <SIcon name={'Comment'} fill={STheme.color.text} />
+                <SIcon name={'Comment'} height={24} fill={STheme.color.text} />
             </SView>
-            <SView width={size/2} />
+            <SView flex />
+            {/* <SView width={size/2} />
             <SView width={size} height>
                 <SIcon name={'Heart'} fill={STheme.color.text} />
             </SView>
             <SView flex />
             <SView width={size} height>
                 <SIcon name={'Comment'} fill={STheme.color.text} />
-            </SView>
+            </SView> */}
         </SView>
     }
     renderTitle() {
@@ -95,8 +101,8 @@ class index extends Component<PublicacionPropsType> {
             <SHr />
             {this.renderTitle()}
             <SHr />
-            {this.renderComments()}
-            <SHr />
+            {/* {this.renderComments()} */}
+            {/* <SHr /> */}
         </SView >
         );
     }

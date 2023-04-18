@@ -129,7 +129,7 @@ class Llamada extends Component {
 
   }
   setMensaje(nombre, numero) {
-    if
+    // if
     let sms = "https://web.whatsapp.com/send?phone=591" + numero + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
 
     return <>

@@ -24,7 +24,10 @@ class Mapa extends Component<MapaPropsType> {
     }
 
     render() {
-        // var { key, nombre, proximo_horario } = this.props.data;
+        var { latitude, longitude } = this.props?.data;
+
+        if(latitude == null) latitude= -17.768507
+        if(longitude == null) longitude= -63.183698
         return (
             <SView col={"xs-12 "} row center>
                 <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} {...this.props} center>
@@ -32,8 +35,8 @@ class Mapa extends Component<MapaPropsType> {
                         initialRegion={{
                             // latitude: this.props.data?.latitude,
                             // latitude: this.props.data?.latitude,
-                            latitude: -17.768507,
-                            longitude: -63.183698,
+                            latitude: latitude,
+                            longitude: longitude,
                             latitudeDelta: 0.0922,
                             longitudeDelta: 0.0421,
                         }}
@@ -44,9 +47,10 @@ class Mapa extends Component<MapaPropsType> {
                             scrollwheel: false,
                         }}
                         preventCenter
-                    >{/* <SMarker latitude={-17.768507} longitude={-63.183698} lng={-17.768507} lat={-63.183698} >
-                            <SIcon name="MarcadorMapa" width={20} height={30} />
-                        </SMarker> */}
+                    >
+                        <SMarker  lat={latitude} lng={longitude} >
+                            <SIcon name="MarcadorMapac" width={35} height={45} />
+                        </SMarker>
                     </SMapView2>
                     <SHr height={20} />
                     <SView

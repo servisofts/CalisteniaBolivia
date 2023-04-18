@@ -16,6 +16,7 @@ class encontrado extends Component {
         super(props);
         this.state = {
         };
+        this.params = SNavigation.getAllParams();
     }
 
     clearData() {
@@ -76,7 +77,7 @@ class encontrado extends Component {
                         <SHr height={35} />
                         <BtnSend2
                             onPress={() => {
-                                SNavigation.navigate("/paquete/membresia/confirmar", { pk:12, sucursal:"9b12670e-c6ca-4948-a532-550faccdcb9d"} );
+                                SNavigation.navigate("/paquete/membresia/confirmar", {  ...this.params} );
                             }}
                             style={{ zIndex: 99999, position: "absolute" }}
                         >Sí, es mi cuenta

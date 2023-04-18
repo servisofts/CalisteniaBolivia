@@ -10,7 +10,7 @@ class index extends Component {
 
         this.params = SNavigation.getAllParams();
         this.state = {
-            title: "Libro mayor " + this.params.fecha_inicio + " " + this.params.fecha_fin,
+            title: "Libro mayor",
             // func: "reporte_ventas_vendedores",
             // params: [`'${this.params.fecha_inicio}'`, `'${this.params.fecha_fin}'`],
             // params: [`'\${servicio.key}'`, `'${this.params.fecha_inicio}'`, `'${this.params.fecha_fin}'`],

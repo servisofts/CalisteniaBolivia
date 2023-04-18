@@ -37,6 +37,21 @@ export default class Header extends Component {
                         }}
                     />
                 </SView>
+                <SView col={"xs-10"} center>
+                    <SHr height={15} />
+                    <SText fontSize={18} font={'Roboto'} style={{ textTransform: "uppercase" }}>CALISTENIA {this.props.data.descripcion}</SText>
+                </SView>
+                <SHr height={5} />
+                <SView col={"xs-10"} center   >
+                    {/* <SView col={"xs-1"} >
+                        <SIcon name='Iubicacion' width={10} height={20} fill={STheme.color.gray} />
+                    </SView>
+                    <SView col={"xs-11"} >
+                        <SView width={5} /> */}
+                        <SText center fontSize={14} color={STheme.color.gray}  >{this.props.data.direccion}</SText>
+                    {/* </SView> */}
+                </SView>
+
                 {this.effect1(-12)}
 
                 <SView col={"xs-12 sm-10 md-8 lg-6 xl-4 xxl-4"} row height={140} backgroundColor={STheme.color.primary} center  >

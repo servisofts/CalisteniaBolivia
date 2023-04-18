@@ -71,6 +71,7 @@ class detalle extends Component {
         var { key, descripcion, dias, precio, participantes } = paquete;
 
         return <SView col={"xs-12"} center>
+            
             <SView
                 // height={125}
                 col={"xs-12"}
@@ -102,7 +103,6 @@ class detalle extends Component {
                     <SText color={STheme.color.text} fontSize={12} >
                         Busca brindar un apoyo integral al cliente para que pueda mejorar sus habilidades y alcanzar sus metas de entrenamiento.
                     </SText>
-
                 </SView>
             </SView>
             <SHr height={16} />
@@ -164,7 +164,6 @@ class detalle extends Component {
 
                     SNavigation.navigate("/paquete/membresia/confirmar", {  ...this.params});
                 }}
-
             >Adquirir paquete</BtnSend>
         </SView>
 

@@ -13,6 +13,7 @@ class recuperar extends Component {
         super(props);
         this.state = {
         };
+        this.params = SNavigation.getAllParams();
     }
 
     clearData() {
@@ -94,7 +95,7 @@ class recuperar extends Component {
                                 Password: { placeholder: "Número de carnet", isRequired: true },
                             }}
                             onSubmit={(values) => {
-                                SNavigation.navigate("/cuenta/encontrado");
+                                SNavigation.navigate("/cuenta/encontrado", {  ...this.params});
                             }}
                         />
                         <SHr height={35} />
