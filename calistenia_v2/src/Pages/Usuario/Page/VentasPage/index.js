@@ -71,20 +71,20 @@ class VentasPage extends Component {
       }} >Recuperar</SButtom>
   }
   valido_CI(ci) {
-    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+    return <Text style={{ color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
   valido_Telefono(telefono) {
     return <Text style={{
-      fontSize: 16, color: (
+      color: (
         telefono.length < 8
           || telefono.charAt(0) !== "7"
           && telefono.charAt(0) !== "6"
           && telefono.charAt(0) !== "+"
           ? "red" : STheme.color.text),
-    }}>{" Telefono: " + telefono}</Text>
+    }}>{"Telefono: " + telefono}</Text>
   }
   valido_Correo(correo) {
-    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+    return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
   render() {
     const getLista = () => {
@@ -121,7 +121,7 @@ class VentasPage extends Component {
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
-          height: 50,
+          height: 60,
           margin: 4,
           borderRadius: 10,
           backgroundColor: STheme.color.card
@@ -167,10 +167,22 @@ class VentasPage extends Component {
                 justifyContent: "center"
               }}>
                 <Text style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_CI(obj?.CI)} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_CI(obj?.CI)}</Text>
+                <Text style={{
+                  fontSize: 12,
+                  width: 400,
+                  color: STheme.color.text,
+                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
+                }}>{this.valido_Telefono(obj?.Telefono)}</Text>
+                <Text style={{
+                  fontSize: 12,
+                  width: 400,
+                  color: STheme.color.text,
+                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
+                }}>{this.valido_Correo(obj?.Correo)}</Text>
 
               </View>
               {this.getRecuperar(obj, isRecuperar)}
