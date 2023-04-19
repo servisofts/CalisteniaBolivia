@@ -204,13 +204,10 @@ class VentasPage extends Component {
               }
             }}
           >
-            <SView col={"xs-12"} center>
-              {getLista()}
-            </SView>
+            <SView col={"xs-12"} center> {getLista()} </SView>
           </SScrollView2>
-          <FloatButtom onPress={() => {
-            SNavigation.navigate("registro")
-          }} />
+          <FloatButtom onPress={() => { SNavigation.navigate("registro") }} />
+          <SButtom type={"danger"} style={{ position: "absolute", top: -10, right: 50 }} onPress={() => { SNavigation.navigate("cliente/historial"); }}>Historial</SButtom>
         </View>
       </SPage>
     );

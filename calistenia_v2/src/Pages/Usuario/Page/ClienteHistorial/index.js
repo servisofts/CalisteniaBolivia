@@ -153,17 +153,19 @@ class ClienteHistorial extends Component {
       <ExportExcel
         header={[
           { key: "indice", label: "Nro", width: 40 },
-          { key: "nombres", label: "nombres", width: 200 },
-          { key: "telefono", label: "telefono", width: 90 },
-          { key: "correo", label: "correo", width: 150 },
-          { key: "cumpleaños", label: "cumpleaños", width: 80 },
-          { key: "veces", label: "Veces Inscripto", width: 150 },
+          { key: "nombres", label: "Nombres", width: 200 },
+          { key: "telefono", label: "Telefono", width: 90 },
+          { key: "correo", label: "Correo", width: 150 },
+          { key: "cumpleaños", label: "Cumpleaños", width: 80 },
+          { key: "veces", label: "Veces", width: 40 },
         ]}
         getDataProcesada={() => {
           var daFinal = {};
+          let cant = 0;
           Object.values(data).map((obj, i) => {
+            if (obj.veces != this.state.parametros.cantidad) return;
             var toInsert = {
-              indice: i + 1,
+              indice: cant + 1,
               key_usuario: obj?.key_usuario,
               nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
               ci: obj?.usuario?.CI,
@@ -172,6 +174,7 @@ class ClienteHistorial extends Component {
               telefono: obj?.usuario?.Telefono,
               veces: obj?.veces
             }
+            cant++;
             daFinal[i] = toInsert
           })
           return daFinal
