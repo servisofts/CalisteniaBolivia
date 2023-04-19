@@ -1,9 +1,8 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
 import Model from '../../../../Model';
@@ -71,46 +70,44 @@ class ClienteHistorial extends Component {
     var actual = pageLimit * (this.state.pagination.curPage - 1);
     return listaKeys.slice(0, actual + pageLimit);
   }
-  getRecuperar(data, isRecuperar) {
-    if (!isRecuperar) {
-      return <View />
-    }
-    if (data.estado != 0) {
-      return <View />
-    }
-    return <SButtom
-      props={{
-        type: "danger",
-        variant: "confirm"
-      }}
-      onPress={() => {
-        Usuario.Actions.editar({
-          ...data,
-          estado: 1,
-        }, this.props)
-      }} >Recuperar</SButtom>
-  }
+  // getRecuperar(data, isRecuperar) {
+  //   if (!isRecuperar) {
+  //     return <View />
+  //   }
+  //   if (data.estado != 0) {
+  //     return <View />
+  //   }
+  //   return <SButtom
+  //     props={{
+  //       type: "danger",
+  //       variant: "confirm"
+  //     }}
+  //     onPress={() => {
+  //       Usuario.Actions.editar({
+  //         ...data,
+  //         estado: 1,
+  //       }, this.props)
+  //     }} >Recuperar</SButtom>
+  // }
   valido_CI(ci) {
     return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
   valido_veces(numero) {
     return <Text center style={{
-      fontSize: 16, color: STheme.color.text, position: "absolute",
-      right: 0,
+      color: STheme.color.text, position: "absolute", right: 0,
     }}>{"veces (" + numero + ")"}</Text>
   }
   valido_Telefono(telefono) {
     return <Text style={{
-      fontSize: 16, color: (
-        telefono.length < 8
-          || telefono.charAt(0) !== "7"
-          && telefono.charAt(0) !== "6"
-          && telefono.charAt(0) !== "+"
-          ? "red" : STheme.color.text),
+      color: (telefono.length < 8
+        || telefono.charAt(0) !== "7"
+        && telefono.charAt(0) !== "6"
+        && telefono.charAt(0) !== "+"
+        ? "red" : STheme.color.text),
     }}>{" Telefono: " + telefono}</Text>
   }
   valido_Correo(correo) {
-    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+    return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
   getParametros() {
@@ -162,31 +159,17 @@ class ClienteHistorial extends Component {
 
 
   getItem2(_data, usuario) {
-
-    // if (_data?.veces != this.state.parametros.cantidad) return;
-
     return <SView col={"xs-12"} height={60} center>
       <SView col={"xs-12"} center row border={"#666"} height>
         <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
           <View style={{
-            width: 40, height: 40,
-            marginRight: 8, justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: STheme.color.card,
-            borderRadius: 100,
-            overflow: "hidden"
+            width: 40, height: 40, marginRight: 8, justifyContent: "center", alignItems: "center", backgroundColor: STheme.color.card, borderRadius: 100, overflow: "hidden"
           }}>
             <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
           </View>
-          <View row style={{
-            flex: 1,
-            justifyContent: "center"
-          }}>
-            <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)}
-
-              {this.valido_veces(_data?.veces)}
-
-            </Text>
+          <View row style={{ flex: 1, justifyContent: "center" }}>
+            <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text>
+            {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
           </View>
         </View>
       </SView>
@@ -195,50 +178,6 @@ class ClienteHistorial extends Component {
     // })
 
   }
-  getItem() {
-
-    if (!this.state.data) return <SLoad />
-    let _data = this.state.data;
-
-    var usuarios = Model.usuario.Action.getAll();
-    if (!usuarios) return <SLoad />
-
-    return Object.values(_data).map(obj => {
-
-      if (obj.veces != this.state.parametros.cantidad) return;
-      var usuario = usuarios[obj?.key_usuario];
-
-      return <>
-        <SView col={"xs-12"} height={60} center>
-          <SView col={"xs-11 md-9 lg-6"} center row border={"#666"} style={{ height: "100%" }}  >
-
-            <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
-              <View style={{
-                width: 40, height: 40,
-                marginRight: 8, justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: STheme.color.card,
-                borderRadius: 100,
-                overflow: "hidden"
-              }}>
-                <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
-              </View>
-              <View row style={{
-                flex: 1,
-                justifyContent: "center"
-              }}>
-                <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(obj?.veces)} </Text>
-              </View>
-            </View>
-          </SView>
-        </SView>
-        <SView col={"xs-12"} height={20} backgroundColor={"transparent"} />
-      </>
-    })
-
-  }
-
-
   getLista() {
     if (!this.state.data) return <SLoad />
 
@@ -249,23 +188,18 @@ class ClienteHistorial extends Component {
       return obj;
     })
 
-    console.log("chau ", data)
     return <>
       <ExportExcel
         header={[
-          // { key: "key_usuario", label: "key", width: 250 },
-          { key: "ci", label: "documento", width: 40 },
-          { key: "indice", label: "n", width: 40 },
-          { key: "telefono", label: "telefono", width: 90 },
+          { key: "indice", label: "Nro", width: 40 },
           { key: "nombres", label: "nombres", width: 200 },
-          { key: "cumpleaños", label: "cumpleaños", width: 80 },
+          { key: "telefono", label: "telefono", width: 90 },
           { key: "correo", label: "correo", width: 150 },
+          { key: "cumpleaños", label: "cumpleaños", width: 80 },
           { key: "veces", label: "Veces Inscripto", width: 150 },
         ]}
         getDataProcesada={() => {
           var daFinal = {};
-          // const ingreso = 0, egreso = 0, traspaso = 0;
-          // var total = { ingreso: 0, egreso: 0, traspaso: 10 }
           Object.values(data).map((obj, i) => {
             var toInsert = {
               indice: i + 1,
@@ -287,31 +221,19 @@ class ClienteHistorial extends Component {
         limit={6}
         buscador
         filter={obj => {
-          if (obj.veces <= this.state.parametros.cantidad) return true;
+          if (obj.veces == this.state.parametros.cantidad) return true;
           return false;
         }}
         render={obj => {
-
           return this.getItem2(obj, obj.usuario)
-        }
-        }
-
+        }}
       />
     </>
-
   }
 
-
-
-
   render() {
-    // this.state.parametros.inicio = new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd");
-    // this.state.parametros.fin = new SDate().toString("yyyy-MM-dd");
-    // this.setState({ ...this.state })
-
     return (
-      <SPage hidden header={<BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
-
+      <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
         <Container>
           {this.getParametros()}
           <SHr height={10} />
