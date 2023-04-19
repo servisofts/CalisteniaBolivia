@@ -15,13 +15,9 @@ class ClienteHistorial extends Component {
       pagination: {
         curPage: 1,
       },
-
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
-      // params: [this.state.parametros.inicio, this.state.parametros.fin],
       // params: ["'2023-01-01'", "'2023-03-01'"],
-      // esrser
-
       parametros: {
         "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
         "fin": new SDate().toString("yyyy-MM-dd"),
@@ -29,9 +25,8 @@ class ClienteHistorial extends Component {
       },
       ...this.state,
     };
-
-
   }
+
   componentDidMount() {
     this.getData();
   }
@@ -45,7 +40,6 @@ class ClienteHistorial extends Component {
       // params: this.state.params,
       params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
       ...this.params
-
     })
       .then((resp) => {
         this.setState({ loading: false, data: resp.data });
@@ -54,41 +48,7 @@ class ClienteHistorial extends Component {
         this.setState({ loading: false, error: e });
       });
   }
-  pagination = (listaKeys) => {
-    if (!listaKeys) {
-      return [];
-    }
-    if (listaKeys.length <= 0) {
-      return [];
-    }
-    var pageLimit = 50
-    var tamanho = listaKeys.length;
-    var nroBotones = Math.ceil(tamanho / pageLimit);
-    if (this.state.pagination.curPage > nroBotones) {
-      this.state.pagination.curPage = nroBotones;
-    }
-    var actual = pageLimit * (this.state.pagination.curPage - 1);
-    return listaKeys.slice(0, actual + pageLimit);
-  }
-  // getRecuperar(data, isRecuperar) {
-  //   if (!isRecuperar) {
-  //     return <View />
-  //   }
-  //   if (data.estado != 0) {
-  //     return <View />
-  //   }
-  //   return <SButtom
-  //     props={{
-  //       type: "danger",
-  //       variant: "confirm"
-  //     }}
-  //     onPress={() => {
-  //       Usuario.Actions.editar({
-  //         ...data,
-  //         estado: 1,
-  //       }, this.props)
-  //     }} >Recuperar</SButtom>
-  // }
+
   valido_CI(ci) {
     return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
@@ -104,7 +64,7 @@ class ClienteHistorial extends Component {
         && telefono.charAt(0) !== "6"
         && telefono.charAt(0) !== "+"
         ? "red" : STheme.color.text),
-    }}>{" Telefono: " + telefono}</Text>
+    }}>{"Telefono: " + telefono}</Text>
   }
   valido_Correo(correo) {
     return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
@@ -121,8 +81,7 @@ class ClienteHistorial extends Component {
                 this.getData();
                 //this.setState({ ...this.state });
               }
-
-              console.log("fecha inicio ", val);
+              // console.log("fecha inicio ", val);
             }}
           />
           <SView height width={20} />
@@ -131,9 +90,7 @@ class ClienteHistorial extends Component {
               if (this.state.parametros.fin != val) {
                 this.state.parametros.fin = val;
                 this.getData();
-                //this.setState({ ...this.state });
               }
-              console.log("fecha fin ", val);
             }}
           />
           <SView height width={20} />
@@ -160,7 +117,9 @@ class ClienteHistorial extends Component {
 
   getItem2(_data, usuario) {
     return <SView col={"xs-12"} height={60} center>
-      <SView col={"xs-12"} center row border={"#666"} height>
+      <SView col={"xs-12"} center row border={"#6664"} height onPress={() => {
+        SNavigation.navigate("ClientePerfilPage", { key: usuario.key });
+      }} >
         <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
           <View style={{
             width: 40, height: 40, marginRight: 8, justifyContent: "center", alignItems: "center", backgroundColor: STheme.color.card, borderRadius: 100, overflow: "hidden"
@@ -168,7 +127,9 @@ class ClienteHistorial extends Component {
             <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
           </View>
           <View row style={{ flex: 1, justifyContent: "center" }}>
-            <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text>
+            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_veces(_data?.veces)}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Telefono(usuario?.Telefono)}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Correo(usuario?.Correo)} </Text>
             {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
           </View>
         </View>
