@@ -182,7 +182,7 @@ class ClienteHistorial extends Component {
       />
 
       <SList data={data} space={8}
-        limit={6}
+        limit={8}
         buscador
         filter={obj => {
           if (obj.veces == this.state.parametros.cantidad) return true;
