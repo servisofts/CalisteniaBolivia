@@ -80,7 +80,10 @@ class index extends Component {
             order={[{ key: "fecha_on", order: "desc" }]}
             space={30}
             render={(a) => {
-                return <Publicacion.Card data={a} />
+                // let user = Model.usuario.Action.getByKey(a.key_usuario);
+                // if (!user) return <SLoad/>
+                // console.log(user);
+                return <Publicacion.Card data={a}  />
             }}
         />
     }

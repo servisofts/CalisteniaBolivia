@@ -30,6 +30,8 @@ import Icoincidencia, { ReactComponent as IcoincidenciaW } from './icoincidencia
 import Inoenco, { ReactComponent as InoencoW } from './inoenco.svg';
 import MarcadorMapac, { ReactComponent as MarcadorMapacW } from './marcadorMapac.svg';
 import Iubicacion, { ReactComponent as IubicacionW } from './iubicacion.svg';
+import MenuLat, { ReactComponent as MenuLatW } from './menuLat.svg';
+
 
 
 
@@ -64,6 +66,8 @@ const Assets = {
 	"Inoenco": { Native: Inoenco, Web: InoencoW },
 	"MarcadorMapac": { Native: MarcadorMapac, Web: MarcadorMapacW },
 	"Iubicacion": { Native: Iubicacion, Web: IubicacionW },
+	"MenuLat": { Native: MenuLat, Web: MenuLatW },
+	
 
 }
 

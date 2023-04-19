@@ -14,6 +14,7 @@ import {
 } from "servisofts-component";
 import SMapView from "servisofts-component/Component/SMapView";
 import SSocket from "servisofts-socket";
+import { BtnNavegar } from "../../../Components";
 export type MapaPropsType = {
     // data: any,
 };
@@ -53,7 +54,7 @@ class Mapa extends Component<MapaPropsType> {
                         </SMarker>
                     </SMapView2>
                     <SHr height={20} />
-                    <SView
+                    {/* <SView
                         center
                         backgroundColor={STheme.color.darkGray}
                         width={170}
@@ -64,7 +65,16 @@ class Mapa extends Component<MapaPropsType> {
                         }}
                     >
                         <SText>Ir a Google Maps</SText>
-                    </SView>
+                    </SView> */}
+                    <BtnNavegar latLng={{ latitude: latitude, longitude: longitude }}
+                     backgroundColor={STheme.color.darkGray}
+                     width={190}
+                     height={50}
+                     style={{ borderRadius: 8 }}
+                     center
+                    >
+                        <SText color={"#fff"} center fontSize={15} >Ir a Google Maps</SText>
+                    </BtnNavegar>
                     <SHr height={40} />
                 </SView>
             </SView>

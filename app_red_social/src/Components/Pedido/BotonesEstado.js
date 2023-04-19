@@ -133,23 +133,14 @@ class index extends Component<BotonesEstadoPropsType> {
 
         console.log("todo ", this.props.data)
         return <SView col={"xs-12"} flex center >
-
-
-
             <SView col={"xs-12 md-7"} height row center backgroundColor={STheme.color.card} style={{ borderRadius: 12, }}>
-
                 <SHr height={10} />
-
-
                 <SView col={"xs-3.5"} style={{ borderBottomWidth: 3, }} border={STheme.color.gray} center
-
                     onPress={() => {
                         SPopup.open({ key: "confirmar", content: this.popupConfirmacion() });
                     }}
-
                 />
                 <SHr height={5} />
-
                 {/* <SView col={"xs-3.5"} style={{ borderBottomWidth: 3, }} border={'transparent'} center  /> */}
                 <SText col={"xs-12"} color={STheme.color.text} style={{ fontSize: 50 }} bold center>5:00 - 05:30</SText>
                 <SText col={"xs-12"} color={STheme.color.lightGray} style={{ fontSize: 12 }} bold center>{this.props.data.state}</SText>
