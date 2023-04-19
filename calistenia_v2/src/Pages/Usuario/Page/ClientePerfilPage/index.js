@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SDate, SHr, SLoad, SNavigation, SOrdenador, SPage, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SOrdenador, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
@@ -13,6 +13,9 @@ import PaquetesDeUsuario from './PaquetesDeUsuario';
 import Paquete from '../../../Paquete';
 import Sucursal from '../../../Sucursal';
 import sucursal_usuario from '../../../sucursal_usuario';
+
+import Html2Canvas from 'html2canvas';
+import jspdf from 'jspdf';
 var finalData = {};
 
 class ClientePerfilPage extends Component {
@@ -54,6 +57,20 @@ class ClientePerfilPage extends Component {
     return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
+  imprimir() {
+    const input = document.getElementById('historial');
+    Html2Canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf('p', 'mm', [canvas.width, canvas.height]);
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const heightLeft = imgHeight;
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('historial.pdf');
+      });
+  }
 
 
   getPerfil() {
@@ -172,7 +189,17 @@ class ClientePerfilPage extends Component {
           <SView col={"xs-12"} center>
             {this.getPerfil()}
 
-            <SView col={"xs-12"} center border={"transparent"}>
+            <SView col={"xs-12"} center row border={"transparent"}>
+
+              {/* <SView col={"xs-12"} row center border={"red"}> */}
+
+              <SButtom onPress={() => { this.imprimir() }}>
+                <SIcon name={"Pdf"} width={25} />
+              </SButtom>
+
+              <SView width={5} center />
+
+
               <ExportExcel
                 header={[
                   { key: "indice", label: "Indice", width: 30 },
