@@ -45,6 +45,8 @@ class ClienteHistorial extends Component {
       func: this.state.func,
       // params: this.state.params,
       params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
+      ...this.params
+
     })
       .then((resp) => {
         this.setState({ loading: false, data: resp.data });
@@ -117,17 +119,24 @@ class ClienteHistorial extends Component {
         <SView col={"xs-12"} height={40} center row border={"transparent"} >
           <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
             onChangeText={(val) => {
-              this.state.parametros.inicio = val;
-              this.setState({ ...this.state })
+              if (this.state.parametros.inicio != val) {
+                this.state.parametros.inicio = val;
+                this.getData();
+                //this.setState({ ...this.state });
+              }
+
+              console.log("fecha inicio ", val);
             }}
           />
           <SView height width={20} />
-          {/* seria mejor con un ref o con un state */}
-          {/* ref={ref => this._fechaFin = ref} */}
           <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
             onChangeText={(val) => {
-              this.state.parametros.fin = val;
-              this.setState({ ...this.state })
+              if (this.state.parametros.fin != val) {
+                this.state.parametros.fin = val;
+                this.getData();
+                //this.setState({ ...this.state });
+              }
+              console.log("fecha fin ", val);
             }}
           />
           <SView height width={20} />
@@ -296,45 +305,19 @@ class ClienteHistorial extends Component {
 
 
   render() {
-
+    // this.state.parametros.inicio = new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd");
+    // this.state.parametros.fin = new SDate().toString("yyyy-MM-dd");
+    // this.setState({ ...this.state })
 
     return (
       <SPage hidden header={<BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
 
-
-
-
-
         <Container>
           {this.getParametros()}
           <SHr height={10} />
-
           {this.getLista()}
           <SHr height={10} />
         </Container>
-        {/* <View style={{
-          flex: 1,
-          width: "100%",
-        }}>
-          <SScrollView2
-            disableHorizontal
-            onScroll={(evt) => {
-              var evn = evt.nativeEvent;
-              var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
-              var heigth = evn.contentSize.height;
-              if (heigth - posy <= 0) {
-                this.state.pagination.curPage += 1;
-                this.setState({ ...this.state })
-              }
-            }} >
-            <SView col={"xs-12"} center>
-              {this.getItem()}
-            </SView>
-          </SScrollView2>
-          <FloatButtom onPress={() => {
-            SNavigation.navigate("registro")
-          }} />
-        </View> */}
       </SPage>
     );
   }
