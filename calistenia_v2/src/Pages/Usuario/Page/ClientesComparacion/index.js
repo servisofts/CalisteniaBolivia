@@ -1,47 +1,29 @@
-import { Component } from "react";
-import { connect } from "react-redux";
-import { SDate, SHr, SInput, SLoad, SPage, SText } from "servisofts-component";
-import SSocket from "servisofts-socket";
+import { Component } from 'react';
+import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
+import BarraSuperior from '../../../../Components/BarraSuperior';
+import Container from '../../../../Components/Container';
+import Model from '../../../../Model';
 
 class ClientesComparacion extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
+      pagination: {
+        curPage: 1,
+      },
       title: "Reporte Name",
-      func: "_get_cliente_fecha_inicio",
-      // params: "2023-03-01",
-      // params: ["'" + pk + "'"],
-      params: ["'2023-03-01'"],
-
+      func: "_get_cliente_fecha_veces_inscripto",
+      // params: ["'2023-01-01'", "'2023-03-01'"],
       parametros: {
-
-        // asi se tiene la fecha para clientes activos
-        // "inicio": new SDate().addMonth(-1).toString("dd-MM-yyyy"),
-        // "fin": new SDate().toString("dd-MM-yyyy"),
-
-        // asi es para tener la banca que solo muestre de este mes
-        // "inicio": new SDate().addMonth(-1).setDay(1).toString("dd-MM-yyyy"),
-        // "fin": new SDate().toString("dd-MM-yyyy"),
-
-
-        // asi es para tener la banca antes de 2 meses para comparacion
-        // "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
-        // "fin": new SDate().toString("dd-MM-yyyy"),
-
-        // asi para tener el ultimo dia del mes anterior
-        // "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
-        // "fin": new SDate().addMonth(-1).setDay(-1).toString("dd-MM-yyyy"),
-
-        // para que solo el mes y desordenado
-        // "inicio": new SDate().addMonth(-2).setDay(1).toString("MONTH-dd"),
-        // "fin": new SDate().toString("MM-yyyy"),
-
-        "inicio": new SDate().addMonth(-2).setDay(1).toString("dd-MM-yyyy"),
-        "fin": new SDate().toString("dd-MM-yyyy"),
-        "cantidad": 0,
+        "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
+        "fin": new SDate().toString("yyyy-MM-dd"),
+        "cantidad": 1,
       },
       ...this.state,
-
     };
   }
 
@@ -55,7 +37,9 @@ class ClientesComparacion extends Component {
       component: "reporte",
       type: "execute_function",
       func: this.state.func,
-      params: this.state.params,
+      // params: this.state.params,
+      params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
+      ...this.params
     })
       .then((resp) => {
         this.setState({ loading: false, data: resp.data });
@@ -65,112 +49,166 @@ class ClientesComparacion extends Component {
       });
   }
 
+  valido_CI(ci) {
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+  }
+  valido_veces(numero) {
+    return <Text center style={{
+      color: STheme.color.text, position: "absolute", right: 0,
+    }}>{"veces (" + numero + ")"}</Text>
+  }
+  valido_Telefono(telefono) {
+    return <Text style={{
+      color: (telefono.length < 8
+        || telefono.charAt(0) !== "7"
+        && telefono.charAt(0) !== "6"
+        && telefono.charAt(0) !== "+"
+        ? "red" : STheme.color.text),
+    }}>{"Telefono: " + telefono}</Text>
+  }
+  valido_Correo(correo) {
+    return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
+
   getParametros() {
+    return <>
+      <SView col={"xs-12"} center row border={"transparent"}>
+        <SView col={"xs-12"} height={40} center row border={"transparent"} >
+          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.inicio != val) {
+                this.state.parametros.inicio = val;
+                this.getData();
+                //this.setState({ ...this.state });
+              }
+              // console.log("fecha inicio ", val);
+            }}
+          />
+          <SView height width={20} />
+          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.fin != val) {
+                this.state.parametros.fin = val;
+                this.getData();
+              }
+            }}
+          />
+          <SView height width={20} />
+          <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              // if (val.length < 2) return;
+              // validar solo que sea maximo 3 caracteres
+              this.state.parametros.cantidad = val;
+              this.setState({ ...this.state })
+            }}
+          />
+        </SView>
+      </SView >
+      <SView col={"xs-12"} height={4} />
 
-    return (
-      <>
-        {/* <SInput ref={ref => this.setState(parametros.inicio) = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"} */}
-        <SInput col={"xs-3"} type={"date"} customStyle={"calistenia"}
-          defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} placeholder={"fecha inicio"}
-          onChangeText={(val) => {
-            this.state.parametros.inicio = val;
-            this.setState({ ...this.state })
-          }}
-
-
-        />
-        <SInput ref={ref => this._fechaFin = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"}
-          defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} placeholder={"fecha fin"}
-          onChangeText={(val) => {
-            this.state.parametros.inicio = val;
-            this.setState({ ...this.state })
-          }}
-
-        />
-        <SInput ref={ref => this._cantidadIncriptos = ref} col={"xs-3"} type={"number"} customStyle={"calistenia"}
-          defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"}
-          onChangeText={(val) => {
-            // if (val.length < 2) return;
-            this.state.parametros.cantidad = val;
-            this.setState({ ...this.state })
-          }}
-        />
-
-      </>
-    );
+    </>
   }
 
 
-  getDataParametros() {
-    let fini = this.state.parametros.inicio;
-    let ffin = this.state.parametros.fin;
-    let cinscpt = this.state.parametros.cantidad ?? 0;
-    console.log("inicio " + fini + "fin " + ffin + " cant" + cinscpt)
-    return (
-      <>
-        <SText col={"xs-11"} color={"red"}>{fini}</SText>
-        <SText col={"xs-11"} color={"cyan"}>{ffin}</SText>
-        <SText col={"xs-11"} color={"blue"}>{cinscpt}</SText>
-      </>
-    );
-  }
 
-  getBtnOk() {
-    return <SText onPress={() => { this.getDataParametros() }}> boton</SText >
-  }
 
+
+
+
+  getItem2(_data, usuario) {
+    return <SView col={"xs-12"} height={60} center>
+      <SView col={"xs-12"} center row border={"#6664"} height onPress={() => {
+        SNavigation.navigate("ClientePerfilPage", { key: usuario.key });
+      }} >
+        <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
+          <View style={{
+            width: 40, height: 40, marginRight: 8, justifyContent: "center", alignItems: "center", backgroundColor: STheme.color.card, borderRadius: 100, overflow: "hidden"
+          }}>
+            <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
+          </View>
+          <View row style={{ flex: 1, justifyContent: "center" }}>
+            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_veces(_data?.veces)}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Telefono(usuario?.Telefono)}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Correo(usuario?.Correo)} </Text>
+            {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
+          </View>
+        </View>
+      </SView>
+    </SView>
+
+    // })
+
+  }
   getLista() {
-    if (!this.state.data) return <SLoad />;
+    if (!this.state.data) return <SLoad />
 
-    // var dias = [];
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return <SLoad />
+    let data = this.state.data.map(obj => {
+      obj.usuario = usuarios[obj?.key_usuario]
+      return obj;
+    })
 
-    // var fecha = new SDate("2023-03-01", "yyyy-MM-dd");
-    // var fecha_limit = new SDate("2023-05-01", "yyyy-MM-dd");
+    return <>
+      <ExportExcel
+        header={[
+          { key: "indice", label: "Nro", width: 40 },
+          { key: "nombres", label: "Nombres", width: 200 },
+          { key: "telefono", label: "Telefono", width: 90 },
+          { key: "correo", label: "Correo", width: 150 },
+          { key: "cumpleaños", label: "Cumpleaños", width: 80 },
+          { key: "veces", label: "Veces", width: 40 },
+        ]}
+        getDataProcesada={() => {
+          var daFinal = {};
+          let cant = 0;
+          Object.values(data).map((obj, i) => {
+            if (obj.veces != this.state.parametros.cantidad) return;
+            var toInsert = {
+              indice: cant + 1,
+              key_usuario: obj?.key_usuario,
+              nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
+              ci: obj?.usuario?.CI,
+              correo: obj?.usuario?.Correo,
+              cumpleaños: obj?.usuario["Fecha nacimiento"],
+              telefono: obj?.usuario?.Telefono,
+              veces: obj?.veces
+            }
+            cant++;
+            daFinal[i] = toInsert
+          })
+          return daFinal
+        }}
+      />
 
-    // while (fecha.isBefore(fecha_limit)) {
-    //   dias.push({
-    //     width: 20,
-    //     key: "-" + fecha.toString("yyyy-MM-dd"),
-    //     label: fecha.toString("MM/dd"), space: 0,
-    //     render: (a) => {
-    //       return false;
-    //     },
-    //     component: (a) => {
-    //       if (!a) return null
-    //       return <SView col={"xs-12"} height backgroundColor={"#f00"} />
-    //     }
-    //   })
-    //   fecha.addDay(1)
-    // }
-
-    return (
-      <>
-        <svg width="40" height="40" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="20" x2="20" y2="0" stroke="red" />
-          <line x1="0" y1="0" x2="20" y2="20" stroke="red" />
-        </svg>
-      </>
-    );
+      <SList data={data} space={8}
+        limit={7}
+        buscador
+        filter={obj => {
+          if (obj.veces == this.state.parametros.cantidad) return true;
+          return false;
+        }}
+        render={obj => {
+          return this.getItem2(obj, obj.usuario)
+        }}
+      />
+    </>
   }
 
   render() {
-    this.getDataParametros();
     return (
-      <SPage title={"lista"} center disableScroll>
-        <SText>comparacion</SText>
-        <SHr height={24} color={"transparent"}></SHr>
-
-        {this.getParametros()}
-        {this.getDataParametros()}
-        {this.getBtnOk()}
-        {this.getLista()}
-
-        <SHr height={50} color={"transparent"}></SHr>
+      <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
+        <Container>
+          {this.getParametros()}
+          <SHr height={10} />
+          {this.getLista()}
+          <SHr height={10} />
+        </Container>
       </SPage>
     );
   }
 }
 const initStates = (state) => {
-  return { state };
+  return { state }
 };
 export default connect(initStates)(ClientesComparacion);

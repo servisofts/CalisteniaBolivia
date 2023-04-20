@@ -14,7 +14,9 @@ class PaquetesDeUsuario extends Component {
     super(props);
     this.state = {
 
+      // veces: 2
     };
+
   }
   componentDidMount() {
     this.getCaja()
@@ -257,12 +259,15 @@ class PaquetesDeUsuario extends Component {
       return <View />
     }
 
+    let contador = 0;
+
     return new SOrdenador([
       // { key: "Peso", order: "desc", peso: 4 },
       { key: "fecha_inicio", order: "desc", peso: 1 },
     ]).ordernarObject(
       data
     ).map((key) => {
+      contador++;
       var obj = data[key];
       if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) {
         return null;
@@ -281,6 +286,9 @@ class PaquetesDeUsuario extends Component {
         borderRadius: 8,
         alignItems: "center",
         justifyContent: "center",
+        borderColor: (contador <= this.state?.veces ? "cyan" : "transparent"),
+        borderWidth: 1.5,
+
       }} onPress={() => {
         console.log(obj);
         SNavigation.navigate("EsperandoVenta", {
@@ -288,7 +296,8 @@ class PaquetesDeUsuario extends Component {
           key_paquete_venta_usuario: obj.key_paquete_venta_usuario,
         });
       }}>
-        <View style={{
+        <SView style={{
+          // < SView border={contador <= this.state.veces ? "red" : "blue"} style={{
           flex: 1,
           width: "100%",
           flexDirection: "row",
@@ -351,10 +360,11 @@ class PaquetesDeUsuario extends Component {
           {this.getEditar(obj)}
           <SView width={10} ></SView>
 
-      { this.getEliminar(obj) }
-        </View >
+          {this.getEliminar(obj)}
+        </SView >
         <Paquete_Item data={obj} paquete={paquete} />
       </TouchableOpacity >
+
     })
   }
   getBtnAdd = () => {

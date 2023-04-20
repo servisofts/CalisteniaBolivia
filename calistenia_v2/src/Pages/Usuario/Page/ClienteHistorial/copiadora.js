@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, STheme, SView } from 'servisofts-component';
+import { SButtom, SDate, SImage, SInput, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import BarraSuperior from '../../../../Components/BarraSuperior';
@@ -10,30 +10,50 @@ import FloatButtom from '../../../../Components/FloatButtom';
 import Model from '../../../../Model';
 import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
-class VentasPage extends Component {
+class copiadora extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       pagination: {
         curPage: 1,
-      }
+      },
+
+      title: "Reporte Name",
+      func: "_get_cliente_fecha_veces_inscripto",
+      // params: [this.state.parametros.inicio, this.state.parametros.fin],
+      // params: ["'2023-01-01'", "'2023-03-01'"],
+      // esrser
+
+      parametros: {
+        "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
+        "fin": new SDate().toString("yyyy-MM-dd"),
+        "cantidad": 1,
+      },
+      ...this.state,
     };
 
 
   }
   componentDidMount() {
-    // var object = {
-    //   service: "usuario",
-    //   component: "usuario",
-    //   version: "2.0",
-    //   type: "getAll",
-    //   estado: "cargando",
-    //   cabecera: "registro_administrador",
-    //   key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    // }
-    // SSocket.send(object);
+    this.getData();
+  }
 
+  getData() {
+    this.setState({ loading: "cargando", data: null });
+    SSocket.sendPromise({
+      component: "reporte",
+      type: "execute_function",
+      func: this.state.func,
+      // params: this.state.params,
+      params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
+    })
+      .then((resp) => {
+        this.setState({ loading: false, data: resp.data });
+      })
+      .catch((e) => {
+        this.setState({ loading: false, error: e });
+      });
   }
   pagination = (listaKeys) => {
     if (!listaKeys) {
@@ -71,22 +91,110 @@ class VentasPage extends Component {
       }} >Recuperar</SButtom>
   }
   valido_CI(ci) {
-    return <Text style={{ color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
+    return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
   valido_Telefono(telefono) {
     return <Text style={{
-      color: (
+      fontSize: 16, color: (
         telefono.length < 8
           || telefono.charAt(0) !== "7"
           && telefono.charAt(0) !== "6"
           && telefono.charAt(0) !== "+"
           ? "red" : STheme.color.text),
-    }}>{"Telefono: " + telefono}</Text>
+    }}>{" Telefono: " + telefono}</Text>
   }
   valido_Correo(correo) {
-    return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
+
+  getParametros() {
+    return <>
+
+      <SView col={"xs-12"} height={62} row center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }}>
+
+
+
+
+
+        <SInput col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} placeholder={"fecha inicio"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+
+        />
+        <SInput ref={ref => this._fechaFin = ref} col={"xs-3"} type={"date"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} placeholder={"fecha fin"}
+          onChangeText={(val) => {
+            this.state.parametros.inicio = val;
+            this.setState({ ...this.state })
+          }}
+
+        />
+        <SInput ref={ref => this._cantidadIncriptos = ref} col={"xs-3"} type={"number"} customStyle={"calistenia"}
+          defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"}
+          onChangeText={(val) => {
+            // if (val.length < 2) return;
+            this.state.parametros.cantidad = val;
+            this.setState({ ...this.state })
+          }}
+        />
+
+      </SView>
+    </>
+
+  }
+
+  getParametrosResultados() {
+
+    if (!this.state.data) return null;
+    let _data = this.state.data;
+    Object.values(_data).map(obj => {
+      if (obj.veces > this.state.parametros.cantidad) return;
+
+      console.log("veces ", obj.veces)
+    })
+
+  }
+
+
+  dibujar() {
+
+    if (!this.state.data) return null;
+    let _data = this.state.data;
+
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return <SLoad />
+
+    return Object.values(_data).map(obj => {
+      if (obj.veces != this.state.parametros.cantidad) return;
+      var usuario = usuarios[obj?.key_usuario];
+
+      //  console.log("veces ", obj.veces)
+      return <>
+        <SView col={"xs-12"} height={62} row center style={{ borderBottomWidth: 1, borderBottomColor: STheme.color.card }} onPress={() => {
+
+          SNavigation.navigate("ClientePerfilPage", {
+            key: usuario.key
+          })
+        }}>
+
+          <SText >nombre {usuario.Nombres} {usuario.Apellidos} ci {usuario.CI} telefono {usuario?.Telefono}  veces {obj?.veces} </SText>
+        </SView>
+      </>
+    })
+
+  }
+
+
   render() {
+
+
+    // if (_data?.veces > 2) return null;
+    // console.log("miralo ", this.state.data)
+
     const getLista = () => {
       var data = Model.usuario.Action.getAll();
       // var dataRU = SSRolesPermisos.Events.getUsuarioRol("d16d800e-5b8d-48ae-8fcb-99392abdf61f", this.props)
@@ -108,6 +216,7 @@ class VentasPage extends Component {
         objFinal[rol_user.key_usuario] = data[rol_user.key_usuario]
       });
       var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
+
       return this.pagination(
         new SOrdenador([
           { key: "Peso", order: "desc", peso: 4 },
@@ -121,7 +230,7 @@ class VentasPage extends Component {
         return <TouchableOpacity style={{
           width: "90%",
           maxWidth: 600,
-          height: 60,
+          height: 50,
           margin: 4,
           borderRadius: 10,
           backgroundColor: STheme.color.card
@@ -167,22 +276,10 @@ class VentasPage extends Component {
                 justifyContent: "center"
               }}>
                 <Text style={{
-                  fontSize: 14,
+                  fontSize: 16,
                   color: STheme.color.text,
                   textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_CI(obj?.CI)}</Text>
-                <Text style={{
-                  fontSize: 12,
-                  width: 400,
-                  color: STheme.color.text,
-                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{this.valido_Telefono(obj?.Telefono)}</Text>
-                <Text style={{
-                  fontSize: 12,
-                  width: 400,
-                  color: STheme.color.text,
-                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{this.valido_Correo(obj?.Correo)}</Text>
+                }}>{obj["Nombres"] + " " + obj["Apellidos"]} {this.valido_CI(obj?.CI)} {this.valido_Telefono(obj?.Telefono)} {this.valido_Correo(obj?.Correo)}</Text>
 
               </View>
               {this.getRecuperar(obj, isRecuperar)}
@@ -191,6 +288,7 @@ class VentasPage extends Component {
         </TouchableOpacity>
       })
     }
+
     return (
       <SPage hidden disableScroll>
         <BarraSuperior title={"Ventas"} navigation={this.props.navigation} goBack={() => {
@@ -200,6 +298,11 @@ class VentasPage extends Component {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
+
+        {this.getParametros()}
+
+        {this.getParametrosResultados()}
+
         <View style={{
           flex: 1,
           width: "100%",
@@ -216,12 +319,15 @@ class VentasPage extends Component {
               }
             }}
           >
-            <SView col={"xs-12"} center> {getLista()} </SView>
+            <SView col={"xs-12"} center>
+              {/* {getLista()} */}
+              {this.dibujar()}
+
+            </SView>
           </SScrollView2>
-          <FloatButtom onPress={() => { SNavigation.navigate("registro") }} />
-          {/* <SButtom style={{ position: "absolute", top: 5, right: 50, backgroundColor: "salmon", borderRadius: 4 }} onPress={() => { SNavigation.navigate("clientes/historial"); }}>Historial</SButtom>
-          <SButtom type={"danger"} style={{ position: "absolute", top: 70, right: 50, backgroundColor: "#D68910" }} onPress={() => { SNavigation.navigate("clientes/comparacion"); }}>Comparación</SButtom>
-          <SButtom style={{ position: "absolute", top: 140, right: 50, backgroundColor: "#1D8348", borderRadius: 4 }} onPress={() => { SNavigation.navigate("clientes/cumplenos"); }}>Cumpleaños📆</SButtom> */}
+          <FloatButtom onPress={() => {
+            SNavigation.navigate("registro")
+          }} />
         </View>
       </SPage>
     );
@@ -230,4 +336,4 @@ class VentasPage extends Component {
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(VentasPage);
+export default connect(initStates)(copiadora);
