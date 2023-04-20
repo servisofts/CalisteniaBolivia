@@ -57,6 +57,30 @@ class ClientePerfilPage extends Component {
     return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
+  valido_Cumpleaños(Cumpleaños) {
+
+
+    var fecha = Cumpleaños;
+    var fechaObj = new Date(fecha);
+    var mes = fechaObj.getMonth() + 1;
+
+    const fechaActual = new Date();
+    const mesActual = fechaActual.getMonth() + 1;
+
+    // como obtengo mi mes con Sdate
+
+    var mensaje = "";
+    if (mes === mesActual) {
+      mensaje = "Cumpleañero 🥳📆 " + fecha;
+    } else {
+      mensaje = "Fecha nacimiento: " + fecha;
+    }
+
+    return <Text style={{ fontSize: 14, color: (mes === mesActual ? "green" : STheme.color.text) }}>{mensaje}</Text>
+  }
+
+
+
   imprimir() {
     const input = document.getElementById('historial');
     Html2Canvas(input)
@@ -104,15 +128,15 @@ class ClientePerfilPage extends Component {
         {this.valido_CI(this.data?.CI)}
         {this.valido_Telefono(this.data?.Telefono)}
         {this.valido_Correo(this.data?.Correo)}
+        {this.valido_Cumpleaños(this.data["Fecha nacimiento"])}
 
-
-        <Text style={{
+        {/* <Text style={{
           color: STheme.color.text,
           fontSize: 18,
           textTransform: "capitalize",
           fontWeight: "bold"
         }}>{this.data["Fecha nacimiento"]}</Text>
-
+ */}
 
         <SHr />
         <SHr />

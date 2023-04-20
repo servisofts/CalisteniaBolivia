@@ -242,7 +242,7 @@ class ClientesCumpleaño extends Component {
       <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
         <Container>
           <SText>Cumpleañero del mes</SText>
-          <SText color={"red"}>{this.state.mes}</SText>
+          <SText color={"red"}>Mes {this.state.mes}</SText>
           <SText color={"red"}>{aux}</SText>
           <SHr height={10} />
           <SHr height={10} />
