@@ -7,6 +7,7 @@ import Caja from '../..';
 import Cabecera from './Cabecera';
 import Movimientos from './Movimientos';
 import Perfil from './Perfil';
+import SSocket from 'servisofts-socket';
 class DetalleCaja extends Component {
   static navigationOptions = {
     headerShown: false,
@@ -46,6 +47,18 @@ class DetalleCaja extends Component {
             <SButtom type={"danger"} onPress={() => {
               SNavigation.navigate("ReciboCaja", { key: caja.key })
             }}>{"IMPRIMIR"}</SButtom>
+            <SHr />
+            <SButtom type={"danger"} onPress={() => {
+              SSocket.sendPromise({
+                component: "caja",
+                type: "asiento",
+                key_caja: this.key_caja
+              }).then(e => {
+                console.log(e);
+              }).catch(e => {
+                console.error(e);
+              })
+            }}>{"ASIENTO"}</SButtom>
             <SHr />
             {/* <SButtom type={"danger"} onPress={() => {
               SSocket.sendPromise({
