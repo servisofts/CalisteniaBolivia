@@ -66,6 +66,15 @@ public class SucursalUsuario {
         }
     }
     
+    public static   JSONObject getAllEntrenadores(String key_usuario) {
+        try {
+            String consulta = "select get_all('"+COMPONENT+"', 'key_usuario', '"+key_usuario+"') as json";
+            return SPGConect.ejecutarConsultaObject(consulta);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void getByKey(JSONObject obj, SSSessionAbstract session) {
         try {

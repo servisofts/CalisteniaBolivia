@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SHr, SIcon, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
-import { AsientoContable } from 'servisofts-rn-contabilidad';
+import { AsientoContable2 } from 'servisofts-rn-contabilidad';
 import Container from '../../Components/Container';
 import Model from '../../Model';
 
@@ -20,7 +20,7 @@ class index extends Component {
         return (
             <SPage title={"Asiento contable"} disableScroll center>
                 <SView col={"xs-11.5 sm-10 md-8"} height>
-                    <AsientoContable key_gestion={this.key_gestion} key_asiento_contable={this.pk} clone={this.clone} />
+                    <AsientoContable2 key_gestion={this.key_gestion} key_asiento_contable={this.pk} clone={this.clone} />
                 </SView>
             </SPage>
         );
