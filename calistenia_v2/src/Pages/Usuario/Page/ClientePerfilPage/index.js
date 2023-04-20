@@ -104,6 +104,16 @@ class ClientePerfilPage extends Component {
         {this.valido_CI(this.data?.CI)}
         {this.valido_Telefono(this.data?.Telefono)}
         {this.valido_Correo(this.data?.Correo)}
+
+
+        <Text style={{
+          color: STheme.color.text,
+          fontSize: 18,
+          textTransform: "capitalize",
+          fontWeight: "bold"
+        }}>{this.data["Fecha nacimiento"]}</Text>
+
+
         <SHr />
         <SHr />
 

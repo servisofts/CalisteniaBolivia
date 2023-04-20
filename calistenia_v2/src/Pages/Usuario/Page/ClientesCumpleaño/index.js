@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
@@ -15,11 +15,15 @@ class ClientesCumpleaño extends Component {
       pagination: {
         curPage: 1,
       },
+
+      mes: new SDate().getMonth(),
+      // mes1: new SDate().getMonth().toString('MONTH'),
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
       // params: ["'2023-01-01'", "'2023-03-01'"],
       parametros: {
-        "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
+        "inicio": new SDate("2013-01-01").toString("yyyy-MM-dd"),
+        // "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
         "fin": new SDate().toString("yyyy-MM-dd"),
         "cantidad": 1,
       },
@@ -57,6 +61,30 @@ class ClientesCumpleaño extends Component {
       color: STheme.color.text, position: "absolute", right: 0,
     }}>{"veces (" + numero + ")"}</Text>
   }
+
+  valido_Cumpleaños(Cumpleaños) {
+
+
+    var fecha = Cumpleaños;
+    var fechaObj = new Date(fecha);
+    var mes = fechaObj.getMonth() + 1;
+
+    const fechaActual = new Date();
+    const mesActual = fechaActual.getMonth() + 1;
+
+    // como obtengo mi mes con Sdate
+
+    var mensaje = "";
+    if (mes === mesActual) {
+      mensaje = "🥳📆 " + fecha;
+    } else {
+      mensaje = "" + fecha;
+    }
+
+    return <Text style={{ fontSize: 16, color: (mes === mesActual ? "red" : STheme.color.text), position: "absolute", right: 0, }}>{mensaje}</Text>
+  }
+
+
   valido_Telefono(telefono) {
     return <Text style={{
       color: (telefono.length < 8
@@ -70,44 +98,44 @@ class ClientesCumpleaño extends Component {
     return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
-  getParametros() {
-    return <>
-      <SView col={"xs-12"} center row border={"transparent"}>
-        <SView col={"xs-12"} height={40} center row border={"transparent"} >
-          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-            onChangeText={(val) => {
-              if (this.state.parametros.inicio != val) {
-                this.state.parametros.inicio = val;
-                this.getData();
-                //this.setState({ ...this.state });
-              }
-              // console.log("fecha inicio ", val);
-            }}
-          />
-          <SView height width={20} />
-          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-            onChangeText={(val) => {
-              if (this.state.parametros.fin != val) {
-                this.state.parametros.fin = val;
-                this.getData();
-              }
-            }}
-          />
-          <SView height width={20} />
-          <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-            onChangeText={(val) => {
-              // if (val.length < 2) return;
-              // validar solo que sea maximo 3 caracteres
-              this.state.parametros.cantidad = val;
-              this.setState({ ...this.state })
-            }}
-          />
-        </SView>
-      </SView >
-      <SView col={"xs-12"} height={4} />
+  // getParametros() {
+  //   return <>
+  //     <SView col={"xs-12"} center row border={"transparent"}>
+  //       <SView col={"xs-12"} height={40} center row border={"transparent"} >
+  //         <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+  //           onChangeText={(val) => {
+  //             if (this.state.parametros.inicio != val) {
+  //               this.state.parametros.inicio = val;
+  //               this.getData();
+  //               //this.setState({ ...this.state });
+  //             }
+  //             // console.log("fecha inicio ", val);
+  //           }}
+  //         />
+  //         <SView height width={20} />
+  //         <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+  //           onChangeText={(val) => {
+  //             if (this.state.parametros.fin != val) {
+  //               this.state.parametros.fin = val;
+  //               this.getData();
+  //             }
+  //           }}
+  //         />
+  //         <SView height width={20} />
+  //         <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+  //           onChangeText={(val) => {
+  //             // if (val.length < 2) return;
+  //             // validar solo que sea maximo 3 caracteres
+  //             this.state.parametros.cantidad = val;
+  //             this.setState({ ...this.state })
+  //           }}
+  //         />
+  //       </SView>
+  //     </SView >
+  //     <SView col={"xs-12"} height={4} />
 
-    </>
-  }
+  //   </>
+  // }
 
 
 
@@ -127,9 +155,11 @@ class ClientesCumpleaño extends Component {
             <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
           </View>
           <View row style={{ flex: 1, justifyContent: "center" }}>
-            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_veces(_data?.veces)}</Text>
+            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_Cumpleaños(usuario["Fecha nacimiento"])}</Text>
             <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Telefono(usuario?.Telefono)}</Text>
             <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Correo(usuario?.Correo)} </Text>
+
+
             {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
           </View>
         </View>
@@ -145,7 +175,8 @@ class ClientesCumpleaño extends Component {
     var usuarios = Model.usuario.Action.getAll();
     if (!usuarios) return <SLoad />
     let data = this.state.data.map(obj => {
-      obj.usuario = usuarios[obj?.key_usuario]
+      obj.usuario = usuarios[obj?.key_usuario];
+      // mes_cumpleaños = usuarios[obj?.key_usuario]["Fecha nacimiento"];
       return obj;
     })
 
@@ -163,7 +194,11 @@ class ClientesCumpleaño extends Component {
           var daFinal = {};
           let cant = 0;
           Object.values(data).map((obj, i) => {
-            if (obj.veces != this.state.parametros.cantidad) return;
+
+            let captura1 = new SDate(obj.usuario["Fecha nacimiento"]).getMonth();
+            if (captura1 != this.state.mes) return;
+
+
             var toInsert = {
               indice: cant + 1,
               key_usuario: obj?.key_usuario,
@@ -184,8 +219,11 @@ class ClientesCumpleaño extends Component {
       <SList data={data} space={8}
         limit={7}
         buscador
+        order={[{ key: "peso", order: "desc", peso: 2, }]}
+        // order={[{ key: "Fecha nacimiento", order: "desc", peso: 2, }]}
         filter={obj => {
-          if (obj.veces == this.state.parametros.cantidad) return true;
+          let captura = new SDate(obj.usuario["Fecha nacimiento"]).getMonth();
+          if (captura === 4) return true;
           return false;
         }}
         render={obj => {
@@ -196,10 +234,17 @@ class ClientesCumpleaño extends Component {
   }
 
   render() {
+
+    // let aux = new SDate().toString('dd de MONTH del yyyy a las hh:mm.')
+    let aux = new SDate().toString('MONTH');
+
     return (
       <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
         <Container>
-          {this.getParametros()}
+          <SText>Cumpleañero del mes</SText>
+          <SText color={"red"}>{this.state.mes}</SText>
+          <SText color={"red"}>{aux}</SText>
+          <SHr height={10} />
           <SHr height={10} />
           {this.getLista()}
           <SHr height={10} />
