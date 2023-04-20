@@ -1,16 +1,23 @@
 import { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
-// import BackgroundImage from '../../Component/BackgroundImage';
+import { ExportExcel, SButtom, SDate, SHr, SIcon, SLoad, SNavigation, SOrdenador, SPage, STheme, SView } from 'servisofts-component';
+import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import FotoPerfilUsuario from '../../../../Components/FotoPerfilUsuario';
 import Model from '../../../../Model';
 import HuellasDeUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/HuellasDeUsuario';
 import SincronizarUsuario from '../../../../Services/zkteco/Components/usuario_huella/Components/SincronizarUsuario';
 import PaquetesDeUsuario from './PaquetesDeUsuario';
-// import PaquetesDeUsuario from './PaquetesDeUsuario';
-// import SSCrollView from '../../Component/SScrollView';
+
+import Paquete from '../../../Paquete';
+import Sucursal from '../../../Sucursal';
+import sucursal_usuario from '../../../sucursal_usuario';
+
+import Html2Canvas from 'html2canvas';
+import jspdf from 'jspdf';
+var finalData = {};
+
 class ClientePerfilPage extends Component {
   static navigationOptions = ({ navigation }) => {
     return { headerShown: false, }
@@ -49,6 +56,47 @@ class ClientePerfilPage extends Component {
     if (correo.length < 12) this.bandera = true;
     return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
+
+  valido_Cumpleaños(Cumpleaños) {
+
+
+    var fecha = Cumpleaños;
+    var fechaObj = new Date(fecha);
+    var mes = fechaObj.getMonth() + 1;
+
+    const fechaActual = new Date();
+    const mesActual = fechaActual.getMonth() + 1;
+
+    // como obtengo mi mes con Sdate
+
+    var mensaje = "";
+    if (mes === mesActual) {
+      mensaje = "Cumpleañero 🥳📆 " + fecha;
+    } else {
+      mensaje = "Fecha nacimiento: " + fecha;
+    }
+
+    return <Text style={{ fontSize: 14, color: (mes === mesActual ? "green" : STheme.color.text) }}>{mensaje}</Text>
+  }
+
+
+
+  imprimir() {
+    const input = document.getElementById('historial');
+    Html2Canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf('p', 'mm', [canvas.width, canvas.height]);
+        const imgWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        const heightLeft = imgHeight;
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('historial.pdf');
+      });
+  }
+
+
   getPerfil() {
     this.data = Model.usuario.Action.getByKey(this.key);
     if (!this.data) return <SLoad />
@@ -80,6 +128,16 @@ class ClientePerfilPage extends Component {
         {this.valido_CI(this.data?.CI)}
         {this.valido_Telefono(this.data?.Telefono)}
         {this.valido_Correo(this.data?.Correo)}
+        {this.valido_Cumpleaños(this.data["Fecha nacimiento"])}
+
+        {/* <Text style={{
+          color: STheme.color.text,
+          fontSize: 18,
+          textTransform: "capitalize",
+          fontWeight: "bold"
+        }}>{this.data["Fecha nacimiento"]}</Text>
+ */}
+
         <SHr />
         <SHr />
 
@@ -95,7 +153,67 @@ class ClientePerfilPage extends Component {
       <SHr />
     </SView >
   }
+
+  cargarDatos() {
+    var reducer = this.props.state.paqueteVentaReducer;
+    var data = reducer.usuario[this.key];
+    if (!data) {
+      if (reducer.estado == "cargando") return null;
+      if (reducer.estado == "error") return <Text>ERROR</Text>
+      var object = {
+        component: "paqueteVenta",
+        type: "getAllByUsuario",
+        estado: "cargando",
+        key_usuario: this.key
+      }
+      SSocket.send(object, true);
+      // return <View />
+    }
+
+    var objFinal = {};
+
+    return new SOrdenador([
+      { key: "fecha_inicio", order: "desc", peso: 1 },
+    ]).ordernarObject(data).map((key) => {
+
+      var obj = data[key];
+
+      if (!sucursal_usuario.Actions.isActive(obj.key_sucursal, this.props)) return null;
+
+      var usuarios = Model.usuario.Action.getAll();
+      if (!usuarios) return <SLoad />
+      // var usuario = Object.values(usuarios).find(aux => aux.key == obj.key_usuario);
+      var usuario = usuarios[obj.key_usuario];
+
+      var paquetes = Paquete.Actions.getAll(this.props);
+      if (!paquetes) return null;
+      // var paquete = Object.values(paquetes).find(aux => aux.key == obj.key_paquete);
+      var paquete = paquetes[obj.key_paquete];
+
+      var sucursales = Sucursal.Actions.getAll(this.props);
+      if (!sucursales) return null;
+      // var sucursal = Object.values(sucursales).find(aux => aux.key == obj.key_sucursal);
+      var sucursal = sucursales[obj.key_sucursal];
+
+      // console.log("aqui ", obj, " pack ", paquete.descripcion, " sucursal ", sucursal.descripcion, " usuario ", usuario.Nombres);
+
+      // objFinal[key] = { obj, usuario, paquete, sucursal }
+      objFinal[key] = {
+        data: obj,
+        usuario: usuario,
+        paquete: paquete,
+        sucursal: sucursal,
+      };
+      finalData = objFinal;
+
+    })
+
+  }
+
+
+
   render() {
+    this.cargarDatos();
     return (
       <SPage hidden >
         <BarraSuperior duration={500} title={"Perfil de cliente"} navigation={this.props.navigation} goBack={() => {
@@ -104,6 +222,58 @@ class ClientePerfilPage extends Component {
         <ScrollView>
           <SView col={"xs-12"} center>
             {this.getPerfil()}
+
+            <SView col={"xs-12"} center row border={"transparent"}>
+
+              {/* <SView col={"xs-12"} row center border={"red"}> */}
+
+              <SButtom onPress={() => { this.imprimir() }}>
+                <SIcon name={"Pdf"} width={25} />
+              </SButtom>
+
+              <SView width={5} center />
+
+
+              <ExportExcel
+                header={[
+                  { key: "indice", label: "Indice", width: 30 },
+                  // { key: "cliente", label: "cliente", width: 40 },
+                  { key: "sucursal", label: "sucursal", width: 50 },
+                  { key: "fecha_on", label: "fecha compra", width: 80 },
+                  { key: "cajera", label: "Cajera", width: 100 },
+                  { key: "paquete", label: "paquete", width: 140 },
+                  { key: "motivo", label: "motivo", width: 100 },
+                  { key: "precio", label: "precio", width: 40 },
+                  { key: "fecha_inicio", label: "paquete inicio", width: 80 },
+                  { key: "fecha_fin", label: "paquete fin", width: 80 },
+                ]}
+                getDataProcesada={() => {
+                  var daFinal = {};
+                  Object.values(finalData).map((obj, i) => {
+
+                    console.log("miralo ", obj)
+
+                    // if (!obj.data.estado || obj.data.estado <= 0) return;
+                    var toInsert = {
+                      indice: i + 1,
+                      sucursal: obj.sucursal?.descripcion,
+                      fecha_on: new SDate(obj.data?.fecha_on).toString("yyyy-MM-dd"),
+                      cajera: obj.usuario?.Nombres,
+                      paquete: obj.paquete?.descripcion,
+                      motivo: obj.data?.observacion,
+                      precio: obj.data?.monto ?? "0",
+                      fecha_inicio: obj.data?.fecha_inicio,
+                      fecha_fin: obj.data?.fecha_fin,
+                    }
+                    daFinal[i] = toInsert
+                  })
+                  return daFinal
+                }}
+              />
+            </SView>
+
+
+
             <SView col={"xs-11 md-8 xl-6"} center>
               <PaquetesDeUsuario key_usuario={this.key} navigation={this.props.navigation} />
             </SView>
