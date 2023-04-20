@@ -104,7 +104,7 @@ class ClienteHistorial extends Component {
           />
         </SView>
       </SView >
-      <SView col={"xs-12"} height={20} />
+      <SView col={"xs-12"} height={18} />
 
     </>
   }

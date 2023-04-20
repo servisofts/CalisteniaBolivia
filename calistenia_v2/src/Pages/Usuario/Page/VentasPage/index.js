@@ -219,9 +219,9 @@ class VentasPage extends Component {
             <SView col={"xs-12"} center> {getLista()} </SView>
           </SScrollView2>
           <FloatButtom onPress={() => { SNavigation.navigate("registro") }} />
-          <SButtom style={{ position: "absolute", top: 5, right: 50, backgroundColor: "salmon", borderRadius: 4 }} onPress={() => { SNavigation.navigate("cliente/historial"); }}>Historial</SButtom>
-          <SButtom type={"danger"} style={{ position: "absolute", top: 70, right: 50, backgroundColor: "#D68910" }} onPress={() => { SNavigation.navigate("cliente/comparacion"); }}>Comparación</SButtom>
-          <SButtom style={{ position: "absolute", top: 140, right: 50, backgroundColor: "#1D8348", borderRadius: 4 }} onPress={() => { SNavigation.navigate("cliente/comparacion"); }}>Cumpleaños📆</SButtom>
+          <SButtom style={{ position: "absolute", top: 5, right: 50, backgroundColor: "salmon", borderRadius: 4 }} onPress={() => { SNavigation.navigate("clientes/historial"); }}>Historial</SButtom>
+          <SButtom type={"danger"} style={{ position: "absolute", top: 70, right: 50, backgroundColor: "#D68910" }} onPress={() => { SNavigation.navigate("clientes/comparacion"); }}>Comparación</SButtom>
+          <SButtom style={{ position: "absolute", top: 140, right: 50, backgroundColor: "#1D8348", borderRadius: 4 }} onPress={() => { SNavigation.navigate("clientes/cumplenos"); }}>Cumpleaños📆</SButtom>
         </View>
       </SPage>
     );

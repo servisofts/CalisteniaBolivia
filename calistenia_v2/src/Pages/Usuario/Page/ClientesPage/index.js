@@ -5,7 +5,6 @@ import { ExportExcel, SButtom, SDate, SImage, SLoad, SNavigation, SOrdenador, SP
 import SSocket from 'servisofts-socket';
 import Usuario from '../..';
 import Buscador from '../../../../Components/Buscador';
-import FechasBetween from '../../../../Components/FechasBetween';
 import Model from '../../../../Model';
 import Sucursal from '../../../Sucursal';
 import sucursal_usuario from '../../../sucursal_usuario';
@@ -251,22 +250,22 @@ class ClientesPage extends Component {
     // todo aqui tengo que mejorar Alvaro
     // la idea esque exporte todos los clientes
     return (
-      <SPage disableScroll title={"Clientes"}>
+      <SPage disableScroll title={"Clientes activos"}>
         <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo, Telefono o Motivo."} ref={(ref) => {
           if (!this.state.buscador) this.setState({ buscador: ref });
         }} repaint={() => { this.setState({ ...this.state }) }}
         />
 
 
-        <FechasBetween onChange={(fecha_inicio, fecha_fin) => {
+        {/* <FechasBetween onChange={(fecha_inicio, fecha_fin) => {
           this.state.fecha.fecha_inicio = fecha_inicio
           this.state.fecha.fecha_fin = fecha_fin
           this.setState({ ...this.state })
-        }} />
+        }} /> */}
 
 
 
-        <SView col={"xs-12"} center border={"cyan"}>
+        <SView col={"xs-12"} center border={"transparent"}>
 
           {/* tarea10 ✅ ✅ ✅ */}
           <ExportExcel
