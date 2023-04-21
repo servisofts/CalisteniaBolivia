@@ -18,6 +18,7 @@ class index extends Component {
     }
     render_with_data() {
         var sucursales = Model.sucursal.Action.getAll();
+        // var sucursales2 = Model.sucursalUsuario.Action.getAll(key_sucursal);
         if (!sucursales) return <SLoad />
 
         return <SList
@@ -44,16 +45,12 @@ class index extends Component {
                 navBar={this.navBar()}
                 footer={this.footer()}
                 onRefresh={this.clearData}
+                header={<Sucursal.MapaListaButtoms url={"/sucursal"} />}
             >
                 <Container>
-                    {/* <SHr height={15} />
-                    <SView col={"xs-12"} height={100} center style={{ borderWidth: 2, borderColor: STheme.color.secondary, borderRadius: 21 }}>
-                        <SHr height={10} />
-                        <SIcon name='logowhite' fill={STheme.color.text} width={200} />
-                        <SHr height={10} />
-                    </SView> */}
                     <SHr height={15} />
                     {this.render_with_data()}
+                    <SHr height={20} />
                 </Container>
             </SPage>
         );

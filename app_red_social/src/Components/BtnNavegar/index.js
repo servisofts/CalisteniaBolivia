@@ -34,7 +34,7 @@ export default class index extends Component<BtnNavegarPropsType> {
     }
     render() {
         return (
-            <SView onPress={this._handlePress.bind(this)}>
+            <SView onPress={this._handlePress.bind(this)} {...this.props}>
                 {this.props.children ?? <SText>Navegar</SText>}
             </SView>
         );
