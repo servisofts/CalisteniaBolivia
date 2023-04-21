@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView, SNavigation, SPopup, SLoad } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BoxMenuLat from './BoxMenuLat';
+import BoxMenuLatOtros from './BoxMenuLatOtros';
 import Model from '../../Model';
 export type PublicacionPropsType = {
     data: any,
@@ -24,6 +25,8 @@ class index extends Component<PublicacionPropsType> {
     }
 
     renderAuthor() {
+        // var key_usuario = Model.usuario.Action.getKey() ?? null;
+        var key_usuario = Model.usuario.Action.getKey();
         // let user = Model.usuario.Action.getByKey(this.props.data.key_usuario);
         // if (!user) return null
         // let user = this.props.usuario;
@@ -44,7 +47,7 @@ class index extends Component<PublicacionPropsType> {
                 <SText bold>{user?.Nombres} {user?.Apellidos}</SText>
             </SView>
             <SView width={30} center onPress={() => {
-                SPopup.open({ key: "menuLat", content: <BoxMenuLat /> });
+                SPopup.open({ key: "menuLat", content: (key_usuario == this.props.data.key_usuario) ? <BoxMenuLat datas={this.props.data} /> : <BoxMenuLatOtros datas={this.props.data} />  });
             }} >
                 <SIcon name={"MenuLat"} fill={STheme.color.text} width={24} height={24} />
                 <SView width={5} />

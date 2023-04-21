@@ -72,7 +72,23 @@ class index extends Component {
                 Model.usuario.Action.unlogin();
                 // SNavigation.navigate("/perfil/editar", { key: this.data.key });
             }}>
-                <SText bold>Cerrar session</SText>
+                <SText bold>Cerrar sesión</SText>
+            </SView>
+        </SView>
+    }
+    renderPublicaciones() {
+        return <SView col={"xs-12"} row>
+            <SView card padding={8} row width={130} center onPress={() => {
+                SNavigation.navigate("/perfil/editar", { key: this.data.key });
+            }}>
+                <SText bold>Editar perfil</SText>
+            </SView>
+            <SView flex />
+            <SView card padding={8} row width={130} center onPress={() => {
+                Model.usuario.Action.unlogin();
+                // SNavigation.navigate("/perfil/editar", { key: this.data.key });
+            }}>
+                <SText bold>Cerrar sesión</SText>
             </SView>
         </SView>
     }
@@ -86,6 +102,9 @@ class index extends Component {
                     <SHr />
                     <SHr />
                     {this.renderMenu()}
+                    <SHr />
+                    <SHr />
+                    {this.renderPublicaciones()}
                 </SView>
             </Container>
         </SPage>
