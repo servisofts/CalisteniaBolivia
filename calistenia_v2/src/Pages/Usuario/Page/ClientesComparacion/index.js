@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
@@ -94,7 +94,7 @@ class ClientesComparacion extends Component {
               if (this.state.parametros.inicio != val) {
                 this.state.parametros.inicio = val;
                 this.getData();
-                this.getCalcularDias();
+                // this.getCalcularDias();
                 //this.setState({ ...this.state });
               }
               // console.log("fecha inicio ", val);
@@ -106,12 +106,12 @@ class ClientesComparacion extends Component {
               if (this.state.parametros.fin != val) {
                 this.state.parametros.fin = val;
                 this.getData();
-                this.getCalcularDias();
+                // this.getCalcularDias();
 
               }
             }}
           />
-          <SView height width={20} />
+          {/* <SView height width={20} /> */}
           {/* <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
             onChangeText={(val) => {
               // if (val.length < 2) return;
@@ -175,7 +175,7 @@ class ClientesComparacion extends Component {
     // console.log("La diferencia en días es: " + dias);
     return <>
       {/* <SText> asddas {fini} </SText> */}
-      <SText> dias {this.state.parametros.dias} </SText>
+      {/* <SText> dias {this.state.parametros.dias} </SText> */}
       <ExportExcel
         header={[
           { key: "indice", label: "Nro", width: 40 },
@@ -230,7 +230,7 @@ class ClientesComparacion extends Component {
 
 
     return (
-      <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
+      <SPage hidden header={<BarraSuperior title={"Clientes que no se volvieron a inscribir"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
         <Container>
           {this.getParametros()}
           <SHr height={10} />

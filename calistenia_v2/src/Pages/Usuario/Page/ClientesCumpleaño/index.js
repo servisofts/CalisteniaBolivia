@@ -1,30 +1,39 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SImage, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
 import Model from '../../../../Model';
 
+const today = new Date();
+const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+const ultimoDia = lastDayOfMonth.getFullYear() + "-" + (lastDayOfMonth.getMonth() + 1) + "-" + lastDayOfMonth.getDate();
+
+
 class ClientesCumpleaño extends Component {
 
   constructor(props) {
     super(props);
+
+    // const today = new Date();
+    // const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
     this.state = {
       pagination: {
         curPage: 1,
       },
 
       mes: new SDate().getMonth(),
-      // mes1: new SDate().getMonth().toString('MONTH'),
       title: "Reporte Name",
       func: "_get_cliente_fecha_veces_inscripto",
       // params: ["'2023-01-01'", "'2023-03-01'"],
       parametros: {
-        "inicio": new SDate("2013-01-01").toString("yyyy-MM-dd"),
-        // "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
-        "fin": new SDate().toString("yyyy-MM-dd"),
+        "inicio": new SDate().toString("yyyy-MM-dd"),
+        // "inicio": new SDate("2013-01-01").toString("yyyy-MM-dd"),
+        // "fin": new SDate().getMonth()
+        "fin": new SDate(ultimoDia).toString("yyyy-MM-dd"),
         "cantidad": 1,
       },
       ...this.state,
@@ -36,13 +45,16 @@ class ClientesCumpleaño extends Component {
   }
 
   getData() {
+    var _from = new SDate("2013-01-01").toString("yyyy-MM-dd");
+    var _to = new SDate().toString("yyyy-MM-dd");
+
     this.setState({ loading: "cargando", data: null });
     SSocket.sendPromise({
       component: "reporte",
       type: "execute_function",
       func: this.state.func,
       // params: this.state.params,
-      params: ["'" + this.state.parametros.inicio + "'", "'" + this.state.parametros.fin + "'"],
+      params: ["'" + _from + "'", "'" + _to + "'"],
       ...this.params
     })
       .then((resp) => {
@@ -98,44 +110,34 @@ class ClientesCumpleaño extends Component {
     return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
   }
 
-  // getParametros() {
-  //   return <>
-  //     <SView col={"xs-12"} center row border={"transparent"}>
-  //       <SView col={"xs-12"} height={40} center row border={"transparent"} >
-  //         <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-  //           onChangeText={(val) => {
-  //             if (this.state.parametros.inicio != val) {
-  //               this.state.parametros.inicio = val;
-  //               this.getData();
-  //               //this.setState({ ...this.state });
-  //             }
-  //             // console.log("fecha inicio ", val);
-  //           }}
-  //         />
-  //         <SView height width={20} />
-  //         <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-  //           onChangeText={(val) => {
-  //             if (this.state.parametros.fin != val) {
-  //               this.state.parametros.fin = val;
-  //               this.getData();
-  //             }
-  //           }}
-  //         />
-  //         <SView height width={20} />
-  //         <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
-  //           onChangeText={(val) => {
-  //             // if (val.length < 2) return;
-  //             // validar solo que sea maximo 3 caracteres
-  //             this.state.parametros.cantidad = val;
-  //             this.setState({ ...this.state })
-  //           }}
-  //         />
-  //       </SView>
-  //     </SView >
-  //     <SView col={"xs-12"} height={4} />
+  getParametros() {
+    return <>
+      <SView col={"xs-12"} center row border={"transparent"}>
+        <SView col={"xs-12"} height={40} center row border={"transparent"} >
+          <SInput flex type={""} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.inicio != val) {
+                this.state.parametros.inicio = val;
+                this.getData();
+                //this.setState({ ...this.state });
+              }
+              // console.log("fecha inicio ", val);
+            }}
+          />
+          <SView height width={20} />
+          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.fin != val) {
+                this.state.parametros.fin = val;
+                this.getData();
+              }
+            }}
+          />
+        </SView>
+      </SView >
 
-  //   </>
-  // }
+    </>
+  }
 
 
 
@@ -207,10 +209,37 @@ class ClientesCumpleaño extends Component {
               correo: obj?.usuario?.Correo,
               cumpleaños: obj?.usuario["Fecha nacimiento"],
               telefono: obj?.usuario?.Telefono,
-              veces: obj?.veces
+              // veces: obj?.veces
             }
+
             cant++;
             daFinal[i] = toInsert
+
+            // var daFinal = {};
+            // let cant = 0;
+            // Object.values(data)
+            //   .filter((obj) => new SDate(obj.usuario["Fecha nacimiento"]).getMonth() === this.state.mes) // filtrar por mes
+            //   .sort((a, b) => {
+            //     const dayA = new SDate(a.usuario["Fecha nacimiento"]).getDate();
+            //     const dayB = new SDate(b.usuario["Fecha nacimiento"]).getDate();
+            //     return dayA - dayB;
+            //   })
+            //   .forEach((obj, i) => {
+            //     var toInsert = {
+            //       indice: cant + 1,
+            //       key_usuario: obj?.key_usuario,
+            //       nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
+            //       ci: obj?.usuario?.CI,
+            //       correo: obj?.usuario?.Correo,
+            //       cumpleaños: obj?.usuario["Fecha nacimiento"],
+            //       telefono: obj?.usuario?.Telefono,
+            //       // veces: obj?.veces
+            //     }
+            //     cant++;
+            //     daFinal[i] = toInsert
+            //   })
+            // return daFinal;
+
           })
           return daFinal
         }}
@@ -219,11 +248,15 @@ class ClientesCumpleaño extends Component {
       <SList data={data} space={8}
         limit={7}
         buscador
-        order={[{ key: "peso", order: "desc", peso: 2, }]}
-        // order={[{ key: "Fecha nacimiento", order: "desc", peso: 2, }]}
+        order={[{ key: "usuario/Fecha nacimiento", order: "asc", peso: 1, }]}
         filter={obj => {
-          let captura = new SDate(obj.usuario["Fecha nacimiento"]).getMonth();
-          if (captura === 4) return true;
+
+
+          let year = new SDate().toString("yyyy");
+          let fecha_inicio = new SDate(this.state.parametros.inicio, "yyyy-MM-dd").setYear(year);
+          let fecha_fin = new SDate(this.state.parametros.fin, "yyyy-MM-dd").setYear(year);
+          let fc = new SDate(obj.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year)
+          if (fc.isAfter(fecha_inicio) && fc.isBefore(fecha_fin)) return true;
           return false;
         }}
         render={obj => {
@@ -235,15 +268,19 @@ class ClientesCumpleaño extends Component {
 
   render() {
 
-    // let aux = new SDate().toString('dd de MONTH del yyyy a las hh:mm.')
-    let aux = new SDate().toString('MONTH');
+    let aux = new SDate().toString("MONTH");
+
 
     return (
-      <SPage hidden header={<BarraSuperior title={"Historial Incripciones"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
+      <SPage hidden header={<BarraSuperior title={"Cumpleañeros del mes clientes"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
         <Container>
-          <SText>Cumpleañero del mes</SText>
+          <SText>Cumpleañero del messss</SText>
           <SText color={"red"}>Mes {this.state.mes}</SText>
           <SText color={"red"}>{aux}</SText>
+
+          {this.getParametros()}
+          <SHr height={10} />
+
           <SHr height={10} />
           <SHr height={10} />
           {this.getLista()}
