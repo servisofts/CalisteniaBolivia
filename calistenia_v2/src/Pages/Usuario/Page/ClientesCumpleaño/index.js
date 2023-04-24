@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
@@ -273,10 +273,25 @@ class ClientesCumpleaño extends Component {
 
     return (
       <SPage hidden header={<BarraSuperior title={"Cumpleañeros del mes clientes"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
+
+        <SView center style={{ color: "blue", position: "absolute", top: 0, left: 0, }}><SIcon name="Hb_footer_left" style={{ width: 32, height: 32 }} /></SView>
+        <SView center style={{ color: "blue", position: "absolute", top: 0, right: 0, }}><SIcon name="Hb_header_left" style={{ width: 32, height: 32 }} /></SView>
+
+
+        {/* "Hb_cake": {Native: Hb_cake, Web: Hb_cakeW },
+        "Hb_footer_left": {Native: Hb_footer_left, Web: Hb_footer_leftW },
+        "Hb_footer_right": {Native: Hb_footer_right, Web: Hb_footer_rightW },
+        "Hb_header_left": {Native: Hb_header_left, Web: Hb_header_leftW },
+        "Hb_header_right": {Native: Hb_header_right, Web: Hb_header_rightW },
+         */}
+
         <Container>
           <SText>Cumpleañero del messss</SText>
           <SText color={"red"}>Mes {this.state.mes}</SText>
           <SText color={"red"}>{aux}</SText>
+
+          <SView center > <SIcon name="Hb_cake" style={{ width: 32, height: 32 }} /></SView>
+
 
           {this.getParametros()}
           <SHr height={10} />
@@ -286,6 +301,13 @@ class ClientesCumpleaño extends Component {
           {this.getLista()}
           <SHr height={10} />
         </Container>
+
+
+        <View style={{ flex: 1, height: "100%" }}> </View>
+
+
+        <SView center style={{ color: "blue", position: "absolute", bottom: 0, left: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /></SView>
+        <SView center style={{ color: "blue", position: "absolute", bottom: 0, right: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /> </SView>
       </SPage>
     );
   }
