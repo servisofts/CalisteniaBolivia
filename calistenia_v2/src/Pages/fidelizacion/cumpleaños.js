@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Text } from 'react-native';
 
-import { ExportExcel, SDate, SIcon, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SIcon, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
 import { connect } from 'servisofts-page';
 import SSocket from 'servisofts-socket';
 import Container from '../../Components/Container';
@@ -168,8 +168,8 @@ class index extends Component {
     let year = new SDate().toString("yyyy");
 
     data.sort((a, b) => {
-      let fc = new SDate(a.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year)
-      let fc2 = new SDate(b.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year)
+      let fc = new SDate(a?.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year);
+      let fc2 = new SDate(b?.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year);
       return fc.getTime() - fc2.getTime()
     })
 
@@ -223,7 +223,7 @@ class index extends Component {
       />
 
       <SList data={data} space={8}
-        limit={7}
+        limit={10}
         buscador
         filter={obj => {
           let year = new SDate().toString("yyyy");
@@ -241,34 +241,30 @@ class index extends Component {
     </>
   }
 
+  template() {
+    return <>
+      <SView col={"xs-2.5 sm-1 md-3.5  "} center border={"transparent"} style={{ position: "absolute", top: 35, left: 0, }}><SIcon name="HbHeaderLeft1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-3"} center border={"transparent"} style={{ position: "absolute", top: 35, right: 0, }}><SIcon name="HbHeaderRight1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-2  "} center style={{ position: "absolute", bottom: 0, left: 0, }}><SIcon name="HbFooterLeft1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-2  "} center style={{ position: "absolute", bottom: 0, right: 0, }}><SIcon name="HbFooterRight1" style={{ width: "100%" }} /></SView>
+    </>
+  }
   render() {
-    let aux = new SDate().toString("MONTH");
+    let aux = new SDate().toString("dd MONTH");
 
-    return (<SPage title={this.state.title} center backgroundColor={"transparent"}>
+    return <>
+      <SPage title={this.state.title} center backgroundColor={"transparent"}>
 
-      <SView col={"xs-12"} row center border={"transparent"}>
+        <Container>
+          <SText fontSize={36} font={"Roboto"} bold color={STheme.color.text} center>Cumpleañeros{"\n" + aux + " 🥳"}</SText>
+          <SHr height={40} />
+          {this.getParametros()}
+          {this.loadData()}
+        </Container>
+      </SPage>
+      {this.template()}
 
-        <SView center flex border={"transparent"} style={{ position: "absolute", top: 0, left: 0, width: "40%", maxWidth: 800 }}><SIcon name="HbHeaderRight1" style={{ width: "100%", }} /></SView>
-
-        <SView center flex border={"transparent"} style={{ position: "absolute", top: 0, right: 0, witdh: "40%", maxWidth: 800 }}><SIcon name="HbHeaderLeft1" style={{ width: "100%", }} /></SView>
-
-
-      </SView>
-
-      <Container  >
-        {/* <SView center style={{ color: "blue", position: "absolute", top: 0 }}><SIcon name="HbCake1" style={{ width: 50, }} /></SView> */}
-
-
-        {this.getParametros()}
-        {this.loadData()}
-
-      </Container>
-
-
-      <SView center flex style={{ color: "blue", position: "absolute", bottom: 0, left: 0, }}><SIcon name="HbFooterLeft1" style={{ width: "50%" }} /></SView>
-      <SView center style={{ color: "blue", position: "absolute", bottom: 0, right: 0, }}><SIcon name="HbFooterRight1" style={{ width: 100 }} /> </SView>
-
-    </SPage>)
+    </>
   }
 }
 export default connect(index);
