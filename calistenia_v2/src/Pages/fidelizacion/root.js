@@ -31,8 +31,8 @@ class index extends Component {
           // blackList={["/fidelizacion/historial"]}
           params={{
             // key_empresa: empresa.key,
-            fecha_fin: fecha_fin,
-            fecha_inicio: fecha_inicio,
+            // fecha_fin: fecha_fin,
+            // fecha_inicio: fecha_inicio,
           }}
           onPress={(e) => {
             e.preventDefault();
