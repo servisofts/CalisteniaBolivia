@@ -1,15 +1,12 @@
 import { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SDate, SHr, SIcon, SImage, SInput, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
 import Container from '../../../../Components/Container';
 import Model from '../../../../Model';
-
-const today = new Date();
-const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-const ultimoDia = lastDayOfMonth.getFullYear() + "-" + (lastDayOfMonth.getMonth() + 1) + "-" + lastDayOfMonth.getDate();
 
 
 class ClientesCumpleaño extends Component {
@@ -45,9 +42,6 @@ class ClientesCumpleaño extends Component {
   }
 
   getData() {
-    var _from = new SDate("2013-01-01").toString("yyyy-MM-dd");
-    var _to = new SDate().toString("yyyy-MM-dd");
-
     this.setState({ loading: "cargando", data: null });
     SSocket.sendPromise({
       component: "reporte",
@@ -209,6 +203,7 @@ class ClientesCumpleaño extends Component {
               correo: obj?.usuario?.Correo,
               cumpleaños: obj?.usuario["Fecha nacimiento"],
               telefono: obj?.usuario?.Telefono,
+
               // veces: obj?.veces
             }
 
@@ -257,6 +252,7 @@ class ClientesCumpleaño extends Component {
           let fecha_fin = new SDate(this.state.parametros.fin, "yyyy-MM-dd").setYear(year);
           let fc = new SDate(obj.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year)
           if (fc.isAfter(fecha_inicio) && fc.isBefore(fecha_fin)) return true;
+
           return false;
         }}
         render={obj => {
@@ -267,6 +263,7 @@ class ClientesCumpleaño extends Component {
   }
 
   render() {
+
 
     let aux = new SDate().toString("MONTH");
 
@@ -301,7 +298,6 @@ class ClientesCumpleaño extends Component {
           {this.getLista()}
           <SHr height={10} />
         </Container>
-
 
         <View style={{ flex: 1, height: "100%" }}> </View>
 
