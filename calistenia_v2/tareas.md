@@ -163,8 +163,6 @@ como ordenar el SLIt de forma asc fecha inicio -->
         }}
       /> -->
 
-hola chaval
-
 <!-- para eliminar un moviento, cuneta, cliente con permisos,
 
 1ro.- agrego el boton funcion get_anular
@@ -179,3 +177,5 @@ hola chaval
     entrar a rol desarrollador servisofts
         entrar a permios
         ir a Bancos y click en eliminar -->
+
+chau
