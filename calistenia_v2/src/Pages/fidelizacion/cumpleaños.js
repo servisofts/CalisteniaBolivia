@@ -250,7 +250,8 @@ class index extends Component {
     </>
   }
   render() {
-    let aux = new SDate().toString("dd MONTH");
+    let ____fecha = this.state.parametros.inicio;
+    let aux = new SDate(____fecha).addDay(1).toString("dd MONTH");
 
     return <>
       <SPage title={this.state.title} center backgroundColor={"transparent"}>

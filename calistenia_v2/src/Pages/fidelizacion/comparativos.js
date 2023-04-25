@@ -226,19 +226,13 @@ class index extends Component {
   }
 
   render() {
-    return <SPage title={this.state.title} center disableScroll>
-      {/* {this.renderHeader()} */}
-      <SHr height={10} />
+    return <SPage title={this.state.title} center>
       <Container>
         {this.getParametros()}
         <SHr height={10} />
         {this.getLista()}
-        <SHr height={10} />
+        <SHr height={30} />
       </Container>
-
-      <SView col={"xs-12"} flex>
-        {/* {this.getLista()} */}
-      </SView>
     </SPage>
   }
 }
