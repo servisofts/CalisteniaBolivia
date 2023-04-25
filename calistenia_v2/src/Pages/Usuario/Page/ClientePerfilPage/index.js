@@ -211,10 +211,19 @@ class ClientePerfilPage extends Component {
   }
 
 
+  template() {
+    return <>
+      <SView col={"xs-2.5 sm-1 md-3.5  "} center border={"transparent"} style={{ position: "absolute", top: 35, left: 0, }}><SIcon name="HbHeaderLeft1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-3"} center border={"transparent"} style={{ position: "absolute", top: 35, right: 0, }}><SIcon name="HbHeaderRight1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-2  "} center style={{ position: "absolute", bottom: 0, left: 0, }}><SIcon name="HbFooterLeft1" style={{ width: "100%" }} /></SView>
+      <SView col={"xs-2.5 sm-1 md-2  "} center style={{ position: "absolute", bottom: 0, right: 0, }}><SIcon name="HbFooterRight1" style={{ width: "100%" }} /></SView>
+    </>
+  }
 
   render() {
     this.cargarDatos();
-    return (
+    return (<>
+
       <SPage hidden >
         <BarraSuperior duration={500} title={"Perfil de cliente"} navigation={this.props.navigation} goBack={() => {
           SNavigation.goBack()
@@ -280,7 +289,9 @@ class ClientePerfilPage extends Component {
           </SView>
         </ScrollView>
       </SPage >
-    );
+      {/* {this.template()} */}
+
+    </>);
   }
 }
 

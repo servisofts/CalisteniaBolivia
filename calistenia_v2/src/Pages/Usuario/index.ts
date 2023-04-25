@@ -28,7 +28,7 @@ const Pages: SPageListProps = {
   EntrenadorPage,
   ClientePerfilPage,
   VendedorPage,
-  "clientes/cumplenos": ClientesCumpleaño,
+  "usuarios/cumpleaños": ClientesCumpleaño,
   "clientes/historial": ClienteHistorial,
   "clientes/comparacion": ClientesComparacion,
 };
