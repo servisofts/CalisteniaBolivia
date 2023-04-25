@@ -1,105 +1,71 @@
 import { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { ExportExcel, SButtom, SIcon, SImage, SLoad, SNavigation, SOrdenador, SPage, SScrollView2, SText, STheme, SView } from 'servisofts-component';
+import { ExportExcel, SDate, SHr, SImage, SList, SLoad, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+
 import SSocket from 'servisofts-socket';
 import BarraSuperior from '../../../../Components/BarraSuperior';
-import Buscador from '../../../../Components/Buscador';
+import Container from '../../../../Components/Container';
 import Model from '../../../../Model';
-import { SSRolesPermisosValidate } from '../../../../SSRolesPermisos';
 
-var objFinal = {};
 
 class ClientesCumpleaño extends Component {
 
-  // primer paso para hacer un gradico svg dos rayas
   constructor(props) {
     super(props);
+
+    // const today = new Date();
+    // const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
     this.state = {
       pagination: {
         curPage: 1,
       },
-      select: {
-        "nuevo": false,
-        "todos": true,
-        "activos": false,
-        "egreso": false,
-        "eliminados": false,
-        "becados": false,
-        "distintos": false,
+
+      mes: new SDate().getMonth(),
+      title: "Reporte Name",
+      func: "_get_cliente_fecha_veces_inscripto",
+      // params: ["'2023-01-01'", "'2023-03-01'"],
+      parametros: {
+        "inicio": new SDate().toString("yyyy-MM-dd"),
+        // "inicio": new SDate("2013-01-01").toString("yyyy-MM-dd"),
+        // "fin": new SDate().getMonth()
+        "fin": new SDate(ultimoDia).toString("yyyy-MM-dd"),
+        "cantidad": 1,
       },
       ...this.state,
     };
-
   }
+
   componentDidMount() {
-    // if (this.props.state.usuarioReducer.usuarioLog) {
-    //   var object = {
-    //     service: "usuario",
-    //     component: "usuario",
-    //     version: "2.0",
-    //     type: "getAll",
-    //     estado: "cargando",
-    //     cabecera: "registro_administrador",
-    //     key_usuario: this.props.state.usuarioReducer.usuarioLog.key,
-    //   }
-    //   SSocket.send(object);
+    this.getData();
+  }
 
-    // }
+  getData() {
+    this.setState({ loading: "cargando", data: null });
+    SSocket.sendPromise({
+      component: "reporte",
+      type: "execute_function",
+      func: this.state.func,
+      // params: this.state.params,
+      params: ["'" + _from + "'", "'" + _to + "'"],
+      ...this.params
+    })
+      .then((resp) => {
+        this.setState({ loading: false, data: resp.data });
+      })
+      .catch((e) => {
+        this.setState({ loading: false, error: e });
+      });
+  }
 
-  }
-  pagination = (listaKeys) => {
-    if (!listaKeys) {
-      return [];
-    }
-    if (listaKeys.length <= 0) {
-      return [];
-    }
-    var pageLimit = 50
-    var tamanho = listaKeys.length;
-    var nroBotones = Math.ceil(tamanho / pageLimit);
-    if (this.state.pagination.curPage > nroBotones) {
-      this.state.pagination.curPage = nroBotones;
-    }
-    var actual = pageLimit * (this.state.pagination.curPage - 1);
-    return listaKeys.slice(0, actual + pageLimit);
-  }
-  getRecuperar(data, isRecuperar) {
-    if (!isRecuperar) {
-      return <View />
-    }
-    if (data.estado != 0) {
-      return <View />
-    }
-    return <SButtom
-      props={{
-        type: "danger",
-        variant: "confirm"
-      }}
-      onPress={() => {
-        Usuario.Actions.editar({
-          ...data,
-          estado: 1,
-        }, this.props)
-      }} >Recuperar</SButtom>
-  }
   valido_CI(ci) {
     return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
-
-  valido_Telefono(telefono) {
-    return <Text style={{
-      fontSize: 16, color: (
-        telefono.length < 8
-          || telefono.charAt(0) !== "7"
-          && telefono.charAt(0) !== "6"
-          && telefono.charAt(0) !== "+"
-          ? "red" : STheme.color.text),
-    }}>{" Telefono: " + telefono}</Text>
-  }
-
-  valido_Correo(correo) {
-    return <Text style={{ fontSize: 16, color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  valido_veces(numero) {
+    return <Text center style={{
+      color: STheme.color.text, position: "absolute", right: 0,
+    }}>{"veces (" + numero + ")"}</Text>
   }
 
   valido_Cumpleaños(Cumpleaños) {
@@ -116,274 +82,228 @@ class ClientesCumpleaño extends Component {
 
     var mensaje = "";
     if (mes === mesActual) {
-      mensaje = "🥳🍰🎂🎊📆 " + fecha;
+      mensaje = "🥳📆 " + fecha;
     } else {
-      mensaje = "";
+      mensaje = "" + fecha;
     }
 
-    return <Text style={{ fontSize: 16, color: (mes === mesActual ? "red" : STheme.color.text), }}>{mensaje}</Text>
+    return <Text style={{ fontSize: 16, color: (mes === mesActual ? "red" : STheme.color.text), position: "absolute", right: 0, }}>{mensaje}</Text>
   }
 
-  setColor(key) {
-    if (key == "nuevo") {
-      return STheme.color.card;
-      // return "rgb(62,177,227)+88";
-    }
 
-    if (key == "todos") {
-      return "rgba(113, 175, 74, 0.53)+88";
-    }
-    if (key == "activos") {
-      return "rgba(223, 39, 50, 0.53)+8";
-    }
-    if (key == "eliminados") {
-      return "rgba(239, 140, 56, 0.53)";
-    }
-    if (key == "becados") {
-      return "rgba(170, 170, 170, 0.53)+9";
-    }
-    if (key == "distintos") {
-      return "rgb(171,112,233)+9";
-    }
-
-    else {
-      return "rgba(170, 170, 170, 0.53)+9";
-    }
+  valido_Telefono(telefono) {
+    return <Text style={{
+      color: (telefono.length < 8
+        || telefono.charAt(0) !== "7"
+        && telefono.charAt(0) !== "6"
+        && telefono.charAt(0) !== "+"
+        ? "red" : STheme.color.text),
+    }}>{"Telefono: " + telefono}</Text>
   }
-  setMensaje(nombre, numero) {
-    // if
-    let sms = "https://web.whatsapp.com/send?phone=591" + numero + "8&text=Hola,%20" + nombre + "%20desearle%20feliz%cumpleaños!!";
+  valido_Correo(correo) {
+    return <Text style={{ color: (correo.length < 12 ? "red" : STheme.color.text), }}>{"Correo: " + correo}</Text>
+  }
 
+  getParametros() {
     return <>
-      <SView row height={36} center onPress={() => { SNavigation.openURL(sms); }} row>
-        <SText>{numero}</SText>
-      </SView>
-    </>
+      <SView col={"xs-12"} center row border={"transparent"}>
+        <SView col={"xs-12"} height={40} center row border={"transparent"} >
+          <SInput flex type={""} customStyle={"calistenia"} defaultValue={this.state.parametros.inicio.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.inicio != val) {
+                this.state.parametros.inicio = val;
+                this.getData();
+                //this.setState({ ...this.state });
+              }
+              // console.log("fecha inicio ", val);
+            }}
+          />
+          <SView height width={20} />
+          <SInput flex type={"date"} customStyle={"calistenia"} defaultValue={this.state.parametros.fin.toString("dd-MM-yyyy")} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+            onChangeText={(val) => {
+              if (this.state.parametros.fin != val) {
+                this.state.parametros.fin = val;
+                this.getData();
+              }
+            }}
+          />
+        </SView>
+      </SView >
 
-  }
-
-
-
-
-  optionItem({ key, label }) {
-    // var select = !!this.state.select[key]
-
-    var select = !!this.state.select[key]
-
-    return <>
-      <SView row height={36} center style={{
-        paddingLeft: 8,
-        paddingRight: 8,
-        opacity: select ? 1 : 0.2,
-        borderRadius: 4,
-        backgroundColor: this.setColor(key),
-        // backgroundColor: Model.compra_venta.Action.getStateInfo(key).color + "88"
-      }} onPress={() => {
-
-        if (key == "nuevo") SNavigation.navigate("registro");
-        // if (key == "todos") SNavigation.navigate("registro");
-        // if (key == "activos") SNavigation.navigate("registro");
-        // if (key == "eliminados") SNavigation.navigate("registro");
-        // if (key == "becados") SNavigation.navigate("registro");
-        // if (key == "distintos") SNavigation.navigate("registro");
-        // if (!this.state.select["distintos"]) {
-        //   console.log("chaval activado")
-        // }
-
-
-
-
-        if (!select) {
-          this.state.select[key] = true;
-        } else {
-          delete this.state.select[key];
-        }
-
-
-        this.setState({ ...this.state })
-
-      }} row>
-        {!select ? null : <> <SIcon name={"Close"} width={12} height={12} fill={STheme.color.text} /> <SView width={8} /></>}
-        <SText>{label}</SText>
-      </SView>
-      <SView width={8} ></SView>
     </>
   }
 
-  menu() {
-    const items = [
-      { key: "nuevo", label: " + Crear" },
-      { key: "todos", label: "Todos ✅" },
-      { key: "activos", label: "Activos" },
-      { key: "eliminados", label: "Eliminados" },
-      { key: "becados", label: "Becados" },
-      { key: "distintos", label: "No inscriptos" },
-    ].map(item => this.optionItem(item));
-    return items;
+
+
+
+
+
+
+  getItem2(_data, usuario) {
+    return <SView col={"xs-12"} height={60} center>
+      <SView col={"xs-12"} center row border={"#6664"} height onPress={() => {
+        SNavigation.navigate("ClientePerfilPage", { key: usuario.key });
+      }} >
+        <View style={{ flexDirection: "row", height: "100%", width: "100%", alignItems: "center" }}>
+          <View style={{
+            width: 40, height: 40, marginRight: 8, justifyContent: "center", alignItems: "center", backgroundColor: STheme.color.card, borderRadius: 100, overflow: "hidden"
+          }}>
+            <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
+          </View>
+          <View row style={{ flex: 1, justifyContent: "center" }}>
+            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_Cumpleaños(usuario["Fecha nacimiento"])}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Telefono(usuario?.Telefono)}</Text>
+            <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Correo(usuario?.Correo)} </Text>
+
+
+            {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
+          </View>
+        </View>
+      </SView>
+    </SView>
+
+    // })
+
+  }
+  getLista() {
+    if (!this.state.data) return <SLoad />
+
+    var usuarios = Model.usuario.Action.getAll();
+    if (!usuarios) return <SLoad />
+    let data = this.state.data.map(obj => {
+      obj.usuario = usuarios[obj?.key_usuario];
+      // mes_cumpleaños = usuarios[obj?.key_usuario]["Fecha nacimiento"];
+      return obj;
+    })
+
+    return <>
+      <ExportExcel
+        header={[
+          { key: "indice", label: "Nro", width: 40 },
+          { key: "nombres", label: "Nombres", width: 200 },
+          { key: "telefono", label: "Telefono", width: 90 },
+          { key: "correo", label: "Correo", width: 150 },
+          { key: "cumpleaños", label: "Cumpleaños", width: 80 },
+          { key: "veces", label: "Veces", width: 40 },
+        ]}
+        getDataProcesada={() => {
+          var daFinal = {};
+          let cant = 0;
+          Object.values(data).map((obj, i) => {
+
+            let captura1 = new SDate(obj.usuario["Fecha nacimiento"]).getMonth();
+            if (captura1 != this.state.mes) return;
+
+
+            var toInsert = {
+              indice: cant + 1,
+              key_usuario: obj?.key_usuario,
+              nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
+              ci: obj?.usuario?.CI,
+              correo: obj?.usuario?.Correo,
+              cumpleaños: obj?.usuario["Fecha nacimiento"],
+              telefono: obj?.usuario?.Telefono,
+
+              // veces: obj?.veces
+            }
+
+            cant++;
+            daFinal[i] = toInsert
+
+            // var daFinal = {};
+            // let cant = 0;
+            // Object.values(data)
+            //   .filter((obj) => new SDate(obj.usuario["Fecha nacimiento"]).getMonth() === this.state.mes) // filtrar por mes
+            //   .sort((a, b) => {
+            //     const dayA = new SDate(a.usuario["Fecha nacimiento"]).getDate();
+            //     const dayB = new SDate(b.usuario["Fecha nacimiento"]).getDate();
+            //     return dayA - dayB;
+            //   })
+            //   .forEach((obj, i) => {
+            //     var toInsert = {
+            //       indice: cant + 1,
+            //       key_usuario: obj?.key_usuario,
+            //       nombres: obj?.usuario.Nombres + " " + obj?.usuario.Apellidos,
+            //       ci: obj?.usuario?.CI,
+            //       correo: obj?.usuario?.Correo,
+            //       cumpleaños: obj?.usuario["Fecha nacimiento"],
+            //       telefono: obj?.usuario?.Telefono,
+            //       // veces: obj?.veces
+            //     }
+            //     cant++;
+            //     daFinal[i] = toInsert
+            //   })
+            // return daFinal;
+
+          })
+          return daFinal
+        }}
+      />
+
+      <SList data={data} space={8}
+        limit={7}
+        buscador
+        order={[{ key: "usuario/Fecha nacimiento", order: "asc", peso: 1, }]}
+        filter={obj => {
+
+
+          let year = new SDate().toString("yyyy");
+          let fecha_inicio = new SDate(this.state.parametros.inicio, "yyyy-MM-dd").setYear(year);
+          let fecha_fin = new SDate(this.state.parametros.fin, "yyyy-MM-dd").setYear(year);
+          let fc = new SDate(obj.usuario["Fecha nacimiento"], "yyyy-MM-dd").setYear(year)
+          if (fc.isAfter(fecha_inicio) && fc.isBefore(fecha_fin)) return true;
+
+          return false;
+        }}
+        render={obj => {
+          return this.getItem2(obj, obj.usuario)
+        }}
+      />
+    </>
   }
 
   render() {
 
-    const getLista = () => {
-      var data = Model.usuario.Action.getAll();
-      if (!data) return <SLoad />
-      if (!this.state.buscador) {
-        return <View />
-      }
-      Object.keys(data).map((key) => {
-        objFinal[key] = data[key];
-      });
+
+    let aux = new SDate().toString("MONTH");
 
 
-
-      var isRecuperar = SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "recuperar_eliminado" });
-      return this.pagination(
-        new SOrdenador([
-          { key: "Peso", order: "desc", peso: 4 },
-          { key: "Nombres", order: "asc", peso: 2 },
-          { key: "Apellidos", order: "asc", peso: 1 },
-        ]).ordernarObject(
-          this.state.buscador.buscar(objFinal)
-        )
-      ).map((key) => {
-        var obj = data[key];
-        return <TouchableOpacity style={{
-          width: "90%",
-          maxWidth: 600,
-          height: 50,
-          margin: 4,
-          borderRadius: 10,
-          backgroundColor: STheme.color.card
-        }} onPress={() => {
-          SNavigation.navigate("registro", {
-            key: key
-          })
-        }}>
-          <View style={{
-            flex: 1,
-            justifyContent: "center"
-          }}>
-            <View style={{
-              flexDirection: "row",
-              height: "100%",
-              width: "100%",
-              alignItems: "center"
-            }}>
-              <View style={{
-                width: 40,
-                height: 40,
-                marginRight: 8,
-                marginLeft: 4,
-                justifyContent: "center",
-                alignItems: "center",
-                // padding: 1,
-                // borderRadius: 200,
-                backgroundColor: STheme.color.card,
-                borderRadius: 100,
-                overflow: "hidden"
-              }}>
-                <SImage src={SSocket.api.root + "usuario/" + key + `?date=${new Date().getTime()}`} />
-
-              </View>
-              <View style={{
-                flex: 1,
-                justifyContent: "center"
-              }}>
-                <Text style={{
-                  fontSize: 16,
-                  color: STheme.color.text,
-                  textDecorationLine: (obj.estado == 0 ? "line-through" : "none"),
-                }}>{obj["Nombres"] + " " + obj["Apellidos"]}
-                  {/* {this.valido_Telefono(obj?.Telefono)} */}
-
-                  {this.valido_Cumpleaños(obj["Fecha nacimiento"],)}
-                  {/* {this.setMensaje("alvaroski", "69050028")} */}
-                  {this.setMensaje("alvaroski", obj.Telefono)}
-                </Text>
-              </View>
-              {this.getRecuperar(obj, isRecuperar)}
-            </View>
-          </View>
-        </TouchableOpacity>
-      })
-    }
     return (
-      <SPage hidden disableScroll>
-        <BarraSuperior title={"Usuarios"} navigation={this.props.navigation} goBack={() => {
-          SNavigation.goBack();
-        }} />
-        <Buscador placeholder={"Buscar por CI, Nombres, Apellidos, Correo o Telefono."} ref={(ref) => {
-          if (!this.state.buscador) this.setState({ buscador: ref });
-        }} repaint={() => { this.setState({ ...this.state }) }}
-          eliminados={SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "ver_eliminados" })}
-        />
-        <View style={{
-          flex: 1,
-          width: "100%",
-        }}>
-          <SScrollView2
-            disableHorizontal
-            onScroll={(evt) => {
-              var evn = evt.nativeEvent;
-              var posy = evn.contentOffset.y + evn.layoutMeasurement.height;
-              var heigth = evn.contentSize.height;
-              if (heigth - posy <= 0) {
-                this.state.pagination.curPage += 1;
-                this.setState({ ...this.state })
-              }
-            }}
-          >
+      <SPage hidden header={<BarraSuperior title={"Cumpleañeros del mes clientes"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
 
-            <SView col={"xs-12"} style={{ height: 56, }} center row border={"transparent"}>
-              {/* <SHr height={10} /> */}
-              {this.menu()}
-              {/* <SHr height={10} /> */}
-            </SView>
+        <SView center style={{ color: "blue", position: "absolute", top: 0, left: 0, }}><SIcon name="Hb_footer_left" style={{ width: 32, height: 32 }} /></SView>
+        <SView center style={{ color: "blue", position: "absolute", top: 0, right: 0, }}><SIcon name="Hb_header_left" style={{ width: 32, height: 32 }} /></SView>
 
 
-            <SView col={"xs-12"} center>
-              {/* tarea10 ✅ ✅ ✅ */}
-              <ExportExcel
-                header={[
-                  // { key: "key_usuario", label: "key", width: 250 },
-                  // { key: "ci", label: "documento", width: 40 },
-                  { key: "indice", label: "n", width: 40 },
-                  { key: "telefono", label: "telefono", width: 90 },
-                  { key: "nombres", label: "nombres", width: 200 },
-                  // { key: "cumpleaños", label: "cumpleaños", width: 80 },
-                  // { key: "correo", label: "correo", width: 150 },
-                ]}
-                getDataProcesada={() => {
-                  var daFinal = {};
-                  // const ingreso = 0, egreso = 0, traspaso = 0;
-                  var total = { ingreso: 0, egreso: 0, traspaso: 10 }
-                  Object.values(objFinal).map((obj, i) => {
-                    var toInsert = {
-                      indice: i + 1,
-                      key_usuario: obj?.key,
-                      nombres: obj?.Nombres + " " + obj?.Apellidos,
-                      ci: obj?.CI,
-                      correo: obj?.Correo,
-                      cumpleaños: obj["Fecha nacimiento"],
-                      telefono: obj?.Telefono,
-                    }
-                    daFinal[i] = toInsert
-                  })
-                  return daFinal
-                }}
-              />
-            </SView>
+        {/* "Hb_cake": {Native: Hb_cake, Web: Hb_cakeW },
+        "Hb_footer_left": {Native: Hb_footer_left, Web: Hb_footer_leftW },
+        "Hb_footer_right": {Native: Hb_footer_right, Web: Hb_footer_rightW },
+        "Hb_header_left": {Native: Hb_header_left, Web: Hb_header_leftW },
+        "Hb_header_right": {Native: Hb_header_right, Web: Hb_header_rightW },
+         */}
+
+        <Container>
+          <SText>Cumpleañero del messss</SText>
+          <SText color={"red"}>Mes {this.state.mes}</SText>
+          <SText color={"red"}>{aux}</SText>
+
+          <SView center > <SIcon name="Hb_cake" style={{ width: 32, height: 32 }} /></SView>
 
 
-            <SView col={"xs-12"} center>
-              {getLista()}
+          {this.getParametros()}
+          <SHr height={10} />
 
-            </SView>
-          </SScrollView2>
-          {/* <FloatButtom esconder={!SSRolesPermisosValidate({ page: "UsuarioPage", permiso: "crear" })} onPress={() => {
-            SNavigation.navigate("registro")
-          }} /> */}
-        </View>
+          <SHr height={10} />
+          <SHr height={10} />
+          {this.getLista()}
+          <SHr height={10} />
+        </Container>
+
+        <View style={{ flex: 1, height: "100%" }}> </View>
+
+
+        <SView center style={{ color: "blue", position: "absolute", bottom: 0, left: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /></SView>
+        <SView center style={{ color: "blue", position: "absolute", bottom: 0, right: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /> </SView>
       </SPage>
     );
   }

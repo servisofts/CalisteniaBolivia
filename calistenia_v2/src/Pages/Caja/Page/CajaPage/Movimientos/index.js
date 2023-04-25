@@ -119,7 +119,7 @@ class Movimientos extends Component {
 
       return (
         <View key={index} style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "center", padding: 4 }}>
-          <View style={{ backgroundColor: STheme.color.card, width: "100%", height: 50, borderRadius: 4, flexDirection: "row", }}>
+          <View style={{ backgroundColor: STheme.color.card, width: "100%", height: 70, borderRadius: 4, flexDirection: "row", }}>
             <SView style={{
               flex: 1,
               height: "100%",

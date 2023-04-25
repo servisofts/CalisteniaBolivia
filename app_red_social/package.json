@@ -1,6 +1,6 @@
 {
   "name": "calistenia_rs_app",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "calistenia_rs_app",
   "scripts": {
     "start": "react-native start",

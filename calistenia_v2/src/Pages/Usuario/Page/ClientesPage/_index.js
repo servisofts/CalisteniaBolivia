@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-import { SScrollView2, SView, SOrdenador, SPage, SButtom, SImage, SLoad, SNavigation, STheme, ExportExcel, SText, SList } from 'servisofts-component';
+import { SList, SLoad, SNavigation, SPage, SText } from 'servisofts-component';
 import Usuario from '../..';
 
 
@@ -33,7 +33,7 @@ class ClientesPage extends Component {
   render() {
 
     return (
-      <SPage title={"Clientes"}>
+      <SPage title={"Clientes activos"}>
         {this.getLista()}
       </SPage>
     );

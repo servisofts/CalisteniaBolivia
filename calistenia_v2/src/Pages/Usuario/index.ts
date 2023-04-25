@@ -28,9 +28,9 @@ const Pages: SPageListProps = {
   EntrenadorPage,
   ClientePerfilPage,
   VendedorPage,
-  "cliente/cumple": ClientesCumpleaño,
-  "cliente/historial": ClienteHistorial,
-  "cliente/comparacion": ClientesComparacion,
+  "usuarios/cumpleaños": ClientesCumpleaño,
+  "clientes/historial": ClienteHistorial,
+  "clientes/comparacion": ClientesComparacion,
 };
 
 import usuarioReducer from "./Reducer/usuarioReducer";
