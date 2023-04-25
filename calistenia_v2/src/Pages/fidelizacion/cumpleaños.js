@@ -244,16 +244,20 @@ class index extends Component {
   render() {
     let aux = new SDate().toString("MONTH");
 
-    return (<SPage title={this.state.title} center>
-      <SView col={"xs-12"} center>
+    return (<SPage title={this.state.title} center backgroundColor={"transparent"}>
 
-        <SView center style={{ color: "blue", position: "absolute", top: 0, left: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /></SView>
-        <SView center style={{ color: "blue", position: "absolute", top: 0, right: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /></SView>
+      <SView col={"xs-12"} row center border={"transparent"}>
+
+        <SView center flex border={"transparent"} style={{ position: "absolute", top: 0, left: 0, width: "40%", maxWidth: 800 }}><SIcon name="HbHeaderRight1" style={{ width: "100%", }} /></SView>
+
+        <SView center flex border={"transparent"} style={{ position: "absolute", top: 0, right: 0, witdh: "40%", maxWidth: 800 }}><SIcon name="HbHeaderLeft1" style={{ width: "100%", }} /></SView>
 
 
       </SView>
 
       <Container  >
+        {/* <SView center style={{ color: "blue", position: "absolute", top: 0 }}><SIcon name="HbCake1" style={{ width: 50, }} /></SView> */}
+
 
         {this.getParametros()}
         {this.loadData()}
@@ -261,8 +265,8 @@ class index extends Component {
       </Container>
 
 
-      <SView center style={{ color: "blue", position: "absolute", bottom: 0, left: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /></SView>
-      <SView center style={{ color: "blue", position: "absolute", bottom: 0, right: 0, }}><SIcon name="Usuarios_proveedor" style={{ width: 32, height: 32 }} /> </SView>
+      <SView center flex style={{ color: "blue", position: "absolute", bottom: 0, left: 0, }}><SIcon name="HbFooterLeft1" style={{ width: "50%" }} /></SView>
+      <SView center style={{ color: "blue", position: "absolute", bottom: 0, right: 0, }}><SIcon name="HbFooterRight1" style={{ width: 100 }} /> </SView>
 
     </SPage>)
   }
