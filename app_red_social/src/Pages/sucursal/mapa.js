@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SButtom, SHr, SIcon, SImage, SList, SLoad, SMapView2, SMarker, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
-import { BottomNavigator, Container, Restaurante, TopBar, Sucursal } from '../Components';
-import Model from '../Model';
+import { SButtom, SHr, SIcon, SImage, SList, SLoad, SMapView2,SMapView, SMarker, SNavigation, SPage, SText, STheme, SView } from 'servisofts-component';
+import { BottomNavigator, Container, Restaurante, TopBar, Sucursal } from '../../Components';
+import Model from '../../Model';
 
 class index extends Component {
     constructor(props) {
         super(props);
         this.state = {
             region: {
-                latitude: -17.7833276,
-                longitude: -63.1821408,
+                latitude: -17.765054583781613,
+                longitude: -63.1834162269279
             },
         };
     }
 
     clearData() {
-        Model.restaurante.Action.CLEAR();
+        Model.sucursal.Action.CLEAR();
     }
 
     loadData() {
-        this.restaurantes = Model.restaurante.Action.getAllFilters();
-        if (!this.restaurantes) return null;
+        this.sucursales = Model.sucursal.Action.getAll();
+        if (!this.sucursales) return null;
         return true;
     }
 
@@ -29,29 +29,31 @@ class index extends Component {
         return <TopBar type={"ubicacion"} title='Hola' />
     }
 
-    getListRestaurante() {
+    getListSucursales() {
         if (!this.loadData()) return null;
-        return Object.values(this.restaurantes).map((obj, index) => {
-            return <Restaurante.Marker lat={obj.latitude} lng={obj.longitude} data={obj} onPress={() => {
-                SNavigation.navigate("/restaurante", { pk: obj.key });
+        return Object.values(this.sucursales).map((obj, index) => {
+            return <Sucursal.Marker lat={obj.latitude} lng={obj.longitude} data={obj} onPress={() => {
+                SNavigation.navigate("/sucursal", { pk: obj.key });
             }} />
         })
     }
 
     showMapa100() {
-        var usuario = Model.filtros.Action.getByKey("direccion")?.select;
-        var filDistancia = Model.filtros.Action.getByKey("distancia")?.select;
-        var delta = 0.001 * parseFloat(filDistancia ?? 0);
+        // var usuario = Model.filtros.Action.getByKey("direccion")?.select;
+        // var filDistancia = Model.filtros.Action.getByKey("distancia")?.select;
+        // var delta = 0.001 * parseFloat(filDistancia ?? 0);
 
         return <SView col={"xs-12"} height center >
             <SMapView2 initialRegion={
                 {
-                    latitude: usuario?.latitude ?? this.state.region.latitude,
-                    longitude: usuario?.longitude ?? this.state.region.longitude,
-                    latitudeDelta: delta,
-                    longitudeDelta: delta,
-                }} preventCenter>
-                {this.getListRestaurante()}
+                    latitude: this.state.region.latitude,
+                    longitude: this.state.region.longitude,
+                    latitudeDelta: 0.09,
+                    longitudeDelta: 0.09
+                }} 
+                
+                preventCenter>
+                {this.getListSucursales()}
                 {/* <SMarker lat={usuario?.latitude} lng={usuario?.longitude} >
                     <SIcon name={"Marker"} width={50} height={50} fill={"#FA790E"} />
                 </SMarker> */}
@@ -61,15 +63,15 @@ class index extends Component {
     header() {
         return <SView col={"xs-12"}>
             <Container>
-                <Restaurante.BarraFiltros />
-                <Restaurante.MapaListaButtoms url={"/mapa"} />
+                {/* <Restaurante.BarraFiltros /> */}
+                <Sucursal.MapaListaButtoms url={"/sucursal/mapa"} />
             </Container>
         </SView>
     }
     render() {
         return (
             <SPage
-                navBar={this.navBar()}
+                // navBar={this.navBar()}
                 header={this.header()}
                 footer={this.footer()}
                 disableScroll
@@ -81,7 +83,7 @@ class index extends Component {
     }
 
     footer() {
-        return <BottomNavigator url={"/explorar"} />
+        return <BottomNavigator url={"/sucursal"} />
     }
 }
 const initStates = (state) => {

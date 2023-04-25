@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { SDate, SHr, SIcon, SImage, SPage, SText, STheme, SView, SNavigation, SPopup } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
 import Model from '../../Model';
-export type BoxMenuLatPropsType = {
+export type BoxMenuLatOtrosPropsType = {
     datas: any,
     onPress?: (obj) => {},
 }
-class index extends Component<BoxMenuLatPropsType> {
+class index extends Component<BoxMenuLatOtrosPropsType> {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,7 +44,7 @@ class index extends Component<BoxMenuLatPropsType> {
                         }}
                         onPress={() => { }}
                     >
-                        <SText fontSize={14} >Desactivar comentarios</SText>
+                        <SText fontSize={14} >Copiar enlace</SText>
                     </SView>
                     <SView col={"xs-12"} height={48} center
                         style={{
@@ -53,26 +53,16 @@ class index extends Component<BoxMenuLatPropsType> {
                         }}
                         onPress={() => { }}
                     >
-                        <SText fontSize={14} >Editar</SText>
+                        <SText fontSize={14} >Compartir</SText>
                     </SView>
                     <SView col={"xs-12"} height={48} center
-
-                        onPress={() => {
-                            console.log(this.props.datas)
-                            SPopup.confirm({
-                                title: "Eliminar", message: "¿Estás seguro de eliminar la publicación?", onPress: () => {
-                                    Model.publicacion.Action.editar({
-                                        // data: {
-                                        //     ...obj,
-                                        //     estado: 0
-                                        // },
-                                    })
-                                    // Parent.Actions.eliminar(obj, this.props)
-                                }
-                            })
-                         }}
+                        // style={{
+                        //     borderBottomColor: STheme.color.gray,
+                        //     borderBottomWidth: 1
+                        // }}
+                        onPress={() => { }}
                     >
-                        <SText fontSize={14} >Eliminar</SText>
+                        <SText fontSize={14} >Dejar de seguir</SText>
                     </SView>
                     <SHr height={15} />
                     {/* <SView col={"xs-12"} style={{ borderBottomWidth: 1, borderColor: STheme.color.lightGray }}></SView> */}

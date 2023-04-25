@@ -14,7 +14,7 @@ import terminos from './terminos';
 import restaurante from './restaurante';
 import explorar from './explorar';
 import favoritos from './favoritos';
-import mapa from './mapa';
+// import mapa from './mapa';
 import billetera from './billetera';
 import direccion from './direccion';
 import pedido from './pedido';
@@ -49,7 +49,7 @@ export default SPage.combinePages("/", {
   notificaciones,
   explorar,
   favoritos,
-  mapa,
+  //mapa,
   ajustes,
   filtros,
   ...restaurante,

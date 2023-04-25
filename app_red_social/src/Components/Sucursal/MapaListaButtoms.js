@@ -56,7 +56,7 @@ class index extends Component<MapaListaButtomsPropsType> {
             <Container>
                 <SView col={"xs-12"} row>
                     {this.getButtom({ label: "LISTA", url: "/sucursal", corner: "left" })}
-                    {this.getButtom({ label: "MAPA", url: "/mapa", corner: "right" })}
+                    {this.getButtom({ label: "MAPA", url: "/sucursal/mapa", corner: "right" })}
                     <SHr height={10}/>
                 </SView>
             </Container >

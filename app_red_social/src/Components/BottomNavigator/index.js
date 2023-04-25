@@ -43,14 +43,16 @@ export default class index extends Component {
             // console.log(this.props.url)
         }} row center height >
             <SView width={8} height />
-            <SView width={24} height={24} style={{
+            <SView width={26} height={26} style={{
                 borderRadius: 100,
-                overflow:"hidden"
-            }}>
+                borderColor: ((this.props.url == "/perfil") || (this.props.url == "/login")) ? STheme.color.secondary : STheme.color.text,
+                borderWidth: 1,
+                overflow: "hidden"
+            }} center>
                 {!user ?
-                    <SIcon name={"Profile"} fill={STheme.color.primary} stroke={(this.props.url == "/login") ? STheme.color.secondary : STheme.color.text} />
+                    <SIcon name={"Profile"} width={18} height={18} fill={STheme.color.primary} stroke={(this.props.url == "/login") ? STheme.color.secondary : STheme.color.text} />
                     :
-                    <SImage src={Model.usuario._get_image_download_path(SSocket.api, user.key)} />
+                    <SImage src={Model.usuario._get_image_download_path(SSocket.api, user.key)} style={{borderWidth:1}} />
                 }
             </SView>
             <SView width={8} height />

@@ -5,12 +5,12 @@ import SSocket from 'servisofts-socket';
 import BoxMenuLat from './BoxMenuLat';
 import BoxMenuLatOtros from './BoxMenuLatOtros';
 import Model from '../../Model';
-export type PublicacionPropsType = {
+export type CardPerfilPropsType = {
     data: any,
     usuario: any,
     onPress?: (obj) => {},
 }
-class index extends Component<PublicacionPropsType> {
+class index extends Component<CardPerfilPropsType> {
     constructor(props) {
         super(props);
         this.state = {
@@ -98,18 +98,17 @@ class index extends Component<PublicacionPropsType> {
         </SView>
     }
     render() {
-        return (<SView col={"xs-12"} >
+        return (<SView {...this.props} style={{borderWidth:1, borderColor:STheme.color.primary}}>
             {/* <SText>{JSON.stringify(this.props.data)}</SText> */}
-            {this.renderAuthor()}
-            <SHr h={8} />
+            {/* {this.renderAuthor()} */}
             {this.renderImage()}
-            <SHr h={16} />
+            {/* <SHr height={1} /> */}
+            {/* <SHr h={16} />
             {this.renderActions()}
             <SHr h={16} />
             {this.renderLikes()}
-            <SHr />
-            {this.renderTitle()}
-            <SHr />
+            <SHr /> */}
+            {/* {this.renderTitle()} */}
             {/* {this.renderComments()} */}
             {/* <SHr /> */}
         </SView >

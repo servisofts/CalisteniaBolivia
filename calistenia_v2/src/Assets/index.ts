@@ -26,6 +26,7 @@ import Fp, { ReactComponent as FpW } from "./svg/fp.svg";
 import Logo, { ReactComponent as LogoW } from "./svg/logo.svg";
 import LogoClean, { ReactComponent as LogoCleanW } from "./svg/logoclean.svg";
 import Pdf, { ReactComponent as PdfW } from "./svg/pdf.svg";
+import DashboardBtn, { ReactComponent as DashboardBtnW } from './svg/DashboardBtn.svg';
 const Assets: SAssets = {
   svg: {
     Logo: { Native: Logo, Web: LogoW },
@@ -46,6 +47,7 @@ const Assets: SAssets = {
     HbFooterRight1: { Native: HbFooterRight1, Web: HbFooterRight1W },
     HbHeaderLeft1: { Native: HbHeaderLeft1, Web: HbHeaderLeft1W },
     HbHeaderRight1: { Native: HbHeaderRight1, Web: HbHeaderRight1W },
+    "DashboardBtn": { Native: DashboardBtn, Web: DashboardBtnW },
     // HbHeaderRight1: { Native: HbHeaderRight1, Web: HbHeaderRight1W },
   },
 };
