@@ -3,19 +3,15 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import Container from '../../../../Components/Container';
-import Model from '../../../../Model';
-
-class ClientesComparacion extends Component {
-
+import Container from '../../Components/Container';
+import Model from '../../Model';
+class index extends Component {
   constructor(props) {
     super(props);
+
+    // this.params = SNavigation.getAllParams();
     this.state = {
-      pagination: {
-        curPage: 1,
-      },
-      title: "Reporte Name",
+      title: "Comparativos",
       func: "_get_cliente_llamarlos",
       // params: ["'2023-01-01'", "'2023-03-01'"],
       parametros: {
@@ -25,6 +21,9 @@ class ClientesComparacion extends Component {
         "dias": 0,
       },
       ...this.state,
+      // func: "reporte_ventas_vendedores",
+      // params: [`'${this.params.fecha_inicio}'`, `'${this.params.fecha_fin}'`],
+      // params: [`'\${servicio.key}'`, `'${this.params.fecha_inicio}'`, `'${this.params.fecha_fin}'`],
     };
   }
 
@@ -227,21 +226,18 @@ class ClientesComparacion extends Component {
   }
 
   render() {
-
-
-    return (
-      <SPage hidden header={<BarraSuperior title={"Clientes que no se volvieron a inscribir"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
-        <Container>
-          {this.getParametros()}
-          <SHr height={10} />
-          {this.getLista()}
-          <SHr height={10} />
-        </Container>
-      </SPage>
-    );
+    return <SPage title={this.state.title} center>
+      <Container>
+        {this.getParametros()}
+        <SHr height={10} />
+        {this.getLista()}
+        <SHr height={30} />
+      </Container>
+    </SPage>
   }
 }
+
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(ClientesComparacion);
+export default connect(initStates)(index);

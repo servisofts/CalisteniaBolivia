@@ -3,34 +3,30 @@ import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { ExportExcel, SDate, SHr, SImage, SInput, SList, SLoad, SNavigation, SPage, STheme, SView } from 'servisofts-component';
 import SSocket from 'servisofts-socket';
-import BarraSuperior from '../../../../Components/BarraSuperior';
-import Container from '../../../../Components/Container';
-import Model from '../../../../Model';
-
-class ClientesComparacion extends Component {
-
+import Container from '../../Components/Container';
+import Model from '../../Model';
+class index extends Component {
   constructor(props) {
     super(props);
+
+    // this.params = SNavigation.getAllParams();
     this.state = {
-      pagination: {
-        curPage: 1,
-      },
-      title: "Reporte Name",
-      func: "_get_cliente_llamarlos",
+      // title: "Historial " + this.params.fecha_inicio + " " + this.params.fecha_fin,
+      title: "Historial ",
+      func: "_get_cliente_fecha_veces_inscripto",
       // params: ["'2023-01-01'", "'2023-03-01'"],
       parametros: {
         "inicio": new SDate().addMonth(-2).setDay(1).toString("yyyy-MM-dd"),
         "fin": new SDate().toString("yyyy-MM-dd"),
         "cantidad": 1,
-        "dias": 0,
       },
       ...this.state,
     };
   }
 
+
   componentDidMount() {
     this.getData();
-    this.getCalcularDias();
   }
 
   getData() {
@@ -50,28 +46,15 @@ class ClientesComparacion extends Component {
         this.setState({ loading: false, error: e });
       });
   }
-  getCalcularDias() {
-    var fini = new Date(this.state.parametros.inicio);
-    var ffin = new Date(this.state.parametros.fin);
-    var diferenciaEnMilisegundos = ffin - fini;
-    var dias = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24);
-    this.state.parametros.dias = dias;
-    this.setState({ ...this.state })
-  }
 
   valido_CI(ci) {
     return <Text style={{ fontSize: 16, color: (ci.length < 7 ? "red" : STheme.color.text), }}>{"CI: " + ci}</Text>
   }
-  valido_dias_veces(dias, veces) {
+  valido_veces(numero) {
     return <Text center style={{
       color: STheme.color.text, position: "absolute", right: 0,
-    }}>{"veces (" + veces + ")\n"} {"dias (" + dias + ")"}</Text>
+    }}>{"veces (" + numero + ")"}</Text>
   }
-  // valido_dias(dias) {
-  //   return <Text center style={{
-  //     color: STheme.color.text, position: "absolute", right: 0,
-  //   }}>{"dias (" + dias + ")"}</Text>
-  // }
   valido_Telefono(telefono) {
     return <Text style={{
       color: (telefono.length < 8
@@ -94,7 +77,6 @@ class ClientesComparacion extends Component {
               if (this.state.parametros.inicio != val) {
                 this.state.parametros.inicio = val;
                 this.getData();
-                // this.getCalcularDias();
                 //this.setState({ ...this.state });
               }
               // console.log("fecha inicio ", val);
@@ -106,23 +88,21 @@ class ClientesComparacion extends Component {
               if (this.state.parametros.fin != val) {
                 this.state.parametros.fin = val;
                 this.getData();
-                // this.getCalcularDias();
-
               }
             }}
           />
-          {/* <SView height width={20} /> */}
-          {/* <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
+          <SView height width={20} />
+          <SInput flex type={"number"} customStyle={"calistenia"} defaultValue={this.state.parametros.cantidad ?? 0} placeholder={"cantidad inscripto"} style={{ width: "100%", height: "100%", borderRadius: 4, borderColor: "#666" }}
             onChangeText={(val) => {
               // if (val.length < 2) return;
               // validar solo que sea maximo 3 caracteres
               this.state.parametros.cantidad = val;
               this.setState({ ...this.state })
             }}
-          /> */}
+          />
         </SView>
       </SView >
-      <SView col={"xs-12"} height={4} />
+      <SView col={"xs-12"} height={18} />
 
     </>
   }
@@ -145,7 +125,7 @@ class ClientesComparacion extends Component {
             <SImage src={SSocket.api.root + "usuario/" + usuario?.key + `?date=${new Date().getTime() / 500}`} />
           </View>
           <View row style={{ flex: 1, justifyContent: "center" }}>
-            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}   </Text>
+            <Text style={{ fontSize: 14, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Apellidos}  {this.valido_veces(_data?.veces)}</Text>
             <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Telefono(usuario?.Telefono)}</Text>
             <Text style={{ fontSize: 12, color: STheme.color.text }}>{this.valido_Correo(usuario?.Correo)} </Text>
             {/* <Text style={{ fontSize: 16, color: STheme.color.text }}>{usuario.Nombres + " " + usuario.Nombres} {this.valido_CI(usuario.CI)} {this.valido_Telefono(usuario?.Telefono)} {this.valido_Correo(usuario?.Correo)} {this.valido_veces(_data?.veces)}</Text> */}
@@ -166,16 +146,8 @@ class ClientesComparacion extends Component {
       obj.usuario = usuarios[obj?.key_usuario]
       return obj;
     })
-    // var fini = new Date(this.state.parametros.inicio);
-    // var ffin = new Date(this.state.parametros.fin);
-    // var diferenciaEnMilisegundos = ffin - fini;
-    // var dias = diferenciaEnMilisegundos / (1000 * 60 * 60 * 24);
 
-    // Mostrar resultado
-    // console.log("La diferencia en días es: " + dias);
     return <>
-      {/* <SText> asddas {fini} </SText> */}
-      {/* <SText> dias {this.state.parametros.dias} </SText> */}
       <ExportExcel
         header={[
           { key: "indice", label: "Nro", width: 40 },
@@ -189,7 +161,7 @@ class ClientesComparacion extends Component {
           var daFinal = {};
           let cant = 0;
           Object.values(data).map((obj, i) => {
-            // if (obj.veces != this.state.parametros.cantidad) return;
+            if (obj.veces != this.state.parametros.cantidad) return;
             var toInsert = {
               indice: cant + 1,
               key_usuario: obj?.key_usuario,
@@ -208,16 +180,11 @@ class ClientesComparacion extends Component {
       />
 
       <SList data={data} space={8}
-        limit={7}
+        limit={8}
         buscador
         filter={obj => {
-          // if (obj.veces == this.state.parametros.cantidad) return true;
-          // return false;
-
-          // if (obj.dias_totales < this.state.parametros.dias) return true;
-          // return false;
-
-          return true;
+          if (obj.veces == this.state.parametros.cantidad) return true;
+          return false;
         }}
         render={obj => {
           return this.getItem2(obj, obj.usuario)
@@ -227,21 +194,18 @@ class ClientesComparacion extends Component {
   }
 
   render() {
-
-
-    return (
-      <SPage hidden header={<BarraSuperior title={"Clientes que no se volvieron a inscribir"} navigation={this.props.navigation} goBack={() => { SNavigation.goBack(); }} />}>
-        <Container>
-          {this.getParametros()}
-          <SHr height={10} />
-          {this.getLista()}
-          <SHr height={10} />
-        </Container>
-      </SPage>
-    );
+    return <SPage title={this.state.title} center  >
+      <Container>
+        {this.getParametros()}
+        <SHr height={10} />
+        {this.getLista()}
+        <SHr height={20} />
+      </Container>
+    </SPage>
   }
 }
+
 const initStates = (state) => {
   return { state }
 };
-export default connect(initStates)(ClientesComparacion);
+export default connect(initStates)(index);
