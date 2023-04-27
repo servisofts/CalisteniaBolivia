@@ -67,6 +67,7 @@ class index extends Component {
 
   valido_Cumpleaños(Cumpleaños) {
 
+    let formateado = new SDate(Cumpleaños).toString("dd MONTH");
 
 
     let mes = new SDate(Cumpleaños, "yyyy-MM-dd").getMonth();
@@ -76,11 +77,11 @@ class index extends Component {
 
     var mensaje = "";
     if (mes === mesActual) {
-      mensaje = "🎂📆" + Cumpleaños;
+      mensaje = "🎂📆 " + formateado;
     } else {
-      mensaje = "" + Cumpleaños;
+      mensaje = "" + formateado;
     }
-    return <Text style={{ fontSize: 14, color: (mes === mesActual ? "green" : STheme.color.text), position: "absolute", right: 0, }}>{mensaje}</Text>
+    return <Text style={{ fontSize: 16, color: (mes === mesActual ? "green" : STheme.color.text), position: "absolute", right: 0, }}>{mensaje}</Text>
   }
 
 
@@ -223,7 +224,7 @@ class index extends Component {
       />
 
       <SList data={data} space={8}
-        limit={10}
+        limit={7}
         buscador
         filter={obj => {
           let year = new SDate().toString("yyyy");

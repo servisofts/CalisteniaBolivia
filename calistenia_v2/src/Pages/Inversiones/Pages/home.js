@@ -59,6 +59,11 @@ class home extends Component {
             icon: 'Ajustes',
             url: 'crowdfunding',
           })}
+          {this.getItem({
+            title: 'Prestamos',
+            icon: 'Ajustes',
+            url: 'prestamos',
+          })}
         </SView>
 
       </SPage>

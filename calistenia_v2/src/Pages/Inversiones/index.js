@@ -5,6 +5,7 @@ import fondo_inversion_sucursal from './Components/fondo_inversion_sucursal';
 import fondo_inversion_usuario from './Components/fondo_inversion_usuario';
 import invertir from './Components/invertir';
 import mis_inversiones from './Components/mis_inversiones';
+import prestamos from './Components/prestamos';
 import tipo_comision from './Components/tipo_comision';
 import home from './Pages/home';
 export default {
@@ -17,6 +18,7 @@ export default {
     ...fondo_inversion_preventa.Pages,
     ...invertir.Pages,
     ...crowdfunding.Pages,
+    ...prestamos.Pages,
     ...mis_inversiones.Pages,
   },
   Reducers: {
@@ -26,5 +28,6 @@ export default {
     ...fondo_inversion_usuario.Reducers,
     ...fondo_inversion_preventa.Reducers,
     ...crowdfunding.Reducers,
+    ...prestamos.Reducers,
   }
 }
