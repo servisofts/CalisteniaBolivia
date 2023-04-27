@@ -33,6 +33,7 @@ import testAlvaro from "./testAlvaro";
 import testTablaUsuarios from "./testTablaUsuarios";
 
 import fidelizacion from "./fidelizacion";
+import responsabilidades from "./responsabilidades";
 import terminos from "./terminos";
 
 const newPages = SPage.combinePages("/", {
@@ -42,6 +43,7 @@ const newPages = SPage.combinePages("/", {
   ...empresa,
   ...contabilidad,
   ...fidelizacion,
+  ...responsabilidades,
   ...rol,
 });
 

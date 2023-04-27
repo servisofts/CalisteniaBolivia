@@ -42,7 +42,7 @@
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
-    "servisofts-component": "2.10.7",
+    "servisofts-component": "2.10.6",
     "servisofts-model": "1.0.3",
     "servisofts-page": "1.0.7",
     "servisofts-rn-contabilidad": "1.0.5",

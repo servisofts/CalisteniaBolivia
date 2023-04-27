@@ -19,13 +19,24 @@
 
 <!-- #tabla prestamo -->
 
-key pretamo11
+key
+key_usuario
+fecha_on
+estado
+
+key_prestamista
+nro:pretamo11
 descripcion pepito mendez
+
 monto_prestamo 1000
-cantidad_meses 10
+
+<!-- cantidad_meses 10 -->
+
 porcentaje 20%
 fecha_inicio febrero 10
 fecha_fin noviembre 10
+periodicidad de interes
+
 ...................
 febrero 200
 marzo 200

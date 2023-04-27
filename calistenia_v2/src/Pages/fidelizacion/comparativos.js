@@ -208,12 +208,11 @@ class index extends Component {
 
       <SList data={data}
         space={8}
-        limit={50}
-        // flex
+        limit={7}
         buscador
-        style={{
-          overflowY: "auto", height: "50px", maxHeight: "700px"
-        }}
+        // style={{
+        //   overflowY: "auto", height: "50px", maxHeight: "700px"
+        // }}
         filter={obj => {
           // if (obj.veces == this.state.parametros.cantidad) return true;
           // return false;
@@ -234,7 +233,7 @@ class index extends Component {
       <Container>
         {this.getParametros()}
         <SHr height={10} />
-        <SView col={"xs-12"} border={"red"}>
+        <SView col={"xs-12"} center border={"transparent"}>
 
           {this.getLista()}
         </SView>
