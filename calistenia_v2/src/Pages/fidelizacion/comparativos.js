@@ -206,16 +206,20 @@ class index extends Component {
         }}
       />
 
-      <SList data={data} space={8}
-        limit={7}
+      <SList data={data}
+        space={8}
+        limit={50}
+        // flex
         buscador
+        style={{
+          overflowY: "auto", height: "50px", maxHeight: "700px"
+        }}
         filter={obj => {
           // if (obj.veces == this.state.parametros.cantidad) return true;
           // return false;
 
           // if (obj.dias_totales < this.state.parametros.dias) return true;
           // return false;
-
           return true;
         }}
         render={obj => {
@@ -230,8 +234,11 @@ class index extends Component {
       <Container>
         {this.getParametros()}
         <SHr height={10} />
-        {this.getLista()}
-        <SHr height={30} />
+        <SView col={"xs-12"} border={"red"}>
+
+          {this.getLista()}
+        </SView>
+        {/* <SHr height={30} /> */}
       </Container>
     </SPage>
   }
