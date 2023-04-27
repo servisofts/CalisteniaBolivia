@@ -180,7 +180,7 @@ class index extends Component {
       />
 
       <SList data={data} space={8}
-        limit={8}
+        limit={7}
         buscador
         filter={obj => {
           if (obj.veces == this.state.parametros.cantidad) return true;
