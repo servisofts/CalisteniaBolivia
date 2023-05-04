@@ -129,13 +129,15 @@ class Home extends Component {
     if (!publicaciones) return <SLoad />
     if (!usuarios) usuarios = {}
 
-    return <SList
-      center
-      space={32}
-      data={Object.values(publicaciones)}
-      order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
-      render={(obj => <Card data={obj} usuario={usuarios[obj.key_usuario]} />)}
-    />
+    return <SView col={"xs-12"} center>
+      <SList
+        // center
+        space={32}
+        data={Object.values(publicaciones)}
+        order={[{ key: "fecha_on", order: "desc", peso: 1, }]}
+        render={(obj => <Card data={obj} usuario={usuarios[obj.key_usuario]} />)}
+      />
+    </SView>
 
   }
   render() {
@@ -143,7 +145,9 @@ class Home extends Component {
       <>
         {this.getBar()}
         <SPage title={'Home'} hidden>
-          {this.getLista()}
+          <SView col={"xs-12"} center>
+            {this.getLista()}
+          </SView>
         </SPage>
         <BottomBar page={"home"} />
       </>

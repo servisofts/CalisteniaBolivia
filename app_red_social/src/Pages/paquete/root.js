@@ -28,7 +28,6 @@ class index extends Component {
 
         return <SList
             buscador={"true"}
-            center
             space={14}
             // data={Object.values(sucursales)}
             data={sucursales}
