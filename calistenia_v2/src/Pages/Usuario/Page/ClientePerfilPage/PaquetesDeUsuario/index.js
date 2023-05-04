@@ -13,14 +13,73 @@ class PaquetesDeUsuario extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-      // veces: 2
+      parametros: {
+        "inicio": new SDate(),
+        "fin": new SDate(),
+        "dias": 0,
+      },
+      ...this.state,
     };
+
+    this._ref = {};
 
   }
   componentDidMount() {
-    this.getCaja()
+    this.getCaja();
+    this.getLista();
   }
+
+  calcular(key) {
+    var inputs = this.state.inputs;
+    if (key == "cantidad_meses" || key == "fecha_inicio") {
+      if (inputs["fecha_inicio"].value) {
+        var fecha_inicio = new SDate(inputs["fecha_inicio"].value);
+        if (inputs["cantidad_meses"].value) {
+          fecha_inicio.addMonth(parseInt(inputs["cantidad_meses"].value));
+          inputs["fecha_fin"].value = fecha_inicio.toString("yyyy-MM-dd");
+        } else {
+          inputs["fecha_fin"].value = fecha_inicio.toString("yyyy-MM-dd");
+        }
+      }
+    } else {
+      if (inputs["fecha_inicio"].value && inputs["fecha_fin"].value) {
+        var cantodad_meses = new SDate(inputs["fecha_inicio"].value).diff(new SDate(inputs["fecha_fin"].value));
+        inputs["cantidad_meses"].value = parseInt(Math.round(cantodad_meses / 30));
+      }
+    }
+
+    this.setState({ inputs: { ...this.state.inputs } });
+  }
+
+  getInputs() {
+    if (this.key) {
+      var data = Parent.Actions.getByKey(this.key, this.props);
+      if (!data) return <SLoad />
+      this.data = data;
+      if (!this.state.isLoad) {
+        this.state.inputs.cantidad_acciones.value = data.cantidad_acciones;
+        this.state.inputs.precio_accion.value = data.precio_accion;
+        this.state.inputs.monto_maximo.value = data.monto_maximo;
+        this.state.inputs.fecha_inicio.value = new SDate(data.fecha_inicio).toString("yyyy-MM-dd");
+        this.state.inputs.fecha_fin.value = new SDate(data.fecha_fin).toString("yyyy-MM-dd");
+        this.state.inputs.cantidad_meses.value = data.cantidad_meses;
+        this.state.inputs.observacion.value = data.observacion;
+        this.state.inputs.descripcion.value = data.descripcion;
+        this.setState({ isLoad: true });
+      }
+    }
+    return Object.keys(this.state.inputs).map((key) => {
+      var obj = this.state.inputs[key];
+      return <SView col={obj.col ?? "xs-6"} center>
+        <SInput ref={(r) => this._ref[key] = r} customStyle={"calistenia"} col={"xs-11"} {...obj} onChangeText={(val) => {
+          this.state.inputs[key].value = val;
+          this.setState({ inputs: { ...this.state.inputs } });
+          this.calcular(key);
+        }} />
+      </SView>
+    })
+  }
+
   getCaja() {
     var obj = {
       component: "caja",
@@ -31,6 +90,7 @@ class PaquetesDeUsuario extends Component {
     SSocket.send(obj, true);
     // return null;
   }
+
   getPaquete(key) {
     let reducer = this.props.state.paqueteReducer;
     let data = reducer.data;
@@ -130,15 +190,49 @@ class PaquetesDeUsuario extends Component {
       }}></SView>
     </SView>
   }
+
+  calculadorAlvaro(inicio, dias) {
+    this.state.parametros.inicio = inicio;
+    this.state.parametros.dias = dias;
+    this.state.parametros.fin = new SDate(inicio, "yyyy-MM-dd").addDay(parseInt(dias)).toString("yyyy-MM-dd");
+    this.setState({ ...this.state })
+    console.log("inicio " + this.state.parametros.inicio);
+    console.log("dias " + this.state.parametros.dias);
+    console.log("fin " + this.state.parametros.fin);
+  }
   popupFecha(obj) {
     let usuario = Model.usuario.Action.getByKey(obj.key_usuario);
 
-
+    var mes_inicio = new SDate(obj.fecha_inicio);
+    var mes_fin = new SDate(obj.fecha_fin);
+    var cantodad_dias = new SDate(obj.fecha_inicio).diff(new SDate(obj.fecha_fin));
+    this.calculadorAlvaro(obj.fecha_inicio, cantodad_dias);
     return <>
       <SView width={362} height={325} center row style={{ borderRadius: 8 }} withoutFeedback backgroundColor={STheme.color.background} style={{ borderColor: "green" }}   >
         <SHr height={20} />
+        <SInput ref={ref => this._fechaInicio = ref} col={"xs-10"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"}
+          onChangeText={(val) => {
+            if (this.state.parametros.inicio != val) {
+              this.state.parametros.inicio = val;
+              this.calculadorAlvaro(val, this.state.parametros.dias);
+            }
+          }}
+        />
 
-        <SInput ref={ref => this._fechaInicio = ref} col={"xs-10"} type={"date"} defaultValue={obj.fecha_inicio} customStyle={"calistenia"} />
+        <SInput ref={ref => this._diasObtenidos = ref} placeholder={"Ingresar cantidad dias"} col={"xs-3"} defaultValue={cantodad_dias} customStyle={"calistenia"}
+          onChangeText={(val) => {
+            if (val == false) return;
+            if (this.state.parametros.dias != val) {
+              this.state.parametros.dias = val;
+              this.calculadorAlvaro(this.state.parametros.inicio, val);
+            }
+          }}
+        />
+
+        {/* placeholder={this.props.placeholder ? this.props.placeholder : "Buscar..."}  */}
+
+        <SInput placeholder={"Ingresar fecha fin"} col={"xs-6"} type={"date"} defaultValue={this.state.parametros.fin} customStyle={"calistenia"} disabled />
+
         {/* <SHr height={15} /> */}
         <SText col={"xs-9"} color={STheme.color.text + 66} center>¿Está seguro de que desea cambiar la fecha del paquete?</SText>
         {/* <SHr height={15} /> */}
@@ -149,18 +243,13 @@ class PaquetesDeUsuario extends Component {
         <SView width={30} ></SView>
         <SButtom type="success" onPress={() => {
 
-          var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
+          var aux = this._diasObtenidos.getValue();
+          // var dias = new SDate(obj.fecha_inicio, "yyyy-MM-dd").diff(new SDate(obj.fecha_fin, "yyyy-MM-dd"));
           var fecha_inicio_modificada = this._fechaInicio.getValue();
-          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(dias);
-
-          // console.log("inicio ", fecha_inicio_modificada)
-          // console.log("fin ", fecha_fin_modificada.toString("yyyy-MM-dd"))
-          // console.log("key ", obj.key_paquete_venta_usuario)
+          var fecha_fin_modificada = new SDate(fecha_inicio_modificada, "yyyy-MM-dd").addDay(parseInt(aux)).toString("yyyy-MM-dd");
 
 
-          // alvaro boton eliminar
-          // obj.estado = "3";
-          // obj.descripcion = "Anulación de venta de servicioasaasasasasas.";
+
 
           let reducer = this.props.state.paqueteVentaReducer;
           let data = reducer.data;
@@ -176,7 +265,8 @@ class PaquetesDeUsuario extends Component {
               data: {
                 key: obj.key_paquete_venta_usuario,
                 fecha_inicio: fecha_inicio_modificada,
-                fecha_fin: fecha_fin_modificada.toString("yyyy-MM-dd"),
+                fecha_fin: fecha_fin_modificada,
+                // fecha_fin: fecha_fin_modificada.toString("yyyy-MM-dd"),
               }
             }
 
@@ -190,6 +280,8 @@ class PaquetesDeUsuario extends Component {
                 this.getPaquete();
                 this.getLista();
                 SPopup.close("CodigoSeguridad");
+                this.getLista();
+
                 //     resolve(resp)
                 //     return;
               }
@@ -197,10 +289,9 @@ class PaquetesDeUsuario extends Component {
 
             })
             // this.props.dispatch(this.props.state.paqueteVentaReducer);
-
             // return false;
           }
-
+          this.getLista()
           //   .then(response => {
           //   // Hacer algo con la respuesta exitosa
           //   console.log("entro ", objSen)
@@ -216,7 +307,7 @@ class PaquetesDeUsuario extends Component {
         }}>Confirmar</SButtom>
 
         <SHr height={20} />
-      </SView>
+      </SView >
     </>
   }
 
@@ -344,19 +435,7 @@ class PaquetesDeUsuario extends Component {
             }}>Bs. {SMath.formatMoney(obj.monto)}</Text>
           </View>
 
-          {/* <View style={{
-                        flex: 2,
-                        justifyContent: "center",
-                        // alignItems: "center"
-                        paddingStart: 8,
-                    }}>
-                        <Text style={{
-                            fontSize: 10,
-                        }}>Desde: {SDateFormat(obj.fecha_inicio)}</Text>
-                        <Text style={{
-                            fontSize: 10,
-                        }}>Hasta: {SDateFormat(obj.fecha_fin)}</Text>
-                    </View> */}
+
           {this.getEditar(obj)}
           <SView width={10} ></SView>
 
