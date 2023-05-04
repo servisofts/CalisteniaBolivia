@@ -95,15 +95,13 @@ class index extends Component {
         let publicacionesMias = Object.values(publicaciones).filter(obj => obj.key_usuario == usuario.key);
         this.state.nroPublicaciones = Object.keys(publicacionesMias).length;
         
-        //console.log(publicacionesMias)
+        console.log(publicacionesMias)
         //console.log(Object.keys(publicacionesMias).length)
 
         return <SList
             data={publicacionesMias}
             order={[{ key: "fecha_on", order: "desc" }]}
             space={0}
-            horizontal
-
             render={(a) => {
                 // let user = Model.usuario.Action.getByKey(a.key_usuario);
                 // if (!user) return <SLoad/>

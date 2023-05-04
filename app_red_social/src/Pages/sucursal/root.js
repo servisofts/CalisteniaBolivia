@@ -23,7 +23,7 @@ class index extends Component {
 
         return <SList
             // buscador={"true"}
-            center
+            
             space={14}
             data={sucursales}
             // order={[{ key: "fecha_on", order: "desc", peso: 1, }]}

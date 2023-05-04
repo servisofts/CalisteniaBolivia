@@ -9,6 +9,7 @@ import centro_costo_detalle from "./centro_costo_detalle";
 import asiento_contable from "./asiento_contable";
 import asiento_contable_detalle from "./asiento_contable_detalle";
 import cuentas from "./cuentas";
+import cuenta_centro_costo from "./cuenta_centro_costo";
 import asiento from "./asiento";
 import asientos from "./asientos";
 
@@ -35,6 +36,7 @@ export default SPage.combinePages(Parent.name,
         "sumas_saldos": sumas_saldos,
         "libro_diario": libro_diario,
         "mayores": mayores,
+        ...cuenta_centro_costo,
         ...gestion,
         ...cuenta_contable,
         ...centro_costo,
